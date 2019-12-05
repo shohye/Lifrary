@@ -22,66 +22,16 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="topbar-info">
-                                                <a th:href="@{tel:+61-3-8376-6284}"><i class="fa fa-phone"></i>+61-3-8376-6284</a>
+                                                <a th:href="@{tel:063-717-1008}"><i class="fa fa-phone"></i>063-717-1008</a>
                                                 <span>/</span>
                                                 <a th:href="@{mailto:support@libraria.com}"><i class="fa fa-envelope"></i>support@libraria.com</a>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="topbar-links">
-                                                <a th:href="@{/signin}"><i class="fa fa-lock"></i>Login / Register</a>
-                                                <span>|</span>
-                                                <div class="header-cart dropdown">
-                                                    <a data-toggle="dropdown" class="dropdown-toggle" th:href="@{#}">
-                                                        <i class="fa fa-shopping-cart"></i>
-                                                        <small>0</small>
-                                                    </a>
-                                                    <div class="dropdown-menu cart-dropdown">
-                                                        <ul>
-                                                            <li class="clearfix">
-                                                                <img th:src="@{library/images/header-cart-image-01.jpg}" alt="cart item" />
-                                                                <div class="item-info">
-                                                                    <div class="name">
-                                                                        <a th:href="@{#}">The Great Gatsby</a>
-                                                                    </div>
-                                                                    <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                                    <div class="price">1 X $10.00</div>
-                                                                </div>
-                                                                <a class="remove" href="#"><i class="fa fa-trash-o"></i></a>
-                                                            </li>
-                                                            <li class="clearfix">
-                                                                <img th:src="@{library/images/header-cart-image-02.jpg}" alt="cart item" />
-                                                                <div class="item-info">
-                                                                    <div class="name">
-                                                                        <a th:href="@{#}">The Great Gatsby</a>
-                                                                    </div>
-                                                                    <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                                    <div class="price">1 X $10.00</div>
-                                                                </div>
-                                                                <a class="remove" th:href="@{#}"><i class="fa fa-trash-o"></i></a>
-                                                            </li>
-                                                            <li class="clearfix">
-                                                                <img th:src="@{library/images/header-cart-image-03.jpg}" alt="cart item" />
-                                                                <div class="item-info">
-                                                                    <div class="name">
-                                                                        <a href="#">The Great Gatsby</a>
-                                                                    </div>
-                                                                    <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                                    <div class="price">1 X $10.00</div>
-                                                                </div>
-                                                                <a class="remove" th:href="@{#}"><i class="fa fa-trash-o"></i></a>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="cart-total">
-                                                            <div class="title">SubTotal</div>
-                                                            <div class="price">$30.00</div>
-                                                        </div>
-                                                        <div class="cart-buttons">
-                                                            <a th:href="@{cart.html}" class="btn btn-dark-gray">View Cart</a>
-                                                            <a th:href="@{checkout.html}" class="btn btn-primary">Checkout</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <!-- 세션 여기서 나누기. fa fa-user(유저 아이콘) [[${id}]]님 반갑습니다.   -->
+                                                <a th:href="@{/login}"><i class="fa fa-lock"></i>로그인</a>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -158,7 +108,7 @@
                                     </li>
                                     <!-- 검색 -->
                                     <li>
-                                        <a th:href="@{index-2.html}">검색</a>
+                                        <a th:href="@{#}">검색</a>
                                     </li>
                                     <!-- 인기도서 -->
                                     <li>
