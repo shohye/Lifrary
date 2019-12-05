@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    
+
+<head th:replace="fragments/library/head :: headFragment"></head>
+    
+    <body>
+        
+        <!-- Start: Header Section -->
+	        <header id="header-v1" class="navbar-wrapper">
+	        	<div th:replace="fragments/library/header :: headerFragment"></div>
+	        </header>
+        <!-- End: Header Section -->
+        
+        
+        <th:block layout:fragment="customContents">       
+        
+        </th:block>
+        
+        <!-- Start: Social Network -->
+        	<!-- <section th:replace="fragments/library/socialNetwork :: socialNetworkFragment"></section> -->
+        <!-- End: Social Network -->
+        
+        
+        <!--footer -->
+        	<footer th:replace="fragments/library/footer :: footerFragment"></footer>
+        
+        
+    </body>
+
+
+</html>

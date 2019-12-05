@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<table border="1">
+		<tr>
+			<td>ulLevel</td>
+			<td>lCode</td>
+			<td>uId</td>
+			<td>ulMin</td>
+			<td>ulMax</td>
+			<td>ulLendNum</td>
+			<td>ulLendDay</td>
+			<td>ulDate</td>
+		</tr>
+		<th:block th:each="level : ${getUserLevel}">
+			<tr>
+				<td th:text="${level.ulLevel}"></td>
+				<td th:text="${level.lCode}"></td>
+				<td th:text="${level.uId}"></td>
+				<td th:text="${level.ulMin}"></td>
+				<td th:text="${level.ulMax}"></td>
+				<td th:text="${level.ulLendNum}"></td>
+				<td th:text="${level.ulLendDay}"></td>
+				<td th:text="${level.ulDate}"></td>
+			</tr>
+			<br> <br>
+		</th:block>
+	</table>
+
+<th:block th:each="level : ${getUserLevel}"><br></th:block>
+	
+</body>
+</html>

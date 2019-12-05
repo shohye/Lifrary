@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en" class="default-style">
+
+<head th:replace="fragments/admin/head :: adminHead"></head>
+
+<body>
+  <div class="page-loader">
+    <div class="bg-primary"></div>
+  </div>
+
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-2">
+    <div class="layout-inner">
+
+      <!-- Layout sidenav -->
+      <div th:replace="fragments/admin/sideNav :: adminSideNav"></div>
+      <!-- / Layout sidenav -->
+     
+      <!-- Layout container -->
+      <div class="layout-container">
+       
+        <!-- Layout navbar -->
+       <nav th:replace="fragments/admin/navBer :: adminNavBer"></nav>
+       <!-- /Layout navbar -->
+        
+        <!-- Layout content -->
+        <div class="layout-content">
+
+          <!-- Content -->
+          <div class="container-fluid flex-grow-1 container-p-y">
+          <th:block layout:fragment="adminContents"></th:block>
+          </div>
+          <!-- / Content -->
+
+          <!-- Layout footer -->
+           <nav th:replace="fragments/admin/footer :: adminFooter"></nav>
+		  <!-- / Layout footer -->
+        </div>
+        <!-- Layout content -->
+
+      </div>
+      <!-- / Layout container -->
+
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-sidenav-toggle"></div>
+  </div>
+  <!-- / Layout wrapper -->
+	
+  <!-- scripts -->
+  <th:block layout:replace="fragments/admin/script :: adminScript">
+  </th:block>
+  
+  <th:block layout:fragment="pageScript"></th:block>
+   <!-- / scripts -->
+</body>
+
+</html>
