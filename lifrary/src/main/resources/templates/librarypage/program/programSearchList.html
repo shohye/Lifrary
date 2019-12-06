@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+    
+	<th:block layout:fragment="customContents"> 
+
+
+        <!-- Start: Page Banner -->
+        	<section th:replace="fragments/library/programBanner :: programBannerFragment"></section>
+        <!-- End: Page Banner -->
+
+
+        <!-- Start: Program List Section -->
+        	<div th:replace="fragments/library/programListSection :: programListSectionFragment"></div>
+        <!-- End: Program List Section -->
+
+       
+</th:block>
+
+</html>
