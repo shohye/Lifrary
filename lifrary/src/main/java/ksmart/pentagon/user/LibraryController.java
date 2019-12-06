@@ -27,13 +27,14 @@ public class LibraryController {
 	@GetMapping("/login")
 	public String login() {
 		
-		return "librarypage/login";
+		return "librarypage/user/login";
 	}
 	
 	@PostMapping("/login")
 	public String login(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw) {
 		System.out.println(uId + " <== uId");
 		System.out.println(uPw + " <== uPw");
+		
 		
 		
 		return null;

@@ -34,7 +34,7 @@ public class AdminController {
 	 */
 	@GetMapping("/adminLogin")
 	public String adminLogin() {
-		return "adminpage/adminLogin";
+		return "adminpage/librarian/adminLogin";
 	}
 	
 }
