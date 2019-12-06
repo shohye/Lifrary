@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
+
+
+<!-- Content -->
+<th:block layout:fragment="adminContents">
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var aa = $("#abc").text();
+			console.log(aa);
+			})
+		function callFormatting1(sFormatString) {
+			document.execCommand(sFormatString); /* 글씨 굵게 */
+		}
+		function callFormatting2(sFormatString) {
+			document.execCommand(sFormatString) /* --> 이탤릭 */
+		}
+		function callFormatting3(sFormatString) {
+			document.execCommand(sFormatString) /* --> 밑줄 */
+		}
+		function callFormatting4(sFormatString) {
+			document.execCommand(sFormatString) /* -->중간줄 */
+		}
+		function callFormatting5(sFormatString) {
+			document.execCommand(sFormatString) /* -->글번호 매기기 */
+		}
+		function callFormatting6(sFormatString) {
+			document.execCommand(sFormatString) /* -->왼쪽정렬 */
+		}
+		function callFormatting7(sFormatString) {
+			document.execCommand(sFormatString) /* -->가운데정렬 */
+		}
+		function callFormatting8(sFormatString) {
+			document.execCommand(sFormatString) /* -->오른쪽정렬 */
+		}
+		function doInit() {
+			 for(i=0;i<document.all.length;i++) {
+			 document.all(i).unselectable="on";
+			 oDiv.unselectable="off";
+			 oDiv.innerHTML="";
+			 oDiv.focus();
+			 }
+			}
+
+	</script>
+	<div>
+		<input style="margin: auto; width: 80%; background-color: #cccccc">
+	
+		<div style="margin: auto; width: 80%; height: 300px; background-color: #cccccc" id="oDiv" CONTENTEDITABLE>
+		
+			
+	</div>
+	<h4 class="font-weight-bold py-3 mb-4">
+              <span class="text-muted font-weight-light">공지사항 등록</span> </h4>
+
+            <div class="card mb-4">
+              <h6 class="card-header">
+                공지사항 제목<input type="text" style="width: 100%;" class="form-control" placeholder="공지사항 제목을 입력해주세요.">
+       
+              </h6>
+              <div class="card-body">
+                <input type="button" value="굵게" onclick="callFormatting1('bold')">
+		<input type="button" value="이탤릭" onclick="callFormatting2('Italic')">
+		<input type="button" value="밑줄" onclick="callFormatting3('Underline')">
+		<input type="button" value="중간줄" onclick="callFormatting4('bold')">
+		<input type="button" value="글번호매기기" onclick="callFormatting5('bold')">
+		<input type="button" value="왼쪽정렬" onclick="callFormatting6('bold')">
+		<input type="button" value="가운데정렬" onclick="callFormatting7('bold')">
+		<input type="button" value="오른쪽정렬" onclick="callFormatting8('justifyright')">
+                <div id="bs-markdown" class="form-control" rows="30" style="height: 500px;" CONTENTEDITABLE>
+                텍스트
+                </div>
+                <a id="abc">Tlqkf</a>
+                <button value="버튼" id="bsbtn">버튼</button>
+              </div>
+            </div>
+</th:block>
+
+<!-- / Content -->
+
+<!-- script -->
+<th:block layout:fragment="pageScript">
+
+
+</th:block>
+<!-- /script -->
+
+
+
+</html>
