@@ -2,6 +2,7 @@ package ksmart.pentagon.facility;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /*
@@ -16,5 +17,30 @@ public class FacilityController {
 
 	@Autowired private FacilityService facilityService;
 	
+	
+	@GetMapping("/readingRoom")
+	public String readingRoom(Model model) {
+		model.addAttribute("room", "reading");
+		
+		return "librarypage/facility/readingRoomReservation";
+	}
+	
+	@GetMapping("/studyRoom")
+	public String studyRoom(Model model) {
+		model.addAttribute("room", "study");
+		return "librarypage/facility/studyRoomReservation";
+	}
+	
+	@GetMapping("/lectureRoom")
+	public String lectureRoom(Model model) {
+		model.addAttribute("room", "lecture");
+		return "librarypage/facility/lectureRoomReservation";
+	}
+		
+	@GetMapping("/locker")
+	public String locker(Model model) {
+		model.addAttribute("room", "locker");
+		return "librarypage/facility/lockerReservation";
+	}
 	
 }

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+		
+<!-- Start: readingRoom Section -->
+	<section class ="section-padding" th:fragment="facilitySectionFragment">
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="main-news-list">
+                        <div class="container">
+                            
+                            <div class="row">
+                                <div class="col-md-9 col-md-push-3 news-events-list-view">
+                                    <div class="news-list-box">
+                                        <div class="single-news-list">  
+                                         
+                                         <!-- ==== 열람실 ==== -->                                    
+										<th:block th:if=" ${room} == 'reading'">
+											<span style="font-size: 40px;">열람실 신청 안내</span>											
+	                                        <section class = "section-padding">
+											<div style="background-color: #CCCC99; font-size: 15px; font-style: italic">
+												위치 : 3층, 4층 <br>
+												규모 : 806석 (노트북실 포함) <br>
+												이용시간 : 07:00 - 23:00 (단, 금요일은 09:00 - 18:00) <br>
+												이용대상 : 중학생 이상의 청소년과 일반인 <br>
+												일반열람실Ⅰ(3층, 152석, 장애인석 1석 포함), 일반열람실Ⅱ(4층, 254석)은 일반인을 대상으로 운영하고 있습니다. <br>
+												여자열람실(3층, 108석), 남자열람실(4층, 108석)은 청소년과 일반인 모두를 대상으로 운영하고 있습니다. <br>
+												청소년ㆍ일반열람실(4층, 92석)은 청소년과 일반인 남·여 모두를 대상으로 운영하고 있습니다. <br>
+												노트북실(3층, 92석)은 노트북과 태블릿PC 이용자를 대상으로 운영하며, 청소년과 일반인 남·여 모두 이용 가능합니다.
+											</div>	                                        
+	                                        </section>
+	                                        <div class="clearfix"></div>
+	                                     </th:block>   
+	                                    
+	                                    <!-- ====  강연실 ====  -->
+	                                    <th:block th:if=" ${room} == 'study'">
+											<span style="font-size: 40px;">강연실 신청 안내</span>											
+	                                        <section class = "section-padding">
+											<div style="background-color: #CCCC99; font-size: 15px; font-style: italic">
+												위치 : 3층, 4층 <br>
+												규모 : 806석 (노트북실 포함) <br>
+												이용시간 : 07:00 - 23:00 (단, 금요일은 09:00 - 18:00) <br>
+												이용대상 : 중학생 이상의 청소년과 일반인 <br>
+												일반열람실Ⅰ(3층, 152석, 장애인석 1석 포함), 일반열람실Ⅱ(4층, 254석)은 일반인을 대상으로 운영하고 있습니다. <br>
+												여자열람실(3층, 108석), 남자열람실(4층, 108석)은 청소년과 일반인 모두를 대상으로 운영하고 있습니다. <br>
+												청소년ㆍ일반열람실(4층, 92석)은 청소년과 일반인 남·여 모두를 대상으로 운영하고 있습니다. <br>
+												노트북실(3층, 92석)은 노트북과 태블릿PC 이용자를 대상으로 운영하며, 청소년과 일반인 남·여 모두 이용 가능합니다.
+											</div>	                                        
+	                                        </section>
+	                                        <div class="clearfix"></div>
+	                                     </th:block>
+	                                     
+	                                     <!-- ==== 스터디룸 ==== -->
+	                                    <th:block th:if=" ${room} == 'lecture'">
+											<span style="font-size: 40px;">스터디룸 신청 안내</span>											
+	                                        <section class = "section-padding">
+											<div style="background-color: #CCCC99; font-size: 15px; font-style: italic">
+												위치 : 3층, 4층 <br>
+												규모 : 806석 (노트북실 포함) <br>
+												이용시간 : 07:00 - 23:00 (단, 금요일은 09:00 - 18:00) <br>
+												이용대상 : 중학생 이상의 청소년과 일반인 <br>
+												일반열람실Ⅰ(3층, 152석, 장애인석 1석 포함), 일반열람실Ⅱ(4층, 254석)은 일반인을 대상으로 운영하고 있습니다. <br>
+												여자열람실(3층, 108석), 남자열람실(4층, 108석)은 청소년과 일반인 모두를 대상으로 운영하고 있습니다. <br>
+												청소년ㆍ일반열람실(4층, 92석)은 청소년과 일반인 남·여 모두를 대상으로 운영하고 있습니다. <br>
+												노트북실(3층, 92석)은 노트북과 태블릿PC 이용자를 대상으로 운영하며, 청소년과 일반인 남·여 모두 이용 가능합니다.
+											</div>	                                        
+	                                        </section>
+	                                        <div class="clearfix"></div>
+	                                     </th:block>
+	                                     
+	                                     <!-- ==== 사물함 ==== -->
+	                                    <th:block th:if=" ${room} == 'locker'">
+											<span style="font-size: 40px;">사물함 신청 안내</span>											
+	                                        <section class = "section-padding">
+											<div style="background-color: #CCCC99; font-size: 15px; font-style: italic">
+												위치 : 3층, 4층 <br>
+												규모 : 806석 (노트북실 포함) <br>
+												이용시간 : 07:00 - 23:00 (단, 금요일은 09:00 - 18:00) <br>
+												이용대상 : 중학생 이상의 청소년과 일반인 <br>
+												일반열람실Ⅰ(3층, 152석, 장애인석 1석 포함), 일반열람실Ⅱ(4층, 254석)은 일반인을 대상으로 운영하고 있습니다. <br>
+												여자열람실(3층, 108석), 남자열람실(4층, 108석)은 청소년과 일반인 모두를 대상으로 운영하고 있습니다. <br>
+												청소년ㆍ일반열람실(4층, 92석)은 청소년과 일반인 남·여 모두를 대상으로 운영하고 있습니다. <br>
+												노트북실(3층, 92석)은 노트북과 태블릿PC 이용자를 대상으로 운영하며, 청소년과 일반인 남·여 모두 이용 가능합니다.
+											</div>	                                        
+	                                        </section>
+	                                        <div class="clearfix"></div>
+	                                     </th:block>
+	                                        
+	                                    </div>
+                              	 </div>                                                                                                          
+                          </div>
+                                
+                                <!-- start : facility Left Menu -->                          
+                                                               
+                                	<div th:replace="fragments/library/facilityLeftMenu :: facilityLeftMenuFragment"></div>
+                                
+                            	<!-- end : facility Left Menu -->
+                            
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            
+        </div>
+        </section>
+        <!-- End: readingRoom Section -->
+</html>

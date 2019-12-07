@@ -1,113 +1,113 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- Start: Program Search Section -->
-                            <section class="search-filters" th:fragment="programSearchSectionFragment">
-                                <div class="filter-box">
-                                    <h3>Find the library events &amp; classes</h3>
-                                    <form action="http://libraria.demo.presstigers.com/news-events-detail.html" method="get">
-                                        <div class="col-md-10">
-                                            <div class="row">
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label class="sr-only" for="keywords">Search by Keyword</label>
-                                                        <input class="form-control" placeholder="Search by Keyword" id="keywords" name="keywords" type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-3">
-                                                    <div class="form-group">
-                                                        <select name="category" id="category" class="form-control">
-                                                            <option>All Categories</option>
-                                                            <option>Category 01</option>
-                                                            <option>Category 02</option>
-                                                            <option>Category 03</option>
-                                                            <option>Category 04</option>
-                                                            <option>Category 05</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-3">
-                                                    <div class="form-group">
-                                                        <select name="locations" id="locations" class="form-control">
-                                                            <option>All Locations</option>
-                                                            <option>Location 01</option>
-                                                            <option>Location 02</option>
-                                                            <option>Location 03</option>
-                                                            <option>Location 04</option>
-                                                            <option>Location 05</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <select name="startdate" id="startdate" class="form-control">
-                                                                    <option>Start Date</option>
-                                                                    <option>Start Date 01</option>
-                                                                    <option>Start Date 02</option>
-                                                                    <option>Start Date 03</option>
-                                                                    <option>Start Date 04</option>
-                                                                    <option>Start Date 05</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <select name="enddate" id="enddate" class="form-control">
-                                                                    <option>End Date</option>
-                                                                    <option>End Date 01</option>
-                                                                    <option>End Date 02</option>
-                                                                    <option>End Date 03</option>
-                                                                    <option>End Date 04</option>
-                                                                    <option>End Date 05</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div> 
-                                                </div>
-                                                <div class="col-md-4 col-sm-3">
-                                                    <div class="form-group">
-                                                        <select name="agegroup" id="agegroup" class="form-control">
-                                                            <option>Age Group</option>
-                                                            <option>Age Group 01</option>
-                                                            <option>Age Group 02</option>
-                                                            <option>Age Group 03</option>
-                                                            <option>Age Group 04</option>
-                                                            <option>Age Group 05</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-3">
-                                                    <div class="form-group">
-                                                        <select name="language" id="language" class="form-control">
-                                                            <option>Language</option>
-                                                            <option>Language 01</option>
-                                                            <option>Language 02</option>
-                                                            <option>Language 03</option>
-                                                            <option>Language 04</option>
-                                                            <option>Language 05</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="row">
-                                                <div class="col-md-12 col-sm-6">
-                                                    <div class="form-group">
-                                                        <input class="form-control btn-clearform" type="submit" value="Clear Form">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 col-sm-6">
-                                                    <div class="form-group">
-                                                        <input class="form-control" type="submit" value="Find Event">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+    <section class="search-filters" th:fragment="programSearchSectionFragment">
+        <div class="filter-box">
+            <h3>Find the library events &amp; classes</h3>
+            <form action="http://libraria.demo.presstigers.com/news-events-detail.html" method="get">
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <label class="sr-only" for="keywords">Search by Keyword</label>
+                                <input class="form-control" placeholder="Search by Keyword" id="keywords" name="keywords" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-3">
+                            <div class="form-group">
+                                <select name="category" id="category" class="form-control">
+                                    <option>All Categories</option>
+                                    <option>Category 01</option>
+                                    <option>Category 02</option>
+                                    <option>Category 03</option>
+                                    <option>Category 04</option>
+                                    <option>Category 05</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-3">
+                            <div class="form-group">
+                                <select name="locations" id="locations" class="form-control">
+                                    <option>All Locations</option>
+                                    <option>Location 01</option>
+                                    <option>Location 02</option>
+                                    <option>Location 03</option>
+                                    <option>Location 04</option>
+                                    <option>Location 05</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <select name="startdate" id="startdate" class="form-control">
+                                            <option>Start Date</option>
+                                            <option>Start Date 01</option>
+                                            <option>Start Date 02</option>
+                                            <option>Start Date 03</option>
+                                            <option>Start Date 04</option>
+                                            <option>Start Date 05</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="clear"></div>
-                            </section>
-                            <!-- End: Program Search Section -->
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <select name="enddate" id="enddate" class="form-control">
+                                            <option>End Date</option>
+                                            <option>End Date 01</option>
+                                            <option>End Date 02</option>
+                                            <option>End Date 03</option>
+                                            <option>End Date 04</option>
+                                            <option>End Date 05</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-md-4 col-sm-3">
+                            <div class="form-group">
+                                <select name="agegroup" id="agegroup" class="form-control">
+                                    <option>Age Group</option>
+                                    <option>Age Group 01</option>
+                                    <option>Age Group 02</option>
+                                    <option>Age Group 03</option>
+                                    <option>Age Group 04</option>
+                                    <option>Age Group 05</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-3">
+                            <div class="form-group">
+                                <select name="language" id="language" class="form-control">
+                                    <option>Language</option>
+                                    <option>Language 01</option>
+                                    <option>Language 02</option>
+                                    <option>Language 03</option>
+                                    <option>Language 04</option>
+                                    <option>Language 05</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-6">
+                            <div class="form-group">
+                                <input class="form-control btn-clearform" type="submit" value="Clear Form">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="form-group">
+                                <input class="form-control" type="submit" value="Find Event">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="clear"></div>
+    </section>
+    <!-- End: Program Search Section -->
 </html>
