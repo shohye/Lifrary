@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+		
+<!-- Start: Program List Section -->
+	<section class ="section-padding" th:fragment="programApplySectionFragment">
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="main-news-list">
+                        <div class="container">
+                            
+                            <div class="row">
+                                <div class="col-md-9 col-md-push-3 news-events-list-view">
+                                 
+                                 <span style="font-size: 40px;">프로그램 신청하기</span>											
+	                                        <section class = "section-padding">
+											<div style="background-color: #CCCCCC; font-size: 15px; font-style: bold; padding : 20px">
+												<form th:action="@{/programApply}" method="post">
+													<table border="1">
+													
+															<input type="hidden" name="pmCode" readonly="readonly" th:value="${pmCode}">
+														
+														<tr>
+															<td>프로그램명 : <input type="text" name="pmName" readonly="readonly" th:value="${pmName}"></td>
+														</tr>
+														<tr>
+															<td>신청 아이디 : <input type="text" name="uId" readonly="readonly" th:value="${SID}"></td>
+														</tr>
+														<tr>
+															<td>참여자 이름 : <input type="text" name="paParticipants" ></td>
+														</tr>
+														
+														<tr>
+															<td>
+															남자  <input type="radio" name="paGender" value="남" checked="checked">
+															여자  <input type="radio" name="paGender" value="여">
+															</td>
+															
+														</tr>
+														
+														<tr>	
+															<td>생년 월일 : <input type="date" name="paBirth"></td>
+														</tr>
+														<tr>
+															<td>주소 : <input type="text" name="paAddr"></td>
+														</tr>
+														<tr>	
+															<td>연락처 : <input type="tel" name="paTel" 
+															pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required></td>
+														</tr>
+									
+														<tr>	
+															<td><button type="submit"> 신청 </button></td>
+														</tr>
+													</table> 
+												</form>
+											</div>	                                        
+	                                        </section>
+	                                        <div class="clearfix"></div>
+                                 
+                                 
+                                 
+                                  
+                                </div>
+                                <!-- start : program Left Menu -->                          
+                                                               
+                                	<div th:replace="fragments/library/programLeftMenu :: programLeftMenuFragment"></div>
+                                
+                            	<!-- end : program Left Menu -->
+                            
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <!-- End: Program List Section -->
+        </section>
+</html>

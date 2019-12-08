@@ -7,7 +7,7 @@
          <aside id="secondary" class="sidebar widget-area">
              
              <div class="widget widget_related_search">
-                 <h4 class="widget-title" data-control>Related Searches</h4>
+                 <h4 class="widget-title" data-control>주제</h4>
                  <div class="widget_categories">
                      <ul>
                          <li><a th:href="@{#}">Love stories <span>(18)</span></a></li>
@@ -15,14 +15,12 @@
                          <li><a th:href="@{#}">Rich people <span>(03)</span></a></li>
                          <li><a th:href="@{#}">Humorous stories <span>(02)</span></a></li>
                          <li><a th:href="@{#}">Widows <span>(02)</span></a></li>
-                         <li><a th:href="@{#}">Women <span>(11)</span></a></li>
-                         <li><a th:href="@{#}">Babysitters <span>(25)</span></a></li>
-                         <li><a th:href="@{#}">Law firms <span>(09)</span></a></li>
                      </ul>
                  </div>
              </div>
              <div class="widget widget_recent_entries">
-                 <h4 class="widget-title" data-control>Recent News</h4>
+             <!-- 등록된 행사 th:each로 뿌려주기 -->
+                 <h4 class="widget-title" data-control>최근 등록된 프로그램</h4>
                  <ul>
                      <li>
                          <figure>
@@ -33,40 +31,19 @@
                          <span><i class="fa fa-clock-o"></i> &nbsp; 10:15 AM - 10:15 PM</span>
                          <span><i class="fa fa-map-marker"></i> &nbsp; New York, USA</span>
                          <div class="clearfix"></div>
-                     </li>
-                     <li>
-                         <figure>
-                             <img th:src="@{library/images/order-item-05.jpg}" alt="product" />
-                         </figure>
-                         <a th:href="@{#}">It uses a dictionary</a>
-                         <span><i class="fa fa-calendar"></i> &nbsp; July 25, 2016</span>
-                         <span><i class="fa fa-clock-o"></i> &nbsp; 10:15 AM - 10:15 PM</span>
-                         <span><i class="fa fa-map-marker"></i> &nbsp; New York, USA</span>
-                         <div class="clearfix"></div>
-                     </li>
-                     <li>
-                         <figure>
-                             <img th:src="@{library/images/order-item-06.jpg}" alt="product" />
-                         </figure>
-                         <a th:href="@{#}">It uses a dictionary</a>
-                         <span><i class="fa fa-calendar"></i> &nbsp; July 25, 2016</span>
-                         <span><i class="fa fa-clock-o"></i> &nbsp; 10:15 AM - 10:15 PM</span>
-                         <span><i class="fa fa-map-marker"></i> &nbsp; New York, USA</span>
-                         <div class="clearfix"></div>
-                     </li>
+                     </li>                
                  </ul>
              </div>
              
              <div class="widget widget_tag_cloud">
-                 <h4 class="widget-title" data-control>News Tags</h4>
+                 <h4 class="widget-title" data-control>연령별 행사 리스트</h4>
                  <ul>
-                     <li><a th:href="@{#}">Fashion</a></li>
-                     <li><a th:href="@{#}">Life Style</a></li>
-                     <li><a th:href="@{#}">Beauty</a></li>
-                     <li><a th:href="@{#}">Music</a></li>
-                     <li><a th:href="@{#}">Health</a></li>
-                     <li><a th:href="@{#}">Travel</a></li>
-                     <li><a th:href="@{#}">Library</a></li>
+                     <li><a th:href="@{#}">전체</a></li>
+                     <li><a th:href="@{#}">유아</a></li>
+                     <li><a th:href="@{#}">초등학생</a></li>
+                     <li><a th:href="@{#}">중학생</a></li>
+                     <li><a th:href="@{#}">고등학생</a></li>
+                     <li><a th:href="@{#}">성인</a></li>
                  </ul>
              </div>
              
