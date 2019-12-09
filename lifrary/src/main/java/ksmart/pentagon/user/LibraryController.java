@@ -1,5 +1,7 @@
 package ksmart.pentagon.user;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,11 +33,11 @@ public class LibraryController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw) {
+	public String login(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw, HttpSession session) {
 		System.out.println(uId + " <== uId");
 		System.out.println(uPw + " <== uPw");
 		
-		
+		libraryService.loginCheck(uId, uPw);
 		
 		return null;
 	}

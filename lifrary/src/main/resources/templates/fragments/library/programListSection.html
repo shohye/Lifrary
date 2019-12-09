@@ -73,8 +73,7 @@
                                                     </ul>
                                                     <br>
                                                     <h3><i class="fa fa-hand-o-down" aria-hidden="true"></i>    행사 정보    <i class="fa fa-hand-o-down" aria-hidden="true"></i></h3>
-                                                    <p th:text="${pList.pmDetail}"></p>
-                                                   
+                                                    	<p th:text="${#strings.abbreviate(pList.pmDetail,25)}"></p>               
                                                     <th:block th:if="${pList.pmProgress} == '종료'">
                                                    		<a class="btn btn-primary">종료된 행사</a>
                                                     </th:block>

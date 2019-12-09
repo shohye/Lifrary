@@ -29,8 +29,7 @@ public class ProgramController {
 	@GetMapping("/programSearchList")
 	public String programListView(Model model) {
 			model.addAttribute("menu", "프로그램 리스트");
-			model.addAttribute("programList", programService.getProgramList());
-		
+			model.addAttribute("programList", programService.getProgramList());					
 		return "librarypage/program/programSearchList";
 	}
 	
