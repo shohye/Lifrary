@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class BoardController {
 	
-	@GetMapping("adminpage/board/noticeSearchList")
+	@GetMapping("noticeSearch")
 	public String noticeInsert() {
-		return "adminpage/board/noticeSearchList";
+		return "adminpage/board/noticeSearch";
 	}
 }
