@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
+
+
+<!-- Content -->
+<th:block layout:fragment="adminContents">
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#bsbtn").click(function(){
+				
+			var aa = $("#inputTest").text();
+			console.log(aa.trim());
+				
+			})
+		})
+		function callFormatting1(sFormatString) {
+			document.execCommand(sFormatString); /* 글씨 굵게 */
+		}
+		function callFormatting2(sFormatString) {
+			document.execCommand(sFormatString) /* --> 이탤릭 */
+		}
+		function callFormatting3(sFormatString) {
+			document.execCommand(sFormatString) /* --> 밑줄 */
+		}
+		function callFormatting4(sFormatString) {
+			document.execCommand(sFormatString) /* -->중간줄 */
+		}
+		function callFormatting5(sFormatString) {
+			document.execCommand(sFormatString) /* -->글번호 매기기 */
+		}
+		function callFormatting6(sFormatString) {
+			document.execCommand(sFormatString) /* -->왼쪽정렬 */
+		}
+		function callFormatting7(sFormatString) {
+			document.execCommand(sFormatString) /* -->가운데정렬 */
+		}
+		function callFormatting8(sFormatString) {
+			document.execCommand(sFormatString) /* -->오른쪽정렬 */
+		}
+		function doInit() {
+			for (i = 0; i < document.all.length; i++) {
+				document.all(i).unselectable = "on";
+				oDiv.unselectable = "off";
+				oDiv.innerHTML = "";
+				oDiv.focus();
+			}
+		}
+	</script>
+	<h4 class="font-weight-bold py-3 mb-4">
+		<span class="text-muted font-weight-light"></span>공지사항 등록
+	</h4>
+
+	<div class="card mb-4">
+			<div>
+				<div id="inputTest" type="text" style="width: 80%;" class="form-control"
+					placeholder="공지사항 제목을 입력해주세요."CONTENTEDITABLE>
+			</div>
+			<table border="2">
+			<div class="card-body">
+			<button style="width: 30px; height: 30px;"
+				onclick="callFormatting1('bold')">
+				<i class="fa fa-bold"></i>
+			</button>
+			<button style="width: 30px; height: 30px;"
+				onclick="callFormatting2('Italic')">
+				<i class="fa fa-italic"></i>
+			</button>
+			<button style="width: 30px; height: 30px;"
+				onclick="callFormatting3('Underline')">
+				<i class="fa fa-underline d-block"></i>
+			</button>
+			<button style="width: 30px; height: 30px;"
+				onclick="callFormatting4('StrikeThrough')">
+				<img th:src="@{/admin/img/avatars/10-3.png}">
+			</button>
+			<button style="width: 30px; height: 30px;"
+				onclick="callFormatting5('insertorderedList')">
+				<i class="fas fa-list-ol d-block"></i>
+			</button>
+			<button style="width: 30px; height: 30px;"
+				onclick="callFormatting6('justifyleft')">
+				<i class="fa fa-align-left d-block"></i>
+			</button>
+			<button style="width: 30px; height: 30px;"
+				onclick="callFormatting7('justifycenter')">
+				<i class="fa fa-align-justify d-block"></i>
+			</button>
+			<button style="width: 30px; height: 30px;"
+				onclick="callFormatting8('justifyright')">
+				<i class="fa fa-align-right d-block"></i>
+			</button>
+			</table>
+			
+			
+			<span>내용</span>
+			<div id="" class="form-control" rows="30"
+				style="height: 400px;" CONTENTEDITABLE></div>
+			<button style="width: 100%" value="버튼" id="bsbtn"
+				class="btn btn-primary">공지사항 등록</button>
+		</div>
+	</div>
+</th:block>
+
+<!-- / Content -->
+
+<!-- script -->
+<th:block layout:fragment="pageScript">
+
+
+</th:block>
+<!-- /script -->
+
+
+
+</html>
