@@ -1,9 +1,10 @@
 package ksmart.pentagon.user;
 
 
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+
+import ksmart.pentagon.vo.User;
 
 
 /*
@@ -16,5 +17,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface LibraryMapper {
 	//입력한 uId에 해당하는    uPw, uDivision 리턴
-	public Map<String, String> loginCheck(String uId);
+	public User loginCheck(String uId);
 }

@@ -1,12 +1,17 @@
 package ksmart.pentagon.user;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import ksmart.pentagon.vo.User;
 
 /*
  * @file   LibraryController.java 
@@ -32,14 +37,45 @@ public class LibraryController {
 		return "librarypage/user/login";
 	}
 	
+	/**
+	 * 로그인 처리후 인덱스로 이동
+	 * @param uId
+	 * @param uPw
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/login")
-	public String login(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw, HttpSession session) {
+	public String login(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw, HttpSession session, Model model) {
 		System.out.println(uId + " <== uId");
 		System.out.println(uPw + " <== uPw");
 		
-		libraryService.loginCheck(uId, uPw);
+		Map<String,Object> map = libraryService.loginCheck(uId, uPw);
+		User user = (User)map.get("user");
+		String result = (String)map.get("result");
+		System.out.println(result + " <== result controller");
+		if(!result.equals("로그인성공")) {
+			//경고창 출력을 위해 result보내주기
+			return "librarypage/user/login";
+		}
+
+
+		session.setAttribute("SID", user.getuId());
+		session.setAttribute("SNAME", user.getuName());
+		session.setAttribute("SDIV", user.getuDivision());
 		
-		return null;
+		
+		return "redirect:/";
+	}
+	/**
+	 * 로그아웃으로 세션 종료
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
 	}
 	
 }

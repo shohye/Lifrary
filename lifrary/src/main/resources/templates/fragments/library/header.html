@@ -29,9 +29,17 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="topbar-links">
-                                            <!-- 세션 여기서 나누기. fa fa-user(유저 아이콘) [[${id}]]님 반갑습니다.   -->
-                                                <a th:href="@{/login}"><i class="fa fa-lock"></i>로그인</a>
-                                                
+                                            
+                                            <th:block th:if="${session.SID == null}">
+	                                            <!-- 세션 여기서 나누기. fa fa-user(유저 아이콘) [[${id}]]님 반갑습니다.   -->
+	                                                <a th:href="@{/login}"><i class="fa fa-lock"></i>로그인</a>	                                                
+                                            </th:block>
+                                            
+                                            <th:block th:unless="${session.SID == null}">
+	                                               <a><i class="fa fa-unlock"></i></a><span>[[${session.SID}]]님 반갑습니다. &emsp; 권한 : [[${session.SDIV}]]</span>&emsp;&emsp; 
+	                                                <a th:href="@{/logout}">로그아웃</a>                           
+                                            </th:block>
+                                            
                                             </div>
                                         </div>
                                     </div>

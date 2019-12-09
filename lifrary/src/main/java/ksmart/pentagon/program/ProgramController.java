@@ -51,7 +51,6 @@ public class ProgramController {
 	/**
 	 * 프로그램 신청 페이지로 이동
 	 * @param pmCode (프로그램 종합 코드) pmName (프로그램명) model
-	 * SID는 가정을 하기 위해 써놓은것으로, 로그인 / 세션처리를 마치면 지워줄것.
 	 * 
 	 * @return
 	 */
@@ -62,9 +61,6 @@ public class ProgramController {
 		model.addAttribute("menu", "프로그램 신청하기");
 		model.addAttribute("pmCode", pmCode);
 		model.addAttribute("pmName", pmName);
-		
-		model.addAttribute("SID", "id002");
-		// 세션으로 값을 받는다는 가정.
 		
 		return "librarypage/program/programApply";
 	}
