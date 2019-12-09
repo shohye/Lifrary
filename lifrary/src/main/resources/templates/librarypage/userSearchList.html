@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+
+ <!-- headAdd(Libs&page) -->
+  
+  <th:block layout:fragment="adminHeadAdd">
+  
+  <!-- addLibs -->
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+
+  <!-- addPage -->
+  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
+ 
+  </th:block>
+  
+  <!-- /headAdd(Libs&page) --> 
+	  
+	 
+	<!-- Content -->
+	<th:block layout:fragment="adminContents">   
+		 <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+              <div>전체 회원 리스트</div>
+              <button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; Add product</button>
+            </h4>
+
+		<div class="ui-bordered px-4 pt-4 mb-4">
+              <div class="form-row align-items-center">
+              	<div class="col-md mb-4">
+                <form th:action="@{/getUserSearch}" method="post">
+                  <label class="form-label">이건 검색하는거에룡 !</label>
+                  <select class="custom-select" name="sk">
+                    <option value="u_number">회원번호</option>
+                    <option value="ul_name">회원등급명</option>
+                    <option value="u.u_id">아이디</option>
+                    <option value="u_name">이름</option>
+                  </select>
+                  <input class="form-control" type="text" name="sv"><br/>
+                
+                 <!--  <div class="col-md mb-4">
+                  <label class="form-label">등록일검색</label>
+                  <input class="form-control" id="user-list-latest-activity" type="text" placeholder="Any">
+                </div> -->
+                <div class="col-md col-xl-2 mb-4">
+                  <label class="form-label d-none d-md-block">&nbsp;</label>
+                  <button class="btn btn-secondary btn-block" type="submit">검색</button>
+                 </div>
+                </form>
+                </div>
+               
+              </div>
+         </div>
+
+            <div class="card">
+              <div class="card-datatable table-responsive">
+                <div id="product-list_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+               		<div class="row">
+                		<div class="col-sm-12 col-md-6">
+                			<div class="dataTables_length" id="product-list_length">
+                				<label>보기 
+                					<select name="product-list_length" aria-controls="product-list" class="custom-select custom-select-sm form-control form-control-sm">
+                						<option value="10">10</option>
+                						<option value="25">25</option>
+                						<option value="50">50</option>
+                						<option value="100">100</option>
+                					</select> entries
+                					</label>
+                				</div>
+                			</div>
+                		
+                	</div>
+                	<div class="row">
+                	<div class="col-sm-12">
+                	<table id="product-list" class="table table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="product-list_info" style="width: 35px;">
+	                  <thead>
+	                    <tr role="row">
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">회원번호</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">아이디</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">등급명</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 34px;">이름</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">메일수신동의</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 25px;">권한명</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 25px;">대출상태</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">공공시설</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">제한일</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">연체일</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">등록일</th>
+	                    	<!-- <th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" aria-label="Sales: activate to sort column ascending" style="width: 35px;">권한제한등록일</th> -->
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;"></th>
+	                    	
+	                   </tr>
+	                   <th:block th:each="l : ${userList}">
+	                   		<tr>
+	                   			<td th:text="${l.uNumber}"></td>
+	                   			<!-- <td th:text="${l.uasLimitDate}"></td> -->
+	                   			<td th:text="${l.uId}"></td>
+	                   			<td th:text="${l.ulName}"></td>
+	                   			<td th:text="${l.uName}"></td>
+	                   			<td th:text="${l.uEmailAgree}" style="text-align:center"></td>
+	                   			<td th:text="${l.uasName}"></td>
+	                   			<td style="text-align:center">
+		                   			<span th:if="${l.uasLendLimit}  == O" th:text="대출가능" class="badge badge-outline-success" ></span>
+		                   			<span th:unless="${l.uasLendLimit} == O" th:text="대출불가" class="badge badge-outline-danger"></span>
+	                   			</td>
+	                   			<td style="text-align:center">
+	                   				<span th:if="${l.uasFacilityLimit}  == O" th:text="사용가능" class="badge badge-outline-success" ></span>
+		                   			<span th:unless="${l.uasFacilityLimit} == O" th:text="사용불가" class="badge badge-outline-danger"></span>
+	                   			</td>
+	                   			<td th:text="${l.uasLimitDate}" style="text-align:center">
+	                   			<td th:text="|${l.uOverdueDay}일|" style="text-align:center"></td>
+	                   			<td th:text="${l.uDate}"></td>
+	                   		
+	                   			<td class="text-center text-nowrap">
+	                   				<button title="" 
+	                   						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
+	                   						type="button" data-original-title="Edit">
+	                   				<a th:href="@{/adminUserUpdate(uId=${l.uId})}">
+	                   				<i class="ion ion-md-create"></i></a>
+	                   				</button>&nbsp;&nbsp;
+	                   				<button title="" 
+	                   						class="btn btn-default btn-xs icon-btn md-btn-flat dropdown-toggle hide-arrow user-tooltip" 
+	                   						type="button" 
+	                   						data-original-title="Actions" data-toggle="dropdown">
+	                   				<a th:href="@{#}">
+	                   				<i class="ion ion-ios-settings"></i>
+	                   				</button>
+	                   			</td>
+	                   		</tr>
+	                   </th:block>
+	                  </thead>
+		               
+		             	 </table>
+		           		</div>
+		          	</div>
+		            <div class="row">
+		            	<div class="col-sm-12 col-md-5">
+		            		<div class="dataTables_info" id="product-list_info" role="status" aria-live="polite">Showing 1 to 10 of 37 entries</div>
+		            	</div>
+		            	<div class="col-sm-12 col-md-7">
+		            		<div class="dataTables_paginate paging_simple_numbers" id="product-list_paginate">
+		            			<ul class="pagination">
+		            				<li class="paginate_button page-item previous disabled" id="product-list_previous">
+		            					<a href="#" aria-controls="product-list" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+		            				</li>
+		            				<li class="paginate_button page-item active">
+		            					<a href="#" aria-controls="product-list" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+		            				</li>
+		            				<li class="paginate_button page-item ">
+		            					<a href="#" aria-controls="product-list" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+		            				</li>
+		            				<li class="paginate_button page-item ">
+		            					<a href="#" aria-controls="product-list" data-dt-idx="3" tabindex="0" class="page-link">3</a>
+		            				</li>
+		            				<li class="paginate_button page-item ">
+		            					<a href="#" aria-controls="product-list" data-dt-idx="4" tabindex="0" class="page-link">4</a>
+		            				</li>
+		            				<li class="paginate_button page-item next" id="product-list_next">
+		            					<a href="#" aria-controls="product-list" data-dt-idx="5" tabindex="0" class="page-link">Next</a>
+		            				</li>
+		            			</ul>
+		            		</div>
+		            	</div>
+		            </div>
+		           </div>
+              </div>
+            </div>
+	</th:block>
+	<!-- / Content -->
+  <!-- / scripts -->
+	  <th:block layout:fragment="pageScript">
+	  <!-- addLibs -->
+	  <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
+	  <script th:src="@{/admin/vendor/libs/numeral/numeral.js}"></script>
+	  <script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
+		
+	  <!-- addDemo -->
+ 
+	  </th:block>
+   <!-- / scripts -->
+	          
+</html>

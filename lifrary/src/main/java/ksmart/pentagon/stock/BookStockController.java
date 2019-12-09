@@ -1,6 +1,8 @@
 package ksmart.pentagon.stock;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /*
@@ -13,9 +15,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class BookStockController {
 	
+	@Autowired private BookStockService bookStockService;
+	
 	// (어드민) 소장도서 리스트
 	@GetMapping("/admin/stockSearchList")
-    public String stockSearchList() {
+    public String stockSearchList(Model model) {
+		
+		model.addAttribute("stockList", bookStockService.getStockList());
+		
     	return "/adminpage/bookStock/stockSearchList";
     }
 
