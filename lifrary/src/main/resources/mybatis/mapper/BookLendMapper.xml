@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.booklend.BookLendMapper">
+  
+	  <resultMap type="ksmart.pentagon.vo.BookLend" id="booklLend">
+	    <result column="bl_code" property="blCode"/>
+	    <result column="l_code" property="lCode"/>
+	    <result column="bl_id" property="blId"/>
+	    <result column="bs_code" property="bsCode"/>
+	    <result column="bi_isbn" property="biIsbn"/>
+	    <result column="bi_name" property="biName"/>
+	    <result column="bi_img" property="biImg"/>
+	    <result column="bl_lend_date" property="blLendDate"/>
+	    <result column="bl_extension_date" property="blExtensionDate"/>
+	    <result column="bl_schedule_date" property="blScheduleDate"/>
+	    <result column="bl_return_date" property="blReturnDate"/>
+	    <result column="bl_hold_date" property="blHoldDate"/>
+	    <result column="bl_overdue_days" property="blOverdueDays"/>
+	</resultMap>
+	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfo">
+	    <result column="bi_isbn" property="biIsbn"/>
+	    <result column="bi_name" property="biName"/>
+	    <result column="bi_year" property="biYear"/>
+	    <result column="bi_author" property="biAuthor"/>
+	    <result column="bi_publisher" property="biPublisher"/>
+	    <result column="bi_kdc" property="biKdc"/>
+	    <result column="bi_img" property="biImg"/>
+	</resultMap>
+	<resultMap type="ksmart.pentagon.vo.BookStock" id="bookStock">
+	    <result column="bs_code" property="bsCode"/>
+	    <result column="bi_isbn" property="biIsbn"/>
+	    <result column="bs_alias_mark" property="bsAliasMark"/>
+	    <result column="bs_writer_mark" property="bsWriterMark"/>
+	    <result column="bs_secondary_mark" property="bsSecondaryMark"/>
+	    <result column="bs_stock_state" property="bsStockState"/>
+	    <result column="bs_book_state" property="bsBookState"/>
+	    <result column="bs_lend_state" property="bsLendState"/>
+	    <collection property="bookinformation" resultMap="bookInfo"/>
+	</resultMap>
+	<select id="bookSearchList" resultMap="booklLend">
+		SELECT
+			 bl.bl_code
+			,bl.l_code
+			,bl.bl_id  
+			,bl.bs_code 
+			,bi.bi_isbn
+			,bi.bi_name
+			,bi.bi_img  
+			,bl.bl_lend_date
+			,bl.bl_extension_date
+			,bl.bl_schedule_date
+			,bl.bl_return_date
+			,bl.bl_overdue_days
+		FROM
+			(SELECT 
+				*
+				,DATEDIFF( bl.bl_return_date, bl.bl_schedule_date ) AS bl_overdue_days 
+			FROM  
+				book_lend AS bl) AS bl
+		INNER JOIN
+			book_stock AS bs
+		ON 
+			bl.bs_code = bs.bs_code
+		INNER JOIN
+			book_information AS bi
+		ON 
+			bs.bi_isbn = bi.bi_isbn	
+  	</select>
+  	<select id="bookInfo" parameterType="String" resultMap="bookStock">
+		 SELECT 
+			 bs.bs_code
+			,bs.bi_isbn
+			,bs.bs_alias_mark
+			,bs.bs_writer_mark
+			,bs.bs_secondary
+			,bs.bs_stock_state
+			,bs.bs_book_state
+			,bs.bs_lend_state
+			,bi.bi_name
+			,bi.bi_year
+			,bi.bi_author
+			,bi.bi_publisher
+			,bi.bi_kdc 
+		FROM
+			book_stock AS bs
+		INNER JOIN 
+			book_information AS bi
+		ON 
+			bs.bi_isbn = bi.bi_isbn
+		WHERE 
+			bs.bs_code = #{svbook}
+  	</select>
+  </mapper>
