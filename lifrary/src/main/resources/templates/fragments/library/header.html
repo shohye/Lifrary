@@ -87,63 +87,50 @@
                                     </div>
                                 </div>
                                 <div class="navbar-collapse hidden-sm hidden-xs">
-                                    
                                     <ul class="nav navbar-nav">
-                                        <!-- 검색 -->
                                         <li class="dropdown active">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">검색</a>
-                                        </li>
-                                        
-                                        <!-- 인기도서 -->
-                                        <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">인기도서</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{index-2.html}">Home</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{books-media-list-view.html}">인기도서</a></li>
-                                                <li><a th:href="@{books-media-gird-view-v1.html}">신착도서</a></li>
-                                                <li><a th:href="@{books-media-gird-view-v2.html}">사서추천도서</a></li>
+                                                <li><a th:href="@{index-2.html}">Home V1</a></li>
+                                                <li><a th:href="@{home-v2.html}">Home V2</a></li>
+                                                <li><a th:href="@{home-v3.html}">Home V3</a></li>
                                             </ul>
                                         </li>
-                                        
-                                        <!-- 프로그램 -->
                                         <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">프로그램</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{books-media-list-view.html}">Books &amp; Media</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{news-events-list-view.html}">프로그램 신청</a></li>
+                                                <li><a th:href="@{books-media-list-view.html}">Books &amp; Media List View</a></li>
+                                                <li><a th:href="@{books-media-gird-view-v1.html}">Books &amp; Media Grid View V1</a></li>
+                                                <li><a th:href="@{books-media-gird-view-v2.html}">Books &amp; Media Grid View V2</a></li>
+                                                <li><a th:href="@{books-media-detail-v1.html}">Books &amp; Media Detail V1</a></li>
+                                                <li><a th:href="@{books-media-detail-v2.html}">Books &amp; Media Detail V2</a></li>
                                             </ul>
                                         </li>
-                                        <!-- 게시판 -->
                                         <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">게시판</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{news-events-list-view.html}">News &amp; Events</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{#}">공지사항</a></li>
-                                                <li><a th:href="@{#}">문의</a></li>
-                                                <li><a th:href="@{#}">독후감</a></li>
+                                                <li><a th:href="@{news-events-list-view.html}">News &amp; Events List View</a></li>
+                                                <li><a th:href="@{news-events-detail.html}">News &amp; Events Detail</a></li>
                                             </ul>
                                         </li>
-                                        <!--  공공시설  -->
                                         <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">공공시설</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">Pages</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{#}">열람실</a></li>
-                                                <li><a th:href="@{#}">스터디룸</a></li>
-                                                <li><a th:href="@{#}">강연실</a></li>
-                                                <li><a th:href="@{#}">사물함</a></li>
+                                                <li><a th:href="@{cart.html}">Cart</a></li>
+                                                <li><a th:href="@{checkout.html}">Checkout</a></li>
+                                                <li><a th:href="@{signin.html}">Signin/Register</a></li>
+                                                <li><a th:href="@{404.html}">404/Error</a></li>
                                             </ul>
                                         </li>
-                                        <li><a th:href="@{#}">도서관 소개</a></li>
-                                        <!-- 마이페이지 -->
                                         <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">마이페이지</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{blog.html}">Blog</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{#}">내 정보</a></li>
-                                                <li><a th:href="@{#}">내 도서현황</a></li>
-                                                <li><a th:href="@{#}">북 다이어리</a></li>
-                                                <li><a th:href="@{#}">내 서재</a></li>
-                                                <li><a th:href="@{#}">내 프로그램 신청 내역</a></li>
-                                                <li><a th:href="@{#}">내 공공시설 신청 내역</a></li>
-                                                <li><a th:href="@{#}">희망도서 신청 내역</a></li>
+                                                <li><a th:href="@{blog.html}">Blog Grid View</a></li>
+                                                <li><a th:href="@{blog-detail.html}">Blog Detail</a></li>
                                             </ul>
                                         </li>
+                                        <li><a th:href="@{services.html}">Services</a></li>
+                                        <li><a th:href="@{contact.html}">Contact</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -153,62 +140,52 @@
                             <div id="mobile-menu">
                                 <ul>
                                     <li class="mobile-title">
-                                        <h4>Menu</h4>
+                                        <h4>Navigation</h4>
                                         <a th:href="@{#}" class="close"></a>
                                     </li>
-                                    <!-- 검색 -->
                                     <li>
-                                        <a th:href="@{index-2.html}">검색</a>
-                                    </li>
-                                    <!-- 인기도서 -->
-                                    <li>
-                                        <a th:href="@{#}">인기도서</a>
+                                        <a th:href="@{index-2.html}">Home</a>
                                         <ul>
-                                            <li><a th:href="@{#}">인기도서</a></li>
-                                            <li><a th:href="@{#}">신착도서</a></li>
-                                            <li><a th:href="@{#}">사서추천도서</a></li>
+                                            <li><a th:href="@{index-2.html}">Home V1</a></li>
+                                            <li><a th:href="@{home-v2.html}">Home V2</a></li>
+                                            <li><a th:href="@{home-v3.html}">Home V3</a></li>
                                         </ul>
                                     </li>
-                                     <!-- 프로그램 -->
                                     <li>
-                                        <a th:href="@{#}">프로그램</a>
+                                        <a th:href="@{books-media-list-view.html}">Books &amp; Media</a>
                                         <ul>
-                                            <li><a th:href="@{#}">프로그램 신청</a></li>
+                                            <li><a th:href="@{books-media-list-view.html}">Books &amp; Media List View</a></li>
+                                            <li><a th:href="@{books-media-gird-view-v1.html}">Books &amp; Media Grid View V1</a></li>
+                                            <li><a th:href="@{books-media-gird-view-v2.html}">Books &amp; Media Grid View V2</a></li>
+                                            <li><a th:href="@{books-media-detail-v1.html}">Books &amp; Media Detail V1</a></li>
+                                            <li><a th:href="@{books-media-detail-v2.html}">Books &amp; Media Detail V2</a></li>
                                         </ul>
                                     </li>
-                                     <!-- 게시판 -->
                                     <li>
-                                        <a th:href="@{#}">게시판</a>
+                                        <a th:href="@{news-events-list-view.html}">News &amp; Events</a>
                                         <ul>
-                                            <li><a th:href="@{#}">공지사항</a></li>
-                                            <li><a th:href="@{#}">문의</a></li>
-                                            <li><a th:href="@{#}">독후감</a></li>
+                                            <li><a th:href="@{news-events-list-view.html}">News &amp; Events List View</a></li>
+                                            <li><a th:href="@{news-events-detail.html}">News &amp; Events Detail</a></li>
                                         </ul>
                                     </li>
-                                    <!-- 공공시설 -->
                                     <li>
-                                        <a th:href="@{#}">공공시설</a>
+                                        <a th:href="@{#}">Pages</a>
                                         <ul>
-                                            <li><a th:href="@{#}">열람실</a></li>
-                                            <li><a th:href="@{#}">스터디룸</a></li>
-                                            <li><a th:href="@{#}">강연실</a></li>
-                                            <li><a th:href="@{#}">사물함</a></li>
+                                            <li><a th:href="@{cart.html}">Cart</a></li>
+                                            <li><a th:href="@{checkout.html}">Checkout</a></li>
+                                            <li><a th:href="@{signin.html}">Signin/Register</a></li>
+                                            <li><a th:href="@{404.html}">404/Error</a></li>
                                         </ul>
                                     </li>
-                                    <!-- 도서관 소개 -->
-                                    <li><a th:href="@{#}">도서관 소개</a></li>
                                     <li>
-                                        <a th:href="@{#}">마이페이지</a>
+                                        <a th:href="@{blog.html}">Blog</a>
                                         <ul>
-                                            <li><a th:href="@{#}">내 정보</a></li>
-                                            <li><a th:href="@{#}">내 도서현황</a></li>
-                                            <li><a th:href="@{#}">북 다이어리</a></li>
-                                            <li><a th:href="@{#}">내 서재</a></li>
-                                            <li><a th:href="@{#}">내 프로그램 신청 내역</a></li>
-                                            <li><a th:href="@{#}">내 공공시설 신청 내역</a></li>
-                                            <li><a th:href="@{#}">희망도서 신청 내역</a></li>
+                                            <li><a th:href="@{blog.html}">Blog Grid View</a></li>
+                                            <li><a th:href="@{blog-detail.html}">Blog Detail</a></li>
                                         </ul>
                                     </li>
+                                    <li><a th:href="@{services.html}">Services</a></li>
+                                    <li><a th:href="@{contact.html}">Contact</a></li>
                                 </ul>
                             </div>
                         </div>

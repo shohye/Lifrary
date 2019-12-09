@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+	  
+<!-- headAdd(Libs&page) -->
+  
+	  <th:block layout:fragment="adminHeadAdd">
+	  
+	  <!-- addLibs -->
+	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/select.dataTables.min.css}">
+	  <!-- addPage -->
+	  
+	    <script th:src="@{/admin/vendor/js/jquery-3.3.1.min.js}"></script>
+	    <script th:src="@{/admin/vendor/js/jquery.dataTables.js}"></script>
+	    <script th:src="@{/admin/vendor/js/dataTables.responsive.min.js}"></script>
+	    <script th:src="@{/admin/vendor/js/dataTables.buttons.min.js}"></script>
+		<script th:src="@{/admin/vendor/js/buttons.html5.min.js}"></script>
+		<script th:src="@{/admin/js/tables_datatables_order.js}"></script>
+	   
+	     
+	 
+	  </th:block>
+	  
+<!-- /headAdd(Libs&page) --> 
+ 
+ 
+  <!-- Content -->
+         <th:block layout:fragment="adminContents">
+         
+            <!-- DataTable within card -->
+
+            <div class="card">
+              <h3 class="card-header">
+                	주문 도서 리스트
+              </h3>
+              <div class="card-datatable table-responsive">
+                <table id="myTable" class="datatables-demo table table-striped table-bordered">
+                
+               
+                
+                  <thead>
+                    <tr>
+                      <th>ISBN</th>
+                      <th>도서명</th>
+                      <th>저자명</th>
+                      <th>발행자</th>
+                      <th>발행년도</th>
+                      <th>주문업체명</th>
+                      <th>주문권수</th>
+                      <th>결제가격</th>
+                      <th>주문상태</th>
+                      <th>주문등록일</th>                 
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+				    <tr th:each="data : ${#}">
+				      <td th:text="${#}"></td>
+				      <td th:text="${#}"></td>
+				      <td th:text="${#}"></td>
+				      <td th:text="${#}"></td>
+				      <td th:text="${#}"></td>
+				      <td th:text="${#}"></td>
+				      <td th:text="${#}"></td>
+				      <td th:text="${#}"></td>
+				      <td th:text="${#}"></td>
+				      <td th:text="${#}"></td>
+				    </tr>
+				  </tbody> 
+                </table>
+              </div>
+            </div>
+                        
+
+          </th:block>
+          
+          <!-- / Content -->
+         
+          <!-- script -->
+          <th:block layout:fragment="pageScript">
+
+		  <!-- addLibs -->
+		    <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script> 
+		    <script th:src="@{/admin/vendor/libs/datatables/dataTables.select.min.js}"></script>
+		
+		  <!-- addDemo -->
+		    
+		  </th:block>
+  		  <!-- /script -->
+  		  
+  		  
+          
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+    
+    <th:block layout:fragment="customContents">
+       
+        <!-- Start: Slider Section -->
+        	<div th:replace="fragments/library/sliderSection :: sliderSectionFragment"></div>
+        <!-- End: Slider Section -->
+        
+        
+        <!-- Start: Search Section -->
+        	<section th:replace="fragments/library/searchSection :: searchSectionFragment"></section>
+        <!-- End: Search Section -->
+        
+        
+        <!-- Start: Welcome Section -->
+        	<section th:replace="fragments/library/welcomeSection :: welcomeSectionFragment"></section>
+        <!-- End: Welcome Section -->
+        
+        
+        <!-- Start: Category Filter -->
+        	<section th:replace="fragments/library/categoryFilter :: categoryFilterFragment"></section>
+        <!-- End: Category Filter -->       
+               
+               
+        <!-- Start: Features -->
+        	<section th:replace="fragments/library/features :: featuresFragments"></section>
+        <!-- End: Features -->
+       
+    </th:block>
+</html>

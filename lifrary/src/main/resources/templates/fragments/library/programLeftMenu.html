@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+				<div class="col-md-3 col-md-pull-9" th:fragment="programLeftMenuFragment">
+                                    <aside id="secondary" class="sidebar widget-area">
+                                        <div class="widget widget_search">
+                                            <h4 class="widget-title" data-control>Search News</h4>
+                                            <form method="get" action="#." class="form-horizontal search-form">
+                                                <input class="form-control" id="inputEmail" placeholder="Search Here" value="" name="s" type="text">
+                                                <button type="submit"><i class="fa fa-search"></i></button>
+                                            </form>
+                                        </div>
+                                        <div class="widget widget_related_search">
+                                            <h4 class="widget-title" data-control>Related Searches</h4>
+                                            <div class="widget_categories">
+                                                <ul>
+                                                    <li><a th:href="@{#}">Love stories <span>(18)</span></a></li>
+                                                    <li><a th:href="@{#}">Texas <span>(04)</span></a></li>
+                                                    <li><a th:href="@{#}">Rich people <span>(03)</span></a></li>
+                                                    <li><a th:href="@{#}">Humorous stories <span>(02)</span></a></li>
+                                                    <li><a th:href="@{#}">Widows <span>(02)</span></a></li>
+                                                    <li><a th:href="@{#}">Women <span>(11)</span></a></li>
+                                                    <li><a th:href="@{#}">Babysitters <span>(25)</span></a></li>
+                                                    <li><a th:href="@{#}">Law firms <span>(09)</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="widget widget_recent_entries">
+                                            <h4 class="widget-title" data-control>Recent News</h4>
+                                            <ul>
+                                                <li>
+                                                    <figure>
+                                                        <img th:src="@{library/images/order-item-04.jpg}" alt="product" />
+                                                    </figure>
+                                                    <a th:href="@{#}">It uses a dictionary</a>
+                                                    <span><i class="fa fa-calendar"></i> &nbsp; July 25, 2016</span>
+                                                    <span><i class="fa fa-clock-o"></i> &nbsp; 10:15 AM - 10:15 PM</span>
+                                                    <span><i class="fa fa-map-marker"></i> &nbsp; New York, USA</span>
+                                                    <div class="clearfix"></div>
+                                                </li>
+                                                <li>
+                                                    <figure>
+                                                        <img th:src="@{library/images/order-item-05.jpg}" alt="product" />
+                                                    </figure>
+                                                    <a th:href="@{#}">It uses a dictionary</a>
+                                                    <span><i class="fa fa-calendar"></i> &nbsp; July 25, 2016</span>
+                                                    <span><i class="fa fa-clock-o"></i> &nbsp; 10:15 AM - 10:15 PM</span>
+                                                    <span><i class="fa fa-map-marker"></i> &nbsp; New York, USA</span>
+                                                    <div class="clearfix"></div>
+                                                </li>
+                                                <li>
+                                                    <figure>
+                                                        <img th:src="@{library/images/order-item-06.jpg}" alt="product" />
+                                                    </figure>
+                                                    <a th:href="@{#}">It uses a dictionary</a>
+                                                    <span><i class="fa fa-calendar"></i> &nbsp; July 25, 2016</span>
+                                                    <span><i class="fa fa-clock-o"></i> &nbsp; 10:15 AM - 10:15 PM</span>
+                                                    <span><i class="fa fa-map-marker"></i> &nbsp; New York, USA</span>
+                                                    <div class="clearfix"></div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="widget widget_archives">
+                                            <h4 class="widget-title" data-control>News Archives</h4>
+                                            <form action="http://libraria.demo.presstigers.com/index.html" method="get">
+                                                <div class="form-group">
+                                                    <select name="month" id="month" class="form-control">
+                                                        <option>Select Month</option>
+                                                        <option>Month 01</option>
+                                                        <option>Month 02</option>
+                                                        <option>Month 03</option>
+                                                        <option>Month 04</option>
+                                                        <option>Month 05</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="widget widget_tag_cloud">
+                                            <h4 class="widget-title" data-control>News Tags</h4>
+                                            <ul>
+                                                <li><a th:href="@{#}">Fashion</a></li>
+                                                <li><a th:href="@{#}">Life Style</a></li>
+                                                <li><a th:href="@{#}">Beauty</a></li>
+                                                <li><a th:href="@{#}">Music</a></li>
+                                                <li><a th:href="@{#}">Health</a></li>
+                                                <li><a th:href="@{#}">Travel</a></li>
+                                                <li><a th:href="@{#}">Library</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="widget twitter-widget">
+                                            <h3 class="footer-widget-title">Recent Tweets</h3>
+                                            <span class="underline left"></span>
+                                            <div id="twitter-feed-sidebar">
+                                                <ul>
+                                                    <li>
+                                                        <p><a th:href="@{#}">@TemplateLibraria</a> Sed ut perspiciatis unde omnis iste natus error sit voluptatem. <a th:href="@{#}">template-libraria.com</a></p>
+                                                    </li>
+                                                    <li>
+                                                        <p><a th:href="@{#}">@TemplateLibraria</a> Sed ut perspiciatis unde omnis iste natus error sit voluptatem. <a th:href="@{#}">template-libraria.com</a></p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </aside>
+                                </div>
+</html>
