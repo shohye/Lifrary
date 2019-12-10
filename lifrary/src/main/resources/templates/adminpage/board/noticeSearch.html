@@ -6,102 +6,137 @@
 
 <!-- Content -->
 <th:block layout:fragment="adminContents">
+	
 
-	<script type="text/javascript">
+	<style type="text/css">
+#text {
+	-moz-appearance: textfield-multiline;
+	-webkit-appearance: textarea;
+	border: 1px solid gray;
+	font: medium -moz-fixed;
+	font: -webkit-small-control;
+	overflow: auto;
+	padding: 2px;
+	resize: both;
+}
+
+button {
+	-moz-box-shadow: 0px 1px 0px 0px #fff6af;
+	-webkit-box-shadow: 0px 1px 0px 0px #fff6af;
+	box-shadow: 0px 1px 0px 0px #fff6af;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffec64
+		), color-stop(1, #ffab23));
+	background: -moz-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background: -webkit-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background: -o-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background: -ms-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64',
+		endColorstr='#ffab23', GradientType=0);
+	background-color: #ffec64;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 10px;
+	border: 1px solid #ffaa22;
+	display: inline-block;
+	cursor: pointer;
+	color: #333333;
+	font-family: Arial;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 5px 10px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #ffee66;
+}
+</style>
+	<script src="http://code.jquery.com/jquery-3.2.1.min.js">
+		
+	</script>
+	<script>
+		document.execCommand('styleWithCSS', false, true);
+		document.execCommand('insertBrOnReturn', false, true);
 		$(document).ready(function() {
-			$("#bsbtn").click(function(){
+			$('#nsbtn').click(function(){
+				var boardContent1 = $('#boardContent').html();
+				var boardContent = $('input[name="boardContent"]').val(boardContent1);
+				console.log(boardContent.val());
 				
-			var aa = $("#inputTest").text();
-			console.log(aa.trim());
-				
-			})
-		})
-		function callFormatting1(sFormatString) {
-			document.execCommand(sFormatString); /* 글씨 굵게 */
-		}
-		function callFormatting2(sFormatString) {
-			document.execCommand(sFormatString) /* --> 이탤릭 */
-		}
-		function callFormatting3(sFormatString) {
-			document.execCommand(sFormatString) /* --> 밑줄 */
-		}
-		function callFormatting4(sFormatString) {
-			document.execCommand(sFormatString) /* -->중간줄 */
-		}
-		function callFormatting5(sFormatString) {
-			document.execCommand(sFormatString) /* -->글번호 매기기 */
-		}
-		function callFormatting6(sFormatString) {
-			document.execCommand(sFormatString) /* -->왼쪽정렬 */
-		}
-		function callFormatting7(sFormatString) {
-			document.execCommand(sFormatString) /* -->가운데정렬 */
-		}
-		function callFormatting8(sFormatString) {
-			document.execCommand(sFormatString) /* -->오른쪽정렬 */
-		}
-		function doInit() {
-			for (i = 0; i < document.all.length; i++) {
-				document.all(i).unselectable = "on";
-				oDiv.unselectable = "off";
-				oDiv.innerHTML = "";
-				oDiv.focus();
-			}
-		}
+			});
+			$('#text').focus();
+			$('.noteButton').click(function() {
+				document.execCommand($(this).attr('id'), false, true);
+			});
+			
+			$('select').change(function() {
+				document.execCommand($(this).attr('id'), false, $(this).val());
+			});
+		});
 	</script>
 	<h4 class="font-weight-bold py-3 mb-4">
 		<span class="text-muted font-weight-light"></span>공지사항 등록
 	</h4>
-
 	<div class="card mb-4">
+		<div>
 			<div>
-			<div>
-				<div id="inputTest" type="text" style="width: 80%; margin-right: 200px;" class="form-control"CONTENTEDITABLE>
-				</div>
+				<form th:action="@{/adminNoticeSearch}" method="Post">
+				<h4 style="padding-left: 40%; padding-top: 10px;">제목 입력</h4>
+				<input type="text" name="boardTitle" class="form-control"
+					placeholder="제목을 입력해주세요.">
 			</div>
-			<table border="2">
-				<div class="card-body">
-				<button style="width: 30px; height: 30px;"
-					onclick="callFormatting1('bold')">
-					<i class="fa fa-bold"></i>
-				</button>
-				<button style="width: 30px; height: 30px;"
-					onclick="callFormatting2('Italic')">
-					<i class="fa fa-italic"></i>
-				</button>
-				<button style="width: 30px; height: 30px;"
-					onclick="callFormatting3('Underline')">
-					<i class="fa fa-underline d-block"></i>
-				</button>
-				<button style="width: 30px; height: 30px;"
-					onclick="callFormatting4('StrikeThrough')">
-					<img th:src="@{/admin/img/avatars/10-3.png}">
-				</button>
-				<button style="width: 30px; height: 30px;"
-					onclick="callFormatting5('insertorderedList')">
-					<i class="fas fa-list-ol d-block"></i>
-				</button>
-				<button style="width: 30px; height: 30px;"
-					onclick="callFormatting6('justifyleft')">
-					<i class="fa fa-align-left d-block"></i>
-				</button>
-				<button style="width: 30px; height: 30px;"
-					onclick="callFormatting7('justifycenter')">
-					<i class="fa fa-align-justify d-block"></i>
-				</button>
-				<button style="width: 30px; height: 30px;"
-					onclick="callFormatting8('justifyright')">
-					<i class="fa fa-align-right d-block"></i>
-				</button>
-			</table>
-			
-			
-			<span>내용</span><br>
-			<div id="" class="form-control" rows="30"
-				style="height: 400px;" CONTENTEDITABLE></div>
-			<button style="width: 100%" value="버튼" id="bsbtn"
-				class="btn btn-primary">공지사항 등록</button>
 		</div>
+		<div style="background-color: #; padding-top: 10px;">
+			<button class="btn btn-secondary noteButton" id="selectAll">전체선택</button>
+			<button class="btn btn-secondary noteButton" id="bold">굵게</button>
+			<button class="btn btn-secondary noteButton" id="italic">기울임</button>
+			<button class="btn btn-secondary noteButton" id="underLine">밑줄</button>
+			<button class="btn btn-secondary noteButton" id="justifyLeft">왼쪽정렬</button>
+			<button class="btn btn-secondary noteButton" id="justifyCenter">가운데정렬</button>
+			<button class="btn btn-secondary noteButton" id="justifyRight">오른쪽정렬</button>
+
+			<select id="fontName" style="height: 40px; width: 100px;">
+				<option value="글꼴선택">글꼴 선택</option>
+				<option value="돋움">돋움</option>
+				<option value="굴림">굴림</option>
+				<option value="궁서">궁서</option>
+				<option value="바탕">바탕</option>
+				<option value="맑은 고딕">맑은 고딕</option>
+			</select> <select id="fontSize" style="height: 40px; width: 100px;">
+				<option value="">글자 크기</option>
+				<option value="1">4px</option>
+				<option value="2">8px</option>
+				<option value="3">10px</option>
+				<option value="4">12px</option>
+				<option value="5">16px</option>
+				<option value="6">20px</option>
+				<option value="7">30px</option>
+			</select> <select id="foreColor" style="height: 40px; width: 100px;">
+				<option value="">글자 색깔</option>
+				<option value="#ffffff">흰색</option>
+				<option value="#f00">빨강</option>
+				<option value="#00f">파랑</option>
+				<option value="#0f0">초록</option>
+				<option value="#ffff00">노랑</option>
+				<option value="#000">검정</option>
+			</select> <select id="hiliteColor" style="height: 40px; width: 100px;">
+				<option value="">글자 배경색</option>
+				<option value="#ffffff">흰색</option>
+				<option value="#f00">빨강</option>
+				<option value="#00f">파랑</option>
+				<option value="#0f0">초록</option>
+				<option value="#ffff00">노랑</option>
+				<option value="#000">검정</option>
+			</select>
+		</div>
+		<div style="padding-left: 40%; padding-top: 10px;">
+			<h4>내용 입력</h4>
+		</div>
+		<div id="boardContent" class="form-control" rows="30" style="height: 400px;"
+			CONTENTEDITABLE></div>
+		<input type="hidden" name="boardContent">
+		<input>
+		<input style="width: 100%" type="submit" id="nsbtn" value="공지사항 등록" class="btn btn-primary">
+		</form>
+	</div>
 	</div>
 </th:block>
 

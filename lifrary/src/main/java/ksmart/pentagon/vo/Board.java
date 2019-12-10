@@ -1,6 +1,6 @@
 package ksmart.pentagon.vo;
 
-public class board {
+public class Board {
 	private String boardCode;		//게시글내용코드
 	private String lCode;			//도서관코드
 	private String uId;				//아이디
