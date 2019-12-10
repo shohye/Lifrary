@@ -55,47 +55,48 @@
 
 	<div class="card mb-4">
 			<div>
-				<div id="inputTest" type="text" style="width: 80%;" class="form-control"
-					placeholder="공지사항 제목을 입력해주세요."CONTENTEDITABLE>
+			<div>
+				<div id="inputTest" type="text" style="width: 80%; margin-right: 200px;" class="form-control"CONTENTEDITABLE>
+				</div>
 			</div>
 			<table border="2">
-			<div class="card-body">
-			<button style="width: 30px; height: 30px;"
-				onclick="callFormatting1('bold')">
-				<i class="fa fa-bold"></i>
-			</button>
-			<button style="width: 30px; height: 30px;"
-				onclick="callFormatting2('Italic')">
-				<i class="fa fa-italic"></i>
-			</button>
-			<button style="width: 30px; height: 30px;"
-				onclick="callFormatting3('Underline')">
-				<i class="fa fa-underline d-block"></i>
-			</button>
-			<button style="width: 30px; height: 30px;"
-				onclick="callFormatting4('StrikeThrough')">
-				<img th:src="@{/admin/img/avatars/10-3.png}">
-			</button>
-			<button style="width: 30px; height: 30px;"
-				onclick="callFormatting5('insertorderedList')">
-				<i class="fas fa-list-ol d-block"></i>
-			</button>
-			<button style="width: 30px; height: 30px;"
-				onclick="callFormatting6('justifyleft')">
-				<i class="fa fa-align-left d-block"></i>
-			</button>
-			<button style="width: 30px; height: 30px;"
-				onclick="callFormatting7('justifycenter')">
-				<i class="fa fa-align-justify d-block"></i>
-			</button>
-			<button style="width: 30px; height: 30px;"
-				onclick="callFormatting8('justifyright')">
-				<i class="fa fa-align-right d-block"></i>
-			</button>
+				<div class="card-body">
+				<button style="width: 30px; height: 30px;"
+					onclick="callFormatting1('bold')">
+					<i class="fa fa-bold"></i>
+				</button>
+				<button style="width: 30px; height: 30px;"
+					onclick="callFormatting2('Italic')">
+					<i class="fa fa-italic"></i>
+				</button>
+				<button style="width: 30px; height: 30px;"
+					onclick="callFormatting3('Underline')">
+					<i class="fa fa-underline d-block"></i>
+				</button>
+				<button style="width: 30px; height: 30px;"
+					onclick="callFormatting4('StrikeThrough')">
+					<img th:src="@{/admin/img/avatars/10-3.png}">
+				</button>
+				<button style="width: 30px; height: 30px;"
+					onclick="callFormatting5('insertorderedList')">
+					<i class="fas fa-list-ol d-block"></i>
+				</button>
+				<button style="width: 30px; height: 30px;"
+					onclick="callFormatting6('justifyleft')">
+					<i class="fa fa-align-left d-block"></i>
+				</button>
+				<button style="width: 30px; height: 30px;"
+					onclick="callFormatting7('justifycenter')">
+					<i class="fa fa-align-justify d-block"></i>
+				</button>
+				<button style="width: 30px; height: 30px;"
+					onclick="callFormatting8('justifyright')">
+					<i class="fa fa-align-right d-block"></i>
+				</button>
 			</table>
 			
 			
-			<span>내용</span>
+			<span>내용</span><br>
 			<div id="" class="form-control" rows="30"
 				style="height: 400px;" CONTENTEDITABLE></div>
 			<button style="width: 100%" value="버튼" id="bsbtn"
