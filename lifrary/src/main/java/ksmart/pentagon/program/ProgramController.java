@@ -26,7 +26,7 @@ public class ProgramController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/programSearchList")
+	@GetMapping("/lifraryProgramSearchList")
 	public String programListView(Model model) {
 			model.addAttribute("menu", "프로그램 리스트");
 			model.addAttribute("programList", programService.getProgramList());					
@@ -39,7 +39,7 @@ public class ProgramController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/programDetail")
+	@GetMapping("/lifraryProgramDetail")
 	public String programDetail(@RequestParam(value = "pmCode")String pmCode, Model model) {
 		
 		model.addAttribute("menu", "프로그램 상세보기");
@@ -54,7 +54,7 @@ public class ProgramController {
 	 * 
 	 * @return
 	 */
-	@GetMapping("/programApply")
+	@GetMapping("/lifraryProgramApply")
 	public String programApply(@RequestParam(value = "pmCode")String pmCode, 
 							   @RequestParam(value = "pmName")String pmName, 
 							   Model model) {
@@ -71,7 +71,7 @@ public class ProgramController {
 	 * @param pa
 	 * @return
 	 */
-	@PostMapping("/programApply")
+	@PostMapping("/lifraryProgramApply")
 	public String programApply(ProgramApply pa) {
 	System.out.println(pa + " <== pa");
 		programService.insertProgram(pa);

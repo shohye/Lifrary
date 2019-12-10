@@ -31,7 +31,7 @@ public class LibraryController {
 	 * @author 김상협
 	 * @date 19/12/05
 	 */	
-	@GetMapping("/login")
+	@GetMapping("/lifraryLogin")
 	public String login() {
 		
 		return "librarypage/user/login";
@@ -45,7 +45,7 @@ public class LibraryController {
 	 * @param model
 	 * @return
 	 */
-	@PostMapping("/login")
+	@PostMapping("/lifraryLogin")
 	public String login(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw, HttpSession session, Model model) {
 		System.out.println(uId + " <== uId");
 		System.out.println(uPw + " <== uPw");
@@ -63,7 +63,7 @@ public class LibraryController {
 		session.setAttribute("SID", user.getuId());
 		session.setAttribute("SNAME", user.getuName());
 		session.setAttribute("SDIV", user.getuDivision());
-		
+		//SLIB  <= 도서관 코드 세션추가할것.
 		
 		return "redirect:/";
 	}
@@ -72,7 +72,7 @@ public class LibraryController {
 	 * @param session
 	 * @return
 	 */
-	@GetMapping("/logout")
+	@GetMapping("/lifraryLogout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
