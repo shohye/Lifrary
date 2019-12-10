@@ -10,6 +10,15 @@ public class BookInformation {
 	private String biKdc;
 	private String biImg;
 	private String biDate;
+	private String biDtail;
+	
+	
+	public String getBiDtail() {
+		return biDtail;
+	}
+	public void setBiDtail(String biDtail) {
+		this.biDtail = biDtail;
+	}
 	public String getBiIsbn() {
 		return biIsbn;
 	}

@@ -24,18 +24,7 @@ $(document).ready(function () {
         },*/
         responsive: true,
         orderMulti: true,
-        order : [[1, 'desc']],
-        columns: [
-            {"data": "bi_isbn"},
-            {"data": "bi_name"},
-            {"data": "bi_author"}, 
-            {"data": "bi_publisher"}, 
-            {"data": "bi_year"}, 
-            {"data": "bp_price"},
-            {"data": "bp_book_num"},
-            {"data": "bp_additional"},
-            {"data": "bp_date"}
-        ],
+        
         "language": {
             "emptyTable": "데이터가 없어요.",
             "lengthMenu": "페이지당 _MENU_ 개씩 보기",
@@ -62,7 +51,7 @@ $(document).ready(function () {
 		}]
     });
 
-    /* Column별 검색기능 추가 */
+    /* Column별 검색기능 추가 
     $('#myTable_filter').prepend('<select id="select"></select>');
     $('#myTable > thead > tr').children().each(function (indexInArray, valueOfElement) { 
         $('#select').append('<option>'+valueOfElement.innerHTML+'</option>');
@@ -71,7 +60,7 @@ $(document).ready(function () {
     $('.dataTables_filter input').unbind().bind('keyup', function () {
         var colIndex = document.querySelector('#select').selectedIndex;
         table.column(colIndex).search(this.value).draw();
-    });
+    });*/
 
     /* 날짜검색 이벤트 리바인딩 */
     $('#myTable_filter').prepend('<input type="text" id="toDate" placeholder="yyyy-MM-dd"> ');

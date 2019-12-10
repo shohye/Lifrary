@@ -1,9 +1,13 @@
 package ksmart.pentagon.stock;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /*
  * @file   BookStockController.java
@@ -25,6 +29,33 @@ public class BookStockController {
 		
     	return "/adminpage/bookStock/stockSearchList";
     }
+	
+	// (어드민) 소장도서 리스트
+		@GetMapping("/admin/stockDetail")
+	    public String stockDetail(Model model , @RequestParam(value="bsCode",required=false) String bsCode) {
+			
+		    if(bsCode == null) {
+		    	return "redirect:/admin/stockSearchList";
+		    }
+			model.addAttribute("stockDetail",bookStockService.getStockdetail(bsCode));
+			
+	    	return "/adminpage/bookStock/stockDetail";
+	    }
+		
+	// (어드민) 소장도서 리스트 수정 화면
+		@GetMapping("/admin/stockDetailUpdate")
+	    public String stockDetailUpdate(Model model , @RequestParam(value="bsCode",required=false) String bsCode) {
+			if(bsCode == null) {
+				return "redirect:/admin/stockSearchList";
+		    }  
+			model.addAttribute("stockDetail",bookStockService.getStockdetail(bsCode));
+			
+	    	return "/adminpage/bookStock/stockDetailUpdate";
+	    }
+		
+		
+		
+		
 
     // (도서관) 검색후 결과 도서 리스트
     @GetMapping("/library/bookDataSearchList")

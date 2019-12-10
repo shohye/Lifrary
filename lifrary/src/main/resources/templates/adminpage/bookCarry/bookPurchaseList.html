@@ -43,12 +43,12 @@
                 
                   <thead>
                     <tr>
-                      <th>ISBN</th>
+                      <th data-orderable="false">ISBN</th>
                       <th>도서명</th>
                       <th>저자명</th>
                       <th>발행자</th>
                       <th>발행년도</th>
-                      <th>가격</th>
+                      <th>결제가격</th>
                       <th>구매예정권수</th>
                       <th data-orderable="false">추가사항</th>
                       <th>등록일</th>                     
@@ -56,16 +56,16 @@
                   </thead>
                   
                   <tbody>
-				    <tr th:each="data : ${#}">
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
+				    <tr th:each="pl : ${purchaseList}">
+				      <td th:text="${pl.bookInformation.biIsbn}"></td>
+				      <td th:text="${pl.bookInformation.biName}"></td>
+				      <td th:text="${pl.bookInformation.biAuthor}"></td>
+				      <td th:text="${pl.bookInformation.biPublisher}"></td>
+				      <td th:text="${pl.bookInformation.biYear}"></td>
+				      <td th:text="${pl.bpPrice}"></td>
+				      <td th:text="${pl.bpBookNum}"></td>
+				      <td th:text="${pl.bpAdditional}"></td>
+				      <td th:text="${pl.bpDate}"></td>
 				    </tr>
 				  </tbody> 
                 </table>

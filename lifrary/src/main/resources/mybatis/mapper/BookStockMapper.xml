@@ -12,6 +12,7 @@
 	    <result column="bi_publisher" property="biPublisher"/>
 	    <result column="bi_kdc" property="biKdc"/>
 	    <result column="bi_img" property="biImg"/>
+	    <result column="bi_detail" property="biDtail"/>
 	</resultMap>
 	
 	<resultMap type="ksmart.pentagon.vo.BookCate" id="bookCate">
@@ -24,6 +25,7 @@
 	
 	<resultMap type="ksmart.pentagon.vo.BookStock" id="bookStock">
 	    <result column="bs_code" property="bsCode"/>
+	    <result column="u_id" property="uId"/>
 	    <result column="bi_isbn" property="biIsbn"/>
 	    <result column="bcl_code" property="bclCode"/>
 	    <result column="bcm_code" property="bcmCode"/>
@@ -34,10 +36,10 @@
 	    <result column="bs_stock_state" property="bsStockState"/>
 	    <result column="bs_book_state" property="bsBookState"/>
 	    <result column="bs_lend_state" property="bsLendState"/>
-	     <result column="bs_carry_route" property="bsCarryRoute"/>
+	    <result column="bs_carry_route" property="bsCarryRoute"/>
 	    <result column="bs_date" property="bsDate"/>
 	    
-	    <collection property="bookinformation" resultMap="bookInfo"/>
+	    <collection property="bookInformation" resultMap="bookInfo"/>
 	    <collection property="bookCate" resultMap="bookCate"/>
 	</resultMap>
 	
@@ -48,21 +50,51 @@
 			, bi.bi_name
 			, bi.bi_isbn
 			, bi.bi_kdc
-			, bcl.bcl_name
-			, bcm.bcm_name
 			, bs_alias_mark
 			, bs_writer_mark
 			, bs_secondary_mark
 			, bs.bs_book_state
 			, bs.bs_carry_route
 			, bs.bs_date
+			, bs.bs_lend_state
+		From  book_stock  bs 
+		left JOIN book_information  bi ON bs.bi_isbn = bi.bi_isbn
+		where
+			bs.bs_delete_id IS NULL
+	</select>
+	
+	<select id="getStockdetail" resultMap="bookStock" parameterType="String">
+		SELECT 
+			  bs.bs_code
+			, bs.u_id
+			, bi.bi_img
+			, bi.bi_name
+			, bi.bi_isbn
+			, bi.bi_year
+			, bi.bi_author
+			, bi.bi_publisher
+			, bi.bi_kdc
+			, bi.bi_detail
+			, bcl.bcl_name
+			, bcm.bcm_name
+			, bs_alias_mark
+			, bs_writer_mark
+			, bs_secondary_mark
+			, bs.bs_total_page
+			, bs.bs_book_state
+			, bs.bs_lend_state
+			, bs.bs_carry_route
+			, bs.bs_date
+			
 		From  book_stock  bs 
 		left JOIN book_information  bi ON bs.bi_isbn = bi.bi_isbn
 		left JOIN book_cate_large bcl ON bs.bcl_code = bcl.bcl_code
 		left JOIN book_cate_medium bcm ON bs.bcm_code = bcm.bcm_code
 		where
-			bs.bs_delete_id IS NULL
+			bs.bs_code=#{bsCode}
+		 
 	</select>
+	
 	
 	
 	

@@ -66,7 +66,7 @@
                       <th>대출가능상태</th>
                       <th>반입구</th>
                       <th>등록일자</th>
-                      <th>상세</th>
+                      <th>상세</th>              
                     </tr>
                   </thead>
                   <tbody>
@@ -74,18 +74,21 @@
 	                    <td class="align-middle" th:text="${l.bsCode}"></td>
 	                    <td style="min-width: 170px;">
 			               	 	<div class="media align-items-center">
-			               	 		<img class="ui-w-40 d-block" th:src="${l.bookinformation.biImg}" alt="">
-			               	 		<span class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(l.bookinformation.biName,10)}"></span>
+			               	 		<img class="ui-w-40 d-block" th:src="${l.bookInformation.biImg}" alt="">
+			               	 		<span class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(l.bookInformation.biName,20)}"></span>
 			               	 	</div>
 			            </td>
 	                    <td class="align-middle" th:text="${l.bsCallNum}"></td> 
-	                    <td class="align-middle" th:text="${l.bookinformation.biIsbn}"></td>
+	                    <td class="align-middle" th:text="${l.bookInformation.biIsbn}"></td>
 	                    <td class="align-middle" th:text="${l.bsBookState}"></td>
-	                    <td class="align-middle" th:text="${l.bsLendState}"></td>
+	                    <td class="align-middle"> 
+				      <button th:if="${l.bsLendState eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">대출가능</button>
+				      <button th:unless="${l.bsLendState eq 'O'}" type="button" class="btn btn-xs btn-outline-success">대출불가</button>
+				      </td>
 	                    <td class="align-middle" th:text="${l.bsCarryRoute}"></td>
 	                    <td class="align-middle" th:text="${l.bsDate}"></td>
 	                    
-	                    <!-- ㅗ
+	                    <!-- 
 	                    <td class="align-middle text-center" th:if = "${L.blExtensionDate != null}">
 	                    	<a href="javascript:void(0)">
 	                    		<span class="badge badge-outline-secondary">연장완료</span>
@@ -96,9 +99,10 @@
 	                    		<span class="badge badge-outline-success">연장하기</span>
 	                    	</a>	
 	                    </td> -->
-	                    <td class="align-middle">
-			               	<a href="javascript:void(0)" class="btn btn-default btn-xs icon-btn md-btn-flat product-tooltip" title="" data-original-title="취소">
-			               	 	<i class="ion ion-ios-refresh"></i>
+	                  
+	                    <td class="align-middle align-center">
+			               	<a th:href="@{/admin/stockDetail(bsCode=${l.bsCode})}" class="btn icon-btn btn-sm btn-outline-secondary" title="상세">
+			               	 	<span class="ion ion-ios-paper d-block"></span>			               	 
 			               	</a>
 	                    </td> 
 	                  </tr>

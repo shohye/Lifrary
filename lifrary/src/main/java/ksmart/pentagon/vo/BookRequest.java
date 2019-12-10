@@ -1,6 +1,6 @@
 package ksmart.pentagon.vo;
 
-public class BookReequest {
+public class BookRequest {
 	
 	private String brCode;
 	private String brTitle;
