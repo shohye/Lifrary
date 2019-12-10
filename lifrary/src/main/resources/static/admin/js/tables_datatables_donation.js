@@ -25,18 +25,7 @@ $(document).ready(function () {
         responsive: true,
         orderMulti: true,
         order : [[1, 'desc']],
-        columns: [
-            {"data": "u_id"},
-            {"data": "br_title"},
-            {"data": "br_isbn"}, 
-            {"data": "br_year"}, 
-            {"data": "br_price"}, 
-            {"data": "br_author"},
-            {"data": "br_publisher"},
-            {"data": "br_progress"},
-            {"data": "br_cancle_reason"},
-            {"data": "br_date"}
-        ],
+        
         "language": {
             "emptyTable": "데이터가 없어요.",
             "lengthMenu": "페이지당 _MENU_ 개씩 보기",

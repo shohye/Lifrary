@@ -34,7 +34,7 @@
 
             <div class="card">
               <h3 class="card-header">
-                	기부 신청자 리스트
+                	도서 기부 신청자 리스트
               </h3>
               <div class="card-datatable table-responsive">
                 <table id="myTable" class="datatables-demo table table-striped table-bordered">
@@ -43,31 +43,45 @@
                 
                   <thead>
                     <tr>
-                      <th>신청자아이디</th>
-                      <th>도서명</th>
-                      <th>ISBN</th>
-                      <th>발행년도</th>
-                      <th>가격</th>
-                      <th>저자명</th>
-                      <th>발행자</th>
-                      <th data-orderable="false">진행상황</th>
-                      <th>취소사유</th> 
-                      <th>신청일</th>                    
+                      <th>기증자명</th>
+                      <th data-orderable="false">연락처</th>
+                      <th>주소</th>
+                      <th>기증도서권수</th>
+                      <th>개인정보수집</th>
+                      <th>기증스티커</th>
+                      <th>명예전당</th>
+                      <th>신청일</th> 
+                      <th>수정/삭제</th>                   
                     </tr>
                   </thead>
                   
                   <tbody>
-				    <tr th:each="data : ${#}">
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
+				    <tr th:each="d : ${donationList}">
+				      <td class="align-middle" th:text="${d.bdnName}"></td>
+				      <td class="align-middle" th:text="${d.bdnTel}"></td>
+				      <td class="align-middle" th:text="${d.bdnAddr}"></td>
+				      <td class="align-middle" th:text="${d.bpBookNum}"></td>
+				      <td class="align-middle">
+				      	 <button th:if="${d.bdnPersonal eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">동의</button>
+				     	 <button th:unless="${d.bdnPersonal eq 'O'}" type="button" class="btn btn-xs btn-outline-danger">비동의</button>
+				      </td>
+				      <td class="align-middle">
+				      	 <button th:if="${d.bdnSticker eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">부착</button>
+				      	 <button th:unless="${d.bdnSticker eq 'O'}" type="button" class="btn btn-xs btn-outline-danger">미부착</button>				      
+				      </td>
+				      <td class="align-middle">
+				      	 <button th:if="${d.bdnHonorAgree eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">등록</button>
+				         <button th:unless="${d.bdnHonorAgree eq 'O'}" type="button" class="btn btn-xs btn-outline-danger">미등록</button>
+				      </td>
+				      <td class="align-middle" th:text="${d.bdnDate}"></td>	
+				      <td class="align-middle align-center">
+		               	 <a th:href="@{/admin/bookDonationUpdate(bdnCode=${d.bdnCode})}" class="btn icon-btn btn-sm btn-outline-secondary" title="수정">
+		               	 	<span class="ion ion-ios-create d-block"></span>			               	 
+		               	 </a>
+		               	 <a th:href="@{#}" class="btn icon-btn btn-sm btn-outline-secondary" title="삭제">
+		               	 	<span class="ion ion-ios-cut d-block"></span>			               	 
+		               	 </a>
+                      </td> 	
 				    </tr>
 				  </tbody> 
                 </table>

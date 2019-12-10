@@ -33,26 +33,73 @@
 	         <result property="bpPrice" column="bp_price"/>
 	         <result property="bpBookNum" column="bp_book_num"/>
 	         <result property="bpAdditional" column="bp_additional"/>	         
-	         <result property="bpDate" column="bp_date"/>         
+	         <result property="bpDate" column="bp_date"/>   
+	         
+	         <result property="bdnCode" column="bdn_code"/>
+	         <result property="bdnName" column="bdn_name"/>
+	         <result property="bdnAddr" column="bdn_addr"/>
+	         <result property="bdnTel" column="bdn_tel"/>	         
+	         <result property="bdnNum" column="bdn_num"/>
+	         <result property="bdnPersonal" column="bdn_personal"/>
+	         <result property="bdnSticker" column="bdn_sticker"/>
+	         <result property="bdnHonorAgree" column="bdn_honor_agree"/>	         
+	         <result property="bdnDate" column="bdn_date"/>          
 	         
 	         <collection property="bookInformation" resultMap="bookInfoResultMap" />
 	 </resultMap>
 	 
   	<select id="getOrderList" resultMap="bookCarryResultMap">
 			SELECT 
-				* 
+				*
+										 
 			FROM 
 				book_order as bo INNER JOIN book_information as bi
-			ON bo.bi_isbn = bo.bi_isbn;  		
+			ON 
+			    bo.bi_isbn = bi.bi_isbn;  		
   	
   	</select>
   	<select id="getPurchaseList" resultMap="bookCarryResultMap">
+			SELECT 	
+				*
+			FROM 
+				book_purchase as bp INNER JOIN book_information as bi
+			ON bp.bi_isbn = bi.bi_isbn;  		
+  	
+  	</select>
+  	<select id="getDonationList" resultMap="bookCarryResultMap">
 			SELECT 
 				* 
 			FROM 
-				book_purchase as bp INNER JOIN book_information as bi
-			ON bp.bi_isbn = bo.bi_isbn;  		
+				book_donation;  		
   	
+  	</select>
+  	<select id="getOrderUpdate" resultMap="bookCarryResultMap" parameterType="String">
+  		   SELECT 
+				*
+										 
+			FROM 
+				book_order as bo INNER JOIN book_information as bi
+			ON 
+			    bo.bi_isbn = bi.bi_isbn
+			where
+				bo_code=#{boCode}
+  	</select>
+  	<select id="getPurchaseUpdate" resultMap="bookCarryResultMap" parameterType="String">
+  			SELECT 	
+				*
+			FROM 
+				book_purchase as bp INNER JOIN book_information as bi
+			ON bp.bi_isbn = bi.bi_isbn
+			where
+				bp_code=#{bpCode};
+  	</select>
+  	<select id="getDonationUpdate" resultMap="bookCarryResultMap" parameterType="String">
+  			SELECT 
+				* 
+			FROM 
+				book_donation
+		    where
+				bdn_code=#{bdnCode};
   	</select>
   	
   	

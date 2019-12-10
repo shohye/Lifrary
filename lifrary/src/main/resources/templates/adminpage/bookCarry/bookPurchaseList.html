@@ -51,21 +51,30 @@
                       <th>결제가격</th>
                       <th>구매예정권수</th>
                       <th data-orderable="false">추가사항</th>
-                      <th>등록일</th>                     
+                      <th>등록일</th>
+                      <th>수정/삭제</th>                  
                     </tr>
                   </thead>
                   
                   <tbody>
 				    <tr th:each="pl : ${purchaseList}">
-				      <td th:text="${pl.bookInformation.biIsbn}"></td>
-				      <td th:text="${pl.bookInformation.biName}"></td>
-				      <td th:text="${pl.bookInformation.biAuthor}"></td>
-				      <td th:text="${pl.bookInformation.biPublisher}"></td>
-				      <td th:text="${pl.bookInformation.biYear}"></td>
-				      <td th:text="${pl.bpPrice}"></td>
-				      <td th:text="${pl.bpBookNum}"></td>
-				      <td th:text="${pl.bpAdditional}"></td>
-				      <td th:text="${pl.bpDate}"></td>
+				      <td class="align-middle" th:text="${pl.bookInformation.biIsbn}"></td>
+				      <td class="align-middle" th:text="${#strings.abbreviate(pl.bookInformation.biName,15)}"></td>
+				      <td class="align-middle" th:text="${#strings.abbreviate(pl.bookInformation.biAuthor,15)}"></td>
+				      <td class="align-middle" th:text="${pl.bookInformation.biPublisher}"></td>
+				      <td class="align-middle" th:text="${pl.bookInformation.biYear}"></td>
+				      <td class="align-middle" th:text="${pl.bpPrice}"></td>
+				      <td class="align-middle" th:text="${pl.bpBookNum}"></td>
+				      <td class="align-middle" th:text="${pl.bpAdditional}"></td>
+				      <td class="align-middle" th:text="${pl.bpDate}"></td>
+				      <td class="align-middle align-center">
+		               	 <a th:href="@{#}" class="btn icon-btn btn-sm btn-outline-secondary" title="수정">
+		               	 	<span class="ion ion-ios-create d-block"></span>			               	 
+		               	 </a>
+		               	 <a th:href="@{#}" class="btn icon-btn btn-sm btn-outline-secondary" title="삭제">
+		               	 	<span class="ion ion-ios-cut d-block"></span>			               	 
+		               	 </a>
+                      </td> 	
 				    </tr>
 				  </tbody> 
                 </table>

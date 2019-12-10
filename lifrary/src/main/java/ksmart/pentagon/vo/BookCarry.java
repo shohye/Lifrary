@@ -21,15 +21,15 @@ public class BookCarry {
 		
 	private BookInformation bookInformation;
 	
-	private String bdn_code;
-	private String bdn_name;
-	private String bdn_addr;
-	private String bdn_tel;
-	private String bdn_num;
-	private String bdn_personal;
-	private String bdn_sticker;
-	private String bdn_honor_agree;
-	private String bdn_date;    // 기증자	
+	private String bdnCode;      //bdn_code
+	private String bdnName;     //bdn_name
+	private String bdnAddr;     //bdn_addr
+	private String bdnTel;      //bdn_tel
+	private String bdnNum;      //bdn_num
+	private String bdnPersonal; //bdn_personal
+	private String bdnSticker;  //bdn_sticker
+	private String bdnHonorAgree;   //bdn_honor_agree
+	private String bdnDate;     //bdn_date    => 기증자	
 
 	public String getUid() {
 		return uid;
@@ -122,7 +122,60 @@ public class BookCarry {
 	public void setBookInformation(BookInformation bookInformation) {
 		this.bookInformation = bookInformation;
 	}
-	
+	public String getBdnCode() {
+		return bdnCode;
+	}
+	public void setBdnCode(String bdnCode) {
+		this.bdnCode = bdnCode;
+	}
+	public String getBdnName() {
+		return bdnName;
+	}
+	public void setBdnName(String bdnName) {
+		this.bdnName = bdnName;
+	}
+	public String getBdnAddr() {
+		return bdnAddr;
+	}
+	public void setBdnAddr(String bdnAddr) {
+		this.bdnAddr = bdnAddr;
+	}
+	public String getBdnTel() {
+		return bdnTel;
+	}
+	public void setBdnTel(String bdnTel) {
+		this.bdnTel = bdnTel;
+	}
+	public String getBdnNum() {
+		return bdnNum;
+	}
+	public void setBdnNum(String bdnNum) {
+		this.bdnNum = bdnNum;
+	}
+	public String getBdnPersonal() {
+		return bdnPersonal;
+	}
+	public void setBdnPersonal(String bdnPersonal) {
+		this.bdnPersonal = bdnPersonal;
+	}
+	public String getBdnSticker() {
+		return bdnSticker;
+	}
+	public void setBdnSticker(String bdnSticker) {
+		this.bdnSticker = bdnSticker;
+	}
+	public String getBdnHonorAgree() {
+		return bdnHonorAgree;
+	}
+	public void setBdnHonorAgree(String bdnHonorAgree) {
+		this.bdnHonorAgree = bdnHonorAgree;
+	}
+	public String getBdnDate() {
+		return bdnDate;
+	}
+	public void setBdnDate(String bdnDate) {
+		this.bdnDate = bdnDate;
+	}
 	
 	
 	

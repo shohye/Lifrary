@@ -30,7 +30,7 @@ public class BookStockController {
     	return "/adminpage/bookStock/stockSearchList";
     }
 	
-	// (어드민) 소장도서 리스트
+	// (어드민) 소장도서 상세내용
 		@GetMapping("/admin/stockDetail")
 	    public String stockDetail(Model model , @RequestParam(value="bsCode",required=false) String bsCode) {
 			
@@ -42,7 +42,7 @@ public class BookStockController {
 	    	return "/adminpage/bookStock/stockDetail";
 	    }
 		
-	// (어드민) 소장도서 리스트 수정 화면
+	// (어드민) 소장도서 상세수정 화면
 		@GetMapping("/admin/stockDetailUpdate")
 	    public String stockDetailUpdate(Model model , @RequestParam(value="bsCode",required=false) String bsCode) {
 			if(bsCode == null) {

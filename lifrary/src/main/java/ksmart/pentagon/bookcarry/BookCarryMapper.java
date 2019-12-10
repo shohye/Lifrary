@@ -16,5 +16,16 @@ public interface BookCarryMapper {
 	List<BookCarry> getPurchaseList();
 	
 	// 기부자 리스트 출력
+	List<BookCarry> getDonationList();
+	
+	// 오더 도서 한개정보출력/ 수정화면	
+	BookCarry getOrderUpdate(String boCode);
+	
+	// 구매 도서 한개정보출력/ 수정화면	
+	BookCarry getPurchaseUpdate(String bpCode);
+		
+		
+	// 기부자 한개정보출력/ 수정화면	
+	BookCarry getDonationUpdate(String bdnCode);
 	
 }

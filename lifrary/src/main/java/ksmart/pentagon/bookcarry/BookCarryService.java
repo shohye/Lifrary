@@ -22,4 +22,26 @@ public class BookCarryService {
 		return bookCarryMapper.getPurchaseList();
 	}
 
+	public List<BookCarry> getDonationList(){
+		return bookCarryMapper.getDonationList();
+	}
+	
+	// 오더 도서 한개정보출력/ 수정화면	
+	public BookCarry getOrderUpdate(String boCode) {
+		return bookCarryMapper.getOrderUpdate(boCode);
+		
+	}
+		
+	// 구매 도서 한개정보출력/ 수정화면	
+	public BookCarry getPurchaseUpdate(String bpCode) {
+		return bookCarryMapper.getPurchaseUpdate(bpCode);
+		
+	}		
+		
+	// 기부자 한개정보출력/ 수정화면	
+	public BookCarry getDonationUpdate(String bdnCode) {
+		return bookCarryMapper.getDonationUpdate(bdnCode);
+		
+	}
+		
 }
