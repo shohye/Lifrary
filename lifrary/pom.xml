@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ksmart.pentagon</groupId>
-	<artifactId>pentagonlibrary</artifactId>
+	<artifactId>lifrary</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>pentagonlibrary</name>
+	<name>lifrary</name>
 	<description>2team project</description>
 
 	<properties>

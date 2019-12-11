@@ -9,7 +9,7 @@ $(function() {
   };
 
   $('#product-list').dataTable({
-    ajax: 'assets/json/pages_e-commerce_product-list.json',
+    ajax: 'tassets/json/pages_e-commerce_product-list.json',
     "columns": [
       { "data": "1" },
       { "data": "2" },
@@ -17,7 +17,8 @@ $(function() {
       { "data": "4" },
       { "data": "5" },
       { "data": "6" },
-      { "data": "7" },
+      { "data": "7" 
+    	"defaultContent": ""},
       { "data": "8" }
     ],
     order: [[ 1, 'desc' ]],
