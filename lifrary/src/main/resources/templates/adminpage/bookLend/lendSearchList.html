@@ -106,7 +106,7 @@
 				<div class="card mb-4">
 					<h5 class="card-header">서지 정보</h5>
 					<div class="card-body">
-						<form th:action="@{/admin/lendBookInfo.do}" id="bookInfoForm" method="post">
+						<form th:action="@{/admin/lendBookInfo}" id="bookInfoForm" method="post">
 							<div class="input-group">
 								<div class="input-group-prepend">
 	                    			<span class="input-group-text">도서코드</span>
@@ -178,7 +178,7 @@
 				<div class="card mb-4">
 					<h5 class="card-header">회원 정보</h5>
 					<div class="card-body">
-						<form th:action="@{/admin/lendUserInfo.do}" id="userInfoForm" method="post">
+						<form th:action="@{/admin/lendUserInfo}" id="userInfoForm" method="post">
 							<div class="input-group">
 								<div class="input-group-prepend">
 	                    			<span class="input-group-text">회원번호</span>
@@ -312,7 +312,7 @@
 	<script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
 
 	<!-- addDemo -->
-	<script th:src="@{/admin/js/booklend_tables.js}"></script>
+	<script th:src="@{/admin/js/book_lend_tables.js}"></script>
 	</th:block>
 	<!-- / scripts -->
 	          
