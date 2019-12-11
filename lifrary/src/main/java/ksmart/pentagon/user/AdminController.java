@@ -63,6 +63,7 @@ public class AdminController {
 		System.out.println(uId + " <== uId");
 		System.out.println(uPw + " <== uPw");
 		
+		adminService.adminLoginCheck(uId);
 		return null;
 	}
 	

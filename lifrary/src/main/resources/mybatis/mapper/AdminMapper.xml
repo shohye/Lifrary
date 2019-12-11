@@ -3,12 +3,35 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="ksmart.pentagon.user.AdminMapper">
+  
+  
+  <resultMap type="ksmart.pentagon.vo.LibrarianLevel" id="Librarian">
+	<!-- db -->
+	<result property="uId" column="u_id"/>
+	<result property="lCode" column="l_code"/>
+	<result property="llInsert" column="ll_insert"/>
+	<result property="llCarry" column="ll_carry"/>
+	<result property="llBookAdmin" column="ll_book_admin"/>
+	<result property="llStats" column="ll_stats"/>
+	<result property="llBookStock" column="ll_book_stock"/>
+	<result property="llUpdate" column="ll_update"/>
+ </resultMap>
+ 
+ 	<resultMap type="ksmart.pentagon.vo.User" id="test">
+ 		<result property="uId" column="u_id"/>
+ 		<result property="ulName" column="ul_name"/>
+ 		<result property="uPw" column="u_pw"/>
+ 		<result property="uDivision" column="u_division"/>
+ 		<collection property="librarianlevel" resultMap="Librarian"/>
+ 	</resultMap>
+ 
    <resultMap type="ksmart.pentagon.vo.User" id="userResultMap">
 	<!-- db -->
 	<result property="uId" column="u_id"/>
 	<result property="lCode" column="l_code"/>
 	<result property="ulLevel" column="ul_level"/>
 	<result property="ulName" column="ul_name"/>
+	<result property="uDivision" column="u_division"/>
 	<result property="uasCode" column="uas_code"/>
 	<result property="uasName" column="uas_name"/>
 	<result property="uasLendLimit" column="uas_lend_limit"/>
@@ -25,21 +48,24 @@
 	<result property="uOverdueDay" column="u_overdue_day"/>
 	<result property="uDate" column="u_date"/>
 	<result property="uAuthorityDate" column="u_authority_date"/>
-	<collection property="LibrarianLevel" resultMap="Librarian"></collection>
+	<collection property="librarianLevel" resultMap="Librarian"/>
  </resultMap>
-  <resultMap type="ksmart.pentagon.vo.LibrarianLevel" id="Librarian">
-	<!-- db -->
-	<result property="uId" column="u_id"/>
-	<result property="lCode" column="l_code"/>
-	<result property="llInsert" column="ll_insert"/>
-	<result property="llCarry" column="ll_carry"/>
-	<result property="llBookAdmin" column="ll_book_admin"/>
-	<result property="llStats" column="ll_stats"/>
-	<result property="llBookStock" column="ll_book_stock"/>
-	<result property="llUpdate" column="ll_update"/>
- </resultMap>
+ 
  	<select id="adminLoginCheck" resultMap="userResultMap">
- 	
+ 		SELECT
+			u.u_id,
+			u.u_pw,
+			u.u_division,
+			u.u_name,
+			ll.ll_insert,
+			ll.ll_carry,
+			ll.ll_book_admin,
+			ll.ll_stats,
+			ll.ll_book_stock
+		FROM
+			user AS u INNER JOIN librarian_level AS ll
+		ON u.u_id = ll.u_id
+		WHERE u.u_id = #{uId}
  	</select>
  
  

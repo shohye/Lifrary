@@ -22,7 +22,9 @@ public class AdminService {
 	
 	//사서 채널 로그인 처리 / 회원 정보 유무 확인후 로그인
 	public User adminLoginCheck(String uId) {
-		
+		System.out.println(adminMapper.adminLoginCheck(uId) + "<== 사서 정보 가져오기. 로그인 처리.");
+		User user = adminMapper.adminLoginCheck(uId);
+		user.getLibrarianLevel().getLlBookStock(); // user객체안의 getLibrarianLevel()을 하여 LibrarianLevel객체를 가져옴. 가져온 객체에서 LlBookStock()가져옴!
 		return null;
 	}
 	

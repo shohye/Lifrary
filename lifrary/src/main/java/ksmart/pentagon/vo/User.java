@@ -1,8 +1,6 @@
 
 package ksmart.pentagon.vo;
 
-import groovy.transform.stc.ThirdParam.Component;
-
 public class User {
 	private String uId;
 	private String lCode;
@@ -25,7 +23,7 @@ public class User {
 	private int uOverdueDay;
 	private String uDate;
 	private String uAuthorityDate;
-	private LibrarianLevel librarianlevel;
+	private LibrarianLevel librarianLevel;
 	private int uLendCnt;
 	private UserLevel userLevel;
 	
@@ -168,15 +166,26 @@ public class User {
 	public void setUserLevel(UserLevel userLevel) {
 		this.userLevel = userLevel;
 	}
+	
+	public LibrarianLevel getLibrarianLevel() {
+		return librarianLevel;
+	}
+	public void setLibrarianLevel(LibrarianLevel librarianLevel) {
+		this.librarianLevel = librarianLevel;
+	}
+	
+	
 	@Override
 	public String toString() {
-		return "UserList [uId=" + uId + ", lCode=" + lCode + ", ulLevel=" + ulLevel + ", ulName=" + ulName
-				+ ", uDivision=" + uDivision + ", uasCode=" + uasCode + ", uasName=" + uasName + ", uasLendLimit="
-				+ uasLendLimit + ", uasFacilityLimit=" + uasFacilityLimit + ", uNumber=" + uNumber + ", uPw=" + uPw
-				+ ", uName=" + uName + ", uBirth=" + uBirth + ", uAddr=" + uAddr + ", uTel=" + uTel + ", uEmail="
-				+ uEmail + ", uEmailAgree=" + uEmailAgree + ", uAppointment=" + uAppointment + ", uOverdueDay="
-				+ uOverdueDay + ", uDate=" + uDate + ", uAuthorityDate=" + uAuthorityDate + "]";
+		return "User [uId=" + uId + ", lCode=" + lCode + ", ulLevel=" + ulLevel + ", ulName=" + ulName + ", uDivision="
+				+ uDivision + ", uasCode=" + uasCode + ", uasName=" + uasName + ", uasLendLimit=" + uasLendLimit
+				+ ", uasFacilityLimit=" + uasFacilityLimit + ", uNumber=" + uNumber + ", uPw=" + uPw + ", uName="
+				+ uName + ", uBirth=" + uBirth + ", uAddr=" + uAddr + ", uTel=" + uTel + ", uEmail=" + uEmail
+				+ ", uEmailAgree=" + uEmailAgree + ", uAppointment=" + uAppointment + ", uOverdueDay=" + uOverdueDay
+				+ ", uDate=" + uDate + ", uAuthorityDate=" + uAuthorityDate + ", librarianLevel=" + librarianLevel
+				+ ", uLendCnt=" + uLendCnt + ", userLevel=" + userLevel + "]";
 	}
+	
 	
 
 }
