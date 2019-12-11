@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $.fn.dataTable.ext.search.push(
+   /* $.fn.dataTable.ext.search.push(
         function(settings, data, dataIndex){
             var min = Date.parse($('#fromDate').val());
             var max = Date.parse($('#toDate').val());
@@ -14,7 +14,7 @@ $(document).ready(function () {
             }
             return false;
         }
-    )
+    )*/
 
     var table = $('#myTable').DataTable({
        /* ajax: {
@@ -25,30 +25,26 @@ $(document).ready(function () {
         responsive: true,
         orderMulti: true,
         
-        "language": {
-            "emptyTable": "데이터가 없어요.",
-            "lengthMenu": "페이지당 _MENU_ 개씩 보기",
-            "info": "현재 _START_ - _END_ / _TOTAL_건",
-            "infoEmpty": "데이터 없음",
-            "infoFiltered": "( _MAX_건의 데이터에서 필터링됨 )",
-            "search": "에서 검색: ",
-            "zeroRecords": "일치하는 데이터가 없어요.",
-            "loadingRecords": "로딩중...",
-            "processing":     "잠시만 기다려 주세요...",
-            "paginate": {
-                "next": "다음",
-                "previous": "이전"
-            }
-        },
+        language: {
+   		 "info" : "_START_ - _END_ (총 _TOTAL_ 개)",
+   	     "infoEmpty" : "0개",
+   	     "infoFiltered" : "(전체 _MAX_ 개 중 검색결과)",
+   		 "search" : "전체항목에서 검색 : ",
+   		 "lengthMenu" : "보기_MENU_ 개씩",
+   		 "paginate" : {
+   	            "next" : "다음",
+   	            "previous" : "이전"
+   	        }
+   	 },
         
-        dom : 'Blfrtip',
+       /* dom : 'Blfrtip',
         buttons:[{
 			extend:'csvHtml5',
 			text: 'csv다운로드',
 			footer: true,
 			bom: true,
 			className: 'exportCSV'
-		}]
+		}]*/
     });
 
     /* Column별 검색기능 추가 
@@ -62,12 +58,12 @@ $(document).ready(function () {
         table.column(colIndex).search(this.value).draw();
     });*/
 
-    /* 날짜검색 이벤트 리바인딩 */
+   /*  날짜검색 이벤트 리바인딩 
     $('#myTable_filter').prepend('<input type="text" id="toDate" placeholder="yyyy-MM-dd"> ');
     $('#myTable_filter').prepend('<input type="text" id="fromDate" placeholder="yyyy-MM-dd">~');
     $('#toDate, #fromDate').unbind().bind('keyup',function(){
         table.draw();
     })
-
+*/
 
 });

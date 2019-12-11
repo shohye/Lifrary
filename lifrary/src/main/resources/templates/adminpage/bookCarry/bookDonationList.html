@@ -35,6 +35,7 @@
             <div class="card">
               <h3 class="card-header">
                 	도서 기부 신청자 리스트
+                	<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; 신청자추가</button>
               </h3>
               <div class="card-datatable table-responsive">
                 <table id="myTable" class="datatables-demo table table-striped table-bordered">
@@ -46,7 +47,7 @@
                       <th>기증자명</th>
                       <th data-orderable="false">연락처</th>
                       <th>주소</th>
-                      <th>기증도서권수</th>
+                      <th>권수</th>
                       <th>개인정보수집</th>
                       <th>기증스티커</th>
                       <th>명예전당</th>
@@ -61,17 +62,17 @@
 				      <td class="align-middle" th:text="${d.bdnTel}"></td>
 				      <td class="align-middle" th:text="${d.bdnAddr}"></td>
 				      <td class="align-middle" th:text="${d.bpBookNum}"></td>
-				      <td class="align-middle">
-				      	 <button th:if="${d.bdnPersonal eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">동의</button>
-				     	 <button th:unless="${d.bdnPersonal eq 'O'}" type="button" class="btn btn-xs btn-outline-danger">비동의</button>
+				      <td class="align-middle text-center">
+				      	 <span th:if="${d.bdnPersonal eq 'O'}"  class="badge badge-outline-success">동의</span>
+				     	 <span th:unless="${d.bdnPersonal eq 'O'}" class="badge badge-outline-danger">비동의</span>
 				      </td>
-				      <td class="align-middle">
-				      	 <button th:if="${d.bdnSticker eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">부착</button>
-				      	 <button th:unless="${d.bdnSticker eq 'O'}" type="button" class="btn btn-xs btn-outline-danger">미부착</button>				      
+				      <td class="align-middle text-center">
+				      	 <span th:if="${d.bdnSticker eq 'O'}" class="badge badge-outline-success">부착</span>
+				      	 <span th:unless="${d.bdnSticker eq 'O'}" class="badge badge-outline-danger">미부착</span>				      
 				      </td>
-				      <td class="align-middle">
-				      	 <button th:if="${d.bdnHonorAgree eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">등록</button>
-				         <button th:unless="${d.bdnHonorAgree eq 'O'}" type="button" class="btn btn-xs btn-outline-danger">미등록</button>
+				      <td class="align-middle text-center">
+				      	 <span th:if="${d.bdnHonorAgree eq 'O'}"  class="badge badge-outline-success">등록</span>
+				         <span th:unless="${d.bdnHonorAgree eq 'O'}"  class="badge badge-outline-danger">미등록</span>
 				      </td>
 				      <td class="align-middle" th:text="${d.bdnDate}"></td>	
 				      <td class="align-middle align-center">
