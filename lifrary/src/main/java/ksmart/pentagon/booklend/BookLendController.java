@@ -18,15 +18,15 @@ import ksmart.pentagon.vo.BookStock;
 public class BookLendController {
 	@Autowired private BookLendService bookLendService;
 	
-	@GetMapping("/admin/lendSearchList.do")
-	public String bookLendSearchList(Model model){
+	@GetMapping("/admin/lendSearchList")
+	public String LendSearchList(Model model){
 		
 		model.addAttribute("lendList", bookLendService.bookSearchList());
 		 
 		return "adminpage/bookLend/lendSearchList";
 	}
 		
-	@PostMapping("/admin/lendBookInfo.do")
+	@PostMapping("/admin/lendBookInfo")
 	public String lendBookInfo(  @RequestParam(value="svBook" ) String svBook
 								,@RequestParam(value="svUser", required=false) String svUser
 								, RedirectAttributes redirectAttributes){
@@ -70,10 +70,10 @@ public class BookLendController {
 		}
 		
 		
-		return "redirect:/admin/lendSearchList.do";
+		return "redirect:/admin/lendSearchList";
 	}
 	
-	@PostMapping("/admin/lendUserInfo.do")
+	@PostMapping("/admin/lendUserInfo")
 	public String lendUserInfo(  @RequestParam(value="svUser" ) String svUser
 								,@RequestParam(value="svBook", required=false) String svBook
 								, RedirectAttributes redirectAttributes){
@@ -112,9 +112,13 @@ public class BookLendController {
 		}
 
 		
-		return "redirect:/admin/lendSearchList.do";
+		return "redirect:/admin/lendSearchList";
 	}
 	
-	
+	@GetMapping("/admin/reservationSearchList")
+	public String reservationSearchList() {
+		return "/adminpage/bookLend/reservationSearchList";
+		
+	}
 
 }
