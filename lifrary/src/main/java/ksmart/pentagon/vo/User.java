@@ -1,6 +1,8 @@
 
 package ksmart.pentagon.vo;
 
+import groovy.transform.stc.ThirdParam.Component;
+
 public class User {
 	private String uId;
 	private String lCode;
@@ -23,9 +25,11 @@ public class User {
 	private int uOverdueDay;
 	private String uDate;
 	private String uAuthorityDate;
+	private LibrarianLevel librarianlevel;
 	private int uLendCnt;
 	private UserLevel userLevel;
-
+	
+	
 	public String getuId() {
 		return uId;
 	}
@@ -164,4 +168,15 @@ public class User {
 	public void setUserLevel(UserLevel userLevel) {
 		this.userLevel = userLevel;
 	}
+	@Override
+	public String toString() {
+		return "UserList [uId=" + uId + ", lCode=" + lCode + ", ulLevel=" + ulLevel + ", ulName=" + ulName
+				+ ", uDivision=" + uDivision + ", uasCode=" + uasCode + ", uasName=" + uasName + ", uasLendLimit="
+				+ uasLendLimit + ", uasFacilityLimit=" + uasFacilityLimit + ", uNumber=" + uNumber + ", uPw=" + uPw
+				+ ", uName=" + uName + ", uBirth=" + uBirth + ", uAddr=" + uAddr + ", uTel=" + uTel + ", uEmail="
+				+ uEmail + ", uEmailAgree=" + uEmailAgree + ", uAppointment=" + uAppointment + ", uOverdueDay="
+				+ uOverdueDay + ", uDate=" + uDate + ", uAuthorityDate=" + uAuthorityDate + "]";
+	}
+	
+
 }

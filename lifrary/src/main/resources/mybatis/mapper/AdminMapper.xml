@@ -3,6 +3,41 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="ksmart.pentagon.user.AdminMapper">
+   <resultMap type="ksmart.pentagon.vo.User" id="userResultMap">
+	<!-- db -->
+	<result property="uId" column="u_id"/>
+	<result property="lCode" column="l_code"/>
+	<result property="ulLevel" column="ul_level"/>
+	<result property="ulName" column="ul_name"/>
+	<result property="uasCode" column="uas_code"/>
+	<result property="uasName" column="uas_name"/>
+	<result property="uasLendLimit" column="uas_lend_limit"/>
+	<result property="uasFacilityLimit" column="uas_facility_limit"/>
+	<result property="uNumber" column="u_number"/>
+	<result property="uPw" column="u_pw"/>
+	<result property="uName" column="u_name"/>
+	<result property="uBirth" column="u_birth"/>
+	<result property="uAddr" column="u_addr"/>
+	<result property="uTel" column="u_tel"/>
+	<result property="uEmail" column="u_email"/>
+	<result property="uEmailAgree" column="u_email_agree"/>
+	<result property="uAppointment" column="u_appointment"/>
+	<result property="uOverdueDay" column="u_overdue_day"/>
+	<result property="uDate" column="u_date"/>
+	<result property="uAuthorityDate" column="u_authority_date"/>
+	<collection property="LibrarianLevel" resultMap="Librarian"></collection>
+ </resultMap>
+  <resultMap type="ksmart.pentagon.vo.LibrarianLevel" id="Librarian">
+	<!-- db -->
+	<result property="uId" column="u_id"/>
+	<result property="lCode" column="l_code"/>
+	<result property="llInsert" column="ll_insert"/>
+	<result property="llCarry" column="ll_carry"/>
+	<result property="llBookAdmin" column="ll_book_admin"/>
+	<result property="llStats" column="ll_stats"/>
+	<result property="llBookStock" column="ll_book_stock"/>
+	<result property="llUpdate" column="ll_update"/>
+ </resultMap>
   	<select id="getUserLevel" resultType="ksmart.pentagon.vo.UserLevel">
   		SELECT 
   			ul_level as ulLevel, 
@@ -16,4 +51,123 @@
 		FROM 
 			user_level
   	</select>
+  	  	<select id="getUserList" resultType="ksmart.pentagon.vo.User">
+		SELECT 
+			u.u_number 				AS uNumber
+			,u.u_id 	 			AS uId
+			,ul.ul_name				AS ulName
+			,u.u_name 				AS uName
+			,u.u_birth				AS uBirth
+			,u.u_tel				AS uTel
+			,u.u_email_agree		AS uEmailAgree
+			,u.u_email				AS uEmail
+			,uas.uas_lend_limit		AS uasLendLimit
+			,uas.uas_facility_limit AS uasFacilityLimit
+			,uas.uas_name			AS uasName
+			,u.u_overdue_day		AS uOverdueDay
+			,u.u_date				AS uDate
+		FROM
+			user as u 
+		INNER JOIN 
+			user_authority_set as uas
+		ON 
+			u.uas_code = uas.uas_code
+		INNER join
+			user_level AS ul
+		on
+			ul.ul_level = u.ul_level
+  	</select>
+  	
+  	<select id="getUserSearch" parameterType="String" resultType="ksmart.pentagon.vo.User">
+		SELECT 
+			u.u_number 				AS uNumber
+			,u.u_id 	 			AS uId
+			,ul.ul_name				AS ulName
+			,u.u_name 				AS uName
+			,u.u_birth				AS uBirth
+			,u.u_tel				AS uTel
+			,u.u_email_agree		AS uEmailAgree
+			,u.u_email				AS uEmail
+			,uas.uas_lend_limit		AS uasLendLimit
+			,uas.uas_facility_limit AS uasFacilityLimit
+			,uas.uas_name			AS uasName
+			,u.u_overdue_day		AS uOverdueDay
+			,u.u_date				AS uDate
+		FROM
+			user as u 
+		INNER JOIN 
+			user_authority_set as uas
+		ON 
+			u.uas_code = uas.uas_code
+		INNER join
+			user_level AS ul
+		on
+			ul.ul_level = u.ul_level
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="sv != null and sv neq ''.toString()"> 
+				AND ${sk} Like CONCAT('%',#{sv},'%')		
+			</if>
+		</trim>
+  	</select>
+  	  	<select	id="getAdminUserUpdate"
+ 	parameterType="String" 
+ 	resultType="ksmart.pentagon.vo.User">
+		SELECT
+ 			u.u_number 	AS uNumber 
+			,u.u_tel 	AS uTel
+			,u.u_id 	AS uId
+			,u.u_name 	AS uName
+			,u.u_addr	AS uAddr
+			,u.u_email 	AS uEmail
+			,u.u_overdue_day 	AS uOverdueDay
+			,u.u_birth 	AS uBirth
+			,u.u_date 	AS uDate
+			,ul.ul_name 	AS ulName
+			,uas.uas_lend_limit		AS uasLendLimit
+			,uas.uas_facility_limit AS uasFacilityLimit
+			,uas.uas_name			AS uasName
+			,u.u_email_agree 	AS uEmailAgree
+		FROM
+			user u 
+		INNER JOIN 
+			user_authority_set as uas
+		ON 
+			u.uas_code = uas.uas_code
+		INNER join
+			user_level AS ul
+		on
+			ul.ul_level = u.ul_level
+		WHERE u.u_id = #{uId}
+	</select>
+	
+ 	<update id="adminUserUpdate" parameterType="ksmart.pentagon.vo.User">
+ 		UPDATE user
+ 		<trim prefix="SET" suffixOverrides=",">
+ 			<if test="uTel neq null and uTel neq ''.toString()">
+ 				u_tel=#{uTel},
+ 			</if>
+ 			<if test="uAddr neq null and uAddr neq ''.toString()">
+ 				u_addr=#{uAddr},
+ 			</if>
+ 			<if test="uName neq null and uName neq ''.toString()">
+ 				u_name=#{uName},
+ 			</if>
+ 			<if test="uEmail neq null and uEmail neq ''.toString()">
+ 				u_email=#{uEmail},
+ 			</if>
+ 			<if test="uOverdueDay neq null and uOverdueDay neq ''.toString()">
+ 				u_overdue_day=#{uOverdueDay},
+ 			</if>
+ 			<if test="uBirth neq null and uBirth neq ''.toString()">
+ 				u_birth=#{uBirth},
+ 			</if>
+ 			<if test="uEmailAgree neq null and uEmailAgree neq ''.toString()">
+ 				u_email_agree=#{uEmailAgree},
+ 			</if>
+ 			<if test="uasCode neq null and uasCode neq ''.toString()">
+ 				uas_code=#{uasCode},
+ 			</if>
+ 		</trim>
+ 		WHERE u_id = #{uId}
+ 	</update>
   </mapper>
