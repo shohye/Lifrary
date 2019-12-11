@@ -45,7 +45,20 @@
 	         <result property="bdnHonorAgree" column="bdn_honor_agree"/>	         
 	         <result property="bdnDate" column="bdn_date"/>          
 	         
-	         <collection property="bookInformation" resultMap="bookInfoResultMap" />
+	         <collection property="bookInformation" resultMap="bookInfoResultMap" />	       	         
+	 </resultMap>
+	 
+	 <resultMap type="ksmart.pentagon.vo.BookRequest" id="bookRequest">	         
+	         <result property="brCode" column="br_code"/>
+	         <result property="brTitle" column="br_title"/>
+	         <result property="brIsbn" column="br_isbn"/>
+	         <result property="brYear" column="br_year"/>	         
+	         <result property="brPrice" column="br_price"/>
+	         <result property="brAuthor" column="br_author"/>
+	         <result property="brPublisher" column="br_publisher"/>	         
+	         <result property="brProgress" column="br_progress"/>
+	         <result property="brCancelReason" column="br_cancel_reason"/>
+	         <result property="brDate" column="br_date"/>	              
 	 </resultMap>
 	 
   	<select id="getOrderList" resultMap="bookCarryResultMap">
@@ -100,7 +113,5 @@
 				book_donation
 		    where
 				bdn_code=#{bdnCode};
-  	</select>
-  	
-  	
+  	</select> 	
   </mapper>

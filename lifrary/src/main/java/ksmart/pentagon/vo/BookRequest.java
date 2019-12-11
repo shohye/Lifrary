@@ -10,7 +10,7 @@ public class BookRequest {
 	private String brAuthor;
 	private String brPublisher;
 	private String brProgress;
-	private String brCancleReason;
+	private String brCancelReason;
 	private String brDate;
 	
 	public String getBrCode() {
@@ -61,11 +61,11 @@ public class BookRequest {
 	public void setBrProgress(String brProgress) {
 		this.brProgress = brProgress;
 	}
-	public String getBrCancleReason() {
-		return brCancleReason;
+	public String getBrCancelReason() {
+		return brCancelReason;
 	}
-	public void setBrCancleReason(String brCancleReason) {
-		this.brCancleReason = brCancleReason;
+	public void setBrCancleReason(String brCancelReason) {
+		this.brCancelReason = brCancelReason;
 	}
 	public String getBrDate() {
 		return brDate;
@@ -74,12 +74,6 @@ public class BookRequest {
 		this.brDate = brDate;
 	}
 	
-	@Override
-	public String toString() {
-		return "BookReequest [brCode=" + brCode + ", brTitle=" + brTitle + ", brIsbn=" + brIsbn + ", brYear=" + brYear
-				+ ", brPrice=" + brPrice + ", brAuthor=" + brAuthor + ", brPublisher=" + brPublisher + ", brProgress="
-				+ brProgress + ", brCancleReason=" + brCancleReason + ", brDate=" + brDate + "]";
-	}
 	
 	
 	

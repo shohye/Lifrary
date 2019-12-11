@@ -30,13 +30,14 @@
   <!-- Content -->
          <th:block layout:fragment="adminContents">
          
+         <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+			<div>도서 기부 신청자 리스트</div>
+			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; 신청자추가</button>
+		 </h4>
+         
             <!-- DataTable within card -->
 
             <div class="card">
-              <h3 class="card-header">
-                	도서 기부 신청자 리스트
-                	<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; 신청자추가</button>
-              </h3>
               <div class="card-datatable table-responsive">
                 <table id="myTable" class="datatables-demo table table-striped table-bordered">
                 
