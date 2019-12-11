@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BoardService {
-	/*
-	 * @Autowired private BoardMapper boardmapper;
-	 */
+	
+	@Autowired private BoardMapper boardmapper;
+	 
 }
