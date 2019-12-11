@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+
+ <!-- headAdd(Libs&page) -->
+  
+  <th:block layout:fragment="adminHeadAdd">
+  
+  
+  <!-- addLibs -->
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+
+  <!-- addPage -->
+  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
+  </th:block>
+  
+  <!-- /headAdd(Libs&page) --> 
+  <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+ <!--  <script type="text/javascript">
+  $(document).ready(function(){
+	  
+	  //도서정보 검색폼을 실행시키는 자바스크립트
+	  $('#bookInfoBtn').click(function(){
+	  
+	  var bookinfo = $('[name="svBook"]').val();
+	  
+	  if( bookinfo == ''){
+		  alert('검색내용을 입력해주세요');
+	  }
+	  else{
+		  $('#bookInfoForm').submit();
+	  }
+	  
+ 	 });
+  });//document.ready
+ 
+ </script> -->
+ 
+ 
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+	  
+	 
+	<!-- Content -->
+	<th:block layout:fragment="adminContents">   
+		<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+			<div>전체 도서 관리</div>
+			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; Add product</button>
+		</h4>
+
+	<div class="card">
+    	<div class="card">
+              <div class="card-datatable table-responsive">
+                <table class="datatables-demo table table-hover table-bordered">
+                  <thead>
+                    <tr >
+                      <th>도서코드</th>
+                      <th>도서명</th>
+                      <th>청구기호</th>
+                      <th>ISBN</th>
+                      <th>책상태</th>
+                      <th>대출가능상태</th>
+                      <th>반입구</th>
+                      <th>등록일자</th>
+                      <th>상세</th>              
+                    </tr>
+                  </thead>
+                  <tbody>
+	                  <tr role="row" th:each="l: ${stockList}">
+	                    <td class="align-middle" th:text="${l.bsCode}"></td>
+	                    <td style="min-width: 170px;">
+			               	 	<div class="media align-items-center">
+			               	 		<img class="ui-w-40 d-block" th:src="${l.bookInformation.biImg}" alt="">
+			               	 		<span class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(l.bookInformation.biName,20)}"></span>
+			               	 	</div>
+			            </td>
+	                    <td class="align-middle" th:text="${l.bsCallNum}"></td> 
+	                    <td class="align-middle" th:text="${l.bookInformation.biIsbn}"></td>
+	                    <td class="align-middle" th:text="${l.bsBookState}"></td>
+	                    <td class="align-middle"> 
+				      <button th:if="${l.bsLendState eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">대출가능</button>
+				      <button th:unless="${l.bsLendState eq 'O'}" type="button" class="btn btn-xs btn-outline-success">대출불가</button>
+				      </td>
+	                    <td class="align-middle" th:text="${l.bsCarryRoute}"></td>
+	                    <td class="align-middle" th:text="${l.bsDate}"></td>
+	                    
+	                    <!-- 
+	                    <td class="align-middle text-center" th:if = "${L.blExtensionDate != null}">
+	                    	<a href="javascript:void(0)">
+	                    		<span class="badge badge-outline-secondary">연장완료</span>
+	                    	</a>	
+	                    </td>
+	                    <td class="align-middle text-center" th:unless = "${L.blExtensionDate != null}">
+	                    	<a href="javascript:void(0)">
+	                    		<span class="badge badge-outline-success">연장하기</span>
+	                    	</a>	
+	                    </td> -->
+	                  
+	                    <td class="align-middle align-center">
+			               	<a th:href="@{/admin/stockDetail(bsCode=${l.bsCode})}" class="btn icon-btn btn-sm btn-outline-secondary" title="상세">
+			               	 	<span class="ion ion-ios-paper d-block"></span>			               	 
+			               	</a>
+	                    </td> 
+	                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>          
+    </div>
+	</th:block>
+	<!-- / Content -->
+ 	<!-- scripts -->
+	
+	<th:block layout:fragment="pageScript">
+	
+	<!-- addLibs -->
+	<script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
+	<script th:src="@{/admin/vendor/libs/numeral/numeral.js}"></script>
+	<script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
+
+	<!-- addDemo -->
+	<script th:src="@{/admin/js/book_stock_list_tables.js}"></script>
+	</th:block>
+	<!-- / scripts -->
+	          
+</html>

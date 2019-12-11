@@ -10,7 +10,7 @@
                                     <div class="navbar-brand">
                                         <h1>
                                             <a th:href="@{/}">
-                                                <img th:src="@{library/images/libraria-logo-v1.png}" alt="LIBRARIA" />
+                                                <img th:src="@{/library/images/libraria-logo-v1.png}" alt="LIFRARY" />
                                             </a>
                                         </h1>
                                     </div>
@@ -22,66 +22,24 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="topbar-info">
-                                                <a th:href="@{tel:+61-3-8376-6284}"><i class="fa fa-phone"></i>+61-3-8376-6284</a>
+                                                <a th:href="@{tel:063-717-1008}"><i class="fa fa-phone"></i>063-717-1008</a>
                                                 <span>/</span>
                                                 <a th:href="@{mailto:support@libraria.com}"><i class="fa fa-envelope"></i>support@libraria.com</a>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="topbar-links">
-                                                <a th:href="@{/signin}"><i class="fa fa-lock"></i>Login / Register</a>
-                                                <span>|</span>
-                                                <div class="header-cart dropdown">
-                                                    <a data-toggle="dropdown" class="dropdown-toggle" th:href="@{#}">
-                                                        <i class="fa fa-shopping-cart"></i>
-                                                        <small>0</small>
-                                                    </a>
-                                                    <div class="dropdown-menu cart-dropdown">
-                                                        <ul>
-                                                            <li class="clearfix">
-                                                                <img th:src="@{library/images/header-cart-image-01.jpg}" alt="cart item" />
-                                                                <div class="item-info">
-                                                                    <div class="name">
-                                                                        <a th:href="@{#}">The Great Gatsby</a>
-                                                                    </div>
-                                                                    <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                                    <div class="price">1 X $10.00</div>
-                                                                </div>
-                                                                <a class="remove" href="#"><i class="fa fa-trash-o"></i></a>
-                                                            </li>
-                                                            <li class="clearfix">
-                                                                <img th:src="@{library/images/header-cart-image-02.jpg}" alt="cart item" />
-                                                                <div class="item-info">
-                                                                    <div class="name">
-                                                                        <a th:href="@{#}">The Great Gatsby</a>
-                                                                    </div>
-                                                                    <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                                    <div class="price">1 X $10.00</div>
-                                                                </div>
-                                                                <a class="remove" th:href="@{#}"><i class="fa fa-trash-o"></i></a>
-                                                            </li>
-                                                            <li class="clearfix">
-                                                                <img th:src="@{library/images/header-cart-image-03.jpg}" alt="cart item" />
-                                                                <div class="item-info">
-                                                                    <div class="name">
-                                                                        <a href="#">The Great Gatsby</a>
-                                                                    </div>
-                                                                    <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                                    <div class="price">1 X $10.00</div>
-                                                                </div>
-                                                                <a class="remove" th:href="@{#}"><i class="fa fa-trash-o"></i></a>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="cart-total">
-                                                            <div class="title">SubTotal</div>
-                                                            <div class="price">$30.00</div>
-                                                        </div>
-                                                        <div class="cart-buttons">
-                                                            <a th:href="@{cart.html}" class="btn btn-dark-gray">View Cart</a>
-                                                            <a th:href="@{checkout.html}" class="btn btn-primary">Checkout</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            
+                                            <th:block th:if="${session.SID == null}">
+	                                            <!-- 세션 여기서 나누기. fa fa-user(유저 아이콘) [[${id}]]님 반갑습니다.   -->
+	                                                <a th:href="@{/lifraryLogin}"><i class="fa fa-lock"></i>로그인</a>	                                                
+                                            </th:block>
+                                            
+                                            <th:block th:unless="${session.SID == null}">
+	                                               <a><i class="fa fa-unlock"></i></a><span>[[${session.SID}]]님 반갑습니다. &emsp; 권한 : [[${session.SDIV}]]</span>&emsp;&emsp; 
+	                                                <a th:href="@{/lifraryLogout}">로그아웃</a>                           
+                                            </th:block>
+                                            
                                             </div>
                                         </div>
                                     </div>
@@ -91,7 +49,7 @@
                                     <ul class="nav navbar-nav">
                                         <!-- 검색 -->
                                         <li class="dropdown active">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">1.검색</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifrary/bookDataSearch}">1.검색</a>
                                         </li>
                                         
                                         <!-- 인기도서 -->
@@ -106,42 +64,42 @@
                                         
                                         <!-- 프로그램 -->
                                         <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">3.프로그램</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifraryProgramSearchList}">3.프로그램</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{news-events-list-view.html}">#프로그램 신청</a></li>
+                                                <li><a th:href="@{/lifraryProgramSearchList}">#프로그램 신청</a></li>
                                             </ul>
                                         </li>
                                         <!-- 게시판 -->
                                         <li class="dropdown">
                                             <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">4.게시판</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{#}">#공지사항</a></li>
-                                                <li><a th:href="@{#}">#문의</a></li>
-                                                <li><a th:href="@{#}">#독후감</a></li>
+                                                <li><a th:href="@{#}">공지사항</a></li>
+                                                <li><a th:href="@{#}">문의</a></li>
+                                                <li><a th:href="@{#}">독후감</a></li>
                                             </ul>
                                         </li>
                                         <!--  공공시설  -->
                                         <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">5.공공시설</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifraryReadingRoom}">5.공공시설</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{#}">#열람실</a></li>
-                                                <li><a th:href="@{#}">#스터디룸</a></li>
-                                                <li><a th:href="@{#}">#강연실</a></li>
-                                                <li><a th:href="@{#}">#사물함</a></li>
+                                                <li><a th:href="@{/lifraryReadingRoom}">열람실</a></li>
+                                                <li><a th:href="@{/lifraryStudyRoom}">스터디룸</a></li>
+                                                <li><a th:href="@{/lifraryLectureRoom}">강연실</a></li>
+                                                <li><a th:href="@{/lifraryLocker}">사물함</a></li>
                                             </ul>
                                         </li>
-                                        <li><a th:href="@{#}">6.도서관 소개</a></li>
+                                        <li><a th:href="@{#}">도서관 소개</a></li>
                                         <!-- 마이페이지 -->
                                         <li class="dropdown">
                                             <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">7.마이페이지</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{#}">#내 정보</a></li>
-                                                <li><a th:href="@{#}">#내 도서현황</a></li>
-                                                <li><a th:href="@{#}">#북 다이어리</a></li>
-                                                <li><a th:href="@{#}">#내 서재</a></li>
-                                                <li><a th:href="@{#}">#내 프로그램 신청 내역</a></li>
-                                                <li><a th:href="@{#}">#내 공공시설 신청 내역</a></li>
-                                                <li><a th:href="@{#}">#희망도서 신청 내역</a></li>
+                                                <li><a th:href="@{#}">내 정보</a></li>
+                                                <li><a th:href="@{#}">내 도서현황</a></li>
+                                                <li><a th:href="@{#}">북 다이어리</a></li>
+                                                <li><a th:href="@{#}">내 서재</a></li>
+                                                <li><a th:href="@{#}">내 프로그램 신청 내역</a></li>
+                                                <li><a th:href="@{#}">내 공공시설 신청 내역</a></li>
+                                                <li><a th:href="@{#}">희망도서 신청 내역</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -158,11 +116,11 @@
                                     </li>
                                     <!-- 검색 -->
                                     <li>
-                                        <a th:href="@{index-2.html}">1.검색</a>
+                                        <a th:href="@{/lifrary/bookDataSearch}">1.검색</a>
                                     </li>
                                     <!-- 인기도서 -->
                                     <li>
-                                        <a th:href="@{#}">2.인기도서</a>
+                                        <a href="javascript:void(0)">2.인기도서</a>
                                         <ul>
                                             <li><a th:href="@{#}">#인기도서</a></li>
                                             <li><a th:href="@{#}">#신착도서</a></li>
@@ -171,9 +129,9 @@
                                     </li>
                                      <!-- 프로그램 -->
                                     <li>
-                                        <a th:href="@{#}">3.프로그램</a>
+                                        <a th:href="@{/lifraryProgramSearchList}">3.프로그램</a>
                                         <ul>
-                                            <li><a th:href="@{#}">#프로그램 신청</a></li>
+                                            <li><a th:href="@{/lifraryProgramSearchList}">#프로그램 신청</a></li>
                                         </ul>
                                     </li>
                                      <!-- 게시판 -->
@@ -187,12 +145,12 @@
                                     </li>
                                     <!-- 공공시설 -->
                                     <li>
-                                        <a th:href="@{#}">5.공공시설</a>
+                                        <a th:href="@{/readingRoom}">5.공공시설</a>
                                         <ul>
-                                            <li><a th:href="@{#}">#열람실</a></li>
-                                            <li><a th:href="@{#}">#스터디룸</a></li>
-                                            <li><a th:href="@{#}">#강연실</a></li>
-                                            <li><a th:href="@{#}">#사물함</a></li>
+                                           <li><a th:href="@{/lifraryReadingRoom}">#열람실</a></li>
+                                           <li><a th:href="@{/lifraryStudyRoom}">#스터디룸</a></li>
+                                           <li><a th:href="@{/lifraryLectureRoom}">#강연실</a></li>
+                                           <li><a th:href="@{/lifraryLocker}">#사물함</a></li>
                                         </ul>
                                     </li>
                                     <!-- 도서관 소개 -->

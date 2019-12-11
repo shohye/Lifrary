@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+	  
+	  <th:block layout:fragment="adminHeadAdd">
+	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
+ 	  </th:block>
+ 
+ 
+  <!-- Content -->
+         <th:block layout:fragment="adminContents">
+         	<div class="layout-content">
+         		<div class="container-fluid flex-grow-1 container-p-y" >
+        
+         			<div th:with="s=${stockDetail}" class="media align-items-center py-3 mb-3">
+		              <img th:src="${s.bookInformation.biImg}" alt="" class="d-block ui-w-100 rounded-circle">
+		              <div class="media-body ml-4" > 
+		                <h4 class="font-weight-bold mb-0" th:text="${s.bookInformation.biName}"></h4>
+		                <div class="text-muted mb-2">등록자:
+		                	<span th:text="${s.uId}"></span>
+		                </div>
+		                <a th:href="@{/admin/stockDetailUpdate(bsCode=${s.bsCode})}" class="btn btn-primary btn-sm">수정</a>&nbsp;
+		                <a href="javascript:void(0)" class="btn btn-default btn-sm">삭제</a>&nbsp;
+		                
+		              </div>
+		            </div>
+		            <div class="card mb-4">
+		              <div class="card-body">
+		                <table th:with="s=${stockDetail}" class="table user-view-table m-0" > <!-- th:with="m = ${#}" -->
+		                  <tbody>
+		                    <tr>
+		                      <td>도서코드:</td><td th:text="${s.bsCode}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>ISBN:</td><td th:text="${s.bookInformation.biIsbn}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>청구기호:</td><td th:text="${s.bsCallNum}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>대분류:</td><td th:text="${s.bookCate.bclName}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>중분류:</td><td th:text="${s.bookCate.bcmName}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>저자:</td><td th:text="${s.bookInformation.biAuthor}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>발행자:</td><td th:text="${s.bookInformation.biPublisher}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>발행년도:</td><td th:text="${s.bookInformation.biYear}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>총페이지수:</td><td th:text="|${s.bsTotalPage}p|"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>상세내용:</td><td th:text="${s.bookInformation.biDtail}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>반입구:</td><td th:text="${s.bsCarryRoute}"></td>
+		                    </tr>
+		                    
+		                    <tr>
+		                      <td>책상태:</td>
+		                      <td>
+		                      	 <button th:if="${s.bsBookState eq '정상'}" type="button" class="btn btn-xs btn-outline-primary">[[${s.bsBookState}]]</button>
+				      			 <button th:unless="${s.bsBookState eq '정상'}" type="button" class="btn btn-xs btn-outline-success">[[${s.bsBookState}]]</button>		                      
+		                      </td>
+		                    </tr>
+		                    <tr>
+		                      <td>대출가능상태:</td>
+		                      <td>
+		                      	  <button th:if="${s.bsLendState eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">대출가능</button>
+				      			  <button th:unless="${s.bsLendState eq 'O'}" type="button" class="btn btn-xs btn-outline-success">대출불가</button>
+		                      </td>
+		                    </tr>
+		                    <tr>
+		                      <td>등록일자:</td><td th:text="${s.bsDate}"></td>
+		                    </tr>
+		                
+		                  </tbody>
+		                </table>
+		              </div>
+		              
+		              
+		            </div>
+         	
+    
+         		</div>
+         	</div>
+
+          </th:block>
+          
+          <!-- / Content -->
+         
+          <!-- script -->
+          <th:block layout:fragment="pageScript">
+
+		  <!-- addLibs -->
+		  <script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		
+		  <!-- addDemo -->
+		  <script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
+		  </th:block>
+  		  <!-- /script -->
+  		  
+  		  
+          
+</html>

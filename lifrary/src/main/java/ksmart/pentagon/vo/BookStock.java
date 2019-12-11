@@ -23,7 +23,15 @@ public class BookStock {
 	private String bsDeleteReason;
 	private String bsDeleteDate;
 	private BookInformation bookInformation;
+	private BookCate bookCate;
 	private BookLend booklLend;
+	
+	public BookCate getBookCate() {
+		return bookCate;
+	}
+	public void setBookCate(BookCate bookCate) {
+		this.bookCate = bookCate;
+	}
 	public String getBsCode() {
 		return bsCode;
 	}
@@ -82,6 +90,7 @@ public class BookStock {
 		return bsSecondaryMark;
 	}
 	public void setBsSecondaryMark(String bsSecondaryMark) {
+		System.out.println("setBsSecondaryMark=>"+bsSecondaryMark);
 		this.bsSecondaryMark = bsSecondaryMark;
 	}
 	public String getBsTotalPage() {
@@ -102,12 +111,7 @@ public class BookStock {
 	public void setBsBookState(String bsBookState) {
 		this.bsBookState = bsBookState;
 	}
-	public String getBsLendState() {
-		return bsLendState;
-	}
-	public void setBsLendState(String bsLendState) {
-		this.bsLendState = bsLendState;
-	}
+
 	public String getBsCarryRoute() {
 		return bsCarryRoute;
 	}
@@ -150,12 +154,21 @@ public class BookStock {
 	public void setBookInformation(BookInformation bookInformation) {
 		this.bookInformation = bookInformation;
 	}
+	public String getBsLendState() {
+		return bsLendState;
+	}
+	public void setBsLendState(String bsLendState) {
+		this.bsLendState = bsLendState;
+	}
 	public BookLend getBooklLend() {
 		return booklLend;
 	}
 	public void setBooklLend(BookLend booklLend) {
 		this.booklLend = booklLend;
 	}
-
+	
+	
+	
+	
 	
 }
