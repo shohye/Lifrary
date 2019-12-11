@@ -60,7 +60,7 @@ public class AdminController {
 		System.out.println(uList + " <<== adminService.getUserList() ");
 		model.addAttribute("uList",uList);
 		
-		return "/adminPage/userManagement/userSearchList";
+		return "/adminpage/userManagement/userSearchList";
 	}
 	
 	//전체회원리스트
@@ -69,7 +69,7 @@ public class AdminController {
 		System.out.println(" getUserSearch 전체회원리스트  @PostMapping");
 		model.addAttribute("uList", adminService.getUserSearch());
 	
-		return "/adminPage/userManagement/userSearchList";
+		return "/adminpage/userManagement/userSearchList";
 	}
 	
    //회원수정처리
@@ -78,7 +78,7 @@ public class AdminController {
 		System.out.println("getAdminUserUpdate @GetMapping 회원수정 처리 (Id로 업데이트)"); 
 		model.addAttribute("uUpdate", adminService.getAdminUserUpdate(uId));
 		
-		return "/adminPage/userManagement/adminUserUpdate"; 
+		return "/adminpage/userManagement/adminUserUpdate"; 
 	}
 	
 	//회원수정화면
@@ -93,33 +93,33 @@ public class AdminController {
 		
 		
 	//회원등급등록화면
-   @GetMapping("/userLevelInsert") 
+   @GetMapping("/admin/userLevelInsert") 
    public String userAuthorityInsert() {
 	  System.out.println("userLevelInsert 회원등급등록화면 "); 
 	  
-	  return "/adminPage/userManagement/userLevelInsert";
+	  return "/adminpage/userManagement/userLevelInsert";
 	  }
 
    	//사서 전체 리스트
-	@GetMapping("/librarianSearchList")
+	@GetMapping("/admin/librarianSearchList")
 	public String librarianSearchList(Model model) { 
 		 System.out.println("librarianSearchList 전체사서리스트 ");
 	 
-	  return "/adminPage/librarian/librarianSearchList"; }
+	  return "/adminpage/librarian/librarianSearchList"; }
 	 
 	//사서 등록 
-	@GetMapping("/librarianInsert") 
+	@GetMapping("/admin/librarianInsert") 
     public String librarianInsert() {
       System.out.println("librarianInsert 사서등록 "); 
-      return "/adminPage/librarian/librarianInsert";
+      return "/adminpage/librarian/librarianInsert";
      }
    
 	//사서 등록
-	@PostMapping("/librarianInsert")
+	@PostMapping("/admin/librarianInsert")
     public String librarianInsert(LibrarianLevel librarianLevel, Model model) {
 	   System.out.println(librarianLevel + " ==> librarianInsert librarianLevel");
 	   
-	   return "redirect:/adminPage/librarian/librarianInsert";
+	   return "redirect:/adminpage/librarian/librarianInsert";
    } 
 	
 		
