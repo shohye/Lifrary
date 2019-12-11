@@ -4,12 +4,12 @@ public class UserLevel {
 	private String ulLevel;
 	private String lCode;
 	private String uId;
+	private String ulName;
 	private int ulMin;
 	private int ulMax;
 	private int ulLendNum;
 	private int ulLendDay;
 	private String ulDate;
-	
 	
 	public String getUlLevel() {
 		return ulLevel;
@@ -28,6 +28,12 @@ public class UserLevel {
 	}
 	public void setuId(String uId) {
 		this.uId = uId;
+	}
+	public String getUlName() {
+		return ulName;
+	}
+	public void setUlName(String ulName) {
+		this.ulName = ulName;
 	}
 	public int getUlMin() {
 		return ulMin;

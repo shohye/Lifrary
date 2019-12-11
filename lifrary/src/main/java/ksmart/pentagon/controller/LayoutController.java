@@ -11,7 +11,7 @@ public class LayoutController {
 		return "librarypage/index";
 	}
 
-	@GetMapping("/adminIndex")
+	@GetMapping("/admin/index")
 	public String adminIndex() {
 		return "adminpage/index";
 	}

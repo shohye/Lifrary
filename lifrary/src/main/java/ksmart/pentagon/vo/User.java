@@ -1,11 +1,16 @@
+
 package ksmart.pentagon.vo;
 
 public class User {
 	private String uId;
 	private String lCode;
 	private String ulLevel;
+	private String ulName;
 	private String uDivision;
 	private String uasCode;
+	private String uasName;
+	private String uasLendLimit;
+	private String uasFacilityLimit;
 	private String uNumber;
 	private String uPw;
 	private String uName;
@@ -17,6 +22,10 @@ public class User {
 	private String uAppointment;
 	private int uOverdueDay;
 	private String uDate;
+	private String uAuthorityDate;
+	private int uLendCnt;
+	private UserLevel userLevel;
+
 	public String getuId() {
 		return uId;
 	}
@@ -35,6 +44,12 @@ public class User {
 	public void setUlLevel(String ulLevel) {
 		this.ulLevel = ulLevel;
 	}
+	public String getUlName() {
+		return ulName;
+	}
+	public void setUlName(String ulName) {
+		this.ulName = ulName;
+	}
 	public String getuDivision() {
 		return uDivision;
 	}
@@ -46,6 +61,24 @@ public class User {
 	}
 	public void setUasCode(String uasCode) {
 		this.uasCode = uasCode;
+	}
+	public String getUasName() {
+		return uasName;
+	}
+	public void setUasName(String uasName) {
+		this.uasName = uasName;
+	}
+	public String getUasLendLimit() {
+		return uasLendLimit;
+	}
+	public void setUasLendLimit(String uasLendLimit) {
+		this.uasLendLimit = uasLendLimit;
+	}
+	public String getUasFacilityLimit() {
+		return uasFacilityLimit;
+	}
+	public void setUasFacilityLimit(String uasFacilityLimit) {
+		this.uasFacilityLimit = uasFacilityLimit;
 	}
 	public String getuNumber() {
 		return uNumber;
@@ -113,14 +146,22 @@ public class User {
 	public void setuDate(String uDate) {
 		this.uDate = uDate;
 	}
-	
-	@Override
-	public String toString() {
-		return "User [uId=" + uId + ", lCode=" + lCode + ", ulLevel=" + ulLevel + ", uDivision=" + uDivision
-				+ ", uasCode=" + uasCode + ", uNumber=" + uNumber + ", uPw=" + uPw + ", uName=" + uName + ", uBirth="
-				+ uBirth + ", uAddr=" + uAddr + ", uTel=" + uTel + ", uEmail=" + uEmail + ", uEmailAgree=" + uEmailAgree
-				+ ", uAppointment=" + uAppointment + ", uOverdueDay=" + uOverdueDay + ", uDate=" + uDate + "]";
+	public String getuAuthorityDate() {
+		return uAuthorityDate;
 	}
-	
-	
+	public void setuAuthorityDate(String uAuthorityDate) {
+		this.uAuthorityDate = uAuthorityDate;
+	}
+	public int getuLendCnt() {
+		return uLendCnt;
+	}
+	public void setuLendCnt(int uLendCnt) {
+		this.uLendCnt = uLendCnt;
+	}
+	public UserLevel getUserLevel() {
+		return userLevel;
+	}
+	public void setUserLevel(UserLevel userLevel) {
+		this.userLevel = userLevel;
+	}
 }
