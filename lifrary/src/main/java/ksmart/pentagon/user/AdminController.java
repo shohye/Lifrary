@@ -53,51 +53,53 @@ public class AdminController {
 		return "/adminPage/userManagement/userSearchList";
 	}
 	
-	   //회원수정처리
-		@GetMapping("/adminUserUpdate") 
-		public String getAdminUserUpdate(@RequestParam(value = "uId") String uId, Model model) {
-			System.out.println("getAdminUserUpdate @GetMapping 회원수정 처리 (Id로 업데이트)"); 
-			model.addAttribute("uUpdate", adminService.getAdminUserUpdate(uId));
-			
-			return "/adminPage/userManagement/adminUserUpdate"; 
-		}
+   //회원수정처리
+	@GetMapping("/adminUserUpdate") 
+	public String getAdminUserUpdate(@RequestParam(value = "uId") String uId, Model model) {
+		System.out.println("getAdminUserUpdate @GetMapping 회원수정 처리 (Id로 업데이트)"); 
+		model.addAttribute("uUpdate", adminService.getAdminUserUpdate(uId));
 		
-		//회원수정화면
-		@PostMapping("/adminUserUpdate")
-		public String adminUserUpdate(User user) {
-			System.out.println("adminUserUpdate @PostMapping 회원수정 화면 ");
-			System.out.println(user.toString() + "<==== user ");
-			adminService.adminUserUpdate(user);
-			
-			return "redirect:/userSearchList";
-		}
-		
-		//회원등급등록화면
-		   @GetMapping("/userLevelInsert") 
-		   public String userAuthorityInsert() {
-			  System.out.println("userLevelInsert 회원등급등록화면 "); 
-			  
-			  return "/adminPage/userManagement/userLevelInsert";
-			  }
+		return "/adminPage/userManagement/adminUserUpdate"; 
+	}
 	
-			@GetMapping("/librarianSearchList")
-			public String librarianSearchList(Model model) { 
-				 System.out.println("librarianSearchList 전체사서리스트 ");
-			 
-			  return "/adminPage/librarian/librarianSearchList"; }
-			 
-			
-			@GetMapping("/librarianInsert") 
-		    public String librarianInsert() {
-		      System.out.println("librarianInsert 사서등록 "); 
-		      return "/adminPage/librarian/librarianInsert";
-		     }
-		   
-			@PostMapping("/librarianInsert")
-		    public String librarianInsert(LibrarianLevel librarianLevel, Model model) {
-			   System.out.println(librarianLevel + " ==> librarianInsert librarianLevel");
-			   
-			   return "redirect:/adminPage/librarian/librarianInsert";
-		   } 
-			
+	//회원수정화면
+	@PostMapping("/adminUserUpdate")
+	public String adminUserUpdate(User user) {
+		System.out.println("adminUserUpdate @PostMapping 회원수정 화면 ");
+		System.out.println(user.toString() + "<==== user ");
+		adminService.adminUserUpdate(user);
+		
+		return "redirect:/userSearchList";
+	}
+		
+	//회원등급등록화면
+   @GetMapping("/userLevelInsert") 
+   public String userAuthorityInsert() {
+	  System.out.println("userLevelInsert 회원등급등록화면 "); 
+	  
+	  return "/adminPage/userManagement/userLevelInsert";
+	  }
+
+   	//사서 전체 리스트
+	@GetMapping("/librarianSearchList")
+	public String librarianSearchList(Model model) { 
+		 System.out.println("librarianSearchList 전체사서리스트 ");
+	 
+	  return "/adminPage/librarian/librarianSearchList"; }
+	 
+	//사서 등록 
+	@GetMapping("/librarianInsert") 
+    public String librarianInsert() {
+      System.out.println("librarianInsert 사서등록 "); 
+      return "/adminPage/librarian/librarianInsert";
+     }
+   
+	//사서 등록
+	@PostMapping("/librarianInsert")
+    public String librarianInsert(LibrarianLevel librarianLevel, Model model) {
+	   System.out.println(librarianLevel + " ==> librarianInsert librarianLevel");
+	   
+	   return "redirect:/adminPage/librarian/librarianInsert";
+   } 
+	
 }
