@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Start: Program Search Section -->
+    <section class="search-filters" th:fragment="programSearchSectionFragment">
+        <div class="filter-box">
+            <h3>프로그램 검색  (행사 &amp; 강좌)</h3>
+            <form action="http://libraria.demo.presstigers.com/news-events-detail.html" method="get">
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <label class="sr-only" for="keywords">키워드를 입력해주세요</label>
+                                <input class="form-control" placeholder="키워드를 입력해주세요" id="keywords" name="keywords" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-3">
+                            <div class="form-group">
+                                <select name="category" id="category" class="form-control">
+                                    <option>전체 카테고리</option>
+                                    <option>Category 01</option>
+                                    <option>Category 02</option>
+                                    <option>Category 03</option>
+                                    <option>Category 04</option>
+                                    <option>Category 05</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-3">
+                            <div class="form-group">
+                                <select name="locations" id="locations" class="form-control">
+                                    <option>전체 지역</option>
+                                    <option>Location 01</option>
+                                    <option>Location 02</option>
+                                    <option>Location 03</option>
+                                    <option>Location 04</option>
+                                    <option>Location 05</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <select name="startdate" id="startdate" class="form-control">
+                                            <option>시작</option>
+                                            <option>Start Date 01</option>
+                                            <option>Start Date 02</option>
+                                            <option>Start Date 03</option>
+                                            <option>Start Date 04</option>
+                                            <option>Start Date 05</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <select name="enddate" id="enddate" class="form-control">
+                                            <option>종료</option>
+                                            <option>End Date 01</option>
+                                            <option>End Date 02</option>
+                                            <option>End Date 03</option>
+                                            <option>End Date 04</option>
+                                            <option>End Date 05</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-md-4 col-sm-3">
+                            <div class="form-group">
+                                <select name="agegroup" id="agegroup" class="form-control">
+                                    <option>연령별</option>
+                                    <option>Age Group 01</option>
+                                    <option>Age Group 02</option>
+                                    <option>Age Group 03</option>
+                                    <option>Age Group 04</option>
+                                    <option>Age Group 05</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-3">
+                            <div class="form-group">
+                                <select name="language" id="language" class="form-control">
+                                    <option>언어</option>
+                                    <option>Language 01</option>
+                                    <option>Language 02</option>
+                                    <option>Language 03</option>
+                                    <option>Language 04</option>
+                                    <option>Language 05</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="row">
+                         
+                        <div class="col-md-12 col-sm-6">
+                            <div class="form-group">
+                                <input class="form-control" type="submit" value="찾기">
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="clear"></div>
+    </section>
+    <!-- End: Program Search Section -->
+</html>
