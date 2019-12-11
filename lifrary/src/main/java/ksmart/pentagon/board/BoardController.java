@@ -1,22 +1,31 @@
 package ksmart.pentagon.board;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ksmart.pentagon.vo.Board;
 
 @Controller
 public class BoardController {
 	
+	@Autowired BoardService boardService;
 	//공지사항 리스트화면이동
 	@GetMapping("/adminNoticeSearchList")
-	public String adminNoticeSearchList() {
+	public String adminNoticeSearchList(Model model) {
 		System.out.println("공지사항리스트 컨트롤러  /adminNoticeSearchList ##Mapping경로 ");
+		List<Board> boardList = boardService.getBoard();
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		System.out.println("boardList : "+boardList);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		model.addAttribute("boardList", boardList);
 		return "adminpage/board/noticeSearchList";
 	}
 	
@@ -24,6 +33,7 @@ public class BoardController {
 	@GetMapping("/adminNoticeInsert")
 	public String adminNoticeInsert() {
 		System.out.println("공지사항 등록 컨트롤러  /adminNoticeInsert ##Mapping경로 ");
+		
 		return "adminpage/board/noticeInsert";
 	}
 	
@@ -55,7 +65,14 @@ public class BoardController {
 		System.out.println("사서 문의 리스트 컨트롤러 /adminInquirySearchList ##Mapping경로");
 		return "adminpage/board/adminInquirySearchList";
 	}
-	
+	@GetMapping("/list1")
+	public String list(@RequestParam(value="b01",required=false) String b01,Model model) {
+		System.out.println("@@@list : " + b01);
+		System.out.println("공지사항리스트 컨트롤러  /adminNoticeSearchList ##Mapping경로 ");
+		List<Board> boardList = boardService.getBoard();
+		model.addAttribute("boardList", boardList);
+		return "adminpage/board/noticeSearchList";
+	}
 	
 	
 	

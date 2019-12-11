@@ -4,22 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  	<mapper namespace="ksmart.pentagon.board.BoardMapper">
  		<resultMap type="ksmart.pentagon.vo.Board" id="boardNoticeList">
- 			<result property="boardCode" column=""/>
- 			<result property="lCode" column=""/>
- 			<result property="uId" column=""/>
- 			<result property="boardICode" column=""/>
- 			<result property="boardMCode" column=""/>
- 			<result property="boardTitle" column=""/>
- 			<result property="boardPw" column=""/>
- 			<result property="boardContent" column=""/>
- 			<result property="boardOpen" column=""/>
- 			<result property="boardPageView" column=""/>
- 			<result property="boardDate" column=""/>
+ 			<result property="boardCode" column="board_code"/>
+ 			<result property="lCode" column="l_code"/>
+ 			<result property="uId" column="u_id"/>
+ 			<result property="boardICode" column="board_l_code"/>
+ 			<result property="boardMCode" column="board_m_code"/>
+ 			<result property="boardTitle" column="board_title"/>
+ 			<result property="boardPw" column="board_pw"/>
+ 			<result property="boardContent" column="board_content"/>
+ 			<result property="boardOpen" column="board_open"/>
+ 			<result property="boardPageView" column="board_page_view"/>
+ 			<result property="boardDate" column="board_date"/>
  		</resultMap>
   	<select id="getBoard" resultMap="boardNoticeList">
   		SELECT
   			*
-  		FROM 
+  		FROM board
   	</select>
   
   

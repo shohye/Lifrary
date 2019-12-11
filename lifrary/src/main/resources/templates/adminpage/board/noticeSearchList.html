@@ -32,12 +32,12 @@
 	                  </tr>
 	                </thead>
 	                <tbody>
-	                  <tr>
-	                  	<td>1</td>
-	                  	<td>2</td>
-	                  	<td>3</td>
-	                  	<td>4</td>
-	                  	<td>5</td>
+	                  <tr data-th-each="l : ${boardList}">
+	                  	<td></td>
+	                  	<td><a th:href="@{/list(b01=${l.boardCode})}">[[${l.boardTitle}]]</a></td>
+	                  	<td th:text="${l.uId}"></td>
+	                  	<td th:text="${l.boardPageView}"></td>
+	                  	<td th:text="${l.boardDate}"></td>
 	                  </tr>
 	                </tbody>
 	              </table>
