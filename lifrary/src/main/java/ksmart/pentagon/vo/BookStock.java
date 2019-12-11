@@ -22,9 +22,9 @@ public class BookStock {
 	private String bsDeleteId;
 	private String bsDeleteReason;
 	private String bsDeleteDate;
-	
 	private BookInformation bookInformation;
 	private BookCate bookCate;
+	private BookLend booklLend;
 	
 	public BookCate getBookCate() {
 		return bookCate;
@@ -111,12 +111,7 @@ public class BookStock {
 	public void setBsBookState(String bsBookState) {
 		this.bsBookState = bsBookState;
 	}
-	public String getBsLendState() {
-		return bsLendState;
-	}
-	public void setBsLendState(String bsLendState) {
-		this.bsLendState = bsLendState;
-	}
+
 	public String getBsCarryRoute() {
 		return bsCarryRoute;
 	}
@@ -159,18 +154,14 @@ public class BookStock {
 	public void setBookInformation(BookInformation bookInformation) {
 		this.bookInformation = bookInformation;
 	}
-	
-	@Override
-	public String toString() {
-		return "BookStock [bsCode=" + bsCode + ", lCode=" + lCode + ", uId=" + uId + ", bclCode=" + bclCode
-				+ ", bcmCode=" + bcmCode + ", biIsbn=" + biIsbn + ", bsCallNum=" + bsCallNum + ", bsAliasMark="
-				+ bsAliasMark + ", bsWriterMark=" + bsWriterMark + ", bsSecondaryMark=" + bsSecondaryMark
-				+ ", bsTotalPage=" + bsTotalPage + ", bsStockState=" + bsStockState + ", bsBookState=" + bsBookState
-				+ ", bsLendState=" + bsLendState + ", bsCarryRoute=" + bsCarryRoute + ", bsDate=" + bsDate
-				+ ", bsDelete=" + bsDelete + ", bsDeleteId=" + bsDeleteId + ", bsDeleteReason=" + bsDeleteReason
-				+ ", bsDeleteDate=" + bsDeleteDate + ", bookInformation=" + bookInformation + ", bookCate=" + bookCate
-				+ "]";
+	public String getBsLendState() {
+		return bsLendState;
 	}
+	public void setBsLendState(String bsLendState) {
+		this.bsLendState = bsLendState;
+	}
+	
+	
 	
 	
 	
