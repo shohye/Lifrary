@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+	  
+<!-- headAdd(Libs&page) -->
+  
+	  <th:block layout:fragment="adminHeadAdd">
+	  
+	  <!-- addLibs -->
+	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/select.dataTables.min.css}">
+	  <!-- addPage -->
+	  
+	    <script th:src="@{/admin/vendor/js/jquery-3.3.1.min.js}"></script>
+	    <script th:src="@{/admin/vendor/js/jquery.dataTables.js}"></script>
+	    <script th:src="@{/admin/vendor/js/dataTables.responsive.min.js}"></script>
+	    <script th:src="@{/admin/vendor/js/dataTables.buttons.min.js}"></script>
+		<script th:src="@{/admin/vendor/js/buttons.html5.min.js}"></script>
+		<script th:src="@{/admin/js/tables_datatables_order.js}"></script>
+	   
+	     
+	 
+	  </th:block>
+	  
+<!-- /headAdd(Libs&page) --> 
+ 
+ 
+  <!-- Content -->
+         <th:block layout:fragment="adminContents">
+         
+            <!-- DataTable within card -->
+
+            <div class="card">
+              <h3 class="card-header">
+                	주문 도서 리스트
+              </h3>
+              <div class="card-datatable table-responsive">
+                <table id="myTable" class="datatables-demo table table-striped table-bordered">
+                
+               
+                
+                  <thead>
+                    <tr>
+                      <th data-orderable="false">ISBN</th>
+                      <th>도서명</th>
+                      <th>저자명</th>
+                      <th>발행자</th>
+                      <th>발행년도</th>
+                      <th>주문업체명</th>
+                      <th>주문권수</th>
+                      <th>결제가격</th>
+                      <th>주문상태</th>
+                      <th>주문등록일</th>
+                      <th>수정/삭제</th>                 
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+				    <tr th:each="ol : ${orderList}">
+				      <td class="align-middle" th:text="${ol.bookInformation.biIsbn}"></td>
+				      <td class="align-middle" th:text="${#strings.abbreviate(ol.bookInformation.biName,17)}"></td>
+				      <td class="align-middle" th:text="${#strings.abbreviate(ol.bookInformation.biAuthor,10)}"></td>
+				      <td class="align-middle" th:text="${ol.bookInformation.biPublisher}"></td>
+				      <td class="align-middle" th:text="${ol.bookInformation.biYear}"></td>
+				      <td class="align-middle" th:text="${ol.boCompany}"></td>
+				      <td class="align-middle" th:text="${ol.boBookNum}"></td>
+				      <td class="align-middle" th:text="${ol.boPrice}"></td>
+				      <td> 
+				      <button th:if="${ol.bosState eq '수령완료'}" type="button" class="btn btn-xs btn-outline-primary">[[${ol.bosState}]]</button>
+				      <button th:unless="${ol.bosState eq '수령완료'}" type="button" class="btn btn-xs btn-outline-success">[[${ol.bosState}]]</button>
+				      </td>				      
+				      <td th:text="${ol.boDate}"></td>
+				      <td class="align-middle align-center">
+		               	 <a th:href="@{/admin/bookOrderUpdate(boCode=${ol.boCode})}" class="btn icon-btn btn-sm btn-outline-secondary" title="수정">
+		               	 	<span class="ion ion-ios-create d-block"></span>			               	 
+		               	 </a>
+		               	 <a th:href="@{#}" class="btn icon-btn btn-sm btn-outline-secondary" title="삭제">
+		               	 	<span class="ion ion-ios-cut d-block"></span>			               	 
+		               	 </a>
+                      </td> 	
+				    </tr>
+				  </tbody> 
+                </table>
+              </div>
+            </div>
+                        
+
+          </th:block>
+          
+          <!-- / Content -->
+         
+          <!-- script -->
+          <th:block layout:fragment="pageScript">
+
+		  <!-- addLibs -->
+		    <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script> 
+		    <script th:src="@{/admin/vendor/libs/datatables/dataTables.select.min.js}"></script>
+		
+		  <!-- addDemo -->
+		    
+		  </th:block>
+  		  <!-- /script -->
+  		  
+  		  
+          
+</html>

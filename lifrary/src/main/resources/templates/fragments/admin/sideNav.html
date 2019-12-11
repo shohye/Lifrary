@@ -30,12 +30,20 @@
 
             <ul class="sidenav-menu">
               <li class="sidenav-item">
+<<<<<<< HEAD
                 <a th:href="@{/userSearchList}" class="sidenav-link">
+=======
+                <a th:href="@{/admin/userSearchList}" class="sidenav-link">
+>>>>>>> refs/heads/develop
                   <div>!회원 관리</div>
                 </a>
               </li>
               <li class="sidenav-item">
+<<<<<<< HEAD
                 <a th:href="@{/userLevelInsert}" class="sidenav-link">
+=======
+                <a th:href="@{/admin/userLevelInsert}" class="sidenav-link">
+>>>>>>> refs/heads/develop
                   <div>!회원 등급 설정</div>
                 </a>
               </li>
@@ -54,7 +62,11 @@
             </a>
             <ul class="sidenav-menu">
               <li class="sidenav-item">
+<<<<<<< HEAD
                 <a th:href="@{/librarianInsert}" class="sidenav-link">
+=======
+                <a th:href="@{/admin/librarianInsert}" class="sidenav-link">
+>>>>>>> refs/heads/develop
                   <div>!사서 등록</div>
                 </a>
               </li>
@@ -93,6 +105,7 @@
 		  <!--Book Management -->
           <li class="sidenav-divider mb-1"></li><!-- 줄선  -->
           <li class="sidenav-header small font-weight-semibold">Book Management</li>
+             
           
           <!-- 수서 관리 -->
           <li class="sidenav-item">
@@ -103,46 +116,63 @@
             <ul class="sidenav-menu">
               <li class="sidenav-item">
                 <a th:href="@{#}" class="sidenav-link">
-                  <div>#희망도서 관리</div>
+                  <div>!희망도서 관리</div>
                 </a>
               </li>
               <li class="sidenav-item">
-                <a th:href="@{#}" class="sidenav-link">
-                  <div>#구입예정도서 관리</div>
+                <a th:href="@{/admin/bookPurchaseList}" class="sidenav-link">
+                  <div>!구입예정도서 관리</div>
                 </a>
               </li>
               <li class="sidenav-item">
-                <a th:href="@{#}" class="sidenav-link">
-                  <div>#주문도서 관리</div>
+                <a th:href="@{/admin/bookOrderList}" class="sidenav-link">
+                  <div>!주문도서 관리</div>
                 </a>
               </li>
               <li class="sidenav-item">
-                <a th:href="@{#}" class="sidenav-link">
-                  <div>기증도서 관리</div>
+                <a th:href="@{/admin/bookDonationList}" class="sidenav-link">
+                  <div>#도서 기증자 관리</div>
                 </a>
               </li>
             </ul>
           </li>
 
-          <!-- 도서 관리 -->
-          <li class="sidenav-item">
-            <a href="javascript:void(0)" class="sidenav-link sidenav-toggle"><i class="sidenav-icon fas fa-book"></i>
+
+		<!-- 도서관리 -->
+		<li class="sidenav-item">
+            <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
+              <i class="sidenav-icon ion ion-md-document"></i>
               <div>5.도서 관리</div>
             </a>
-
             <ul class="sidenav-menu">
-              <li class="sidenav-item">
-                <a th:href="@{#}" class="sidenav-link">
-                  <div>#도서 관리</div>
+              <li class="sidenav-item"> 
+                <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
+                  <div>!도서 관리</div>
                 </a>
+                <ul class="sidenav-menu"> 
+                  <li class="sidenav-item"> 
+                    <a th:href="@{/admin/stockSearchList}" class="sidenav-link">
+                      <div>!도서목록</div>
+                    </a>
+                  </li> 
+                  <li class="sidenav-item"> 
+                    <a th:href="@{#}" class="sidenav-link">
+                      <div>삭제도서 목록</div>
+                    </a>
+                  </li> 
+                </ul> 
               </li>
-              <li class="sidenav-item">
-                <a th:href="@{#}" class="sidenav-link">
+              <li class="sidenav-item"> 
+                <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
                   <div>#장서 점검</div>
                 </a>
               </li>
-            </ul>
+              </ul> 
           </li>
+     
+      
+         
+          
 
           <!-- 대출/반납/예약 관리 -->
           <li class="sidenav-item">
@@ -176,12 +206,12 @@
             <ul class="sidenav-menu">
               <li class="sidenav-item">
                 <a th:href="@{/adminNoticeSearchList}" class="sidenav-link">
-                  <div>#공지사항</div>
+                  <div>!공지사항</div>
                 </a>
               </li>
               <li class="sidenav-item">
                 <a th:href="@{/adminInquirySearchList}" class="sidenav-link">
-                  <div>#문의</div>
+                  <div>!문의</div>
                 </a>
               </li>
               <li class="sidenav-item">
@@ -215,7 +245,7 @@
           <!--  프로그램 관리 -->
           <li class="sidenav-item">
             <a href="javascript:void(0)" class="sidenav-link sidenav-toggle"><i class="sidenav-icon fas fa-chalkboard-teacher"></i>
-              <div>프로그램 관리</div>
+              <div>9.프로그램 관리</div>
             </a>
 
             <ul class="sidenav-menu">
@@ -303,7 +333,7 @@
             <ul class="sidenav-menu">
 			  
 			  <!-- 중위 메뉴 -->	
-              <li class="sidenav-item">
+              <li class="sidenav-item"> 
                 <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
                   <div>중위 메뉴1</div>
                 </a>

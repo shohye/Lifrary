@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+	 
+	          <!-- Content -->
+	      <th:block layout:fragment="adminContents">
+          <div class="container-fluid flex-grow-1 container-p-y">
+
+            <h4 class="font-weight-bold py-3 mb-4">
+              <span class="text-muted font-weight-light">Forms /</span> 구입예정 도서 등록
+            </h4>
+
+            <div class="card mb-4">
+              <div class="card-body">
+                <form id="validation-form" action="" method="post">
+                  <div class="form-group">
+	                 <div class="form-group ">
+	                   <label class="form-label" >ISBN</label>
+			            <div class="input-group">
+		                  <input type="text" class="form-control" placeholder="Search for ISBN">
+		                 
+		                  <span class="input-group-append">
+		                    <button class="btn btn-secondary" type="button">도서정보 가져오기</button>
+		                  </span>
+		                </div>        
+	                 </div>  
+	              </div>
+                  <div class="form-row">
+	                  <div class="form-group col-md-6">
+	                    <label class="form-label" >도서명</label>
+	                    <input type="text" class="form-control" name="bi_name" placeholder="bookname">
+	                   <!--  <small class="form-text text-muted">Example block-level help text here.</small> -->
+	                  </div>
+	                  <div class="form-group col-md-6">
+	                    <label class="form-label">저자명</label>
+	                    <input type="password" class="form-control" name="bi_author" placeholder="authors">
+	                  </div>
+	              </div>
+            	  <div class="form-row">
+	                 <div class="form-group col-md-6">
+	                   <label class="form-label">발행자</label>
+	                   <input type="password" class="form-control" name="bi_publisher" placeholder="publisher">
+	                 </div>
+	                 <div class="form-group col-md-6">
+	                   <label class="form-label">발행년도</label>
+	                   <input type="text" class="form-control" name="bi_year" placeholder="publication year">
+	                 </div>
+                  </div>
+                  <div class="form-row">
+	                  <div class="form-group col-md-6">
+	                    <label class="form-label">가격</label>
+	                    <input type="text" class="form-control" name="bp_price" placeholder="price">
+	                  </div>
+	                  <div class="form-group col-md-6">
+	                    <label class="form-label">구매예정권수</label>
+	                    <select class="form-control" name="bp_book_num">
+	                   		<option value="1">1</option>
+	                        <option value="2">2</option>
+	                        <option value="3">3</option>
+	                        <option value="4">4</option>
+	                        <option value="5">5</option>
+	                    </select>
+	                  </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">추가사항</label>
+                    <textarea class="form-control" name="bp_additional"></textarea>
+                  </div>
+                  
+                  <div class="text-right mt-3">
+                  	<button type="submit" class="btn btn-primary">Submit</button>
+ 				  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+          <!-- / Content -->
+	 
+  
+</html>

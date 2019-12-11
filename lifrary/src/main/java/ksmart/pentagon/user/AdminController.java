@@ -33,7 +33,7 @@ public class AdminController {
 	}
 	
 	//전체회원리스트
-	@GetMapping("/userSearchList")
+	@GetMapping("/admin/userSearchList")
 	public String userSearchList(Model model) {
 		System.out.println("userSearchList 전체회원리스트  @GetMapping ");
 		
@@ -45,7 +45,7 @@ public class AdminController {
 	}
 	
 	//전체회원리스트
-	@PostMapping("/getUserSearch")
+	@PostMapping("/admin/getUserSearch")
 	public String getUserSearch(Model model) {
 		System.out.println(" getUserSearch 전체회원리스트  @PostMapping");
 		model.addAttribute("uList", adminService.getUserSearch());
@@ -54,7 +54,7 @@ public class AdminController {
 	}
 	
    //회원수정처리
-	@GetMapping("/adminUserUpdate") 
+	@GetMapping("/admin/adminUserUpdate") 
 	public String getAdminUserUpdate(@RequestParam(value = "uId") String uId, Model model) {
 		System.out.println("getAdminUserUpdate @GetMapping 회원수정 처리 (Id로 업데이트)"); 
 		model.addAttribute("uUpdate", adminService.getAdminUserUpdate(uId));
@@ -63,7 +63,7 @@ public class AdminController {
 	}
 	
 	//회원수정화면
-	@PostMapping("/adminUserUpdate")
+	@PostMapping("/admin/adminUserUpdate")
 	public String adminUserUpdate(User user) {
 		System.out.println("adminUserUpdate @PostMapping 회원수정 화면 ");
 		System.out.println(user.toString() + "<==== user ");
@@ -71,6 +71,7 @@ public class AdminController {
 		
 		return "redirect:/userSearchList";
 	}
+		
 		
 	//회원등급등록화면
    @GetMapping("/userLevelInsert") 
@@ -101,5 +102,7 @@ public class AdminController {
 	   
 	   return "redirect:/adminPage/librarian/librarianInsert";
    } 
+	
+		
 	
 }

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+	  
+	  <th:block layout:fragment="adminHeadAdd">
+	  <link rel="stylesheet" th:href="@{/admin/vendor/libs/select2/select2.css}">
+ 	  <link rel="stylesheet" th:href="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+ 	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
+ 	  </th:block>
+ 
+ 
+  <!-- Content -->
+      <th:block layout:fragment="adminContents">
+        <div class="container-fluid flex-grow-1 container-p-y">
+
+            <h4 class="font-weight-bold py-3 mb-4">
+              	도서 상세정보 수정
+            </h4>
+
+            <div class="nav-tabs-top">
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#user-edit-account">도서정보</a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane fade active show" id="user-edit-account">
+
+                  <div class="card-body" th:with="s=${stockDetail}" >
+
+                    <div class="media align-items-center">
+                        <img th:src="${s.bookInformation.biImg}" alt="" class="d-block ui-w-80">
+                  </div>
+
+                  </div>
+                  <hr class="border-light m-0">
+                  <div class="card-body pb-2" th:with="s=${stockDetail}" >
+				    <form th:action="@{#}" id="stockDetailUpdateForm" method="post" >
+	                    <div class="form-group">
+	                      <label class="form-label">도서명</label>
+	                      <input type="text" class="form-control mb-1" name="biName" th:value="${s.bookInformation.biName}">     <!-- th:value="${#}"  -->            
+	                    </div>
+	                    <div class="form-row">
+		                    <div class="form-group col-md-6">
+		                      <label class="form-label">도서코드</label>
+		                      <input type="text" class="form-control" name="bsCode" th:value="${s.bsCode}">
+		                    </div>
+		                    <div class="form-group col-md-6">
+		                      <label class="form-label">ISBN</label>
+		                      <input type="text" class="form-control mb-1" name="biIsbn" th:value="${s.bookInformation.biIsbn}">
+		                    </div>
+		                </div>
+		                <div class="form-row">
+		                    <div class="form-group col-md-6">
+		                      <label class="form-label">저자</label>
+		                      <input type="text" class="form-control" name="biAuthor" th:value="${s.bookInformation.biAuthor}">
+		                    </div>
+		                    <div class="form-group col-md-6">
+		                      <label class="form-label">청구기호</label>
+		                      <input type="text" class="form-control mb-1" name="bsCallNum" th:value="${s.bsCallNum}">	                   
+		                    </div>
+		                </div>
+		                 <div class="form-row">
+		                    <div class="form-group col-md-6">
+		                      <label class="form-label">대분류</label>
+		                      <input type="text" class="form-control" name="biName" th:value="${s.bookCate.bclName}">
+		                    </div>
+		                    <div class="form-group col-md-6">
+		                      <label class="form-label">중분류</label>
+		                      <input type="text" class="form-control mb-1" name="biIsbn" th:value="${s.bookCate.bcmName}">
+		                    </div>
+		                </div>
+		                 <div class="form-row">
+		                    <div class="form-group col-md-6">
+		                      <label class="form-label">발행자</label>
+		                      <input type="text" class="form-control" name="biPublisher" th:value="${s.bookInformation.biPublisher}" >
+		                    </div>
+		                    <div class="form-group col-md-6">
+		                      <label class="form-label">발행년도</label>
+		                      <input type="text" class="form-control mb-1" name="biYear" th:value="${s.bookInformation.biYear}">
+		                    </div>
+		                </div>
+		                <div class="form-row">
+		                    <div class="form-group col-md-6">
+		                      <label class="form-label">총페이지</label>
+		                      <input type="text" class="form-control" name="bsTotalPage" th:value="${s.bsTotalPage}" >
+		                    </div>
+		                    <div class="form-group col-md-6">
+		                      <label class="form-label">반입구</label>
+		                      <input type="text" class="form-control mb-1" name="bsCarryRoute" th:value="${s.bsCarryRoute}">
+		                    </div>
+		                </div>
+		                <div class="form-group">
+		                    <label class="form-label">상세내용</label>
+		                    <textarea class="form-control" name="biDtail" th:text="${s.bookInformation.biDtail}"></textarea>
+	                    </div>
+	                    <div class="form-row">
+		                    <div class="form-group col-md-6">
+		   					   <p>책상태</p>	
+		                      <label class="custom-control custom-checkbox">
+	                              <input th:if="${s.bsBookState eq '정상'}" type="checkbox" class="custom-control-input" name="bsBookState" checked="">
+	                              <input th:unless="${s.bsBookState eq '정상'}" type="checkbox" class="custom-control-input" name="bsBookState" >
+	                                <span class="custom-control-label">정상</span>
+	                          </label>
+	                           <label class="form-label">
+	                            <input type="text" th:if="${s.bsBookState eq '정상'}" class="form-control" name="bsBookState" placeholder="정상이 아닌경우 작성" >
+	                            <input type="text" th:unless="${s.bsBookState eq '정상'}" class="form-control" name="bsBookState" th:placeholder="${s.bsBookState}" >
+	                           </label>
+		                    </div>
+		                    <div class="form-group col-md-6">
+		   					   <p>대출가능상태</p>	
+		                      <label class="custom-control custom-checkbox">
+	                              <input th:if="${s.bsLendState eq 'O'}" type="checkbox" class="custom-control-input" name="bsLendState" value="O" checked="">
+	                              <input th:unless="${s.bsLendState eq 'O'}" type="checkbox" class="custom-control-input" name="bsLendState" value="O">
+	                                <span class="custom-control-label">가능</span>
+	                          </label>
+	                           <label class="custom-control custom-checkbox">
+	                              <input th:if="${s.bsLendState eq 'X'}" type="checkbox" class="custom-control-input" name="bsLendState" value="X" checked="">
+	                              <input th:unless="${s.bsLendState eq 'X'}" type="checkbox" class="custom-control-input" name="bsLendState" value="X">
+	                                <span class="custom-control-label">불가능</span>
+	                          </label>
+		                    </div>	     
+		                    
+		                </div>
+		               	              
+	                 </form>     
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+
+            <div class="text-right mt-3">
+              <button type="button" class="btn btn-primary">수정</button>&nbsp;
+             
+            </div>
+
+          </div>
+      </th:block>
+          
+          <!-- / Content -->
+         
+          <!-- script -->
+          <th:block layout:fragment="pageScript">
+
+		  <!-- addLibs -->
+		  <script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		
+		  <!-- addDemo -->
+		  <script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
+		  </th:block>
+  		  <!-- /script -->
+  		  
+  		  <th:block layout:fragment="adminFootScript">
+  		  <script th:src="@{/admin/vendor/libs/select2/select2.js}"></script>
+  		  <script th:src="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+  		  
+  		  <script th:src="@{/admin/js/pages_users_edit.js}"></script>
+  		  
+  		  </th:block>
+  		  
+          
+</html>
