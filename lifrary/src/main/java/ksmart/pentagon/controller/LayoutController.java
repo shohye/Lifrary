@@ -10,6 +10,11 @@ public class LayoutController {
 	public String index() {
 		return "librarypage/index";
 	}
+	
+	@GetMapping("/intro")
+	public String intro() {
+		return "intro";
+	}
 
 	@GetMapping("/admin/index")
 	public String adminIndex() {

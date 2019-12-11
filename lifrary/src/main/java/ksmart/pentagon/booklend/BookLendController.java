@@ -18,6 +18,7 @@ import ksmart.pentagon.vo.BookStock;
 public class BookLendController {
 	@Autowired private BookLendService bookLendService;
 	
+	//대출도서리스트
 	@GetMapping("/admin/lendSearchList")
 	public String LendSearchList(Model model){
 		
@@ -25,7 +26,8 @@ public class BookLendController {
 		 
 		return "adminpage/bookLend/lendSearchList";
 	}
-		
+	
+	//도서정보검색
 	@PostMapping("/admin/lendBookInfo")
 	public String lendBookInfo(  @RequestParam(value="svBook" ) String svBook
 								,@RequestParam(value="svUser", required=false) String svUser
@@ -73,6 +75,7 @@ public class BookLendController {
 		return "redirect:/admin/lendSearchList";
 	}
 	
+	//회원정보검색
 	@PostMapping("/admin/lendUserInfo")
 	public String lendUserInfo(  @RequestParam(value="svUser" ) String svUser
 								,@RequestParam(value="svBook", required=false) String svBook
@@ -115,6 +118,7 @@ public class BookLendController {
 		return "redirect:/admin/lendSearchList";
 	}
 	
+	//예약도서리스트
 	@GetMapping("/admin/reservationSearchList")
 	public String reservationSearchList() {
 		return "/adminpage/bookLend/reservationSearchList";
