@@ -1,3 +1,4 @@
+
 package ksmart.pentagon.vo;
 
 import groovy.transform.stc.ThirdParam.Component;

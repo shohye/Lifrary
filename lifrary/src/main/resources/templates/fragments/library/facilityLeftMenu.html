@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+							
+								
+	<div class="col-md-3 col-md-pull-9" th:fragment="facilityLeftMenuFragment">
+         <aside id="secondary" class="sidebar widget-area">
+             
+             <div class="widget widget_related_search">
+                 <h4 class="widget-title" data-control>공공시설 신청</h4>
+                 <div class="widget_categories">
+                     <ul>
+                         <li><h3><a th:href="@{/lifraryReadingRoom}">열람실 신청</a></h3></li>
+                         <li><h3><a th:href="@{/lifraryStudyRoom}">스터디룸 신청</a></h3></li>
+                         <li><h3><a th:href="@{/lifraryLectureRoom}">강연실 신청</a></h3></li>
+                         <li><h3><a th:href="@{/lifraryLocker}">사물함 신청</a></h3></li>
+                     </ul>
+                 </div>
+             </div>
+                       
+             
+         </aside>
+     </div>
+</html>

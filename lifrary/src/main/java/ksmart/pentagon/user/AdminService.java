@@ -9,6 +9,13 @@ import ksmart.pentagon.vo.LibrarianLevel;
 import ksmart.pentagon.vo.User;
 import ksmart.pentagon.vo.UserLevel;
 
+/*
+ * @file   AdminService.java 
+ * @name   admin service
+ * @brief  공공시설 관련 기능 메서드 처리 로직 구현
+ * @author 김상협 
+ */
+
 @Service
 public class AdminService {
 	@Autowired private AdminMapper adminMapper;
