@@ -37,8 +37,28 @@
 	    <result column="bs_stock_state" property="bsStockState"/>
 	    <result column="bs_book_state" property="bsBookState"/>
 	    <result column="bs_lend_state" property="bsLendState"/>
-	    <collection property="bookinformation" resultMap="bookInfo"/>
+	    <result column="bs_book_state" property="bsBookState"/>
+	    <result column="u_number" property="uId"/>
+	    <collection property="bookInformation" resultMap="bookInfo"/>
+	    <collection property="booklLend" resultMap="booklLend"/>
 	</resultMap>
+	<resultMap type="ksmart.pentagon.vo.User" id="user">
+	    <result column="u_id" property="uId"/>
+	    <result column="u_name" property="uName"/>
+	    <result column="u_number" property="uNumber"/>
+	    <result column="u_overdue_day" property="uOverdueDay"/>
+	    <result column="ul_level" property="ulLevel"/>
+	    <result column="uas_code" property="uasCode"/>
+	    <result column="u_authority_date" property="uAuthorityDate"/>
+	    <result column="uas_lend_limit" property="uasLendLimit"/>
+	    <result column="u_lend_cnt" property="uLendCnt"/>
+	    <collection property="userLevel" resultMap="userLevel"/>
+	</resultMap>
+	<resultMap type="ksmart.pentagon.vo.UserLevel" id="userLevel">
+	    <result column="ul_name" property="ulName"/>
+	    <result column="ul_lend_num" property="ulLendNum"/>
+	    <result column="ul_lend_day" property="ulLendDay"/>
+	</resultMap>	
 	<select id="bookSearchList" resultMap="booklLend">
 		SELECT
 			 bl.bl_code
@@ -66,15 +86,17 @@
 		INNER JOIN
 			book_information AS bi
 		ON 
-			bs.bi_isbn = bi.bi_isbn	
+			bs.bi_isbn = bi.bi_isbn
+		WHERE 
+			bl.bl_lend_date IS NOT NULL 		
   	</select>
   	<select id="bookInfo" parameterType="String" resultMap="bookStock">
-		 SELECT 
+		  SELECT 
 			 bs.bs_code
 			,bs.bi_isbn
 			,bs.bs_alias_mark
 			,bs.bs_writer_mark
-			,bs.bs_secondary
+			,bs.bs_secondary_mark
 			,bs.bs_stock_state
 			,bs.bs_book_state
 			,bs.bs_lend_state
@@ -82,14 +104,77 @@
 			,bi.bi_year
 			,bi.bi_author
 			,bi.bi_publisher
-			,bi.bi_kdc 
+			,bi.bi_kdc
+			,u.u_number
+			,bl.bl_id 
+			,bl.bl_lend_date
+			,bl.bl_return_date 
 		FROM
 			book_stock AS bs
 		INNER JOIN 
 			book_information AS bi
 		ON 
 			bs.bi_isbn = bi.bi_isbn
+		INNER join
+			book_lend AS bl
+		ON 
+			bs.bs_code = bl.bs_code
+		INNER join
+			user AS u
+		ON 
+			bl.bl_id = u.u_id 			
 		WHERE 
-			bs.bs_code = #{svbook}
+			bs.bs_code = #{svBook}
+		ORDER BY 
+			bl.bl_code desc
+		LIMIT 0,1
+  	</select>
+  	<select id="userInfo" parameterType="String" resultMap="user">
+  		SELECT
+			 u.u_id
+			,u.u_name
+			,u.u_number
+			,u.u_overdue_day
+			,u.ul_level
+			,ul.ul_name
+			,ul.ul_lend_num
+			,ul.ul_lend_day
+			,u.uas_code
+			,uas.uas_lend_limit
+			,DATE_ADD(uah.uah_date, INTERVAL uas.uas_limit_date DAY) AS u_authority_date
+			,(SELECT
+					COUNT(1)
+				FROM
+					book_lend AS bl
+				WHERE
+					bl.bl_return_date IS NULL
+				AND
+				(
+					(bl.bl_lend_date IS NULL AND bl.bl_hold_date IS NOT NULL)
+					OR
+					bl.bl_lend_date IS NOT NULL
+				)
+				AND 
+					bl.bl_id = u.u_id	) AS u_lend_cnt
+		FROM
+			user AS u
+		INNER JOIN
+			user_level AS ul
+		ON
+			u.ul_level = ul.ul_level 
+		INNER JOIN
+			user_authority_set AS uas
+		ON 
+			u.uas_code = uas.uas_code	
+		LEFT JOIN
+			user_authority_history AS uah
+		ON 
+			u.u_id = uah.u_id
+		WHERE
+			u.u_number = #{svUser}
+		ORDER BY 
+			uah.uah_date DESC
+		LIMIT 0,1	
+  	
   	</select>
   </mapper>
