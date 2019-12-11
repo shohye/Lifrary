@@ -12,6 +12,7 @@ public class Board {
 	private String boardOpen;		//공개여부
 	private String boardPageView;	//조회수
 	private String boardDate;		//게시글등록일
+	
 	public String getBoardCode() {	
 		return boardCode;
 	}

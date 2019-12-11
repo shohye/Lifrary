@@ -2,10 +2,25 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="ksmart.pentagon.board.BoardMapper">
-  	<select id="getBoard" resultType="ksmart.pentagon.vo.Board.java">
-  		
+ 	<mapper namespace="ksmart.pentagon.board.BoardMapper">
+ 		<resultMap type="ksmart.pentagon.vo.Board" id="boardNoticeList">
+ 			<result property="boardCode" column=""/>
+ 			<result property="lCode" column=""/>
+ 			<result property="uId" column=""/>
+ 			<result property="boardICode" column=""/>
+ 			<result property="boardMCode" column=""/>
+ 			<result property="boardTitle" column=""/>
+ 			<result property="boardPw" column=""/>
+ 			<result property="boardContent" column=""/>
+ 			<result property="boardOpen" column=""/>
+ 			<result property="boardPageView" column=""/>
+ 			<result property="boardDate" column=""/>
+ 		</resultMap>
+  	<select id="getBoard" resultMap="boardNoticeList">
+  		SELECT
+  			*
+  		FROM 
   	</select>
   
   
-  </mapper>
+  	</mapper>

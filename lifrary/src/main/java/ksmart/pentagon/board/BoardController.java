@@ -20,7 +20,7 @@ public class BoardController {
 		return "adminpage/board/noticeSearchList";
 	}
 	
-	//공지사항 사서 등록화면이동
+	//공지사항 등록화면이동
 	@GetMapping("/adminNoticeInsert")
 	public String adminNoticeInsert() {
 		System.out.println("공지사항 등록 컨트롤러  /adminNoticeInsert ##Mapping경로 ");
