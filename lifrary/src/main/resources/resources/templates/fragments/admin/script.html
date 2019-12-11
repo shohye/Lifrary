@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="default-style">
+
+<!-- script -->
+
+	<th:block layout:fragment="adminScript">
+	<!-- Core scripts -->
+	<script th:src="@{/admin/vendor/libs/popper/popper.js}"></script>
+	<script th:src="@{/admin/vendor/js/bootstrap.js}"></script>
+	<script th:src="@{/admin/vendor/js/sidenav.js}"></script>
+	
+	<!-- Libs -->
+	<script th:src="@{/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
+	
+	<!-- Demo -->
+	<script th:src="@{/admin/js/demo.js}"></script>
+	</th:block>
+
+    <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+	<th:block layout:fragment="adminFootScript"></th:block>
+    <!--/ teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+
+<!-- /script -->
+    
+</html>

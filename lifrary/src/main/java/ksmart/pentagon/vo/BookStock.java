@@ -8,6 +8,7 @@ public class BookStock {
 	private String bclCode;
 	private String bcmCode;
 	private String biIsbn;
+	private String bsCallNum;	
 	private String bsAliasMark;
 	private String bsWriterMark;
 	private String bsSecondaryMark;
@@ -21,7 +22,8 @@ public class BookStock {
 	private String bsDeleteId;
 	private String bsDeleteReason;
 	private String bsDeleteDate;
-	private BookInformation bookinformation;
+	private BookInformation bookInformation;
+	private BookLend booklLend;
 	public String getBsCode() {
 		return bsCode;
 	}
@@ -57,6 +59,12 @@ public class BookStock {
 	}
 	public void setBiIsbn(String biIsbn) {
 		this.biIsbn = biIsbn;
+	}
+	public String getBsCallNum() {
+		return bsCallNum;
+	}
+	public void setBsCallNum(String bsCallNum) {
+		this.bsCallNum = bsCallNum;
 	}
 	public String getBsAliasMark() {
 		return bsAliasMark;
@@ -136,12 +144,18 @@ public class BookStock {
 	public void setBsDeleteDate(String bsDeleteDate) {
 		this.bsDeleteDate = bsDeleteDate;
 	}
-	public BookInformation getBookinformation() {
-		return bookinformation;
+	public BookInformation getBookInformation() {
+		return bookInformation;
 	}
-	public void setBookinformation(BookInformation bookinformation) {
-		this.bookinformation = bookinformation;
+	public void setBookInformation(BookInformation bookInformation) {
+		this.bookInformation = bookInformation;
 	}
-	
+	public BookLend getBooklLend() {
+		return booklLend;
+	}
+	public void setBooklLend(BookLend booklLend) {
+		this.booklLend = booklLend;
+	}
+
 	
 }

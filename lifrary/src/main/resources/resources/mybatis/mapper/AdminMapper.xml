@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.user.AdminMapper">
+  	<select id="getUserLevel" resultType="ksmart.pentagon.vo.UserLevel">
+  		SELECT 
+  			ul_level as ulLevel, 
+  			l_code as lCode, 
+  			u_id as uId, 
+  			ul_min as ulMin, 
+  			ul_max as ulMax, 
+  			ul_lend_num as ulLendNum, 
+  			ul_lend_day as ulLendDay, 
+  			ul_date as ulDate
+		FROM 
+			user_level
+  	</select>
+  </mapper>

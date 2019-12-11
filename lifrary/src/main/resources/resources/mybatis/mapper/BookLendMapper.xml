@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.booklend.BookLendMapper">
+  
+	  <resultMap type="ksmart.pentagon.vo.BookLend" id="booklLend">
+	    <result column="bl_code" property="blCode"/>
+	    <result column="l_code" property="lCode"/>
+	    <result column="bl_id" property="blId"/>
+	    <result column="bs_code" property="bsCode"/>
+	    <result column="bi_isbn" property="biIsbn"/>
+	    <result column="bi_name" property="biName"/>
+	    <result column="bi_img" property="biImg"/>
+	    <result column="bl_lend_date" property="blLendDate"/>
+	    <result column="bl_extension_date" property="blExtensionDate"/>
+	    <result column="bl_schedule_date" property="blScheduleDate"/>
+	    <result column="bl_return_date" property="blReturnDate"/>
+	    <result column="bl_hold_date" property="blHoldDate"/>
+	    <result column="bl_overdue_days" property="blOverdueDays"/>
+	</resultMap>
+	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfo">
+	    <result column="bi_isbn" property="biIsbn"/>
+	    <result column="bi_name" property="biName"/>
+	    <result column="bi_year" property="biYear"/>
+	    <result column="bi_author" property="biAuthor"/>
+	    <result column="bi_publisher" property="biPublisher"/>
+	    <result column="bi_kdc" property="biKdc"/>
+	    <result column="bi_img" property="biImg"/>
+	</resultMap>
+	<resultMap type="ksmart.pentagon.vo.BookStock" id="bookStock">
+	    <result column="bs_code" property="bsCode"/>
+	    <result column="bi_isbn" property="biIsbn"/>
+	    <result column="bs_alias_mark" property="bsAliasMark"/>
+	    <result column="bs_writer_mark" property="bsWriterMark"/>
+	    <result column="bs_secondary_mark" property="bsSecondaryMark"/>
+	    <result column="bs_stock_state" property="bsStockState"/>
+	    <result column="bs_book_state" property="bsBookState"/>
+	    <result column="bs_lend_state" property="bsLendState"/>
+	    <result column="bs_book_state" property="bsBookState"/>
+	    <result column="u_number" property="uId"/>
+	    <collection property="bookInformation" resultMap="bookInfo"/>
+	    <collection property="booklLend" resultMap="booklLend"/>
+	</resultMap>
+	<resultMap type="ksmart.pentagon.vo.User" id="user">
+	    <result column="u_id" property="uId"/>
+	    <result column="u_name" property="uName"/>
+	    <result column="u_number" property="uNumber"/>
+	    <result column="u_overdue_day" property="uOverdueDay"/>
+	    <result column="ul_level" property="ulLevel"/>
+	    <result column="uas_code" property="uasCode"/>
+	    <result column="u_authority_date" property="uAuthorityDate"/>
+	    <result column="uas_lend_limit" property="uasLendLimit"/>
+	    <result column="u_lend_cnt" property="uLendCnt"/>
+	    <collection property="userLevel" resultMap="userLevel"/>
+	</resultMap>
+	<resultMap type="ksmart.pentagon.vo.UserLevel" id="userLevel">
+	    <result column="ul_name" property="ulName"/>
+	    <result column="ul_lend_num" property="ulLendNum"/>
+	    <result column="ul_lend_day" property="ulLendDay"/>
+	</resultMap>	
+	<select id="bookSearchList" resultMap="booklLend">
+		SELECT
+			 bl.bl_code
+			,bl.l_code
+			,bl.bl_id  
+			,bl.bs_code 
+			,bi.bi_isbn
+			,bi.bi_name
+			,bi.bi_img  
+			,bl.bl_lend_date
+			,bl.bl_extension_date
+			,bl.bl_schedule_date
+			,bl.bl_return_date
+			,bl.bl_overdue_days
+		FROM
+			(SELECT 
+				*
+				,DATEDIFF( bl.bl_return_date, bl.bl_schedule_date ) AS bl_overdue_days 
+			FROM  
+				book_lend AS bl) AS bl
+		INNER JOIN
+			book_stock AS bs
+		ON 
+			bl.bs_code = bs.bs_code
+		INNER JOIN
+			book_information AS bi
+		ON 
+			bs.bi_isbn = bi.bi_isbn
+		WHERE 
+			bl.bl_lend_date IS NOT NULL 		
+  	</select>
+  	<select id="bookInfo" parameterType="String" resultMap="bookStock">
+		  SELECT 
+			 bs.bs_code
+			,bs.bi_isbn
+			,bs.bs_alias_mark
+			,bs.bs_writer_mark
+			,bs.bs_secondary_mark
+			,bs.bs_stock_state
+			,bs.bs_book_state
+			,bs.bs_lend_state
+			,bi.bi_name
+			,bi.bi_year
+			,bi.bi_author
+			,bi.bi_publisher
+			,bi.bi_kdc
+			,u.u_number
+			,bl.bl_id 
+			,bl.bl_lend_date
+			,bl.bl_return_date 
+		FROM
+			book_stock AS bs
+		INNER JOIN 
+			book_information AS bi
+		ON 
+			bs.bi_isbn = bi.bi_isbn
+		INNER join
+			book_lend AS bl
+		ON 
+			bs.bs_code = bl.bs_code
+		INNER join
+			user AS u
+		ON 
+			bl.bl_id = u.u_id 			
+		WHERE 
+			bs.bs_code = #{svBook}
+		ORDER BY 
+			bl.bl_code desc
+		LIMIT 0,1
+  	</select>
+  	<select id="userInfo" parameterType="String" resultMap="user">
+  		SELECT
+			 u.u_id
+			,u.u_name
+			,u.u_number
+			,u.u_overdue_day
+			,u.ul_level
+			,ul.ul_name
+			,ul.ul_lend_num
+			,ul.ul_lend_day
+			,u.uas_code
+			,uas.uas_lend_limit
+			,DATE_ADD(uah.uah_date, INTERVAL uas.uas_limit_date DAY) AS u_authority_date
+			,(SELECT
+					COUNT(1)
+				FROM
+					book_lend AS bl
+				WHERE
+					bl.bl_return_date IS NULL
+				AND
+				(
+					(bl.bl_lend_date IS NULL AND bl.bl_hold_date IS NOT NULL)
+					OR
+					bl.bl_lend_date IS NOT NULL
+				)
+				AND 
+					bl.bl_id = u.u_id	) AS u_lend_cnt
+		FROM
+			user AS u
+		INNER JOIN
+			user_level AS ul
+		ON
+			u.ul_level = ul.ul_level 
+		INNER JOIN
+			user_authority_set AS uas
+		ON 
+			u.uas_code = uas.uas_code	
+		LEFT JOIN
+			user_authority_history AS uah
+		ON 
+			u.u_id = uah.u_id
+		WHERE
+			u.u_number = #{svUser}
+		ORDER BY 
+			uah.uah_date DESC
+		LIMIT 0,1	
+  	
+  	</select>
+  </mapper>
