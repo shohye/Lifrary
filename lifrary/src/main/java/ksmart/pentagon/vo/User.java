@@ -25,6 +25,9 @@ public class User {
 	private String uDate;
 	private String uAuthorityDate;
 	private LibrarianLevel librarianlevel;
+	private int uLendCnt;
+	private UserLevel userLevel;
+	
 	
 	public String getuId() {
 		return uId;
@@ -151,6 +154,18 @@ public class User {
 	}
 	public void setuAuthorityDate(String uAuthorityDate) {
 		this.uAuthorityDate = uAuthorityDate;
+	}
+	public int getuLendCnt() {
+		return uLendCnt;
+	}
+	public void setuLendCnt(int uLendCnt) {
+		this.uLendCnt = uLendCnt;
+	}
+	public UserLevel getUserLevel() {
+		return userLevel;
+	}
+	public void setUserLevel(UserLevel userLevel) {
+		this.userLevel = userLevel;
 	}
 	@Override
 	public String toString() {

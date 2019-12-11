@@ -20,10 +20,10 @@
 		<appender-ref ref="STDOUT" />
 	</logger>
 
-	<logger name="jdbc.resultsettable" level="DEBUG" additivity="false">
+	<!-- <logger name="jdbc.resultsettable" level="DEBUG" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
-
+ -->
 	<include resource="org/springframework/boot/logging/logback/base.xml"/>
  
 	<appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
