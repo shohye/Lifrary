@@ -26,7 +26,7 @@ $(document).ready(function () {
         orderMulti: true,
         order : [[1, 'desc']],*/
         
-        "language": {
+       
         	language: {
        		 "info" : "_START_ - _END_ (총 _TOTAL_ 개)",
        	     "infoEmpty" : "0개",

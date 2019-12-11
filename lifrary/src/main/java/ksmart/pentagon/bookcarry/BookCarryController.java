@@ -35,6 +35,10 @@ public class BookCarryController {
     // 기부신청자 수정
     @GetMapping("/admin/bookDonationUpdate")
     public String bookDonationUpdate(@RequestParam(value="bdnCode",required=false)String bdnCode, Model model) {
+    	
+    	if(bdnCode == null) {
+    		bdnCode ="bdn-19120500001";
+	    }
     	model.addAttribute("donationUpdate",bookCarryService.getDonationUpdate(bdnCode));
     	return "/adminpage/bookCarry/bookDonationUpdate";
     }
@@ -56,6 +60,10 @@ public class BookCarryController {
     // 도서 구매 수정
     @GetMapping("/admin/bookPurchaseUpdate")
     public String bookPurchaseUpdate( @RequestParam(value="bpCode",required=false)String bpCode, Model model) {
+    	if(bpCode == null) {
+    		bpCode ="bp-19120500002";
+	    }
+    	
     	model.addAttribute("purchaseUpdate",bookCarryService.getPurchaseUpdate(bpCode));
     	
     	return "/adminpage/bookCarry/bookPurchaseUpdate";
@@ -66,9 +74,9 @@ public class BookCarryController {
     /***************************************************************************/
     
     // 도서 주문 입력
-    @GetMapping("/admin/bookOrderForm")
+    @GetMapping("/admin/bookOrderInsert")
     public String bookOrderForm() {
-    	return "/adminpage/bookCarry/bookOrderForm";
+    	return "/adminpage/bookCarry/bookOrderInsert";
     }
     // 도서 주문 리스트
     @GetMapping("/admin/bookOrderList")
@@ -81,7 +89,9 @@ public class BookCarryController {
     // 도서 주문 수정
     @GetMapping("/admin/bookOrderUpdate")
     public String bookOrderUpdate(@RequestParam(value="boCode",required=false)String boCode, Model model) {
-    	
+    	if(boCode == null) {
+    		boCode ="bo-19120500002";
+	    }
     	model.addAttribute("orderUpdate",bookCarryService.getOrderUpdate(boCode));
     	return "/adminpage/bookCarry/bookOrderUpdate";
     }
@@ -92,8 +102,12 @@ public class BookCarryController {
     
     // 희망도서 신청 리스트
     @GetMapping("/admin/requestSearchList")
-    public String requestSearchList() {
-    	return "/adminpage/requestSearchList";
+    public String requestSearchList(Model model) {
+    	
+    	
+    	model.addAttribute("requestList", bookCarryService.getRequestList());
+    	return "/adminpage/bookCarry/requestSearchList";
     }
-
+    
+   
 }

@@ -3,21 +3,36 @@ package ksmart.pentagon.vo;
 public class BookRequest {
 	
 	private String brCode;
+	private String uId;
 	private String brTitle;
 	private String brIsbn;
 	private String brYear;
 	private int brPrice;
 	private String brAuthor;
 	private String brPublisher;
+	private String brOpinion;
 	private String brProgress;
 	private String brCancelReason;
 	private String brDate;
 	
+	
+	public String getBrProgress() {
+		return brProgress;
+	}
+	public void setBrProgress(String brProgress) {
+		this.brProgress = brProgress;
+	}
 	public String getBrCode() {
 		return brCode;
 	}
 	public void setBrCode(String brCode) {
 		this.brCode = brCode;
+	}
+	public String getuId() {
+		return uId;
+	}
+	public void setuId(String uId) {
+		this.uId = uId;
 	}
 	public String getBrTitle() {
 		return brTitle;
@@ -55,16 +70,16 @@ public class BookRequest {
 	public void setBrPublisher(String brPublisher) {
 		this.brPublisher = brPublisher;
 	}
-	public String getBrProgress() {
-		return brProgress;
+	public String getBrOpinion() {
+		return brOpinion;
 	}
-	public void setBrProgress(String brProgress) {
-		this.brProgress = brProgress;
+	public void setBrOpinion(String brOpinion) {
+		this.brOpinion = brOpinion;
 	}
 	public String getBrCancelReason() {
 		return brCancelReason;
 	}
-	public void setBrCancleReason(String brCancelReason) {
+	public void setBrCancelReason(String brCancelReason) {
 		this.brCancelReason = brCancelReason;
 	}
 	public String getBrDate() {
@@ -73,6 +88,9 @@ public class BookRequest {
 	public void setBrDate(String brDate) {
 		this.brDate = brDate;
 	}
+	
+	
+	
 	
 	
 	

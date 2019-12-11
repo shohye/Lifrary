@@ -54,7 +54,8 @@
                       <th>예정권수</th>
                       <th data-orderable="false">추가사항</th>
                       <th>등록일</th>
-                      <th>수정/삭제</th>                  
+                      <th>상세&수정</th> 
+                      <th>삭제</th>                 
                     </tr>
                   </thead>
                   
@@ -70,13 +71,19 @@
 				      <td class="align-middle" th:text="${pl.bpAdditional}"></td>
 				      <td class="align-middle" th:text="${pl.bpDate}"></td>
 				      <td class="align-middle align-center">
-		               	 <a th:href="@{#}" class="btn icon-btn btn-sm btn-outline-secondary" title="수정">
-		               	 	<span class="ion ion-ios-create d-block"></span>			               	 
-		               	 </a>
-		               	 <a th:href="@{#}" class="btn icon-btn btn-sm btn-outline-secondary" title="삭제">
-		               	 	<span class="ion ion-ios-cut d-block"></span>			               	 
-		               	 </a>
-                      </td> 	
+			      		<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
+						   <a th:href="@{/admin/bookPurchaseUpdate(bpCode=${pl.bpCode})}" title="수정">
+							 <i class="ion ion-md-create" title="수정"></i>
+						   </a>
+						</button>
+					  </td>
+					  <td class="align-middle align-center">
+						<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
+						   <a href="#" title="삭제">
+							 <i class="ion ion-ios-cut d-block" title="삭제"></i>
+						   </a>
+						</button>
+                      </td> 		
 				    </tr>
 				  </tbody> 
                 </table>

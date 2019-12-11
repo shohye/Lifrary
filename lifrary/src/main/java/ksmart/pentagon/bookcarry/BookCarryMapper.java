@@ -5,6 +5,7 @@ import java.util.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import ksmart.pentagon.vo.BookCarry;
+import ksmart.pentagon.vo.BookRequest;
 
 @Mapper
 public interface BookCarryMapper {
@@ -27,5 +28,8 @@ public interface BookCarryMapper {
 		
 	// 기부자 한개정보출력/ 수정화면	
 	BookCarry getDonationUpdate(String bdnCode);
+	
+	// 희망도서신청 리스트 출력
+	List<BookRequest> getRequestList();
 	
 }
