@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+ <!-- headAdd(Libs&page) -->
+  
+  <th:block layout:fragment="adminHeadAdd">
+  
+  <!-- addLibs -->  
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+  </th:block>
+  
+  <!-- /headAdd(Libs&page) --> 
+  
+  <!-- teamScript -->
+  <th:block layout:fragment="teamHeadScript">
+  
+  </th:block>
+  <!-- / teamScript  -->
+  
+  <!-- Content -->
+  <th:block layout:fragment="adminContents">
+	<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+			<div>예약 관리</div>
+	</h4>
+	<h6>예약도서리스트만 출력!! 예약도서 취소가능!</h6>  
+	<div class="card">
+	    <div class="card-datatable table-responsive">
+	      <table class="datatables-demo table table-striped table-bordered">
+	        <thead>
+	          <tr>
+	            <th>도서코드</th>
+	            <th>도서명</th>
+	            <th>회원번호</th>
+	            <th>회원명</th>
+	            <th>예약일</th>
+	            <th>예약상태</th>
+	            <th>취소</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	          <tr class="odd gradeX">
+	            <td>도서1</td>
+	            <td>도서1</td>
+	            <td>도서1</td>
+	            <td class="center">도서1</td>
+	            <td class="center">도서1</td>
+	            <td class="center">도서1</td>
+	            <td class="center">도서1</td>
+	          </tr>
+	          <tr class="even gradeC">
+	            <td>도서2</td>
+	            <td>도서2</td>
+	            <td>도서2</td>
+	            <td class="center">도서2</td>
+	            <td class="center">도서2</td>
+	            <td class="center">도서2</td>
+	            <td class="center">도서2</td>
+	          </tr>
+	        </tbody>
+	      </table>
+	    </div>
+	  </div>
+  </th:block>
+  <!-- Content -->
+ 
+  <!-- / scripts -->
+  <th:block layout:fragment="pageScript">
+  
+  <!-- addLibs -->
+  <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
+
+  <!-- addDemo -->
+  <script th:src="@{/admin/js/book_reservation_tables.js}"></script>
+  
+  </th:block>
+   
+  <!-- teamScript  -->
+  <th:block layout:fragment="adminFootScript">
+
+  </th:block>
+  <!--/ teamScript -->
+
+  <!-- / scripts -->
+  
+</html>
