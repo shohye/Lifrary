@@ -20,6 +20,14 @@ import ksmart.pentagon.vo.UserLevel;
 public class AdminService {
 	@Autowired private AdminMapper adminMapper;
 	
+	//사서 채널 로그인 처리 / 회원 정보 유무 확인후 로그인
+	public User adminLoginCheck(String uId) {
+		
+		return null;
+	}
+	
+	
+	
 	//유저 레벨 전체 가져오기.
 	public List<UserLevel> getUserLevel(){
 		System.out.println("@@@@@@@@@@@@@@@@@서비스 진입@@@@@@@@@@@@@@@@@@");

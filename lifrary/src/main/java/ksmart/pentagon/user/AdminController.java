@@ -47,8 +47,23 @@ public class AdminController {
 	 * @date 19/12/05
 	 */
 	@GetMapping("/adminLogin")
-	public String adminLogin() {
+	public String adminLoginCheck() {
 		return "adminpage/librarian/adminLogin";
+	}
+	
+	/**
+	 * 어드민 로그인 체크후 세션처리까지 하는 메서드
+	 * @param uId
+	 * @param uPw
+	 * @param model
+	 * @return
+	 */
+	@PostMapping("/adminLogin")
+	public String adminLogin(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw, Model model) {
+		System.out.println(uId + " <== uId");
+		System.out.println(uPw + " <== uPw");
+		
+		return null;
 	}
 	
 	//전체회원리스트

@@ -38,6 +38,12 @@
 	<result property="llBookStock" column="ll_book_stock"/>
 	<result property="llUpdate" column="ll_update"/>
  </resultMap>
+ 	<select id="adminLoginCheck" resultMap="userResultMap">
+ 	
+ 	</select>
+ 
+ 
+ 
   	<select id="getUserLevel" resultType="ksmart.pentagon.vo.UserLevel">
   		SELECT 
   			ul_level as ulLevel, 
