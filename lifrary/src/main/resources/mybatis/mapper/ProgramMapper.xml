@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.program.ProgramMapper">
+  	<resultMap type="ksmart.pentagon.vo.ProgramManager" id="PMResultMap">
+  		<result property="pmCode" column="pm_code"/>
+  		<result property="lCode" column="l_code"/>
+  		<result property="uId" column="u_id"/>
+  		<result property="pmName" column="pm_name"/>
+  		<result property="pmTarget" column="pm_target"/>
+  		<result property="pmPlace" column="pm_place"/>
+  		<result property="pmStartTerm" column="pm_start_term"/>
+  		<result property="pmEndTerm" column="pm_end_term"/>
+  		<result property="pmStartTime" column="pm_start_time"/>
+  		<result property="pmEndTime" column="pm_end_time"/>
+  		<result property="pmStartReceipt" column="pm_start_receipt"/>
+  		<result property="pmEndReceipt" column="pm_end_receipt"/>
+  		<result property="pmProgress" column="pm_progress"/>
+  		<result property="pmTeacherName" column="pm_teacher_name"/>
+  		<result property="pmMnop" column="pm_mnop"/>
+  		<result property="pmTuition" column="pm_tuition"/>
+  		<result property="pmTel" column="pm_tel"/>
+  		<result property="pmDetail" column="pm_detail"/>
+  		<result property="pmFile" column="pm_file"/>
+  		<result property="pmDate" column="pm_date"/>
+  	</resultMap>
+  
+  	<select id="getProgramList" resultMap="PMResultMap">
+  		SELECT 
+			*
+		FROM 
+			program_mgr
+  	</select>
+  	
+  	<select id="getProgram" parameterType="String" resultMap="PMResultMap">
+  		SELECT 
+			*
+		FROM 
+			program_mgr
+		WHERE
+			pm_code = #{pmCode}
+  	</select>
+  	
+  	<insert id="insertProgram" parameterType="ksmart.pentagon.vo.ProgramApply">
+  		INSERT INTO 
+			program_apply
+		(pa_code, l_code, pm_code, u_id, pa_participants, pa_gender, pa_birth, pa_addr, pa_tel, pa_date)
+		VALUES (#{paCode}, '000000', #{pmCode}, #{uId}, #{paParticipants}, #{paGender}, #{paBirth}, #{paAddr}, #{paTel}, NOW())
+  	</insert>
+  	
+  </mapper>
