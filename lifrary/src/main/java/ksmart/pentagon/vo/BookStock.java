@@ -160,6 +160,12 @@ public class BookStock {
 	public void setBsLendState(String bsLendState) {
 		this.bsLendState = bsLendState;
 	}
+	public BookLend getBooklLend() {
+		return booklLend;
+	}
+	public void setBooklLend(BookLend booklLend) {
+		this.booklLend = booklLend;
+	}
 	
 	
 	
