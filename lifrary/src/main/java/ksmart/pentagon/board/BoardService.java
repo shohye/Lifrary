@@ -1,14 +1,11 @@
-package ksmart.pentagon.service;
+package ksmart.pentagon.board;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ksmart.pentagon.mapper.BoardMapper;
-
 @Service
 public class BoardService {
-	
-	@Autowired
-	private BoardMapper boardmapper;
-	
+	/*
+	 * @Autowired private BoardMapper boardmapper;
+	 */
 }
