@@ -10,7 +10,7 @@
                                     <div class="navbar-brand">
                                         <h1>
                                             <a th:href="@{/}">
-                                                <img th:src="@{library/images/libraria-logo-v1.png}" alt="LIBRARIA" />
+                                                <img th:src="@{/library/images/libraria-logo-v1.png}" alt="LIFRARY" />
                                             </a>
                                         </h1>
                                     </div>
@@ -49,7 +49,7 @@
                                     <ul class="nav navbar-nav">
                                         <!-- 검색 -->
                                         <li class="dropdown active">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">1.검색</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifrary/bookDataSearch}">1.검색</a>
                                         </li>
                                         
                                         <!-- 인기도서 -->
@@ -117,10 +117,11 @@
                                     <!-- 검색 -->
                                     <li>
                                         <a th:href="@{#}">1.검색</a>
+                                        <a th:href="@{/lifrary/bookDataSearch}">1.검색</a>
                                     </li>
                                     <!-- 인기도서 -->
                                     <li>
-                                        <a th:href="@{#}">2.인기도서</a>
+                                        <a href="javascript:void(0)">2.인기도서</a>
                                         <ul>
                                             <li><a th:href="@{#}">#인기도서</a></li>
                                             <li><a th:href="@{#}">#신착도서</a></li>

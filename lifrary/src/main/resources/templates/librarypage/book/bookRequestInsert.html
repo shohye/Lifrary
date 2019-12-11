@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- 희망도서신청 페이지 -->
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+
+		<th:block layout:fragment="customContents">                
+	        <!-- Start: Page Banner -->
+	        <section th:replace="fragments/library/bookBanner :: bookBannerFragment"></section>
+	        <!-- End: Page Banner -->
+	
+	        <div id="content" class="site-content" th:fragment="bookListSectionFragment">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="books-media-list">
+                        <div class="container">
+                            <div id="requestForm col-md-6" >
+					            <form class="requestF" action="" method="post">		
+					                 <div class="form-row">					               
+						                 <div class="form-group col-md-6">
+						                   <label class="form-label">도서명</label>
+						                   <input type="text" class="form-control" name="bi_publisher" placeholder="publisher">
+						                 </div>
+						                 <div class="form-group col-md-6">
+						                   <label class="form-label">ISBN</label>
+						                   <input type="text" class="form-control" name="bi_year" placeholder="publication year">
+						                 </div>
+					                 </div>
+					             
+					                  <div class="form-row">
+						                  <div class="form-group col-md-6">
+						                    <label class="form-label">발행년도</label>
+						                    <input type="text" class="form-control" name="bi_name" placeholder="bookname">
+						                   <!--  <small class="form-text text-muted">Example block-level help text here.</small> -->
+						                  </div>
+						                  <div class="form-group col-md-6">
+						                    <label class="form-label">가격</label>
+						                    <input type="text" class="form-control" name="bi_author" placeholder="authors">
+						                  </div>
+						              </div>
+					            	  <div class="form-row">
+						                 <div class="form-group col-md-6">
+						                   <label class="form-label">저자명</label>
+						                   <input type="text" class="form-control" name="bi_publisher" placeholder="publisher">
+						                 </div>
+						                 <div class="form-group col-md-6">
+						                   <label class="form-label">발행자</label>
+						                   <input type="text" class="form-control" name="bi_year" placeholder="publication year">
+						                 </div>
+					                  </div>
+					                  
+			                  
+			                  <div class="text-right mt-3">
+			                  	<button type="submit" class="btn btn-primary">Submit</button>
+			 				  </div>
+					       </form> 
+						  <div class="clear"></div>
+						</div> 
+                     </div>
+                   </div>
+                </main>
+            </div>
+        </div>        
+        
+	       	
+        </th:block>
+
+        
+
+</html>

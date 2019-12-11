@@ -15,5 +15,4 @@ public class LayoutController {
 	public String adminIndex() {
 		return "adminpage/index";
 	}
-
 }
