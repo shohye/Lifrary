@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.bookcarry.BookCarryMapper">
+  
+  	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfoResultMap">	         
+	         <result property="biIsbn" column="bi_isbn"/>
+	         <result property="lCode" column="l_code"/>
+	         <result property="biName" column="bi_name"/>
+	         <result property="biYear" column="bi_year"/>	         
+	         <result property="biAuthor" column="bi_author"/>
+	         <result property="biPublisher" column="bi_publisher"/>
+	         <result property="biKdc" column="bi_kdc"/>	         
+	         <result property="biDtail" column="bi_detail"/>
+	         <result property="biImg" column="bi_img"/>
+	         <result property="biDate" column="bi_date"/>	              
+	 </resultMap>
+	 
+  	 <resultMap type="ksmart.pentagon.vo.BookCarry" id="bookCarryResultMap">	         
+	         <result property="uid" column="u_id"/>
+	         <result property="lCode" column="l_code"/>
+	         <result property="biIsbn" column="bi_isbn"/>
+	         
+	         <result property="boCode" column="bo_code"/>	         
+	         <result property="boCompany" column="bo_company"/>
+	         <result property="boBookNum" column="bo_book_num"/>
+	         <result property="boPrice" column="bo_price"/>	         
+	         <result property="bosState" column="bo_state"/>
+	         <result property="boDate" column="bo_date"/>
+	         
+	         <result property="bpCode" column="bp_code"/>
+	         <result property="bpPrice" column="bp_price"/>
+	         <result property="bpBookNum" column="bp_book_num"/>
+	         <result property="bpAdditional" column="bp_additional"/>	         
+	         <result property="bpDate" column="bp_date"/>   
+	         
+	         <result property="bdnCode" column="bdn_code"/>
+	         <result property="bdnName" column="bdn_name"/>
+	         <result property="bdnAddr" column="bdn_addr"/>
+	         <result property="bdnTel" column="bdn_tel"/>	         
+	         <result property="bdnNum" column="bdn_num"/>
+	         <result property="bdnPersonal" column="bdn_personal"/>
+	         <result property="bdnSticker" column="bdn_sticker"/>
+	         <result property="bdnHonorAgree" column="bdn_honor_agree"/>	         
+	         <result property="bdnDate" column="bdn_date"/>          
+	         
+	         <collection property="bookInformation" resultMap="bookInfoResultMap" />
+	 </resultMap>
+	 
+  	<select id="getOrderList" resultMap="bookCarryResultMap">
+			SELECT 
+				*
+										 
+			FROM 
+				book_order as bo INNER JOIN book_information as bi
+			ON 
+			    bo.bi_isbn = bi.bi_isbn;  		
+  	
+  	</select>
+  	<select id="getPurchaseList" resultMap="bookCarryResultMap">
+			SELECT 	
+				*
+			FROM 
+				book_purchase as bp INNER JOIN book_information as bi
+			ON bp.bi_isbn = bi.bi_isbn;  		
+  	
+  	</select>
+  	<select id="getDonationList" resultMap="bookCarryResultMap">
+			SELECT 
+				* 
+			FROM 
+				book_donation;  		
+  	
+  	</select>
+  	<select id="getOrderUpdate" resultMap="bookCarryResultMap" parameterType="String">
+  		   SELECT 
+				*
+										 
+			FROM 
+				book_order as bo INNER JOIN book_information as bi
+			ON 
+			    bo.bi_isbn = bi.bi_isbn
+			where
+				bo_code=#{boCode}
+  	</select>
+  	<select id="getPurchaseUpdate" resultMap="bookCarryResultMap" parameterType="String">
+  			SELECT 	
+				*
+			FROM 
+				book_purchase as bp INNER JOIN book_information as bi
+			ON bp.bi_isbn = bi.bi_isbn
+			where
+				bp_code=#{bpCode};
+  	</select>
+  	<select id="getDonationUpdate" resultMap="bookCarryResultMap" parameterType="String">
+  			SELECT 
+				* 
+			FROM 
+				book_donation
+		    where
+				bdn_code=#{bdnCode};
+  	</select>
+  	
+  	
+  </mapper>
