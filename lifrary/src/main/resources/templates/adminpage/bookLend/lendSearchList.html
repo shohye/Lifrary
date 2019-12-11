@@ -20,22 +20,70 @@
   <!-- /headAdd(Libs&page) --> 
   <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
   <th:block layout:fragment="teamHeadScript">
-  <script type="text/javascript">
+  <script type="text/javascript" th:inline="javascript">
   $(document).ready(function(){
 	  
+	  /*<![CDATA[*/
+		var searchBook = [[ ${searchBook} ]];//도서검색결과
+		var searchUser = [[ ${searchUser} ]];//회원검색결과
+		var holdId = [[ ${holdId} ]];//예약도서 예약자 ID
+		
+		/*]]*/
+		
+		if(searchBook == 0){
+			alert('도서 검색결과가 없습니다');
+		}
+		if(searchBook == 2){
+			$('[type="hidden"]').val('');
+		} 
+		if(searchUser == 0){
+			alert('회원 검색결과가 없습니다');
+		}
+		
+	  	//예약자도서 예약자 체크
+		var holdCheck = $('#holdCheck').children('span').text();
+	
+		if(holdCheck == '예약'){
+			var userId = $('#userId').text();
+			console.log(holdId,'ㅇㅖ약자아이디');
+			console.log(userId,'회원아이디');
+			if(holdId == userId){
+				$('#holdUserCheck').append('<span class="badge badge-outline-info">예약자 일치</span>');
+				console.log('예약자');
+			}
+			else{
+				console.log('예약자아닌데용?');
+				$('#holdUserCheck').append('<span class="badge badge-outline-danger">예약자 불일치</span>');
+			}
+			
+		}
+		
 	  //도서정보 검색폼을 실행시키는 자바스크립트
 	  $('#bookInfoBtn').click(function(){
 	  
-	  var bookinfo = $('[name="svBook"]').val();
+	  var bookinfo = $('#bookinfo').val();
 	  
 	  if( bookinfo == ''){
-		  alert('검색내용을 입력해주세요');
+		  alert('검색 도서를 입력해주세요');
 	  }
 	  else{
 		  $('#bookInfoForm').submit();
 	  }
 	  
  	 });
+	  $('#userInfoBtn').click(function(){
+		  
+		  var userinfo = $('#userInfo').val();
+		  
+		  if( userinfo == ''){
+			  alert('검색 회원을 입력해주세요');
+		  }
+		  else{
+			  $('#userInfoForm').submit();
+		  }
+		  
+	 	 }); 
+	  
   });//document.ready
  
  </script>
@@ -49,7 +97,6 @@
 	<th:block layout:fragment="adminContents">   
 		<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
 			<div>대출 관리</div>
-			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; Add product</button>
 		</h4>
 
 	<!-- Filters -->
@@ -59,12 +106,13 @@
 				<div class="card mb-4">
 					<h5 class="card-header">서지 정보</h5>
 					<div class="card-body">
-						<form th:action="@{lendbookinfo.do}" id="bookInfoForm" method="post">
+						<form th:action="@{/admin/lendBookInfo.do}" id="bookInfoForm" method="post">
 							<div class="input-group">
 								<div class="input-group-prepend">
 	                    			<span class="input-group-text">도서코드</span>
 	                 			</div>
-	                       		<input type="text" name="svBook" class="form-control" placeholder="Search for...">
+	                       		<input type="text" id="bookInfo" name="svBook" class="form-control" placeholder="Search for...">
+	                       		<input type="hidden" name="svUser" th:if ="${resultUser != null}" th:value=${resultUser.uNumber}>
 	                        	<span class="input-group-append">
 	                         		<button type="button" id="bookInfoBtn" class="btn icon-btn btn-outline-primary">
 	                        			<span class="fas fa-search"></span>
@@ -73,36 +121,53 @@
 	                      	</div>
 	                    </form>	
 		                <table class="table user-view-table m-0">
-		                  <tbody>
+		                  <tbody th:with="rB=${resultBook}">
 		                    <tr>
 		                      <td>도서코드:</td>
-		                      <td colspan="3">소장도서코드</td>
+		                      <td colspan="3" th:if = "${rB != null}" th:text="${rB.bsCode}"></td>
+		                      <td colspan="3" th:unless = "${rB != null}"></td>
 		                    </tr>
 		                    <tr>
 		                      <td>도서명:</td>
-		                      <td colspan="3">1234567891234567891234567891234567891234</td>
+		                      <td colspan="3" th:if = "${rB != null}" th:text="${#strings.abbreviate(rB.bookInformation.biName,35)}"></td>
+		                      <td colspan="3" th:unless = "${rB != null}"></td>
 		                    </tr>
 		                    <tr>
 		                      <td>ISBN:</td>
-		                      <td colspan="3">1204080506107</td>
+		                      <td colspan="3" th:if = "${rB != null}" th:text="${rB.biIsbn}"></td>
+		                      <td colspan="3" th:unless = "${rB != null}"></td>
 		                    </tr>
 		                    <tr>
 		                      <td>청구기호:</td>
-		                      <td>800최56ㄴ</td>
+		                      <td th:if = "${rB != null}" th:text="${rB.bsCallNum}"></td>
+		                      <td th:unless = "${rB != null}"></td>
 		                      <td>저자명:</td>
-		                      <td>최네모</td>
+		                      <td th:if = "${rB != null}" th:text="${#strings.abbreviate(rB.bookInformation.biAuthor,10)}"></td>
+		                      <td th:unless = "${rB != null}"></td>
 		                    </tr>
 		                    <tr>
 		                      <td>발행자:</td>
-		                      <td>멍뭉</td>
+		                      <td th:if = "${rB != null}" th:text="${#strings.abbreviate(rB.bookInformation.biPublisher,15)}"></td>
+		                      <td th:unless = "${rB != null}"></td>
 		                      <td>발행년도:</td>
-		                      <td>2019</td>
+		                      <td th:if = "${rB != null}" th:text="${rB.bookInformation.biYear}"></td>
+		                      <td th:unless = "${rB != null}"></td>
 		                    </tr>
 		                    <tr>
 		                      <td>도서상태:</td>
-		                      <td><span class="ion ion-md-checkmark text-primary"></span>&nbsp; 정상</td>
-		                      <td>대출가능상태:</td>
-		                      <td><span class="ion ion-md-close text-danger"></span>&nbsp; 예약</td>
+		                      <td th:if = "${rB != null}">
+		                      	<span th:if="${rB.bsBookState eq '정상'}" class="ion ion-md-checkmark text-primary"></span>
+		                      	<span th:unless = "${rB.bsBookState eq '정상'}" class="ion ion-md-close text-danger"></span>
+		                      	&nbsp;[[${rB.bsBookState}]]
+		                      </td>
+		                      <td th:unless = "${rB != null}"></td>	
+		                      <td>대출상태:</td>
+		                      <td th:if = "${rB != null}" id="holdCheck" >
+	                    		<span th:if = "${rB.bsLendState eq 'O'}" class="badge badge-outline-success">대출가능</span>
+	                    		<span th:if = "${rB.bsLendState eq '예약'}" class="badge badge-outline-warning">예약</span>
+	                    		<span th:if = "${rB.bsLendState eq 'X'}"class="badge badge-outline-danger">대출불가</span>
+	                    	  </td>
+		                      <td th:unless = "${rB != null}"></td>	
 		                    </tr>
 		                  </tbody>
 		                </table>
@@ -113,48 +178,60 @@
 				<div class="card mb-4">
 					<h5 class="card-header">회원 정보</h5>
 					<div class="card-body">
-						<form>
+						<form th:action="@{/admin/lendUserInfo.do}" id="userInfoForm" method="post">
 							<div class="input-group">
 								<div class="input-group-prepend">
 	                    			<span class="input-group-text">회원번호</span>
 	                 			</div>
-	                       		<input type="text" class="form-control" placeholder="Search for...">
+	                 			<input type="text" id="userInfo" name="svUser" class="form-control" placeholder="Search for...">
+	                       		<input type="hidden" name="svBook" th:if ="${resultBook != null}" th:value=${resultBook.bsCode}>
 	                        	<span class="input-group-append">
-	                         		<button type="button" class="btn icon-btn btn-outline-primary">
+	                         		<button type="button" id="userInfoBtn" class="btn icon-btn btn-outline-primary">
 	                        			<span class="fas fa-search"></span>
 	                      			</button>
 	                        	</span>
 	                      	</div>
                       	</form>
 		                <table class="table user-view-table m-0">
-		                  <tbody>
+		                  <tbody th:with="rU=${resultUser}">
 		                  	<tr>
 		                      <td>회원번호:</td>
-		                      <td>100000001</td>
-		                      <td>ID:</td>
-		                      <td>id001</td>
+		                      <td th:if = "${rU != null}" th:text="${rU.uNumber}"></td>
+		                      <td th:unless = "${rU != null}"></td>
+		                      <td >ID:</td>
+		                      <td id="userId" th:if = "${rU != null}" th:text="${rU.uId}"></td>
+		                      <td th:unless = "${rU != null}"></td>
 		                    </tr>
 		                    <tr>
 		                      <td>회원명:</td>
-		                      <td>최세모</td>
+		                      <td th:if = "${rU != null}" th:text="${rU.uName}"></td>
+		                      <td th:unless = "${rU != null}"></td>
 		                      <td>회원레벨:</td>
-		                      <td>새싹</td>
+		                      <td th:if = "${rU != null}" th:text="${rU.userLevel.ulName}"></td>
+		                      <td th:unless = "${rU != null}"></td>
 		                    </tr>
 		                    <tr>
-		                      <td>대출상태:</td>
-		                      <td colspan="3"><span class="ion ion-md-checkmark text-primary"></span>&nbsp; Yes</td>
+		                      <td>대출권한:</td>
+		                       <td id="holdUserCheck" colspan="3" th:if = "${rU != null}">
+	                    		<span th:if = "${rU.uasLendLimit eq 'O'}" class="badge badge-outline-success">대출가능</span>
+	                    		<span th:unless = "${rU.uasLendLimit eq 'O'}"class="badge badge-outline-danger">대출불가</span>
+	                    	  </td>
+		                      <td colspan="3" th:unless = "${rU!= null}"></td>	
 		                    </tr>
 		                    <tr>
 		                      <td>대출가능권수:</td>
-		                      <td colspan="3">2권</td>
+		                      <td colspan="3" th:if = "${rU != null}" th:text="|${rU.userLevel.ulLendNum}권|"></td>
+		                      <td colspan="3" th:unless = "${rU != null}"></td>
 		                    </tr>
 		                    <tr>
 		                      <td>누적연체일:</td>
-		                      <td colspan="3">0일</td>
+		                      <td colspan="3" th:if = "${rU != null}" th:text="|${rU.uOverdueDay}일|"></td>
+		                      <td colspan="3" th:unless = "${rU != null}"></td>
 		                    </tr>
 		                    <tr>
 		                      <td>대출제한일:</td>
-		                      <td colspan="3">2019-12-04</td>
+		                      <td colspan="3" th:if = "${rU != null}" th:text="${rU.uAuthorityDate}"></td>
+		                      <td colspan="3" th:unless = "${rU != null}"></td>
 		                    </tr>
 		                  </tbody>
 		                </table>
@@ -195,7 +272,7 @@
 	                    <td style="min-width: 300px;">
 			               	 	<div class="media align-items-center">
 			               	 		<img class="ui-w-40 d-block" th:src="${L.biImg}" alt="">
-			               	 		<a href="javascript:void(0)" class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(L.biName,25)}"></a>
+			               	 		<span class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(L.biName,25)}"></span>
 			               	 	</div>
 			               	 </td>
 	                    <td class="align-middle" th:text="${L.blLendDate}"></td>
@@ -204,16 +281,16 @@
 	                    <td class="align-middle" th:text="|${L.blOverdueDays}일|"></td>
 	                    <td class="align-middle text-center" th:if = "${L.blExtensionDate != null}">
 	                    	<a href="javascript:void(0)">
-	                    		<span class="badge badge-outline-success">연장완료</span>
+	                    		<span class="badge badge-outline-secondary">연장완료</span>
 	                    	</a>	
 	                    </td>
 	                    <td class="align-middle text-center" th:unless = "${L.blExtensionDate != null}">
 	                    	<a href="javascript:void(0)">
-	                    		<span class="badge badge-outline-info">연장하기</span>
+	                    		<span class="badge badge-outline-success">연장하기</span>
 	                    	</a>	
 	                    </td>
 	                    <td class="align-middle">
-			               	<a href="javascript:void(0)" class="btn btn-default btn-xs icon-btn md-btn-flat product-tooltip" title="" data-original-title="취소">
+			               	<a href="javascript:void(0)" class="btn btn-default btn-xs icon-btn md-btn-flat" title="대출취소" data-original-title="취소" >
 			               	 	<i class="ion ion-ios-refresh"></i>
 			               	</a>
 	                    </td>
