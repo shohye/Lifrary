@@ -13,12 +13,23 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ksmart.pentagon.vo.BookStock;
 
-
+/***
+ * @file BookLendController.java
+ * @name BookLendController
+ * @brief 대출,반납,예약도서관련 주소요청 처리
+ * @author 최지혜
+ */
 @Controller
 public class BookLendController {
 	@Autowired private BookLendService bookLendService;
 	
 	//대출도서리스트
+	/***
+	 * @param model
+	 * @brief 대출도서리스트
+	 * @return adminpage/bookLend/lendSearchList
+	 * @author 최지혜
+	 */
 	@GetMapping("/admin/lendSearchList")
 	public String LendSearchList(Model model){
 		
@@ -28,6 +39,13 @@ public class BookLendController {
 	}
 	
 	//도서정보검색
+	/**
+	 * 
+	 * @param svBook 도서검색키워드
+	 * @param svUser 
+	 * @param redirectAttributes
+	 * @return /admin/lendSearchList
+	 */
 	@PostMapping("/admin/lendBookInfo")
 	public String lendBookInfo(  @RequestParam(value="svBook" ) String svBook
 								,@RequestParam(value="svUser", required=false) String svUser

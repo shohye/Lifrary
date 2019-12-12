@@ -12912,9 +12912,16 @@ a:focus {
   background-color: transparent;
   border-right: 2px solid #595959;
 }
+@media (max-width: 991px){
+.layout-v3 .fun-stuff .facts-counter ul li {
+  border: none;
+  background-color: transparent;
+  
+}
+}
 
 .layout-v3 .facts-counter ul li .fact-item span{
-	font-size: 20px;
+	font-size: 15px;
 }
 .layout-v3 .welcome-section .welcome-image {
   background-image: url("/library/images/welcome-img-home-v3.jpg");
@@ -19041,7 +19048,7 @@ a:focus {
 }
 @media (max-width: 767px) {
   .layout-v3 #home-v1-header-carousel .carousel-caption {
-    transform: translateY(-38%);
+    transform: translateY(-20%);
   }
 }
 .layout-v3 #home-v1-header-carousel .carousel-caption h2 {
@@ -19142,12 +19149,13 @@ a:focus {
 .layout-v3 #home-v1-header-carousel .filter-box input {
   border-color: #595959;
   border-radius: 0 3px 3px 0;
-  border-width: 3px 3px 3px 0;
+  border-width: 3px 3px 3px 0px;
   
 }
 @media (max-width: 767px) {
   .layout-v3 #home-v1-header-carousel .filter-box input {
     border-radius: 0;
+    border-width: 3px 3px 3px 3px;
   }
 }
 .layout-v3 #home-v1-header-carousel .filter-box .select:last-child {
