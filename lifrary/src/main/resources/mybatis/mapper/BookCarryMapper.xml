@@ -47,7 +47,8 @@
 	         
 	         <collection property="bookInformation" resultMap="bookInfoResultMap" />	       	         
 	 </resultMap>
-	 <resultMap type="ksmart.pentagon.vo.BookRequest" id="bookRequest">	         
+	 
+	 <resultMap type="ksmart.pentagon.vo.BookRequest" id="bookRequestResultMap">	         
 	         <result property="brCode" column="br_code"/>
 	         <result property="uId" column="u_id"/>
 	         <result property="brTitle" column="br_title"/>
@@ -59,15 +60,37 @@
 	         <result property="brOpinion" column="br_opinion"/>
 	         <result property="brProgress" column="br_progress"/>
 	         <result property="brCancelReason" column="br_cancel_reason"/>
-	         <result property="brDate" column="br_date"/>	              
+	         <result property="brDate" column="br_date"/>
+	         
+	         <collection property="user" resultMap="userResultMap"></collection>              
+	 </resultMap>	 
+   	 <resultMap type="ksmart.pentagon.vo.User" id="userResultMap">
+			<!-- db -->
+			<result property="uId" column="u_id"/>
+			<result property="uNumber" column="u_number"/>
+			<result property="uName" column="u_name"/>
+			<result property="uTel" column="u_tel"/>
+			<result property="uEmail" column="u_email"/>
+			<result property="uEmailAgree" column="u_email_agree"/>
 	 </resultMap>
 	 
-  	<select id="getRequestList" resultMap="bookRequest" >
+  	<select id="getRequestList" resultMap="bookRequestResultMap" >
   			SELECT 
 				* 
 			FROM 
 				book_request
-  	</select>  	
+  	</select>
+  	<select id="getRequestDatail" resultMap="bookRequestResultMap" parameterType="String">
+  			SELECT 
+				* 
+			FROM 
+				book_request br inner join user u
+			on 
+				br.u_id = u.u_id
+			where 
+				br.u_id =#{u_id}
+  	</select> 
+  	  	
 
   	<select id="getOrderList" resultMap="bookCarryResultMap">
 			SELECT 
@@ -79,7 +102,7 @@
 			    bo.bi_isbn = bi.bi_isbn;  		
   	
   	</select>
-  	<select id="getPurchaseList" resultMap="bookCarryResultMap">
+  	<select id="getPurchaseList" resultMap="bookCarryResultMap" >
 			SELECT 	
 				*
 			FROM 

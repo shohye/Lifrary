@@ -49,8 +49,6 @@
                       <th data-orderable="false">ISBN</th>
                       <th>도서명</th>
                       <th>저자명</th>
-                      <th>발행자</th>
-                      <th>발행년도</th>
                       <th>업체명</th>
                       <th>권수</th>
                       <th>결제가격</th>
@@ -64,10 +62,8 @@
                   <tbody>
 				    <tr th:each="ol : ${orderList}">
 				      <td class="align-middle" th:text="${ol.bookInformation.biIsbn}"></td>
-				      <td class="align-middle" th:text="${#strings.abbreviate(ol.bookInformation.biName,17)}"></td>
-				      <td class="align-middle" th:text="${#strings.abbreviate(ol.bookInformation.biAuthor,10)}"></td>
-				      <td class="align-middle" th:text="${ol.bookInformation.biPublisher}"></td>
-				      <td class="align-middle" th:text="${ol.bookInformation.biYear}"></td>
+				      <td class="align-middle" th:text="${#strings.abbreviate(ol.bookInformation.biName,20)}"></td>
+				      <td class="align-middle" th:text="${#strings.abbreviate(ol.bookInformation.biAuthor,12)}"></td>
 				      <td class="align-middle" th:text="${ol.boCompany}"></td>
 				      <td class="align-middle" th:text="${ol.boBookNum}"></td>
 				      <td class="align-middle" th:text="${ol.boPrice}"></td>

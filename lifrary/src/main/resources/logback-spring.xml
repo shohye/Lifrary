@@ -18,6 +18,7 @@
 
 	<logger name="jdbc.sqlonly" level="DEBUG" additivity="false">
 		<appender-ref ref="STDOUT" />
+		<!-- <appender-ref ref="dailyRollingFileAppender" /> -->
 	</logger>
 
 	<!-- <logger name="jdbc.resultsettable" level="DEBUG" additivity="false">
@@ -48,6 +49,6 @@
 
 	<root level="ERROR">
 		<appender-ref ref="STDOUT" />
-		<appender-ref ref="dailyRollingFileAppender" />
+		<!-- <appender-ref ref="dailyRollingFileAppender" /> 로그 생기는 코드-->
 	</root>
 </configuration>

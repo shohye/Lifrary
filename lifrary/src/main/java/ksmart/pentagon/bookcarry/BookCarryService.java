@@ -52,34 +52,47 @@ public class BookCarryService {
 		List<BookRequest> br = bookCarryMapper.getRequestList();
 		String cancelReason =null;
 		String opinion =null;
-		for(int i =0; i<br.size(); i++) {
-			
+		for(int i =0; i<br.size(); i++) {			
 			cancelReason = br.get(i).getBrCancelReason();
 			opinion = br.get(i).getBrOpinion();
 			
 			if(cancelReason == null) {
-				cancelReason = "";	
-				br.get(i).setBrCancelReason(cancelReason);
-			
-			}
-			
+				cancelReason = "-";	
+				br.get(i).setBrCancelReason(cancelReason);			
+			}			
 			if(opinion == null) {
-				opinion = "";
+				opinion = "-";
 				br.get(i).setBrOpinion(opinion);
-			}
-			
+			}			
 		}
-				
-		
-		
-		
-		
 		System.out.println("opinion=>"+opinion);
-		
-		
-	
-		return br;
-		
+			
+		return br;		
 	}
+	
+	// 희망도서 한개정보 출력 => 상세정보 회면
+	public BookRequest getRequestDatail(String uId) {
+		BookRequest br = bookCarryMapper.getRequestDatail(uId);
 		
+		String cancelReason =null;
+		String opinion =null;
+		String uid = null;
+		
+		if(br.getUser().getuId() == null) {
+			uid = "공백";
+			br.getUser().setuId(uid);
+		}
+		
+		if(br.getBrCancelReason() == null) {
+			cancelReason ="공백";
+			br.setBrCancelReason(cancelReason);
+		}
+		
+		if(br.getBrOpinion() == null) {
+			opinion = "공백";
+			br.setBrOpinion(opinion);
+		}
+		
+		return br;		
+	}
 }

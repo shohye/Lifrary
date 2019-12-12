@@ -15,6 +15,16 @@ public class BookRequest {
 	private String brCancelReason;
 	private String brDate;
 	
+	private User user;
+	
+	
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 	public String getBrProgress() {
 		return brProgress;

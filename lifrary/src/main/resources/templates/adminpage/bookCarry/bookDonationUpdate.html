@@ -3,6 +3,16 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
+	  
+	   <!-- headAdd(Libs&page) -->
+  
+	  
+	  <!-- /headAdd(Libs&page) --> 
+	  <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+	  
+	  </th:block>
+	  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+	  
 	 
 	          <!-- Content -->
 	      <th:block layout:fragment="adminContents">
@@ -51,48 +61,47 @@
                   </div>
 	              <div class="form-row">
 	                  <div class="form-group col-md-6">
-	                   <p>기증스티커</p>	
-	                      <label class="custom-control custom-checkbox">
-                              <input th:if="${du.bdnSticker eq 'O'}" type="checkbox" class="custom-control-input" name="bdnSticker" value="O" checked="">
-                              <input th:unless="${du.bdnSticker eq 'O'}" type="checkbox" class="custom-control-input" name="bdnSticker" value="O">
-                                <span class="custom-control-label">부착</span>
-                          </label>
-                           <label class="custom-control custom-checkbox">
-                              <input th:if="${du.bdnSticker eq 'X'}" type="checkbox" class="custom-control-input" name="bdnSticker" value="X" checked="">
-                              <input th:unless="${du.bdnSticker eq 'X'}" type="checkbox" class="custom-control-input" name="bdnSticker" value="X">
-                                <span class="custom-control-label">미부착</span>
-                          </label>
-	                    
+	                   <p>기증스티커</p>
+	                       <label class="custom-control custom-radio">
+		               		   	<input th:if="${du.bdnSticker eq 'O'}" name="bdnSticker" type="radio" class="custom-control-input" value="O" checked="">
+		               		   	<input th:unless="${du.bdnSticker eq 'O'}" name="bdnSticker" type="radio" class="custom-control-input" value="O">
+		               		   	<span class="custom-control-label">부착</span>
+	                       </label>
+	                       <label class="custom-control custom-radio">
+	                 		   	<input th:if="${du.bdnSticker eq 'X'}" name="bdnSticker" type="radio" class="custom-control-input" value="X" checked="">
+	                 		   	<input th:unless="${du.bdnSticker eq 'X'}" name="bdnSticker" type="radio" class="custom-control-input" value="X">
+	                 		   	<span class="custom-control-label">미부착</span>
+	                       </label>	
 	                  </div>
+	                  
 	                  <div class="form-group col-md-6">
 	                   <p>명예전당</p>	
-	                      <label class="custom-control custom-checkbox">
-                              <input th:if="${du.bdnHonorAgree eq 'O'}" type="checkbox" class="custom-control-input" name="bdnHonorAgree" value="O" checked="">
-                              <input th:unless="${du.bdnHonorAgree eq 'O'}" type="checkbox" class="custom-control-input" name="bdnHonorAgree" value="O">
-                                <span class="custom-control-label">등록</span>
-                          </label>
-                           <label class="custom-control custom-checkbox">
-                              <input th:if="${du.bdnHonorAgree eq 'X'}" type="checkbox" class="custom-control-input" name="bdnHonorAgree" value="X" checked="">
-                              <input th:unless="${du.bdnHonorAgree eq 'X'}" type="checkbox" class="custom-control-input" name="bdnHonorAgree" value="X">
-                                <span class="custom-control-label">미등록</span>
-                          </label>
-	                    
+		                   <label class="custom-control custom-radio">
+		               		   	<input th:if="${du.bdnHonorAgree eq 'O'}" name="bdnHonorAgree" type="radio" class="custom-control-input" value="O" checked="">
+		               		   	<input th:unless="${du.bdnHonorAgree eq 'O'}" name="bdnHonorAgree" type="radio" class="custom-control-input" value="O">
+		               		   	<span class="custom-control-label">등록</span>
+	                       </label>
+	                       <label class="custom-control custom-radio">
+	                 		   	<input th:if="${du.bdnHonorAgree eq 'X'}" name="bdnHonorAgree" type="radio" class="custom-control-input" value="X" checked="">
+	                 		   	<input th:unless="${du.bdnHonorAgree eq 'X'}" name="bdnHonorAgree" type="radio" class="custom-control-input" value="X">
+	                 		   	<span class="custom-control-label">미둥록</span>
+	                       </label>		               	                    
 	                  </div>
-                  </div>   
+                  </div> 
+                  
                   <div class="form-row">
 	                  <div class="form-group col-md-6">
-	                   <p>개인정보수집동의여부</p>	
-	                      <label class="custom-control custom-checkbox">
-                              <input th:if="${du.bdnPersonal eq 'O'}" type="checkbox" class="custom-control-input" name="bdnPersonal" value="O" checked="">
-                              <input th:unless="${du.bdnPersonal eq 'O'}" type="checkbox" class="custom-control-input" name="bdnPersonal" value="O">
-                                <span class="custom-control-label">동의</span>
-                          </label>
-                           <label class="custom-control custom-checkbox">
-                              <input th:if="${du.bdnPersonal eq 'X'}" type="checkbox" class="custom-control-input" name="bdnPersonal" value="X" checked="">
-                              <input th:unless="${du.bdnPersonal eq 'X'}" type="checkbox" class="custom-control-input" name="bdnPersonal" value="X">
-                                <span class="custom-control-label">비동의</span>
-                          </label>
-	                    
+	                   <p>개인정보수집동의여부</p>	                          
+                         <label class="custom-control custom-radio">
+                   		   	<input th:if="${du.bdnPersonal eq 'O'}" name="bdnPersonal" type="radio" class="custom-control-input" value="O" checked="">
+                   		   	<input th:unless="${du.bdnPersonal eq 'O'}" name="bdnPersonal" type="radio" class="custom-control-input" value="O">
+                   		   	<span class="custom-control-label">동의</span>
+                         </label>
+                         <label class="custom-control custom-radio">
+                   		   	<input th:if="${du.bdnPersonal eq 'X'}" name="bdnPersonal" type="radio" class="custom-control-input" value="X" checked="">
+                   		   	<input th:unless="${du.bdnPersonal eq 'X'}" name="bdnPersonal" type="radio" class="custom-control-input" value="X">                  		   	
+                   		   	<span class="custom-control-label">비동의</span>
+                          </label>	                    
 	                  </div>
                   </div>
                   
@@ -105,6 +114,10 @@
 
           </div>
           <!-- / Content -->
+          
+          <!-- scripts -->
+	
+	
 	 
   
 </html>

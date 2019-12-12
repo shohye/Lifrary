@@ -109,5 +109,15 @@ public class BookCarryController {
     	return "/adminpage/bookCarry/requestSearchList";
     }
     
+    // 희망도서 상세내용 
+    @GetMapping("/admin/requestDetail")
+    public String requestDetail(Model model, @RequestParam(value="uId",required=false)String uId) { 	
+    	if(uId == null) {
+    		uId ="id003";
+	    }
+    	model.addAttribute("requestDetail",bookCarryService.getRequestDatail(uId));
+    	return "/adminpage/bookCarry/requestDetail";
+    }
+    
    
 }

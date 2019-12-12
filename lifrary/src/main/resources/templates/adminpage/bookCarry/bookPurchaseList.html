@@ -48,11 +48,8 @@
                       <th data-orderable="false">ISBN</th>
                       <th>도서명</th>
                       <th>저자명</th>
-                      <th>발행자</th>
-                      <th>발행년도</th>
                       <th>결제가격</th>
-                      <th>예정권수</th>
-                      <th data-orderable="false">추가사항</th>
+                      <th>예정권수</th>               
                       <th>등록일</th>
                       <th>상세&수정</th> 
                       <th>삭제</th>                 
@@ -64,11 +61,9 @@
 				      <td class="align-middle" th:text="${pl.bookInformation.biIsbn}"></td>
 				      <td class="align-middle" th:text="${#strings.abbreviate(pl.bookInformation.biName,15)}"></td>
 				      <td class="align-middle" th:text="${#strings.abbreviate(pl.bookInformation.biAuthor,15)}"></td>
-				      <td class="align-middle" th:text="${pl.bookInformation.biPublisher}"></td>
-				      <td class="align-middle" th:text="${pl.bookInformation.biYear}"></td>
 				      <td class="align-middle" th:text="${pl.bpPrice}"></td>
 				      <td class="align-middle" th:text="${pl.bpBookNum}"></td>
-				      <td class="align-middle" th:text="${pl.bpAdditional}"></td>
+				      
 				      <td class="align-middle" th:text="${pl.bpDate}"></td>
 				      <td class="align-middle align-center">
 			      		<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
