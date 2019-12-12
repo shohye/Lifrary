@@ -59,7 +59,7 @@ public class AdminController {
 			session.removeAttribute("SNAME");
 			System.out.println("세션이 잘 종료되었습니다.");
 		}else {
-			System.out.println("세션값이 없습니다.");
+			System.out.println("(도서관)세션값이 없습니다.");
 		}
 		return "/adminpage/librarian/adminLogin";
 	}
