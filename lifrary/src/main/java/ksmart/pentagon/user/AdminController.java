@@ -114,7 +114,7 @@ public class AdminController {
 		session.removeAttribute("SALS");
 		session.removeAttribute("SALBS");
 		
-		return "redirect:/adminLogin";
+		return "redirect:/admin/login";
 	}
 	
 	
