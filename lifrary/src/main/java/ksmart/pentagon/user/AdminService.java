@@ -1,6 +1,8 @@
 package ksmart.pentagon.user;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +23,27 @@ public class AdminService {
 	@Autowired private AdminMapper adminMapper;
 	
 	//사서 채널 로그인 처리 / 회원 정보 유무 확인후 로그인
-	public User adminLoginCheck(String uId) {
-		System.out.println(adminMapper.adminLoginCheck(uId) + "<== 사서 정보 가져오기. 로그인 처리.");
+	public Map<String,Object> adminLoginCheck(String uId, String uPw) {
+		
 		User user = adminMapper.adminLoginCheck(uId);
-		user.getLibrarianLevel().getLlBookStock(); // user객체안의 getLibrarianLevel()을 하여 LibrarianLevel객체를 가져옴. 가져온 객체에서 LlBookStock()가져옴!
-		return null;
+		String result = null;
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		
+		if(user != null) {
+			if(uPw.equals(user.getuPw())) { // 비밀번호 일치
+				result = "로그인 성공";
+				resultMap.put("user", user);
+			} else {
+				result = "비밀번호 불일치";
+			}
+			
+		} else {
+			result = "아이디 없음";
+		}
+		resultMap.put("result", result);
+		System.out.println(result + " <== service result");
+		return resultMap;
 	}
 	
 	

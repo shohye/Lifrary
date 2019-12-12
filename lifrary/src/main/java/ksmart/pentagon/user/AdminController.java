@@ -1,6 +1,9 @@
 package ksmart.pentagon.user;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,8 +50,18 @@ public class AdminController {
 	 * @date 19/12/05
 	 */
 	@GetMapping("/adminLogin")
-	public String adminLoginCheck() {
-		return "adminpage/librarian/adminLogin";
+	public String adminLoginCheck(HttpSession session) {
+		//library => admin  로그인 페이지로 이동시, session에 값이 있는경우 remove해준다.
+		if(session.getAttribute("SID") != null) {
+			System.out.println("세션에 SID값이 있습니다");
+			session.removeAttribute("SID");
+			session.removeAttribute("SDIV");
+			session.removeAttribute("SNAME");
+			System.out.println("세션이 잘 종료되었습니다.");
+		}else {
+			System.out.println("세션값이 없습니다.");
+		}
+		return "/adminpage/librarian/adminLogin";
 	}
 	
 	/**
@@ -59,13 +72,51 @@ public class AdminController {
 	 * @return
 	 */
 	@PostMapping("/adminLogin")
-	public String adminLogin(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw, Model model) {
+	public String adminLogin(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw, HttpSession session, Model model) {
 		System.out.println(uId + " <== uId");
 		System.out.println(uPw + " <== uPw");
 		
-		adminService.adminLoginCheck(uId);
-		return null;
+		Map<String,Object> map =  adminService.adminLoginCheck(uId, uPw);
+		String result = (String)map.get("result");
+		User user = (User)map.get("user");
+		
+		if(!result.equals("로그인 성공")) {
+			//경고창 출력을 위해 result보내주기
+			model.addAttribute("result", result);
+			return "/adminpage/librarian/adminLogin";
+		}
+		
+		session.setAttribute("SAID",user.getuId()); // 아이디
+		session.setAttribute("SADIV",user.getuDivision()); // 사서 / 관리자 구분
+		session.setAttribute("SANAME",user.getuName()); // 이름
+		session.setAttribute("SALI",user.getLibrarianLevel().getLlInsert()); // library insert - 사서 등록
+		session.setAttribute("SALC",user.getLibrarianLevel().getLlCarry()); // library carry - 수서
+		session.setAttribute("SALBA",user.getLibrarianLevel().getLlBookAdmin()); // library book admin - 대출, 반납, 예약
+		session.setAttribute("SALS",user.getLibrarianLevel().getLlStats()); // library stats - 통계
+		session.setAttribute("SALBS",user.getLibrarianLevel().getLlBookStock()); // library book stock - 장서 점검 
+		System.out.println(result + " < == result");
+		return "redirect:/admin/index";
 	}
+	/**
+	 * 사서채널 로그아웃 / 세션 제거.
+	 * 도서관 코드가 없어지면 안되므로 , 설정된 세션만 remove해준다.
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("/admin/logout")
+	public String adminLogout(HttpSession session) {
+		session.removeAttribute("SAID");
+		session.removeAttribute("SADIV");
+		session.removeAttribute("SANAME");
+		session.removeAttribute("SALI");
+		session.removeAttribute("SALC");
+		session.removeAttribute("SALBA");
+		session.removeAttribute("SALS");
+		session.removeAttribute("SALBS");
+		
+		return "redirect:/adminLogin";
+	}
+	
 	
 	//전체회원리스트
 	@GetMapping("/admin/userSearchList")

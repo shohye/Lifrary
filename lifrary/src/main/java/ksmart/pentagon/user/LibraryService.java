@@ -28,7 +28,7 @@ public class LibraryService {
 		
 		if(user != null) {//아이디 있음 
 			if(uPw.equals(user.getuPw())) { //비밀번호 일치
-				result = "로그인성공";
+				result = "로그인 성공";
 				resultMap.put("user", user);
 			} else { // 비밀번호 불일치
 				result = "비밀번호 불일치";

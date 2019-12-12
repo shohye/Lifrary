@@ -23,9 +23,9 @@ public class User {
 	private int uOverdueDay;
 	private String uDate;
 	private String uAuthorityDate;
-	private LibrarianLevel librarianLevel;
 	private int uLendCnt;
 	private UserLevel userLevel;
+	private LibrarianLevel librarianLevel;
 	
 	
 	public String getuId() {
