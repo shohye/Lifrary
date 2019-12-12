@@ -1,7 +1,6 @@
 package ksmart.pentagon.user;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 
 import ksmart.pentagon.vo.LibrarianLevel;
@@ -18,6 +17,9 @@ import ksmart.pentagon.vo.UserLevel;
 @Mapper
 public interface AdminMapper {
 
+	//사서 채널 로그인 처리 / 회원 정보 유무 확인후 로그인
+	public User adminLoginCheck(String uId);
+		
 	//유저 레벨 전체 가져오기.
 	public List<UserLevel> getUserLevel();
 	

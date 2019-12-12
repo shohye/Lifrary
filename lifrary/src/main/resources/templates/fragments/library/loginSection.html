@@ -19,7 +19,7 @@
                                                             <h2>로그인</h2>
                                                             <span class="underline left"></span>
                                                         </div>
-                                                        <form class="login" th:action="@{/lifraryLogin}" method="post">
+                                                        <form id = "loginForm" class="login" th:action="@{/lifraryLogin}" method="post">
                                                             <p class="form-row form-row-first input-required">
                                                                 <label>
                                                                     <span class="first-letter">ID</span>  
@@ -34,6 +34,11 @@
                                                                 </label>
                                                                 <input type="password" id="uPw" name="uPw" class="input-text">
                                                             </p>
+                                                            <div>
+	                                                           <th:block th:if="${result} != null">
+	                                                           		<p id="pText" style="color: red"></p>
+	                                                           </th:block>
+                                                            </div>
                                                             <div class="clear"></div>
                                                             <div class="password-form-row">
                                                                 <p class="form-row input-checkbox">
@@ -44,8 +49,8 @@
                                                                     <a href="#">비밀번호를 잊었습니까?</a>
                                                                 </p>
                                                             </div>
-                                                            <input type="submit" value="로그인" name="login" class="button btn btn-default">
-                                                            &nbsp&nbsp&nbsp<input type="submit" value="회원가입" name="login" class="button btn btn-default">
+                                                            <input id = "loginBtn" type="button" value="로그인" name="login" class="button btn btn-default" onclick="userJoin()">
+                                                            &nbsp&nbsp&nbsp<input type="submit" value="회원가입" class="button btn btn-default">
                                                             <div class="clear"></div>
                                                         </form>
                                                     </div>
