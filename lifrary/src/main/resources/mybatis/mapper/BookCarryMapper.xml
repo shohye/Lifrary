@@ -68,7 +68,7 @@
 			<!-- db -->
 			<result property="uId" column="u_id"/>
 			<result property="uNumber" column="u_number"/>
-			<result property="uName" column="u_name"/>
+			<result property="uName" column="hu_name"/>
 			<result property="uTel" column="u_tel"/>
 			<result property="uEmail" column="u_email"/>
 			<result property="uEmailAgree" column="u_email_agree"/>
@@ -145,5 +145,75 @@
 		    where
 				bdn_code=#{bdnCode};
   	</select>
+  	<update id="updateDonation" parameterType="ksmart.pentagon.vo.BookCarry" >
+		UPDATE 
+			book_donation
+		SET
+			 bdn_name       = #{bdnName}
+			,bdn_tel        = #{bdnTel}
+			,bdn_addr       = #{bdnAddr}
+			,bdn_num        = #{bdnNum}
+			,bdn_sticker    = #{bdnSticker}
+			,bdn_personal   = #{bdnPersonal}
+			,bdn_honor_agree= #{bdnHonorAgree}
+		WHERE 
+			 bdn_code = #{bdnCode};	
+	</update>
+	<update id="updateOrder1" parameterType="ksmart.pentagon.vo.BookCarry" >
+		
+	        UPDATE 
+				book_order as bo INNER JOIN book_information as bi
+			ON 
+				 bo.bi_isbn = bi.bi_isbn
+			SET
+				 bo.bo_company   = #{boCompany}
+				,bo.bo_book_num  = #{boBookNum}
+				,bo.bo_price     = #{boPrice}
+			WHERE 
+				 bi.bi_isbn = #{biIsbn}
+
+	</update>
+	<update id="updateOrder2" parameterType="ksmart.pentagon.vo.BookInformation" >
+		
+	        UPDATE 
+				book_order as bo INNER JOIN book_information as bi
+			ON 
+				 bo.bi_isbn = bi.bi_isbn
+			SET
+				 bi.bi_name   = #{biName}
+				,bi.bi_author  = #{biAuthor}
+				,bi.bi_publisher= #{biPublisher}
+				,bi.bi_year    = #{biYear}
+			WHERE 
+				 bi.bi_isbn = #{biIsbn}
+
+	</update>
+	<update id="updatePurchase1" parameterType="ksmart.pentagon.vo.BookCarry" >
+		UPDATE 
+			book_purchase as bp INNER JOIN book_information as bi
+		ON 
+			bp.bi_isbn = bi.bi_isbn
+		SET
+			 bp.bp_price= #{bpPrice}
+			,bp.bp_book_num = #{bpBookNum}
+			,bp.bp_additional  = #{bpAdditional}
+		WHERE 
+			 bi.bi_isbn = #{biIsbn}
+    </update>
+    <update id="updatePurchase2" parameterType="ksmart.pentagon.vo.BookInformation" >
+		UPDATE 
+			book_purchase as bp INNER JOIN book_information as bi
+		ON 
+			bp.bi_isbn = bi.bi_isbn
+		SET
+			 bi.bi_name   = #{biName}
+			,bi.bi_author  = #{biAuthor}
+			,bi.bi_publisher= #{biPublisher}
+			,bi.bi_year    = #{biYear}
+		WHERE 
+			 bi.bi_isbn = #{biIsbn}
+    </update>
+
+	
   		
   </mapper>

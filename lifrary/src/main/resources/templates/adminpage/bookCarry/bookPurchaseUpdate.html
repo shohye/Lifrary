@@ -14,12 +14,12 @@
 
             <div class="card mb-4">
               <div class="card-body" th:with="pu=${purchaseUpdate}">
-                <form id="validation-form" action="" method="post">
+                <form id="validation-form" th:action="@{/admin/bookPurchaseUpdate}" method="post">
                   <div class="form-group">
 	                 <div class="form-group ">
 	                   <label class="form-label" >ISBN</label>
 			            <div class="input-group">
-		                  <input type="text" class="form-control" name="biIsbn" th:value="${pu.bookInformation.biIsbn}">
+		                  <input type="text" class="form-control" name="biIsbn" th:value="${pu.bookInformation.biIsbn}" readonly>
 		           
 		                </div>        
 	                 </div>  
@@ -71,7 +71,11 @@
                   </div>
                   
                   <div class="text-right mt-3">
+                  	<button type="submit" class="btn btn-primary">
+						<a th:href="@{/admin/bookPurchaseList}" style="color: white">리스트로 이동</a>
+					</button>
                   	<button type="submit" class="btn btn-primary">수정</button>
+                  	
  				  </div>
                 </form>
               </div>

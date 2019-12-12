@@ -24,11 +24,12 @@
 
             <div class="card mb-4">
               <div class="card-body" th:with="du=${donationUpdate}">
-                <form id="validation-form" action="" method="post">
+                <form id="validation-form" th:action="@{/admin/bookDonationUpdate}" method="post">
                   
                   <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label" >이름</label>
+	                    <input type="hidden" name="bdnCode" th:value="${du.bdnCode}">
 	                    <input type="text" class="form-control" name="bdnName" th:value="${du.bdnName}" placeholder="name">
 	                   <!--  <small class="form-text text-muted">Example block-level help text here.</small> -->
 	                  </div>
@@ -44,19 +45,27 @@
 	                 </div>
 	                 <div class="form-group col-md-6">
 	                    <label class="form-label" >기증도서권수</label>
-	                    <input type="text" class="form-control" name="bdnNum" th:value="|${du.bdnNum}권|" placeholder="book number">
+	                    <input type="text" class="form-control" name="bdnNum" th:value="${du.bdnNum}" placeholder="book number">
 	                   <!--  <small class="form-text text-muted">Example block-level help text here.</small> -->
 	                  </div>
                   </div>
                   <div class="form-row">
 	                  <div class="form-group col-md-6">
-	                    <label class="form-label" >기증도서권수</label>
-	                    <input type="text" class="form-control" name="bdnNum" th:value="|${du.bdnNum}권|" placeholder="book number">
-	                   <!--  <small class="form-text text-muted">Example block-level help text here.</small> -->
-	                  </div>
-	                  <div class="form-group col-md-6">
 	                    <label class="form-label">신청일</label>
 	                    <input type="text" class="form-control" th:value="${du.bdnDate}" name="bdnDate" >
+	                  </div>
+	                  <div class="form-group col-md-6">
+	                   <p>개인정보수집동의여부</p>	                          
+                         <label class="custom-control custom-radio">
+                   		   	<input th:if="${du.bdnPersonal eq 'O'}" name="bdnPersonal" type="radio" class="custom-control-input" value="O" checked="">
+                   		   	<input th:unless="${du.bdnPersonal eq 'O'}" name="bdnPersonal" type="radio" class="custom-control-input" value="O">
+                   		   	<span class="custom-control-label">동의</span>
+                         </label>
+                         <label class="custom-control custom-radio">
+                   		   	<input th:if="${du.bdnPersonal eq 'X'}" name="bdnPersonal" type="radio" class="custom-control-input" value="X" checked="">
+                   		   	<input th:unless="${du.bdnPersonal eq 'X'}" name="bdnPersonal" type="radio" class="custom-control-input" value="X">                  		   	
+                   		   	<span class="custom-control-label">비동의</span>
+                          </label>	                    
 	                  </div>
                   </div>
 	              <div class="form-row">
@@ -84,29 +93,18 @@
 	                       <label class="custom-control custom-radio">
 	                 		   	<input th:if="${du.bdnHonorAgree eq 'X'}" name="bdnHonorAgree" type="radio" class="custom-control-input" value="X" checked="">
 	                 		   	<input th:unless="${du.bdnHonorAgree eq 'X'}" name="bdnHonorAgree" type="radio" class="custom-control-input" value="X">
-	                 		   	<span class="custom-control-label">미둥록</span>
+	                 		   	<span class="custom-control-label">미등록</span>
 	                       </label>		               	                    
 	                  </div>
                   </div> 
                   
-                  <div class="form-row">
-	                  <div class="form-group col-md-6">
-	                   <p>개인정보수집동의여부</p>	                          
-                         <label class="custom-control custom-radio">
-                   		   	<input th:if="${du.bdnPersonal eq 'O'}" name="bdnPersonal" type="radio" class="custom-control-input" value="O" checked="">
-                   		   	<input th:unless="${du.bdnPersonal eq 'O'}" name="bdnPersonal" type="radio" class="custom-control-input" value="O">
-                   		   	<span class="custom-control-label">동의</span>
-                         </label>
-                         <label class="custom-control custom-radio">
-                   		   	<input th:if="${du.bdnPersonal eq 'X'}" name="bdnPersonal" type="radio" class="custom-control-input" value="X" checked="">
-                   		   	<input th:unless="${du.bdnPersonal eq 'X'}" name="bdnPersonal" type="radio" class="custom-control-input" value="X">                  		   	
-                   		   	<span class="custom-control-label">비동의</span>
-                          </label>	                    
-	                  </div>
-                  </div>
+                  
                   
                   <div class="text-right mt-3">
-                  	<button type="submit" class="btn btn-primary">수정</button>
+                  	<button type="submit" class="btn btn-primary">
+						<a th:href="@{/admin/bookDonationList}" style="color: white">리스트로 이동</a>
+					</button>
+                  	<button type="submit" class="btn btn-primary">수정완료</button>
  				  </div>
                 </form>
               </div>

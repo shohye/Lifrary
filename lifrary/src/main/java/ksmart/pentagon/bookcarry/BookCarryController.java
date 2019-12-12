@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import ksmart.pentagon.vo.BookCarry;
+import ksmart.pentagon.vo.BookInformation;
 
 
 /*
@@ -20,7 +24,6 @@ public class BookCarryController {
 	
 	@Autowired BookCarryService bookCarryService;
 	
-	
 	// 기부신청자 입력
 	@GetMapping("/admin/bookDonationInsert")
     public String bookDonationInsert() {
@@ -32,7 +35,7 @@ public class BookCarryController {
     	model.addAttribute("donationList",bookCarryService.getDonationList());
     	return "/adminpage/bookCarry/bookDonationList";
     }
-    // 기부신청자 수정
+    // 기부신청자 수정 화면
     @GetMapping("/admin/bookDonationUpdate")
     public String bookDonationUpdate(@RequestParam(value="bdnCode",required=false)String bdnCode, Model model) {
     	
@@ -42,6 +45,14 @@ public class BookCarryController {
     	model.addAttribute("donationUpdate",bookCarryService.getDonationUpdate(bdnCode));
     	return "/adminpage/bookCarry/bookDonationUpdate";
     }
+    
+    // 기부신청자 수정 처리
+    @PostMapping("/admin/bookDonationUpdate")
+    public String bookDonationUpdate(BookCarry bookCarry){
+    	bookCarryService.updateDonation(bookCarry);
+		return "redirect:/admin/bookDonationList";   	
+    }
+
     
     
     /***************************************************************************/
@@ -57,7 +68,7 @@ public class BookCarryController {
     	model.addAttribute("purchaseList", bookCarryService.getPurchaseList());
     	return "/adminpage/bookCarry/bookPurchaseList";
     }
-    // 도서 구매 수정
+    // 도서 구매 수정 화면
     @GetMapping("/admin/bookPurchaseUpdate")
     public String bookPurchaseUpdate( @RequestParam(value="bpCode",required=false)String bpCode, Model model) {
     	if(bpCode == null) {
@@ -68,7 +79,13 @@ public class BookCarryController {
     	
     	return "/adminpage/bookCarry/bookPurchaseUpdate";
     }
-    
+    // 도서구매 수정 처리
+    @PostMapping("/admin/bookPurchaseUpdate")
+    public String bookPurchaseUpdate(BookCarry bookCarry,BookInformation bookInformation) {
+    	bookCarryService.updatePurchase1(bookCarry);
+    	bookCarryService.updatePurchase2(bookInformation);
+		return "redirect:/admin/bookPurchaseList"; 	
+    }
 
     
     /***************************************************************************/
@@ -86,7 +103,7 @@ public class BookCarryController {
     		
     	return "/adminpage/bookCarry/bookOrderList";
     }
-    // 도서 주문 수정
+    // 도서 주문 수정 화면
     @GetMapping("/admin/bookOrderUpdate")
     public String bookOrderUpdate(@RequestParam(value="boCode",required=false)String boCode, Model model) {
     	if(boCode == null) {
@@ -95,7 +112,13 @@ public class BookCarryController {
     	model.addAttribute("orderUpdate",bookCarryService.getOrderUpdate(boCode));
     	return "/adminpage/bookCarry/bookOrderUpdate";
     }
-    
+    // 도서 주문 수정 처리
+    @PostMapping("/admin/bookOrderUpdate")
+    public String bookOrderUpdate(BookCarry bookCarry,BookInformation bookInformation) {
+    	bookCarryService.updateOrder1(bookCarry);
+    	bookCarryService.updateOrder2(bookInformation);
+		return "redirect:/admin/bookOrderList";  	
+    }
 
     
     /***************************************************************************/
