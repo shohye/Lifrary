@@ -3,6 +3,48 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
     
+    <th:block layout:fragment="customScript">
+    	<script th:inline="javascript">
+  		/* 로그인 유효성 검사. */  	
+  		/*<![CDATA[*/
+  			
+  	$(document).ready(function(){
+  			
+  		var result = [[${result}]];
+  		
+  		if(result == '아이디 없음'){
+  			$('#pText').text('아이디가 없습니다. 아이디를 확인해주세요.'); 			
+  		} else if(result == '비밀번호 불일치'){
+  			$('#pText').text('비밀번호가 일치하지 않습니다. 비밀번호를 확인해주세요.'); 			  			
+  		}
+    	
+  		
+    	
+    	/*]]>*/
+  	})
+    	</script>
+    	
+	    	<script type="text/javascript">
+	    	var userJoin = function(){
+	    		var loginForm = document.getElementById('loginForm');
+	    		var userId = loginForm.uId.value;
+	    		var userPw = loginForm.uPw.value;
+	
+	    		if(userId == ''){
+	    			alert('아이디를 입력해주세요');
+	    			loginForm.uId.focus();
+	    			return false;
+	    		} else if(userPw == ''){
+	    			alert('비밀번호를 입력해주세요');
+	    			loginForm.uPw.focus();
+	    			return false;
+	    		} else {
+	    			loginForm.submit();
+	    		}
+	    	}
+	    	</script>
+    </th:block>
+    
 
       <th:block layout:fragment="customContents">  
         

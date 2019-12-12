@@ -12912,6 +12912,12 @@ a:focus {
   background-color: transparent;
   border-right: 2px solid #595959;
 }
+
+.layout-v3 .fun-stuff .facts-counter ul {
+	list-style: none;
+}
+
+
 @media (max-width: 991px){
 .layout-v3 .fun-stuff .facts-counter ul li {
   border: none;
@@ -19038,12 +19044,12 @@ a:focus {
 }
 @media (min-width: 1200px) and (max-width: 1599px) {
   .layout-v3 #home-v1-header-carousel .carousel-caption {
-    transform: translateY(-25%);
+    transform: translateY(-50%);
   }
 }
 @media (max-width: 991px) {
   .layout-v3 #home-v1-header-carousel .carousel-caption {
-    transform: translateY(-25%);
+    transform: translateY(-20%);
   }
 }
 @media (max-width: 767px) {
@@ -19192,7 +19198,7 @@ a:focus {
 .bx-wrapper {
   position: relative;
   margin: 0 auto 72px;
-  padding: 0;
+  padding: 0;.layout-v3 #home-v1-header-carousel .carousel-caption
   *zoom: 1;
 }
 .bx-wrapper img {

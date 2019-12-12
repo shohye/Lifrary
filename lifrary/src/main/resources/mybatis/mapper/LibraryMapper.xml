@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="ksmart.pentagon.user.LibraryMapper">
- 	<select id="loginCheck" resultType="ksmart.pentagon.vo.User">
+ 	<select id="loginCheck" parameterType="String" resultType="ksmart.pentagon.vo.User">
  		SELECT 
  			u_id as uId,
  			u_pw as uPw,
