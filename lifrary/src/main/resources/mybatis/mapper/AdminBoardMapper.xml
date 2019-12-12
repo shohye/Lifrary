@@ -18,9 +18,19 @@
  		</resultMap>
   	<select id="getBoard" resultMap="boardNoticeList">
   		SELECT
-  			*
+	*
+	FROM board AS b INNER JOIN board_medium AS me
+	ON b.board_m_code = me.board_m_code
+	WHERE me.board_m_name = #{board_m_name}
+  	</select>
+  	<select id="maxBoardCode" resultType="String">
+  		SELECT
+  		max(board_code)
+  		AS max
   		FROM board
   	</select>
-  
-  
+  	<select id="boardInsert" resultMap="boardNoticeList">
+ 		
+  	</select>
+  	
   	</mapper>

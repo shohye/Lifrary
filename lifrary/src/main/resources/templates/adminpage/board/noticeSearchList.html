@@ -6,9 +6,11 @@
 
 <!-- Content -->
 <th:block layout:fragment="adminContents">
-
-        
-
+<style>
+	a {
+	color : #4E5155;
+	}
+</style>
         <!-- Layout content -->
         <div class="layout-content">
 
@@ -32,13 +34,13 @@
 	                  </tr>
 	                </thead>
 	                <tbody>
-	                  <tr data-th-each="l : ${boardList}">
-	                  	<td></td>
-	                  	<td><a th:href="@{/list(b01=${l.boardCode})}">[[${l.boardTitle}]]</a></td>
-	                  	<td th:text="${l.uId}"></td>
-	                  	<td th:text="${l.boardPageView}"></td>
-	                  	<td th:text="${l.boardDate}"></td>
-	                  </tr>
+		                  <tr th:each="l : ${boardList}">
+		                  	<td th:text="${l.lNum}"></td>
+		                  	<td><a th:href="@{/adminNoticeDetail(boardCode=${l.boardCode})}">[[${l.boardTitle}]]</a></td>
+		                  	<td th:text="${l.uId}"></td>
+		                  	<td th:text="${l.boardPageView}"></td>
+		                  	<td th:text="${l.boardDate}"></td>
+		                  </tr>
 	                </tbody>
 	              </table>
 	            </div>
@@ -53,9 +55,6 @@
 	   </div>
 	   <br>
 	   <br>
-	   <div>
-	   <a th:href="@{/adminNoticeDetail}" class="btn btn-primary">상세보기 화면</a>
-	   </div>
 </th:block>
 
 <!-- / Content -->
@@ -70,7 +69,6 @@
   <!-- Libs -->
   <script th:src="@{/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
   <script th:src="@{/admin/vendor/libs/datatables/datatables2.js}"></script>
-
   <!-- Demo -->
   <script th:src="@{/admin/js/demo.js}"></script>
   <script th:src="@{/admin/js/tables_datatables.js}"></script>

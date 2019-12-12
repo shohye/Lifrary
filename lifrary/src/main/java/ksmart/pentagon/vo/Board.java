@@ -12,7 +12,14 @@ public class Board {
 	private String boardOpen;		//공개여부
 	private String boardPageView;	//조회수
 	private String boardDate;		//게시글등록일
+	private int lNum;
 	
+	public int getlNum() {
+		return lNum;
+	}
+	public void setlNum(int lNum) {
+		this.lNum = lNum;
+	}
 	public String getBoardCode() {	
 		return boardCode;
 	}
@@ -75,11 +82,12 @@ public class Board {
 	}
 	@Override
 	public String toString() {
-		return "board [boardCode=" + boardCode + ", lCode=" + lCode + ", uId=" + uId + ", boardICode=" + boardICode
+		return "Board [boardCode=" + boardCode + ", lCode=" + lCode + ", uId=" + uId + ", boardICode=" + boardICode
 				+ ", boardMCode=" + boardMCode + ", boardTitle=" + boardTitle + ", boardPw=" + boardPw
-				+ ", boardContent=" + boardContent + ", boardPageView=" + boardPageView + ", boardDate=" + boardDate
-				+ "]";
+				+ ", boardContent=" + boardContent + ", boardOpen=" + boardOpen + ", boardPageView=" + boardPageView
+				+ ", boardDate=" + boardDate + ", lNum=" + lNum + "]";
 	}
+	
 	
 	
 }
