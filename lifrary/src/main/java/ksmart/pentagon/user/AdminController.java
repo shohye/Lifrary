@@ -49,7 +49,7 @@ public class AdminController {
 	 * @author 김상협
 	 * @date 19/12/05
 	 */
-	@GetMapping("/adminLogin")
+	@GetMapping("/admin/login")
 	public String adminLoginCheck(HttpSession session) {
 		//library => admin  로그인 페이지로 이동시, session에 값이 있는경우 remove해준다.
 		if(session.getAttribute("SID") != null) {
@@ -71,7 +71,7 @@ public class AdminController {
 	 * @param model
 	 * @return
 	 */
-	@PostMapping("/adminLogin")
+	@PostMapping("/admin/login")
 	public String adminLogin(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw, HttpSession session, Model model) {
 		System.out.println(uId + " <== uId");
 		System.out.println(uPw + " <== uPw");
