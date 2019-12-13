@@ -18,12 +18,23 @@ public class BookCalenderController {
 	 * @return /librarypage/calender/myCalender
 	 * @author 최지혜
 	 */
-	@GetMapping("/lifrary/bookCalenderList")
-	public String bookCalenderList() {
+	@GetMapping("/lifrary/myCalender")
+	public String myCalenderList() {
 		
 		
 		return "/librarypage/calender/myCalender";
 		
 	}
-
+	
+	/**
+	 * @brief 마이페이지 북다이어리(캘린더) 등록 화면
+	 * @return /librarypage/calender/myCalenderInser
+	 * @author 최지혜
+	 */
+	@GetMapping("/lifrary/myCalenderInsert")
+	public String myCalenderInsert() {
+		
+		return "/librarypage/calender/myCalenderInsert";
+	}
+	
 }
