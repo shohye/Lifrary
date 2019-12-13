@@ -30,12 +30,16 @@
   <!-- Content -->
          <th:block layout:fragment="adminContents">
          
+         <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+			<div>도서 기부 신청자 리스트</div>
+			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; 
+				 <a th:href="@{/admin/bookDonationInsert}" style="color: white"> 신청자 추가 </a>
+			</button>
+		 </h4>
+         
             <!-- DataTable within card -->
 
             <div class="card">
-              <h3 class="card-header">
-                	도서 기부 신청자 리스트
-              </h3>
               <div class="card-datatable table-responsive">
                 <table id="myTable" class="datatables-demo table table-striped table-bordered">
                 
@@ -43,15 +47,16 @@
                 
                   <thead>
                     <tr>
-                      <th>기증자명</th>
+                      <th>성명</th>
                       <th data-orderable="false">연락처</th>
                       <th>주소</th>
-                      <th>기증도서권수</th>
+                      <th>권수</th>
                       <th>개인정보수집</th>
                       <th>기증스티커</th>
                       <th>명예전당</th>
                       <th>신청일</th> 
-                      <th>수정/삭제</th>                   
+                      <th>상세&수정</th>
+                      <th>삭제</th>                   
                     </tr>
                   </thead>
                   
@@ -60,28 +65,34 @@
 				      <td class="align-middle" th:text="${d.bdnName}"></td>
 				      <td class="align-middle" th:text="${d.bdnTel}"></td>
 				      <td class="align-middle" th:text="${d.bdnAddr}"></td>
-				      <td class="align-middle" th:text="${d.bpBookNum}"></td>
-				      <td class="align-middle">
-				      	 <button th:if="${d.bdnPersonal eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">동의</button>
-				     	 <button th:unless="${d.bdnPersonal eq 'O'}" type="button" class="btn btn-xs btn-outline-danger">비동의</button>
+				      <td class="align-middle" th:text="${d.bdnNum}"></td>
+				      <td class="align-middle text-center">
+				      	 <span th:if="${d.bdnPersonal eq 'O'}"  class="badge badge-outline-success">동의</span>
+				     	 <span th:unless="${d.bdnPersonal eq 'O'}" class="badge badge-outline-danger">비동의</span>
 				      </td>
-				      <td class="align-middle">
-				      	 <button th:if="${d.bdnSticker eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">부착</button>
-				      	 <button th:unless="${d.bdnSticker eq 'O'}" type="button" class="btn btn-xs btn-outline-danger">미부착</button>				      
+				      <td class="align-middle text-center">
+				      	 <span th:if="${d.bdnSticker eq 'O'}" class="badge badge-outline-success">부착</span>
+				      	 <span th:unless="${d.bdnSticker eq 'O'}" class="badge badge-outline-danger">미부착</span>				      
 				      </td>
-				      <td class="align-middle">
-				      	 <button th:if="${d.bdnHonorAgree eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">등록</button>
-				         <button th:unless="${d.bdnHonorAgree eq 'O'}" type="button" class="btn btn-xs btn-outline-danger">미등록</button>
+				      <td class="align-middle text-center">
+				      	 <span th:if="${d.bdnHonorAgree eq 'O'}"  class="badge badge-outline-success">등록</span>
+				         <span th:unless="${d.bdnHonorAgree eq 'O'}"  class="badge badge-outline-danger">미등록</span>
 				      </td>
 				      <td class="align-middle" th:text="${d.bdnDate}"></td>	
 				      <td class="align-middle align-center">
-		               	 <a th:href="@{/admin/bookDonationUpdate(bdnCode=${d.bdnCode})}" class="btn icon-btn btn-sm btn-outline-secondary" title="수정">
-		               	 	<span class="ion ion-ios-create d-block"></span>			               	 
-		               	 </a>
-		               	 <a th:href="@{#}" class="btn icon-btn btn-sm btn-outline-secondary" title="삭제">
-		               	 	<span class="ion ion-ios-cut d-block"></span>			               	 
-		               	 </a>
-                      </td> 	
+			      		<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
+						   <a th:href="@{/admin/bookDonationUpdate(bdnCode=${d.bdnCode})}" title="수정">
+							 <i class="ion ion-md-create" title="수정"></i>
+						   </a>
+						</button>
+                      </td> 
+                      <td class="align-middle align-center">
+                      	<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
+						   <a href="#" title="삭제">
+							 <i class="ion ion-ios-cut d-block" title="삭제"></i>
+						   </a>
+						</button>
+                      </td>	 	
 				    </tr>
 				  </tbody> 
                 </table>
