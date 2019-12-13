@@ -65,6 +65,25 @@
 	<result property="uasDate" column="uas_date"/>
  </resultMap>
  
+	<select id="adminLoginCheck" resultMap="userResultMap">
+		SELECT
+			u.u_id,
+			u.u_pw,
+			u.u_division,
+			u.u_name,
+			ll.ll_insert,
+			ll.ll_carry,
+			ll.ll_book_admin,
+			ll.ll_stats,
+			ll.ll_book_stock
+		FROM
+			user AS u INNER JOIN librarian_level AS ll
+		ON
+			u.u_id = ll.u_id
+		WHERE
+			u.u_id = #{uId}
+	</select>
+ 
   	<select id="getUserLevel" resultType="ksmart.pentagon.vo.UserLevel">
   		SELECT 
   			ul_level as ulLevel, 
