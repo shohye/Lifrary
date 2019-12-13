@@ -65,7 +65,14 @@ public class LibraryController {
 		session.setAttribute("SNAME", user.getuName());
 		session.setAttribute("SDIV", user.getuDivision());
 		
-		return "redirect:/";
+		System.out.println(session.getAttribute("LIBNUM")+ " <== LIBNUM");
+		if(session.getAttribute("LIBNUM") == "000000") {
+			return "redirect:/pentagon/index";
+		}else if(session.getAttribute("LIBNUM") == "111111") {
+			return "redirect:/square/index";
+		} else {
+			return "redirect:/";
+		}
 	}
 	/**
 	 * 로그아웃으로 세션 제거작업.
@@ -78,7 +85,15 @@ public class LibraryController {
 		session.removeAttribute("SID");
 		session.removeAttribute("SNAME");
 		session.removeAttribute("SDIV");
-		return "redirect:/";
+		session.getAttribute("LIBNUM");
+		
+		if(session.getAttribute("LIBNUM") == "000000") {
+			return "redirect:/pentagon/index";
+		}else if(session.getAttribute("LIBNUM") == "111111") {
+			return "redirect:/square/index";
+		} else {
+			return "redirect:/";
+		}
 	}
 	
 }

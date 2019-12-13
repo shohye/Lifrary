@@ -21,18 +21,14 @@
                                                         </div>
                                                         <form id = "loginForm" class="login" th:action="@{/lifraryLogin}" method="post">
                                                             <p class="form-row form-row-first input-required">
-                                                                <label>
-                                                                    <span class="first-letter">ID</span>  
-                                                                    <span class="second-letter">*</span>
-                                                                </label>
-                                                                <input type="text"  id="uId" name="uId" class="input-text">
+                                                            
+                                                                <input type="text"  id="uId" name="uId" value="id006" class="input-text" placeholder="ID">
+                                                                
                                                              </p>
                                                             <p class="form-row form-row-last input-required">
-                                                                <label>
-                                                                    <span class="first-letter">Password</span>  
-                                                                    <span class="second-letter">*</span>
-                                                                </label>
-                                                                <input type="password" id="uPw" name="uPw" class="input-text">
+                                                            
+                                                                <input type="password" id="uPw" name="uPw" value="pw006" class="input-text" placeholder="Password">
+                                                                
                                                             </p>
                                                             <div>
 	                                                           <th:block th:if="${result} != null">
