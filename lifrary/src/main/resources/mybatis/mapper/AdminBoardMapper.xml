@@ -7,7 +7,7 @@
  			<result property="boardCode" column="board_code"/>
  			<result property="lCode" column="l_code"/>
  			<result property="uId" column="u_id"/>
- 			<result property="boardICode" column="board_l_code"/>
+ 			<result property="boardLCode" column="board_l_code"/>
  			<result property="boardMCode" column="board_m_code"/>
  			<result property="boardTitle" column="board_title"/>
  			<result property="boardPw" column="board_pw"/>
@@ -21,7 +21,7 @@
 	*
 	FROM board AS b INNER JOIN board_medium AS me
 	ON b.board_m_code = me.board_m_code
-	WHERE me.board_m_name = #{board_m_name}
+	WHERE me.board_m_name = #{boardLName}
   	</select>
   	<select id="maxBoardCode" resultType="String">
   		SELECT
@@ -30,7 +30,19 @@
   		FROM board
   	</select>
   	<select id="boardInsert" resultMap="boardNoticeList">
- 		
+ 		INSERT INTO board
+	(board_code, 
+	l_code, 
+	u_id, 
+	board_l_code, 
+	board_m_code, 
+	board_title, 
+	board_pw, 
+	board_content, 
+	board_open, 
+	board_page_view, 
+	board_date)
+	VALUES (#{boardCode}, #{lCode}, #{uId}, #{boardLCode}, #{boardMCode}, #{boardTitle}, #{boardPw}, #{boardContent}, #{boardOpen}, 0, NOW())
   	</select>
   	
   	</mapper>

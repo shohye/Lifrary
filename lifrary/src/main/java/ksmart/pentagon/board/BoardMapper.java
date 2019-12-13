@@ -9,7 +9,7 @@ import ksmart.pentagon.vo.Board;
 @Mapper
 public interface BoardMapper {
 	
-	public List<Board> getBoard(String board_m_name);
+	public List<Board> getBoard(Board board);
 
 	public String maxBoardCode();
 	

@@ -19,8 +19,9 @@ public class BoardService {
 
 	@Autowired private BoardMapper boardmapper;
 	
-		public List<Board> getBoard(String board_m_name){
-			return boardmapper.getBoard(board_m_name);
+		public List<Board> getBoard(Board board){
+			System.out.println("BoardService 파일");
+			return boardmapper.getBoard(board);
 		}
 		public void noticeInsert(Board board){
 			String total = null;
@@ -48,7 +49,9 @@ public class BoardService {
 				System.out.println(total);
 			}
 			board.setBoardCode(total);
+			System.out.println("boardmapper.boardInsert() 메서드 실행");
 			boardmapper.boardInsert(board);
+			
 		}	
 		
 		

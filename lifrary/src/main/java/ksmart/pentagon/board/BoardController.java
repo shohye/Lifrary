@@ -24,11 +24,11 @@ public class BoardController {
 	@Autowired BoardService boardService;
 	//공지사항 리스트화면이동
 	@GetMapping("/admin/noticeSearchList")
-	public String adminNoticeSearchList(Model model) {
+	public String adminNoticeSearchList(Board board ,Model model) {
 		System.out.println("공지사항리스트 컨트롤러  /admin/noticeSearchList ##Mapping경로 ");
 		//boardList 공지사항 전체 리스트
-		String board_m_name = "공지사항";
-		List<Board> boardList = boardService.getBoard(board_m_name);
+		System.out.println(board);
+		List<Board> boardList = boardService.getBoard(board);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("boardList : "+boardList);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
@@ -36,24 +36,32 @@ public class BoardController {
 		for(int i= 0; i < boardList.size(); i++) {
 			boardList.get(i).setlNum(i+1);
 		}
+		String boardLCode = boardList.get(0).getBoardLCode();
+		String boardMCode = boardList.get(0).getBoardMCode();
+		System.out.println("boardLName : "+ boardLCode);
+		System.out.println("boardMName : "+ boardMCode);	
+		model.addAttribute("boardLCode", boardLCode);
+		model.addAttribute("boardMCode", boardMCode);
 		model.addAttribute("boardList", boardList);
 		return "adminpage/board/noticeSearchList";
 	}
 	
 	//공지사항 등록화면이동 컨트롤
 	@GetMapping("/admin/noticeInsert")
-	public String adminNoticeInsert() {
+	public String adminNoticeInsert(@RequestParam(value = "boardLCode")String boardLCode,@RequestParam(value = "boardMCode")String boardMCode,Model model) {
 		System.out.println("공지사항 등록 컨트롤러  /admin/noticeInsert ##Mapping경로 ");
+		model.addAttribute("boardLCode", boardLCode);
+		model.addAttribute("boardMCode", boardMCode);
 		return "adminpage/board/noticeInsert";
 	}
 	//공지사항 등록 컨트롤
 	@PostMapping("/admin/noticeInsert")
 	public String adminNoticeInsert(Board board, Model model) {
 		System.out.println("공지사항 등록 컨트롤러  /admin/noticeInsert ##Mapping경로 ");
-		System.out.println("boardTitle제목 : "+ board.getBoardTitle());
-		System.out.println("boardContent내용 : "+ board.getBoardContent());
+		System.out.println(board);
 		boardService.noticeInsert(board);
-		return "adminpage/board/noticeInsert";
+		
+		return "adminpage/board/noticeSearchList";
 	}
 	
 	//공지사항 사서 상세 화면

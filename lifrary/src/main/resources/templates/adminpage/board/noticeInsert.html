@@ -49,9 +49,7 @@ button {
 	text-shadow: 0px 1px 0px #ffee66;
 }
 </style>
-	<script src="http://code.jquery.com/jquery-3.2.1.min.js">
-		
-	</script>
+	
 	<script>
 		document.execCommand('styleWithCSS', false, true);
 		document.execCommand('insertBrOnReturn', false, true);
@@ -94,12 +92,16 @@ button {
 	</h4>
 	<div class="card mb-4">
 				<form th:action="@{/admin/noticeInsert}" method="Post">
-				<input type="hidden" value="${}">
+				<input type="hidden" th:value="${session.SAID}" name="uId">
+				<input type="hidden" value="000000" name="lCode">
+				<input type="hidden" th:value="${boardLCode}" name="boardLCode">
+				<input type="hidden" th:value="${boardMCode}" name="boardMCode">
+				<input type="hidden" name="boardContent">
 		<div>
 			<div>
 				<table>
 					<tr>
-						<td><a th:href="@{/admin/noticeInsert}" class="btn btn-primary">리스트로 이동</a></td>
+						<td><a th:href="@{/admin/noticeSearchList(boardLName=${'공지사항'})}" class="btn btn-primary">리스트로 이동</a></td>
 						<td><h4 style="padding-top: 10px; margin-left: 380px;">제목 입력</h4></td>
 						<td></td>
 				
@@ -159,7 +161,7 @@ button {
 		</div>
 		<div id="boardContent" class="form-control" rows="30" style="height: 400px;"
 			CONTENTEDITABLE></div>
-		<input type="hidden" name="boardContent">
+		
 		<input style="width: 100%" type="submit" id="nsbtn" value="공지사항 등록" class="btn btn-primary">
 		</form>
 	</div>
