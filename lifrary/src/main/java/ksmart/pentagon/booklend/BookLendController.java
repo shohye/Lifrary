@@ -3,6 +3,8 @@ package ksmart.pentagon.booklend;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -154,5 +156,32 @@ public class BookLendController {
 		return "/adminpage/bookLend/reservationSearchList";
 		
 	}
+	
+	/**
+	 * 
+	 * @param session
+	 * @brief 마이페이지 대출도서리스트
+	 * @return
+	 * @author 최지혜
+	 */
+	@GetMapping("/lifrary/myLendList")
+	public String myLendList(HttpSession session) {
+		//회원 아이디 넘기기!
+		
+		return "/librarypage/book/myLendList.html";
+		
+	}
+	
+	@GetMapping("/lifrary/myReservationList")
+	public String myReservationList(HttpSession session) {
+		//회원 아이디 넘기기!
+		
+		return "/librarypage/book/myReservationList";
+		
+	}
+	
+	
+	
+	
 
 }
