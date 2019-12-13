@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div class="col-md-3 col-md-pull-9" th:fragment="myPageLeftMenuFragment">
+         <aside id="secondary" class="sidebar widget-area" data-accordion-group="">
+             <div class="widget widget_related_search open" data-accordion="">
+                 <h4 class="widget-title" data-control="">마이페이지</h4>
+                 <div data-content="" style="transition: max-height 300ms ease 0s; max-height: 250px;">
+                     <div data-accordion="">
+                         <h5 class="widget-sub-title" data-control="">내 정보</h5>
+                         <div class="widget_categories" data-content="" style="max-height: 0px; overflow: hidden;">
+                             <ul>
+                                 <li><a href="#">#내 정보 수정</a></li>
+                                 <li><a href="#">#회원 탈퇴</a></li>
+                                
+                             </ul>
+                         </div>
+                     </div>
+                     <div data-accordion="">
+                         <h5 class="widget-sub-title" data-control="">내 도서현황</h5>
+                         <div class="widget_categories" data-content="" style="max-height: 0px; overflow: hidden;">
+                             <ul>
+                                 <li><a href="/lifrary/myLendList">!도서 대출 현황</a></li>
+                                 <li><a href="/lifrary/myStudyBookList">!도서 예약 현황</a></li>
+                             </ul>
+                         </div>
+                         <div class="clearfix"></div>
+                     </div>
+                     <div data-accordion="">
+                         <h5 class="widget-sub-title" data-control="">북 다이어리</h5>
+                         <div class="widget_categories" data-content="" style="max-height: 0px; overflow: hidden;">
+                             <ul>
+                                 <li><a href="/lifrary/myCalender">!북 캘린더</a></li>
+                                 <li><a href="#">#한줄일기</a></li>
+                                 <li><a href="/lifrary/myBookReportSearchList">!내 독후감</a></li>
+                             </ul>
+                         </div>
+                         <div class="clearfix"></div>
+                     </div>
+                     <div data-accordion="">
+                         <h5 class="widget-sub-title" data-control="">내 서재</h5>
+                         <div class="widget_categories" data-content="" style="max-height: 0px; overflow: hidden;">
+                             <ul>
+                                 <li><a href="/lifrary/myStudyCateList">!나만의 서재</a></li>
+                             </ul>
+                         </div>
+                         <div class="clearfix"></div>
+                     </div>
+                     <div data-accordion="">
+                         <h5 class="widget-sub-title" data-control="">내 프로그램 신청 내역</h5>
+                         <div class="widget_categories" data-content="" style="max-height: 0px; overflow: hidden;">
+                             <ul>
+                                 <li><a href="#">#프로그램 신청 내역</a></li>
+                             </ul>
+                         </div>
+                         <div class="clearfix"></div>
+                     </div>
+                     <div data-accordion="">
+                         <h5 class="widget-sub-title" data-control="">내 공공시설 신청 내역</h5>
+                         <div class="widget_categories" data-content="" style="max-height: 0px; overflow: hidden;">
+                             <ul>
+                                 <li><a href="#">#열람실</a></li>
+                                 <li><a href="#">#스터디룸</a></li>
+                                 <li><a href="#">#강연실</a></li>
+                                 <li><a href="#">#사물함</a></li>
+                             </ul>
+                         </div>
+                         <div class="clearfix"></div>
+                     </div>
+                     <div data-accordion="">
+                         <h5 class="widget-sub-title" data-control="">내 희망도서 신청 내역</h5>
+                         <div class="widget_categories" data-content="" style="max-height: 0px; overflow: hidden; margin: 0 0 30px;">
+                             <ul>
+                                 <li><a href="#">#희망도서 신청 내역</a></li>
+                             </ul>
+                         </div>
+                         <div class="clearfix"></div>
+                     </div>
+                 </div>
+                 <div class="clearfix"></div>
+             </div>
+         </aside>
+     </div>
+</html>
