@@ -19,52 +19,55 @@ import ksmart.pentagon.vo.ProgramApply;
 @Controller
 public class ProgramController {
 
-	@Autowired private ProgramService programService;
-	
+	@Autowired
+	private ProgramService programService;
+
 	/**
-	 * 프로그램(행사, 강좌) 전체 리스트 가져오기 
+	 * 프로그램(행사, 강좌) 전체 리스트 가져오기
+	 * 
 	 * @param model
 	 * @return
 	 */
 	@GetMapping("/lifrary/programSearchList")
 	public String programListView(Model model) {
-			model.addAttribute("menu", "프로그램 리스트");
-			model.addAttribute("programList", programService.getProgramList());					
+		model.addAttribute("menu", "프로그램 리스트");
+		model.addAttribute("programList", programService.getProgramList());
 		return "librarypage/program/programSearchList";
 	}
-	
+
 	/**
 	 * 선택한 프로그램(행사, 강좌) 하나 가져오기
+	 * 
 	 * @param pmCode
 	 * @param model
 	 * @return
 	 */
 	@GetMapping("/lifrary/programDetail")
-	public String programDetail(@RequestParam(value = "pmCode")String pmCode, Model model) {
-		
+	public String programDetail(@RequestParam(value = "pmCode") String pmCode, Model model) {
+
 		model.addAttribute("menu", "프로그램 상세보기");
 		model.addAttribute("program", programService.getProgram(pmCode));
-		
+
 		return "librarypage/program/programDetail";
 	}
-	
+
 	/**
 	 * 프로그램(행사, 강좌) 신청 페이지로 이동
+	 * 
 	 * @param pmCode (프로그램 종합 코드) pmName (프로그램명) model
 	 * 
 	 * @return
 	 */
 	@GetMapping("/lifrary/programApply")
-	public String programApply(@RequestParam(value = "pmCode")String pmCode, 
-							   @RequestParam(value = "pmName")String pmName, 
-							   Model model) {
+	public String programApply(@RequestParam(value = "pmCode") String pmCode,
+			@RequestParam(value = "pmName") String pmName, Model model) {
 		model.addAttribute("menu", "프로그램 신청하기");
 		model.addAttribute("pmCode", pmCode);
 		model.addAttribute("pmName", pmName);
-		
+
 		return "librarypage/program/programApply";
 	}
-	
+
 	/**
 	 * 프로그램(행사, 강좌) 신청하기
 	 * 
@@ -73,27 +76,45 @@ public class ProgramController {
 	 */
 	@PostMapping("/lifrary/programApply")
 	public String programApply(ProgramApply pa) {
-	System.out.println(pa + " <== pa");
+		System.out.println(pa + " <== pa");
 		programService.insertProgram(pa);
 		return "redirect:/programSearchList";
 	}
 
-	/*========================================================================*/
+	/* ======================================================================== */
 	// 아래는 사서채널
-	
+	/**
+	 * 등록된 프로그램 리스트 페이지 이동 / 출력해주기.
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/admin/programSearchList")
-	public String programSearchList() {
+	public String adminProgramSearchList(Model model) {
+		model.addAttribute("programList", programService.getProgramList());
 		return "adminpage/program/programSearchList";
 	}
-	
-	
+
 	/**
 	 * 프로그램(행사, 강좌) 등록 페이지로 이동
+	 * 
 	 * @return
 	 */
 	@GetMapping("/admin/programInsert")
 	public String programInsert() {
 		return "adminpage/program/programInsert";
 	}
-	
+
+	/**
+	 * 프로그램 1개 상세보기
+	 * @param pmCode
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/admin/programDetail")
+	public String adminProgramDetail(@RequestParam(value = "pmCode") String pmCode, Model model) {
+		model.addAttribute("program", programService.getProgram(pmCode));
+
+		return "adminpage/program/programDetail";
+	}
 }

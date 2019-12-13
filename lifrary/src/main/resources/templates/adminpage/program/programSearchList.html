@@ -46,49 +46,46 @@
                       <th>번호</th>
                       <th data-orderable="false">행사명</th>
                       <th>신청대상</th>
-                      <th>진행상황</th>
-                      <th>강사명</th>               
                       <th data-orderable="false">최대인원</th>
+                      <th>강사명</th>               
+                      <th>진행상황</th>
+                      <th>운영 기간</th>
                       <th>등록일</th> 
-                      <th>상세보기</th>                 
-                      <th data-orderable="false">수정</th>                 
-                      <th data-orderable="false">삭제</th>                 
+                      <th data-orderable="false">상세보기</th>               
                     </tr>
                   </thead>
                   
                   <tbody>
-				    <tr th:each="pl : ${purchaseList}">
-				      <td class="align-middle" th:text="${pl.bookInformation.biIsbn}"></td>
-				      <td class="align-middle" th:text="${#strings.abbreviate(pl.bookInformation.biName,15)}"></td>
-				      <td class="align-middle" th:text="${#strings.abbreviate(pl.bookInformation.biAuthor,15)}"></td>
-				      <td class="align-middle" th:text="${pl.bpPrice}"></td>
-				      <td class="align-middle" th:text="${pl.bpBookNum}"></td>
+				    <tr th:each="pro, pl : ${programList}">				      
+				      <td class="align-middle" th:text="${pl.count}"></td>
+				      <td class="align-middle" th:text="${#strings.abbreviate(pro.pmName,15)}"></td>
+				      <td class="align-middle" th:text="${pro.pmTarget}"></td>
+				      <td class="align-middle" th:text="${pro.pmMnop}"></td>
+				      <td class="align-middle" th:text="${pro.pmTeacherName}"></td>
+				      <td class="align-middle" th:text="${pro.pmProgress}"></td>
+				      <td class="align-middle" th:text="|${pro.pmStartTerm} ~ ${pro.pmEndTerm}|"></td>
+				      <td class="align-middle" th:text="${pro.pmDate}"></td>
 				      
-				      <td class="align-middle" th:text="${pl.bpDate}"></td>
-				      <td class="align-middle align-center">
-			      		<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
-						   <a th:href="@{/admin/bookPurchaseUpdate(bpCode=${pl.bpCode})}" title="수정">
-							 <i class="ion ion-md-create" title="수정"></i>
+				      <td class="align-middle align-center"> 
+						   <a th:href="@{/admin/programDetail(pmCode=${pro.pmCode})}" title="상세보기">
+								<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
+									 <i class="ion ion-ios-paper d-block" title="상세보기"></i>
+								</button>
 						   </a>
-						</button>
 					  </td>
-					  <td class="align-middle align-center">
-						<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
-						   <a th:href="@{#}" title="삭제">
-							 <i class="ion ion-ios-cut d-block" title="삭제"></i>
-						   </a>
-						</button>
-                      </td> 		
+				 		
 				    </tr>
 				  </tbody> 
                 </table>
               </div>
             </div>
 	              <div>
-		            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;"><span class="ion ion-md-add"></span>
-						 <a th:href="@{/admin/programInsert}" style="color: white"> 프로그램 추가 </a>
-					</button>
-				</div>
+						<a th:href="@{/admin/programInsert}" style="color: white"> 
+				            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
+				            	<span class="ion ion-md-add"> 프로그램 추가</span>
+							</button>
+						</a>
+				  </div>
                         
 
           </th:block>

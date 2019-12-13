@@ -49,4 +49,5 @@
 		VALUES (#{paCode}, '000000', #{pmCode}, #{uId}, #{paParticipants}, #{paGender}, #{paBirth}, #{paAddr}, #{paTel}, NOW())
   	</insert>
   	
+  	
   </mapper>
