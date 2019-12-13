@@ -33,12 +33,14 @@ public class LayoutController {
 		} else {
 			System.out.println("(사서)세션값이 없습니다.");
 		}
+		session.removeAttribute("LIBNUM");
+		
 		if("pentagon".equals(lib)) { 
 			
-			session.setAttribute("LIBNUM",000000);
+			session.setAttribute("LIBNUM","000000");
 			
 		} else if("square".equals(lib)) {
-			session.setAttribute("LIBNUM",111111);
+			session.setAttribute("LIBNUM","111111");
 		}
 	  
 		return "librarypage/index";
