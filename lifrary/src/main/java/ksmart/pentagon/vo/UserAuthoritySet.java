@@ -11,6 +11,7 @@ public class UserAuthoritySet {
 	private String uasFacilityLimit;
 	private String uasLimitDate;
 	private String uasDate;
+	
 	public String getUasCode() {
 		return uasCode;
 	}
