@@ -27,7 +27,7 @@ public class BookLendController {
 	/***
 	 * @param model
 	 * @brief 대출도서리스트
-	 * @return adminpage/bookLend/lendSearchList
+	 * @return /adminpage/bookLend/lendSearchList
 	 * @author 최지혜
 	 */
 	@GetMapping("/admin/lendSearchList")
@@ -35,16 +35,17 @@ public class BookLendController {
 		
 		model.addAttribute("lendList", bookLendService.bookSearchList());
 		 
-		return "adminpage/bookLend/lendSearchList";
+		return "/adminpage/bookLend/lendSearchList";
 	}
 	
-	//도서정보검색
+
 	/**
-	 * 
-	 * @param svBook 도서검색키워드
-	 * @param svUser 
+	 * @param svBook 도서검색 값
+	 * @param svUser 회원검색 값
 	 * @param redirectAttributes
+	 * @brief 도서정보 검색
 	 * @return /admin/lendSearchList
+	 * @author 최지혜
 	 */
 	@PostMapping("/admin/lendBookInfo")
 	public String lendBookInfo(  @RequestParam(value="svBook" ) String svBook
@@ -93,7 +94,14 @@ public class BookLendController {
 		return "redirect:/admin/lendSearchList";
 	}
 	
-	//회원정보검색
+	/**
+	 * @param svUser 회원검색 값
+	 * @param svBook 도서검색 값
+	 * @param redirectAttributes
+	 * @brief 회원정보검색
+	 * @return /admin/lendSearchList
+	 * @author 최지혜
+	 */
 	@PostMapping("/admin/lendUserInfo")
 	public String lendUserInfo(  @RequestParam(value="svUser" ) String svUser
 								,@RequestParam(value="svBook", required=false) String svBook
@@ -136,7 +144,11 @@ public class BookLendController {
 		return "redirect:/admin/lendSearchList";
 	}
 	
-	//예약도서리스트
+	/**
+	 * @brief 예약도서리스트
+	 * @return /adminpage/bookLend/reservationSearchList
+	 * @author 최지혜
+	 */
 	@GetMapping("/admin/reservationSearchList")
 	public String reservationSearchList() {
 		return "/adminpage/bookLend/reservationSearchList";
