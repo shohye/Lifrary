@@ -61,9 +61,9 @@ public class BookStockController {
     }
     
     // (도서관) 검색후 도서 리스트(그리드 버전)
-    @GetMapping("/lifrary/booksGridView")
-    public String booksGridView() {
-    	return "/librarypage/bookData/booksGridView";
+    @GetMapping("/lifrary/bookDataSearchGrid")
+    public String bookDataSearchGrid() {
+    	return "/librarypage/bookData/bookDataSearchGrid";
     }
     
     // (도서관) 도서 상세페이지
@@ -71,6 +71,14 @@ public class BookStockController {
     public String bookDetail() {
     	return "/librarypage/bookData/bookDetail";
     }
+    
+    // (도서관) 도서 미리보기 페이지
+    @GetMapping("/lifrary/bookPreview")
+    public String bookPreview() {
+    	return "/librarypage/bookData/bookPreview";
+    }
+    
+   
     
     
     // (도서관) 검색창만 있는 페이지
