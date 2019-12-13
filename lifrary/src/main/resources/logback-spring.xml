@@ -51,5 +51,8 @@
 		<appender-ref ref="STDOUT" />
 
 		<!-- <appender-ref ref="dailyRollingFileAppender" /> 로그 생기는 코드-->
+
+		 
+
 	</root>
 </configuration>
