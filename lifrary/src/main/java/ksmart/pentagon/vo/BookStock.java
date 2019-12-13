@@ -24,7 +24,7 @@ public class BookStock {
 	private String bsDeleteDate;
 	private BookInformation bookInformation;
 	private BookCate bookCate;
-	private BookLend booklLend;
+	private BookLend bookLend;
 	
 	public BookCate getBookCate() {
 		return bookCate;
@@ -160,11 +160,11 @@ public class BookStock {
 	public void setBsLendState(String bsLendState) {
 		this.bsLendState = bsLendState;
 	}
-	public BookLend getBooklLend() {
-		return booklLend;
+	public BookLend getBookLend() {
+		return bookLend;
 	}
-	public void setBooklLend(BookLend booklLend) {
-		this.booklLend = booklLend;
+	public void setBooklLend(BookLend bookLend) {
+		this.bookLend = bookLend;
 	}
 	
 	
