@@ -93,12 +93,13 @@ button {
 		<span class="text-muted font-weight-light"></span>공지사항 등록
 	</h4>
 	<div class="card mb-4">
-				<form th:action="@{/adminNoticeInsert}" method="Post">
+				<form th:action="@{/admin/noticeInsert}" method="Post">
+				<input type="hidden" value="${}">
 		<div>
 			<div>
 				<table>
 					<tr>
-						<td><a th:href="@{/adminNoticeInsert}" class="btn btn-primary">공지사항등록</a></td>
+						<td><a th:href="@{/admin/noticeInsert}" class="btn btn-primary">리스트로 이동</a></td>
 						<td><h4 style="padding-top: 10px; margin-left: 380px;">제목 입력</h4></td>
 						<td></td>
 				

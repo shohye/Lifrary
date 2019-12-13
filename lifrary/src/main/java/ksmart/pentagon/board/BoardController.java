@@ -23,9 +23,9 @@ public class BoardController {
 	
 	@Autowired BoardService boardService;
 	//공지사항 리스트화면이동
-	@GetMapping("/adminNoticeSearchList")
+	@GetMapping("/admin/noticeSearchList")
 	public String adminNoticeSearchList(Model model) {
-		System.out.println("공지사항리스트 컨트롤러  /adminNoticeSearchList ##Mapping경로 ");
+		System.out.println("공지사항리스트 컨트롤러  /admin/noticeSearchList ##Mapping경로 ");
 		//boardList 공지사항 전체 리스트
 		String board_m_name = "공지사항";
 		List<Board> boardList = boardService.getBoard(board_m_name);
@@ -41,15 +41,15 @@ public class BoardController {
 	}
 	
 	//공지사항 등록화면이동 컨트롤
-	@GetMapping("/adminNoticeInsert")
+	@GetMapping("/admin/noticeInsert")
 	public String adminNoticeInsert() {
-		System.out.println("공지사항 등록 컨트롤러  /adminNoticeInsert ##Mapping경로 ");
+		System.out.println("공지사항 등록 컨트롤러  /admin/noticeInsert ##Mapping경로 ");
 		return "adminpage/board/noticeInsert";
 	}
 	//공지사항 등록 컨트롤
-	@PostMapping("/adminNoticeInsert")
+	@PostMapping("/admin/noticeInsert")
 	public String adminNoticeInsert(Board board, Model model) {
-		System.out.println("공지사항 등록 컨트롤러  /adminNoticeInsert ##Mapping경로 ");
+		System.out.println("공지사항 등록 컨트롤러  /admin/noticeInsert ##Mapping경로 ");
 		System.out.println("boardTitle제목 : "+ board.getBoardTitle());
 		System.out.println("boardContent내용 : "+ board.getBoardContent());
 		boardService.noticeInsert(board);
@@ -57,30 +57,30 @@ public class BoardController {
 	}
 	
 	//공지사항 사서 상세 화면
-	@GetMapping("/adminNoticeDetail")
+	@GetMapping("/admin/noticeDetail")
 	public String adminNoticeDetail(@RequestParam(value = "boardCode", required = false ) String boardCode, Model model) {
-		System.out.println("공지사항 상세보기 컨트롤러 /adminNoticeDetail ##Mapping경로");
+		System.out.println("공지사항 상세보기 컨트롤러 /admin/noticeDetail ##Mapping경로");
 		System.out.println("공지사항 상세보기 겟방식 코드 : " + boardCode);
 		return "adminpage/board/noticeDetail";
 	}
 	
 	//공지사항 삭제 후 리스트로 이동
-	@GetMapping("/adminNoticeDelete")
+	@GetMapping("/admin/noticeDelete")
 	public String adminNoticeDelete() {
-		System.out.println("공지사항 삭제 컨트롤러 /adminNoticeDelete ##Mapping경로");
+		System.out.println("공지사항 삭제 컨트롤러 /admin/noticeDelete ##Mapping경로");
 		return "adminpage/board/noticeSearchList";
 	}
 	
 	//공지사항 수정화면으로 이동
-	@GetMapping("/adminNoticeUpdate")
+	@GetMapping("/admin/noticeUpdate")
 	public String adminNoticeUpdate() {
-		System.out.println("공지사항 수정 컨트롤러 /adminNoticeUpdate ##Mapping경로");
+		System.out.println("공지사항 수정 컨트롤러 /admin/noticeUpdate ##Mapping경로");
 		return "adminpage/board/noticeUpdate";
 	}
 	
 	
 	//문의 리스트 화면으로 이동
-	@GetMapping("/adminInquirySearchList")
+	@GetMapping("/admin/inquirySearchList")
 	public String adminInquirySearchList() {
 		System.out.println("사서 문의 리스트 컨트롤러 /adminInquirySearchList ##Mapping경로");
 		return "adminpage/board/adminInquirySearchList";
