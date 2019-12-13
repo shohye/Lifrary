@@ -52,7 +52,12 @@ public class BookCarryController {
     	bookCarryService.updateDonation(bookCarry);
 		return "redirect:/admin/bookDonationList";   	
     }
-
+ // 기부신청자 입력 처리
+    @PostMapping("/admin/bookDonationInsert")
+    public String bookDonationInsert2(){
+    	
+		return "redirect:/admin/bookDonationList";   	
+    }
     
     
     /***************************************************************************/

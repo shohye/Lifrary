@@ -52,8 +52,12 @@ public class BookStockController {
 		
     	return "/adminpage/bookStock/stockDetailUpdate";
     }
+	
+	
 				
-
+	/************************************************************************/
+	
+	
     // (도서관) 검색후 결과 도서 리스트
     @GetMapping("/lifrary/bookDataSearchList")
     public String bookDataSearchList() {
@@ -77,15 +81,15 @@ public class BookStockController {
     public String bookPreview() {
     	return "/librarypage/bookData/bookPreview";
     }
-    
-   
-    
-    
+     
     // (도서관) 검색창만 있는 페이지
     @GetMapping("/lifrary/bookDataSearch")
     public String bookDataSearch() {
     	return "/librarypage/bookData/bookDataSearch";
     }
+
+    
+    /************************************************************************/
     
     
     // (도서관) 희망도서 신청 폼

@@ -1123,6 +1123,7 @@ th {
 html {
   font-size: 10px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  
 }
 body {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
@@ -1130,6 +1131,7 @@ body {
   line-height: 1.42857143;
   color: #6b6b6b;
   background-color: #fff;
+  margin-bottom: 20px;
 }
 input,
 button,
@@ -7653,7 +7655,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Lato", Georgia, Times, serif;
+ 
   text-transform: uppercase;
 }
 h3,
@@ -7746,6 +7748,7 @@ html {
   height: 100%;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  width:100%;
 }
 *,
 *::before,
@@ -16177,14 +16180,14 @@ a:focus {
 .books-media-gird .search-filters,
 .booksmedia-detail-main .search-filters,
 .books-full-width .search-filters {
-  margin: 0 0 100px 0;
+  margin: 10px 0 100px 0;
 }
 @media (max-width: 767px) {
   .books-media-list .search-filters,
   .books-media-gird .search-filters,
   .booksmedia-detail-main .search-filters,
   .books-full-width .search-filters {
-    margin: 0 0 50px 0;
+    margin: 10px 0 50px 0;
   }
 }
 .filter-options .search-form {
