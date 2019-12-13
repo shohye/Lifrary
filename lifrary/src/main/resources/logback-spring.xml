@@ -48,12 +48,7 @@
 	<logger name="org.h2.server.web" level="INFO"/> -->
 
 	<root level="ERROR">
-<<<<<<< HEAD
 		<appender-ref ref="STDOUT" />
-=======
-		<appender-ref ref="STDOUT" />
-
->>>>>>> refs/heads/develop
 		<!-- <appender-ref ref="dailyRollingFileAppender" /> 로그 생기는 코드-->
 	</root>
 </configuration>
