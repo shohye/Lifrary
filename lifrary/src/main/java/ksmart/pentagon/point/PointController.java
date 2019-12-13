@@ -24,7 +24,7 @@ public class PointController {
 	public String pointList() {
 		
 		
-		return "adminpage/point/pointList";
+		return "/adminpage/point/pointList";
 		
 	}
 	/***
@@ -38,7 +38,7 @@ public class PointController {
 	public String pointHistorySearchList() {
 		
 		
-		return "adminpage/point/pointHistorySearchList";
+		return "/adminpage/point/pointHistorySearchList";
 		
 		}
 }
