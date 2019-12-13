@@ -1,10 +1,75 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>독후감 작성페이지</title>
-</head>
-<body>
-<h1>독후감 작성페이지</h1>
-</body>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+    
+    <th:block layout:fragment="customContents">
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>BOOK REPORT DETAIL</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">독후감 is 또 하나의 훌륭한 작품</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li>BOOK REPORT DETAIL</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="blog-detail-main">
+                        <div class="container">
+                            <div class="row">
+                                <div class="blog-page">
+                                    <div class="blog-section">
+                                        <article>
+                                            <div class="blog-detail">
+                                                <header class="entry-header">
+                                                	<div class="center-content">
+	                            						<h2 class="section-title">SERVICE WE ARE OFFERING</h2>
+	                           								<span class="underline center"></span>
+	                            							<p class="lead">The standard chunk of Lorem Ipsum used since</p>
+                            								<div class="clearfix"></div>
+                        	 								</div> 
+                                                	</header>
+                                                <div class="post-detail">
+                                                    <div class="post-detail-head">
+                                                        <div class="post-share">
+                                                            <a href="#."><i class="fa fa-comment"></i> 리플수</a>
+                                                            <a href="#."><i class="fa fa-thumbs-o-up"></i> 좋아요수</a>
+                                                            <a href="#."><i class="fa fa-eye"></i> 조회수</a>
+                                                        </div>
+                                                        <div class="post-social-share">
+                                                            <ul>
+                                                                <li><a href="#."><i class="fa fa-pencil-square-o"></i> <span>수정하기</span></a></li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="entry-content">
+                                                        <p>누구를 위해 누군가 기도하고 있나 봐 숨죽여 쓴 사랑시가 낮게 들리는 듯해 너에게로 선명히 날아가 늦지 않게 자리에 닿기를</p>
+                                                    </div>
+                                                    <footer class="entry-footer">
+                                                        <div class="col-xs-12 col-sm-12 entry-tags"> 
+                                                            <strong><i class="fa fa-tags" aria-hidden="true"></i> 별점:</strong> <span> <a href="#">별점 넣어 볼깡</a></span>			
+                                                        </div>
+                                                    </footer>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>       
+    </th:block>
 </html>

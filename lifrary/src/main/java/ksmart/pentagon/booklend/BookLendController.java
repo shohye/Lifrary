@@ -151,9 +151,9 @@ public class BookLendController {
 	 * @return /adminpage/bookLend/reservationSearchList
 	 * @author 최지혜
 	 */
-	@GetMapping("/admin/reservationSearchList")
-	public String reservationSearchList() {
-		return "/adminpage/bookLend/reservationSearchList";
+	@GetMapping("/admin/holdSearchList")
+	public String holdSearchList() {
+		return "/adminpage/bookLend/holdSearchList";
 		
 	}
 	
@@ -172,11 +172,11 @@ public class BookLendController {
 		
 	}
 	
-	@GetMapping("/lifrary/myReservationList")
-	public String myReservationList(HttpSession session) {
+	@GetMapping("/lifrary/myHoldList")
+	public String myHoldList(HttpSession session) {
 		//회원 아이디 넘기기!
 		
-		return "/librarypage/book/myReservationList";
+		return "/librarypage/book/myHoldList";
 		
 	}
 	
