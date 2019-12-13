@@ -35,13 +35,6 @@ public class AdminController {
 
 	@Autowired private AdminService adminService;
 	
-	@GetMapping("/test")
-	public String test(Model model) {
-		System.out.println("@@@@@@@@@@@@@@@@@컨트롤러 진입@@@@@@@@@@@@@@@@@@");
-		model.addAttribute("getUserLevel", adminService.getUserLevel());
-		System.out.println("@@@@@@@@@@@@@@@@@서비스 탈출@@@@@@@@@@@@@@@@@@");
-		return "test";
-	}
 	/**
 	 * 어드민 로그인 페이지로 진입
 	 * @param model
