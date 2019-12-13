@@ -32,12 +32,12 @@
                                             
                                             <th:block th:if="${session.SID == null}">
 	                                            <!-- 세션 여기서 나누기. fa fa-user(유저 아이콘) [[${id}]]님 반갑습니다.   -->
-	                                                <a th:href="@{/lifraryLogin}"><i class="fa fa-lock"></i>로그인</a>	                                                
+	                                                <a th:href="@{/lifrary/login}"><i class="fa fa-lock"></i>로그인</a>	                                                
                                             </th:block>
                                             
                                             <th:block th:unless="${session.SID == null}">
 	                                               <a><i class="fa fa-unlock"></i></a><span>[[${session.SID}]]님 반갑습니다. &emsp; 권한 : [[${session.SDIV}]]</span>&emsp;&emsp; 
-	                                                <a th:href="@{/lifraryLogout}" onclick="alert('페이지에서 로그아웃 하였습니다.')">로그아웃</a>                           
+	                                                <a th:href="@{/lifrary/logout}" onclick="alert('페이지에서 로그아웃 하였습니다.')">로그아웃</a>                           
                                             </th:block>
                                             
                                             </div>
@@ -64,9 +64,9 @@
                                         
                                         <!-- 프로그램 -->
                                         <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifraryProgramSearchList}">3.프로그램</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifrary/programSearchList}">3.프로그램</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{/lifraryProgramSearchList}">!프로그램 신청</a></li>
+                                                <li><a th:href="@{/lifrary/programSearchList}">!프로그램 신청</a></li>
                                             </ul>
                                         </li>
                                         <!-- 게시판 -->
@@ -80,12 +80,12 @@
                                         </li>
                                         <!--  공공시설  -->
                                         <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifraryReadingRoom}">5.공공시설</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifrary/readingRoom}">5.공공시설</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{/lifraryReadingRoom}">!열람실</a></li>
-                                                <li><a th:href="@{/lifraryStudyRoom}">!스터디룸</a></li>
-                                                <li><a th:href="@{/lifraryLectureRoom}">!강연실</a></li>
-                                                <li><a th:href="@{/lifraryLocker}">!사물함</a></li>
+                                                <li><a th:href="@{/lifrary/readingRoom}">!열람실</a></li>
+                                                <li><a th:href="@{/lifrary/studyRoom}">!스터디룸</a></li>
+                                                <li><a th:href="@{/lifrary/lectureRoom}">!강연실</a></li>
+                                                <li><a th:href="@{/lifrary/locker}">!사물함</a></li>
                                             </ul>
                                         </li>
                                         <li><a th:href="@{#}">6.도서관 소개</a></li>
@@ -129,9 +129,9 @@
                                     </li>
                                      <!-- 프로그램 -->
                                     <li>
-                                        <a th:href="@{/lifraryProgramSearchList}">3.프로그램</a>
+                                        <a th:href="@{/lifrary/programSearchList}">3.프로그램</a>
                                         <ul>
-                                            <li><a th:href="@{/lifraryProgramSearchList}">!프로그램 신청</a></li>
+                                            <li><a th:href="@{/lifrary/programSearchList}">!프로그램 신청</a></li>
                                         </ul>
                                     </li>
                                      <!-- 게시판 -->
@@ -147,10 +147,10 @@
                                     <li>
                                         <a th:href="@{/readingRoom}">5.공공시설</a>
                                         <ul>
-                                           <li><a th:href="@{/lifraryReadingRoom}">!열람실</a></li>
-                                           <li><a th:href="@{/lifraryStudyRoom}">!스터디룸</a></li>
-                                           <li><a th:href="@{/lifraryLectureRoom}">!강연실</a></li>
-                                           <li><a th:href="@{/lifraryLocker}">!사물함</a></li>
+                                           <li><a th:href="@{/lifrary/readingRoom}">!열람실</a></li>
+                                           <li><a th:href="@{/lifrary/studyRoom}">!스터디룸</a></li>
+                                           <li><a th:href="@{/lifrary/lectureRoom}">!강연실</a></li>
+                                           <li><a th:href="@{/lifrary/locker}">!사물함</a></li>
                                         </ul>
                                     </li>
                                     <!-- 도서관 소개 -->

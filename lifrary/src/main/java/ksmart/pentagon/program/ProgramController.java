@@ -22,11 +22,11 @@ public class ProgramController {
 	@Autowired private ProgramService programService;
 	
 	/**
-	 * 프로그램 전체 리스트 가져오기 
+	 * 프로그램(행사, 강좌) 전체 리스트 가져오기 
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/lifraryProgramSearchList")
+	@GetMapping("/lifrary/programSearchList")
 	public String programListView(Model model) {
 			model.addAttribute("menu", "프로그램 리스트");
 			model.addAttribute("programList", programService.getProgramList());					
@@ -34,12 +34,12 @@ public class ProgramController {
 	}
 	
 	/**
-	 * 선택한 프로그램 하나 가져오기
+	 * 선택한 프로그램(행사, 강좌) 하나 가져오기
 	 * @param pmCode
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/lifraryProgramDetail")
+	@GetMapping("/lifrary/programDetail")
 	public String programDetail(@RequestParam(value = "pmCode")String pmCode, Model model) {
 		
 		model.addAttribute("menu", "프로그램 상세보기");
@@ -49,12 +49,12 @@ public class ProgramController {
 	}
 	
 	/**
-	 * 프로그램 신청 페이지로 이동
+	 * 프로그램(행사, 강좌) 신청 페이지로 이동
 	 * @param pmCode (프로그램 종합 코드) pmName (프로그램명) model
 	 * 
 	 * @return
 	 */
-	@GetMapping("/lifraryProgramApply")
+	@GetMapping("/lifrary/programApply")
 	public String programApply(@RequestParam(value = "pmCode")String pmCode, 
 							   @RequestParam(value = "pmName")String pmName, 
 							   Model model) {
@@ -66,16 +66,34 @@ public class ProgramController {
 	}
 	
 	/**
-	 * 프로그램 신청하기
+	 * 프로그램(행사, 강좌) 신청하기
 	 * 
 	 * @param pa
 	 * @return
 	 */
-	@PostMapping("/lifraryProgramApply")
+	@PostMapping("/lifrary/programApply")
 	public String programApply(ProgramApply pa) {
 	System.out.println(pa + " <== pa");
 		programService.insertProgram(pa);
 		return "redirect:/programSearchList";
+	}
+
+	/*========================================================================*/
+	// 아래는 사서채널
+	
+	@GetMapping("/admin/programSearchList")
+	public String programSearchList() {
+		return "adminpage/program/programSearchList";
+	}
+	
+	
+	/**
+	 * 프로그램(행사, 강좌) 등록 페이지로 이동
+	 * @return
+	 */
+	@GetMapping("/admin/programInsert")
+	public String programInsert() {
+		return "adminpage/program/programInsert";
 	}
 	
 }
