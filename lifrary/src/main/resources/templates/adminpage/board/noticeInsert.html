@@ -96,7 +96,16 @@ button {
 				<form th:action="@{/adminNoticeInsert}" method="Post">
 		<div>
 			<div>
-				<h4 style="padding-left: 40%; padding-top: 10px;">제목 입력</h4>
+				<table>
+					<tr>
+						<td><a th:href="@{/adminNoticeInsert}" class="btn btn-primary">공지사항등록</a></td>
+						<td><h4 style="padding-top: 10px; margin-left: 380px;">제목 입력</h4></td>
+						<td></td>
+				
+				
+				
+					</tr>
+				</table>
 				<input id="boardTitle" type="text" name="boardTitle" class="form-control"
 					placeholder="제목을 입력해주세요.">
 			</div>
