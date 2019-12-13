@@ -31,7 +31,7 @@ public class LayoutController {
 			session.removeAttribute("SALBS");
 			System.out.println("세션이 잘 종료되었습니다.");
 		} else {
-			System.out.println("세션값이 없습니다.");
+			System.out.println("(사서)세션값이 없습니다.");
 		}
 		if("pentagon".equals(lib)) { 
 			
