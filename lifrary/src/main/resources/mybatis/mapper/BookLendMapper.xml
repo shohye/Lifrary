@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="ksmart.pentagon.booklend.BookLendMapper">
   
-	  <resultMap type="ksmart.pentagon.vo.BookLend" id="booklLend">
+	  <resultMap type="ksmart.pentagon.vo.BookLend" id="bookLend">
 	    <result column="bl_code" property="blCode"/>
 	    <result column="l_code" property="lCode"/>
 	    <result column="bl_id" property="blId"/>
@@ -40,7 +40,7 @@
 	    <result column="bs_book_state" property="bsBookState"/>
 	    <result column="u_number" property="uId"/>
 	    <collection property="bookInformation" resultMap="bookInfo"/>
-	    <collection property="booklLend" resultMap="booklLend"/>
+	    <collection property="bookLend" resultMap="bookLend"/>
 	</resultMap>
 	<resultMap type="ksmart.pentagon.vo.User" id="user">
 	    <result column="u_id" property="uId"/>
@@ -59,7 +59,7 @@
 	    <result column="ul_lend_num" property="ulLendNum"/>
 	    <result column="ul_lend_day" property="ulLendDay"/>
 	</resultMap>	
-	<select id="bookSearchList" resultMap="booklLend">
+	<select id="bookSearchList" resultMap="bookLend">
 		SELECT
 			 bl.bl_code
 			,bl.l_code
