@@ -119,14 +119,14 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  class="default-style">
       <form id="adminLoginForm" class="my-5" th:action="@{/admin/login}" method="post">
         <div class="form-group">
           <label class="form-label">ID</label>
-          <input type="text" class="form-control" id="uId" name = "uId">
+          <input type="text" class="form-control" id="uId" name = "uId" value="id006" placeholder="ID">
         </div>
         <div class="form-group">
           <label class="form-label d-flex justify-content-between align-items-end">
             <div>Password</div>
             <h5><a th:href="@{#}" class="d-block small">비밀번호를 잊었습니까?</a></h5>
           </label>
-          <input type="password" class="form-control" id="uPw" name = "uPw">
+          <input type="password" class="form-control" id="uPw" name = "uPw" value="pw006" placeholder="Password">
         </div>
         
         <div>
