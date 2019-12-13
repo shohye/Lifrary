@@ -20,6 +20,10 @@ import ksmart.pentagon.vo.UserLevel;
 @Mapper
 public interface AdminMapper {
 
+	
+	//사서 채널 로그인 처리 / 회원 정보 유무 확인후 로그인
+	public User adminLoginCheck(String uId);
+	
 	//유저 회원 전체 가져오기.
 	public List<User> getUserList();
 	
@@ -34,7 +38,7 @@ public interface AdminMapper {
 	
 	//유저 회원 상세보기.
 	public User adminUserDetail (String uId);
-	
+	 
 	/**********************************************************/
 	 
 	//관리자가 회원등급 등록하기

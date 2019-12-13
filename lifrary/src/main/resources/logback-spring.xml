@@ -47,12 +47,11 @@
 	<logger name="org.quartz.core" level="INFO"/>
 	<logger name="org.h2.server.web" level="INFO"/> -->
 
+
 	<root level="ERROR">
 		<appender-ref ref="STDOUT" />
 
 		<!-- <appender-ref ref="dailyRollingFileAppender" /> 로그 생기는 코드-->
-
-		 
 
 	</root>
 </configuration>
