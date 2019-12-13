@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+
+ <!-- headAdd(Libs&page) -->
+  
+  <th:block layout:fragment="adminHeadAdd">
+  
+  <!-- addLibs -->
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+
+  <!-- addPage -->
+  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
+ 
+  </th:block>
+  
+  <!-- /headAdd(Libs&page) --> 
+	  
+	 
+	<!-- Content -->
+	<th:block layout:fragment="adminContents">   
+		 <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+              <div>회원 등급 리스트</div>
+              <button type="button" class="btn btn-primary rounded-pill d-block">
+              <span class="ion ion-md-add"></span>&nbsp; 회원등급 등록</button>
+            </h4>
+
+            <div class="card">
+              <div class="card-datatable table-responsive">
+                <div id="product-list_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                	<div class="row">
+                	<div class="col-sm-12">
+                	<table id="product-list" class="table table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="product-list_info" style="width: 35px;">
+	                  <thead>
+	                    <tr role="row">
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">회원등급</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">도서관코드</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">관리자ID</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 34px;">등급명</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">기준최소권수</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 25px;">기준최대권수</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 25px;">대출가능권수</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">대출가능일수</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">등록일</th>
+	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;"></th>
+	                    	
+	                   </tr>
+	                   <th:block th:each="ul : ${userLevel}">
+	                   		<tr>
+	                   			<td th:text="${ul.ulLevel}"></td>
+	                   			<td th:text="${ul.lCode}"></td>
+	                   			<td th:text="${ul.uId}"></td>
+	                   			<td th:text="${ul.ulName}"></td>
+	                   			<td th:text="${ul.ulMin}" style="text-align:center"></td>
+	                   			<td th:text="${ul.ulMax}"></td>
+	                   			<td th:text="${ul.ulLendNum}" style="text-align:center">
+	                   			<td th:text="${ul.ulLendDay}" style="text-align:center"></td>
+	                   			<td th:text="${ul.ulDate}"></td>
+	                   		
+	                   			<td class="text-center text-nowrap">
+	                   				<button title="" 
+	                   						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
+	                   						type="button" data-original-title="Edit">
+	                   				<a th:href="@{#}" title="수정">
+	                   				<i class="ion ion-md-create" title="수정"></i></a>
+	                   				</button>&nbsp;&nbsp;
+	                   				<button title="" 
+	                   						class="btn btn-default btn-xs icon-btn md-btn-flat dropdown-toggle hide-arrow user-tooltip" 
+	                   						type="button" 
+	                   						data-original-title="Actions" data-toggle="dropdown">
+	                   				<a th:href="@{#}" title="삭제">
+	                   				<i class="ion ion-ios-settings" title="삭제"></i>
+	                   				</button>
+	                   			</td>
+	                   		</tr>
+	                   </th:block>
+	                  </thead>
+		               
+		             	 </table>
+		           		</div>
+		          	</div>
+		       <!--      <div class="row">
+		            	<div class="col-sm-12 col-md-5">
+		            		<div class="dataTables_info" id="product-list_info" role="status" aria-live="polite">Showing 1 to 10 of 37 entries</div>
+		            	</div>
+		            	<div class="col-sm-12 col-md-7">
+		            		<div class="dataTables_paginate paging_simple_numbers" id="product-list_paginate">
+		            			<ul class="pagination">
+		            				<li class="paginate_button page-item previous disabled" id="product-list_previous">
+		            					<a href="#" aria-controls="product-list" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+		            				</li>
+		            				<li class="paginate_button page-item active">
+		            					<a href="#" aria-controls="product-list" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+		            				</li>
+		            				<li class="paginate_button page-item ">
+		            					<a href="#" aria-controls="product-list" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+		            				</li>
+		            				<li class="paginate_button page-item ">
+		            					<a href="#" aria-controls="product-list" data-dt-idx="3" tabindex="0" class="page-link">3</a>
+		            				</li>
+		            				<li class="paginate_button page-item ">
+		            					<a href="#" aria-controls="product-list" data-dt-idx="4" tabindex="0" class="page-link">4</a>
+		            				</li>
+		            				<li class="paginate_button page-item next" id="product-list_next">
+		            					<a href="#" aria-controls="product-list" data-dt-idx="5" tabindex="0" class="page-link">Next</a>
+		            				</li>
+		            			</ul>
+		            		</div>
+		            	</div>
+		            </div> -->
+		           </div>
+              </div>
+            </div>
+	</th:block>
+	<!-- / Content -->
+  <!-- / scripts -->
+	  <th:block layout:fragment="pageScript">
+	  <!-- addLibs -->
+	  <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
+	  <script th:src="@{/admin/vendor/libs/numeral/numeral.js}"></script>
+	  <script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
+		
+	  <!-- addDemo -->
+ 
+	  </th:block>
+   <!-- / scripts -->
+	          
+</html>

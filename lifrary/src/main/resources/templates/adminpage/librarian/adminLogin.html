@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" lang="en" class="default-style">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  class="default-style">
 
 <head>
   <title>사서 채널 로그인</title>
@@ -9,45 +10,89 @@
   <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-  <link rel="icon" type="image/x-icon" th:href="@{favicon.ico}">
+  <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
 
   <link th:href="@{https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900}" rel="stylesheet">
 
   <!-- Icon fonts -->
-  <link rel="stylesheet" th:href="@{admin/vendor/fonts/fontawesome.css}">
-  <link rel="stylesheet" th:href="@{admin/vendor/fonts/ionicons.css}">
-  <link rel="stylesheet" th:href="@{admin/vendor/fonts/linearicons.css}">
-  <link rel="stylesheet" th:href="@{admin/vendor/fonts/open-iconic.css}">
-  <link rel="stylesheet" th:href="@{admin/vendor/fonts/pe-icon-7-stroke.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/fonts/fontawesome.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/fonts/ionicons.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/fonts/linearicons.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/fonts/open-iconic.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/fonts/pe-icon-7-stroke.css}">
 
   <!-- Core stylesheets -->
-  <link rel="stylesheet" th:href="@{admin/vendor/css/rtl/bootstrap.css}" class="theme-settings-bootstrap-css">
-  <link rel="stylesheet" th:href="@{admin/vendor/css/rtl/appwork.css}" class="theme-settings-appwork-css">
-  <link rel="stylesheet" th:href="@{admin/vendor/css/rtl/theme-corporate.css}" class="theme-settings-theme-css">
-  <link rel="stylesheet" th:href="@{admin/vendor/css/rtl/colors.css}" class="theme-settings-colors-css">
-  <link rel="stylesheet" th:href="@{admin/vendor/css/rtl/uikit.css}">
-  <link rel="stylesheet" th:href="@{admin/css/demo.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/css/rtl/bootstrap.css}" class="theme-settings-bootstrap-css">
+  <link rel="stylesheet" th:href="@{/admin/vendor/css/rtl/appwork.css}" class="theme-settings-appwork-css">
+  <link rel="stylesheet" th:href="@{/admin/vendor/css/rtl/theme-corporate.css}" class="theme-settings-theme-css">
+  <link rel="stylesheet" th:href="@{/admin/vendor/css/rtl/colors.css}" class="theme-settings-colors-css">
+  <link rel="stylesheet" th:href="@{/admin/vendor/css/rtl/uikit.css}">
+  <link rel="stylesheet" th:href="@{/admin/css/demo.css}">
 	
   <!-- Load polyfills -->
-  <script th:src="@{admin/vendor/js/polyfills.js}"></script>
+  <script th:src="@{/admin/vendor/js/polyfills.js}"></script>
   <script>document['documentMode']===10&&document.write('<script th:src="@{https://polyfill.io/v3/polyfill.min.js?features=Intl.~locale.en}"><\/script>')</script>
 
-  <script th:src="@{admin/vendor/js/material-ripple.js}"></script>
-  <script th:src="@{admin/vendor/js/layout-helpers.js}"></script>
+  <script th:src="@{/admin/vendor/js/material-ripple.js}"></script>
+  <script th:src="@{/admin/vendor/js/layout-helpers.js}"></script>
 
   <!-- Theme settings -->
   <!-- This file MUST be included after core stylesheets and layout-helpers.js in the <head> section -->
-  <script th:src="@{admin/vendor/js/theme-settings.js}"></script>
+  <script th:src="@{/admin/vendor/js/theme-settings.js}"></script>
 
   <!-- Core scripts -->
-  <script th:src="@{admin/vendor/js/pace.js}"></script>
+  <script th:src="@{/admin/vendor/js/pace.js}"></script>
   <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js}"></script>
 
   <!-- Libs -->
-  <link rel="stylesheet" th:href="@{admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css}">
   <!-- Page -->
-  <link rel="stylesheet" th:href="@{admin/vendor/css/pages/authentication.css}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/authentication.css}">
+  <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js}"></script>
+  
+  <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+  	<script th:inline="javascript">
+		/* 로그인 유효성 검사. */  	
+		/*<![CDATA[*/
+			
+	$(document).ready(function(){
+			
+		var result = [[${result}]];
+		
+		if(result == '아이디 없음'){
+			$('#pText').text('아이디가 없습니다. 아이디를 확인해주세요.'); 			
+		} else if(result == '비밀번호 불일치'){
+			$('#pText').text('비밀번호가 일치하지 않습니다. 비밀번호를 확인해주세요.'); 			  			
+		}
+	
+		
+	
+	/*]]>*/
+	})
+	</script>
+	
+    	<script type="text/javascript">
+    	var userJoin = function(){
+    		var adminLoginForm = document.getElementById('adminLoginForm');
+    		var userId = adminLoginForm.uId.value;
+    		var userPw = adminLoginForm.uPw.value;
+
+    		if(userId == ''){
+    			alert('아이디를 입력해주세요');
+    			adminLoginForm.uId.focus();
+    			return false;
+    		} else if(userPw == ''){
+    			alert('비밀번호를 입력해주세요');
+    			adminLoginForm.uPw.focus();
+    			return false;
+    		} else {
+    			adminLoginForm.submit();
+    		}
+    	}
+    	</script>
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
 </head>
 
 <body>
@@ -71,30 +116,37 @@
       <!-- / Logo -->
 
       <!-- Form -->
-      <form class="my-5" >
+      <form id="adminLoginForm" class="my-5" th:action="@{/admin/login}" method="post">
         <div class="form-group">
           <label class="form-label">ID</label>
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" id="uId" name = "uId" value="id006" placeholder="ID">
         </div>
         <div class="form-group">
           <label class="form-label d-flex justify-content-between align-items-end">
             <div>Password</div>
             <h5><a th:href="@{#}" class="d-block small">비밀번호를 잊었습니까?</a></h5>
           </label>
-          <input type="password" class="form-control">
+          <input type="password" class="form-control" id="uPw" name = "uPw" value="pw006" placeholder="Password">
         </div>
+        
+        <div>
+           <th:block th:if="${result} != null">
+           	 <p id="pText" style="color: red"/>
+           </th:block>
+       </div>
+        
         <div class="d-flex justify-content-between align-items-center m-0">
           <label class="custom-control custom-checkbox m-0">
             <input type="checkbox" class="custom-control-input">
             <span class="custom-control-label">Remember me</span>
           </label>
-          <button type="button" class="btn btn-primary">Login</button>
+          <button id = "loginBtn" type="button" class="btn btn-primary" onclick="userJoin()">Login</button>
         </div>
       </form>
       <!-- / Form -->
 
       <div class="text-center text-muted">
-        	<h4>관리자가 아니십니까? <br><br><a href="javascript:history.go(-1)"><br>☞뒤로가기☜</a></h4>
+        	<h4>관리자가 아니십니까? <br><br><a th:href="@{/}"><br>☞도서관 페이지로☜</a></h4>
       </div>
 
     </div>
@@ -103,15 +155,15 @@
   <!-- / Content -->
 
   <!-- Core scripts -->
-  <script th:src="@{admin/vendor/libs/popper/popper.js}"></script>
-  <script th:src="@{admin/vendor/js/bootstrap.js}"></script>
-  <script th:src="@{admin/vendor/js/sidenav.js}"></script>
+  <script th:src="@{/admin/vendor/libs/popper/popper.js}"></script>
+  <script th:src="@{/admin/vendor/js/bootstrap.js}"></script>
+  <script th:src="@{/admin/vendor/js/sidenav.js}"></script>
 
   <!-- Libs -->
-  <script th:src="@{admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
+  <script th:src="@{/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
 
   <!-- Demo -->
-  <script th:src="@{admin/js/demo.js}"></script>
+  <script th:src="@{/admin/js/demo.js}"></script>
 
 </body>
 

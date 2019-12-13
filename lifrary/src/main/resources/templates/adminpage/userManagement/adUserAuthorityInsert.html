@@ -33,71 +33,91 @@
           <div class="container-fluid flex-grow-1 container-p-y">
 
             <h4 class="font-weight-bold py-3 mb-4">
-              <span class="text-muted font-weight-light">Forms /</span> 회원등급등록화면
+              <span class="text-muted font-weight-light">Forms /</span> 회원권한등록화면
             </h4>
 
             
             <div class="card mb-4">
               <h6 class="card-header">
-                Form row
+                권한을 등록하세요
               </h6>
               <div class="card-body">
-                <form>
+                <form th:action="@{/admin/adUserAuthorityInsert}" id="validation-form" method="post">
                   <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label class="form-label">회원등급</label>
-                      <input type="email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label class="form-label">(관리자)아이디</label>
-                      <input type="password" class="form-control" placeholder="Password">
-                    </div>
+	              <div class="form-group col-md-6">
+	                 <label class="form-label">제한코드</label>
+	                 <input type="text" class="form-control" name="uasCode" placeholder="제한코드">
+	              </div>
+	              <div class="form-group col-md-6">
+	                 <label class="form-label">작성자 아이디</label>
+	                 <input type="text" class="form-control" name="uId" placeholder="작성자 아이디">
+	              </div>
                   </div>
                   <div class="form-group">
-                    <label class="form-label">등급 명</label>
-                    <input type="text" class="form-control" placeholder="1234 Main St">
+                    <label class="form-label">도서관 코드</label>
+                    <input type="text" class="form-control" name="lCode" placeholder="도서관코드">
                   </div>
                   <div class="form-group">
-                    <label class="form-label">기준권수(최소)</label>
-                    <input type="text" class="form-control" placeholder="1234 Main St">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">기준권수(최대)</label>
-                    <input type="text" class="form-control" placeholder="Apartment, studio, or floor">
+                    <label class="form-label">제한 명</label>
+                    <input type="text" class="form-control" name="uasName" placeholder="제한 명">
                   </div>
                   <div class="form-row">
+	                 <div class="form-group col-md-6">
+	                   <label class="form-label">연체일(최소)</label>
+	                   <input type="text" class="form-control" name="uasOverdueMin" placeholder="최소 연체일">
+	                 </div>
+	                 <div class="form-group col-md-6">
+	                   <label class="form-label">연체일(최대)</label>
+	                   <input type="text" class="form-control" name="uasOverdueMax" placeholder="최대 연체일">
+	                 </div>
+                  </div>
+                  <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label class="form-label">대출가능 권수</label>
-                      <input type="text" class="form-control">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label class="form-label">대출 가능일 수 </label>
-                      <input type="text" class="form-control">
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label class="form-label">State</label>
-                      <select class="custom-select">
-                        <option>Select state</option>
-                        <option>California</option>
-                        <option>Hawaii</option>
-                        <option>Florida</option>
-                        <option>Texas</option>
-                        <option>Massachusetts</option>
-                        <option>Alabama</option>
-                      </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label class="form-label">Zip</label>
-                      <input type="text" class="form-control">
+                      <label class="form-label">제한 일</label>
+                      <input type="text" class="form-control" name="uasLimitDate" placeholder="제한 일">
                     </div>
                   </div>
+             	 <div class="form-group">
+                   <label class="form-label">대출권한</label>
+                    <div class="form-check">
+                     <label class="custom-control custom-radio">
+               		   	<input name="uasLendLimit" type="radio" class="custom-control-input" value="O">
+               		   	<span class="custom-control-label">대출가능</span>
+                     </label>
+                     <label class="custom-control custom-radio">
+                 		 <input name="uasLendLimit" type="radio" class="custom-control-input" value="X">
+                 		 <span class="custom-control-label">대출불가</span>
+                     </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                   <label class="form-label">공공시설</label>
+                    <div class="form-check">
+                     <label class="custom-control custom-radio">
+               		   	 <input  name="uasFacilityLimit" type="radio" class="custom-control-input" value="O">
+               		   	<span class="custom-control-label">사용가능</span>
+                     </label>
+                     <label class="custom-control custom-radio">
+                 		 <input name="uasFacilityLimit" type="radio" class="custom-control-input" value="X">
+                 		 <span class="custom-control-label">사용불가</span>
+                     </label>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label">제한 등록일</label>
+                      <input type="text" class="form-control" name="uasDate" placeholder="제한 등록일">
+                    </div>
+                  </div>
+                    
+                 
                   <div class="form-group">
                     <label class="custom-control custom-checkbox m-0">
                       <input type="checkbox" class="custom-control-input">
-                      <span class="custom-control-label">작성일과 등급코드는 자동 </span>
+                      <span class="custom-control-label">작성일과 권한코드는 등록 날짜자동 </span>
                     </label>
                   </div>
-                  <button type="submit" class="btn btn-primary">등급 등록</button>
+                  <button type="submit" class="btn btn-primary">권한 등록</button>
                 </form>
               </div>
             </div>

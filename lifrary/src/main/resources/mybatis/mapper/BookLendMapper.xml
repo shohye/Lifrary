@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="ksmart.pentagon.booklend.BookLendMapper">
   
-	  <resultMap type="ksmart.pentagon.vo.BookLend" id="booklLend">
+	  <resultMap type="ksmart.pentagon.vo.BookLend" id="bookLend">
 	    <result column="bl_code" property="blCode"/>
 	    <result column="l_code" property="lCode"/>
 	    <result column="bl_id" property="blId"/>
@@ -40,7 +40,7 @@
 	    <result column="bs_book_state" property="bsBookState"/>
 	    <result column="u_number" property="uId"/>
 	    <collection property="bookInformation" resultMap="bookInfo"/>
-	    <collection property="booklLend" resultMap="booklLend"/>
+	    <collection property="bookLend" resultMap="bookLend"/>
 	</resultMap>
 	<resultMap type="ksmart.pentagon.vo.User" id="user">
 	    <result column="u_id" property="uId"/>
@@ -50,6 +50,7 @@
 	    <result column="ul_level" property="ulLevel"/>
 	    <result column="uas_code" property="uasCode"/>
 	    <result column="u_authority_date" property="uAuthorityDate"/>
+	    <result column="u_authority_days" property="uAuthorityDays"/>
 	    <result column="uas_lend_limit" property="uasLendLimit"/>
 	    <result column="u_lend_cnt" property="uLendCnt"/>
 	    <collection property="userLevel" resultMap="userLevel"/>
@@ -59,7 +60,7 @@
 	    <result column="ul_lend_num" property="ulLendNum"/>
 	    <result column="ul_lend_day" property="ulLendDay"/>
 	</resultMap>	
-	<select id="bookSearchList" resultMap="booklLend">
+	<select id="bookSearchList" resultMap="bookLend">
 		SELECT
 			 bl.bl_code
 			,bl.l_code
@@ -135,13 +136,12 @@
 			,u.u_name
 			,u.u_number
 			,u.u_overdue_day
-			,u.ul_level
 			,ul.ul_name
 			,ul.ul_lend_num
 			,ul.ul_lend_day
-			,u.uas_code
 			,uas.uas_lend_limit
 			,DATE_ADD(uah.uah_date, INTERVAL uas.uas_limit_date DAY) AS u_authority_date
+			,DATEDIFF( DATE_ADD(uah.uah_date, INTERVAL uas.uas_limit_date DAY) , NOW() ) AS u_authority_days
 			,(SELECT
 					COUNT(1)
 				FROM
@@ -166,7 +166,7 @@
 			user_authority_set AS uas
 		ON 
 			u.uas_code = uas.uas_code	
-		LEFT JOIN
+		LEFT JOIN 
 			user_authority_history AS uah
 		ON 
 			u.u_id = uah.u_id
@@ -174,7 +174,7 @@
 			u.u_number = #{svUser}
 		ORDER BY 
 			uah.uah_date DESC
-		LIMIT 0,1	
-  	
+		LIMIT 0,1
+			
   	</select>
   </mapper>

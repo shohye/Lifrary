@@ -37,7 +37,7 @@
                                             
                                             <th:block th:unless="${session.SID == null}">
 	                                               <a><i class="fa fa-unlock"></i></a><span>[[${session.SID}]]님 반갑습니다. &emsp; 권한 : [[${session.SDIV}]]</span>&emsp;&emsp; 
-	                                                <a th:href="@{/lifraryLogout}">로그아웃</a>                           
+	                                                <a th:href="@{/lifraryLogout}" onclick="alert('페이지에서 로그아웃 하였습니다.')">로그아웃</a>                           
                                             </th:block>
                                             
                                             </div>
@@ -95,7 +95,7 @@
                                             <ul class="dropdown-menu">
                                                 <li><a th:href="@{#}">#내 정보</a></li>
                                                 <li><a th:href="@{#}">#내 도서현황</a></li>
-                                                <li><a th:href="@{#}">#북 다이어리</a></li>
+                                                <li><a th:href="@{/lifrary/bookCalenderList}">!북 다이어리</a></li>
                                                 <li><a th:href="@{#}">#내 서재</a></li>
                                                 <li><a th:href="@{#}">#내 프로그램 신청 내역</a></li>
                                                 <li><a th:href="@{#}">#내 공공시설 신청 내역</a></li>

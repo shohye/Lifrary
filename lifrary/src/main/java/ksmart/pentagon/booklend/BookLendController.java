@@ -13,19 +13,40 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ksmart.pentagon.vo.BookStock;
 
-
+/***
+ * @file BookLendController.java
+ * @name BookLendController
+ * @brief 대출,반납,예약도서관련 주소요청 처리
+ * @author 최지혜
+ */
 @Controller
 public class BookLendController {
 	@Autowired private BookLendService bookLendService;
 	
+	//대출도서리스트
+	/***
+	 * @param model
+	 * @brief 대출도서리스트
+	 * @return /adminpage/bookLend/lendSearchList
+	 * @author 최지혜
+	 */
 	@GetMapping("/admin/lendSearchList")
 	public String LendSearchList(Model model){
 		
 		model.addAttribute("lendList", bookLendService.bookSearchList());
 		 
-		return "adminpage/bookLend/lendSearchList";
+		return "/adminpage/bookLend/lendSearchList";
 	}
-		
+	
+
+	/**
+	 * @param svBook 도서검색 값
+	 * @param svUser 회원검색 값
+	 * @param redirectAttributes
+	 * @brief 도서정보 검색
+	 * @return /admin/lendSearchList
+	 * @author 최지혜
+	 */
 	@PostMapping("/admin/lendBookInfo")
 	public String lendBookInfo(  @RequestParam(value="svBook" ) String svBook
 								,@RequestParam(value="svUser", required=false) String svUser
@@ -73,6 +94,14 @@ public class BookLendController {
 		return "redirect:/admin/lendSearchList";
 	}
 	
+	/**
+	 * @param svUser 회원검색 값
+	 * @param svBook 도서검색 값
+	 * @param redirectAttributes
+	 * @brief 회원정보검색
+	 * @return /admin/lendSearchList
+	 * @author 최지혜
+	 */
 	@PostMapping("/admin/lendUserInfo")
 	public String lendUserInfo(  @RequestParam(value="svUser" ) String svUser
 								,@RequestParam(value="svBook", required=false) String svBook
@@ -115,6 +144,11 @@ public class BookLendController {
 		return "redirect:/admin/lendSearchList";
 	}
 	
+	/**
+	 * @brief 예약도서리스트
+	 * @return /adminpage/bookLend/reservationSearchList
+	 * @author 최지혜
+	 */
 	@GetMapping("/admin/reservationSearchList")
 	public String reservationSearchList() {
 		return "/adminpage/bookLend/reservationSearchList";

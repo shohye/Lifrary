@@ -33,7 +33,7 @@ public class BookLendService {
 		return bookLend;
 		
 	}
-	//도서정보
+	//도서정보검색
 	public Map<String, Object> bookInfo(String svBook) {
 		
 		Map<String, Object> bookInfoMap = new HashMap<String, Object>();
@@ -41,7 +41,6 @@ public class BookLendService {
 		//앞뒤공백제거
 		String svBookTrim =svBook.trim();
 		BookStock bookStock = bookLendMapper.bookInfo(svBookTrim);
-		
 		
 		if(bookStock != null) {
 			String bsCallNum = "";
@@ -67,15 +66,14 @@ public class BookLendService {
 
 			bookInfoMap.put("searchBook", 1);//도서정보있는 경우 1 대입
 			
-			String lendDate = bookStock.getBooklLend().getBlLendDate();//대출일
-			String returnDate = bookStock.getBooklLend().getBlReturnDate();//반납일
+			String lendDate = bookStock.getBookLend().getBlLendDate();//대출일
+			String returnDate = bookStock.getBookLend().getBlReturnDate();//반납일
 			//예약 도서인지 확인하는 조건문
 			if(lendDate == null && returnDate == null) {
 				bookStock.setBsLendState("예약");
-				bookInfoMap.put("holdId", bookStock.getBooklLend().getBlId());//예약자아이디
+				bookInfoMap.put("holdId", bookStock.getBookLend().getBlId());//예약자아이디
 			}
 			//반납안된 도서인지 확인하는 조건문
-
 			else if(lendDate != null && returnDate == null) {	
 				User user = bookLendMapper.userInfo(bookStock.getuId());
 				
@@ -93,8 +91,8 @@ public class BookLendService {
 					}
 					user.getUserLevel().setUlLendNum(bookLendNum);
 					
-					//대출제한일이 null이거나 사용권한이 0단계인 경우 공백셋팅
-					if(user.getuAuthorityDate() == null || user.getUasCode().equals("uas001")) {
+					//대출제한일이 null이거나 사용제한일이 지난 경우 
+					if(user.getuAuthorityDate() == null || user.getuAuthorityDays() <= 0) {
 						user.setuAuthorityDate(" ");
 					}	
 				}
@@ -133,8 +131,8 @@ public class BookLendService {
 			}
 			user.getUserLevel().setUlLendNum(bookLendNum);
 			
-			//대출제한일이 null이거나 사용권한이 0단계인 경우 공백셋팅
-			if(user.getuAuthorityDate() == null || user.getUasCode().equals("uas001")) {
+			//대출제한일이 null이거나 사용제한일이 지난 경우 
+			if(user.getuAuthorityDate() == null || user.getuAuthorityDays() <= 0) {
 				user.setuAuthorityDate(" ");
 			}
 			userInfoMap.put("searchUser", 1);//회원정보있는 경우 1 대입

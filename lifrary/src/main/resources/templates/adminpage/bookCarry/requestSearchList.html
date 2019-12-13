@@ -31,11 +31,13 @@
          <th:block layout:fragment="adminContents">
          
             <!-- DataTable within card -->
+            
+         <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+			<div>희망도서 신청 리스트</div>
+			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; 도서추가</button>
+		 </h4>
 
             <div class="card">
-              <h3 class="card-header">
-                	 희망도서 신청 리스트
-              </h3>
               <div class="card-datatable table-responsive">
                 <table id="myTable" class="datatables-demo table table-striped table-bordered">
                 
@@ -43,7 +45,7 @@
                 
                   <thead>
                     <tr>
-                      <th>신청자아이디</th>
+                      <th>신청자</th>
                       <th>도서명</th>
                       <th>ISBN</th>
                       <th>발행년도</th>
@@ -51,23 +53,36 @@
                       <th>저자명</th>
                       <th>발행자 </th>
                       <th>진행상황</th>
-                      <th>취소사유</th>
-                      <th>신청일</th>                    
+                     <!--  <th>의견</th>
+                      <th>취소사유</th> -->
+                      <th>신청일</th>
+                      <th>상세</th>                     
                     </tr>
                   </thead>
                   
                   <tbody>
-				    <tr th:each="data : ${#}">
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
-				      <td th:text="${#}"></td>
+				    <tr th:each="r : ${requestList}">
+				      <td class="align-middle" th:text="${r.uId}"></td>
+				      <td class="align-middle" th:text="${r.brTitle}"></td>
+				      <td class="align-middle" th:text="${r.brIsbn}"></td>
+				      <td class="align-middle" th:text="${r.brYear}"></td>
+				      <td class="align-middle" th:text="${r.brPrice}"></td>
+				      <td class="align-middle" th:text="${r.brAuthor}"></td>
+				      <td class="align-middle" th:text="${r.brPublisher}"></td>
+				      <td class="align-middle text-center">
+				      	 <span th:if="${r.brProgress eq '취소'}"  class="badge badge-outline-danger">[[${r.brProgress}]]</span>
+				         <span th:unless="${r.brProgress eq '취소'}"  class="badge badge-outline-success">[[${r.brProgress}]]</span>
+				      </td>
+				     <!--  <td class="align-middle text-center" th:text="${r.brOpinion}"></td>
+				      <td class="align-middle text-center" th:text="${r.brCancelReason}"></td> -->
+				      <td class="align-middle" th:text="${r.brDate}"></td>
+				      <td class="align-middle align-center">
+			      		<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
+						   <a th:href="@{/admin/requestDetail(uId=${r.uId})}" title="상세">
+							 <i class="ion ion-ios-copy" title="수정"></i>
+						   </a>
+						</button>
+					  </td>
 				    </tr>
 				  </tbody> 
                 </table>

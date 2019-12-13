@@ -8,6 +8,7 @@
 	<result property="uId" column="u_id"/>
 	<result property="lCode" column="l_code"/>
 	<result property="ulLevel" column="ul_level"/>
+	<result property="uDivision" column="u_division"/>
 	<result property="ulName" column="ul_name"/>
 	<result property="uasCode" column="uas_code"/>
 	<result property="uasName" column="uas_name"/>
@@ -25,9 +26,9 @@
 	<result property="uOverdueDay" column="u_overdue_day"/>
 	<result property="uDate" column="u_date"/>
 	<result property="uAuthorityDate" column="u_authority_date"/>
-	<collection property="LibrarianLevel" resultMap="Librarian"></collection>
+	<collection property="librarianLevel" resultMap="librarian"/>
  </resultMap>
-  <resultMap type="ksmart.pentagon.vo.LibrarianLevel" id="Librarian">
+  <resultMap type="ksmart.pentagon.vo.LibrarianLevel" id="librarian">
 	<!-- db -->
 	<result property="uId" column="u_id"/>
 	<result property="lCode" column="l_code"/>
@@ -38,6 +39,51 @@
 	<result property="llBookStock" column="ll_book_stock"/>
 	<result property="llUpdate" column="ll_update"/>
  </resultMap>
+ <resultMap type="ksmart.pentagon.vo.UserLevel" id="userLevel">
+	<!-- db -->
+	<result property="uId" column="u_id"/>
+	<result property="lCode" column="l_code"/> 
+	<result property="ulLevel" column="ul_level"/>
+	<result property="ulName" column="ul_name"/>
+	<result property="ulMin" column="ul_min"/>
+	<result property="ulMax" column="ul_max"/>
+	<result property="ulLendNum" column="ul_lend_num"/>
+	<result property="ulLendDay" column="ul_lend_day"/>
+	<result property="ulDate" column="ul_date"/>
+ </resultMap>
+ <resultMap type="ksmart.pentagon.vo.UserAuthoritySet" id="userAuthoritySet">
+	<!-- db -->
+	<result property="uasCode" column="uas_code"/>
+	<result property="lCode" column="l_code"/> 
+	<result property="uId" column="u_id"/>
+	<result property="uasName" column="uas_name"/>
+	<result property="uasOverdueMin" column="uas_overdue_min"/>
+	<result property="uasOverdueMax" column="uas_overdue_max"/>
+	<result property="uasLendLimit" column="uas_lend_limit"/>
+	<result property="uasFacilityLimit" column="uas_facility_limit"/>
+	<result property="uasLimitDate" column="uas_limit_date"/>
+	<result property="uasDate" column="uas_date"/>
+ </resultMap>
+ 
+	<select id="adminLoginCheck" resultMap="userResultMap">
+		SELECT
+			u.u_id,
+			u.u_pw,
+			u.u_division,
+			u.u_name,
+			ll.ll_insert,
+			ll.ll_carry,
+			ll.ll_book_admin,
+			ll.ll_stats,
+			ll.ll_book_stock
+		FROM
+			user AS u INNER JOIN librarian_level AS ll
+		ON
+			u.u_id = ll.u_id
+		WHERE
+			u.u_id = #{uId}
+	</select>
+ 
   	<select id="getUserLevel" resultType="ksmart.pentagon.vo.UserLevel">
   		SELECT 
   			ul_level as ulLevel, 
@@ -170,4 +216,99 @@
  		</trim>
  		WHERE u_id = #{uId}
  	</update>
+
+	<select id="adminUserDetail" resultMap="userResultMap" parameterType="String">
+		SELECT 
+			u.u_id
+			,u.ul_level
+			,ul.ul_name
+			,u.u_division
+			,u.uas_code
+			,u.u_number
+			,u.u_name
+			,u.u_birth
+			,u.u_addr
+			,u.u_tel
+			,u.u_email
+			,u.u_email_agree
+			,u.u_appointment
+			,u.u_overdue_day
+			,u.u_date
+			,uas.uas_name
+			,uas.uas_lend_limit
+			,uas.uas_facility_limit
+		FROM 
+			user u
+		INNER JOIN  
+			user_authority_set as uas
+		ON 
+			u.uas_code = uas.uas_code
+		INNER join
+			user_level AS ul
+		on
+			ul.ul_level = u.ul_level
+		where
+			u.u_id=#{uId}
+		 
+	</select>
+	
+    <insert id="userLevelInsert">
+		INSERT INTO user_level(
+			 u_id
+			 ,l_code
+			,ul_level
+			,ul_name
+			,ul_min
+			,ul_max
+			,ul_lend_num
+			,ul_lend_day
+			,ul_date
+		)VALUES(
+			 #{uId}
+			,#{lCode}
+			,#{ulLevel}
+			,#{ulName}
+			,#{ulMin}
+			,#{ulMax}
+			,#{ulLendNum}
+			,#{ulLendDay}
+			,#{ulDate}
+		)
+	</insert>
+	
+	<insert id="adUserAuthorityInsert">
+		INSERT INTO user_authority_set(
+			 uas_code
+			 ,l_code
+			 ,u_id
+			,uas_name
+			,uas_overdue_min
+			,uas_overdue_max
+			,uas_lend_limit
+			,uas_facility_limit
+			,uas_limit_date
+			,uas_date
+		)VALUES(
+			 #{uasCode}
+			,#{lCode}
+			,#{uId}
+			,#{uasName}
+			,#{uasOverdueMin}
+			,#{uasOverdueMax}
+			,#{uasLendLimit}
+			,#{uasFacilityLimit}
+			,#{uasLimitDate}
+			,#{uasDate}
+		)
+	</insert>
+	
+	<select id="adUserLevelList" resultMap="userLevel" parameterType="String">
+		SELECT 
+			*
+		FROM 
+			user_level
+	</select>
+	
+	
+
   </mapper>

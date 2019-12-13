@@ -54,28 +54,46 @@ public class LibraryController {
 		User user = (User)map.get("user");
 		String result = (String)map.get("result");
 		System.out.println(result + " <== result controller");
-		if(!result.equals("로그인성공")) {
+		
+		if(!result.equals("로그인 성공")) {
 			//경고창 출력을 위해 result보내주기
+			model.addAttribute("result", result);
 			return "librarypage/user/login";
 		}
-
 
 		session.setAttribute("SID", user.getuId());
 		session.setAttribute("SNAME", user.getuName());
 		session.setAttribute("SDIV", user.getuDivision());
-		//SLIB  <= 도서관 코드 세션추가할것.
 		
-		return "redirect:/";
+		System.out.println(session.getAttribute("LIBNUM")+ " <== LIBNUM");
+		if(session.getAttribute("LIBNUM") == "000000") {
+			return "redirect:/pentagon/index";
+		}else if(session.getAttribute("LIBNUM") == "111111") {
+			return "redirect:/square/index";
+		} else {
+			return "redirect:/";
+		}
 	}
 	/**
-	 * 로그아웃으로 세션 종료
+	 * 로그아웃으로 세션 제거작업.
+	 * 도서관 코드는 제거되면 안되므로 로그인시 셋팅했던 정보만 remove해준다.
 	 * @param session
 	 * @return
 	 */
 	@GetMapping("/lifraryLogout")
 	public String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/";
+		session.removeAttribute("SID");
+		session.removeAttribute("SNAME");
+		session.removeAttribute("SDIV");
+		session.getAttribute("LIBNUM");
+		
+		if(session.getAttribute("LIBNUM") == "000000") {
+			return "redirect:/pentagon/index";
+		}else if(session.getAttribute("LIBNUM") == "111111") {
+			return "redirect:/square/index";
+		} else {
+			return "redirect:/";
+		}
 	}
 	
 }

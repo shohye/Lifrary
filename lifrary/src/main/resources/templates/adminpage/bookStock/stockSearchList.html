@@ -49,7 +49,7 @@
 	<th:block layout:fragment="adminContents">   
 		<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
 			<div>전체 도서 관리</div>
-			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; Add product</button>
+			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; 도서 추가</button>
 		</h4>
 
 	<div class="card">
@@ -81,10 +81,10 @@
 	                    <td class="align-middle" th:text="${l.bsCallNum}"></td> 
 	                    <td class="align-middle" th:text="${l.bookInformation.biIsbn}"></td>
 	                    <td class="align-middle" th:text="${l.bsBookState}"></td>
-	                    <td class="align-middle"> 
-				      <button th:if="${l.bsLendState eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">대출가능</button>
-				      <button th:unless="${l.bsLendState eq 'O'}" type="button" class="btn btn-xs btn-outline-success">대출불가</button>
-				      </td>
+	                    <td class="align-middle text-center"> 
+					      <span th:if="${l.bsLendState eq 'O'}" class="badge badge-outline-success">대출가능</span>
+					      <span th:unless="${l.bsLendState eq 'O'}" class="badge badge-outline-danger">대출불가</span>
+					    </td>
 	                    <td class="align-middle" th:text="${l.bsCarryRoute}"></td>
 	                    <td class="align-middle" th:text="${l.bsDate}"></td>
 	                    
