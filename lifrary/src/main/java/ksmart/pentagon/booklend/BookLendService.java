@@ -91,8 +91,8 @@ public class BookLendService {
 					}
 					user.getUserLevel().setUlLendNum(bookLendNum);
 					
-					//대출제한일이 null이거나 사용권한이 0단계인 경우 공백셋팅
-					if(user.getuAuthorityDate() == null || user.getUasCode().equals("uas001")) {
+					//대출제한일이 null이거나 사용제한일이 지난 경우 
+					if(user.getuAuthorityDate() == null || user.getuAuthorityDays() <= 0) {
 						user.setuAuthorityDate(" ");
 					}	
 				}
@@ -131,8 +131,8 @@ public class BookLendService {
 			}
 			user.getUserLevel().setUlLendNum(bookLendNum);
 			
-			//대출제한일이 null이거나 사용권한이 0단계인 경우 공백셋팅
-			if(user.getuAuthorityDate() == null || user.getUasCode().equals("uas001")) {
+			//대출제한일이 null이거나 사용제한일이 지난 경우 
+			if(user.getuAuthorityDate() == null || user.getuAuthorityDays() <= 0) {
 				user.setuAuthorityDate(" ");
 			}
 			userInfoMap.put("searchUser", 1);//회원정보있는 경우 1 대입

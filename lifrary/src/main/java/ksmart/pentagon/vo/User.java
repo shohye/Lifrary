@@ -25,6 +25,7 @@ public class User {
 	private int uOverdueDay;
 	private String uDate;
 	private String uAuthorityDate;
+	private int uAuthorityDays;
 	private LibrarianLevel librarianLevel;
 	private int uLendCnt;
 	private UserLevel userLevel;
@@ -155,6 +156,12 @@ public class User {
 	}
 	public void setuAuthorityDate(String uAuthorityDate) {
 		this.uAuthorityDate = uAuthorityDate;
+	}
+	public int getuAuthorityDays() {
+		return uAuthorityDays;
+	}
+	public void setuAuthorityDays(int uAuthorityDays) {
+		this.uAuthorityDays = uAuthorityDays;
 	}
 	public int getuLendCnt() {
 		return uLendCnt;
