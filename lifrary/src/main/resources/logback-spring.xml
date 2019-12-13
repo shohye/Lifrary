@@ -49,10 +49,6 @@
 
 	<root level="ERROR">
 		<appender-ref ref="STDOUT" />
-<<<<<<< HEAD
 		<!-- <appender-ref ref="dailyRollingFileAppender" /> 로그 생기는 코드-->
-=======
-		<!-- <appender-ref ref="dailyRollingFileAppender" /> -->
->>>>>>> refs/heads/develop
 	</root>
 </configuration>
