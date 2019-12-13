@@ -30,12 +30,17 @@
   <!-- Content -->
          <th:block layout:fragment="adminContents">
          
+         <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+			<div>주문 도서 리스트</div>
+			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; 
+				 <a th:href="@{/admin/bookOrderInsert}" style="color: white"> 도서 추가 </a>
+			</button>
+		 </h4>
+         
             <!-- DataTable within card -->
 
             <div class="card">
-              <h3 class="card-header">
-                	주문 도서 리스트
-              </h3>
+              
               <div class="card-datatable table-responsive">
                 <table id="myTable" class="datatables-demo table table-striped table-bordered">
                 
@@ -46,40 +51,43 @@
                       <th data-orderable="false">ISBN</th>
                       <th>도서명</th>
                       <th>저자명</th>
-                      <th>발행자</th>
-                      <th>발행년도</th>
-                      <th>주문업체명</th>
-                      <th>주문권수</th>
+                      <th>업체명</th>
+                      <th>권수</th>
                       <th>결제가격</th>
-                      <th>주문상태</th>
-                      <th>주문등록일</th>
-                      <th>수정/삭제</th>                 
+                      <th>상태</th>
+                      <th>등록일</th>
+                      <th>상세&수정</th>
+                      <th>삭제</th>                 
                     </tr>
                   </thead>
                   
                   <tbody>
 				    <tr th:each="ol : ${orderList}">
 				      <td class="align-middle" th:text="${ol.bookInformation.biIsbn}"></td>
-				      <td class="align-middle" th:text="${#strings.abbreviate(ol.bookInformation.biName,17)}"></td>
-				      <td class="align-middle" th:text="${#strings.abbreviate(ol.bookInformation.biAuthor,10)}"></td>
-				      <td class="align-middle" th:text="${ol.bookInformation.biPublisher}"></td>
-				      <td class="align-middle" th:text="${ol.bookInformation.biYear}"></td>
+				      <td class="align-middle" th:text="${#strings.abbreviate(ol.bookInformation.biName,20)}"></td>
+				      <td class="align-middle" th:text="${#strings.abbreviate(ol.bookInformation.biAuthor,12)}"></td>
 				      <td class="align-middle" th:text="${ol.boCompany}"></td>
 				      <td class="align-middle" th:text="${ol.boBookNum}"></td>
 				      <td class="align-middle" th:text="${ol.boPrice}"></td>
-				      <td> 
-				      <button th:if="${ol.bosState eq '수령완료'}" type="button" class="btn btn-xs btn-outline-primary">[[${ol.bosState}]]</button>
-				      <button th:unless="${ol.bosState eq '수령완료'}" type="button" class="btn btn-xs btn-outline-success">[[${ol.bosState}]]</button>
-				      </td>				      
+				      <td class="align-middle text-center"> 
+				      <span th:if="${ol.bosState eq '수령완료'}" class="badge badge-outline-success">[[${ol.bosState}]]</span>
+				      <span th:unless="${ol.bosState eq '수령완료'}" class="badge badge-outline-danger">[[${ol.bosState}]]</span>
+				      </td >				      
 				      <td th:text="${ol.boDate}"></td>
 				      <td class="align-middle align-center">
-		               	 <a th:href="@{/admin/bookOrderUpdate(boCode=${ol.boCode})}" class="btn icon-btn btn-sm btn-outline-secondary" title="수정">
-		               	 	<span class="ion ion-ios-create d-block"></span>			               	 
-		               	 </a>
-		               	 <a th:href="@{#}" class="btn icon-btn btn-sm btn-outline-secondary" title="삭제">
-		               	 	<span class="ion ion-ios-cut d-block"></span>			               	 
-		               	 </a>
-                      </td> 	
+			      		<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
+						   <a th:href="@{/admin/bookOrderUpdate(boCode=${ol.boCode})}" title="수정">
+							 <i class="ion ion-md-create" title="수정"></i>
+						   </a>
+						</button>
+					</td>
+					<td class="align-middle align-center">
+						<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
+						   <a href="#" title="삭제">
+							 <i class="ion ion-ios-cut d-block" title="삭제"></i>
+						   </a>
+						</button>
+                      </td> 		
 				    </tr>
 				  </tbody> 
                 </table>

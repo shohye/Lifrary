@@ -9,7 +9,22 @@
  	  <link rel="stylesheet" th:href="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
  	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
  	  </th:block>
- 
+ 	  
+ 	  <script type="text/javascript" th:inline="javascript">
+	  /* $(document).ready(function(){
+		  	  
+		  var input = $('input[id="text"]');
+		  input.change(function() {
+			  
+			  console.log(input);
+			 	  
+			   
+	     });
+		  
+	  });//document.ready  이따할래,,,*/ 
+	 
+	 </script>
+	 
  
   <!-- Content -->
       <th:block layout:fragment="adminContents">
@@ -97,30 +112,34 @@
 		                    <textarea class="form-control" name="biDtail" th:text="${s.bookInformation.biDtail}"></textarea>
 	                    </div>
 	                    <div class="form-row">
-		                    <div class="form-group col-md-6">
+		                    <div class="form-group col-md-6" id="bookState">
 		   					   <p>책상태</p>	
-		                      <label class="custom-control custom-checkbox">
-	                              <input th:if="${s.bsBookState eq '정상'}" type="checkbox" class="custom-control-input" name="bsBookState" checked="">
-	                              <input th:unless="${s.bsBookState eq '정상'}" type="checkbox" class="custom-control-input" name="bsBookState" >
-	                                <span class="custom-control-label">정상</span>
-	                          </label>
-	                           <label class="form-label">
-	                            <input type="text" th:if="${s.bsBookState eq '정상'}" class="form-control" name="bsBookState" placeholder="정상이 아닌경우 작성" >
-	                            <input type="text" th:unless="${s.bsBookState eq '정상'}" class="form-control" name="bsBookState" th:placeholder="${s.bsBookState}" >
-	                           </label>
+		   					   
+		   					     <label class="custom-control custom-radio">
+		                  		   	<input th:if="${s.bsBookState eq '정상'}" name="bsBookState" type="radio" class="custom-control-input" checked="">
+		                  		   	<input th:unless="${s.bsBookState eq '정상'}" name="bsBookState" type="radio" class="custom-control-input" >
+		                  		   	<span class="custom-control-label">정상</span>
+		                        </label>
+		                        <label class="custom-control custom-radio">
+		                  		   	<input th:if="${s.bsBookState ne '정상'}" name="bsBookState" type="radio" class="custom-control-input" checked="">
+		                  		   	<input th:unless="${s.bsBookState ne '정상'}" name="bsBookState" type="radio" class="custom-control-input" >
+		                  		   	<span class="custom-control-label">기타</span>
+		                  		   	 <input type="text" th:if="${s.bsBookState eq '정상'}" class="form-control" id="text" name="bsBookState" placeholder="정상이 아닌경우 작성"  >
+	                              <input type="text" th:unless="${s.bsBookState eq '정상'}" class="form-control" id="text" name="bsBookState" th:placeholder="${s.bsBookState}" >
+		                        </label>		                        		   					 
 		                    </div>
 		                    <div class="form-group col-md-6">
-		   					   <p>대출가능상태</p>	
-		                      <label class="custom-control custom-checkbox">
-	                              <input th:if="${s.bsLendState eq 'O'}" type="checkbox" class="custom-control-input" name="bsLendState" value="O" checked="">
-	                              <input th:unless="${s.bsLendState eq 'O'}" type="checkbox" class="custom-control-input" name="bsLendState" value="O">
-	                                <span class="custom-control-label">가능</span>
-	                          </label>
-	                           <label class="custom-control custom-checkbox">
-	                              <input th:if="${s.bsLendState eq 'X'}" type="checkbox" class="custom-control-input" name="bsLendState" value="X" checked="">
-	                              <input th:unless="${s.bsLendState eq 'X'}" type="checkbox" class="custom-control-input" name="bsLendState" value="X">
-	                                <span class="custom-control-label">불가능</span>
-	                          </label>
+		   					   <p>대출가능상태</p>		                                              
+	                          <label class="custom-control custom-radio">
+		                  		   	<input th:if="${s.bsLendState eq 'O'}" name="bsLendState" type="radio" class="custom-control-input" value="O" checked="">
+		                  		   	<input th:unless="${s.bsLendState eq 'O'}" name="bsLendState" type="radio" class="custom-control-input" value="O">
+		                  		   	<span class="custom-control-label">가능</span>
+		                       </label>
+		                       <label class="custom-control custom-radio">
+		                  		   	<input th:if="${s.bsLendState eq 'X'}" name="bsLendState" type="radio" class="custom-control-input" value="X" checked="">
+		                  		   	<input th:unless="${s.bsLendState eq 'X'}" name="bsLendState" type="radio" class="custom-control-input" value="X">                  		   	
+		                  		   	<span class="custom-control-label">불가능</span>
+		                       </label>	                          
 		                    </div>	     
 		                    
 		                </div>

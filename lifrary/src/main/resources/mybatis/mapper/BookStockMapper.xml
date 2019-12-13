@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="ksmart.pentagon.stock.BookStockMapper">
   
-  	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfo">
+  	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfoResultMap">
 	    <result column="bi_isbn" property="biIsbn"/>
 	    <result column="bi_name" property="biName"/>
 	    <result column="bi_year" property="biYear"/>
@@ -15,7 +15,7 @@
 	    <result column="bi_detail" property="biDtail"/>
 	</resultMap>
 	
-	<resultMap type="ksmart.pentagon.vo.BookCate" id="bookCate">
+	<resultMap type="ksmart.pentagon.vo.BookCate" id="bookCateResultMap">
 	    <result column="bcl_code" property="bclCode"/>
 	    <result column="bcl_name" property="bclName"/>
 	    <result column="bcm_code" property="bcmCode"/>
@@ -23,7 +23,7 @@
 	  
 	</resultMap>
 	
-	<resultMap type="ksmart.pentagon.vo.BookStock" id="bookStock">
+	<resultMap type="ksmart.pentagon.vo.BookStock" id="bookStockResultMap">
 	    <result column="bs_code" property="bsCode"/>
 	    <result column="u_id" property="uId"/>
 	    <result column="bi_isbn" property="biIsbn"/>
@@ -39,11 +39,11 @@
 	    <result column="bs_carry_route" property="bsCarryRoute"/>
 	    <result column="bs_date" property="bsDate"/>
 	    
-	    <collection property="bookInformation" resultMap="bookInfo"/>
-	    <collection property="bookCate" resultMap="bookCate"/>
+	    <collection property="bookInformation" resultMap="bookInfoResultMap"/>
+	    <collection property="bookCate" resultMap="bookCateResultMap"/>
 	</resultMap>
 	
-	<select id="getStockList" resultMap="bookStock">
+	<select id="getStockList" resultMap="bookStockResultMap">
 		SELECT 
 			  bs.bs_code
 			, bi.bi_img
@@ -63,7 +63,7 @@
 			bs.bs_delete_id IS NULL
 	</select>
 	
-	<select id="getStockdetail" resultMap="bookStock" parameterType="String">
+	<select id="getStockdetail" resultMap="bookStockResultMap" parameterType="String">
 		SELECT 
 			  bs.bs_code
 			, bs.u_id

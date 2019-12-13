@@ -30,6 +30,7 @@ public class BookCarry {
 	private String bdnSticker;  //bdn_sticker
 	private String bdnHonorAgree;   //bdn_honor_agree
 	private String bdnDate;     //bdn_date    => 기증자	
+	
 
 	public String getUid() {
 		return uid;
