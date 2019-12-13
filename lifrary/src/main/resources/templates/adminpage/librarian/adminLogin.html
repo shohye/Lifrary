@@ -31,7 +31,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  class="default-style">
 	
   <!-- Load polyfills -->
   <script th:src="@{/admin/vendor/js/polyfills.js}"></script>
-  <script>document['documentMode']===10&&document.write('<script th:src="@{/https://polyfill.io/v3/polyfill.min.js?features=Intl.~locale.en}"><\/script>')</script>
+  <script>document['documentMode']===10&&document.write('<script th:src="@{https://polyfill.io/v3/polyfill.min.js?features=Intl.~locale.en}"><\/script>')</script>
 
   <script th:src="@{/admin/vendor/js/material-ripple.js}"></script>
   <script th:src="@{/admin/vendor/js/layout-helpers.js}"></script>
@@ -42,13 +42,13 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  class="default-style">
 
   <!-- Core scripts -->
   <script th:src="@{/admin/vendor/js/pace.js}"></script>
-  <script th:src="@{/https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js}"></script>
+  <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js}"></script>
 
   <!-- Libs -->
   <link rel="stylesheet" th:href="@{/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css}">
   <!-- Page -->
   <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/authentication.css}">
-  <script th:src="@{/https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js}"></script>
+  <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js}"></script>
   
   <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
   <th:block layout:fragment="teamHeadScript">
