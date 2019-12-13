@@ -155,7 +155,8 @@
 			</if>
 		</trim>
   	</select>
-  	  	<select	id="getAdminUserUpdate"
+  	
+  	<select	id="getAdminUserUpdate"
  	parameterType="String" 
  	resultType="ksmart.pentagon.vo.User">
 		SELECT
@@ -309,6 +310,31 @@
 			user_level
 	</select>
 	
+    <update id="adUserLevelUpdate" parameterType="ksmart.pentagon.vo.UserLevel" >
+		UPDATE 
+			user_level
+		SET
+			 ul_level       = #{ulLevel}
+			,l_code         = #{lCode}
+			,u_id      		= #{uId}
+			,ul_name        = #{ulName}
+			,ul_min   		= #{ulMin}
+			,ul_max         = #{ulMax}
+			,ul_lend_num	= #{ulLendNum}
+			,ul_lend_day    = #{ulLendDay}
+			,ul_date        = #{ulDate}
+		WHERE 
+			 ul_level = #{ulLevel}
+	</update>
+	
+	<select id="getAdUserLevelUpdate" resultMap="userLevel" parameterType="String">
+		SELECT 
+			*
+		FROM 
+			user_level
+		where 
+			ul_level = #{ulLevel}
+	</select>
 	
 
   </mapper>

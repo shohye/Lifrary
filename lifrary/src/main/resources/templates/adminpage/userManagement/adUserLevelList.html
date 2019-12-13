@@ -25,9 +25,11 @@
 		 <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
               <div>회원 등급 리스트</div>
               <button type="button" class="btn btn-primary rounded-pill d-block">
-              <span class="ion ion-md-add"></span>&nbsp; 회원등급 등록</button>
+              <a th:href="@{/admin/userLevelInsert}">
+              <span class="ion ion-md-add"></span>회원등급 등록</a></button>
             </h4>
 
+            <div class="card">
             <div class="card">
               <div class="card-datatable table-responsive">
                 <div id="product-list_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -36,16 +38,16 @@
                 	<table id="product-list" class="table table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="product-list_info" style="width: 35px;">
 	                  <thead>
 	                    <tr role="row">
-	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">회원등급</th>
-	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">도서관코드</th>
-	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">관리자ID</th>
-	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 34px;">등급명</th>
-	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">기준최소권수</th>
-	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 25px;">기준최대권수</th>
-	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 25px;">대출가능권수</th>
-	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">대출가능일수</th>
-	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;">등록일</th>
-	                    	<th class="sorting_disabled" tabindex="0" aria-controls="product-list" rowspan="1" colspan="1" style="width: 35px;"></th>
+	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">회원등급</th>
+	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">도서관코드</th>
+	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">관리자ID</th>
+	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">등급명</th>
+	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">기준최소권수</th>
+	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">기준최대권수</th>
+	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">대출가능권수</th>
+	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">대출가능일수</th>
+	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">등록일</th>
+	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center"></th>
 	                    	
 	                   </tr>
 	                   <th:block th:each="ul : ${userLevel}">
@@ -64,7 +66,7 @@
 	                   				<button title="" 
 	                   						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
 	                   						type="button" data-original-title="Edit">
-	                   				<a th:href="@{#}" title="수정">
+	                   				<a th:href="@{/admin/adUserLevelUpdate(ulLevel=${ul.ulLevel})}" title="수정">
 	                   				<i class="ion ion-md-create" title="수정"></i></a>
 	                   				</button>&nbsp;&nbsp;
 	                   				<button title="" 
@@ -114,6 +116,8 @@
 		           </div>
               </div>
             </div>
+          </div>
+            
 	</th:block>
 	<!-- / Content -->
   <!-- / scripts -->

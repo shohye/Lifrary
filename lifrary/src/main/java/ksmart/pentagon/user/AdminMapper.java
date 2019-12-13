@@ -46,6 +46,12 @@ public interface AdminMapper {
 	
 	//관리자가 회원등급 리스트
 	public List<UserLevel> adUserLevelList();
+	
+	//관리자가 회원등급수정-한개정보 가져오기
+	public UserLevel getAdUserLevelUpdate(String ulLevel);
+	
+	//관리자가 회원등급수정
+	public int adUserLevelUpdate(UserLevel userLevel);  
 		
 	/**********************************************************/
 	

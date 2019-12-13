@@ -174,7 +174,7 @@ public class AdminController {
 	@PostMapping("/admin/adminUserUpdate")
 	public String adminUserUpdate(User user) {
 		System.out.println("adminUserUpdate @PostMapping 회원수정 화면 ");
-		System.out.println(user.toString() + "<==== user ");
+		System.out.println(user.toString() + "<==== user확인바람 ");
 		adminService.adminUserUpdate(user);
 		
 		return "redirect:/admin/userSearchList";
@@ -242,6 +242,31 @@ public class AdminController {
 		return "/adminpage/userManagement/adUserLevelList";
 	}
 	
+	/**
+	 * 관리자페이지에서 회원 등급 수정
+	 * @param model
+	 * @param ulLevel
+	 * @return adUserLevelUpdate페이지
+	 * @author 한우리
+	 */
+	//관리자가 유저 회원 등급 수정 
+	@GetMapping("/admin/adUserLevelUpdate")
+	public String getAdUserLevelUpdate(@RequestParam(value = "ulLevel",required=false)String ulLevel, Model model) {
+		System.out.println(" getAdUserLevelUpdate 회원등급 수정  @GetMapping");
+		model.addAttribute("lUpdate", adminService.getAdUserLevelUpdate(ulLevel));
+		System.out.println(adminService.getAdUserLevelUpdate(ulLevel) + "==>> lUpdate ");
+		
+		return "/adminpage/userManagement/adUserLevelUpdate";
+	}
+	
+	@PostMapping("/admin/adUserLevelUpdate")
+	public String adUserLevelUpdate(UserLevel userLevel) {
+		System.out.println("adUserLevelUpdate 회원등급 수정  @PostMapping");
+		System.out.println(userLevel.toString() + "<==== userLevel 확인바람 ");
+		adminService.adUserLevelUpdate(userLevel);
+		
+		return "redirect:/admin/adUserLevelList";
+	}
 	
    /************************************************************************************************/
    

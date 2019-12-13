@@ -107,6 +107,19 @@ public class AdminService {
 		 return adminMapper.adUserLevelList();
 	 }
 	 
+	 //유저 레벨 수정 폼 가져오기
+	 public UserLevel getAdUserLevelUpdate(String ulLevel) {
+		 System.out.println("getAdUserLevelUpdate 서비스 진입");
+		
+		 return adminMapper.getAdUserLevelUpdate(ulLevel);
+	 }
+	 
+	 public int adUserLevelUpdate(UserLevel userLevel) {
+		 System.out.println("adUserLevelUpdate 서비스 진입");
+		 
+		 return adminMapper.adUserLevelUpdate(userLevel); 
+	 }
+	 
 	 
 	 /**************************************************************/
 	 
