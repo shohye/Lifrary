@@ -1,13 +1,206 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>독후감 공유 게시판</title>
-</head>
-<body>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+ <th:block layout:fragment="customScript">
+ 	<script type="text/javascript">
 
-<h1>여기는 독후감 공유 게시판</h1>
-<a href="/lifrary/bookReportInsert">독후감등록</a>
-<a href="/lifrary/bookReportDetail">독후감 상세 페이지</a>
-</body>
+ 	</script>
+ </th:block>  
+    <th:block layout:fragment="customContents">
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>BOOK REPORT</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">내 손끝에서 피어나는 또 다른 작품</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li>BOOK REPORT</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+         <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="booksmedia-detail-main">
+                        <div class="container">
+                            <div class="row">
+                                <!-- Start: Search Section -->
+                                <section class="search-filters">
+                                    <div class="container">
+                                        <div class="filter-box">
+                                            <h3>독후감을 검색해보세요</h3>
+                                            <form action="#" method="get">
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="form-group">
+                                                        <select name="catalog" id="catalog" class="form-control">
+                                                            <option>::검색어::</option>
+                                                            <option>제목</option>
+                                                            <option>작성자</option>
+                                                            <option>도서명</option>
+                                                            <option>ISBN</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="sr-only" for="keywords">검색내용을 입력해주세요</label>
+                                                        <input class="form-control" placeholder="검색내용을 입력해주세요" id="keywords" name="keywords" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="form-group">
+                                                        <select name="category" id="category" class="form-control">
+                                                            <option>::기간::</option>
+                                                            <option>전체기간</option>
+                                                            <option>최근 1주일</option>
+                                                            <option>최근 1개월</option>
+                                                            <option>최근 6개월</option>
+                                                            <option>최근 1년</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 col-sm-6">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="submit" value="Search">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </section>
+                                <!-- End: Search Section -->
+                            </div>
+                            <div class="filter-options margin-list">
+                            <div class="booksmedia-detail-box">
+                                <div class="clearfix"></div>
+                  
+                                <div class="table-tabs" id="responsiveTabs">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><b class="arrow-up"></b><a data-toggle="tab" href="#sectionA">독후감 목록</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="sectionA" class="tab-pane fade in active">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>번호</th>
+                                                        <th>작성자</th>
+                                                        <th>제목</th>
+                                                        <th>등록일</th>
+                                                        <th>조회수</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                    	<td>번호</td>
+                                                    	<td>작성자</td>
+                                                        <td>
+                                                        	<a href="/lifrary/bookReportDetail">독후감 상세보기 페이지로 이동~~</a>
+                                                        </td>
+                                                        <td>등록일</td>
+                                                        <td>조회수</td>                                                
+                                                    </tr>
+                                                    <tr>
+                                                    	<td>번호</td>
+                                                    	<td>작성자</td>
+                                                        <td>
+                                                        	<a href="/lifrary/bookReportDetail">Bedford Park Public Library District</a>
+                                                        </td>
+                                                        <td>등록일</td>
+                                                        <td>조회수</td>    
+                                                    </tr>
+                                                    <tr>
+                                                    	<td>번호</td>
+                                                    	<td>작성자</td>
+                                                        <td>
+                                                        	<a href="/lifrary/bookReportDetail">Blue Island Public Library</a>
+                                                        </td>
+                                                        <td>등록일</td>
+                                                        <td>조회수</td>    
+                                                    </tr>
+                                                    <tr>
+                                                    	<td>번호</td>
+                                                    	<td>작성자</td>
+                                                        <td>
+                                                       		<a href="/lifrary/bookReportDetail">Bridgeview Public Library</a>
+                                                        </td>
+                                                        <td>등록일</td>
+                                                        <td>조회수</td>    
+                                                    </tr>
+                                                    <tr>
+                                                        <td>번호</td>
+                                                        <td>작성자</td>
+                                                        <td>
+                                                        	<a href="/lifrary/bookReportDetail">Eisenhower Public Library District</a>
+                                                        </td>
+                                                        <td>등록일</td>
+                                                        <td>조회수</td>    
+                                                    </tr>
+                                                    <tr>
+                                                        <td>번호</td>
+                                                        <td>작성자</td>
+                                                        <td>
+                                                        	<a href="/lifrary/bookReportDetail">Forest Park Public Library</a>
+                                                        </td>
+                                                        <td>등록일</td>
+                                                        <td>조회수</td>    
+                                                    </tr>
+                                                    <tr>
+                                                        <td>번호</td>
+                                                        <td>작성자</td>
+                                                        <td>
+                                                        	<a href="/lifrary/bookReportDetail">Hinsdale Public Library</a>
+                                                        </td>
+                                                        <td>등록일</td>
+                                                        <td>조회수</td>    
+                                                    </tr>
+                                                    <tr>
+                                                        <td>번호</td>
+                                                        <td>작성자</td>
+                                                        <td>
+                                                        	<a href="/lifrary/bookReportDetail">Oak Park Public Library Maze Branch</a>
+                                                        </td>
+                                                        <td>등록일</td>
+                                                        <td>조회수</td>    
+                                                    </tr>
+                                                    <tr>
+                                                        <td>번호</td>
+                                                        <td>작성자</td>
+                                                        <td>
+                                                        	<a href="/lifrary/bookReportDetail">River Grove Public Library District</a>
+                                                        </td>
+                                                		<td>등록일</td>
+                                                        <td>조회수</td>    
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div>
+                                            	<a href="/lifrary/bookReportInsert" class="btn btn-dark-gray">독후감 작성</a>
+                                            </div>
+                                            <nav class="navigation pagination text-center">
+		                                        <div class="nav-links">
+		                                            <a class="prev page-numbers" href="#."><i class="fa fa-long-arrow-left"></i> Previous</a>
+		                                            <a class="page-numbers" href="#.">1</a>
+		                                            <span class="page-numbers current">2</span>
+		                                            <a class="page-numbers" href="#.">3</a>
+		                                            <a class="page-numbers" href="#.">4</a>
+		                                            <a class="next page-numbers" href="#.">Next <i class="fa fa-long-arrow-right"></i></a>
+		                                        </div>
+	                                    	</nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div> 
+    </th:block>
 </html>

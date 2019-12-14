@@ -59,5 +59,4 @@ public class BookReportController {
 		return "/librarypage/bookReport/bookReportDetail";
 	
 	}
-	
 }

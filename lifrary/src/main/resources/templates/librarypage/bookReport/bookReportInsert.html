@@ -3,19 +3,35 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
     
-    
+ <th:block layout:fragment="customScript">
+ 	<style>
+ 	.ck-editor__editable {
+	    min-height: 400px;
+	}
+ 	</style>
+	<script type="text/javascript" th:src="@{/ckeditor/ckeditor.js}"></script>
+ 	<script type="text/javascript" >
+ 	 $(document).ready(function(){
+ 		 $('#reportBtn').click(function(){
+ 			
+ 			 $('#reportForm').submit();
+ 		  
+ 	 	});
+ 	});
+ 	</script>
+ </th:block>  
     <th:block layout:fragment="customContents">
        <section class="page-banner services-banner">
             <div class="container">
                 <div class="banner-header">
-                    <h2>BOOK REPORT DETAIL</h2>
+                    <h2>BOOK REPORT</h2>
                     <span class="underline center"></span>
-                    <p class="lead">독후감 is 또 하나의 훌륭한 작품</p>
+                    <p class="lead">내 손끝에서 피어나는 또 다른 작품</p>
                 </div>
                 <div class="breadcrumb">
                     <ul>
                         <li><a th:href="@{/}">Home</a></li>
-                        <li>BOOK REPORT DETAIL</li>
+                        <li>BOOK REPORT</li>
                     </ul>
                 </div>
             </div>
@@ -23,53 +39,78 @@
         <div id="content" class="site-content">
             <div id="primary" class="content-area">
                 <main id="main" class="site-main">
-                    <div class="blog-detail-main">
-                        <div class="container">
-                            <div class="row">
-                                <div class="blog-page">
-                                    <div class="blog-section">
-                                        <article>
-                                            <div class="blog-detail">
-                                                <header class="entry-header">
-                                                	<div class="center-content">
-	                            						<h2 class="section-title">SERVICE WE ARE OFFERING</h2>
-	                           								<span class="underline center"></span>
-	                            							<p class="lead">The standard chunk of Lorem Ipsum used since</p>
-                            								<div class="clearfix"></div>
-                        	 								</div> 
-                                                	</header>
-                                                <div class="post-detail">
-                                                    <div class="post-detail-head">
-                                                        <div class="post-share">
-                                                            <a href="#."><i class="fa fa-comment"></i> 리플수</a>
-                                                            <a href="#."><i class="fa fa-thumbs-o-up"></i> 좋아요수</a>
-                                                            <a href="#."><i class="fa fa-eye"></i> 조회수</a>
-                                                        </div>
-                                                        <div class="post-social-share">
-                                                            <ul>
-                                                                <li><a href="#."><i class="fa fa-pencil-square-o"></i> <span>수정하기</span></a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="clearfix"></div>
+                    <div class="services-main">
+                        <div class="services-pg">                            
+                            <section class="services-offering">
+                                <div class="container">
+	                                <div class="row">
+	                                    <div class="center-content">
+	                                        <h2 class="section-title">My Book Report</h2>
+	                                        <span class="underline center"></span>
+	                                        <p class="lead"></p>
+	                                        <div class="clearfix"></div>
+	                                    </div>
+	                                    <div class="cart-head">
+		                                    <div class="col-xs-12 col-sm-6 account-option">
+		                                        <strong>도서정보</strong>
+		                                        <ul>
+		                                            <li><a href="#">도서등록</a></li>
+		                                            <li class="divider">|</li>
+		                                            <li><a href="#">도서 수정</a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <div class="col-xs-12 col-sm-6 library-info">
+		                                        <ul>
+		                                            <li><strong>도서명:</strong>도서명출력</li>
+		                                            <li>
+		                                            	<strong>ISBN:</strong>
+		                                                <a href="#">도서상세페이지로 이동</a>
+		                                            </li>
+		                                        </ul>
+		                                    </div>
+		                                    <div class="clearfix"></div>
+		                                </div>
+	                                     <div class="entry-content">
+			                             	<form id="reportForm" th:action="@{/lifrary/myBookReportSearchList}" >
+		                                        <div class="form-group">
+				                                     <textarea name="reportContent" id="reportEditor" rows="10" ></textarea>
+			                               	   </div>
+			                               	    <div class="form-group">  
+			                                     	<div class="rating">
+                                                        <strong>나만의 별점:</strong>&nbsp; 
+                                                        <span>☆</span>
+                                                        <span>☆</span>
+                                                        <span>☆</span>
+                                                        <span>☆</span>
+                                                        <span>☆</span>
                                                     </div>
-                                                    <div class="entry-content">
-                                                        <p>누구를 위해 누군가 기도하고 있나 봐 숨죽여 쓴 사랑시가 낮게 들리는 듯해 너에게로 선명히 날아가 늦지 않게 자리에 닿기를</p>
-                                                    </div>
-                                                    <footer class="entry-footer">
-                                                        <div class="col-xs-12 col-sm-12 entry-tags"> 
-                                                            <strong><i class="fa fa-tags" aria-hidden="true"></i> 별점:</strong> <span> <a href="#">별점 넣어 볼깡</a></span>			
-                                                        </div>
-                                                    </footer>
-                                                </div>
-                                            </div>
-                                        </article>
-                                    </div>
+			                               		</div>
+			                               	   <div class="form-group">  
+			                               	   		 <strong>공개여부:</strong>&nbsp;
+				                                     <label>
+				                                     	<input type="radio" name="reportOpen" value="공개">공개 &nbsp;
+				                                     </label>
+				                                     <label>
+				                                     	<input type="radio" name="reportOpen" value="비공개">비공개
+				                                     </label>	
+			                               		</div>
+			                               	   <div class="form-group">  
+				                                     <button type="button" id="reportBtn" class="btn btn-primary">작성</button> 
+			                               		</div>
+			                               </form>
+	                                   </div>
+	                                </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </section>
+                          </div>
+                     </div> 
                 </main>
             </div>
-        </div>       
+        </div>
+	     <script type="text/javascript">
+			 CKEDITOR.replace('reportEditor'
+			                , {height: 500                                                  
+			                 });
+		</script>
     </th:block>
 </html>
