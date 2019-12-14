@@ -3,6 +3,68 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
+
+	 <th:block layout:fragment="teamHeadScript">
+     <script type="text/javascript" th:inline="javascript">  
+     $(document).ready(function(){  		
+ 		// 유효성검사 시작
+ 		$('#insertBtn').click(function(){
+   			
+ 			var biIsbn      = $('input[name=biIsbn]');
+ 			var biName      = $('input[name=biName]');
+ 			var biAuthor    = $('input[name=biAuthor]');
+ 			var biPublisher = $('input[name=biPublisher]');
+ 			var biYear      = $('input[name=biYear]');
+ 			var boCompany   = $('input[name=boCompany]');
+ 			var boBookNum   = $('input[name=boBookNum]');
+ 			var boPrice     = $('input[name=boPrice]');
+ 					
+ 			
+ 			
+ 			if(biIsbn.val() == ''){
+ 				alert('주문한 도서의 ISBN을 입력해주세요');
+ 				biIsbn.focus();
+ 				return false;
+ 			}
+ 			if(biName.val() == ''){
+ 				alert('주문한 도서명을 입력해주세요');
+ 				biName.focus();
+ 				return false;
+ 			}
+ 			if(biAuthor.val() == ''){
+ 				alert('주문한 도서의 저서를 입력해주세요');
+ 				biAuthor.focus();
+ 				return false;
+ 			}
+ 			if(biPublisher.val() == ''){
+ 				alert('주문한 도서의 발행자(출판사)를 입력해주세요');
+ 				biPublisher.focus();
+ 				return false;
+ 			}
+ 			if(biYear.val() == ''){
+ 				alert('주문한 도서의 발행년도를 입력해주세요');
+ 				biYear.focus();
+ 				return false;
+ 			}
+ 			if(boBookNum.val() == ''){
+ 				alert('주문한 도서의 권수를 입력해주세요');
+ 				
+ 				return false;
+ 			}
+ 			if(boPrice.val() == ''){
+ 				alert('주문한 도서의 총 결제금액을 입력해주세요');
+ 				boPrice.focus();
+ 				return false;
+ 			}
+ 			
+ 			
+ 			$('#insertForm').submit();
+ 			
+ 		}); // 유효성검사 끝    		
+ 	}); // 처음 function끝
+    	    	
+    	</script>
+  	    </th:block>
 	 
 	          <!-- Content -->
 	      <th:block layout:fragment="adminContents">
@@ -13,12 +75,12 @@
             </h4>
 
             <div class="card mb-4">
-              <div class="card-body" th:with="ou=${orderUpdate}">
-                <form id="validation-form" action="" method="post" >
+              <div class="card-body">
+                <form id="insertForm" th:action="@{/admin/bookOrderInsert}" method="post" >
                   <div class="form-group ">
 	                   <label class="form-label" >ISBN</label>
 			            <div class="input-group">
-		                  <input type="text" class="form-control" placeholder="Search for ISBN">
+		                  <input type="text" name="biIsbn" class="form-control" placeholder="Search for ISBN">
 		                 
 		                  <span class="input-group-append">
 		                    <button class="btn btn-secondary" type="button">구매예정 정보에서 가져오기</button>
@@ -67,7 +129,7 @@
                   	<button type="button" class="btn btn-primary">
 						<a th:href="@{/admin/bookOrderList}" style="color: white">리스트로 이동</a>
 					</button>
-                  	<button type="submit" class="btn btn-primary">입력</button>
+                  	<button type="button" id="insertBtn" class="btn btn-primary">입력</button>
  				  </div>
                 </form>
               </div>

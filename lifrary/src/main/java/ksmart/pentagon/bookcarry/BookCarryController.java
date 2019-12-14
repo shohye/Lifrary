@@ -52,7 +52,7 @@ public class BookCarryController {
     	bookCarryService.updateDonation(bookCarry);
 		return "redirect:/admin/bookDonationList";   	
     }
- // 기부신청자 입력 처리
+   // 기부신청자 입력 처리
     @PostMapping("/admin/bookDonationInsert")
     public String bookDonationInsert2(){
     	
@@ -91,6 +91,12 @@ public class BookCarryController {
     	bookCarryService.updatePurchase2(bookInformation);
 		return "redirect:/admin/bookPurchaseList"; 	
     }
+   // 기부신청자 입력 처리
+    @PostMapping("/admin/bookPurchaseInsert")
+    public String bookPurchaseInsert(){
+    	
+		return "redirect:/admin/bookPurchaseList";   	
+    }
 
     
     /***************************************************************************/
@@ -123,6 +129,12 @@ public class BookCarryController {
     	bookCarryService.updateOrder1(bookCarry);
     	bookCarryService.updateOrder2(bookInformation);
 		return "redirect:/admin/bookOrderList";  	
+    }
+    // 기부신청자 입력 처리
+    @PostMapping("/admin/bookOrderInsert")
+    public String bookOrderInsert(){
+    	
+		return "redirect:/admin/bookOrderList";   	
     }
 
     

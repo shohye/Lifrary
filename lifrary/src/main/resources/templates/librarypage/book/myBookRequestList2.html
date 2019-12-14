@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+ 
+    
+    <th:block layout:fragment="customContents">
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>Book & Diary</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">매일 매일 적어보는 북다이어리</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li>Book & Diary</li>
+                    </ul>
+                </div>
+            </div>
+        </section>/
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="books-media-list">
+                        <div class="container">
+                            <div class="row">
+                                <!-- Start: Search Section -->
+                                <section class="search-filters">
+                                    <div class="container">
+                                        <div class="filter-box">
+                                            <h3>내 독서 목표량 진행 상황</h3>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="keywords">년도별 목표량</label>
+                                                        <input class="form-control" placeholder="년별 목표량"  type="text" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="keywords">분기별 목표량</label>
+                                                        <input class="form-control" placeholder="분기별 목표량"  type="text" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="keywords">월별 목표량</label>
+                                                        <input class="form-control" placeholder="월별목표량" type="text" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <!-- End: Search Section -->
+                            </div>
+                            
+                            
+                            <div class="row">
+                            
+                            
+                                <div class="col-md-9 col-md-push-3">
+                                  <p><h2 style="color: black">희망도서 신청 내역</h2></p>
+                                    <div class="card mb-4">
+                                	
+						              <div class="table-tabs" id="responsiveTabs">
+                                   
+                                    <div class="tab-content">
+                                        <div id="sectionA" class="tab-pane fade in active">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="align-middle text-center">신청코드</th>
+                                                        <th class="align-middle text-center">도서</th>
+                                                        <th class="align-middle text-center">ISBN</th>
+                                                        <th class="align-middle text-center">가격</th>
+                                                        <th class="align-middle text-center">신청일</th>
+                                                        <th class="align-middle text-center">진행상황</th>
+                                                        <th class="align-middle text-center">취소사유</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="align-middle text-center">(신청코드)</td>
+                                                        <td class="align-middle text-center">(도서)</td>
+                                                        <td class="align-middle text-center">(ISBN)</td>
+                                                        <td class="align-middle text-center">(가격)</td> 
+                                                        <td class="align-middle text-center">(신청일)</td>  
+                                                        <td class="align-middle text-center">(진행상황)</td> 
+                                                        <td class="align-middle text-center">(취소사유)</td>                                                                  
+                                                    </tr>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+						            
+                                 </div>    
+                                 
+                                    
+                                
+                                </div>
+                                
+                                <!-- 마이페이지 사이드메뉴  -->
+                                <div th:replace="fragments/library/myPageLeftMenu :: myPageLeftMenuFragment"></div>
+                                <!-- 마이   페이지 사이드메뉴-->
+                                
+                             
+                            </div>
+                       
+                       
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </th:block>
+    
+    
+    
+</html>

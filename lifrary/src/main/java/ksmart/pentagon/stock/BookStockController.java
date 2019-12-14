@@ -91,12 +91,26 @@ public class BookStockController {
     
     /************************************************************************/
     
+    // (도서관) 희망도서 신청 안내 화면
+    @GetMapping("/lifrary/bookRequestIntro")
+    public String bookRequestIntro() {
+    	return "/librarypage/book/bookRequestIntro";
+    }
     
     // (도서관) 희망도서 신청 폼
     @GetMapping("/lifrary/bookRequestInsert")
     public String bookRequestInsert() {
     	return "/librarypage/book/bookRequestInsert";
     }
-    
+   // (도서관) 마이페이지 희망도서 신청 리스트
+    @GetMapping("/lifrary/myBookRequestList2")
+    public String myBookRequestList2() {
+    	return "/librarypage/book/myBookRequestList2";
+    }
+    // (도서관) 마이페이지 희망도서 신청 리스트
+    @GetMapping("/lifrary/myBookRequestList")
+    public String myBookRequestList() {
+    	return "/librarypage/book/myBookRequestList";
+    }
 
 }
