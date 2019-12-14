@@ -48,8 +48,8 @@
 		                    <tr>
 		                      <td>진행 상태:</td>
 		                      <td>
-		                      	 <button th:if="${p.pmProgress == '진행중'}" type="button" class="btn btn-xs btn-outline-primary">[[${p.pmProgress}]]</button>
-				      			 <button th:unless="${p.pmProgress == '진행중'}" type="button" class="btn btn-xs btn-outline-success">[[${p.pmProgress}]]</button>		                      
+		                      	 <button th:if="${p.pmProgress == '진행중'}" type="button" class="btn btn-xs btn-outline-primary">[[${p.pmProgress}]] // 테스트 버튼</button>
+				      			 <button th:unless="${p.pmProgress == '진행중'}" type="button" class="btn btn-xs btn-outline-success">[[${p.pmProgress}]] // 테스트 버튼</button>		                      
 		                      </td>
 		                    </tr>
 		                    
@@ -66,6 +66,9 @@
 		                      <td>수강료:</td><td th:text="|${p.pmTuition}원|"></td>
 		                    </tr>
 		                    <tr>
+		                      <td>현재 신청 인원 수:</td><td th:text="|(${p.pmApplicant} / ${p.pmMnop})명|"></td>
+		                    </tr>
+		                    <tr>
 		                      <td>신청 최대 인원 수:</td><td th:text="|${p.pmMnop}명|"></td>
 		                    </tr>
 		                    <tr>
@@ -76,24 +79,23 @@
 		                    </tr>
 		                    
 		                  </tbody>
-		                  
 		                </table>
-		                
-		                  	<td class="align-middle align-center">
-						            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
-							   				<a th:href="@{/admin/programInsert}" style="color: white"> 
-						            			<span class="ion ion-md-add"> 수정하기</span>
-							  				</a>
-									</button>
-					  		</td>
-					  		<td class="align-middle align-center">
-						            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
-							 				 <a th:href="@{/admin/programInsert}" style="color: white"> 
-						            			<span class="ion ion-md-add"> 삭제하기</span>
-							  				 </a>
-									</button>
-                      		</td>
+		               <br>
 		 				  
+			                  <tr>
+						            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
+						   				<a th:href="@{/admin/programUpdate(pmCode=${p.pmCode})}" style="color: white"> 
+						            			<span class="ion ion-md-build"> 수정하기</span>
+						  				</a>
+									</button>
+				  			  </tr>
+				  			  <tr>
+						            <button type="button" class="btn btn-danger d-block" style="margin-top: 10px;">
+						 				 <a th:href="@{/admin/programDelete(pmCode=${p.pmCode})}" style="color: white"> 
+					            			<span class="ion ion-md-cut"> 삭제하기</span>
+						  				 </a>
+									</button>
+				  			  </tr>
 		              </div>
 		              
 		              

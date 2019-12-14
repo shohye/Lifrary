@@ -20,9 +20,15 @@ public interface ProgramMapper {
 	//프로그램 리스트 전체 가져오기
 	public List<ProgramManager> getProgramList();
 	
+	//프로그램 신청 리스트 전체 가져오기
+	public List<ProgramApply> getProgramApplyList();
+	
 	//선택한 프로그램 1개 가져오기
 	public ProgramManager getProgram(String pmCode);
 	
 	//프로그램 신청하기
 	public void insertProgram(ProgramApply pa);
+	
+	//프로그램 수정하기
+	public void updateProgram(ProgramManager pm);
 }

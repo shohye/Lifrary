@@ -18,6 +18,7 @@
   		<result property="pmEndReceipt" column="pm_end_receipt"/>
   		<result property="pmProgress" column="pm_progress"/>
   		<result property="pmTeacherName" column="pm_teacher_name"/>
+  		<result property="pmApplicant" column="pm_applicant"/>
   		<result property="pmMnop" column="pm_mnop"/>
   		<result property="pmTuition" column="pm_tuition"/>
   		<result property="pmTel" column="pm_tel"/>
@@ -25,7 +26,23 @@
   		<result property="pmFile" column="pm_file"/>
   		<result property="pmDate" column="pm_date"/>
   	</resultMap>
-  
+  	
+  	<resultMap type="ksmart.pentagon.vo.ProgramApply" id="PAResultMap">
+  		<result property="paCode" column="pa_code"/>
+  		<result property="lCode" column="l_code"/>
+  		<result property="pmCode" column="pm_code"/>
+  		<result property="uId" column="u_id"/>
+  		<result property="paParticipants" column="pa_participants"/>
+  		<result property="paGender" column="pa_gender"/>
+  		<result property="paBirth" column="pa_birth"/>
+  		<result property="paAddr" column="pa_addr"/>
+  		<result property="paTel" column="pa_tel"/>
+  		<result property="paDate" column="pa_date"/>
+  	</resultMap>
+  	
+  	
+  	
+	<!-- 프로그램 리스트 전체 출력 -->  
   	<select id="getProgramList" resultMap="PMResultMap">
   		SELECT 
 			*
@@ -33,6 +50,15 @@
 			program_mgr
   	</select>
   	
+  	<!-- 프로그램 신청 리스트 전체 출력 -->
+  	<select id="getProgramApplyList" resultMap="PAResultMap">
+  		SELECT 
+ 			*
+		FROM 
+			program_apply
+  	</select>
+  	
+  	<!-- 프로그램 상세보기 -->
   	<select id="getProgram" parameterType="String" resultMap="PMResultMap">
   		SELECT 
 			*
@@ -42,12 +68,36 @@
 			pm_code = #{pmCode}
   	</select>
   	
+  	<!-- 도서관 / 프로그램 신청하기 -->
   	<insert id="insertProgram" parameterType="ksmart.pentagon.vo.ProgramApply">
   		INSERT INTO 
 			program_apply
 		(pa_code, l_code, pm_code, u_id, pa_participants, pa_gender, pa_birth, pa_addr, pa_tel, pa_date)
-		VALUES (#{paCode}, '000000', #{pmCode}, #{uId}, #{paParticipants}, #{paGender}, #{paBirth}, #{paAddr}, #{paTel}, NOW())
+		VALUES (#{paCode}, #{lCode}, #{pmCode}, #{uId}, #{paParticipants}, #{paGender}, #{paBirth}, #{paAddr}, #{paTel}, NOW())
   	</insert>
   	
+  	<!-- 사서채널 / 프로그램 수정하기 -->
+  	<update id="updateProgram" parameterType="ksmart.pentagon.vo.ProgramManager">
+  		UPDATE 
+  			program_mgr
+		SET
+			u_id=					#{uId},
+			pm_name=				#{pmName},
+			pm_target=				#{pmTarget},
+			pm_place=				#{pmPlace},
+			pm_start_receipt=		#{pmStartReceipt},
+			pm_end_receipt=			#{pmEndReceipt},
+			pm_start_term=			#{pmStartTerm},
+			pm_end_term=			#{pmEndTerm},
+			pm_start_time=			#{pmStartTime},
+			pm_end_time=			#{pmEndTime},
+			pm_teacher_name=		#{pmTeacherName},
+			pm_mnop=				#{pmMnop},
+			pm_tuition=				#{pmTuition},
+			pm_tel=					#{pmTel},
+			pm_detail=				#{pmDetail}
+		WHERE 
+			pm_code=				#{pmCode}
+  	</update>
   	
   </mapper>

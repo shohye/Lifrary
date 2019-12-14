@@ -25,6 +25,12 @@ public class ProgramService {
 	public List<ProgramManager> getProgramList() {		
 		return programMapper.getProgramList();
 	}
+	
+	//프로그램 신청 리스트 전체 가져오기
+		public List<ProgramApply> getProgramApplyList(){
+			return programMapper.getProgramApplyList();
+		}
+	
 
 	// 선택한 프로그램 1개 가져오기
 	public ProgramManager getProgram(String pmCode) {
@@ -33,7 +39,13 @@ public class ProgramService {
 
 	// 프로그램 신청하기
 	public void insertProgram(ProgramApply pa) {
-		pa.setPaCode("pa-19120900001");
+		//자동 코드 기능이 생기면 수정할것.
+		pa.setPaCode("pa-19120900005");
 		programMapper.insertProgram(pa);
 	}
+	
+	//프로그램 수정하기
+		public void updateProgram(ProgramManager pm) {
+			programMapper.updateProgram(pm);
+		}
 }

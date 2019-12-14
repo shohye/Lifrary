@@ -15,7 +15,8 @@ public class ProgramManager {
 	private String pmEndReceipt;
 	private String pmProgress;
 	private String pmTeacherName;
-	private int pmMnop; // maximum number of people
+	private int pmApplicant; // 현재 신청 인원
+	private int pmMnop; // maximum number of people ( 최대 신청 인원 )
 	private int pmTuition;
 	private String pmTel;
 	private String pmDetail;
@@ -144,16 +145,22 @@ public class ProgramManager {
 	public void setPmMnop(int pmMnop) {
 		this.pmMnop = pmMnop;
 	}
+		
+	public int getPmApplicant() {
+		return pmApplicant;
+	}
+	public void setPmApplicant(int pmApplicant) {
+		this.pmApplicant = pmApplicant;
+	}
+		
 	@Override
 	public String toString() {
 		return "ProgramManager [pmCode=" + pmCode + ", lCode=" + lCode + ", uId=" + uId + ", pmName=" + pmName
 				+ ", pmTarget=" + pmTarget + ", pmPlace=" + pmPlace + ", pmStartTerm=" + pmStartTerm + ", pmEndTerm="
 				+ pmEndTerm + ", pmStartTime=" + pmStartTime + ", pmEndTime=" + pmEndTime + ", pmStartReceipt="
 				+ pmStartReceipt + ", pmEndReceipt=" + pmEndReceipt + ", pmProgress=" + pmProgress + ", pmTeacherName="
-				+ pmTeacherName + ", pmTuition=" + pmTuition + ", pmTel=" + pmTel + ", pmDetail=" + pmDetail
-				+ ", pmFile=" + pmFile + ", pmDate=" + pmDate + "]";
+				+ pmTeacherName + ", pmApplicant=" + pmApplicant + ", pmMnop=" + pmMnop + ", pmTuition=" + pmTuition
+				+ ", pmTel=" + pmTel + ", pmDetail=" + pmDetail + ", pmFile=" + pmFile + ", pmDate=" + pmDate + "]";
 	}
-	
-	
 	
 }

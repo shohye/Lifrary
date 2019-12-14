@@ -5,7 +5,7 @@ public class ProgramApply {
 	private String lCode;
 	private String pmCode;
 	private String uId; // 신청 아이디
-	private String paParticipants;
+	private String paParticipants; // 참여자명
 	private String paGender;
 	private String paBirth;
 	private String paAddr;

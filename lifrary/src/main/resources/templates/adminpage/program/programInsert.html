@@ -96,11 +96,11 @@
 	              <div class="form-row">    
 	                  <div class="form-group col-md-2">
 	                    <label class="form-label">운영시간(시작일)</label>
-	                    <input type="time" class="form-control" name="pmStartTime" value="09:00" min = "09:00" max="17:00">
+	                    <input type="time" class="form-control" name="pmStartTime" value="09:00" min = "09:00" max="17:01">
 	                  </div>
 	                  <div class="form-group col-md-2">
 	                    <label class="form-label">운영시간(종료일)</label>
-	                    <input type="time" class="form-control" name="pmEndTime" value="09:00" min = "09:00" max="17:00">
+	                    <input type="time" class="form-control" name="pmEndTime" value="09:00" min = "09:00" max="17:01">
 	                  </div>
 	              </div>
 	              <div class="form-row">
@@ -128,7 +128,17 @@
 	                  </div>
 	              </div>
 		          <div class="form-row">
-		          	  <div class="form-group col-md-2"></div>      
+		          	  <div class="form-group col-md-8">
+		          	  	<div class="card mb-2">
+				              <h6 class="card-header">
+				              	  상세정보
+				              </h6>
+				              <div class="card-body">
+				                <textarea class="form-control" rows="3" name ="pmDetail"></textarea>
+				              </div>
+				        </div>
+				        <small class="form-text text-muted">상세정보를 입력해주세요.</small>
+		          	  </div>      
                   </div>
                  	 <button type="submit" class="btn btn-primary">등록하기</button>
                 </form>

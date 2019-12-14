@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ksmart.pentagon.vo.ProgramApply;
+import ksmart.pentagon.vo.ProgramManager;
 
 /*
  * @file   ProgramController.java 
@@ -78,13 +79,13 @@ public class ProgramController {
 	public String programApply(ProgramApply pa) {
 		System.out.println(pa + " <== pa");
 		programService.insertProgram(pa);
-		return "redirect:/programSearchList";
+		return "redirect:/lifrary/programSearchList";
 	}
 
 	/* ======================================================================== */
 	// 아래는 사서채널
 	/**
-	 * 등록된 프로그램 리스트 페이지 이동 / 출력해주기.
+	 * 등록 프로그램 리스트 페이지 이동 / 출력해주기.
 	 * 
 	 * @param model
 	 * @return
@@ -94,7 +95,21 @@ public class ProgramController {
 		model.addAttribute("programList", programService.getProgramList());
 		return "adminpage/program/programSearchList";
 	}
-
+	
+	/**
+	 * 프로그램 신청 내역 리스트 페이지로 이동 / 출력
+	 * @return
+	 */
+	@GetMapping("/admin/programApplySearchList")
+	public String adminProgramApplySearchList(Model model) {
+		
+		model.addAttribute("applyList", programService.getProgramApplyList());
+		
+		return "adminpage/program/programApplySearchList";
+	}
+	
+	
+	
 	/**
 	 * 프로그램(행사, 강좌) 등록 페이지로 이동
 	 * 
@@ -116,5 +131,29 @@ public class ProgramController {
 		model.addAttribute("program", programService.getProgram(pmCode));
 
 		return "adminpage/program/programDetail";
+	}
+	
+	/**
+	 * 프로그램 수정페이지로 이동
+	 * @param pmCode
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/admin/programUpdate")
+	public String adminProgramUpdate(@RequestParam(value = "pmCode") String pmCode, Model model) {
+		model.addAttribute("program", programService.getProgram(pmCode));
+		return "adminpage/program/programUpdate";
+	}
+	
+	/**
+	 * 프로그램 수정 처리후, 상세보기 페이지로 redirect.
+	 * pmCode를 다시 get방식으로 보내준다.
+	 * @param pm
+	 * @return
+	 */
+	@PostMapping("/admin/programUpdate")
+	public String adminProgramUpdate(ProgramManager pm) {
+		programService.updateProgram(pm);
+		return "redirect:/admin/programDetail?pmCode="+pm.getPmCode();
 	}
 }

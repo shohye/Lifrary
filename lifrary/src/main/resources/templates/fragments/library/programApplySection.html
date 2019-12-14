@@ -20,6 +20,8 @@
 													<table border="1">
 													
 															<input type="hidden" name="pmCode" readonly="readonly" th:value="${pmCode}">
+															
+															<input type="hidden" name="lCode" readonly="readonly" th:value="${session.LIBNUM}">
 														
 														<tr>
 															<td>프로그램명 : <input type="text" name="pmName" readonly="readonly" th:value="${pmName}"></td>
@@ -51,7 +53,7 @@
 														</tr>
 									
 														<tr>	
-															<td><button type="submit"> 신청 </button></td>
+															<td><button type="submit" onclick="alert('신청이 완료되었습니다.')"> 신청 </button></td>
 														</tr>
 													</table> 
 												</form>
