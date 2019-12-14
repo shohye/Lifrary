@@ -91,10 +91,10 @@ public class AdminService {
 	 
 	 
 	 //관리자가 회원 등급 등록하기
-	 public int userLevelInsert(UserLevel userLevel) {
-		System.out.println("userAuthorityInsert 서비스진입");
-		int result = adminMapper.userLevelInsert(userLevel);
-		System.out.println(result + "==> adminMapper.userLevelInsert(userLevel) 확인완료");
+	 public int adUserLevelInsert(UserLevel userLevel) {
+		System.out.println("adUserLevelInsert 서비스진입");
+		int result = adminMapper.adUserLevelInsert(userLevel);
+		System.out.println("adminMapper.adUserLevelInsert(userLevel) 확인완료 ==>> " + result);
 		
 		 return result; 
 	 }
@@ -107,13 +107,14 @@ public class AdminService {
 		 return adminMapper.adUserLevelList();
 	 }
 	 
-	 //유저 레벨 수정 폼 가져오기
+	 //관리자가 유저 레벨 수정 하기
 	 public UserLevel getAdUserLevelUpdate(String ulLevel) {
 		 System.out.println("getAdUserLevelUpdate 서비스 진입");
 		
 		 return adminMapper.getAdUserLevelUpdate(ulLevel);
 	 }
 	 
+	 //관리자가 회원 등급 수정하고 리스트로넘기기
 	 public int adUserLevelUpdate(UserLevel userLevel) {
 		 System.out.println("adUserLevelUpdate 서비스 진입");
 		 
@@ -128,17 +129,45 @@ public class AdminService {
 	 public int adUserAuthorityInsert(UserAuthoritySet userAuthoritySet) {
 		 System.out.println("adUserAuthorityInsert 서비스진입");
 		 int result = adminMapper.adUserAuthorityInsert(userAuthoritySet);
-		 System.out.println(result + "==> adminMapper.adUserAuthorityInsert(userAuthoritySet) 확인완료");
+		 System.out.println("adminMapper.adUserAuthorityInsert(userAuthoritySet) 확인완료 ==>> " + result);
 		 
 		 return result;
 	 }
+	 
+	 //관리자가 회원 권한 리스트보기
+	 public List<UserAuthoritySet> adUserAuthorityList(){
+		 System.out.println("adUserAuthorityList 서비스 진입");
+		 System.out.println("확인완료 adUserAuthorityList ==>>" + adminMapper.adUserAuthorityList());
+		
+		 return adminMapper.adUserAuthorityList();
+	 }
+	 
+	 //관리자가 회원 권한 수정하기
+	 public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode) {
+		 System.out.println("getAdUserAuthorityUpdate 서비스 진입");
+		 System.out.println("확인완료 getAdUserAuthorityUpdate ==>>" + adminMapper.getAdUserAuthorityUpdate(uasCode));
+		 
+		 return adminMapper.getAdUserAuthorityUpdate(uasCode); 
+	 }
+	 
+	 //관리자가 회원 권한 수정하고 리스트로넘기기
+	 public int adUserAuthorityUpdate(UserAuthoritySet userAuthoritySet) {
+		 System.out.println("adUserAuthorityUpdate 서비스 진입");
+		 
+		 return adminMapper.adUserAuthorityUpdate(userAuthoritySet);
+	 }
+	 
+	 
+	 
+	 /**********************************************************************************/
+	 
 	 
 	 
 	//관리자가 사서 등록하기 
 	public int librarianInsert(LibrarianLevel librarianLevel) {
 		System.out.println("librarianInsert 서비스진입");
 		int result = adminMapper.librarianInsert(librarianLevel);
-		System.out.println(result + "==> libraryMapper.librarianInsert(librarianLevel)확인완료");
+		System.out.println("adminMapper.librarianInsert(librarianLevel)확인완료 ==>> " + result);
 			
 		return result;
 	} 

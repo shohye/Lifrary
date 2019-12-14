@@ -42,22 +42,36 @@ public interface AdminMapper {
 	/**********************************************************/
 	 
 	//관리자가 회원등급 등록하기
-	public int userLevelInsert(UserLevel userLevel);
+	public int adUserLevelInsert(UserLevel userLevel);
 	
 	//관리자가 회원등급 리스트
 	public List<UserLevel> adUserLevelList();
 	
-	//관리자가 회원등급수정-한개정보 가져오기
+	//관리자가 회원등급수정-getmapping
 	public UserLevel getAdUserLevelUpdate(String ulLevel);
 	
-	//관리자가 회원등급수정
+	//관리자가 회원등급수정 postmapping
 	public int adUserLevelUpdate(UserLevel userLevel);  
-		
+	
+	
 	/**********************************************************/
 	
 	
 	//관리자가 회원권한 등록하기.
 	public int adUserAuthorityInsert(UserAuthoritySet userAuthoritySet);
+	
+	//관리자가 회원 권한 리스트보기
+	public List<UserAuthoritySet> adUserAuthorityList();
+	
+	//관리자가 회원 권한 수정하기 getmapping
+	public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode);
+	 
+	//관리자가 회원 권한 수정하기 postmapping
+	public int adUserAuthorityUpdate(UserAuthoritySet userAuthoritySet);
+	
+	
+	/**********************************************************/
+	
 	
 	//관리자가 사서 등록
 	public int librarianInsert(LibrarianLevel librarianLevel);

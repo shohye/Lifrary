@@ -253,7 +253,7 @@
 		 
 	</select>
 	
-    <insert id="userLevelInsert">
+    <insert id="adUserLevelInsert">
 		INSERT INTO user_level(
 			 u_id
 			 ,l_code
@@ -335,6 +335,42 @@
 		where 
 			ul_level = #{ulLevel}
 	</select>
+	
+	<select id="adUserAuthorityList" resultMap="userAuthoritySet" parameterType="String">
+		SELECT 
+			*
+		FROM 
+			user_authority_set
+	</select>
+	
+	<update id="adUserAuthorityUpdate" parameterType="ksmart.pentagon.vo.UserAuthoritySet" >
+		UPDATE 
+			user_authority_set
+		SET
+			 uas_code       	= #{uasCode}
+			,l_code        	 	= #{lCode}
+			,u_id      			= #{uId}
+			,uas_name        	= #{uasName}
+			,uas_overdue_min   	= #{uasOverdueMin}
+			,uas_overdue_max    = #{uasOverdueMax}
+			,uas_lend_limit		= #{uasLendLimit}
+			,uas_facility_limit    = #{uasFacilityLimit}
+			,uas_limit_date        = #{uasLimitDate}
+			,uas_date        	   = #{uasDate}
+		WHERE 
+			 uas_code = #{uasCode}
+	</update>
+	
+	<select id="getAdUserAuthorityUpdate" resultMap="userAuthoritySet" parameterType="String">
+		SELECT 
+			*
+		FROM 
+			user_authority_set
+		where 
+			uas_code = #{uasCode}
+	</select>
+	
+	
 	
 
   </mapper>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import groovyjarjarpicocli.CommandLine.Parameters;
 import ksmart.pentagon.vo.LibrarianLevel;
 import ksmart.pentagon.vo.User;
 import ksmart.pentagon.vo.UserAuthoritySet;
@@ -207,21 +208,21 @@ public class AdminController {
 	 * @author 한우리
 	 */
 	//회원등급등록화면
-   @GetMapping("/admin/userLevelInsert") 
-   public String userLevelInsert() {
-	  System.out.println("userLevelInsert @GetMapping 회원등급등록화면  "); 
+   @GetMapping("/admin/adUserLevelInsert") 
+   public String adUserLevelInsert() {
+	  System.out.println("adUserLevelInsert @GetMapping 회원등급등록화면  "); 
 	  
-	  return "/adminpage/userManagement/userLevelInsert";
+	  return "/adminpage/userManagement/adUserLevelInsert";
    }
 
    //회원등급 등록화면
-   @PostMapping("/admin/userLevelInsert")
-   public String userLevelInsert(UserLevel userLevel , Model model) {
-	   System.out.println("userLevelInsert @PostMapping 회원등급등록화면 ");	   
-	   adminService.userLevelInsert(userLevel);
-	   System.out.println(userLevel + "==> adminService.userLevelInsert(userLevel) 확인완료");
+   @PostMapping("/admin/adUserLevelInsert")
+   public String adUserLevelInsert(UserLevel userLevel , Model model) {
+	   System.out.println("adUserLevelInsert @PostMapping 회원등급등록화면 ");	   
+	   adminService.adUserLevelInsert(userLevel);
+	   System.out.println(userLevel + "==> adminService.adUserLevelInsert(userLevel) 확인완료");
 	
-	   return "redirect:/admin/userLevelInsert";
+	   return "redirect:/admin/adUserLevelList";
    }
    
 	/**
@@ -254,18 +255,33 @@ public class AdminController {
 	public String getAdUserLevelUpdate(@RequestParam(value = "ulLevel",required=false)String ulLevel, Model model) {
 		System.out.println(" getAdUserLevelUpdate 회원등급 수정  @GetMapping");
 		model.addAttribute("lUpdate", adminService.getAdUserLevelUpdate(ulLevel));
-		System.out.println(adminService.getAdUserLevelUpdate(ulLevel) + "==>> lUpdate ");
+		System.out.println("userLevel 확인바람  ==>>" + adminService.getAdUserLevelUpdate(ulLevel));
 		
 		return "/adminpage/userManagement/adUserLevelUpdate";
 	}
 	
+	//관리자가 유저 회원 등급 수정후 리스트로 보냄 
 	@PostMapping("/admin/adUserLevelUpdate")
 	public String adUserLevelUpdate(UserLevel userLevel) {
 		System.out.println("adUserLevelUpdate 회원등급 수정  @PostMapping");
-		System.out.println(userLevel.toString() + "<==== userLevel 확인바람 ");
+		System.out.println(" 회원등급수정 userLevel.toString()  ==>> " + userLevel.toString());
 		adminService.adUserLevelUpdate(userLevel);
 		
 		return "redirect:/admin/adUserLevelList";
+	}
+	
+	/**
+	 * @관리자 유저 회원 등급 내역 검색리스트
+	 * @param model
+	 * @return adUserLevelHistorySearchList페이지
+	 * @author 한우리
+	 */
+	//관리자 유저 회원 등급 내역 검색리스트 
+	@GetMapping("/admin/adUserLevelHistorySearchList")
+	public String adUserLevelHistorySearchList(Model model) {
+		System.out.println("adUserLevelHistorySearchList 회원전체 등급내역 검색리스트 ");
+		
+		return "/adminpage/userManagement/adUserLevelHistorySearchList";
 	}
 	
    /************************************************************************************************/
@@ -295,12 +311,64 @@ public class AdminController {
    public String adUserAuthorityInsert(UserAuthoritySet userAuthoritySet, Model model ) {
 	   System.out.println("adUserAuthorityInsert @PostMapping 회원권한등록화면 "); 
 	   adminService.adUserAuthorityInsert(userAuthoritySet);
-	   System.out.println(userAuthoritySet + "==> adminService.userLevelInsert(userLevel) 확인완료");
+	   System.out.println("회원권한등록화면  확인완료  ==>> " + adminService.adUserAuthorityInsert(userAuthoritySet));
 	  
-	  return "redirect:/admin/adUserAuthorityInsert"; 
+	  return "redirect:/admin/adUserAuthorityList"; 
    }
    
+   /**
+    * 관리자페이지에서 회원권한 리스트화면
+    * @param userAuthoritySet
+    * @return adUserAuthorityLis페이지
+    * @author 한우리
+    */
+   //관리자가 회원권한 리스트 
+   @GetMapping("/admin/adUserAuthorityList")
+   public String adUserAuthorityList(Model model) {
+	   System.out.println("adUserAuthorityList 회원권한 리스트화면 ");
+	   List<UserAuthoritySet> userAuthority = adminService.adUserAuthorityList();
+	   System.out.println("회원권한 리스트 userAuthority 확인완료  ==>>" + userAuthority);
+	   model.addAttribute("userAuthority", userAuthority);
+	  	  
+	   return "/adminpage/userManagement/adUserAuthorityList";
+   }
+   
+   //관리자가 회원권한 수정
+   @GetMapping("/admin/adUserAuthorityUpdate")
+   public String getAdUserAuthorityUpdate(@RequestParam(value = "uasCode",required=false) String uasCode, Model model) {
+	   System.out.println("getAdUserAuthorityUpdate 회원권한 수정화면 @GetMapping");
+	   model.addAttribute("aUpdate", adminService.getAdUserAuthorityUpdate(uasCode));
+	   System.out.println("aUpdate 확인바람  ==>>" + adminService.getAdUserAuthorityUpdate(uasCode));
+	
+	   return "/adminpage/userManagement/adUserAuthorityUpdate";
+   }
+   
+   //관리자가 회원권한 수정 후 리스트로 보냄
+   @PostMapping("/admin/adUserAuthorityUpdate")
+   public String adUserAuthorityUpdate(UserAuthoritySet userAuthoritySet) {
+	   System.out.println("adUserAuthorityUpdate 회원권한 수정화면 @PostMapping");
+	   System.out.println(" 회원권한수정 userAuthoritySet.toString()  ==>> " + userAuthoritySet.toString());
+	   adminService.adUserAuthorityUpdate(userAuthoritySet);
+	
+	   return "redirect:/admin/adUserAuthorityList";  
+   }
+   
+	/**
+	 * @관리자 유저 회원 권한 내역 검색리스트
+	 * @param model
+	 * @return adUserAuthorityHistorySearchList페이지
+	 * @author 한우리
+	 */
+	//관리자 유저 회원 권한 내역 검색리스트 
+	@GetMapping("/admin/adUserAuthorityHistorySearchList")
+	public String adUserAuthorityHistorySearchList(Model model) {
+		System.out.println("adUserAuthorityHistorySearchList 회원전체 권한내역 검색리스트 ");
+		
+		return "/adminpage/userManagement/adUserAuthorityHistorySearchList";
+	}
 
+	
+	
    /************************************************************************************************/
    
    
@@ -346,6 +414,31 @@ public class AdminController {
 	   return "redirect:/admin/librarianInsert";
    } 
 	
-		
+	
+	
+	
+	/*****************************************************************************
+	 * 사서 권한 리스트 /수정
+	 * ****************************************************************************/
+	
+	
+   /**
+	 * 관리자페이지에서 사서 권한리스트
+	 * @param model
+	 * @return librarianLevelList페이지
+	 * @author 한우리
+	 */
+   	//사서 권한 리스트
+	/*
+	 * @GetMapping("/admin/librarianLevelList") public String
+	 * librarianLevelList(Model model) {
+	 * System.out.println("librarianLevelList 사서 권한 리스트 ");
+	 * 
+	 * return "/adminpage/librarian/librarianLevelList"; }
+	 */
+	
+	
+	
+	
 	
 }

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+
+ <!-- headAdd(Libs&page) -->
+  
+  <th:block layout:fragment="adminHeadAdd">
+  
+  <!-- addLibs -->
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+
+  <!-- addPage -->
+  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
+ 
+  </th:block>
+  
+  <!-- /headAdd(Libs&page) --> 
+  
+      <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+  <script type="text/javascript">
+  //리스트에서 마우스 올리면 클릭해서 상세페이지로 가는 이벤트
+/*    $(document).ready(function(){
+	
+	  $('#rrow').click(function(){
+		  
+	  });
+
+  });//document.ready  */
+  
+ </script>
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+	  
+	<!-- Content -->
+	<th:block layout:fragment="adminContents">   
+		 <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+              <div>회원전체 등급 내역 검색리스트 </div>   
+        </h4>
+
+
+            <div class="card">
+              <div class="card">
+                <div class="card-datatable table-responsive">
+				  <table class="datatables-demo table table-hover table-bordered">
+	                <thead>
+                  	<tr>
+                    	<th>회원번호</th>
+                    	<th>아이디</th>
+                    	<th>등급명</th>
+                    	<th>이름</th>
+                    	<th>메일수신동의</th>
+                    	<th>권한명</th>
+                    	<th>대출상태</th>
+                    	<th>공공시설</th>
+                    	<th>연체일</th>
+                    	<th>등록일</th>
+                    	<!-- <th>권한제한등록일</th> -->
+                    	<th></th>	
+                    </tr>
+	                </thead>
+	                  <tbody>
+	                   <tr role="row" th:each="l : ${uList}">
+	               			<td class="align-middle" th:text="${l.uNumber}"></td>
+	               			<!-- <td class="align-middle" th:text="${l.uAuthorityDate}"></td> -->
+	               			<td class="align-middle" th:text="${l.uId}"></td>
+	               			<td class="align-middle" th:text="${l.ulName}"></td>
+	               			<td class="align-middle" th:text="${l.uName}"></td>
+	               			<td class="align-middle" th:text="${l.uEmailAgree}" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="${l.uasName}"></td>
+	               			<td style="text-align:center">
+	                			<span th:if="${l.uasLendLimit}  == O" th:text="대출가능" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${l.uasLendLimit} == O" th:text="대출불가" class="badge badge-outline-danger"></span>
+	               			</td>
+	               			<td style="text-align:center">
+	               				<span th:if="${l.uasFacilityLimit}  == O" th:text="사용가능" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${l.uasFacilityLimit} == O" th:text="사용불가" class="badge badge-outline-danger"></span>
+	               			</td>
+	               			<td class="align-middle" th:text="|${l.uOverdueDay}일|" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="${l.uDate}"></td>
+	               		
+	               			<td class="text-center text-nowrap">
+	               				<button title="" 
+	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
+	               						type="button" data-original-title="Edit">
+	               					<a th:href="@{/admin/adminUserUpdate(uId=${l.uId})}" title="수정">
+	               				<i class="ion ion-md-create" title="수정"></i>
+	               					</a>
+	               				</button>&nbsp;&nbsp;
+	               				<button title="" 
+	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
+	               						type="button" data-original-title="Edit">
+	               					<a th:href="@{/admin/adminUserDetail(uId=${l.uId})}" title="상세">
+	               				<i class="ion fas fa-eye" title="상세"></i>
+	               					</a>
+	               				</button>&nbsp;&nbsp;
+	               				<button title="" 
+	               						class="btn btn-default btn-xs icon-btn md-btn-flat dropdown-toggle hide-arrow user-tooltip" 
+	               						type="button" 
+	               						data-original-title="Actions" data-toggle="dropdown">
+	               				<a th:href="@{#}" title="삭제">
+	               				<i class="ion ion-ios-settings" title="삭제"></i>
+	               				</button>
+	                   		</td>
+	                   		
+	                   	</tr> 
+		            </tbody>
+		          </table>
+		      </div>
+           </div>
+    </div>
+	</th:block>
+	<!-- / Content -->
+  <!-- / scripts -->
+	  <th:block layout:fragment="pageScript">
+	  <!-- addLibs -->
+	  <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
+	  <script th:src="@{/admin/vendor/libs/numeral/numeral.js}"></script>
+	  <script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
+		
+	  <!-- addDemo -->
+ 		<script th:src="@{/admin/js/ad_user_level_history_search_list.js}"></script>
+	  </th:block>
+   <!-- / scripts -->
+	          
+</html>
