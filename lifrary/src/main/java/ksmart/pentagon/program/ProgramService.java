@@ -53,7 +53,7 @@ public class ProgramService {
 	public void insertProgram(ProgramApply pa) {
 		String appUpdate = "insert";
 		// 자동 코드 기능이 생기면 수정할것.
-		pa.setPaCode("pa-19121300002");
+		pa.setPaCode("pa-19121600002");
 		programMapper.insertProgram(pa);
 		programMapper.updateApplicant(appUpdate, pa.getPmCode()); // 신청시 applicant + 1 해주기.
 	}
