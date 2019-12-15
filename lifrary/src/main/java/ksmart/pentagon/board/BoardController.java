@@ -60,6 +60,21 @@ public class BoardController {
 		System.out.println("공지사항 등록 컨트롤러  /admin/noticeInsert ##Mapping경로 ");
 		System.out.println(board);
 		boardService.noticeInsert(board);
+		List<Board> boardList = boardService.getBoard(board);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		System.out.println("boardList : "+boardList);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		//공지사항 전체 리스트 갯수만큼 리스트 Num에 추가하여 리스트에 번호출력
+		for(int i= 0; i < boardList.size(); i++) {
+			boardList.get(i).setlNum(i+1);
+		}
+		String boardLCode = boardList.get(0).getBoardLCode();
+		String boardMCode = boardList.get(0).getBoardMCode();
+		System.out.println("boardLCode : "+ boardLCode);
+		System.out.println("boardMCode : "+ boardMCode);	
+		model.addAttribute("boardLCode", boardLCode);
+		model.addAttribute("boardMCode", boardMCode);
+		model.addAttribute("boardList", boardList);
 		
 		return "adminpage/board/noticeSearchList";
 	}
@@ -69,6 +84,9 @@ public class BoardController {
 	public String adminNoticeDetail(@RequestParam(value = "boardCode", required = false ) String boardCode, Model model) {
 		System.out.println("공지사항 상세보기 컨트롤러 /admin/noticeDetail ##Mapping경로");
 		System.out.println("공지사항 상세보기 겟방식 코드 : " + boardCode);
+		Board board = boardService.getBoardDetail(boardCode);
+		System.out.println("상세 Board 결과 : "+ board);
+		model.addAttribute("board", board);
 		return "adminpage/board/noticeDetail";
 	}
 	

@@ -52,7 +52,11 @@ public class BoardService {
 			System.out.println("boardmapper.boardInsert() 메서드 실행");
 			boardmapper.boardInsert(board);
 			
-		}	
+		}
+		
+		public Board getBoardDetail(String boardCode) {
+			return boardmapper.getBoardDatail(boardCode);
+		}
 		
 		
 }

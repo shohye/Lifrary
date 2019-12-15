@@ -14,4 +14,6 @@ public interface BoardMapper {
 	public String maxBoardCode();
 	
 	public void boardInsert(Board board);
+	
+	public Board getBoardDatail(String boardCode);
 }

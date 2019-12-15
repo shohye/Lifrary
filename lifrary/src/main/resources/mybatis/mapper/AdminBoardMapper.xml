@@ -17,11 +17,11 @@
  			<result property="boardDate" column="board_date"/>
  		</resultMap>
   	<select id="getBoard" resultMap="boardNoticeList">
-  		SELECT
-	*
-	FROM board AS b INNER JOIN board_medium AS me
-	ON b.board_m_code = me.board_m_code
-	WHERE me.board_m_name = #{boardLName}
+  	SELECT
+*
+FROM board AS b INNER JOIN board_medium AS me
+ON b.board_m_code = me.board_m_code
+WHERE me.board_m_name = #{boardLName} ORDER BY b.board_date DESC;
   	</select>
   	<select id="maxBoardCode" resultType="String">
   		SELECT
@@ -45,4 +45,10 @@
 	VALUES (#{boardCode}, #{lCode}, #{uId}, #{boardLCode}, #{boardMCode}, #{boardTitle}, #{boardPw}, #{boardContent}, #{boardOpen}, 0, NOW())
   	</select>
   	
+  	<select id="getBoardDatail" resultMap="boardNoticeList">
+  	SELECT
+	*
+	FROM board AS b
+	WHERE b.board_code = #{boardCode}
+  	</select>
   	</mapper>

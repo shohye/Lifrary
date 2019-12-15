@@ -1,35 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	  layout:decorate="~{layout/admin/adminDefault}"
-	  class="default-style">
- 
- 
- 		 <!-- Content -->
-         <th:block layout:fragment="adminContents">
-          <div>
-	   <a th:href="@{/admin/noticeUpdate}" class="btn btn-primary">수정</a>
-	   </div>
-	   <br>
-	   <br>
-	   <div>
-	   <a th:href="@{/admin/noticeDelete}" class="btn btn-primary">삭제</a>
-	   </div>
-         </th:block>
-          
-         <!-- / Content -->
-         
-         <!-- script -->
-         <th:block layout:fragment="pageScript">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
 
-		  <!-- addLibs -->
-		  <script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+
+	<!-- Content -->
+	<th:block layout:fragment="adminContents">
 		
-		  <!-- addDemo -->
-		  <script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
-		  </th:block>
-  		  <!-- /script -->
-  		  
-  		  
-          
+			<div>
+				<span th:each="l : ${board}" th:text="${l.boardTitle}"></span>
+			</div>
+			<div th:utext="${board.boardContent}">
+			
+			</div>
+			
+		
+	
+		<div>
+			<a th:href="@{/admin/noticeUpdate}" class="btn btn-primary">수정</a>
+		</div>
+		<br>
+		<br>
+		<div>
+			<a th:href="@{/admin/noticeDelete}" class="btn btn-primary">삭제</a>
+		</div>
+	</th:block>
+	
+	<!-- / Content -->
+	
+	<!-- script -->
+	<th:block layout:fragment="pageScript">
+	
+		<!-- addLibs -->
+		<script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+	
+		<!-- addDemo -->
+		<script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
+	</th:block>
+	<!-- /script -->
+
+
+
 </html>
