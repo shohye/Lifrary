@@ -9,7 +9,7 @@
 	    min-height: 400px;
 	}
  	</style>
- 	<script type="text/javascript" th:src="@{/se2/js/service/HuskyEZCreator.js}" charset="utf-8"></script>
+ 	<script type="text/javascript" th:src="@{/library/se2/js/service/HuskyEZCreator.js}" charset="utf-8"></script>
  	<script type="text/javascript" >
  	 $(document).ready(function(){
  		 $('#reportBtn').click(function(){
@@ -112,7 +112,7 @@
 		nhn.husky.EZCreator.createInIFrame({
 		 oAppRef: oEditors,
 		 elPlaceHolder: "reportEditor",
-		 sSkinURI: "/se2/SmartEditor2Skin.html",
+		 sSkinURI: "/library/se2/SmartEditor2Skin.html",
 		 htParams : {
 	          // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
 	          bUseToolbar : true,             

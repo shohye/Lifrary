@@ -6,10 +6,15 @@
  <th:block layout:fragment="customScript">
  	<style>
  	.ck-editor__editable {
-	    min-height: 400px;
+	    min-height: 400px;  
+	}
+	.radio label {
+	padding-left: 20px;
+	margin-bottom: 5px;
+	display: inline;
 	}
  	</style>
-	<script type="text/javascript" th:src="@{/ckeditor/ckeditor.js}"></script>
+	<script type="text/javascript" th:src="@{/library/ckeditor/ckeditor.js}"></script>
  	<script type="text/javascript" >
  	 $(document).ready(function(){
  		 $('#reportBtn').click(function(){
@@ -85,14 +90,12 @@
                                                         <span>☆</span>
                                                     </div>
 			                               		</div>
-			                               	   <div class="form-group">  
+			                               	   <div class="form-group radio">  
 			                               	   		 <strong>공개여부:</strong>&nbsp;
-				                                     <label>
-				                                     	<input type="radio" name="reportOpen" value="공개">공개 &nbsp;
-				                                     </label>
-				                                     <label>
-				                                     	<input type="radio" name="reportOpen" value="비공개">비공개
-				                                     </label>	
+				                                      <input id="open" type="radio" value="O" name="reportOpen">
+                                                      <label for="open">공개&nbsp;</label>
+				                                      <input id="no" type="radio" value="X" name="reportOpen">
+                                                      <label for="no">비공개</label>
 			                               		</div>
 			                               	   <div class="form-group">  
 				                                     <button type="button" id="reportBtn" class="btn btn-primary">작성</button> 
