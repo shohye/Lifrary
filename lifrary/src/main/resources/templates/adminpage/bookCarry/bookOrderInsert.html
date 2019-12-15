@@ -46,7 +46,7 @@
  				biYear.focus();
  				return false;
  			}
- 			if(boBookNum.val() == ''){
+ 			if(boBookNum.val() == '0'){
  				alert('주문한 도서의 권수를 입력해주세요');
  				
  				return false;
@@ -116,6 +116,7 @@
 	                  <div class="form-group col-md-4">
 	                    <label class="form-label">주문권수</label>
 	                    <select class="form-control" name="boBookNum">
+	                    	<option value="0" selected>::주문권수를 선택해주세요::</option>
 	                   		<option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
 	                    </select>
 	                  </div>

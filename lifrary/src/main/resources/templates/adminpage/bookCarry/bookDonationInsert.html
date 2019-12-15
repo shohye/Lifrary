@@ -22,7 +22,7 @@
     			
     			
     			console.log(bdnName.val());
-    			console.log(bdnTel.val());
+    			console.log(bdnNum.val());
     			
     			if(bdnName.val() == ''){
     				alert('기부자 성명을 입력하세요');
@@ -39,7 +39,7 @@
     				bdnAddr.focus();
     				return false;
     			}
-    			if(bdnNum.val() == ''){
+    			if(bdnNum.val() == '0'){
     				alert('기부 도서수를 입력하세요');
     				bdnNum.focus();
     				return false;
@@ -104,9 +104,12 @@
 	                   <label class="form-label">주소</label>
 	                   <input type="text" class="form-control" name="bdnAddr" placeholder="address">
 	                 </div>
-	                 <div class="form-group col-md-3">
+	                 <div class="form-group col-md-6">
 	                    <label class="form-label" >기증도서권수</label>
-	                    <input type="text" class="form-control" name="bdnNum"  placeholder="book number">
+	                    <select class="form-control" name="bdnNum">
+	                    	<option value="0" selected>::주문권수를 선택해주세요::</option>
+	                   		<option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
+	                    </select>
 	                   <!--  <small class="form-text text-muted">Example block-level help text here.</small> -->
 	                  </div>
                   </div>

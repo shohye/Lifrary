@@ -49,7 +49,7 @@
  				bpPrice.focus();
  				return false;
  			}
- 			if(bpBookNum.val() == ''){
+ 			if(bpBookNum.val() == '0'){
  				alert('구매예정 도서의 권수을 입력해주세요');
  				
  				return false;
@@ -115,6 +115,7 @@
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">구매예정권수</label>
 	                    <select class="form-control" name="bpBookNum" >
+	                    	<option value="0" selected>::구매예정권수를 선택해주세요::</option>
 						    <option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
 						</select>
 	                   

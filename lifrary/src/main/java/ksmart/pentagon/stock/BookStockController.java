@@ -7,6 +7,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /*
@@ -29,6 +30,22 @@ public class BookStockController {
 		
     	return "/adminpage/bookStock/stockSearchList";
     }
+	
+	// (어드민) 소장도서 인서트 화면
+	@GetMapping("/admin/stockDetailInsert")
+    public String stockDetailInsert() {
+		
+    	return "/adminpage/bookStock/stockDetailInsert";
+    }
+	// (어드민) 소장도서 인서트 화면
+	@PostMapping("/admin/stockDetailInsert")
+    public String stockDetailInsert2() {
+		
+    	return "redirect:/admin/stockSearchList";
+    }
+	
+	
+	
 	
 	// (어드민) 소장도서 상세내용
 	@GetMapping("/admin/stockDetail")
