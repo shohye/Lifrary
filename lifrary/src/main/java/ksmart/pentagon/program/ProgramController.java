@@ -1,5 +1,7 @@
 package ksmart.pentagon.program;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,6 +83,43 @@ public class ProgramController {
 		programService.insertProgram(pa);
 		return "redirect:/lifrary/programSearchList";
 	}
+	
+	/**
+	 * 현재 세션에 저장되어있는 아이디를 받아, 해당 아이디가 신청한 프로그램의 리스트를 보여준다.
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("/lifrary/programApplyList")
+	public String programApplyList(Model model, HttpSession session) {
+		String getSID = (String)session.getAttribute("SID");
+		model.addAttribute("applyList", programService.getProgramApplyList(getSID));
+		return "librarypage/program/myProgramApplyList";
+	}
+	
+	/**
+	 * paCode에 맞는 pm 상세보기
+	 * @param paCode
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/lifrary/programApplyDetail")
+	public String programApplyDetail(@RequestParam(value = "paCode")String paCode, Model model) {
+		model.addAttribute("program", programService.getProgramDetail(paCode));
+		return "librarypage/program/myProgramApplyDetail";
+	}
+	
+	/**
+	 * 프로그램 취소 / 상태가 신청완료일때만 취소 가능하다 . (취소, 종료, 진행중 상태에서는 취소 불가능)
+	 * @param paCode
+	 * @return
+	 */	
+	@GetMapping("/lifrary/programCancle")
+	public String programCancle(@RequestParam(value = "paCode")String paCode, @RequestParam(value = "pmCode")String pmCode) {
+		programService.cancleProgram(paCode, pmCode);
+		return "redirect:/lifrary/programApplyList";
+	}
+	
 
 	/* ======================================================================== */
 	// 아래는 사서채널
@@ -95,21 +134,19 @@ public class ProgramController {
 		model.addAttribute("programList", programService.getProgramList());
 		return "adminpage/program/programSearchList";
 	}
-	
+
 	/**
 	 * 프로그램 신청 내역 리스트 페이지로 이동 / 출력
+	 * 
 	 * @return
 	 */
 	@GetMapping("/admin/programApplySearchList")
 	public String adminProgramApplySearchList(Model model) {
-		
+
 		model.addAttribute("applyList", programService.getProgramApplyList());
-		
 		return "adminpage/program/programApplySearchList";
 	}
-	
-	
-	
+
 	/**
 	 * 프로그램(행사, 강좌) 등록 페이지로 이동
 	 * 
@@ -122,6 +159,7 @@ public class ProgramController {
 
 	/**
 	 * 프로그램 1개 상세보기
+	 * 
 	 * @param pmCode
 	 * @param model
 	 * @return
@@ -133,8 +171,10 @@ public class ProgramController {
 		return "adminpage/program/programDetail";
 	}
 	
+
 	/**
 	 * 프로그램 수정페이지로 이동
+	 * 
 	 * @param pmCode
 	 * @param model
 	 * @return
@@ -144,16 +184,16 @@ public class ProgramController {
 		model.addAttribute("program", programService.getProgram(pmCode));
 		return "adminpage/program/programUpdate";
 	}
-	
+
 	/**
-	 * 프로그램 수정 처리후, 상세보기 페이지로 redirect.
-	 * pmCode를 다시 get방식으로 보내준다.
+	 * 프로그램 수정 처리후, 상세보기 페이지로 redirect. pmCode를 다시 get방식으로 보내준다.
+	 * 
 	 * @param pm
 	 * @return
 	 */
 	@PostMapping("/admin/programUpdate")
 	public String adminProgramUpdate(ProgramManager pm) {
 		programService.updateProgram(pm);
-		return "redirect:/admin/programDetail?pmCode="+pm.getPmCode();
+		return "redirect:/admin/programDetail?pmCode=" + pm.getPmCode();
 	}
 }

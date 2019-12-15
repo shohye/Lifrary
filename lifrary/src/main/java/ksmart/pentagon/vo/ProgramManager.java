@@ -22,7 +22,7 @@ public class ProgramManager {
 	private String pmDetail;
 	private String pmFile;
 	private String pmDate;
-	
+	private ProgramApply programApply;
 	
 	public String getPmCode() {
 		return pmCode;
@@ -152,7 +152,12 @@ public class ProgramManager {
 	public void setPmApplicant(int pmApplicant) {
 		this.pmApplicant = pmApplicant;
 	}
-		
+	public ProgramApply getProgramApply() {
+		return programApply;
+	}
+	public void setProgramApply(ProgramApply programApply) {
+		this.programApply = programApply;
+	}
 	@Override
 	public String toString() {
 		return "ProgramManager [pmCode=" + pmCode + ", lCode=" + lCode + ", uId=" + uId + ", pmName=" + pmName
@@ -160,7 +165,11 @@ public class ProgramManager {
 				+ pmEndTerm + ", pmStartTime=" + pmStartTime + ", pmEndTime=" + pmEndTime + ", pmStartReceipt="
 				+ pmStartReceipt + ", pmEndReceipt=" + pmEndReceipt + ", pmProgress=" + pmProgress + ", pmTeacherName="
 				+ pmTeacherName + ", pmApplicant=" + pmApplicant + ", pmMnop=" + pmMnop + ", pmTuition=" + pmTuition
-				+ ", pmTel=" + pmTel + ", pmDetail=" + pmDetail + ", pmFile=" + pmFile + ", pmDate=" + pmDate + "]";
+				+ ", pmTel=" + pmTel + ", pmDetail=" + pmDetail + ", pmFile=" + pmFile + ", pmDate=" + pmDate
+				+ ", programApply=" + programApply + "]";
 	}
+		
+
+
 	
 }

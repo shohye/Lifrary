@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+
+<th:block layout:fragment="customContents">
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>프로그램(행사, 강좌) 신청 리스트</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">프로그램 신청 리스트입니다.</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">메인메뉴</a></li>
+                        <li>프로그램 신청 리스트</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- Start: Program List Section -->
+	<section class ="section-padding" th:fragment="programListSectionFragment">
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="main-news-list">
+                        <div class="container">
+                            <!-- Start: program Search Section -->
+                           		 <section th:replace="fragments/library/programSearchSection :: programSearchSectionFragment"></section>
+                            <!-- End: Search Section -->
+                            <div class="row">
+                                <div class="col-md-9 col-md-push-3 news-events-list-view" style="padding: 20px;">
+                                   
+                                   <!-- 프로그램 리스트 반복 출력 --> 
+                                   <h3>나의 신청 내역</h3> <br>
+                                   <table id="myTable" class="datatables-demo table table-striped table-bordered">                         
+						                  <thead>
+						                    <tr>
+						                      <th>번호</th>
+						                      <th>프로그램명</th>
+						                      <th>아이디</th>
+						                      <th>참여자명</th>
+						                      <th>성별</th>
+						                      <th>생년월일</th>
+						                      <th>연락처</th>
+						                      <th>상태</th>
+						                      <th>신청일</th>              
+						                    </tr>
+						                  </thead>
+							                  <tbody>
+											    <tr th:each="apply, al : ${applyList}">	
+												      <td class="align-middle" th:text="${al.count}"></td>
+												      <td class="align-middle"><a th:href="@{/lifrary/programApplyDetail(paCode = ${apply.paCode})}" th:text="${apply.pmName}"></a></td>
+												      <td class="align-middle" th:text="${apply.uId}"></td>
+												      <td class="align-middle" th:text="${apply.paParticipants}"></td>
+												      <td class="align-middle" th:text="${apply.paGender}"></td>
+												      <td class="align-middle" th:text="${apply.paBirth}"></td>
+												      <td class="align-middle" th:text="${apply.paTel}"></td>
+												      <td class="align-middle" th:text="${apply.paCondition}"></td>
+												      <td class="align-middle" th:text="${apply.paDate}"></td>										 		
+											    </tr>
+											  </tbody> 
+						                </table>
+                                    
+                                    
+                                    <nav class="navigation pagination text-center">
+                                        <h2 class="screen-reader-text">Posts navigation</h2>
+                                        <div class="nav-links">
+                                            <a class="prev page-numbers" th:href="@{#}"><i class="fa fa-long-arrow-left"></i> Previous</a>
+                                            <span class="page-numbers current">1</span>
+                                            <a class="page-numbers" th:href="@{#}">2</a>
+                                            <a class="page-numbers" th:href="@{#}">3</a>
+                                            <a class="page-numbers" th:href="@{#}">4</a>
+                                            <a class="next page-numbers" th:href="@{#}">Next <i class="fa fa-long-arrow-right"></i></a>
+                                        </div>
+                                    </nav>
+                                </div>
+                                <!-- 마이페이지 사이드메뉴  -->
+                                <div th:replace="fragments/library/myPageLeftMenu :: myPageLeftMenuFragment"></div>
+                                <!-- 마이페이지 사이드메뉴-->
+                            
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <!-- End: Program List Section -->
+        </section>
+    </th:block>
+</html>

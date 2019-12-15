@@ -93,13 +93,24 @@
                                         <li class="dropdown">
                                             <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">7.마이페이지</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{#}">#내 정보</a></li>
-                                                <li><a th:href="@{/lifrary/myLendList}">!내 도서현황</a></li>
-                                                <li><a th:href="@{/lifrary/myCalender}">!북 다이어리</a></li>
-                                                <li><a th:href="@{/lifrary/myStudyCateList}">!내 서재</a></li>
-                                                <li><a th:href="@{#}">#내 프로그램 신청 내역</a></li>
-                                                <li><a th:href="@{#}">#내 공공시설 신청 내역</a></li>
-                                                <li><a th:href="@{#}">#희망도서 신청 내역</a></li>
+	                                            <th:block th:if="${session.SID} == null">
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">#내 정보</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 도서현황</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!북 다이어리</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 서재</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 프로그램 신청 내역</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">#내 공공시설 신청 내역</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">#희망도서 신청 내역</a></li>
+	                                            </th:block>
+	                                            <th:block th:unless="${session.SID} == null">
+	                                                <li><a th:href="@{#}">#내 정보</a></li>
+	                                                <li><a th:href="@{/lifrary/myLendList}">!내 도서현황</a></li>
+	                                                <li><a th:href="@{/lifrary/myCalender}">!북 다이어리</a></li>
+	                                                <li><a th:href="@{/lifrary/myStudyCateList}">!내 서재</a></li>
+	                                                <li><a th:href="@{/lifrary/programApplyList}">!내 프로그램 신청 내역</a></li>
+	                                                <li><a th:href="@{#}">#내 공공시설 신청 내역</a></li>
+	                                                <li><a th:href="@{#}">#희망도서 신청 내역</a></li>
+	                                            </th:block>
                                             </ul>
                                         </li>
                                     </ul>
@@ -162,7 +173,7 @@
                                             <li><a th:href="@{#}">#내 도서현황</a></li>
                                             <li><a th:href="@{#}">#북 다이어리</a></li>
                                             <li><a th:href="@{#}">#내 서재</a></li>
-                                            <li><a th:href="@{#}">#내 프로그램 신청 내역</a></li>
+                                            <li><a th:href="@{/lifrary/programApplyList}">!내 프로그램 신청 내역</a></li>
                                             <li><a th:href="@{#}">#내 공공시설 신청 내역</a></li>
                                             <li><a th:href="@{#}">#희망도서 신청 내역</a></li>
                                         </ul>

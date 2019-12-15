@@ -44,49 +44,33 @@
                   <thead>
                     <tr>
                       <th>번호</th>
+                      <th>프로그램명</th>
                       <th>아이디</th>
-                      <th data-orderable="false">참여자명</th>
+                      <th>참여자명</th>
                       <th data-orderable="false">성별</th>
-                      <th>생년월일</th>               
-                      <th data-orderable="false">주소</th>
+                      <th>생년월일</th>
                       <th>연락처</th>
-                      <th data-orderable="false">신청일</th>              
+                      <th>신청일</th>              
                     </tr>
                   </thead>
                   
                   <tbody>
 				    <tr th:each="apply, al : ${applyList}">				      
 				      <td class="align-middle" th:text="${al.count}"></td>
+				      <td class="align-middle" th:text="${apply.pmName}"></td>
 				      <td class="align-middle" th:text="${apply.uId}"></td>
 				      <td class="align-middle" th:text="${apply.paParticipants}"></td>
 				      <td class="align-middle" th:text="${apply.paGender}"></td>
 				      <td class="align-middle" th:text="${apply.paBirth}"></td>
-				      <td class="align-middle" th:text="${apply.paAddr}"></td>
-				      <td class="align-middle" th:text="|${pro.pmStartTerm} ~ ${pro.pmEndTerm}|"></td>
-				      <td class="align-middle" th:text="${pro.pmDate}"></td>
-				      
-				      <td class="align-middle align-center"> 
-						   <a th:href="@{/admin/programDetail(pmCode=${pro.pmCode})}" title="상세보기">
-								<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
-									 <i class="ion ion-ios-search d-block" title="상세보기"></i>
-								</button>
-						   </a>
-					  </td>
+				      <td class="align-middle" th:text="${apply.paTel}"></td>
+				      <td class="align-middle" th:text="${apply.paDate}"></td>				     				      
 				 		
 				    </tr>
 				  </tbody> 
                 </table>
               </div>
             </div>
-	              <div>
-						<a th:href="@{/admin/programInsert}" style="color: white"> 
-				            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
-				            	<span class="ion ion-md-add"> 프로그램 추가</span>
-							</button>
-						</a>
-				  </div>
-                        
-
+	                                     
           </th:block>
           <!-- / Content -->
          
