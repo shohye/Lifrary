@@ -12,6 +12,7 @@ import ksmart.pentagon.vo.LibrarianLevel;
 import ksmart.pentagon.vo.User;
 import ksmart.pentagon.vo.UserAuthoritySet;
 import ksmart.pentagon.vo.UserLevel;
+import ksmart.pentagon.vo.UserLevelHistory;
 
 /*
  * @file   AdminService.java 
@@ -68,7 +69,7 @@ public class AdminService {
 	//유저 회원 수정 처리 
 	public int adminUserUpdate(User user) {
 		System.out.println("adminUserUpdate 서비스진입");
-		
+		System.out.println("유저 회원 수정처리 =>> "+ adminMapper.adminUserUpdate(user));
 		return adminMapper.adminUserUpdate(user);
 	}
 	
@@ -120,6 +121,22 @@ public class AdminService {
 		 
 		 return adminMapper.adUserLevelUpdate(userLevel); 
 	 }
+	 
+	 //유저 회원등급 리스트 전체 가져오기 
+	 public List<UserLevelHistory> adUserLevelHistorySearchList(){
+		 System.out.println("adUserLevelHistorySearchList 서비스진입");
+		 System.out.println(adminMapper.adUserLevelHistorySearchList());
+		
+		 return adminMapper.adUserLevelHistorySearchList();
+	}
+	
+	//유저 회원등급 검색 리스트 전체 가져오기
+	 public List<UserLevelHistory> adUserLevelHistorySearch(){
+		 System.out.println("adUserLevelHistorySearch 서비스진입");
+		 System.out.println(adminMapper.adUserLevelHistorySearch());
+		
+		 return adminMapper.adUserLevelHistorySearch();
+	}
 	 
 	 
 	 /**************************************************************/

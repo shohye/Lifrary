@@ -48,17 +48,14 @@
 				  <table class="datatables-demo table table-hover table-bordered">
 	                <thead>
                   	<tr>
-                    	<th>회원번호</th>
-                    	<th>아이디</th>
-                    	<th>등급명</th>
-                    	<th>이름</th>
-                    	<th>메일수신동의</th>
+                    	<th>회원권한이력코드</th>
+                    	<th>도서관코드</th>
+                    	<th>회원ID</th>
+                    	<th>회원이름</th>
+                    	<th>회원제한코드</th>
                     	<th>권한명</th>
-                    	<th>대출상태</th>
-                    	<th>공공시설</th>
-                    	<th>연체일</th>
+                    	<th>회원권한변동사유</th>
                     	<th>등록일</th>
-                    	<!-- <th>권한제한등록일</th> -->
                     	<th></th>	
                     </tr>
 	                </thead>
@@ -83,20 +80,6 @@
 	               			<td class="align-middle" th:text="${l.uDate}"></td>
 	               		
 	               			<td class="text-center text-nowrap">
-	               				<button title="" 
-	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
-	               						type="button" data-original-title="Edit">
-	               					<a th:href="@{/admin/adminUserUpdate(uId=${l.uId})}" title="수정">
-	               				<i class="ion ion-md-create" title="수정"></i>
-	               					</a>
-	               				</button>&nbsp;&nbsp;
-	               				<button title="" 
-	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
-	               						type="button" data-original-title="Edit">
-	               					<a th:href="@{/admin/adminUserDetail(uId=${l.uId})}" title="상세">
-	               				<i class="ion fas fa-eye" title="상세"></i>
-	               					</a>
-	               				</button>&nbsp;&nbsp;
 	               				<button title="" 
 	               						class="btn btn-default btn-xs icon-btn md-btn-flat dropdown-toggle hide-arrow user-tooltip" 
 	               						type="button" 

@@ -64,6 +64,28 @@
 	<result property="uasLimitDate" column="uas_limit_date"/>
 	<result property="uasDate" column="uas_date"/>
  </resultMap>
+  <resultMap type="ksmart.pentagon.vo.UserLevelHistory" id="userLevelHistory">
+	<!-- db -->
+	<result property="ulhCode" column="ulh_code"/>
+	<result property="lCode" column="l_code"/>
+	<result property="uId" column="u_id"/> 
+	<result property="ulLevel" column="ul_level"/>
+	<result property="ulName" column="ul_name"/>
+	<result property="uName" column="u_name"/>
+	<result property="ulhReason" column="ulh_reason"/>
+	<result property="ulhDate" column="ulh_date"/>
+ </resultMap>
+ <resultMap type="ksmart.pentagon.vo.UserAuthorityHistory" id="userAuthorityHistory">
+	<!-- db -->
+	<result property="uahCode" column="uah_code"/>
+	<result property="lCode" column="l_code"/>
+	<result property="uId" column="u_id"/> 
+	<result property="uasCode" column="uas_code"/>
+	<result property="uasName" column="uas_name"/>
+	<result property="uName" column="u_name"/>
+	<result property="uahReason" column="uah_reason"/>
+	<result property="uahDate" column="uah_date"/>
+ </resultMap>
  
 	<select id="adminLoginCheck" resultMap="userResultMap">
 		SELECT
@@ -97,7 +119,8 @@
 		FROM 
 			user_level
   	</select>
-  	  	<select id="getUserList" resultType="ksmart.pentagon.vo.User">
+  	
+  	<select id="getUserList" resultType="ksmart.pentagon.vo.User">
 		SELECT 
 			u.u_number 				AS uNumber
 			,u.u_id 	 			AS uId
@@ -369,6 +392,7 @@
 		where 
 			uas_code = #{uasCode}
 	</select>
+	
 	
 	
 	

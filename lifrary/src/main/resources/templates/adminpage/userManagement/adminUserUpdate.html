@@ -13,12 +13,16 @@
   
     <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
   <th:block layout:fragment="teamHeadScript">
+  
   <script type="text/javascript">
- /*  $(document).ready(function(){
-	
-	  
+   /*  $(document).ready(function(){
+    	
+    	
 
-  });//document.ready  */
+
+
+
+  });//document.ready   */
   
  </script>
   </th:block>
@@ -110,7 +114,7 @@
 					             <div class="form-row align-items-center">	
 					               <!--  <form th:action="@{/getUserSearch}" method="post"> -->
 				                  <label class="form-label">회원등급</label>
-				                  <select class="custom-select" name="ullevel">
+				                  <select id="ullevel" class="custom-select" name="ullevel">
 				                    <option value="ul001">씨앗</option>
 				                    <option value="ul002">새싹</option>
 				                    <option value="ul003">꽃잎</option>

@@ -9,6 +9,7 @@ import ksmart.pentagon.vo.LibrarianLevel;
 import ksmart.pentagon.vo.User;
 import ksmart.pentagon.vo.UserAuthoritySet;
 import ksmart.pentagon.vo.UserLevel;
+import ksmart.pentagon.vo.UserLevelHistory;
 
 /*
  * @file   AdminMapper.java 
@@ -52,6 +53,12 @@ public interface AdminMapper {
 	
 	//관리자가 회원등급수정 postmapping
 	public int adUserLevelUpdate(UserLevel userLevel);  
+	
+	//회원등급내역리스트
+	public List<UserLevelHistory> adUserLevelHistorySearchList();
+	
+	//회원등급내역리스트
+	public List<UserLevelHistory> adUserLevelHistorySearch();
 	
 	
 	/**********************************************************/

@@ -279,7 +279,14 @@ public class AdminController {
 	//관리자 유저 회원 등급 내역 검색리스트 
 	@GetMapping("/admin/adUserLevelHistorySearchList")
 	public String adUserLevelHistorySearchList(Model model) {
-		System.out.println("adUserLevelHistorySearchList 회원전체 등급내역 검색리스트 ");
+		System.out.println("adUserLevelHistorySearchList 회원전체 등급내역 리스트 @GetMapping");
+		
+		return "/adminpage/userManagement/adUserLevelHistorySearchList";
+	}
+	
+	@PostMapping("/admin/adUserLevelHistorySearchList")
+	public String adUserLevelHistorySearch(Model model) {
+		System.out.println("adUserLevelHistorySearch 회원전체 등급내역 검색리스트 @PostMapping");
 		
 		return "/adminpage/userManagement/adUserLevelHistorySearchList";
 	}
@@ -411,7 +418,7 @@ public class AdminController {
     public String librarianInsert(LibrarianLevel librarianLevel, Model model) {
 	   System.out.println(librarianLevel + " ==> librarianInsert librarianLevel");
 	   
-	   return "redirect:/admin/librarianInsert";
+	   return "redirect:/admin/librarianSearchList";
    } 
 	
 	
