@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+ <th:block layout:fragment="customScript">
+ 	<style>
+ 	.ck-editor__editable {
+	    min-height: 400px;
+	}
+ 	</style>
+ 	<script type="text/javascript" th:src="@{/library/se2/js/service/HuskyEZCreator.js}" charset="utf-8"></script>
+ 	<script type="text/javascript" >
+ 	 $(document).ready(function(){
+ 		 $('#reportBtn').click(function(){
+ 			
+ 			 $('#reportForm').submit();
+ 		  
+ 	 	});
+ 	});
+ 	</script>
+ </th:block>  
+    <th:block layout:fragment="customContents">
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>BOOK REPORT</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">내 손끝에서 피어나는 또 다른 작품</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li>BOOK REPORT</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="services-main">
+                        <div class="services-pg">                            
+                            <section class="services-offering">
+                                <div class="container">
+	                                <div class="row">
+	                                    <div class="center-content">
+	                                        <h2 class="section-title">My Book Report</h2>
+	                                        <span class="underline center"></span>
+	                                        <p class="lead"></p>
+	                                        <div class="clearfix"></div>
+	                                    </div>
+	                                    <div class="cart-head">
+		                                    <div class="col-xs-12 col-sm-6 account-option">
+		                                        <strong>도서정보</strong>
+		                                        <ul>
+		                                            <li><a href="#">도서등록</a></li>
+		                                            <li class="divider">|</li>
+		                                            <li><a href="#">도서 수정</a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <div class="col-xs-12 col-sm-6 library-info">
+		                                        <ul>
+		                                            <li><strong>도서명:</strong>도서명출력</li>
+		                                            <li>
+		                                            	<strong>ISBN:</strong>
+		                                                <a href="#">도서상세페이지로 이동</a>
+		                                            </li>
+		                                        </ul>
+		                                    </div>
+		                                    <div class="clearfix"></div>
+		                                </div>
+	                                     <div class="entry-content">
+			                             	<form id="reportForm" th:action="@{/lifrary/myBookReportSearchList}" >
+		                                        <div class="form-group">
+				                                     <textarea name="reportContent" id="reportEditor" rows="10" ></textarea>
+			                               	   </div>
+			                               	    <div class="form-group">  
+			                                     	<div class="rating">
+                                                        <strong>나만의 별점:</strong>&nbsp; 
+                                                        <span>☆</span>
+                                                        <span>☆</span>
+                                                        <span>☆</span>
+                                                        <span>☆</span>
+                                                        <span>☆</span>
+                                                    </div>
+			                               		</div>
+			                               	   <div class="form-group">  
+			                               	   		 <strong>공개여부:</strong>&nbsp;
+				                                     <label>
+				                                     	<input type="radio" name="reportOpen" value="공개">공개 &nbsp;
+				                                     </label>
+				                                     <label>
+				                                     	<input type="radio" name="reportOpen" value="비공개">비공개
+				                                     </label>	
+			                               		</div>
+			                               	   <div class="form-group">  
+				                                     <button type="button" id="reportBtn" class="btn btn-primary">작성</button> 
+			                               		</div>
+			                               </form>
+	                                   </div>
+	                                </div>
+                                </div>
+                            </section>
+                          </div>
+                     </div> 
+                </main>
+            </div>
+        </div>
+     <script type="text/javascript">
+		var oEditors = [];
+		nhn.husky.EZCreator.createInIFrame({
+		 oAppRef: oEditors,
+		 elPlaceHolder: "reportEditor",
+		 sSkinURI: "/library/se2/SmartEditor2Skin.html",
+		 htParams : {
+	          // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+	          bUseToolbar : true,             
+	          // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+	          bUseVerticalResizer : true,     
+	          // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+	          bUseModeChanger : true,         
+	          fOnBeforeUnload : function(){
+	          }
+	      }, 
+		 fCreator: "createSEditor2"
+		});
+	</script> 
+    </th:block>
+</html>

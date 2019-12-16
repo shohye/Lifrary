@@ -7355,6 +7355,19 @@ th {
   -webkit-transition: all 0.3s ease-in-out;
   width: 10px;
 }
+
+#reportForm .rating span {
+  color: #6b6b6b;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  width: auto;
+}
 .rating span:hover ~ ::before,
 .rating span:hover::before {
   content: "\2605";
@@ -7653,7 +7666,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Lato", Georgia, Times, serif;
+  
   text-transform: uppercase;
 }
 h3,
@@ -8052,6 +8065,13 @@ textarea::-webkit-input-placeholder {
   -moz-border-radius: 0;
   border-radius: 0;
   padding: 15px 10px;
+}
+.woocommerce .select-styled {
+  border: 3px solid #f4f4f4;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  padding: 10px 10px;
 }
 .select-styled::after {
   content: '\f107';

@@ -41,4 +41,29 @@ public class PointController {
 		return "/adminpage/point/pointHistorySearchList";
 		
 		}
+	
+	/**
+	 * @brief 마이페이지 포인트사용이력리스트 
+	 * @return /librarypage/point/myPointList
+	 * @author 최지혜
+	 */
+	@GetMapping("/lifrary/myPointList")
+	public String myPointList() {
+		
+		
+		return "/librarypage/point/myPointList";
+		
+		}
+	/**
+	 * @brief 회원 포인트신청
+	 * @return /librarypage/point/myPoint
+	 * @author 최지혜
+	 */
+	@GetMapping("/lifrary/myPoint")
+	public String myPoint() {
+		
+		
+		return "/librarypage/point/myPoint";
+		
+		}
 }
