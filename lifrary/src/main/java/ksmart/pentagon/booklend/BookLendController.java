@@ -33,9 +33,10 @@ public class BookLendController {
 	 * @author 최지혜
 	 */
 	@GetMapping("/admin/lendSearchList")
-	public String LendSearchList(Model model){
+	public String LendSearchList(Model model, HttpSession session){
 		
-		model.addAttribute("lendList", bookLendService.bookSearchList());
+		String libNum = (String) session.getAttribute("LIBNUM");
+		model.addAttribute("lendList", bookLendService.bookSearchList(libNum));
 		 
 		return "/adminpage/bookLend/lendSearchList";
 	}
@@ -52,15 +53,17 @@ public class BookLendController {
 	@PostMapping("/admin/lendBookInfo")
 	public String lendBookInfo(  @RequestParam(value="svBook" ) String svBook
 								,@RequestParam(value="svUser", required=false) String svUser
+								,HttpSession session
 								, RedirectAttributes redirectAttributes){
 		
 		System.out.println("svBook: " + svBook);
 		System.out.println("svUser: " + svBook);
+		String libNum = (String) session.getAttribute("LIBNUM");
 		
 		//도서정보만 검색
 		if(svUser == null || svUser.equals("")) {
 
-			Map<String, Object> bookInfoMap = bookLendService.bookInfo(svBook);
+			Map<String, Object> bookInfoMap = bookLendService.bookInfo(libNum,svBook);
 			
 			//결과 리다이렉트로 보내기
 			redirectAttributes.addFlashAttribute("searchBook", bookInfoMap.get("searchBook"));
@@ -80,13 +83,13 @@ public class BookLendController {
 		//도서+회원정보 검색
 		else {
 			//도서
-			Map<String, Object> bookInfoMap = bookLendService.bookInfo(svBook);
+			Map<String, Object> bookInfoMap = bookLendService.bookInfo(libNum, svBook);
 			//검색결과 리다이렉트로 보내기
 			redirectAttributes.addFlashAttribute("searchBook", bookInfoMap.get("searchBook"));
 			redirectAttributes.addFlashAttribute("resultBook", bookInfoMap.get("resultBook"));
 			
 			//회원
-			Map<String, Object> userInfoMap = bookLendService.userInfo(svUser);
+			Map<String, Object> userInfoMap = bookLendService.userInfo(libNum, svUser);
 			//검색결과 리다이렉트로 보내기
 			redirectAttributes.addFlashAttribute("resultUser", userInfoMap.get("resultUser"));
 			
@@ -107,15 +110,17 @@ public class BookLendController {
 	@PostMapping("/admin/lendUserInfo")
 	public String lendUserInfo(  @RequestParam(value="svUser" ) String svUser
 								,@RequestParam(value="svBook", required=false) String svBook
+								,HttpSession session
 								, RedirectAttributes redirectAttributes){
 		
 		System.out.println("svUser: " + svUser);
 		System.out.println("svBook: " + svBook);
+		String libNum = (String) session.getAttribute("LIBNUM");
 		
 		//회원정보만 검색
 		if(svBook == null || svBook.equals("")) {
 			
-			Map<String, Object> userInfoMap = bookLendService.userInfo(svUser);
+			Map<String, Object> userInfoMap = bookLendService.userInfo(libNum, svUser);
 			
 			//검색결과 리다이렉트로 보내기
 			redirectAttributes.addFlashAttribute("searchUser", userInfoMap.get("searchUser"));
@@ -126,17 +131,13 @@ public class BookLendController {
 		//도서+회원정보 검색
 		else {
 			//도서
-			Map<String, Object> bookInfoMap = bookLendService.bookInfo(svBook);
+			Map<String, Object> bookInfoMap = bookLendService.bookInfo(libNum, svBook);
 			//검색결과 리다이렉트로 보내기
 			redirectAttributes.addFlashAttribute("resultBook", bookInfoMap.get("resultBook"));
 			
-			//예약도서인 경우 예약자 아이디포함하여 보내기
-			if(bookInfoMap.get("holdId") != null) {
-				redirectAttributes.addFlashAttribute("holdId", bookInfoMap.get("holdId"));
-			}
-			
+	
 			//회원
-			Map<String, Object> userInfoMap = bookLendService.userInfo(svUser);
+			Map<String, Object> userInfoMap = bookLendService.userInfo(libNum, svUser);
 			//검색결과 리다이렉트로 보내기
 			redirectAttributes.addFlashAttribute("searchUser", userInfoMap.get("searchUser"));
 			redirectAttributes.addFlashAttribute("resultUser", userInfoMap.get("resultUser"));
@@ -146,13 +147,27 @@ public class BookLendController {
 		return "redirect:/admin/lendSearchList";
 	}
 	
+	@PostMapping("/admin/lendInsert")
+	public String lendInsert(HttpSession session){
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
+		
+		
+		return "redirect:/admin/lendSearchList";
+		
+	}
+	
+	
 	/**
 	 * @brief 예약도서리스트
 	 * @return /adminpage/bookLend/reservationSearchList
 	 * @author 최지혜
 	 */
 	@GetMapping("/admin/holdSearchList")
-	public String holdSearchList() {
+	public String holdSearchList(HttpSession session) {
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
+		
 		return "/adminpage/bookLend/holdSearchList";
 		
 	}
@@ -166,7 +181,8 @@ public class BookLendController {
 	 */
 	@GetMapping("/lifrary/myLendList")
 	public String myLendList(HttpSession session) {
-		//회원 아이디 넘기기!
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
 		
 		return "/librarypage/book/myLendList.html";
 		
@@ -174,7 +190,9 @@ public class BookLendController {
 	
 	@GetMapping("/lifrary/myHoldList")
 	public String myHoldList(HttpSession session) {
-		//회원 아이디 넘기기!
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
+
 		
 		return "/librarypage/book/myHoldList";
 		

@@ -26,63 +26,118 @@
 	  /*<![CDATA[*/
 		var searchBook = [[ ${searchBook} ]];//도서검색결과
 		var searchUser = [[ ${searchUser} ]];//회원검색결과
-		var holdId = [[ ${holdId} ]];//예약도서 예약자 ID
-
+		var resultBook = [[ ${resultBook} ]];//도서정보
+		var resultUser = [[ ${resultUser} ]];//회원정보
 		/*]]*/
 		
 		if(searchBook == 0){
 			alert('도서 검색결과가 없습니다');
 		}
-		if(searchBook == 2){
-			$('[type="hidden"]').val('');
-		} 
 		if(searchUser == 0){
 			alert('회원 검색결과가 없습니다');
 		}
-		
+
+		if(resultBook != null && resultUser != null){
+			var userLevel = resultUser.userLevel;
+			var bookLend = resultBook.bookLend;
+			var bsBookState = resultBook.bsBookState;//도서상태
+			var bsCode = resultBook.bsCode;//소장도서코드
+			var blId = bookLend.blId //예약자 아이디
+			var uId = resultUser.uId;//회원아이디
+			var bsLendState = resultBook.bsLendState;//대출상태
+			var uasLendLimit = resultUser.uasLendLimit;//대출권한
+			var ulLendNum = userLevel.ulLendNum;//대출가능 권수
+
+			//반납도서 등록버튼 활성화
+			if(searchBook == 2){
+				$('[type="hidden"]').val('');
+				
+				$('#lendForm').find('button').attr('class','btn btn-success').text('반납등록');
+			}
+			
+			//예약도서 대출버튼 활성화
+			else if(bsLendState == '예약' && blId == uId){
+				if(bsBookState == '정상' && uasLendLimit == 'O' && ulLendNum > 0){
+					$('#lendForm').find('button').attr('class','btn btn-primary').text('대출등록');
+				}
+			}
+			
+			//소장도서 대출버튼 활성화
+			else if(bsLendState == 'O' && bsBookState == '정상' && uasLendLimit == 'O' && ulLendNum > 0){
+				$('#lendForm').find('button').attr('class','btn btn-primary').text('대출등록');
+			}
+			else{
+				console.log('대출불가');
+			}
+		}
+
 	  	//예약자도서 예약자 체크
 		var holdCheck = $('#holdCheck').children('span').text();
 	
-		if(holdCheck == '예약'){
-			var userId = $('#userId').text();
-			console.log(holdId,'ㅇㅖ약자아이디');
-			console.log(userId,'회원아이디');
-			if(holdId == userId){
-				$('#holdUserCheck').append('<span class="badge badge-outline-info">예약자 일치</span>');
-				console.log('예약자');
+	  	if(resultBook != null && resultUser != null){
+	  		var holdCheck = resultBook.bsLendState; //도서 소장상태
+	  		var bookLend = resultBook.bookLend;
+	  		var blId = bookLend.blId //예약자 아이디
+			var userId = resultUser.uId; //검색 회원 아이디
+	  		
+			if(holdCheck == '예약'){
+				
+				if(blId == userId){
+					$('#holdUserCheck').append('<span class="badge badge-outline-info">예약자 일치</span>');
+					console.log('예약자');
+				}
+				else{
+					console.log('예약자아닌데용?');
+					$('#holdUserCheck').append('<span class="badge badge-outline-danger">예약자 불일치</span>');
+				}
 			}
-			else{
-				console.log('예약자아닌데용?');
-				$('#holdUserCheck').append('<span class="badge badge-outline-danger">예약자 불일치</span>');
-			}
-			
-		}
+	  	}
 		
 	  //도서정보 검색폼을 실행시키는 자바스크립트
 	  $('#bookInfoBtn').click(function(){
 	  
-	  var bookinfo = $('#bookinfo').val();
-	  
-	  if( bookinfo == ''){
-		  alert('검색 도서를 입력해주세요');
-	  }
-	  else{
-		  $('#bookInfoForm').submit();
-	  }
-	  
- 	 });
-	  $('#userInfoBtn').click(function(){
+		  var bookinfo = $('#bookinfo').val();
 		  
-		  var userinfo = $('#userInfo').val();
-		  
-		  if( userinfo == ''){
-			  alert('검색 회원을 입력해주세요');
+		  if( bookinfo == ''){
+			  alert('검색 도서를 입력해주세요');
 		  }
 		  else{
-			  $('#userInfoForm').submit();
+			  $('#bookInfoForm').submit();
 		  }
 		  
-	 	 }); 
+ 	 });
+	  
+	 //회원정보 검색폼을 실행시키는 자바스크립트
+	 $('#userInfoBtn').click(function(){
+		 
+		 var userinfo = $('#userInfo').val();
+		 
+		  
+		 if( userinfo == ''){
+			  alert('검색 회원을 입력해주세요');
+		  }
+		 else{
+			  $('#userInfoForm').submit();
+		  }
+
+	 });
+	 
+	//대출,반납 등록폼 실행시키는 자바스크립트
+	 $('#insertBtn').click(function(){
+		 var btnClass = $(this).attr('class');
+		 console.log(insert);
+
+		 if(btnClass == 'btn btn-success'){
+			 $("#lendForm").attr("action", "/admin/returnUpdate").sumit();
+			 
+			 
+		 }
+		 else if(btnClass == 'btn btn-primary'){
+			 $("#lendForm").sumit();
+		 }
+ 		
+	 }); 
+	 
 	  
   });//document.ready
  
@@ -239,12 +294,14 @@
 		   		</div>
 		 	</div>
 		</div>
-		<form>
-			<input type="hidden" name="" value="">
-			<input type="hidden" name="" value="">
-			<div class="text-center form-group">
-				<button type="button" class="btn btn-primary">대출</button>
-				<button type="button" class="btn btn-outline-default">반납</button>
+		<form th:action="@{/admin/lendInsert}" id="lendForm" method="post" >
+			<input type="hidden" name="blId">
+			<input type="hidden" name="bsCode">
+			<div class="text-center form-group" th:if ="${session.SALBA eq 'O'}" >
+				<button type="button" id="insertBtn" class="btn btn-outline-default">대출/반납</button>
+			</div>
+			<div class="text-center form-group" th:unless ="${session.SALBA eq 'O'}" >
+				<p>*대출권한이 없습니다.</p>
 			</div>
 		</form>
 	</div>

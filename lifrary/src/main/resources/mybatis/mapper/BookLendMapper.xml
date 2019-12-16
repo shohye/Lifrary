@@ -89,7 +89,19 @@
 		ON 
 			bs.bi_isbn = bi.bi_isbn
 		WHERE 
-			bl.bl_lend_date IS NOT NULL 		
+			bl.bl_lend_date IS NOT NULL 
+		AND 
+			bl.l_code = #{libNum}				
+  	</select>
+  	<select id="bookLendCheck" parameterType="String" resultType="java.lang.Integer">
+  		SELECT 
+			 COUNT(1) 
+		FROM
+			book_lend 
+		WHERE
+			bs_code = #{svBook}
+		AND 
+			l_code = #{libNum}		
   	</select>
   	<select id="bookInfo" parameterType="String" resultMap="bookStock">
 		  SELECT 
@@ -126,9 +138,37 @@
 			bl.bl_id = u.u_id 			
 		WHERE 
 			bs.bs_code = #{svBook}
+		AND 
+			bs.l_code = #{libNum}	
 		ORDER BY 
 			bl.bl_code desc
 		LIMIT 0,1
+  	</select>
+  	<select id="bookInfoStock" parameterType="String" resultMap="bookStock">
+		 SELECT
+			bs.bs_code
+			,bs.bi_isbn
+			,bs.bs_alias_mark
+			,bs.bs_writer_mark
+			,bs.bs_secondary_mark
+			,bs.bs_stock_state
+			,bs.bs_book_state
+			,bs.bs_lend_state
+			,bi.bi_name
+			,bi.bi_year
+			,bi.bi_author
+			,bi.bi_publisher
+			,bi.bi_kdc
+		from
+			book_stock AS bs
+		INNER JOIN
+			book_information AS bi
+		ON
+			bs.bi_isbn = bi.bi_isbn
+		WHERE
+			bs.bs_code = #{svBook}
+		AND
+			bs.l_code = #{libNum}
   	</select>
   	<select id="userInfo" parameterType="String" resultMap="user">
   		SELECT
@@ -172,6 +212,8 @@
 			u.u_id = uah.u_id
 		WHERE
 			u.u_number = #{svUser}
+		AND 
+			u.l_code = #{libNum}	
 		ORDER BY 
 			uah.uah_date DESC
 		LIMIT 0,1

@@ -8,10 +8,14 @@ import ksmart.pentagon.vo.User;
 
 public interface BookLendMapper {
 	
-	public List<BookLend> bookSearchList();
+	public List<BookLend> bookSearchList(String libNum);
 	
-	public BookStock bookInfo(String svBook);
+	public int bookLendCheck(String libNum, String svBook);
 	
-	public User userInfo(String svUser);
+	public BookStock bookInfo(String libNum, String svBook);
+	
+	public BookStock bookInfoStock(String libNum, String svBook);
+		
+	public User userInfo(String libNum, String svUser);
 
 }
