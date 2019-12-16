@@ -83,26 +83,26 @@
 	               			<td class="align-middle" th:text="${ll.uEmail}"></td>
 	               			<td class="align-middle" th:text="${ll.uEmailAgree}"></td>
 	               			<td style="text-align:center">
-	                			<span th:if="${ll.llInsert}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
-	                			<span th:unless="${ll.llInsert} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	                			<span th:if="${ll.librarianLevel.llInsert}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.librarianLevel.llInsert} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
 	               			</td>
 	               			<td style="text-align:center">
-	               				<span th:if="${ll.llCarry}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
-	                			<span th:unless="${ll.llCarry} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	               				<span th:if="${ll.librarianLevel.llCarry}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.librarianLevel.llCarry} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
 	               			</td>
 	               			<td style="text-align:center">
-	               				<span th:if="${ll.llBookAdmin}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
-	                			<span th:unless="${ll.llBookAdmin} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	               				<span th:if="${ll.librarianLevel.llBookAdmin}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.librarianLevel.llBookAdmin} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
 	               			</td>
 	               			<td style="text-align:center">
-	               				<span th:if="${ll.llStats}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
-	                			<span th:unless="${ll.llStats} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	               				<span th:if="${ll.librarianLevel.llStats}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.librarianLevel.llStats} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
 	               			</td>
 	               			<td style="text-align:center">
-	               				<span th:if="${ll.llBookStock}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
-	                			<span th:unless="${ll.llBookStock} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	               				<span th:if="${ll.librarianLevel.llBookStock}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.librarianLevel.llBookStock} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
 	               			</td>
-	               			<td class="align-middle" th:text="${ll.llUpdate}" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="${ll.librarianLevel.llUpdate}" style="text-align:center"></td>
 	               		
 	               			<td class="text-center text-nowrap">
 	               				<button title="" 

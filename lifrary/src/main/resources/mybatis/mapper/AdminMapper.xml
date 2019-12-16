@@ -578,6 +578,8 @@
 			librarian_level AS ll
 		ON 
 			u.u_id = ll.u_id
+		WHERE 
+		    u_division='사서'
   	</select>
   	
   	<select id="librarianSearch" parameterType="String" resultMap="userResultMap">
@@ -607,6 +609,8 @@
 			librarian_level AS ll
 		ON 
 			u.u_id = ll.u_id
+		WHERE 
+		    u_division='사서'
 		<trim prefix="where" prefixOverrides="AND|OR">
 			<if test="sv != null and sv neq ''.toString()"> 
 				AND ${sk} Like CONCAT('%',#{sv},'%')		
