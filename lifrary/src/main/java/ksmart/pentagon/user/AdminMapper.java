@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 
 import ksmart.pentagon.vo.LibrarianLevel;
 import ksmart.pentagon.vo.User;
+import ksmart.pentagon.vo.UserAuthorityHistory;
 import ksmart.pentagon.vo.UserAuthoritySet;
 import ksmart.pentagon.vo.UserLevel;
 import ksmart.pentagon.vo.UserLevelHistory;
@@ -76,12 +77,23 @@ public interface AdminMapper {
 	//관리자가 회원 권한 수정하기 postmapping
 	public int adUserAuthorityUpdate(UserAuthoritySet userAuthoritySet);
 	
+	//회원등급내역리스트
+	public List<UserAuthorityHistory> adUserAuthorityHistorySearchList();
+	
+	//회원등급내역리스트
+	public List<UserAuthorityHistory> adUserAuthorityHistorySearch();
+	
 	
 	/**********************************************************/
 	
 	
 	//관리자가 사서 등록
-	public int librarianInsert(LibrarianLevel librarianLevel);
+	public int librarianInsert1(User user);
+	public int librarianInsert2(LibrarianLevel librarianLevel);
 
+	//관리자 사서 리스트
+	public List<User> librarianSearchList();
+	public List<User> librarianSearch();
+	
 	
 }

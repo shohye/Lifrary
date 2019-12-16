@@ -8,7 +8,7 @@ $(function() {
       ],*/
 	  order: [[ 2, 'desc' ]],
 	    columnDefs: [ {
-	    targets: [0,1,7],
+	    targets: [5,6],
 	    orderable: false,
 	    }],
 	 language: {

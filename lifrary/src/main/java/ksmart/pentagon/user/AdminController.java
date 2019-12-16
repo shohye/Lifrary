@@ -10,13 +10,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import groovyjarjarpicocli.CommandLine.Parameters;
 import ksmart.pentagon.vo.LibrarianLevel;
 import ksmart.pentagon.vo.User;
+import ksmart.pentagon.vo.UserAuthorityHistory;
 import ksmart.pentagon.vo.UserAuthoritySet;
 import ksmart.pentagon.vo.UserLevel;
+import ksmart.pentagon.vo.UserLevelHistory;
 
 /*
  * @file   AdminController.java //파일
@@ -280,6 +283,9 @@ public class AdminController {
 	@GetMapping("/admin/adUserLevelHistorySearchList")
 	public String adUserLevelHistorySearchList(Model model) {
 		System.out.println("adUserLevelHistorySearchList 회원전체 등급내역 리스트 @GetMapping");
+		List<UserLevelHistory> levelHistory = adminService.adUserLevelHistorySearchList();
+		System.out.println("회원등급내역리스트 levelHistory " + adminService.adUserLevelHistorySearchList());
+		model.addAttribute("levelHistory", levelHistory);
 		
 		return "/adminpage/userManagement/adUserLevelHistorySearchList";
 	}
@@ -287,6 +293,7 @@ public class AdminController {
 	@PostMapping("/admin/adUserLevelHistorySearchList")
 	public String adUserLevelHistorySearch(Model model) {
 		System.out.println("adUserLevelHistorySearch 회원전체 등급내역 검색리스트 @PostMapping");
+		model.addAttribute("levelHistory", adminService.adUserLevelHistorySearch());
 		
 		return "/adminpage/userManagement/adUserLevelHistorySearchList";
 	}
@@ -360,16 +367,28 @@ public class AdminController {
 	   return "redirect:/admin/adUserAuthorityList";  
    }
    
+
 	/**
 	 * @관리자 유저 회원 권한 내역 검색리스트
 	 * @param model
 	 * @return adUserAuthorityHistorySearchList페이지
 	 * @author 한우리
 	 */
-	//관리자 유저 회원 권한 내역 검색리스트 
+	//관리자 유저 회원 등급 내역 검색리스트 
 	@GetMapping("/admin/adUserAuthorityHistorySearchList")
 	public String adUserAuthorityHistorySearchList(Model model) {
-		System.out.println("adUserAuthorityHistorySearchList 회원전체 권한내역 검색리스트 ");
+		System.out.println("adUserAuthorityHistorySearchList 회원전체 권한내역 리스트 @GetMapping");
+		List<UserAuthorityHistory> authorityHistory = adminService.adUserAuthorityHistorySearchList();
+		System.out.println("회원권한내역리스트 authorityHistory " + adminService.adUserAuthorityHistorySearchList());
+		model.addAttribute("authorityHistory", authorityHistory);
+		
+		return "/adminpage/userManagement/adUserAuthorityHistorySearchList";
+	}
+	
+	@PostMapping("/admin/adUserAuthorityHistorySearchList")
+	public String adUserAuthorityHistorySearch(Model model) {
+		System.out.println("adUserAuthorityHistorySearch 회원전체 권한내역 검색리스트 @PostMapping");
+		model.addAttribute("authorityHistory", adminService.adUserAuthorityHistorySearch());
 		
 		return "/adminpage/userManagement/adUserAuthorityHistorySearchList";
 	}
@@ -381,17 +400,28 @@ public class AdminController {
    
    /**
 	 * 관리자페이지에서 사서 전체리스트
-	 * @param model
+	 * @param modelㅊ
 	 * @return librarianSearchList페이지
 	 * @author 한우리
 	 */
    	//사서 전체 리스트
 	@GetMapping("/admin/librarianSearchList")
 	public String librarianSearchList(Model model) { 
-		 System.out.println("librarianSearchList 전체사서리스트 ");
-	 
+		 System.out.println("librarianSearchList 전체사서리스트 @GetMapping");
+		 List<User> lList = adminService.librarianSearchList();
+		 System.out.println("회원권한내역리스트 lList " + lList);
+		 model.addAttribute("lList", lList);
+		 
 	  return "/adminpage/librarian/librarianSearchList"; 
 	 }
+	
+	@PostMapping("/admin/librarianSearchList")
+	public String librarianSearch(Model model) {
+		 System.out.println("librarianSearchList 전체사서리스트 @PostMapping ");
+		 model.addAttribute("lList", adminService.librarianSearch());
+		 
+		return "/adminpage/librarian/librarianSearchList";
+	}
 	 
    /**
 	 * 관리자페이지에서 사서등록
@@ -406,18 +436,15 @@ public class AdminController {
       return "/adminpage/librarian/librarianInsert";
      }
 
-   /**
-	 * 관리자페이지에서 사서등록
-	 * @param librarianLevel
-	 * @param model
-	 * @return librarianInsert페이지
-	 * @author 한우리
-	 */
 	//사서 등록
 	@PostMapping("/admin/librarianInsert")
-    public String librarianInsert(LibrarianLevel librarianLevel, Model model) {
-	   System.out.println(librarianLevel + " ==> librarianInsert librarianLevel");
-	   
+    public String librarianInsert(User user, LibrarianLevel librarianLevel, Model model) {
+		System.out.println("user 확인 ==>> " + user);
+		System.out.println("librarianLevel 확인 ==>> " + librarianLevel);
+		
+		adminService.librarianInsert1(user);
+		adminService.librarianInsert2(librarianLevel);
+
 	   return "redirect:/admin/librarianSearchList";
    } 
 	
@@ -436,13 +463,15 @@ public class AdminController {
 	 * @author 한우리
 	 */
    	//사서 권한 리스트
-	/*
-	 * @GetMapping("/admin/librarianLevelList") public String
-	 * librarianLevelList(Model model) {
-	 * System.out.println("librarianLevelList 사서 권한 리스트 ");
-	 * 
-	 * return "/adminpage/librarian/librarianLevelList"; }
-	 */
+	
+    @GetMapping("/admin/librarianLevelList") 
+    public String librarianLevelList(Model model) {
+	   System.out.println("librarianLevelList 사서 권한 리스트 ");
+	  
+	   return "/adminpage/librarian/librarianLevelList"; 
+	  
+	}
+	
 	
 	
 	

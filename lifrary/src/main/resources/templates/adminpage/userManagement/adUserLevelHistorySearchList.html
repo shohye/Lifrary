@@ -55,40 +55,19 @@
                     	<th>회원등급</th>
                     	<th>등급명</th>
                     	<th>회원등급변동사유</th>
-                    	<th>등록일</th>
-                    	<th></th>	
+                    	<th>등록일</th>	
                     </tr>
 	                </thead>
 	                  <tbody>
-	                   <tr role="row" th:each="l : ${uList}">
-	               			<td class="align-middle" th:text="${l.uNumber}"></td>
-	               			<!-- <td class="align-middle" th:text="${l.uAuthorityDate}"></td> -->
-	               			<td class="align-middle" th:text="${l.uId}"></td>
-	               			<td class="align-middle" th:text="${l.ulName}"></td>
-	               			<td class="align-middle" th:text="${l.uName}"></td>
-	               			<td class="align-middle" th:text="${l.uEmailAgree}" style="text-align:center"></td>
-	               			<td class="align-middle" th:text="${l.uasName}"></td>
-	               			<td style="text-align:center">
-	                			<span th:if="${l.uasLendLimit}  == O" th:text="대출가능" class="badge badge-outline-success" ></span>
-	                			<span th:unless="${l.uasLendLimit} == O" th:text="대출불가" class="badge badge-outline-danger"></span>
-	               			</td>
-	               			<td style="text-align:center">
-	               				<span th:if="${l.uasFacilityLimit}  == O" th:text="사용가능" class="badge badge-outline-success" ></span>
-	                			<span th:unless="${l.uasFacilityLimit} == O" th:text="사용불가" class="badge badge-outline-danger"></span>
-	               			</td>
-	               			<td class="align-middle" th:text="|${l.uOverdueDay}일|" style="text-align:center"></td>
-	               			<td class="align-middle" th:text="${l.uDate}"></td>
-	               		
-	               			<td class="text-center text-nowrap">
-	               				<button title="" 
-	               						class="btn btn-default btn-xs icon-btn md-btn-flat dropdown-toggle hide-arrow user-tooltip" 
-	               						type="button" 
-	               						data-original-title="Actions" data-toggle="dropdown">
-	               				<a th:href="@{#}" title="삭제">
-	               				<i class="ion ion-ios-settings" title="삭제"></i>
-	               				</button>
-	                   		</td>
-	                   		
+	                   <tr role="row" th:each="lh : ${levelHistory}">
+	               			<td class="align-middle" th:text="${lh.ulhCode}"></td>
+	               			<td class="align-middle" th:text="${lh.lCode}"></td>
+	               			<td class="align-middle" th:text="${lh.uId}"></td>
+	               			<td class="align-middle" th:text="${lh.uName}"></td>
+	               			<td class="align-middle" th:text="${lh.ulLevel}" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="${lh.ulName}" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="${#strings.abbreviate(lh.ulhReason,20)}" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="|${lh.ulhDate}일|" style="text-align:center"></td>
 	                   	</tr> 
 		            </tbody>
 		          </table>

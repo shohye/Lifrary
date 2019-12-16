@@ -52,10 +52,13 @@
 	                <thead>
                   	<tr>
                     	<th>아이디</th>
+                    	<th>도서관코드</th>
+                    	<th>구분</th>
                     	<th>비밀번호</th>
                     	<th>이름</th>
                     	<th>핸드폰</th>
                     	<th>이메일</th>
+                    	<th>이메일동의</th>
                     	<th>생년월일</th>
                     	<th>주소</th>
                     	<th>사서권한</th>
@@ -68,37 +71,51 @@
                     </tr>
 	                </thead>
 	                  <tbody>
-	                   <tr role="row" th:each="l : ${uList}">
-	               			<td class="align-middle" th:text="${l.uNumber}"></td>
-	               			<!-- <td class="align-middle" th:text="${l.uAuthorityDate}"></td> -->
-	               			<td class="align-middle" th:text="${l.uId}"></td>
-	               			<td class="align-middle" th:text="${l.ulName}"></td>
-	               			<td class="align-middle" th:text="${l.uName}"></td>
-	               			<td class="align-middle" th:text="${l.uEmailAgree}" style="text-align:center"></td>
-	               			<td class="align-middle" th:text="${l.uasName}"></td>
+	                   <tr role="row" th:each="ll : ${lList}">
+	               			<td class="align-middle" th:text="${ll.uId}"></td>
+	               			<td class="align-middle" th:text="${ll.lCode}"></td>
+	               			<td class="align-middle" th:text="${ll.uDivision}"></td>
+	               			<td class="align-middle" th:text="${ll.uPw}"></td>
+	               			<td class="align-middle" th:text="${ll.uName}"></td>
+	               			<td class="align-middle" th:text="${ll.uBirth}" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="${ll.uAddr}"></td>
+	               			<td class="align-middle" th:text="${ll.uTel}"></td>
+	               			<td class="align-middle" th:text="${ll.uEmail}"></td>
+	               			<td class="align-middle" th:text="${ll.uEmailAgree}"></td>
 	               			<td style="text-align:center">
-	                			<span th:if="${l.uasLendLimit}  == O" th:text="대출가능" class="badge badge-outline-success" ></span>
-	                			<span th:unless="${l.uasLendLimit} == O" th:text="대출불가" class="badge badge-outline-danger"></span>
+	                			<span th:if="${ll.llInsert}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.llInsert} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
 	               			</td>
 	               			<td style="text-align:center">
-	               				<span th:if="${l.uasFacilityLimit}  == O" th:text="사용가능" class="badge badge-outline-success" ></span>
-	                			<span th:unless="${l.uasFacilityLimit} == O" th:text="사용불가" class="badge badge-outline-danger"></span>
+	               				<span th:if="${ll.llCarry}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.llCarry} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
 	               			</td>
-	               			<td class="align-middle" th:text="|${l.uOverdueDay}일|" style="text-align:center"></td>
-	               			<td class="align-middle" th:text="${l.uDate}"></td>
+	               			<td style="text-align:center">
+	               				<span th:if="${ll.llBookAdmin}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.llBookAdmin} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	               			</td>
+	               			<td style="text-align:center">
+	               				<span th:if="${ll.llStats}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.llStats} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	               			</td>
+	               			<td style="text-align:center">
+	               				<span th:if="${ll.llBookStock}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.llBookStock} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	               			</td>
+	               			<td class="align-middle" th:text="${ll.llUpdate}" style="text-align:center"></td>
 	               		
 	               			<td class="text-center text-nowrap">
 	               				<button title="" 
 	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
 	               						type="button" data-original-title="Edit">
-	               					<a th:href="@{/admin/adminUserUpdate(uId=${l.uId})}" title="수정">
+	               					<a th:href="@{#}" title="수정">
 	               				<i class="ion ion-md-create" title="수정"></i>
 	               					</a>
 	               				</button>&nbsp;&nbsp;
 	               				<button title="" 
 	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
 	               						type="button" data-original-title="Edit">
-	               					<a th:href="@{/admin/adminUserDetail(uId=${l.uId})}" title="상세">
+	               					<a th:href="@{#}" title="상세">
 	               				<i class="ion fas fa-eye" title="상세"></i>
 	               					</a>
 	               				</button>&nbsp;&nbsp;

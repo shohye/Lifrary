@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+
+ <!-- headAdd(Libs&page) -->
+  <th:block layout:fragment="adminHeadAdd">
+  <title>Bootstrap Dual Listbox - Forms - Appwork</title>
+
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/bootstrap-duallistbox/bootstrap-duallistbox.css}">
+  </th:block>
+  <!-- /headAdd(Libs&page) --> 
+
+<body>
+  <div class="page-loader">
+    <div class="bg-primary"></div>
+  </div>
+
+
+
+          <!-- Content -->
+          <th:block layout:fragment="adminContents">
+   
+            <h4 class="font-weight-bold py-3 mb-4">
+              <span class="text-muted font-weight-light">Forms /</span> Bootstrap Dual Listbox
+            </h4>
+
+            <div class="card mb-4">
+              <div class="card-body">
+                <select multiple="multiple" size="10" id="librarian_level">
+                  <option value="option1">Option 1</option>
+                  <option value="option2">Option 2</option>
+                  <option value="option3" selected="selected">Option 3</option>
+                  <option value="option4">Option 4</option>
+                  <option value="option5">Option 5</option>
+                  <option value="option6" selected="selected">Option 6</option>
+                  <option value="option7">Option 7</option>
+                  <option value="option8">Option 8</option>
+                  <option value="option9">Option 9</option>
+                </select>
+              </div>
+            </div>
+
+       
+          </th:block>
+          <!-- / Content -->
+
+          <!-- Layout footer -->
+          <!-- /Layout footer -->
+         
+
+        </div>
+        <!-- Layout content -->
+
+      </div>
+      <!-- / Layout container -->
+
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-sidenav-toggle"></div>
+  </div>
+  <!-- / scripts -->
+	  <th:block layout:fragment="pageScript">
+	  <!-- addLibs -->
+	  <script th:src="@{/admin/vendor/libs/bootstrap-duallistbox/bootstrap-duallistbox.js}"></script>
+		
+	  <!-- addDemo -->
+ 		<script th:src="@{/admin/js/ad_librarian_level_dual-listbox.js}"></script>
+	  </th:block>
+   <!-- / scripts -->
+	          
+</html>

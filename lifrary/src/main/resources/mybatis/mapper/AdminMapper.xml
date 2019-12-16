@@ -26,8 +26,10 @@
 	<result property="uOverdueDay" column="u_overdue_day"/>
 	<result property="uDate" column="u_date"/>
 	<result property="uAuthorityDate" column="u_authority_date"/>
+	
 	<collection property="librarianLevel" resultMap="librarian"/>
  </resultMap>
+  
   <resultMap type="ksmart.pentagon.vo.LibrarianLevel" id="librarian">
 	<!-- db -->
 	<result property="uId" column="u_id"/>
@@ -39,6 +41,7 @@
 	<result property="llBookStock" column="ll_book_stock"/>
 	<result property="llUpdate" column="ll_update"/>
  </resultMap>
+ 
  <resultMap type="ksmart.pentagon.vo.UserLevel" id="userLevel">
 	<!-- db -->
 	<result property="uId" column="u_id"/>
@@ -51,6 +54,7 @@
 	<result property="ulLendDay" column="ul_lend_day"/>
 	<result property="ulDate" column="ul_date"/>
  </resultMap>
+ 
  <resultMap type="ksmart.pentagon.vo.UserAuthoritySet" id="userAuthoritySet">
 	<!-- db -->
 	<result property="uasCode" column="uas_code"/>
@@ -64,6 +68,7 @@
 	<result property="uasLimitDate" column="uas_limit_date"/>
 	<result property="uasDate" column="uas_date"/>
  </resultMap>
+ 
   <resultMap type="ksmart.pentagon.vo.UserLevelHistory" id="userLevelHistory">
 	<!-- db -->
 	<result property="ulhCode" column="ulh_code"/>
@@ -75,6 +80,7 @@
 	<result property="ulhReason" column="ulh_reason"/>
 	<result property="ulhDate" column="ulh_date"/>
  </resultMap>
+ 
  <resultMap type="ksmart.pentagon.vo.UserAuthorityHistory" id="userAuthorityHistory">
 	<!-- db -->
 	<result property="uahCode" column="uah_code"/>
@@ -393,8 +399,220 @@
 			uas_code = #{uasCode}
 	</select>
 	
+	<select id="adUserLevelHistorySearchList" resultMap="userLevelHistory">
+		SELECT 
+			ulh.ulh_code
+			, ulh.l_code
+			, ulh.u_id
+			, u.u_name
+			, ulh.ul_level
+			, ul.ul_name
+			, ulh.ulh_reason
+			, ulh.ulh_date
+		FROM 
+			user_level_history AS ulh
+		INNER JOIN 
+			user_level AS ul
+		ON
+			ulh.ul_level = ul.ul_level
+		INNER JOIN 
+			user AS u
+		ON
+			u.u_id = ulh.u_id
+  	</select>
+  	
+  	<select id="adUserLevelHistorySearch" resultMap="userLevelHistory">
+		SELECT 
+			ulh.ulh_code
+			, ulh.l_code
+			, ulh.u_id
+			, u.u_name
+			, ulh.ul_level
+			, ul.ul_name
+			, ulh.ulh_reason
+			, ulh.ulh_date
+		FROM 
+			user_level_history AS ulh
+		INNER JOIN 
+			user_level AS ul
+		ON
+			ulh.ul_level = ul.ul_level
+		INNER JOIN 
+			user AS u
+		ON
+			u.u_id = ulh.u_id
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="sv != null and sv neq ''.toString()"> 
+				AND ${sk} Like CONCAT('%',#{sv},'%')		
+			</if>
+		</trim>
+  	</select>
+  	
+  	<select id="adUserAuthorityHistorySearchList" resultMap="userAuthorityHistory">
+		SELECT 
+			uah_code
+			, uah.l_code
+			, uah.u_id
+			, u.u_name
+			, uah.uas_code
+			, uas.uas_name
+			, uah.uah_reason
+			, uah.uah_date
+		FROM 
+			user_authority_history AS uah
+		INNER JOIN 
+			user_authority_set AS uas
+		ON
+			uas.uas_code = uah.uas_code
+		INNER JOIN 
+			user AS u
+		ON
+			u.u_id = uah.u_id
+  	</select>
+  	
+  	<select id="adUserAuthorityHistorySearch" resultMap="userAuthorityHistory">
+		SELECT 
+			uah_code
+			, uah.l_code
+			, uah.u_id
+			, u.u_name
+			, uah.uas_code
+			, uas.uas_name
+			, uah.uah_reason
+			, uah.uah_date
+		FROM 
+			user_authority_history AS uah
+		INNER JOIN 
+			user_authority_set AS uas
+		ON
+			uas.uas_code = uah.uas_code
+		INNER JOIN 
+			user AS u
+		ON
+			u.u_id = uah.u_id
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="sv != null and sv neq ''.toString()"> 
+				AND ${sk} Like CONCAT('%',#{sv},'%')		
+			</if>
+		</trim>
+  	</select>
+  	
+  	<insert id="librarianInsert1">
+		INSERT INTO user(
+			 u_id
+			 ,l_code 
+			 ,u_division      	 	
+			 ,u_pw
+			 ,u_name
+			 ,u_birth
+			 ,u_addr
+			 ,u_tel
+			 ,u_email
+			 ,u_email_agree
+			 ,u_appointment
+			 ,u_overdue_day
+			 ,u_date
+		)VALUES(
+			 #{uId}
+			,#{lCode}
+			,#{uDivision}
+			,#{uPw}
+			,#{uName}
+			,#{uBirth}
+			,#{uAddr}
+			,#{uTel}
+			,#{uEmail}
+			,#{uEmailAgree}
+			,''
+			,0
+			,#{uDate}
+		)
+	</insert>
 	
+   <insert id="librarianInsert2">
+		INSERT INTO librarian_level(
+			  u_id	
+			 ,l_code
+			 ,ll_insert
+			 ,ll_carry
+			 ,ll_book_admin
+			 ,ll_stats
+			 ,ll_book_stock
+			 ,ll_update
+		)VALUES(
+			 #{uId}
+			,#{lCode}
+			,#{llInsert}
+			,#{llCarry}
+			,#{llBookAdmin}
+			,#{llStats}
+			,#{llBookStock}
+			,#{llUpdate}
+		)
+	</insert>
 	
+	<select id="librarianSearchList" resultMap="userResultMap">
+		SELECT 
+			u.u_id
+			, u.l_code
+			, u.u_division
+			, u.u_pw
+			, u.u_name
+			, u.u_birth
+			, u.u_addr
+			, u.u_tel
+			, u.u_email
+			, u.u_email_agree
+			, u.u_appointment
+			, u.u_overdue_day
+			, u.u_date
+			, ll.ll_insert
+			, ll.ll_carry
+			, ll.ll_book_admin
+			, ll.ll_stats
+			, ll.ll_book_stock
+			, ll.ll_update
+		FROM 
+			user AS u
+		INNER JOIN 
+			librarian_level AS ll
+		ON 
+			u.u_id = ll.u_id
+  	</select>
+  	
+  	<select id="librarianSearch" parameterType="String" resultMap="userResultMap">
+		SELECT 
+			u.u_id
+			, u.l_code
+			, u.u_division
+			, u.u_pw
+			, u.u_name
+			, u.u_birth
+			, u.u_addr
+			, u.u_tel
+			, u.u_email
+			, u.u_email_agree
+			, u.u_appointment
+			, u.u_overdue_day
+			, u.u_date
+			, ll.ll_insert
+			, ll.ll_carry
+			, ll.ll_book_admin
+			, ll.ll_stats
+			, ll.ll_book_stock
+			, ll.ll_update
+		FROM 
+			user AS u
+		INNER JOIN 
+			librarian_level AS ll
+		ON 
+			u.u_id = ll.u_id
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="sv != null and sv neq ''.toString()"> 
+				AND ${sk} Like CONCAT('%',#{sv},'%')		
+			</if>
+		</trim>
+  	</select>
 	
 
   </mapper>

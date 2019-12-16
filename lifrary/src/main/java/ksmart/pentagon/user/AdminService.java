@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 
 import ksmart.pentagon.vo.LibrarianLevel;
 import ksmart.pentagon.vo.User;
+import ksmart.pentagon.vo.UserAuthorityHistory;
 import ksmart.pentagon.vo.UserAuthoritySet;
 import ksmart.pentagon.vo.UserLevel;
 import ksmart.pentagon.vo.UserLevelHistory;
@@ -122,7 +123,7 @@ public class AdminService {
 		 return adminMapper.adUserLevelUpdate(userLevel); 
 	 }
 	 
-	 //유저 회원등급 리스트 전체 가져오기 
+	 //유저 회원등급 내역 리스트 전체 가져오기 
 	 public List<UserLevelHistory> adUserLevelHistorySearchList(){
 		 System.out.println("adUserLevelHistorySearchList 서비스진입");
 		 System.out.println(adminMapper.adUserLevelHistorySearchList());
@@ -130,7 +131,7 @@ public class AdminService {
 		 return adminMapper.adUserLevelHistorySearchList();
 	}
 	
-	//유저 회원등급 검색 리스트 전체 가져오기
+	//유저 회원등급 내역 검색 리스트 전체 가져오기
 	 public List<UserLevelHistory> adUserLevelHistorySearch(){
 		 System.out.println("adUserLevelHistorySearch 서비스진입");
 		 System.out.println(adminMapper.adUserLevelHistorySearch());
@@ -174,6 +175,22 @@ public class AdminService {
 		 return adminMapper.adUserAuthorityUpdate(userAuthoritySet);
 	 }
 	 
+	 //유저 권한등급 내역 리스트 전체 가져오기 
+	 public List<UserAuthorityHistory> adUserAuthorityHistorySearchList(){
+		 System.out.println("adUserAuthorityHistorySearchList 서비스진입");
+		 System.out.println(adminMapper.adUserAuthorityHistorySearchList());
+		
+		 return adminMapper.adUserAuthorityHistorySearchList();
+	}
+	
+	//유저 권한등급 내역 검색 리스트 전체 가져오기
+	 public List<UserAuthorityHistory> adUserAuthorityHistorySearch(){
+		 System.out.println("adUserAuthorityHistorySearch 서비스진입");
+		 System.out.println(adminMapper.adUserAuthorityHistorySearch());
+		
+		 return adminMapper.adUserAuthorityHistorySearch();
+	}
+	 
 	 
 	 
 	 /**********************************************************************************/
@@ -181,11 +198,25 @@ public class AdminService {
 	 
 	 
 	//관리자가 사서 등록하기 
-	public int librarianInsert(LibrarianLevel librarianLevel) {
-		System.out.println("librarianInsert 서비스진입");
-		int result = adminMapper.librarianInsert(librarianLevel);
-		System.out.println("adminMapper.librarianInsert(librarianLevel)확인완료 ==>> " + result);
-			
-		return result;
-	} 
+	public int librarianInsert1(User user) {
+		System.out.println("librarianInsert1 서비스진입");
+		return adminMapper.librarianInsert1(user);
+	}
+	public int librarianInsert2(LibrarianLevel librarianLevel) {
+		System.out.println("librarianInsert2 서비스진입");
+		return adminMapper.librarianInsert2(librarianLevel);
+	}
+	
+	//관리자 - 사서 리스트 
+	public List<User> librarianSearchList(){
+		System.out.println("librarianSearchList 서비스진입");
+		
+		return adminMapper.librarianSearch();
+	}
+	public List<User> librarianSearch(){
+		System.out.println("librarianSearch 서비스진입");
+		
+		return adminMapper.librarianSearch();
+	}
+	
 }
