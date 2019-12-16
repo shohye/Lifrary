@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+	  
+<!-- headAdd(Libs&page) -->
+  
+	  <th:block layout:fragment="adminHeadAdd">
+	  
+	  <!-- addLibs -->
+	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/select.dataTables.min.css}">
+	  <!-- addPage -->
+	  
+	    <script th:src="@{/admin/vendor/js/jquery-3.3.1.min.js}"></script>
+	    <script th:src="@{/admin/vendor/js/jquery.dataTables.js}"></script>
+	    <script th:src="@{/admin/vendor/js/dataTables.responsive.min.js}"></script>
+	    <script th:src="@{/admin/vendor/js/dataTables.buttons.min.js}"></script>
+		<script th:src="@{/admin/vendor/js/buttons.html5.min.js}"></script>
+		<script th:src="@{/admin/js/tables_datatables_purchase.js}"></script>
+	   
+	     
+	 
+	  </th:block>
+	  
+<!-- /headAdd(Libs&page) --> 
+ 
+ 
+  <!-- Content -->
+         <th:block layout:fragment="adminContents">
+         <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+			<div>프로그램(행사, 강좌) 신청 리스트</div>			
+		</h4>
+         
+            <!-- DataTable within card -->
+
+            <div class="card">
+              
+              <div class="card-datatable table-responsive">
+                <table id="myTable" class="datatables-demo table table-striped table-bordered">
+                
+           
+                  <thead>
+                    <tr>
+                      <th>번호</th>
+                      <th>프로그램명</th>
+                      <th>아이디</th>
+                      <th>참여자명</th>
+                      <th data-orderable="false">성별</th>
+                      <th>생년월일</th>
+                      <th>연락처</th>
+                      <th>신청일</th>              
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+				    <tr th:each="apply, al : ${applyList}">				      
+				      <td class="align-middle" th:text="${al.count}"></td>
+				      <td class="align-middle" th:text="${apply.pmName}"></td>
+				      <td class="align-middle" th:text="${apply.uId}"></td>
+				      <td class="align-middle" th:text="${apply.paParticipants}"></td>
+				      <td class="align-middle" th:text="${apply.paGender}"></td>
+				      <td class="align-middle" th:text="${apply.paBirth}"></td>
+				      <td class="align-middle" th:text="${apply.paTel}"></td>
+				      <td class="align-middle" th:text="${apply.paDate}"></td>				     				      
+				 		
+				    </tr>
+				  </tbody> 
+                </table>
+              </div>
+            </div>
+	                                     
+          </th:block>
+          <!-- / Content -->
+         
+          <!-- script -->
+          <th:block layout:fragment="pageScript">
+
+		  <!-- addLibs -->
+		    <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script> 
+		    <script th:src="@{/admin/vendor/libs/datatables/dataTables.select.min.js}"></script>
+		
+		  <!-- addDemo -->
+		    
+		  </th:block>
+  		  <!-- /script -->
+  		  
+  		  
+          
+</html>

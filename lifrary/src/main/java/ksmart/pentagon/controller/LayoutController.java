@@ -42,7 +42,11 @@ public class LayoutController {
 		} else if("square".equals(lib)) {
 			session.setAttribute("LIBNUM","111111");
 		}
-	  
+	    //도서관 페이지 세션 찍기 테스트.
+		System.out.println(session.getAttribute("SID") + "<== 현재 세션 SID");
+		System.out.println(session.getAttribute("SNAME") + "<== 현재 세션 SNAME");
+		System.out.println(session.getAttribute("SDIV") + "<== 현재 세션 SDIV");
+		
 		return "librarypage/index";
 		  
 	}
