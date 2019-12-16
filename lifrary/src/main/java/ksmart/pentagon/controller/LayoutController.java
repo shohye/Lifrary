@@ -46,7 +46,7 @@ public class LayoutController {
 		System.out.println(session.getAttribute("SID") + "<== 현재 세션 SID");
 		System.out.println(session.getAttribute("SNAME") + "<== 현재 세션 SNAME");
 		System.out.println(session.getAttribute("SDIV") + "<== 현재 세션 SDIV");
-		
+		System.out.println(session.getAttribute("LIBNUM")+ "<== 현재 세션 LIBNUM");
 		return "librarypage/index";
 		  
 	}

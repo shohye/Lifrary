@@ -11,6 +11,6 @@
  			u_division as uDivision
 		FROM 
 			user
-		WHERE u_id = #{uId}
+		WHERE u_id = #{uId} and l_code = #{libNum}
  	</select>
  </mapper>

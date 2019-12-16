@@ -77,8 +77,8 @@ public class AdminController {
 	public String adminLogin(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw, HttpSession session, Model model) {
 		System.out.println(uId + " <== uId");
 		System.out.println(uPw + " <== uPw");
-		
-		Map<String,Object> map =  adminService.adminLoginCheck(uId, uPw);
+		String libNum = (String)session.getAttribute("LIBNUM");
+		Map<String,Object> map =  adminService.adminLoginCheck(uId, uPw, libNum);
 		String result = (String)map.get("result");
 		User user = (User)map.get("user");
 		

@@ -20,9 +20,9 @@ public class LibraryService {
 	@Autowired
 	private LibraryMapper libraryMapper;
 
-	public Map<String,Object> loginCheck(String uId, String uPw) {
+	public Map<String,Object> loginCheck(String uId, String uPw, String libNum) {
 
-		User user = libraryMapper.loginCheck(uId); // DB에서 uId인 user의 uPw
+		User user = libraryMapper.loginCheck(uId, libNum); // DB에서 uId인 user의 uPw
 		String result = null;
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		

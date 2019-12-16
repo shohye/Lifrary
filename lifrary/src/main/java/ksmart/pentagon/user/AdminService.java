@@ -25,9 +25,9 @@ public class AdminService {
 	@Autowired private AdminMapper adminMapper;
 	
 	//사서 채널 로그인 처리 / 회원 정보 유무 확인후 로그인
-	public Map<String,Object> adminLoginCheck(String uId, String uPw) {
+	public Map<String,Object> adminLoginCheck(String uId, String uPw, String libNum) {
 		
-		User user = adminMapper.adminLoginCheck(uId);
+		User user = adminMapper.adminLoginCheck(uId, libNum);
 		String result = null;
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		

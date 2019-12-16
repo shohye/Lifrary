@@ -81,7 +81,7 @@
 		ON
 			u.u_id = ll.u_id
 		WHERE
-			u.u_id = #{uId}
+			u.u_id = #{uId} and l_code = #{libNum}
 	</select>
  
   	<select id="getUserLevel" resultType="ksmart.pentagon.vo.UserLevel">

@@ -21,8 +21,8 @@ import ksmart.pentagon.vo.UserLevel;
 public interface AdminMapper {
 
 	
-	//사서 채널 로그인 처리 / 회원 정보 유무 확인후 로그인
-	public User adminLoginCheck(String uId);
+	//사서 채널 로그인 처리 / 회원 정보 유무 확인후 로그인 , 도서관코드에 맞는 아이디 로그인.
+	public User adminLoginCheck(String uId, String libNum);
 	
 	//유저 회원 전체 가져오기.
 	public List<User> getUserList();
