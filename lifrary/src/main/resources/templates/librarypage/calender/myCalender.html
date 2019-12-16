@@ -2,9 +2,58 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
-    
-    
-    <th:block layout:fragment="customContents">
+	<th:block layout:fragment="customScript">
+	<link th:href="@{/library/fullcalendar/packages/core/main.css}" rel="stylesheet" />
+   	<link th:href="@{/library/fullcalendar/packages/daygrid/main.css}" rel="stylesheet" />
+
+   	<script th:src="@{/library/fullcalendar/packages/core/main.js}"></script>
+   	<script th:src="@{/library/fullcalendar/packages/daygrid/main.js}"></script>
+   	<script th:src="@{/library/fullcalendar/packages/core/locales/ko.js}"></script>
+   	<script type="text/javascript">
+		
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('bookCalendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          plugins: [ 'dayGrid'],
+          customButtons: {
+        	    book: {
+        	      text: '북 캘린더',
+        	      click: function() {
+        	        alert('북캘린더 화면에 뿌리기');
+        	      }
+        	    },
+        	    month:{
+        	      text: '월별',
+          	      click: function() {
+          	        alert('월별 화면에 뿌리기');
+          	      }	
+        	    }
+        	  },
+          header: {
+              left: 'book month',
+              center: 'title'
+            }
+          });
+
+        calendar.render();
+      });
+
+    </script>
+    <style type="text/css">
+    #bookCalendar {
+        max-width: 800px;
+        margin: 0 0 20px;
+    }
+    #bookCalendar h2 {
+    	color: #2C3E50;;
+    }
+    .fc-day-number.fc-sat.fc-past { color:#0000FF; }
+    .fc-day-number.fc-sun.fc-past { color:#FF0000; }
+</style>
+  
+	<th:block layout:fragment="customContents">
+
        <section class="page-banner services-banner">
             <div class="container">
                 <div class="banner-header">
@@ -56,11 +105,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-9 col-md-push-3">
-                                    <h1>캘린더 넣을 자리</h1>
-                                    <a href="/lifrary/myCalenderInsert">***캘린더 등록***</a>
+                                    <div id="bookCalendar"></div>
                                 </div>
                                 <!-- 마이페이지 사이드메뉴  -->
-                                <div th:replace="fragments/library/myPageLeftMenu :: myPageLeftMenuFragment"></div>
+                                <div th:replace="/fragments/library/myPageLeftMenu :: myPageLeftMenuFragment"></div>
                                 <!-- 마이페이지 사이드메뉴-->
                             </div>
                         </div>
