@@ -11,17 +11,15 @@
  	  </th:block>
  	  
  	  <script type="text/javascript" th:inline="javascript">
-	  /* $(document).ready(function(){
+	     $(document).ready(function(){
 		  	  
-		  var input = $('input[id="text"]');
-		  input.change(function() {
+		  $('#text').keyup(function() {
 			  
-			  console.log(input);
-			 	  
-			   
-	     });
-		  
-	  });//document.ready  이따할래,,,*/ 
+			  var bsBookState1 = $('#bsBookState1');
+			  bsBookState1.prop('checked',false);
+			  
+	     });		  
+	  }); //// 어떻게해야,,,
 	 
 	 </script>
 	 
@@ -116,13 +114,13 @@
 		   					   <p>책상태__※수정이 필요합니다 잊지말자 !!※</p>	
 		   					   
 		   					     <label class="custom-control custom-radio">
-		                  		   	<input th:if="${s.bsBookState eq '정상'}" name="bsBookState" type="radio" class="custom-control-input" checked="">
-		                  		   	<input th:unless="${s.bsBookState eq '정상'}" name="bsBookState" type="radio" class="custom-control-input" >
+		                  		   	<input th:if="${s.bsBookState eq '정상'}" id="bsBookState1" type="radio" class="custom-control-input" checked="">
+		                  		   	<input th:unless="${s.bsBookState eq '정상'}" id="bsBookState1" type="radio" class="custom-control-input" >
 		                  		   	<span class="custom-control-label">정상</span>
 		                        </label>
 		                        <label class="custom-control custom-radio">
-		                  		   	<input th:if="${s.bsBookState ne '정상'}" name="bsBookState" type="radio" class="custom-control-input" checked="">
-		                  		   	<input th:unless="${s.bsBookState ne '정상'}" name="bsBookState" type="radio" class="custom-control-input" >
+		                  		   	<input th:if="${s.bsBookState ne '정상'}" id="bsBookState2" type="radio" class="custom-control-input" checked="">
+		                  		   	<input th:unless="${s.bsBookState ne '정상'}" id="bsBookState2" type="radio" class="custom-control-input" >
 		                  		   	<span class="custom-control-label">기타</span>
 		                  		   	 <input type="text" th:if="${s.bsBookState eq '정상'}" class="form-control" id="text" name="bsBookState" placeholder="정상이 아닌경우 작성"  >
 	                              <input type="text" th:unless="${s.bsBookState eq '정상'}" class="form-control" id="text" name="bsBookState" th:placeholder="${s.bsBookState}" >

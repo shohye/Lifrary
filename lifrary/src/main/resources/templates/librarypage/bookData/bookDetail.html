@@ -15,9 +15,10 @@
                 <div class="breadcrumb">
                     <ul>
                         <li><a th:href="@{/}">Home</a></li>
-                        <li>Books & Media</li>
+                        <li>Books</li>
                     </ul>
                 </div>
+                
             </div>
         </section> 
         
@@ -33,31 +34,64 @@
 									<a href="#" class="btn btn-dark-gray">인기도서</a>
 									<a href="#" class="btn btn-dark-gray">사서추천도서</a>
 							</div>
-							                              <!-- Start: Search Section -->
-                              	<section th:replace="fragments/library/searchSection :: searchSectionFragment"></section>
+							
+							 <!-- Start: Search Section -->
+							 <section class="search-filters" th:fragment="searchSectionFragment">
+                              	<div class="row">
+                					<div class="col-md-11 col-md-push-2">
+							            <div class="container">
+							                <div class="filter-box">
+							                      <form action="http://libraria.demo.presstigers.com/index.html" method="get">							    
+							                        <div class="col-md-3 col-sm-6">
+							                            <div class="form-group">
+							                                <select name="catalog" id="catalog" class="form-control">
+							                                    <option value="bcl001">단행본</option>
+							                                    <option value="bcl002">연속간행물</option>
+							                                    <option value="bcl003">비도서</option>
+						                                    
+							                                </select>
+							                            </div>
+							                        </div>
+							                        <div class="col-md-4 col-sm-6">
+							                            <div class="form-group">
+							                                <label class="sr-only" for="keywords">Search by Keyword</label>
+							                                <input class="form-control" placeholder="Search by Keyword" id="keywords" name="keywords" type="text">
+							                            </div>
+							                        </div>
+							                        <div class="col-md-2 col-sm-6">
+							                            <div class="form-group">
+							                                <input class="form-control" type="submit" value="Search">
+							                            </div>
+							                        </div>
+							                    </form>
+							                 </div>
+							               </div>
+							             </div>
+							          </div>
+							        </section>
                               <!-- End: Search Section -->
                              </div>
-                            <div class="booksmedia-detail-box">
+                            <div class="booksmedia-detail-box" th:with="s=${stockDetail}">
                             
                             <div class="detailed-box">
                                     <div class="col-xs-12 col-sm-5 col-md-3">
                                         <div class="post-thumbnail">
                                             <div class="book-list-icon blue-icon"></div>
-                                            <img th:src="@{/library/images/books-media/detail-page/detail-page-image.jpg}" alt="Book Image">
+                                            <img th:src="${s.bookInformation.biImg}" alt="이미지를 찾을 수 없습니다" >
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-7 col-md-6">
                                         <div class="post-center-content">
-                                            <h2>(도서명 출력)</h2>
+                                            <h2 th:text="${s.bookInformation.biName}"></h2>
                                             <br><br>
-                                            <p><strong>저자:</strong>&emsp;(저자명)</p>
-                                            <p><strong>ISBN:</strong>&emsp;(ISBN)</p>
-                                            <p><strong>발행자:</strong>&emsp;(발행자)</p>
-                                            <p><strong>발행년도:</strong>&emsp;(발행년도)</p>
-                                            <p><strong>총 페이지수:</strong>&emsp;(총 페이지수)</p>
-                                            <p><strong>등록번호:</strong>&emsp;(도서관내의 도서 코드)</p>
-                                            <p><strong>소장기관:</strong>&emsp;(도서관명)</p>
-                                            <p><strong>청구기호:</strong>&emsp;(청구기호)</p>
+                                            <p><strong>저자:</strong>&emsp;<span th:text="${s.bookInformation.biAuthor}"></span></p>
+                                            <p><strong>ISBN:</strong>&emsp;<span th:text="${s.bookInformation.biIsbn}"></span></p>
+                                            <p><strong>발행자:</strong>&emsp;<span th:text="${s.bookInformation.biPublisher}"></span></p>
+                                            <p><strong>발행년도:</strong>&emsp;<span th:text="${s.bookInformation.biYear}"></span></p>
+                                            <p><strong>총 페이지수:</strong>&emsp;<span th:text="|${s.bsTotalPage}p|"></span></p>
+                                            <p><strong>등록번호:</strong>&emsp;<span th:text="${s.bsCode}"></span></p>
+                                            <p><strong>소장기관:</strong>&emsp;<span>오각형 도서관</span></p>
+                                            <p><strong>청구기호:</strong>&emsp;<span>청구기호 출력예정</span></p>
                                             <br><br>
                                             <div class="actions">
                                                 <ul>
@@ -113,8 +147,8 @@
                                 </div>
                                 
                                 <div class="clearfix"></div>
-                                <p><strong>책 상세설명:</strong> 
-                                	데이터베이스에서 가져오고 없는경우 "죄송합니다. 이 도서는 상세설명을 제공하지 않습니다."
+                                <p th:with="s=${stockDetail}"><strong>책 상세설명:</strong> 
+                                	<span th:text="${s.bookInformation.biDtail}"></span>
                                 </p>
 
                                 <div class="table-tabs" id="responsiveTabs">
@@ -134,7 +168,7 @@
                                                 <tbody>
                                                     <tr>
                                                         <td class="align-middle text-center">Oak Park Public Library Main Branch</td>
-                                                        <td class="align-middle text-center">B PURMORT</td>
+                                                        <td class="align-middle text-center">청구기호 출력예정</td>
                                                         <td class="align-middle text-center">Book</td>
                                                         <td class="align-middle text-center">In Processing</td> 
                                                         <td class="align-middle text-center">In Processing</td>                                                                    

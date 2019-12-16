@@ -12,14 +12,41 @@
  	  
  	  <script type="text/javascript" th:inline="javascript">
  	  
-	  / $(document).ready(function(){  		
+	   $(document).ready(function(){  	
+		// 도서 정보 가져오기   
+    	   $('#bookInfoBtn').click(function(){  			
+  				var biIsbn = $('#biIsbn').val();
+  				console.log($.trim(biIsbn));
+  				
+  				var request = $.ajax({
+  					url:"/getBookInfo",
+  					method: "POST",
+  					data : { 'biIsbn' : biIsbn }, 
+  					dataType: "json"
+  				});
+  				 
+  				request.done(function( data ) {
+  					console.log(data.biName);
+  					
+  	    			var biName        = $('#biName');
+  	    			var biAuthor      = $('#biAuthor');
+  	    			var biPublisher   = $('#biPublisher');
+  	    			var biYear        = $('#biYear');
+  					
+  		 			biName.val(data.biName);
+  		 			biAuthor.val(data.biAuthor);
+  		 			biPublisher.val(data.biPublisher);
+  		 			biYear.val(data.biYear);
+  						
+  				});
+		  
     		// 유효성검사 시작
     		$('#insertBtn').click(function(){
       			
     			var biIsbn        = $('#biIsbn');
     			var biName        = $('#biName');
     			var biAuthor      = $('#biAuthor');
-    			var bsCallNum     = $('#biAuthor');
+    			var bsCallNum     = $('#bsCallNum');
     			var bclName       = $('#bclName');
     			var bcmName       = $('#bcmName');
     			var biPublisher   = $('#biPublisher');
@@ -44,7 +71,7 @@
     				return false;
     			}
     			if(bsCallNum.val() == ''){
-    				alert('청구기호 입력하세요(청구기호 생성 버튼을 클릭해주세요)');
+    				alert('청구기호 입력하세요(청구기호 생성 버튼을 클릭해주세요==5)');
     				bsCallNum.focus();
     				return false;
     			}
@@ -92,7 +119,7 @@
         <div class="container-fluid flex-grow-1 container-p-y">
 
             <h4 class="font-weight-bold py-3 mb-4">
-              	도서 상세정보 추가
+              	도서 추가
             </h4>
 
             <div class="nav-tabs-top">
@@ -114,7 +141,7 @@
 				            <div class="input-group">
 			                  <input type="text" id="biIsbn" name="biIsbn" class="form-control" placeholder="Search for ISBN">		                 
 			                  <span class="input-group-append">
-			                    <button class="btn btn-secondary" type="button">도서정보 가져오기</button>
+			                    <button id="bookInfoBtn" class="btn btn-secondary" type="button">도서정보 가져오기</button>
 			                  </span>
 			                </div>        
 		                 </div>  
