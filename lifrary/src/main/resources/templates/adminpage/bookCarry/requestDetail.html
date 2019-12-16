@@ -107,7 +107,11 @@
 	                    <input type="text" class="form-control" name="brDate" th:value="${rd.brDate}"  readonly>
 	                  </div>
                   </div>		            
-
+				  <div class="text-right mt-3">
+                  	<button type="button" class="btn btn-primary">
+						<a th:href="@{/admin/requestSearchList}" style="color: white">리스트로 이동</a>
+					</button>
+ 				  </div>
                 </form>
               </div>
             </div>

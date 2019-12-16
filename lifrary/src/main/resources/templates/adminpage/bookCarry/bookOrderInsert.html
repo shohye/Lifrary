@@ -6,7 +6,41 @@
 
 	 <th:block layout:fragment="teamHeadScript">
      <script type="text/javascript" th:inline="javascript">  
-     $(document).ready(function(){  		
+     $(document).ready(function(){
+    	 
+       // 도서 정보 가져오기   
+  	   $('#bookInfoBtn').click(function(){  			
+				var biIsbn = $('#biIsbn').val();
+				console.log($.trim(biIsbn));
+				
+				var request = $.ajax({
+					url:"/getBookInfo",
+					method: "POST",
+					data : { 'biIsbn' : biIsbn }, 
+					dataType: "json"
+				});
+				 
+				request.done(function( data ) {
+					console.log(data.biName);
+					
+					var biName      = $('input[name=biName]');
+		 			var biAuthor    = $('input[name=biAuthor]');
+		 			var biPublisher = $('input[name=biPublisher]');
+		 			var biYear      = $('input[name=biYear]');
+					
+		 			biName.val(data.biName);
+		 			biAuthor.val(data.biAuthor);
+		 			biPublisher.val(data.biPublisher);
+		 			biYear.val(data.biYear);
+						
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				});
+				
+		});
+  	 	   
  		// 유효성검사 시작
  		$('#insertBtn').click(function(){
    			
@@ -16,7 +50,7 @@
  			var biPublisher = $('input[name=biPublisher]');
  			var biYear      = $('input[name=biYear]');
  			var boCompany   = $('input[name=boCompany]');
- 			var boBookNum   = $('input[name=boBookNum]');
+ 			var boBookNum   = $('#boBookNum');
  			var boPrice     = $('input[name=boPrice]');
  					
  			
@@ -80,10 +114,10 @@
                   <div class="form-group ">
 	                   <label class="form-label" >ISBN</label>
 			            <div class="input-group">
-		                  <input type="text" name="biIsbn" class="form-control" placeholder="Search for ISBN">
+		                  <input type="text" id="biIsbn" name="biIsbn" class="form-control" placeholder="Search for ISBN">
 		                 
 		                  <span class="input-group-append">
-		                    <button class="btn btn-secondary" type="button">구매예정 정보에서 가져오기</button>
+		                    <button id="bookInfoBtn" class="btn btn-secondary" type="button">구매예정 정보에서 가져오기</button>
 		                  </span>
 		                </div>        
 	                 </div> 
@@ -115,7 +149,7 @@
 	                  </div>
 	                  <div class="form-group col-md-4">
 	                    <label class="form-label">주문권수</label>
-	                    <select class="form-control" name="boBookNum">
+	                    <select class="form-control" id="boBookNum">
 	                    	<option value="0" selected>::주문권수를 선택해주세요::</option>
 	                   		<option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
 	                    </select>

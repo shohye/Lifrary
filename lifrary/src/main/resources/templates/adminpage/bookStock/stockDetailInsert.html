@@ -11,20 +11,21 @@
  	  </th:block>
  	  
  	  <script type="text/javascript" th:inline="javascript">
+ 	  
 	  / $(document).ready(function(){  		
     		// 유효성검사 시작
     		$('#insertBtn').click(function(){
       			
     			var biIsbn        = $('#biIsbn');
-    			var biName        = $('input[name=biName]');
-    			var biAuthor      = $('input[name=biAuthor]');
-    			var bsCallNum     = $('input[name=bsCallNum]');
-    			var bclName       = $('input[name=bclName]');
-    			var bcmName       = $('input[name=bcmName]');
-    			var biPublisher   = $('input[name=biPublisher]');
-    			var biYear        = $('input[name=biYear]');
-    			var bsTotalPage   = $('input[name=bsTotalPage]');
-    			var bsCarryRoute  = $('input[name=bsCarryRoute]');
+    			var biName        = $('#biName');
+    			var biAuthor      = $('#biAuthor');
+    			var bsCallNum     = $('#biAuthor');
+    			var bclName       = $('#bclName');
+    			var bcmName       = $('#bcmName');
+    			var biPublisher   = $('#biPublisher');
+    			var biYear        = $('#biYear');
+    			var bsTotalPage   = $('#bsTotalPage');
+    			var bsCarryRoute  = $('#bsCarryRoute');
     			
     			
     			if(biIsbn.val() == ''){
@@ -77,8 +78,6 @@
     				bsCarryRoute.focus();
     				return false;
     			}
-    			//2222222
-    			2222
     			
     			$('#insertForm').submit();
     			
@@ -123,17 +122,17 @@
 	                    <div class="form-row">
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">도서명</label>
-	                      <input type="text" class="form-control mb-1" name="biName" placeholder="book name"><!-- th:value="${#}"  --> 
+	                      <input type="text" class="form-control mb-1" id="biName" name="biName" placeholder="book name"><!-- th:value="${#}"  --> 
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">저자</label>
-		                      <input type="text" class="form-control" name="biAuthor" placeholder="author">
+		                      <input type="text" class="form-control" id="biAuthor" name="biAuthor" placeholder="author">
 		                    </div>
 		                </div>
 		                <div class="form-row">		               
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">청구기호</label>
-		                      <input type="text" class="form-control mb-1" name="bsCallNum" placeholder="call number">	                   
+		                      <input type="text" class="form-control mb-1" id="bsCallNum" name="bsCallNum" placeholder="call number">	                   
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                      <!-- <label class="form-label">청구기호 생성</label> -->
@@ -143,11 +142,11 @@
 		                 <div class="form-row">
 		                    <div class="form-group col-md-4">
 		                      <label class="form-label">대분류</label>
-		                      <input type="text" class="form-control" name="bclName" placeholder="classification">
+		                      <input type="text" class="form-control" id="bclName" name="bclName" placeholder="classification">
 		                    </div>
 		                    <div class="form-group col-md-4">
 		                      <label class="form-label">중분류</label>
-		                      <input type="text" class="form-control mb-1" name="bcmName" placeholder="classification">
+		                      <input type="text" class="form-control mb-1" id="bcmName" name="bcmName" placeholder="classification">
 		                    </div>
 		                    <div class="form-group col-md-4">
 		                      <br>
@@ -157,21 +156,21 @@
 		                 <div class="form-row">
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">발행자</label>
-		                      <input type="text" class="form-control" name="biPublisher" placeholder="publisher">
+		                      <input type="text" class="form-control" id="biPublisher" name="biPublisher" placeholder="publisher">
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">발행년도</label>
-		                      <input type="text" class="form-control mb-1" name="biYear" placeholder="year">
+		                      <input type="text" class="form-control mb-1" id="biYear" name="biYear" placeholder="year">
 		                    </div>
 		                </div>
 		                <div class="form-row">
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">총페이지</label>
-		                      <input type="text" class="form-control" name="bsTotalPage" placeholder="total page">
+		                      <input type="text" class="form-control" id="bsTotalPage" name="bsTotalPage" placeholder="total page">
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">반입구</label>
-		                      <select class="form-control" name="bsCarryRoute">
+		                      <select class="form-control" id="bsCarryRoute" name="bsCarryRoute">
 		                      		<option value="0" selected>::반입구를 선택해주세요::</option>
 	                   				<option value="구매">구매</option>
 	                   				<option value="기부">기부</option>
@@ -181,10 +180,15 @@
 		                </div>
 		                <div class="form-group">
 		                    <label class="form-label">상세내용</label>
-		                    <textarea class="form-control" name="biDtail" placeholder="datail"></textarea>
+		                    <textarea class="form-control" id="biDtail" name="biDtail" placeholder="datail"></textarea>
 	                    </div>
 	                    
-		               	              
+	                    <div class="text-right mt-3">
+	                      <button type="button" class="btn btn-primary">
+						     <a th:href="@{/admin/stockSearchList}" style="color: white">리스트로 이동</a>
+						  </button>	                    	
+			              <button id="insertBtn" type="button" class="btn btn-primary">소장 도서 추가</button>             
+			            </div>		               	              
 	                 </form>     
                   </div>
                 </div>
@@ -192,11 +196,8 @@
               </div>
             </div>
 
-            <div class="text-right mt-3">
-              <button id="insertBtn" type="button" class="btn btn-primary">소장 도서 추가</button>&nbsp;
-             
-            </div>
-
+            
+     
           </div>
       </th:block>
           

@@ -1,11 +1,19 @@
 package ksmart.pentagon.bookcarry;
 
+import java.io.IOException;
+import java.util.*;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.xml.sax.SAXException;
 
 import ksmart.pentagon.vo.BookCarry;
 import ksmart.pentagon.vo.BookInformation;
@@ -160,4 +168,21 @@ public class BookCarryController {
     }
     
    
+    /***************************************************************************/
+    
+    
+    //도서정보 가져오기 AJAX
+    @RequestMapping(value="/getBookInfo", produces = "application/json")
+	public @ResponseBody BookInformation Ajax(
+			 Model model
+			,@RequestParam(value="biIsbn",required=false)String biIsbn) 
+	{
+    	
+    	System.out.println("biIsbn=>"+biIsbn);
+			
+		return bookCarryService.getBookInfo(biIsbn);	
+	}
+    
+    
+    
 }

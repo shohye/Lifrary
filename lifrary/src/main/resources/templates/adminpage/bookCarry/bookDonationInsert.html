@@ -7,14 +7,15 @@
 	  
 	 <th:block layout:fragment="teamHeadScript">
      <script type="text/javascript" th:inline="javascript">  
-       $(document).ready(function(){  		
+       $(document).ready(function(){  	
+    	   
     		// 유효성검사 시작
     		$('#insertBtn').click(function(){
       			
     			var bdnName = $('input[name=bdnName]');
     			var bdnTel = $('#bdnTel');
     			var bdnAddr = $('input[name=bdnAddr]');
-    			var bdnNum = $('input[name=bdnNum]');
+    			var bdnNum = $('#bdnNum');
     			var bdnDate = $('input[name=bdnDate]');
     			var bdnPersonal = $('input[name=bdnPersonal]:checked');
     			var bdnSticker = $('input[name=bdnSticker]:checked');
@@ -106,7 +107,7 @@
 	                 </div>
 	                 <div class="form-group col-md-6">
 	                    <label class="form-label" >기증도서권수</label>
-	                    <select class="form-control" name="bdnNum">
+	                    <select class="form-control" id="bdnNum">
 	                    	<option value="0" selected>::주문권수를 선택해주세요::</option>
 	                   		<option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
 	                    </select>

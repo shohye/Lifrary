@@ -37,7 +37,7 @@ public class BookStockController {
 		
     	return "/adminpage/bookStock/stockDetailInsert";
     }
-	// (어드민) 소장도서 인서트 화면
+	// (어드민) 소장도서 인서트 처리
 	@PostMapping("/admin/stockDetailInsert")
     public String stockDetailInsert2() {
 		
@@ -118,11 +118,6 @@ public class BookStockController {
     @GetMapping("/lifrary/bookRequestInsert")
     public String bookRequestInsert() {
     	return "/librarypage/book/bookRequestInsert";
-    }
-   // (도서관) 마이페이지 희망도서 신청 리스트
-    @GetMapping("/lifrary/myBookRequestList2")
-    public String myBookRequestList2() {
-    	return "/librarypage/book/myBookRequestList2";
     }
     // (도서관) 마이페이지 희망도서 신청 리스트
     @GetMapping("/lifrary/myBookRequestList")
