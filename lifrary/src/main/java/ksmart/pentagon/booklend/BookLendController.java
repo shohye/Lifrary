@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ksmart.pentagon.vo.BookLend;
 import ksmart.pentagon.vo.BookStock;
 
 /***
@@ -146,15 +147,38 @@ public class BookLendController {
 		
 		return "redirect:/admin/lendSearchList";
 	}
-	
+	/**
+	 * @param session
+	 * @brief 대출도서 등록
+	 * @return /admin/lendSearchList
+	 * @author 최지혜
+	 */
 	@PostMapping("/admin/lendInsert")
-	public String lendInsert(HttpSession session){
+	public String lendInsert(BookLend booklend){
 		
-		String libNum = (String) session.getAttribute("LIBNUM");
+		int result = bookLendService.lendInsert(booklend);
 		
 		
 		return "redirect:/admin/lendSearchList";
 		
+	}
+	
+	/** 
+	 * @param session
+	 * @brief 반납일 등록
+	 * @return /admin/lendSearchList
+	 * @author 최지혜
+	 */
+	@PostMapping("/admin/returnUpdate")
+	public String returnUpdate(	@RequestParam(value="blId" ) String blId
+							    ,@RequestParam(value="bsCode" ) String bsCode
+							    ,HttpSession session) {
+		String libNum = (String) session.getAttribute("LIBNUM");
+		
+		System.out.println("blId: "+blId);
+		System.out.println("bsCode: "+ bsCode);
+		System.out.println("*****************************반납*************************");
+		return "redirect:/admin/lendSearchList";
 	}
 	
 	

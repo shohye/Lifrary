@@ -155,5 +155,15 @@ public class BookLendService {
 		
 	}
 	
+	//대출도서 등록
+	public int lendInsert(BookLend booklend) {
+		
+		String recode = Code.codeCreate(bookLendMapper.maxCode());
+		
+		booklend.setBlCode(recode); 
+		
+		return bookLendMapper.lendInsert(booklend);
+		
+	}
 
 }

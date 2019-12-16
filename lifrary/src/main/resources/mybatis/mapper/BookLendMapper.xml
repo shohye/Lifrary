@@ -219,4 +219,29 @@
 		LIMIT 0,1
 			
   	</select>
+  	<select id="maxCode"  resultType="java.lang.String">
+  		SELECT
+			MAX(bl_code)
+		FROM
+			book_lend
+  	</select>
+  	<insert id="lendInsert" parameterType="ksmart.pentagon.vo.BookLend" >
+		INSERT INTO book_lend(
+			bl_code
+			,l_code
+			,u_id
+			,bl_id
+			,bs_code
+			,bl_lend_date
+			,bl_schedule_date
+		)VALUES (
+			#{blCode}
+			,#{lCode}
+			,#{uId}
+			,#{blId}
+			,#{bsCode}
+			,CURDATE() 
+			,DATE_ADD(CURDATE(), INTERVAL ${ulLendDay} DAY)
+		)
+	</insert>
   </mapper>

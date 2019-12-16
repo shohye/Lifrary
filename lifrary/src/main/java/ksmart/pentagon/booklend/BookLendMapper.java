@@ -17,5 +17,8 @@ public interface BookLendMapper {
 	public BookStock bookInfoStock(String libNum, String svBook);
 		
 	public User userInfo(String libNum, String svUser);
-
+	
+	public String maxCode();
+	
+	public int lendInsert(BookLend booklend);
 }

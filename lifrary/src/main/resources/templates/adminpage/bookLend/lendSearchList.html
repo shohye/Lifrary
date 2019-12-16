@@ -40,17 +40,18 @@
 		if(resultBook != null && resultUser != null){
 			var userLevel = resultUser.userLevel;
 			var bookLend = resultBook.bookLend;
-			var bsBookState = resultBook.bsBookState;//도서상태
-			var bsCode = resultBook.bsCode;//소장도서코드
+
 			var blId = bookLend.blId //예약자 아이디
 			var uId = resultUser.uId;//회원아이디
+			
+			var bsBookState = resultBook.bsBookState;//도서상태
 			var bsLendState = resultBook.bsLendState;//대출상태
 			var uasLendLimit = resultUser.uasLendLimit;//대출권한
 			var ulLendNum = userLevel.ulLendNum;//대출가능 권수
 
 			//반납도서 등록버튼 활성화
 			if(searchBook == 2){
-				$('[type="hidden"]').val('');
+				$('.svHidden').val('');
 				
 				$('#lendForm').find('button').attr('class','btn btn-success').text('반납등록');
 			}
@@ -112,7 +113,6 @@
 		 
 		 var userinfo = $('#userInfo').val();
 		 
-		  
 		 if( userinfo == ''){
 			  alert('검색 회원을 입력해주세요');
 		  }
@@ -125,20 +125,17 @@
 	//대출,반납 등록폼 실행시키는 자바스크립트
 	 $('#insertBtn').click(function(){
 		 var btnClass = $(this).attr('class');
-		 console.log(insert);
-
+	
 		 if(btnClass == 'btn btn-success'){
-			 $("#lendForm").attr("action", "/admin/returnUpdate").sumit();
-			 
-			 
+			 $("#lendForm").attr("action", "/admin/returnUpdate").submit();
+
 		 }
 		 else if(btnClass == 'btn btn-primary'){
-			 $("#lendForm").sumit();
+			 $("#lendForm").submit();
 		 }
  		
 	 }); 
 	 
-	  
   });//document.ready
  
  </script>
@@ -167,7 +164,7 @@
 	                    			<span class="input-group-text">도서코드</span>
 	                 			</div>
 	                       		<input type="text" id="bookInfo" name="svBook" class="form-control" placeholder="Search for...">
-	                       		<input type="hidden" name="svUser" th:if ="${resultUser != null}" th:value=${resultUser.uNumber}>
+	                       		<input type="hidden" name="svUser" class="svHidden" th:if ="${resultUser != null}" th:value=${resultUser.uNumber}>
 	                        	<span class="input-group-append">
 	                         		<button type="button" id="bookInfoBtn" class="btn icon-btn btn-outline-primary">
 	                        			<span class="fas fa-search"></span>
@@ -239,7 +236,7 @@
 	                    			<span class="input-group-text">회원번호</span>
 	                 			</div>
 	                 			<input type="text" id="userInfo" name="svUser" class="form-control" placeholder="Search for...">
-	                       		<input type="hidden" name="svBook" th:if ="${resultBook != null}" th:value=${resultBook.bsCode}>
+	                       		<input type="hidden" name="svBook" class="svHidden" th:if ="${resultBook != null}" th:value=${resultBook.bsCode}>
 	                        	<span class="input-group-append">
 	                         		<button type="button" id="userInfoBtn" class="btn icon-btn btn-outline-primary">
 	                        			<span class="fas fa-search"></span>
@@ -295,8 +292,11 @@
 		 	</div>
 		</div>
 		<form th:action="@{/admin/lendInsert}" id="lendForm" method="post" >
-			<input type="hidden" name="blId">
-			<input type="hidden" name="bsCode">
+			<input type="hidden" name="blId" th:if ="${resultUser != null}" th:value=${resultUser.uId}>
+			<input type="hidden" name="ulLendDay" th:if ="${resultUser != null}" th:value=${resultUser.userLevel.ulLendDay}>
+			<input type="hidden" name="bsCode" th:if ="${resultUser != null}" th:value=${resultBook.bsCode}>
+			<input type="hidden" name="lCode" th:if ="${session != null}" th:value=${session.LIBNUM}>
+			<input type="hidden" name="uId" th:if ="${session != null}" th:value=${session.SAID}>
 			<div class="text-center form-group" th:if ="${session.SALBA eq 'O'}" >
 				<button type="button" id="insertBtn" class="btn btn-outline-default">대출/반납</button>
 			</div>
