@@ -21,7 +21,7 @@
                                     <div class="news-list-box">
                                         <div class="single-news-list">                                         
                                             <figure>
-                                                <img th:src="@{library/images/news-event/news-listing-01.jpg}" alt="News &amp; Event">
+                                                <img th:src="@{/library/images/news-event/news-listing-01.jpg}" alt="News &amp; Event">
                                             </figure>
                                             <div class="content-block">
                                                 <div class="member-info">
@@ -78,7 +78,7 @@
                                                    		<a class="btn btn-primary">종료된 행사</a>
                                                     </th:block>
                                                     <th:block th:if="${pList.pmProgress} != '종료'">
-                                                   		<a class="btn btn-primary" th:href="@{/lifraryProgramDetail(pmCode = ${pList.pmCode})}">자세히 보기</a>
+                                                   		<a class="btn btn-primary" th:href="@{/lifrary/programDetail(pmCode = ${pList.pmCode})}">자세히 보기</a>
                                                     </th:block>
                                                 </div>
                                             </div>
