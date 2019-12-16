@@ -19,7 +19,8 @@
                                    <!-- 프로그램 리스트 반복 출력 --> 
                                    <th:block th:each="pList : ${programList}">
                                     <div class="news-list-box">
-                                        <div class="single-news-list">                                         
+                                    <!-- 삭제된것은 제외하고 출력. -->
+                                        <div class="single-news-list" th:if="${pList.pmProgress} != '삭제'">           
                                             <figure>
                                                 <img th:src="@{/library/images/news-event/news-listing-01.jpg}" alt="News &amp; Event">
                                             </figure>
@@ -72,16 +73,20 @@
                                                         
                                                     </ul>
                                                     <br>
-                                                    <h3><i class="fa fa-hand-o-down" aria-hidden="true"></i>    행사 정보    <i class="fa fa-hand-o-down" aria-hidden="true"></i></h3>
-                                                    	<p th:text="${#strings.abbreviate(pList.pmDetail,25)}"></p>               
-                                                    <th:block th:if="${pList.pmProgress} == '종료'">
+                                                    <th:block th:if="${pList.pmProgress} == '종료' ">
+                                                    <br><br><br>
+                                                    	<p> 프로그램이 종료되었습니다. </p> 
                                                    		<a class="btn btn-primary">종료된 행사</a>
                                                     </th:block>
-                                                    <th:block th:if="${pList.pmProgress} != '종료'">
+                                                    <th:block th:if="${pList.pmProgress} != '종료' ">
+                                                    <br>
+                                                    <h3><i class="fa fa-hand-o-down" aria-hidden="true"></i>    행사 정보    <i class="fa fa-hand-o-down" aria-hidden="true"></i></h3>
+                                                    	<p th:text="${#strings.abbreviate(pList.pmDetail,25)}"></p>               
                                                    		<a class="btn btn-primary" th:href="@{/lifrary/programDetail(pmCode = ${pList.pmCode})}">자세히 보기</a>
                                                     </th:block>
                                                 </div>
                                             </div>
+                                            
                                             <div class="clearfix"></div>
                                         </div>
                                     </div>

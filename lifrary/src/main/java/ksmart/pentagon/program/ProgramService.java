@@ -49,11 +49,21 @@ public class ProgramService {
 		return programMapper.getProgramDetail(paCode);
 	}
 
+	// 프로그램 삭제하기(사서)
+	public void deleteProgram(String pmCode) {
+		programMapper.deleteProgram(pmCode);
+		
+		// 프로그램 삭제시 신청한 사람들 취소로 바꾸기
+		programMapper.deleteCancleProgram(pmCode);
+		
+	}
+	
+
 	// 프로그램 신청하기
 	public void insertProgram(ProgramApply pa) {
 		String appUpdate = "insert";
 		// 자동 코드 기능이 생기면 수정할것.
-		pa.setPaCode("pa-19121600002");
+		pa.setPaCode("pa-19121600008");
 		programMapper.insertProgram(pa);
 		programMapper.updateApplicant(appUpdate, pa.getPmCode()); // 신청시 applicant + 1 해주기.
 	}
@@ -62,7 +72,7 @@ public class ProgramService {
 	public void cancleProgram(String paCode, String pmCode) {
 		String appUpdate = "cancle";
 		programMapper.cancleProgram(paCode);
-		programMapper.updateApplicant(appUpdate,pmCode);
+		programMapper.updateApplicant(appUpdate, pmCode);
 	}
 
 	// 프로그램 수정하기

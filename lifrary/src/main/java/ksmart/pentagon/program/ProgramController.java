@@ -120,6 +120,8 @@ public class ProgramController {
 		return "redirect:/lifrary/programApplyList";
 	}
 	
+	
+	
 
 	/* ======================================================================== */
 	// 아래는 사서채널
@@ -155,6 +157,13 @@ public class ProgramController {
 	@GetMapping("/admin/programInsert")
 	public String programInsert() {
 		return "adminpage/program/programInsert";
+	}
+	
+	
+	@PostMapping("/admin/programInsert")
+	public String programInsert(ProgramManager pm) {
+		System.out.println(pm);
+		return "redirect:/admin/programApplySearchList";
 	}
 
 	/**
@@ -195,5 +204,12 @@ public class ProgramController {
 	public String adminProgramUpdate(ProgramManager pm) {
 		programService.updateProgram(pm);
 		return "redirect:/admin/programDetail?pmCode=" + pm.getPmCode();
+	}
+	
+	@GetMapping("/admin/programDelete")
+	public String adminProgramDelete(@RequestParam(value = "pmCode")String pmCode) {
+		System.out.println(pmCode + "<== pmCode");
+		programService.deleteProgram(pmCode);
+		return "redirect:/admin/programSearchList";
 	}
 }

@@ -16,7 +16,7 @@
                                  <span style="font-size: 40px;">프로그램 신청하기</span>											
 	                                        <section class = "section-padding">
 											<div style="background-color: #CCCCCC; font-size: 15px; font-style: bold; padding : 20px">
-												<form th:action="@{/lifrary/programApply}" method="post">
+												<form id="applyForm" th:action="@{/lifrary/programApply}" method="post">
 													<table border="1">
 													
 															<input type="hidden" name="pmCode" readonly="readonly" th:value="${pmCode}">
@@ -27,10 +27,10 @@
 															<td>프로그램명 : <input type="text" name="pmName" readonly="readonly" th:value="${pmName}"></td>
 														</tr>
 														<tr>
-															<td>신청 아이디 : <input type="text" name="uId" readonly="readonly" th:value="${session.SID}"></td>
+															<td>신청 아이디 : <input id="SID" type="text" name="uId" readonly="readonly" th:value="${session.SID}"></td>
 														</tr>
 														<tr>
-															<td>참여자 이름 : <input type="text" name="paParticipants" ></td>
+															<td>참여자 이름 : <input id="paParticipants" type="text" name="paParticipants" ></td>
 														</tr>
 														
 														<tr>
@@ -42,18 +42,18 @@
 														</tr>
 														
 														<tr>	
-															<td>생년 월일 : <input type="date" name="paBirth"></td>
+															<td>생년 월일 : <input id="paBirth" type="date" name="paBirth"></td>
 														</tr>
 														<tr>
-															<td>주소 : <input type="text" name="paAddr"></td>
+															<td>주소 : <input id="paAddr" type="text" name="paAddr"></td>
 														</tr>
 														<tr>	
-															<td>연락처 : <input type="tel" name="paTel" 
+															<td>연락처 : <input id="paTel" type="tel" name="paTel" 
 															pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required></td>
 														</tr>
 									
 														<tr>	
-															<td><button type="submit" onclick="alert('신청이 완료되었습니다.')"> 신청 </button></td>
+															<td><button id="submitBtn" type="button"> 신청 </button></td>
 														</tr>
 													</table> 
 												</form>

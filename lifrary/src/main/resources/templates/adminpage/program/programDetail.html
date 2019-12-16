@@ -82,20 +82,27 @@
 		                </table>
 		               <br>
 		 				  
+			                  <table>
 			                  <tr>
-						            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
-						   				<a th:href="@{/admin/programUpdate(pmCode=${p.pmCode})}" style="color: white"> 
+			                  	<td>
+					   				<a th:href="@{/admin/programUpdate(pmCode=${p.pmCode})}" style="color: white"> 
+							            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
 						            			<span class="ion ion-md-build"> 수정하기</span>
-						  				</a>
-									</button>
-				  			  </tr>
-				  			  <tr>
-						            <button type="button" class="btn btn-danger d-block" style="margin-top: 10px;">
+										</button>
+					  				</a>
+				  			 	</td>
+				  			 	<th:block th:if="${p.pmProgress} == '접수중'">
+					  			 	<td>
 						 				 <a th:href="@{/admin/programDelete(pmCode=${p.pmCode})}" style="color: white"> 
-					            			<span class="ion ion-md-cut"> 삭제하기</span>
+								            <button type="button" class="btn btn-danger d-block" style="margin-top: 10px;">
+							            			<span class="ion ion-md-cut"> 삭제하기</span>
+											</button>
 						  				 </a>
-									</button>
+									</td>
+								</th:block>
+									
 				  			  </tr>
+				  		  </table>
 		              </div>
 		              
 		              

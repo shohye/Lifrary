@@ -98,7 +98,7 @@
 		VALUES (#{paCode}, #{lCode}, #{pmCode}, #{uId}, #{paParticipants}, #{paGender}, #{paBirth}, #{paAddr}, #{paTel}, NOW())
   	</insert>
   	
-  	<!-- 프로그램 취소 -->
+  	<!-- 프로그램 취소(회원) -->
   	<update id="cancleProgram">
   		UPDATE
   			program_apply
@@ -106,6 +106,26 @@
 			pa_condition='취소'
 		WHERE 
 			pa_code = #{paCode}
+  	</update>
+  	
+  	<!-- 프로그램 삭제(사서)  -->
+  	<update id="deleteProgram" parameterType="String">
+  		UPDATE 
+  			program_mgr
+		SET
+			pm_progress='삭제'
+		WHERE 
+			pm_code = #{pmCode}
+  	</update>
+  	
+  	<!-- //프로그램 삭제시 신청한 사람들 취소로 바꾸기 -->
+  	<update id="deleteCancleProgram">
+  		UPDATE 
+  			program_apply
+		SET
+			pa_condition='취소'
+		WHERE
+			pa_condition = '신청완료' AND pm_code = #{pmCode}
   	</update>
   	
   	<!-- 프로그램 신청시 현재 신청자수 +1 / 프로그램 취소시 현재 신청자수 -1-->

@@ -38,8 +38,14 @@ public interface ProgramMapper {
 	// 프로그램 수정하기
 	public void updateProgram(ProgramManager pm);
 	
-	// 프로그램 취소하기
+	// 프로그램 취소하기(회원)
 	public void cancleProgram(String paCode);
+	
+	// 프로그램 삭제하기(사서)
+	public void deleteProgram(String pmCode);
+	
+	//프로그램 삭제시 신청한 사람들 취소로 바꾸기
+	public void deleteCancleProgram(String pmCode);
 	
 	// 프로그램 신청자수 변경. (신청시(insert) +1 / 취소시(delete) -1)
 	public void updateApplicant(String appUpdate, String pmCode);
