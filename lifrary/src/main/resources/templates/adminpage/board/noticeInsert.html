@@ -6,7 +6,7 @@
 
 <!-- Content -->
 <th:block layout:fragment="adminContents">
-	
+	<script type="text/javascript" th:src="@{/library/ckeditor/ckeditor.js}"></script>
 
 	<style type="text/css">
 #text {
@@ -50,47 +50,15 @@ button {
 }
 </style>
 	
-	<script>
-		document.execCommand('styleWithCSS', false, true);
-		document.execCommand('insertBrOnReturn', false, true);
-		$(document).ready(function() {
-			
-			$('#nsbtn').click(function(){
-				var boardContenttext = $('#boardContent').text();
-				var boardContenthtml = $('#boardContent').html();
-				var boardTitle = $('#boardTitle');
-				var boardContent = $('input[name="boardContent"]').val(boardContenthtml);
-				if(boardContenttext.trim() == null || boardContenttext.trim() == ""){
-					alert('내용을 입력해주세요.');
-					$('#boardContent').focus();
-					return false;
-				}
-				if(boardContenttext.trim() == null || boardContenttext.trim() == ""){
-					alert('내용을 입력해주세요.');
-					$('#boardContent').focus();
-					return false;
-				}
-				if(boardTitle.val().trim() == null || boardTitle.val().trim() == ""){
-					alert('제목을 입력해주세요.');
-					$('#boardTitle').focus();
-					return false;
-				}
-				
-			});
-			$('#text').focus();
-			$('.noteButton').click(function() {
-				document.execCommand($(this).attr('id'), false, true);
-			});
-			
-			$('select').change(function() {
-				document.execCommand($(this).attr('id'), false, $(this).val());
-			});
-		});
-	</script>
+	
 	<h4 class="font-weight-bold py-3 mb-4">
 		<span class="text-muted font-weight-light"></span>공지사항 등록
+	
 	</h4>
-	<div class="card mb-4">
+	<div style="padding-left: 1140px; margin-bottom: 10px;">
+	<a th:href="@{/admin/noticeSearchList(boardLName=${'공지사항'})}" class="btn btn-primary">리스트로 이동</a>
+	</div>
+	<div class="card mb-4"style="padding-top: 10px;">
 				<form th:action="@{/admin/noticeInsert}" method="Post">
 				<input type="hidden" th:value="${session.SAID}" name="uId">
 				<input type="hidden" value="000000" name="lCode">
@@ -98,75 +66,41 @@ button {
 				<input type="hidden" th:value="${boardMCode}" name="boardMCode">
 				<input type="hidden" name="boardContent">
 				<input type="hidden" th:value="${'공지사항'}" name="boardLName">
-		<div>
 			<div>
-				<table>
-					<tr>
-						<td><a th:href="@{/admin/noticeSearchList(boardLName=${'공지사항'})}" class="btn btn-primary">리스트로 이동</a></td>
-						<td><h4 style="padding-top: 10px; margin-left: 380px;">제목 입력</h4></td>
-						<td></td>
-				
-				
-				
-					</tr>
-				</table>
-				<input id="boardTitle" type="text" name="boardTitle" class="form-control"
-					placeholder="제목을 입력해주세요.">
+				<div>
+					<h4 style="padding-top: 10px;margin-left: 43%;">제목 입력</h4>
+					
+					<input id="boardTitle" type="text" name="boardTitle" class="form-control"
+						placeholder="제목을 입력해주세요.">
+				</div>
 			</div>
+			
+			<div style="padding-left: 43%; padding-top: 10px;">
+			</div>
+			<div class="form-group">
+		    </div>
+			<textarea id="boardContent" class="form-control" rows="10"></textarea>
+			<input style="width: 100%" type="submit" id="nsbtn" value="공지사항 등록" class="btn btn-primary">
+			</form>
 		</div>
-		<div style="background-color: #; padding-top: 10px;">
-			<a class="btn btn-secondary noteButton" id="selectAll">전체선택</a>
-			<a class="btn btn-secondary noteButton" id="bold">굵게</a>
-			<a class="btn btn-secondary noteButton" id="italic">기울임</a>
-			<a class="btn btn-secondary noteButton" id="underLine">밑줄</a>
-			<a class="btn btn-secondary noteButton" id="justifyLeft">왼쪽정렬</a>
-			<a class="btn btn-secondary noteButton" id="justifyCenter">가운데정렬</a>
-			<a class="btn btn-secondary noteButton" id="justifyRight">오른쪽정렬</a>
-
-			<select id="fontName" style="height: 40px; width: 100px;">
-				<option value="글꼴선택">글꼴 선택</option>
-				<option value="돋움">돋움</option>
-				<option value="굴림">굴림</option>
-				<option value="궁서">궁서</option>
-				<option value="바탕">바탕</option>
-				<option value="맑은 고딕">맑은 고딕</option>
-			</select> <select id="fontSize" style="height: 40px; width: 100px;">
-				<option value="">글자 크기</option>
-				<option value="1">4px</option>
-				<option value="2">8px</option>
-				<option value="3">10px</option>
-				<option value="4">12px</option>
-				<option value="5">16px</option>
-				<option value="6">20px</option>
-				<option value="7">30px</option>
-			</select> <select id="foreColor" style="height: 40px; width: 100px;">
-				<option value="">글자 색깔</option>
-				<option value="#ffffff">흰색</option>
-				<option value="#f00">빨강</option>
-				<option value="#00f">파랑</option>
-				<option value="#0f0">초록</option>
-				<option value="#ffff00">노랑</option>
-				<option value="#000">검정</option>
-			</select> <select id="hiliteColor" style="height: 40px; width: 100px;">
-				<option value="">글자 배경색</option>
-				<option value="#ffffff">흰색</option>
-				<option value="#f00">빨강</option>
-				<option value="#00f">파랑</option>
-				<option value="#0f0">초록</option>
-				<option value="#ffff00">노랑</option>
-				<option value="#000">검정</option>
-			</select>
-		</div>
-		<div style="padding-left: 40%; padding-top: 10px;">
-			<h4>내용 입력</h4>
-		</div>
-		<div id="boardContent" class="form-control" rows="30" style="height: 400px;"
-			CONTENTEDITABLE></div>
+	</div>
+	<script type="text/javascript">
+		 CKEDITOR.replace('boardContent' , {height: 500   });
+		 
+		 $(document).ready(function() {
+				$('#nsbtn').click(function(){
+					var boardContent = CKEDITOR.instances.boardContent.getData();
+					var boardContentHtml = $('input[name="boardContent"]').val(boardContent);
+					console.log(boardContentHtml.val());
+				})
+			});
 		
-		<input style="width: 100%" type="submit" id="nsbtn" value="공지사항 등록" class="btn btn-primary">
-		</form>
-	</div>
-	</div>
+	</script>
+	<script>
+		
+	</script>
+	
+	
 </th:block>
 
 <!-- / Content -->

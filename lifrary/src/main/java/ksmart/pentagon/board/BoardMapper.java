@@ -10,10 +10,14 @@ import ksmart.pentagon.vo.Board;
 public interface BoardMapper {
 	
 	public List<Board> getBoard(Board board);
-
+	
 	public String maxBoardCode();
 	
 	public void boardInsert(Board board);
 	
 	public Board getBoardDatail(String boardCode);
+	
+	public void boardPageViewUp(String boardCode);
+	
+	public void setBoardUpdate(Board board);
 }

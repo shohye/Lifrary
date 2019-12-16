@@ -33,9 +33,7 @@ public class BoardController {
 		System.out.println("boardList : "+boardList);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		//공지사항 전체 리스트 갯수만큼 리스트 Num에 추가하여 리스트에 번호출력
-		for(int i= 0; i < boardList.size(); i++) {
-			boardList.get(i).setlNum(i+1);
-		}
+		
 		String boardLCode = boardList.get(0).getBoardLCode();
 		String boardMCode = boardList.get(0).getBoardMCode();
 		System.out.println("boardLName : "+ boardLCode);
@@ -65,9 +63,7 @@ public class BoardController {
 		System.out.println("boardList : "+boardList);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		//공지사항 전체 리스트 갯수만큼 리스트 Num에 추가하여 리스트에 번호출력
-		for(int i= 0; i < boardList.size(); i++) {
-			boardList.get(i).setlNum(i+1);
-		}
+		
 		String boardLCode = boardList.get(0).getBoardLCode();
 		String boardMCode = boardList.get(0).getBoardMCode();
 		System.out.println("boardLCode : "+ boardLCode);
@@ -99,9 +95,36 @@ public class BoardController {
 	
 	//공지사항 수정화면으로 이동
 	@GetMapping("/admin/noticeUpdate")
-	public String adminNoticeUpdate() {
+	public String adminNoticeUpdate(@RequestParam(value = "boardCode", required = false)String boardCode, Model model) {
 		System.out.println("공지사항 수정 컨트롤러 /admin/noticeUpdate ##Mapping경로");
+		System.out.println(boardCode);
+		Board board = boardService.getBoardDetail(boardCode);
+		System.out.println("공지사항 수정화면으로 이동 " + board);
+		model.addAttribute("board", board);
 		return "adminpage/board/noticeUpdate";
+	}
+	
+	//공지사항 수정 등록 후 리스트로 이동
+	@PostMapping("/admin/noticeUpdate")
+	public String adminNoticeUpdate(Board board , Model model) {
+			System.out.println("공지사항 수정완료후 등록 /admin/noticeUpdate 경로 adminNoticeUpdate메서드 실행 ");
+			System.out.println("board : " + board);
+			boardService.setBoardUpdate(board);
+			
+//			리스트로 이동
+			List<Board> boardList = boardService.getBoard(board);
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			System.out.println("board@@@@@@@@@@@@@@@@@@@ : "+board);
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			
+			String boardLCode = boardList.get(0).getBoardLCode();
+			String boardMCode = boardList.get(0).getBoardMCode();
+			System.out.println("boardLName : "+ boardLCode);
+			System.out.println("boardMName : "+ boardMCode);	
+			model.addAttribute("boardLCode", boardLCode);
+			model.addAttribute("boardMCode", boardMCode);
+			model.addAttribute("boardList", boardList);
+			return "adminpage/board/noticeSearchList";
 	}
 	
 	

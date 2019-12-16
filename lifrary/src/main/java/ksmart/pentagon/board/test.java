@@ -12,7 +12,7 @@ public class test {
 		String count = null;
 		System.out.println(nowDate);
 		System.out.println(count = String.format("%05d", 1));
-		String max = "board-19121200034";
+		String max = "board-19121600002";
 		String name = max.substring(0, max.indexOf("-"));
 		String date = max.substring(max.lastIndexOf("-")+1, max.lastIndexOf("-")+7);
 		String subMax = max.substring(max.lastIndexOf("-")+7,max.lastIndexOf("-")+7+5);

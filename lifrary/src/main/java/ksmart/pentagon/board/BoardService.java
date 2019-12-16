@@ -18,11 +18,14 @@ import ksmart.pentagon.vo.Board;
 public class BoardService {
 
 	@Autowired private BoardMapper boardmapper;
-	
+
+//		공지사항 리스트 date 가져오기
 		public List<Board> getBoard(Board board){
 			System.out.println("BoardService 파일");
 			return boardmapper.getBoard(board);
 		}
+		
+//		공지사항 date 등록 후 리스트 date 가져오기
 		public void noticeInsert(Board board){
 			String total = null;
 			String max = boardmapper.maxBoardCode();
@@ -53,10 +56,17 @@ public class BoardService {
 			boardmapper.boardInsert(board);
 			
 		}
-		
+//		공지사항 상세페이지 date가져오기
 		public Board getBoardDetail(String boardCode) {
+			boardmapper.boardPageViewUp(boardCode);
+			System.out.println();
 			return boardmapper.getBoardDatail(boardCode);
 		}
+		
+		public void setBoardUpdate(Board board) {
+			boardmapper.setBoardUpdate(board);
+		}
+		
 		
 		
 }

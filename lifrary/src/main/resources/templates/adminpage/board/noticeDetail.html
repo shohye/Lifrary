@@ -6,23 +6,39 @@
 
 	<!-- Content -->
 	<th:block layout:fragment="adminContents">
-		
-			<div>
-				<span th:each="l : ${board}" th:text="${l.boardTitle}"></span>
-			</div>
-			<div th:utext="${board.boardContent}">
+	<script type="text/javascript" th:src="@{/library/ckeditor/ckeditor.js}"></script>
+		 	<h2 class="font-weight-bold py-3 mb-4">
+              <span class="text-muted font-weight-light"></span>공지사항
+            </h2>
+			<div class="card mb-4">
+				<div style="margin: 30px;" th:each="l : ${board}" >
+				
+					<h4><span th:text="${l.boardTitle}"></span></h4>
+					<h6><span style="color: #A2A4A6;" th:text="|작성자 : ${board.uId}  ㅣ  등록일 : ${board.boardDate}  ㅣ  조회수 : ${board.boardPageView}|"></span></h6>
+					<hr style="border-color: #dcdcdc;">
 			
+				<div th:utext="${board.boardContent}">
+				</div>
+				<hr style="border-color: #dcdcdc;">
+			<table>
+				<tr>
+				<td style="width: 130px;">
+				<button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
+	   				<a th:href="@{/admin/noticeUpdate(boardCode=${l.boardCode},boardLName=${board.boardLName})}" style="color: white">
+	            			<span class="ion ion-md-build"> 수정하기</span>
+	  				</a>
+				</button>
+				</td>
+				<td>
+				<button type="button" class="btn btn-danger d-block" style="margin-top: 10px;">
+					<a th:href="@{#(boardCode=${l.boardCode})}" style="color: white"> 
+	          			<span class="ion ion-md-cut"> 삭제하기</span>
+	       			</a>
+				</button>
+				</td>
+				</tr>
+			</table>
 			</div>
-			
-		
-	
-		<div>
-			<a th:href="@{/admin/noticeUpdate}" class="btn btn-primary">수정</a>
-		</div>
-		<br>
-		<br>
-		<div>
-			<a th:href="@{/admin/noticeDelete}" class="btn btn-primary">삭제</a>
 		</div>
 	</th:block>
 	
@@ -33,9 +49,8 @@
 	
 		<!-- addLibs -->
 		<script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
-	
+		
 		<!-- addDemo -->
-		<script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
 	</th:block>
 	<!-- /script -->
 
