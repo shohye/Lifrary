@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    <th:block layout:fragment="customScript">
+ 	<style>
+ 	.category-filter{
+ 		background-image: none;
+ 	}
+ 	.category-filter h2{
+ 		color: #282828;
+ 	}
+ 	.category-list img {
+ 		max-width: 100%; 
+ 		height: 200px;
+ 	}
+ 	@media (max-width: 991px){
+ 		.category-list img {
+ 		max-width: 100%; 
+ 		height: 300px;
+ 		}
+ 	}
+ 	.center-content {
+ 		margin: 10px 0 10px 0;
+ 	}
+ 	</style>
+ 	</th:block>  
+    
+    <th:block layout:fragment="customContents">
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>MY STUDY</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">자유롭게 도서를 정리하는 나만의 서재</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li>MY STUDY</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="books-media-list">
+                        <div class="container">
+                            <div class="row">
+                                <!-- Start: Search Section -->
+                                <section class="category-filter">
+							           <div class="container">
+							           		<div class="center-content">
+								                 <div class="row">
+								                       <div class="col-md-6 col-md-offset-3">
+								                           <h2 class="section-title">MY STUDY</h2>
+								                           <span class="underline center"></span>
+								                           <p class="lead">나만의 기준으로 도서 정리</p>
+								                       </div>
+								                   	</div>
+								               </div>
+								               <div class="filter-buttons">
+							                   <div class="filter btn" data-filter="all">완독 도서</div>
+							                   <div class="filter btn" data-filter=".adults">읽는 중인 도서</div>
+							                   <div class="filter btn" data-filter=".kids-teens">꿀잼 도서</div>
+							                   <div class="filter btn" data-filter=".video">노잼 도서</div>
+							                   <div class="filter btn" data-filter=".audio">읽을 예정</div>
+							               </div>
+							           </div>
+							    </section>     
+                                <!-- End: Search Section -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 col-md-push-3">
+                                	 <div class="filter-options margin-list">
+                                        <div class="row">                                            
+                                            <div class="col-md-3 col-sm-3">
+                                                <select name="orderby">
+                                                    <option selected="selected">::카테고리 선택::</option>
+                                                    <option>완독 도서</option>
+                                                    <option>읽는 중인 도서</option>
+                                                    <option>노잼 도서</option>
+                                                    <option>꿀잼도서</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 col-sm-3">
+                                                <div class="filter-result">total 29</div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4 pull-right">
+                                                <div >
+                                                	<strong><i class="fa fa-cog"></i>카테고리 설정 </strong>
+                                                	<a href="/lifrary/myStudyCateInsert">&nbsp;등록</a>
+                                                    <a href="/lifrary/myStudyCateUpdate">&nbsp;수정</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                	 <section class="category-filter" style=" padding: 0px;">
+							            <div id="category-filter" >
+							                <ul class="category-list">
+							                    <li class="category-item adults">
+							                        <figure>
+							                            <img src="/library/images/studyPlus.png" alt="이미지 준비중" />
+							                            <figcaption class="bg-orange">
+							                                <div class="info-block">
+							                                    <h4>도서 추가</h4>
+							                                    <a href="#">추가하기 <i class="fa fa-long-arrow-right"></i></a>
+							                                </div>
+							                            </figcaption>
+							                        </figure>
+							                    </li>
+							                    <li class="category-item kids-teens">
+							                        <figure>
+							                            <img src="https://image.aladin.co.kr/product/19838/15/cover/k582635330_1.jpg" alt="New Releaase" />
+							                            <figcaption class="bg-orange">
+							                                <div class="info-block">
+							                                    <h4>The Great Gatsby</h4>
+							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
+							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a>
+							                                	<ol>
+							                                        <li>
+							                                            <a href="#"><i class="fa fa-pencil"></i>수정</a>
+							                                        </li>
+							                                        <li>
+							                                            <a href="#"> <i class="fa fa-times"></i>삭제</a>
+							                                        </li>
+							                                    </ol>
+							                                </div>
+							                            </figcaption>
+							                        </figure>
+							                    </li>
+							                    <li class="category-item video">
+							                        <figure>
+							                            <img src="http://image.aladin.co.kr/product/3273/11/cover/8936456555_1.jpg" alt="New Releaase" />
+							                            <figcaption class="bg-orange">
+							                                <div class="info-block">
+							                                    <h4>The Great Gatsby</h4>
+							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
+							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a>
+							                                	<ol>
+							                                        <li>
+							                                            <a href="#"><i class="fa fa-pencil"></i>수정</a>
+							                                        </li>
+							                                        <li>
+							                                            <a href="#"> <i class="fa fa-times"></i>삭제</a>
+							                                        </li>
+							                                    </ol>
+							                                </div>
+							                            </figcaption>
+							                        </figure>
+							                    </li>
+							                    <li class="category-item audio">
+							                        <figure>
+							                            <img src="https://bookthumb-phinf.pstatic.net/cover/124/959/12495947.jpg?type=m1&udate=20180609" alt="New Releaase" />
+							                            <figcaption class="bg-orange">
+							                                <div class="info-block">
+							                                    <h4>The Great Gatsby</h4>
+							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
+							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a>
+							                               		<ol>
+							                                        <li>
+							                                            <a href="#"><i class="fa fa-pencil"></i>수정</a>
+							                                        </li>
+							                                        <li>
+							                                            <a href="#"> <i class="fa fa-times"></i>삭제</a>
+							                                        </li>
+							                                    </ol>
+							                                </div>
+							                            </figcaption>
+							                        </figure>
+							                    </li>
+							                    <li class="category-item books">
+							                        <figure>
+							                            <img src="https://image.aladin.co.kr/product/17592/76/cover/8936456873_1.jpg" alt="New Releaase" />
+							                            <figcaption class="bg-orange">
+							                                <div class="info-block">
+							                                    <h4>The Great Gatsby</h4>
+							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
+							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a>
+							                                	<ol>
+							                                        <li>
+							                                            <a href="#"><i class="fa fa-pencil"></i>수정</a>
+							                                        </li>
+							                                        <li>
+							                                            <a href="#"> <i class="fa fa-times"></i>삭제</a>
+							                                        </li>
+							                                    </ol>
+							                                </div>
+							                            </figcaption>
+							                        </figure>
+							                    </li>
+							                    <li class="category-item magazines">
+							                        <figure>
+							                            <img src="https://bookthumb-phinf.pstatic.net/cover/078/420/07842053.jpg?type=m1&udate=20180127" alt="New Releaase" />
+							                            <figcaption class="bg-orange">
+							                                <div class="info-block">
+							                                    <h4>The Great Gatsby</h4>
+							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
+							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a> 
+							                                	<ol>
+							                                        <li>
+							                                            <a href="#"><i class="fa fa-pencil"></i>수정</a>
+							                                        </li>
+							                                        <li>
+							                                            <a href="#"> <i class="fa fa-times"></i>삭제</a>
+							                                        </li>
+							                                    </ol>
+							                                </div>
+							                            </figcaption>
+							                        </figure>
+							                    </li>
+							                    <li class="category-item adults">
+							                        <figure>
+							                            <img src="https://image.aladin.co.kr/product/19832/27/cover/8936477838_1.jpg" alt="New Releaase" />
+							                            <figcaption class="bg-orange">
+							                                <div class="info-block">
+							                                    <h4>The Great Gatsby</h4>
+							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
+							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a>
+							                                	<ol>
+							                                        <li>
+							                                            <a href="#"><i class="fa fa-pencil"></i>수정</a>
+							                                        </li>
+							                                        <li>
+							                                            <a href="#"> <i class="fa fa-times"></i>삭제</a>
+							                                        </li>
+							                                    </ol>
+							                                </div>
+							                            </figcaption>
+							                        </figure>
+							                    </li>
+							                    <li class="category-item kids-teens">
+							                        <figure>
+							                            <img src="https://image.aladin.co.kr/product/21168/79/cover/k642636886_2.jpg" alt="New Releaase" />
+							                            <figcaption class="bg-orange">
+							                                <div class="info-block">
+							                                    <h4>The Great Gatsby</h4>
+							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
+							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a>
+							                                	<ol>
+							                                        <li>
+							                                            <a href="#"><i class="fa fa-pencil"></i>수정</a>
+							                                        </li>
+							                                        <li>
+							                                            <a href="#"> <i class="fa fa-times"></i>삭제</a>
+							                                        </li>
+							                                    </ol>
+							                                </div>
+							                            </figcaption>
+							                        </figure>
+							                    </li>
+							                </ul>
+							                <div class="center-content">
+						                   		<nav class="navigation pagination text-center">
+			                                        <div class="nav-links">
+			                                            <a class="prev page-numbers" href="#."><i class="fa fa-long-arrow-left"></i> Previous</a>
+			                                            <a class="page-numbers" href="#.">1</a>
+			                                            <span class="page-numbers current">2</span>
+			                                            <a class="page-numbers" href="#.">3</a>
+			                                            <a class="page-numbers" href="#.">4</a>
+			                                            <a class="next page-numbers" href="#.">Next <i class="fa fa-long-arrow-right"></i></a>
+			                                        </div>
+		                                    	</nav>
+							                </div>
+							                <div class="clearfix"></div>
+							            </div>
+        						</section>
+                                </div>
+                                <!-- 마이페이지 사이드메뉴  -->
+                                <div th:replace="fragments/library/myPageLeftMenu :: myPageLeftMenuFragment"></div>
+                                <!-- 마이페이지 사이드메뉴-->
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </th:block>
+</html>
