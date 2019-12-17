@@ -14273,6 +14273,7 @@ a:focus {
   font-size: 14px;
   line-height: 1.42857143;
 }
+
 .woocommerce-checkout h2 {
   color: #282828;
 }
@@ -17252,12 +17253,24 @@ a:focus {
 .table-tabs .table thead:first-child tr:first-child th {
   border-top: 1px solid #282828;
 }
+
+.table-tabs .report-table thead:first-child tr:first-child th {
+  border-top: none;
+}
 .table-tabs .table th {
   background-color: #282828;
   border-color: #282828;
   border-top: 1px solid #282828;
   color: #fff;
   padding: 20px;
+  text-transform: uppercase;
+}
+.table-tabs .report-table th {
+  background-color: #fff;
+  border-color: #ddd;
+  border-top: none;
+  color: #2f2f2f;
+  padding: 10px;
   text-transform: uppercase;
 }
 @media (max-width: 991px) {
@@ -17269,6 +17282,11 @@ a:focus {
   color: #2f2f2f;
   padding: 20px;
 }
+.table-tabs .report-table td {
+  color: #2f2f2f;
+  padding: 10px;
+}
+
 @media (max-width: 991px) {
   .table-tabs .table td {
     text-indent: 0;

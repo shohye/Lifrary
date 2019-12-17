@@ -47,12 +47,6 @@ public class BookReportController {
 		return "/librarypage/bookReport/bookReportInsert";
 	
 	}
-	@GetMapping("/lifrary/bookReportInsert2")
-	public String bookReportInsert2() {
-		
-		return "/librarypage/bookReport/bookReportInsert2";
-	
-	}
 	
 	/**
 	 * @brief 독후감 상세 

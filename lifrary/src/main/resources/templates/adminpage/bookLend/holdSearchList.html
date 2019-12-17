@@ -16,6 +16,18 @@
   
   <!-- teamScript -->
   <th:block layout:fragment="teamHeadScript">
+  	<script type="text/javascript" th:inline="javascript">
+  	 /*<![CDATA[*/  	
+	  	var resultDelete = [[ ${resultDelete} ]];//예약취소 결과
+	/*]]*/	
+	
+		console.log(resultDelete);
+		
+  	 	if(resultDelete == 1){
+			alert('정상적으로 취소되었습니다');
+		}
+  	
+  	</script>
   
   </th:block>
   <!-- / teamScript  -->
@@ -25,7 +37,6 @@
 	<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
 			<div>예약 관리</div>
 	</h4>
-	<h6>예약도서리스트만 출력!! 예약도서 취소가능!</h6>  
 	<div class="card">
 	    <div class="card-datatable table-responsive">
 	      <table class="datatables-demo table table-striped table-bordered">
@@ -37,27 +48,37 @@
 	            <th>회원명</th>
 	            <th>예약일</th>
 	            <th>예약상태</th>
-	            <th>취소</th>
+	            <th>상세보기</th>
 	          </tr>
 	        </thead>
 	        <tbody>
-	          <tr class="odd gradeX">
-	            <td>도서1</td>
-	            <td>도서1</td>
-	            <td>도서1</td>
-	            <td class="center">도서1</td>
-	            <td class="center">도서1</td>
-	            <td class="center">도서1</td>
-	            <td class="center">도서1</td>
-	          </tr>
-	          <tr class="even gradeC">
-	            <td>도서2</td>
-	            <td>도서2</td>
-	            <td>도서2</td>
-	            <td class="center">도서2</td>
-	            <td class="center">도서2</td>
-	            <td class="center">도서2</td>
-	            <td class="center">도서2</td>
+	          <tr th:each="H : ${holdList}">
+	            <td class="align-middle" th:text="${H.bsCode}"></td>
+	            <td style="min-width: 300px;">
+             	 	<div class="media align-items-center">
+             	 		<img class="ui-w-40 d-block" th:src="${H.biImg}" alt="">
+             	 		<span class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(H.biName,25)}"></span>
+             	 	</div>
+             	 </td>
+	            <td class="align-middle" th:text="${H.uNumber}"></td>
+	            <td class="align-middle" th:text="${H.uName}"></td>
+	            <td class="align-middle" th:text="${H.blHoldDate}"></td>
+	            <td class="align-middle text-center" th:if = "${H.blReturnDate == null}">
+	            	<a th:href="@{/admin/holdDelete(blCode=${H.blCode}, bsCode=${H.bsCode})}">
+			    		<span class="badge badge-outline-success">예약취소</span>
+			    	</a>	
+                </td>
+                <td class="align-middle text-center" th:unless = "${H.blReturnDate == null}">
+                	<span class="badge badge-outline-secondary">취소완료</span>
+                </td>
+                <td class="align-middle">
+	             	<a th:href="@{/admin/stockDetail(bsCode=${H.bsCode})}"class="btn btn-default btn-xs icon-btn md-btn-flat" title="도서정보" data-original-title="도서정보" >
+	             		<i class="fas fa-book"></i>
+	             	</a>
+	             	<a th:href="@{/admin/adminUserDetail(uId=${H.blId})}" class="btn btn-default btn-xs icon-btn md-btn-flat" title="회원정보" data-original-title="회원정보" >
+	             	 	<i class="fas fa-user-alt"></i>
+	             	</a>
+                </td>
 	          </tr>
 	        </tbody>
 	      </table>
