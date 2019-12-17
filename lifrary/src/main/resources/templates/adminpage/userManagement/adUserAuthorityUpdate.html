@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+
+
+   <!-- Content -->
+   		<th:block layout:fragment="adminContents">
+
+  <div class="page-loader">
+    <div class="bg-primary"></div>
+  </div>
+
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-2">
+    <div class="layout-inner">
+
+      <!-- Layout sidenav -->
+      <!-- /Layout sidenav -->
+      
+
+      <!-- Layout container -->
+      <div class="layout-container">
+        <!-- Layout navbar -->
+        <!-- /Layout navbar -->
+        
+
+        <!-- Layout content -->
+        <div class="layout-content">
+
+          <!-- Content -->
+          <div class="container-fluid flex-grow-1 container-p-y">
+
+            <h4 class="font-weight-bold py-3 mb-4">
+              <span class="text-muted font-weight-light">Forms /</span> 회원권한 수정화면
+            </h4>
+
+            
+            <div class="card mb-4">
+              <h6 class="card-header">
+                권한을 수정해주세세요
+              </h6>
+              <div class="card-body">
+                <form th:action="@{/admin/adUserAuthorityUpdate}" id="validation-form" method="post" th:with="aup = ${aUpdate}">
+                  <div class="form-row">
+	              <div class="form-group col-md-6">
+	                 <label class="form-label">제한코드</label>
+	                 <input type="text" class="form-control" name="uasCode" th:value="${aup.uasCode}" placeholder="제한코드" readonly="readonly">
+	              </div>
+	              <div class="form-group col-md-6">
+	                 <label class="form-label">작성자 아이디</label>
+	                 <input type="text" class="form-control" name="uId" th:value="${aup.uId}" placeholder="작성자 아이디">
+	              </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">도서관 코드</label>
+                    <input type="text" class="form-control" name="lCode" th:value="${aup.lCode}" placeholder="도서관코드">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">제한 명</label>
+                    <input type="text" class="form-control" name="uasName" th:value="${aup.uasName}" placeholder="제한 명">
+                  </div>
+                  <div class="form-row">
+	                 <div class="form-group col-md-6">
+	                   <label class="form-label">연체일(최소)</label>
+	                   <input type="text" class="form-control" name="uasOverdueMin" th:value="${aup.uasOverdueMin}" placeholder="최소 연체일">
+	                 </div>
+	                 <div class="form-group col-md-6">
+	                   <label class="form-label">연체일(최대)</label>
+	                   <input type="text" class="form-control" name="uasOverdueMax" th:value="${aup.uasOverdueMax}" placeholder="최대 연체일">
+	                 </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label">제한 일</label>
+                      <input type="text" class="form-control" name="uasLimitDate" th:value="${aup.uasLimitDate}" placeholder="제한 일">
+                    </div>
+                  </div>
+             	 <div class="form-group">
+                   <label class="form-label">대출권한</label>
+                    <div class="form-check">
+                     <label class="custom-control custom-radio">
+               		   	<input th:if="${aup.uasLendLimit eq 'O'}" name="uasLendLimit" type="radio" class="custom-control-input" value="O" checked="">
+	                    <input th:unless="${aup.uasLendLimit eq 'O'}" name="uasLendLimit" type="radio" class="custom-control-input" value="O">	
+               		   	<span class="custom-control-label">대출가능</span>
+                     </label>
+                     <label class="custom-control custom-radio">
+                 		 <input th:if="${aup.uasLendLimit eq 'X'}" name="uasLendLimit" type="radio" class="custom-control-input" value="X" checked="">
+		                 <input th:unless="${aup.uasLendLimit eq 'X'}" name="uasLendLimit" type="radio" class="custom-control-input" value="X">
+                 		 <span class="custom-control-label">대출불가</span>
+                     </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                   <label class="form-label">공공시설</label>
+                    <div class="form-check">
+                     <label class="custom-control custom-radio">
+               		   	 <input th:if="${aup.uasFacilityLimit eq 'O'}" name="uasFacilityLimit" type="radio" class="custom-control-input" value="O" checked="">
+	                   	 <input th:unless="${aup.uasFacilityLimit eq 'O'}" name="uasFacilityLimit" type="radio" class="custom-control-input" value="O">	
+               		   	<span class="custom-control-label">사용가능</span>
+                     </label>
+                     <label class="custom-control custom-radio">
+                 		 <input th:if="${aup.uasFacilityLimit eq 'X'}" name="uasFacilityLimit" type="radio" class="custom-control-input" value="X" checked="">
+		                 <input th:unless="${aup.uasFacilityLimit eq 'X'}" name="uasFacilityLimit" type="radio" class="custom-control-input" value="X">
+                 		 <span class="custom-control-label">사용불가</span>
+                     </label>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label">제한 등록일</label>
+                      <input type="text" class="form-control" name="uasDate" th:value="${aup.uasDate}" placeholder="제한 등록일">
+                    </div>
+                  </div>
+                    
+                 
+                  <div class="form-group">
+                    <label class="custom-control custom-checkbox m-0">
+                      <input type="checkbox" class="custom-control-input">
+                      <span class="custom-control-label">작성일과 권한코드는 등록 날짜자동 </span>
+                    </label>
+                  </div>
+                  <button type="submit" class="btn btn-primary">권한 수정 완료</button>
+                </form>
+              </div>
+            </div>
+
+
+            
+
+          </div>
+          <!-- / Content -->
+
+          <!-- Layout footer -->
+
+          <!-- / Layout footer -->
+
+        </div>
+        <!-- Layout content -->
+
+      </div>
+      <!-- / Layout container -->
+
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-sidenav-toggle"></div>
+  </div>
+  <!-- / Layout wrapper -->
+	<!--  scripts -->	
+	<th:block layout:fragment="pageScript">
+	</th:block>
+	<!--  /scripts -->
+  
+
+	</th:block>
+
+</html>

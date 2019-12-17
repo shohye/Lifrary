@@ -24,24 +24,49 @@
 		  <li class="sidenav-header small font-weight-semibold">User Management</li>
           <!-- 회원 관리 -->
           <li class="sidenav-item">
-            <a href="javascript:void(0)" class="sidenav-link sidenav-toggle"><i class="sidenav-icon fas fa-user-alt"></i>
+            <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
+            <i class="sidenav-icon fas fa-user-alt"></i>
               <div>1.회원 관리</div>
             </a>
             <ul class="sidenav-menu">
-              <li class="sidenav-item">
+              <li class="sidenav-item ">
                 <a th:href="@{/admin/userSearchList}" class="sidenav-link">
                   <div>!회원 관리</div>
                 </a>
               </li>
               <li class="sidenav-item">
-			    <a th:href="@{/admin/adUserLevelList}" class="sidenav-link">
-                  <div>!회원 등급 설정</div>
+			    <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
+                  <div>!회원 등급 관리</div>
                 </a>
+				<ul class="sidenav-menu">
+                  <li class="sidenav-item">
+                    <a th:href="@{/admin/adUserLevelList}"  class="sidenav-link">
+                      <div>!회원 등급 설정</div>
+                    </a>
+                  </li>
+                  <li class="sidenav-item">
+                    <a th:href="@{/admin/adUserLevelHistorySearchList}"  class="sidenav-link">
+                      <div>!회원 등급 이력</div>
+                    </a>
+                  </li>
+                </ul>
               </li>
               <li class="sidenav-item">
-                <a th:href="@{/admin/adUserAuthorityInsert}" class="sidenav-link">
-                  <div>!회원 권한 설정</div>
+                <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
+                  <div>!회원 권한 관리</div>
                 </a>
+                <ul class="sidenav-menu">
+                  <li class="sidenav-item">
+                    <a th:href="@{/admin/adUserAuthorityList}"  class="sidenav-link">
+                      <div>!회원 권한 설정</div>
+                    </a>
+                  </li>
+                  <li class="sidenav-item">
+                    <a th:href="@{/admin/adUserAuthorityHistorySearchList}"  class="sidenav-link">
+                      <div>!회원 권한 이력</div>
+                    </a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>
@@ -53,13 +78,13 @@
             </a>
             <ul class="sidenav-menu">
               <li class="sidenav-item">
-                <a th:href="@{/admin/librarianInsert}" class="sidenav-link">
+                <a th:href="@{/admin/librarianUpdate}" class="sidenav-link">
                   <div>!사서 관리</div>
                 </a>
               </li>
               <li class="sidenav-item">
-                <a th:href="@{#}" class="sidenav-link">
-                  <div>#사서 권한 설정</div>
+                <a th:href="@{/admin/librarianLevelList}" class="sidenav-link">
+                  <div>!사서 권한 설정</div>
                 </a>
               </li>
             </ul>

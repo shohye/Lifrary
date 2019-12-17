@@ -1,8 +1,6 @@
 
 package ksmart.pentagon.vo;
 
-import groovy.transform.stc.ThirdParam.Component;
-
 public class User {
 	private String uId;
 	private String lCode;
