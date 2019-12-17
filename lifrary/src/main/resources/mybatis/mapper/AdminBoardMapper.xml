@@ -21,9 +21,9 @@
   	<select id="getBoard" resultMap="boardNoticeList">
   	SELECT
 *
-FROM board AS b INNER JOIN board_medium AS me
-ON b.board_m_code = me.board_m_code
-WHERE me.board_m_name = #{boardLName} ORDER BY b.board_date DESC;
+FROM board AS b INNER JOIN board_large AS bl
+ON b.board_l_code = bl.board_l_code
+WHERE bl.board_l_name = #{boardLName} ORDER BY b.board_date DESC;
   	</select>
   	
 <!--   	공지사항 PK MAX코드 불러오기 쿼리문 -->
@@ -69,11 +69,17 @@ WHERE me.board_m_name = #{boardLName} ORDER BY b.board_date DESC;
   	</select>
   	
   	<update id="setBoardUpdate" parameterType="ksmart.pentagon.vo.Board">
-  		
   	UPDATE board
 	SET
 		board_title= #{boardTitle},
 		board_content= #{boardContent}
 	WHERE board_code = #{boardCode}
   	</update>
+  	
+  	<delete id="boardDelete" parameterType="String">
+  		DELETE 
+  		FROM 
+  		board 
+  		WHERE board_code= #{boardCode}
+  	</delete>
   	</mapper>

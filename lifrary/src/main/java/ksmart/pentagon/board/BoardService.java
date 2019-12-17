@@ -26,7 +26,7 @@ public class BoardService {
 		}
 		
 //		공지사항 date 등록 후 리스트 date 가져오기
-		public void noticeInsert(Board board){
+		public Board noticeInsert(Board board){
 			String total = null;
 			String max = boardmapper.maxBoardCode();
 			Date today = new Date();
@@ -55,6 +55,8 @@ public class BoardService {
 			System.out.println("boardmapper.boardInsert() 메서드 실행");
 			boardmapper.boardInsert(board);
 			
+			return boardmapper.getBoardDatail(total);
+			
 		}
 //		공지사항 상세페이지 date가져오기
 		public Board getBoardDetail(String boardCode) {
@@ -64,7 +66,12 @@ public class BoardService {
 		}
 		
 		public void setBoardUpdate(Board board) {
+			System.out.println("service67 board : "+board);
 			boardmapper.setBoardUpdate(board);
+		}
+		
+		public void boardDelete(String boardCode) {
+			boardmapper.boardDelete(boardCode);
 		}
 		
 		

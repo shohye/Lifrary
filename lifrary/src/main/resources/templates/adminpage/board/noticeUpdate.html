@@ -59,7 +59,8 @@ button {
 	<a th:href="@{/admin/noticeSearchList(boardLName=${'공지사항'})}" class="btn btn-primary">리스트로 이동</a>
 	</div>
 	<div class="card mb-4"style="padding-top: 10px;">
-				<form th:action="@{/admin/noticeUpdate}" method="Post">
+				<form th:action="@{/admin/noticeUpdate}" method="post">
+				<input type="hidden" th:value="${board.boardCode}" name="boardCode">
 				<input type="hidden" th:value="${session.SAID}" name="uId">
 				<input type="hidden" value="000000" name="lCode">
 				<input type="hidden" th:value="${boardLCode}" name="boardLCode">
@@ -79,7 +80,11 @@ button {
 			<div class="form-group">
 		    </div>
 			<textarea id="boardContent" class="form-control" rows="10" th:utext="${board.boardContent}"></textarea>
-			<input style="width: 100%" type="submit" id="nsbtn" value="공지사항 수정 완료" class="btn btn-primary">
+			<div style="padding: 10px;">
+			<input type="submit" id="nsbtn" value="공지사항 수정 완료" class="btn btn-primary">
+			<a onclick="history.go(-1)" class="btn btn-secondary">수정취소</a>
+			
+			</div>
 			</form>
 			
 		</div>
@@ -89,10 +94,10 @@ button {
 		 
 		 $(document).ready(function() {
 				$('#nsbtn').click(function(){
-					var boardContent = CKEDITOR.instances.boardContent.getData();
-					var boardTitle = CKEDITOR.instances.boardTitle.getData();
-					var boardContentHtml = $('input[name="boardContent"]').val(boardContent);
-					var boardtitleHtml = $('input[name="boardTitle"]').val(boardTitle);
+					var boardContent1 = CKEDITOR.instances.boardContent.getData();
+					var boardTitle1 = CKEDITOR.instances.boardTitle.getData();
+					var boardContentHtml = $('input[name="boardContent"]').val(boardContent1);
+					var boardtitleHtml = $('input[name="boardTitle"]').val(boardTitle1);
 					console.log(boardContentHtml.val());
 					console.log(boardtitleHtml.val());
 				})

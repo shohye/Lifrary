@@ -13,7 +13,7 @@
 			<div class="card mb-4">
 				<div style="margin: 30px;" th:each="l : ${board}" >
 				
-					<h4><span th:text="${l.boardTitle}"></span></h4>
+					<h4><span th:utext="${l.boardTitle}"></span></h4>
 					<h6><span style="color: #A2A4A6;" th:text="|작성자 : ${board.uId}  ㅣ  등록일 : ${board.boardDate}  ㅣ  조회수 : ${board.boardPageView}|"></span></h6>
 					<hr style="border-color: #dcdcdc;">
 			
@@ -24,17 +24,25 @@
 				<tr>
 				<td style="width: 130px;">
 				<button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
-	   				<a th:href="@{/admin/noticeUpdate(boardCode=${l.boardCode},boardLName=${board.boardLName})}" style="color: white">
+	   				<a th:href="@{/admin/noticeUpdate(boardCode=${l.boardCode},boardLName=${'공지사항'})}" style="color: white">
 	            			<span class="ion ion-md-build"> 수정하기</span>
 	  				</a>
 				</button>
 				</td>
-				<td>
+				<td style="width: 130px;">
 				<button type="button" class="btn btn-danger d-block" style="margin-top: 10px;">
-					<a th:href="@{#(boardCode=${l.boardCode})}" style="color: white"> 
+					<a th:href="@{/admin/noticeDelete(boardCode=${l.boardCode},boardLName=${'공지사항'})}" style="color: white"> 
 	          			<span class="ion ion-md-cut"> 삭제하기</span>
 	       			</a>
 				</button>
+				</td>
+				<td>
+				<button type="button" class="btn d-block btn-secondary" style="margin-top: 10px;">
+					<a th:href="@{/admin/noticeSearchList(boardLName=${'공지사항'})}" style="color: white"> 
+	          			<span class="far fa-list-alt"> 리스트 </span>
+	       			</a>
+				</button>
+				
 				</td>
 				</tr>
 			</table>

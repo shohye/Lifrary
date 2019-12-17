@@ -36,7 +36,7 @@
 	                <tbody>
 		                  <tr th:each="l,pro : ${boardList}">
 		                  	<td th:text="${pro.count}"></td>
-		                  	<td><a th:href="@{/admin/noticeDetail(boardCode=${l.boardCode})}" title="상세보기">[[${l.boardTitle}]]</a></td>
+		                  	<td><a th:href="@{/admin/noticeDetail(boardCode=${l.boardCode})}" title="상세보기" th:utext="${l.boardTitle}"></a></td>
 		                  	<td th:text="${l.uId}"></td>
 		                  	<td th:text="${l.boardPageView}"></td>
 		                  	<td th:text="${l.boardDate}"></td>
