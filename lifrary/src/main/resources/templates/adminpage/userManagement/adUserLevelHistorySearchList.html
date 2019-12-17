@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+
+ <!-- headAdd(Libs&page) -->
+  
+  <th:block layout:fragment="adminHeadAdd">
+  
+  <!-- addLibs -->
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+
+  <!-- addPage -->
+  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
+ 
+  </th:block>
+  
+  <!-- /headAdd(Libs&page) --> 
+  
+      <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+  <script type="text/javascript">
+  //리스트에서 마우스 올리면 클릭해서 상세페이지로 가는 이벤트
+/*    $(document).ready(function(){
+	
+	  $('#rrow').click(function(){
+		  
+	  });
+
+  });//document.ready  */
+  
+ </script>
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+	  
+	<!-- Content -->
+	<th:block layout:fragment="adminContents">   
+		 <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+              <div>회원전체 등급 내역 검색리스트 </div>   
+        </h4>
+
+
+            <div class="card">
+              <div class="card">
+                <div class="card-datatable table-responsive">
+				  <table class="datatables-demo table table-hover table-bordered">
+	                <thead>
+                  	<tr>
+                    	<th>회원등급이력코드</th>
+                    	<th>도서관코드</th>
+                    	<th>회원ID</th>
+                    	<th>회원이름</th>
+                    	<th>회원등급</th>
+                    	<th>등급명</th>
+                    	<th>회원등급변동사유</th>
+                    	<th>등록일</th>	
+                    </tr>
+	                </thead>
+	                  <tbody>
+	                   <tr role="row" th:each="lh : ${levelHistory}">
+	               			<td class="align-middle" th:text="${lh.ulhCode}"></td>
+	               			<td class="align-middle" th:text="${lh.lCode}"></td>
+	               			<td class="align-middle" th:text="${lh.uId}"></td>
+	               			<td class="align-middle" th:text="${lh.uName}"></td>
+	               			<td class="align-middle" th:text="${lh.ulLevel}" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="${lh.ulName}" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="${#strings.abbreviate(lh.ulhReason,20)}" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="|${lh.ulhDate}일|" style="text-align:center"></td>
+	                   	</tr> 
+		            </tbody>
+		          </table>
+		      </div>
+           </div>
+    </div>
+	</th:block>
+	<!-- / Content -->
+  <!-- / scripts -->
+	  <th:block layout:fragment="pageScript">
+	  <!-- addLibs -->
+	  <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
+	  <script th:src="@{/admin/vendor/libs/numeral/numeral.js}"></script>
+	  <script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
+		
+	  <!-- addDemo -->
+ 		<script th:src="@{/admin/js/ad_user_level_history_search_list.js}"></script>
+	  </th:block>
+   <!-- / scripts -->
+	          
+</html>
