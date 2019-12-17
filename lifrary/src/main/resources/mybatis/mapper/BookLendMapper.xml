@@ -18,6 +18,8 @@
 	    <result column="bl_return_date" property="blReturnDate"/>
 	    <result column="bl_hold_date" property="blHoldDate"/>
 	    <result column="bl_overdue_days" property="blOverdueDays"/>
+	    <result column="u_number" property="uNumber"/>
+	    <result column="u_name" property="uName"/>
 	</resultMap>
 	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfo">
 	    <result column="bi_isbn" property="biIsbn"/>
@@ -91,7 +93,9 @@
 		WHERE 
 			bl.bl_lend_date IS NOT NULL 
 		AND 
-			bl.l_code = #{libNum}				
+			bl.l_code = #{libNum}
+		ORDER BY 
+			bl.bl_code  DESC					
   	</select>
   	<select id="bookLendCheck" parameterType="String" resultType="java.lang.Integer">
   		SELECT 
@@ -119,6 +123,7 @@
 			,bi.bi_publisher
 			,bi.bi_kdc
 			,u.u_number
+			,bl.bl_code
 			,bl.bl_id 
 			,bl.bl_lend_date
 			,bl.bl_return_date 
@@ -225,7 +230,7 @@
 		FROM
 			book_lend
   	</select>
-  	<insert id="lendInsert" parameterType="ksmart.pentagon.vo.BookLend" >
+  	<insert id="lendInsert" parameterType="ksmart.pentagon.vo.BookLend">
 		INSERT INTO book_lend(
 			bl_code
 			,l_code
@@ -244,4 +249,68 @@
 			,DATE_ADD(CURDATE(), INTERVAL ${ulLendDay} DAY)
 		)
 	</insert>
+	<update id="stockUpdate">
+		UPDATE book_stock
+			SET
+				bs_lend_state= #{lendState}	
+			WHERE 
+				bs_code = #{bsCode}	
+	</update>
+	<update id="returnUpdate">
+		UPDATE book_lend
+			SET
+				bl_return_date= CURDATE()
+			WHERE 
+				bl_code = #{blCode}
+	</update>
+	<update id="extensionUpdate">
+		UPDATE book_lend
+			SET
+				bl_extension_date=CURDATE(),
+				bl_schedule_date= DATE_ADD(bl_schedule_date, INTERVAL 7 DAY) 
+			WHERE 
+				bl_code = #{blCode}
+	</update>
+	<select id="holdSearchList" resultMap="bookLend">
+		SELECT
+			 bl.bl_code
+			,bl.l_code
+			,bl.bl_id  
+			,bl.bs_code 
+			,bi.bi_isbn
+			,bi.bi_name
+			,bi.bi_img 
+			,bl.bl_lend_date 
+			,bl.bl_return_date
+			,bl.bl_hold_date
+			,u.u_number
+			,u.u_name
+		FROM
+			book_lend AS bl
+		INNER JOIN
+			book_stock AS bs
+		ON 
+			bl.bs_code = bs.bs_code
+		INNER JOIN
+			book_information AS bi
+		ON 
+			bs.bi_isbn = bi.bi_isbn
+		INNER join
+			user AS u
+		on
+			bl.bl_id = u.u_id		
+		WHERE 
+			bl.bl_lend_date IS NULL
+		AND 
+			bl.l_code = #{libNum}	 
+		ORDER BY 
+			bl.bl_code  DESC		
+	</select>
+	<update id="holdDelete">
+		UPDATE book_lend
+			SET
+				bl_return_date = CURDATE()
+			WHERE 
+				bl_code = #{blCode}	
+	</update>
   </mapper>

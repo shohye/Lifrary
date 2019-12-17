@@ -16,7 +16,7 @@ public class BookLendService {
 	
 	@Autowired private BookLendMapper bookLendMapper;
 	
-	//대출도서리스트 
+	//대출도서 리스트 
 	public List<BookLend> bookSearchList(String libNum){
 		
 		List<BookLend> bookLend = bookLendMapper.bookSearchList(libNum);
@@ -40,11 +40,11 @@ public class BookLendService {
 				
 		//앞뒤공백제거
 		String svBookTrim =svBook.trim();
+		//새로 등록된 도서인지 확인
 		int bookLendCheck = bookLendMapper.bookLendCheck(libNum, svBookTrim);
 		
 		BookStock bookStock = null;
 		
-		//새로 등록된 도서인지 확인
 		if(bookLendCheck == 0) bookStock = bookLendMapper.bookInfoStock(libNum, svBookTrim);
 		else bookStock = bookLendMapper.bookInfo(libNum,svBookTrim);
 			
@@ -73,7 +73,7 @@ public class BookLendService {
 			bookInfoMap.put("searchBook", 1);//도서정보있는 경우 1 대입
 			
 			//새로 등록된 도서가 아닌경우
-			if(bookStock.getBookLend() != null) {
+			if(bookStock.getBookLend() != null && bookLendCheck != 0) {
 				String lendDate = bookStock.getBookLend().getBlLendDate();//대출일
 				String returnDate = bookStock.getBookLend().getBlReturnDate();//반납일
 				
@@ -157,13 +157,83 @@ public class BookLendService {
 	
 	//대출도서 등록
 	public int lendInsert(BookLend booklend) {
+		int result = 0;
 		
 		String recode = Code.codeCreate(bookLendMapper.maxCode());
 		
 		booklend.setBlCode(recode); 
 		
-		return bookLendMapper.lendInsert(booklend);
+		int lendinsert = bookLendMapper.lendInsert(booklend);
+		
+		if(lendinsert == 1) {
+			
+			String lendState = "X";
+			String bsCode = booklend.getBsCode();
+			
+			int stockUpdate = bookLendMapper.stockUpdate(bsCode, lendState);
+			
+			if(stockUpdate == 1) result = 1; //대출등록,대출상태 수정 성공
+			else result = 2; //대출상태 수정 실패
+			
+		}else {
+			
+			result = 0; //대출등록 실패
+		}
+		
+		return result;
 		
 	}
-
+	//반납일 등록
+	public int returnUpdate(String blCode, String bsCode) {
+		
+		int result = 0;
+		
+		int returnUpdate = bookLendMapper.returnUpdate(blCode);
+		
+		if(returnUpdate == 1) {
+			String lendState = "O";
+			
+			int stockUpdate = bookLendMapper.stockUpdate(bsCode, lendState);
+			if(stockUpdate == 1)result = 1;
+			else result = 2;
+			
+		}else {
+			result = 0;
+		}
+		return result;
+		
+	}
+	
+	//연장일 등록
+	public int extensionUpdate(String blCode) {
+		
+		return bookLendMapper.extensionUpdate(blCode);
+	}
+	
+	//예약도서 리스트
+	public List<BookLend> holdSearchList(String libNum){
+		
+		return bookLendMapper.holdSearchList(libNum);
+		
+	}
+	
+	//예약 취소
+	public int holdDelete(String blCode, String bsCode) {
+		int result = 0;
+		
+		int holdDelete = bookLendMapper.holdDelete(blCode);
+		
+		if(holdDelete == 1) {
+			String lendState = "O";
+			
+			int stockUpdate = bookLendMapper.stockUpdate(bsCode, lendState);
+			if(stockUpdate == 1)result = 1;
+			else result = 2;
+			
+		}else {
+			result = 0;
+		}
+		return result;
+		
+	}
 }

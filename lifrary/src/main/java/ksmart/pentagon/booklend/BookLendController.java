@@ -53,8 +53,8 @@ public class BookLendController {
 	 */
 	@PostMapping("/admin/lendBookInfo")
 	public String lendBookInfo(  @RequestParam(value="svBook" ) String svBook
-								,@RequestParam(value="svUser", required=false) String svUser
-								,HttpSession session
+								, @RequestParam(value="svUser", required=false) String svUser
+								, HttpSession session
 								, RedirectAttributes redirectAttributes){
 		
 		System.out.println("svBook: " + svBook);
@@ -69,12 +69,7 @@ public class BookLendController {
 			//결과 리다이렉트로 보내기
 			redirectAttributes.addFlashAttribute("searchBook", bookInfoMap.get("searchBook"));
 			redirectAttributes.addFlashAttribute("resultBook", bookInfoMap.get("resultBook"));
-			
-			//예약도서인 경우 예약자 아이디포함하여 보내기
-			if(bookInfoMap.get("holdId") != null) {
-				redirectAttributes.addFlashAttribute("holdId", bookInfoMap.get("holdId"));
-			}
-			
+					
 			//반납안된 도서인 경우 회원정보포함하여 보내기
 			if(bookInfoMap.get("resultUser") != null) {
 				redirectAttributes.addFlashAttribute("resultUser", bookInfoMap.get("resultUser"));	
@@ -96,9 +91,9 @@ public class BookLendController {
 			
 		}
 		
-		
 		return "redirect:/admin/lendSearchList";
 	}
+	
 	
 	/**
 	 * @param svUser 회원검색 값
@@ -110,14 +105,14 @@ public class BookLendController {
 	 */
 	@PostMapping("/admin/lendUserInfo")
 	public String lendUserInfo(  @RequestParam(value="svUser" ) String svUser
-								,@RequestParam(value="svBook", required=false) String svBook
-								,HttpSession session
+								, @RequestParam(value="svBook", required=false) String svBook
+								, HttpSession session
 								, RedirectAttributes redirectAttributes){
 		
 		System.out.println("svUser: " + svUser);
 		System.out.println("svBook: " + svBook);
 		String libNum = (String) session.getAttribute("LIBNUM");
-		
+			
 		//회원정보만 검색
 		if(svBook == null || svBook.equals("")) {
 			
@@ -144,55 +139,103 @@ public class BookLendController {
 			redirectAttributes.addFlashAttribute("resultUser", userInfoMap.get("resultUser"));
 		}
 
-		
 		return "redirect:/admin/lendSearchList";
 	}
 	/**
+	 * @param booklend 대출도서정보
 	 * @param session
+	 * @param redirectAttributes
 	 * @brief 대출도서 등록
 	 * @return /admin/lendSearchList
 	 * @author 최지혜
 	 */
 	@PostMapping("/admin/lendInsert")
-	public String lendInsert(BookLend booklend){
+	public String lendInsert(BookLend booklend
+							 , HttpSession session
+							 , RedirectAttributes redirectAttributes){
+		
+		//도서관번호, 사서아이디 
+		String libNum = (String) session.getAttribute("LIBNUM");
+		String saId = (String) session.getAttribute("SAID");
+		
+		booklend.setlCode(libNum);
+		booklend.setuId(saId);
 		
 		int result = bookLendService.lendInsert(booklend);
+		System.out.println(result);
 		
-		
+		redirectAttributes.addFlashAttribute("resultInsert", result);
+	
 		return "redirect:/admin/lendSearchList";
 		
-	}
-	
-	/** 
-	 * @param session
-	 * @brief 반납일 등록
+	}	
+
+	/**
+	 * 
+	 * @param blCode 대출도서코드
+	 * @param bsCode 소장도서코드
+	 * @param redirectAttributes
+	 * @brief 반납 등록
 	 * @return /admin/lendSearchList
 	 * @author 최지혜
 	 */
 	@PostMapping("/admin/returnUpdate")
-	public String returnUpdate(	@RequestParam(value="blId" ) String blId
-							    ,@RequestParam(value="bsCode" ) String bsCode
-							    ,HttpSession session) {
-		String libNum = (String) session.getAttribute("LIBNUM");
+	public String returnUpdate(	 @RequestParam(value="blCode" ) String blCode
+								, @RequestParam(value="bsCode" ) String bsCode
+			 					, RedirectAttributes redirectAttributes) {
+
+		int result = bookLendService.returnUpdate(blCode, bsCode);
+		System.out.println(result);
 		
-		System.out.println("blId: "+blId);
-		System.out.println("bsCode: "+ bsCode);
-		System.out.println("*****************************반납*************************");
+		redirectAttributes.addFlashAttribute("resultUpdate", result);
+		
 		return "redirect:/admin/lendSearchList";
 	}
 	
+	/**
+	 * @param blCode 대출도서코드
+	 * @param redirectAttributes
+	 * @brief 연장일 등록
+	 * @return 
+	 */
+	@GetMapping("/admin/extensionUpdate")
+	public String extensionUpdate( @RequestParam(value="blCode") String blCode
+								   , RedirectAttributes redirectAttributes) {
+		
+		redirectAttributes.addFlashAttribute("resultextension", bookLendService.extensionUpdate(blCode));
+		
+		return "redirect:/admin/lendSearchList";		
+	}
 	
 	/**
+	 * @param session
+	 * @param model
 	 * @brief 예약도서리스트
 	 * @return /adminpage/bookLend/reservationSearchList
 	 * @author 최지혜
 	 */
 	@GetMapping("/admin/holdSearchList")
-	public String holdSearchList(HttpSession session) {
+	public String holdSearchList(HttpSession session
+								 , Model model) {
 		
 		String libNum = (String) session.getAttribute("LIBNUM");
 		
+		model.addAttribute("holdList", bookLendService.holdSearchList(libNum));
+			
 		return "/adminpage/bookLend/holdSearchList";
+		
+	}
+	
+	@GetMapping("/admin/holdDelete")
+	public String holdDelete(@RequestParam(value="blCode") String blCode
+							, @RequestParam(value="bsCode") String bsCode
+							, RedirectAttributes redirectAttributes) {
+
+		int result = bookLendService.holdDelete(blCode, bsCode);
+	
+		redirectAttributes.addFlashAttribute("resultDelete", result);
+		
+		return "redirect:/admin/holdSearchList";
 		
 	}
 	
