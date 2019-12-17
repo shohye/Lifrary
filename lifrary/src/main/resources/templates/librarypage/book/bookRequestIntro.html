@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+    
+    <th:block layout:fragment="customContents">
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>Book & Diary</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">매일 매일 적어보는 북다이어리</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li>Book & Diary</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="books-media-list">
+                        <div class="container">
+                            <div class="row">
+                                <!-- Start: Search Section -->
+                               
+                                <!-- End: Search Section -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 col-md-push-3">
+                                  <p><h2 style="color: black">희망도서 신청 안내</h2></p>
+                                
+                                <ul class="basic_ul">
+									<li>신청일 포함 1주 3권 이내(권당 5만원 이하)</li>
+									<li>신청장소 : 홈페이지 및 각 도서관 자료실</li>
+									<li>희망도서 비치 알림 : SMS 전송(안내 문자 수신을 위해 개인정보수정에서 SMS 수신 체크 확인)</li>
+									<li>우선대출기간 : 신청도서관 도서 비치일로부터 주말까지 </li>
+								</ul>
+								<br>
+								<h4>희망도서 선정 제외기준</h4>
+                                <div class="over_table">
+									<table class="table table-bordered">
+										<caption>
+										희망도서 신청 제외기준 내용 및 종류 등 안내
+										</caption>
+										<thead>
+											<tr>
+												<th scope="col">기 준</th>
+												<th scope="col">내  용</th>
+												<th scope="col">비 고 </th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="align-middle text-center">가격</td>
+												<td>5만원 이상인 도서</td>
+												<td class="txt_left">&nbsp;</td>
+											</tr>
+											<tr>
+												<td rowspan="11" class="align-middle text-center">제외종류</td>
+												<td>소장도서, 중복 신청도서, 신간 구입 예정도서</td>
+												<td class="txt_left">&nbsp;</td>
+											</tr>
+											<tr>
+												<td>문제집, 수험서, 참고서, 대학교재, 전문서적</td>
+												<td>&nbsp;</td>
+											</tr>
+											<tr>
+												<td>서지사항이 불분명한 도서</td>
+												<td>서명, 저자명, 출판사 등</td>
+											</tr>
+											<tr>
+												<td>판타지,  로맨스, 무협지, 성인만화(학습만화 제외)</td>
+												<td>&nbsp;</td>
+											</tr>
+											<tr>
+												<td>전집</td>
+												<td>&nbsp;</td>
+											</tr>
+											<tr>
+												<td>미풍양속, 정서에 문제를 유발할 수 있는 유해도서</td>
+												<td>음란서적, 폭력물 등</td>
+											</tr>
+											<tr>
+												<td>영리 또는 정치 목적의 신청도서</td>
+												<td>&nbsp;</td>
+											</tr>
+											<tr>
+												<td>간증 등 개인적 성향이 강한 종교 관련 도서</td>
+												<td>&nbsp;</td>
+											</tr>
+											<tr>
+												<td>소장이 적합하지 않은 형태의 도서</td>
+												<td>색칠, 스티커, 퍼즐, 컬러링북 등 교구가 많은 도서</td>
+											</tr>
+											<tr>
+												<td>비슷한 주제를 여러 권 신청할 경우</td>
+												<td>&nbsp;</td>
+											</tr>
+											<tr>
+												<td>정기간행물(잡지 등 연속간행물)</td>
+												<td>&nbsp;</td>
+											</tr>
+											<tr>
+												<td class="align-middle text-center">입수가능성</td>
+												<td>품절 및 절판 도서, 미출간도서</td>
+												<td>희망도서 선정시점에 시중에 판매되지 않은 자료</td>
+											</tr>
+											<tr>
+												<td class="align-middle text-center">최신성</td>
+												<td>발행된 지 5년 이상인 도서</td>
+												<td>컴퓨터, 과학, 신학문 분야는 출판된 지 2년 이상인 자료</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<p class="basic_p">※ 신청하신 자료는 자료선정위원회의 심의를 거쳐 구입, 정리 후 이용자에게 제공됩니다.</p>
+                                <br>
+                                <h4>희망도서 선정 확인</h4>
+                                <ul class="basic_ul">
+									<li>신청중 : 희망도서 담당자가 구입 타당성 검토 및 서지사항 확인 중인 상태</li>
+									<li>처리중 : 희망도서를 구입에 반영하여 주문 중인 상태</li>
+									<li>취소됨 : 구입에서 제외된 상태(취소 사유 확인 가능)</li>
+									<li>소장중 : 희망도서를 자료실에 비치한 상태</li>
+								</ul>
+                                <br>
+                                <div class="entry-content search-buttons align-middle text-center"> 
+                                	<a th:href="@{/lifrary/bookRequestInsert}" class="btn btn-dark-gray">신청하기</a> 
+                                	<a th:href="@{#}" class="btn btn-dark-gray">신청확인</a>
+                                </div>
+                                <br>
+                                <br>
+                                </div>
+                                <!-- 마이페이지 사이드메뉴  -->
+                                <div th:replace="fragments/library/myPageLeftMenu :: myPageLeftMenuFragment"></div>
+                                <!-- 마이페이지 사이드메뉴-->
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </th:block>
+</html>
