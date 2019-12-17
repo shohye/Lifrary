@@ -38,7 +38,7 @@
 	<!-- Content -->
 	<th:block layout:fragment="adminContents">   
 		 <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-              <div>전체 사서 리스트</div>
+              <div>전체 사서 (권한)리스트</div>
               <button type="button" class="btn btn-primary rounded-pill d-block">
               <a th:href="@{/admin/librarianInsert}">
               <span class="ion ion-md-add"></span>사서 등록하러 가기</a></button>
@@ -56,11 +56,11 @@
                     	<th>구분</th>
                     	<th>비밀번호</th>
                     	<th>이름</th>
+                    	<!-- <th>생년월일</th>
+                    	<th>주소</th> -->
                     	<th>핸드폰</th>
-                    	<th>이메일</th>
-                    	<th>이메일동의</th>
-                    	<th>생년월일</th>
-                    	<th>주소</th>
+                    	<!-- <th>이메일</th>
+                    	<th>메일수신동의</th> -->
                     	<th>사서권한</th>
                     	<th>수서권한</th>
                     	<th>도서관리권한</th>
@@ -77,11 +77,11 @@
 	               			<td class="align-middle" th:text="${ll.uDivision}"></td>
 	               			<td class="align-middle" th:text="${ll.uPw}"></td>
 	               			<td class="align-middle" th:text="${ll.uName}"></td>
-	               			<td class="align-middle" th:text="${ll.uBirth}" style="text-align:center"></td>
-	               			<td class="align-middle" th:text="${ll.uAddr}"></td>
+	               			<!-- <td class="align-middle" th:text="${ll.uBirth}" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="${ll.uAddr}"></td> -->
 	               			<td class="align-middle" th:text="${ll.uTel}"></td>
-	               			<td class="align-middle" th:text="${ll.uEmail}"></td>
-	               			<td class="align-middle" th:text="${ll.uEmailAgree}"></td>
+	               			<!-- <td class="align-middle" th:text="${ll.uEmail}"></td>
+	               			<td class="align-middle" th:text="${ll.uEmailAgree}"></td> -->
 	               			<td style="text-align:center">
 	                			<span th:if="${ll.librarianLevel.llInsert}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
 	                			<span th:unless="${ll.librarianLevel.llInsert} == O" th:text="권한없음" class="badge badge-outline-danger"></span>

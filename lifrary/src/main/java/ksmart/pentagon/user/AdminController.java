@@ -405,22 +405,22 @@ public class AdminController {
 	 * @author 한우리
 	 */
    	//사서 전체 리스트
-	@GetMapping("/admin/librarianSearchList")
-	public String librarianSearchList(Model model) { 
-		 System.out.println("librarianSearchList 전체사서리스트 @GetMapping");
-		 List<User> lList = adminService.librarianSearchList();
+	@GetMapping("/admin/librarianLevelList")
+	public String librarianLevelList1(Model model) { 
+		 System.out.println("librarianLevelList1 전체사서리스트 @GetMapping");
+		 List<User> lList = adminService.librarianLevelList1();
 		 System.out.println("회원권한내역리스트 lList " + lList);
 		 model.addAttribute("lList", lList);
 		 
-	  return "/adminpage/librarian/librarianSearchList"; 
+	  return "/adminpage/librarian/librarianLevelList"; 
 	 }
 	
-	@PostMapping("/admin/librarianSearchList")
-	public String librarianSearch(Model model) {
-		 System.out.println("librarianSearchList 전체사서리스트 @PostMapping ");
-		 model.addAttribute("lList", adminService.librarianSearch());
+	@PostMapping("/admin/librarianLevelList")
+	public String librarianLevelList2(Model model) {
+		 System.out.println("librarianLevelList2 전체사서리스트 @PostMapping ");
+		 model.addAttribute("lList", adminService.librarianLevelList2());
 		 
-		return "/adminpage/librarian/librarianSearchList";
+		return "/adminpage/librarian/librarianLevelList";
 	}
 	 
    /**
@@ -445,7 +445,7 @@ public class AdminController {
 		adminService.librarianInsert1(user);
 		adminService.librarianInsert2(librarianLevel);
 
-	   return "redirect:/admin/librarianSearchList";
+	   return "redirect:/admin/librarianLevelList";
    } 
 	
 	
@@ -464,11 +464,11 @@ public class AdminController {
 	 */
    	//사서 권한 리스트
 	
-    @GetMapping("/admin/librarianLevelList") 
-    public String librarianLevelList(Model model) {
-	   System.out.println("librarianLevelList 사서 권한 리스트 ");
+    @GetMapping("/admin/librarianSearchList") 
+    public String librarianSearchList(Model model) {
+	   System.out.println("librarianSearchList 사서 권한 리스트 ");
 	  
-	   return "/adminpage/librarian/librarianLevelList"; 
+	   return "/adminpage/librarian/librarianSearchList"; 
 	  
 	}
 	

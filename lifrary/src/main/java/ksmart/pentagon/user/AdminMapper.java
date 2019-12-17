@@ -92,8 +92,8 @@ public interface AdminMapper {
 	public int librarianInsert2(LibrarianLevel librarianLevel);
 
 	//관리자 사서 리스트
-	public List<User> librarianSearchList();
-	public List<User> librarianSearch();
+	public List<User> librarianLevelList1();
+	public List<User> librarianLevelList2();
 	
 	
 }

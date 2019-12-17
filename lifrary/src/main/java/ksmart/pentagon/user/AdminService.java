@@ -208,15 +208,15 @@ public class AdminService {
 	}
 	
 	//관리자 - 사서 리스트 
-	public List<User> librarianSearchList(){
-		System.out.println("librarianSearchList 서비스진입");
+	public List<User> librarianLevelList1(){
+		System.out.println("librarianLevelList1 서비스진입");
 		
-		return adminMapper.librarianSearch();
+		return adminMapper.librarianLevelList1();
 	}
-	public List<User> librarianSearch(){
-		System.out.println("librarianSearch 서비스진입");
+	public List<User> librarianLevelList2(){
+		System.out.println("librarianLevelList2 서비스진입");
 		
-		return adminMapper.librarianSearch();
+		return adminMapper.librarianLevelList2();
 	}
 	
 }

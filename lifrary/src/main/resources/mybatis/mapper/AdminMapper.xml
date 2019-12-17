@@ -551,7 +551,7 @@
 		)
 	</insert>
 	
-	<select id="librarianSearchList" resultMap="userResultMap">
+	<select id="librarianLevelList1" resultMap="userResultMap">
 		SELECT 
 			u.u_id
 			, u.l_code
@@ -582,7 +582,7 @@
 		    u_division='사서'
   	</select>
   	
-  	<select id="librarianSearch" parameterType="String" resultMap="userResultMap">
+  	<select id="librarianLevelList2" parameterType="String" resultMap="userResultMap">
 		SELECT 
 			u.u_id
 			, u.l_code
