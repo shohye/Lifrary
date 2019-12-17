@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+
+
+   <!-- Content -->
+   		<th:block layout:fragment="adminContents">
+
+  <div class="page-loader">
+    <div class="bg-primary"></div>
+  </div>
+
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-2">
+    <div class="layout-inner">
+
+      <!-- Layout sidenav -->
+      <!-- /Layout sidenav -->
+      
+
+      <!-- Layout container -->
+      <div class="layout-container">
+        <!-- Layout navbar -->
+        <!-- /Layout navbar -->
+        
+
+        <!-- Layout content -->
+        <div class="layout-content">
+
+          <!-- Content -->
+          <div class="container-fluid flex-grow-1 container-p-y">
+
+            <h4 class="font-weight-bold py-3 mb-4">
+              <span class="text-muted font-weight-light">Forms /</span> 회원등급등록화면
+            </h4>
+
+            
+            <div class="card mb-4">
+              <h6 class="card-header">
+              	  등급을 등록해주세요
+              </h6>
+              <div class="card-body">
+                <form th:action="@{/admin/adUserLevelInsert}" id="validation-form" method="post">
+                
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label">회원등급</label>
+                      <input type="text" class="form-control" name="ulLevel" placeholder="회원등급">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label class="form-label">(관리자)아이디</label>
+                      <input type="text" class="form-control" name="uId" placeholder="작성자아이디">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">등급 명</label>
+                    <input type="text" class="form-control" name="ulName" placeholder="등급 명">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">도서관코드</label>
+                    <input type="text" class="form-control" name="lCode" placeholder="도서관 코드">
+                  </div>
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label">기준권수(최소)</label>
+                    <input type="text" class="form-control" name="ulMin" placeholder="최소 권수">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-label">기준권수(최대)</label>
+                    <input type="text" class="form-control" name="ulMax" placeholder="최대 권수">
+                  </div>
+                 </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label">대출가능 권수</label>
+                      <input type="text" class="form-control" name="ulLendNum" placeholder="대출 가능 권수">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label class="form-label">대출 가능일 수 </label>
+                      <input type="text" class="form-control" name="ulLendDay" placeholder="대출 가능 일">
+                    </div>
+                  </div>
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label class="form-label">등록날짜 (자동)</label>
+                    <input type="text" class="form-control" name="ulDate" placeholder="등급 등록날짜">
+                  </div>
+                 </div>
+                  <div class="form-group">
+                    <label class="custom-control custom-checkbox m-0">
+                      <input type="checkbox" class="custom-control-input">
+                      <span class="custom-control-label">작성일과 등급코드는 자동 </span>
+                    </label>
+                  </div>
+                  <button type="submit" class="btn btn-primary">등급 등록</button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+          <!-- / Content -->
+
+          <!-- Layout footer -->
+
+          <!-- / Layout footer -->
+
+        </div>
+        <!-- Layout content -->
+
+      </div>
+      <!-- / Layout container -->
+
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-sidenav-toggle"></div>
+  </div>
+  <!-- / Layout wrapper -->
+	<!--  scripts -->	
+	<th:block layout:fragment="pageScript">
+	</th:block>
+	<!--  /scripts -->
+  
+
+	</th:block>
+
+</html>
