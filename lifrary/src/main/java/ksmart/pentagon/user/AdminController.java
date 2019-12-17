@@ -63,6 +63,7 @@ public class AdminController {
 		}else {
 			System.out.println("(도서관)세션값이 없습니다.");
 		}
+		System.out.println(session.getAttribute("LIBNUM")+" <== 도서관 코드");
 		return "/adminpage/librarian/adminLogin";
 	}
 	
@@ -97,6 +98,7 @@ public class AdminController {
 		session.setAttribute("SALS",user.getLibrarianLevel().getLlStats()); // library stats - 통계
 		session.setAttribute("SALBS",user.getLibrarianLevel().getLlBookStock()); // library book stock - 장서 점검 
 		System.out.println(result + " < == result");
+		
 		return "redirect:/admin/index";
 	}
 	/**

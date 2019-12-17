@@ -18,17 +18,20 @@ import ksmart.pentagon.vo.ProgramManager;
 public interface ProgramMapper {
 
 	// 프로그램 리스트 전체 가져오기
-	public List<ProgramManager> getProgramList();
+	public List<ProgramManager> getProgramList(String libNum);
 
-	// 프로그램 신청 리스트 전체 가져오기
-	public List<ProgramApply> getProgramApplyList();
+	// 검색결과에 맞는 프로그램 리스트 가져오기
+	public List<ProgramManager> getSearchProgramList(String keywords, String target, String libNum);
+	
+	// 프로그램 신청 리스트 전체 가져오기 (사서채널)
+	public List<ProgramApply> adminGetProgramApplyList(String libNum);
 	
 	// 프로그램 신청 리스트 전체 가져오기 (마이페이지 -> 리스트 들어갈때 세션 id가지고가기)
 	public List<ProgramApply> getProgramApplyList(String uId);
 
 	// 선택한 프로그램 1개 가져오기
 	public ProgramManager getProgram(String pmCode);
-
+	
 	// 선택한 paCode에 맞는 pm 정보 가져오기
 	public ProgramManager getProgramDetail(String paCode);
 	

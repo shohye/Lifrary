@@ -32,9 +32,27 @@ public class ProgramController {
 	 * @return
 	 */
 	@GetMapping("/lifrary/programSearchList")
-	public String programListView(Model model) {
+	public String programListView(Model model, HttpSession session) {
+		String libNum = (String)session.getAttribute("LIBNUM");
 		model.addAttribute("menu", "프로그램 리스트");
-		model.addAttribute("programList", programService.getProgramList());
+		model.addAttribute("programList", programService.getProgramList(libNum));
+		return "librarypage/program/programSearchList";
+	}
+
+	/**
+	 * 키워드, 대상 검색리스트 가져오기.
+	 * @param keywords
+	 * @param target
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/lifrary/programSearchList")
+	public String programList(@RequestParam(value = "keywords", required = false) String keywords, @RequestParam(value = "target") String target,
+			Model model, HttpSession session) {
+		String libNum = (String)session.getAttribute("LIBNUM");
+		model.addAttribute("menu", "프로그램 리스트");
+		model.addAttribute("programList", programService.getSearchProgramList(keywords, target,libNum));
 		return "librarypage/program/programSearchList";
 	}
 
@@ -83,45 +101,47 @@ public class ProgramController {
 		programService.insertProgram(pa);
 		return "redirect:/lifrary/programSearchList";
 	}
-	
+
 	/**
 	 * 현재 세션에 저장되어있는 아이디를 받아, 해당 아이디가 신청한 프로그램의 리스트를 보여준다.
+	 * 
 	 * @param model
 	 * @param session
 	 * @return
 	 */
 	@GetMapping("/lifrary/programApplyList")
 	public String programApplyList(Model model, HttpSession session) {
-		String getSID = (String)session.getAttribute("SID");
+		String getSID = (String) session.getAttribute("SID");
+		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("applyList", programService.getProgramApplyList(getSID));
 		return "librarypage/program/myProgramApplyList";
 	}
-	
+
 	/**
 	 * paCode에 맞는 pm 상세보기
+	 * 
 	 * @param paCode
 	 * @param model
 	 * @return
 	 */
 	@GetMapping("/lifrary/programApplyDetail")
-	public String programApplyDetail(@RequestParam(value = "paCode")String paCode, Model model) {
+	public String programApplyDetail(@RequestParam(value = "paCode") String paCode, Model model) {
 		model.addAttribute("program", programService.getProgramDetail(paCode));
 		return "librarypage/program/myProgramApplyDetail";
 	}
-	
+
 	/**
 	 * 프로그램 취소 / 상태가 신청완료일때만 취소 가능하다 . (취소, 종료, 진행중 상태에서는 취소 불가능)
+	 * 
 	 * @param paCode
 	 * @return
-	 */	
+	 */
 	@GetMapping("/lifrary/programCancle")
-	public String programCancle(@RequestParam(value = "paCode")String paCode, @RequestParam(value = "pmCode")String pmCode) {
+	public String programCancle(@RequestParam(value = "paCode") String paCode,
+			@RequestParam(value = "pmCode") String pmCode) {
 		programService.cancleProgram(paCode, pmCode);
 		return "redirect:/lifrary/programApplyList";
 	}
-	
-	
-	
 
 	/* ======================================================================== */
 	// 아래는 사서채널
@@ -132,8 +152,9 @@ public class ProgramController {
 	 * @return
 	 */
 	@GetMapping("/admin/programSearchList")
-	public String adminProgramSearchList(Model model) {
-		model.addAttribute("programList", programService.getProgramList());
+	public String adminProgramSearchList(Model model, HttpSession session) {
+		String libNum = (String)session.getAttribute("LIBNUM");
+		model.addAttribute("programList", programService.getProgramList(libNum));
 		return "adminpage/program/programSearchList";
 	}
 
@@ -143,9 +164,9 @@ public class ProgramController {
 	 * @return
 	 */
 	@GetMapping("/admin/programApplySearchList")
-	public String adminProgramApplySearchList(Model model) {
-
-		model.addAttribute("applyList", programService.getProgramApplyList());
+	public String adminProgramApplySearchList(Model model, HttpSession session) {
+		String libNum = (String)session.getAttribute("LIBNUM");
+		model.addAttribute("applyList", programService.adminGetProgramApplyList(libNum));
 		return "adminpage/program/programApplySearchList";
 	}
 
@@ -158,8 +179,7 @@ public class ProgramController {
 	public String programInsert() {
 		return "adminpage/program/programInsert";
 	}
-	
-	
+
 	@PostMapping("/admin/programInsert")
 	public String programInsert(ProgramManager pm) {
 		System.out.println(pm);
@@ -179,7 +199,6 @@ public class ProgramController {
 
 		return "adminpage/program/programDetail";
 	}
-	
 
 	/**
 	 * 프로그램 수정페이지로 이동
@@ -205,9 +224,9 @@ public class ProgramController {
 		programService.updateProgram(pm);
 		return "redirect:/admin/programDetail?pmCode=" + pm.getPmCode();
 	}
-	
+
 	@GetMapping("/admin/programDelete")
-	public String adminProgramDelete(@RequestParam(value = "pmCode")String pmCode) {
+	public String adminProgramDelete(@RequestParam(value = "pmCode") String pmCode) {
 		System.out.println(pmCode + "<== pmCode");
 		programService.deleteProgram(pmCode);
 		return "redirect:/admin/programSearchList";

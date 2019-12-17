@@ -51,21 +51,57 @@
 			*
 		FROM 
 			program_mgr
+		where
+			l_code = #{libNum}
   	</select>
   	
-  	<!-- 프로그램 신청 리스트 전체 출력 -->
+  	<!-- 프로그램 검색결과 리스트 츨력 -->
+  	<select id="getSearchProgramList" parameterType="String" resultMap="PMResultMap">
+  		SELECT
+			*
+		FROM
+			program_mgr
+		WHERE
+			l_code = #{libNum}
+		<if test="keywords == null and  target == '전체'">
+			 and pm_name LIKE CONCAT('%',#{keywords},'%')
+		</if>
+		<if test="keywords == null and target != '전체'">		
+			 and pm_target = #{target} 
+			 and	pm_name LIKE CONCAT('%',#{keywords},'%')
+		</if>
+		<if test="keywords != null and target != '전체'">		
+			 and pm_target = #{target}
+		</if>
+
+			
+  	</select>
+  	
+  	<!-- 프로그램 신청 리스트 전체 출력(회원 마이페이지용)-->
   	<select id="getProgramApplyList" parameterType="String" resultMap="PAResultMap">
   		SELECT 
  			*
 		FROM
 			program_apply AS pa INNER JOIN program_mgr AS pm
 		ON pa.pm_code = pm.pm_code
-		<if test="uId != null">
 		WHERE
-			pa.u_id = #{uId}
-		</if>
+		  pa.u_id = #{uId}
 		
   	</select>
+  	
+  	<!-- 프로그램 신청 리스트 전체 출력 (사서채널용) -->
+  	<select id="adminGetProgramApplyList" parameterType="String" resultMap="PAResultMap">
+  		SELECT 
+ 			*
+		FROM
+			program_apply AS pa INNER JOIN program_mgr AS pm
+		ON pa.pm_code = pm.pm_code
+		WHERE
+			pm.l_code = #{libNum}
+  	</select>
+  	
+  	
+  	
   	
   	<!-- 프로그램 상세보기 -->
   	<select id="getProgram" parameterType="String" resultMap="PMResultMap">
