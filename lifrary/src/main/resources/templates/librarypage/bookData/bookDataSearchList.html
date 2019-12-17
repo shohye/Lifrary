@@ -5,6 +5,27 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}"
 		class="default-style">
+		
+	<th:block layout:fragment="customScript">
+    <style>
+ 	.post-thumbnail img {
+ 		max-width: 100%; 
+ 		height: 300px;
+ 		display: block; 
+ 		margin-left: auto;
+		margin-right: auto;
+ 	}
+ 	@media (max-width: 991px){
+ 		.category-list img {
+ 		max-width: 100%; 
+ 		height: 300px;
+ 		}
+ 	}
+ 	.center-content {
+ 		margin: 10px 0 10px 0;
+ 	}
+ 	</style>
+ 	</th:block>  
     
     
     
@@ -17,50 +38,38 @@
          <div class="container">
              <div class="row">
                  <!-- Start: Search Section -->
-                 <section class="search-filters">
-                     <div class="container">
-                         <div class="filter-box">
-                             <h3>What are you looking for at the library?</h3>
-                             <form action="http://libraria.demo.presstigers.com/index.html" method="get">
-                                 <div class="col-md-4 col-sm-6">
-                                     <div class="form-group">
-                                         <label class="sr-only" for="keywords">Search by Keyword</label>
-                                         <input class="form-control" placeholder="Search by Keyword" id="keywords" name="keywords" type="text">
-                                     </div>
-                                 </div>
-                                 <div class="col-md-3 col-sm-6">
-                                     <div class="form-group">
-                                         <div class="select"><select name="catalog" id="catalog" class="form-control select-hidden">
-                                             <option>Search the Catalog</option>
-                                             <option>Catalog 01</option>
-                                             <option>Catalog 02</option>
-                                             <option>Catalog 03</option>
-                                             <option>Catalog 04</option>
-                                             <option>Catalog 05</option>
-                                         </select><div class="select-styled">Search the Catalog</div><ul class="select-list" style="display: none;"><li rel="Search the Catalog">Search the Catalog</li><li rel="Catalog 01">Catalog 01</li><li rel="Catalog 02">Catalog 02</li><li rel="Catalog 03">Catalog 03</li><li rel="Catalog 04">Catalog 04</li><li rel="Catalog 05">Catalog 05</li></ul></div>
-                                     </div>
-                                 </div>
-                                 <div class="col-md-3 col-sm-6">
-                                     <div class="form-group">
-                                         <div class="select"><select name="category" id="category" class="form-control select-hidden">
-                                             <option>All Categories</option>
-                                             <option>Category 01</option>
-                                             <option>Category 02</option>
-                                             <option>Category 03</option>
-                                             <option>Category 04</option>
-                                             <option>Category 05</option>
-                                         </select><div class="select-styled">All Categories</div><ul class="select-list" style="display: none;"><li rel="All Categories">All Categories</li><li rel="Category 01">Category 01</li><li rel="Category 02">Category 02</li><li rel="Category 03">Category 03</li><li rel="Category 04">Category 04</li><li rel="Category 05">Category 05</li></ul></div>
-                                     </div>
-                                 </div>
-                                 <div class="col-md-2 col-sm-6">
-                                     <div class="form-group">
-                                         <input class="form-control" type="submit" value="Search">
-                                     </div>
-                                 </div>
-                             </form>
-                         </div>
-                     </div>
-                 </section>
+                 <section class="search-filters" th:fragment="searchSectionFragment">
+		           <div class="row">
+           			  <div class="col-md-11 col-md-push-2">
+		                 <div class="container">
+		                   <div class="filter-box">
+		                      <form th:action="@{/lifrary/bookDataSearchList}" method="get">							    
+		                        <div class="col-md-3 col-sm-6">
+		                            <div class="form-group">
+		                                <select name="bclCode" id="bclCode" class="form-control">
+		                                    <option value="bcl001">단행본</option>
+		                                    <option value="bcl002">연속간행물</option>
+		                                    <option value="bcl003">비도서</option>                            
+		                                </select>
+		                            </div>
+		                        </div>
+		                        <div class="col-md-4 col-sm-6">
+		                            <div class="form-group">
+		                                <label class="sr-only" for="keywords">Search by Keyword</label>
+		                                <input id="biName" name="biName" class="form-control" placeholder="Search by Keyword" type="text">
+		                            </div>
+		                        </div>
+		                        <div class="col-md-2 col-sm-6">					                     
+		                            <div class="form-group">
+		                                <input class="form-control" type="submit" value="Search">
+		                            </div>
+		                        </div>
+		                    </form>
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+		        </section>
                  <!-- End: Search Section -->
              </div>
              <div class="row">
@@ -82,8 +91,10 @@
                                  <div class="filter-result">Showing items 1 to 9 of 19 total</div>
                              </div>
                              <div class="col-md-3 col-sm-3 pull-right">
-                                 <div class="filter-toggle">
-                                     <a href="books-media-gird-view-v1.html"><i class="glyphicon glyphicon-th-large"></i></a>
+                                 <div class="filter-toggle" >
+                                	 <input type="hidden" name="bclCode" value="${bclCode}">
+                                	 <input type="hidden" name="biName" value="${biName}">
+                                     <a th:href="@{/lifrary/bookDataSearchGrid(bclCode=${bclCode},biName=${biName})}"><i class="glyphicon glyphicon-th-large"></i></a>
                                      <a href="books-media-list-view.html" class="active"><i class="glyphicon glyphicon-th-list"></i></a>
                                  </div>
                              </div>
@@ -92,21 +103,25 @@
                      
                       <!-- 책정보 하나씩  -->
                      <div class="books-list">
-                         <article> 
+                         <article th:each="sl : ${searchList}"> 
                              <div class="single-book-box">                                                
-                                 <div class="post-thumbnail">
-                                     <div class="book-list-icon yellow-icon"></div>
-                                     <a href="books-media-detail-v1.html"><img alt="Book" th:src="@{/library/images/books-media/list-view/book-media-01.jpg}"></a>                                                                 </div>
+                                 <div class="post-thumbnail">                                     
+                                     <a th:href="@{/lifrary/bookDetail(bsCode=${sl.bsCode})}">
+                                     	<img alt="도서 이미지를 찾을 수 없습니다" th:src="${sl.bookInformation.biImg}">
+                                     </a>
+                                 </div>
                                  <div class="post-detail">           
                                      <header class="entry-header">
                                          <div class="row">
                                              <div class="col-sm-6">
                                                  <h3 class="entry-title">
-                                                     <a href="books-media-detail-v1.html">The Great Gatsby</a>
+                                                     <a th:href="@{/lifrary/bookDetail(bsCode=${sl.bsCode})}">
+                                                     	<span th:text="${sl.bookInformation.biName}"></span>
+                                                     </a>
                                                  </h3>
                                                  <ul>
-                                                     <li><strong>Author:</strong> F. Scott Fitzgerald</li>
-                                                     <li><strong>ISBN:</strong> 9781581573268</li>
+                                                     <li><strong>저자:</strong>&emsp;<span th:text="${sl.bookInformation.biAuthor}"></span></li>
+                                                     <li><strong>ISBN:</strong>&emsp;<span th:text="${sl.bookInformation.biIsbn}"></span></li>
                                                  </ul>
                                              </div>
                                              <div class="col-sm-6">
@@ -131,7 +146,7 @@
                                          <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
                                      </div>
                                      <footer class="entry-footer">
-                                         <a class="btn btn-dark-gray" href="books-media-detail-v1.html">Read More</a>
+                                         <a class="btn btn-dark-gray" th:href="@{/lifrary/bookDetail(bsCode=${sl.bsCode})}">Read More</a>
                                      </footer>
                                  </div>
                                  <div class="clear"></div>

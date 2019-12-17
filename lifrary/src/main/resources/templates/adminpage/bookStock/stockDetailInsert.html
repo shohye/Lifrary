@@ -10,6 +10,7 @@
  	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
  	  </th:block>
  	  
+ 	  <th:block layout:fragment="teamHeadScript">
  	  <script type="text/javascript" th:inline="javascript">
  	  
 	   $(document).ready(function(){  	
@@ -37,8 +38,9 @@
   		 			biAuthor.val(data.biAuthor);
   		 			biPublisher.val(data.biPublisher);
   		 			biYear.val(data.biYear);
-  						
+  					
   				});
+    	   });
 		  
     		// 유효성검사 시작
     		$('#insertBtn').click(function(){
@@ -71,7 +73,7 @@
     				return false;
     			}
     			if(bsCallNum.val() == ''){
-    				alert('청구기호 입력하세요(청구기호 생성 버튼을 클릭해주세요==5)');
+    				alert('청구기호 입력하세요(청구기호 생성 버튼을 클릭해주세요)');
     				bsCallNum.focus();
     				return false;
     			}
@@ -112,7 +114,7 @@
     	}); // 처음 function끝
 	 
 	 </script>
-	 
+	 </th:block>
  
   <!-- Content -->
       <th:block layout:fragment="adminContents">
@@ -134,9 +136,11 @@
                   </div>
                   <hr class="border-light m-0">
                   <div class="card-body pb-2" >
+                  
+                  
 				    <form id="insertForm" th:action="@{/admin/stockDetailInsert}" method="post">
 				        <!-- th:action="@{#}" method="post" -->
-					     <div class="form-group ">
+					    <div class="form-group ">
 		                   <label class="form-label" >ISBN</label>
 				            <div class="input-group">
 			                  <input type="text" id="biIsbn" name="biIsbn" class="form-control" placeholder="Search for ISBN">		                 
@@ -144,7 +148,7 @@
 			                    <button id="bookInfoBtn" class="btn btn-secondary" type="button">도서정보 가져오기</button>
 			                  </span>
 			                </div>        
-		                 </div>  
+		                </div>  
 	                    
 	                    <div class="form-row">
 		                    <div class="form-group col-md-6">
@@ -166,7 +170,7 @@
 		                      <br><button id="callNumberBtn" type="button" class="btn rounded-pill btn-secondary">청구기호 생성</button>              
 		                    </div>
 		                </div>
-		                 <div class="form-row">
+		                <div class="form-row">
 		                    <div class="form-group col-md-4">
 		                      <label class="form-label">대분류</label>
 		                      <input type="text" class="form-control" id="bclName" name="bclName" placeholder="classification">
@@ -180,7 +184,7 @@
 		                      <button id="classificationBtn" type="button" class="btn rounded-pill btn-secondary">분류기호 선택</button>  
 		                    </div>
 		                </div>
-		                 <div class="form-row">
+		                <div class="form-row">
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">발행자</label>
 		                      <input type="text" class="form-control" id="biPublisher" name="biPublisher" placeholder="publisher">
@@ -215,7 +219,9 @@
 						     <a th:href="@{/admin/stockSearchList}" style="color: white">리스트로 이동</a>
 						  </button>	                    	
 			              <button id="insertBtn" type="button" class="btn btn-primary">소장 도서 추가</button>             
-			            </div>		               	              
+			            </div>	
+			            
+			                           	              
 	                 </form>     
                   </div>
                 </div>

@@ -3,6 +3,26 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
+  
+  <th:block layout:fragment="customScript">
+	    <style>
+		 	.post-thumbnail img {			 		
+				height: 420px;
+				max-width: 400px;
+		 	}
+		 	@media (max-width: 991px){
+		 		.category-list img {
+		 		max-width: 100%; 
+		 		height: 300px;
+		 		}
+		 	}
+		 	.center-content {
+		 		margin: 10px 0 10px 0;
+		 	}
+	 	</style>
+ 	</th:block>  
+  
+  
     
 	<th:block layout:fragment="customContents">   
 		<section class="page-banner services-banner" th:fragment="bookBannerFragment">
@@ -26,39 +46,36 @@
                 <main id="main" class="site-main">
                     <div class="booksmedia-detail-main">
                         <div class="container">
-                            <div class="row">
-                            
+                            <div class="row">                        
                             <div class="entry-content search-buttons align-middle text-center">			
 									<a href="#" class="btn btn-dark-gray">통합검색</a>
 									<a href="#" class="btn btn-dark-gray">신착도서</a>
 									<a href="#" class="btn btn-dark-gray">인기도서</a>
 									<a href="#" class="btn btn-dark-gray">사서추천도서</a>
-							</div>
-							
+							</div>							
 							 <!-- Start: Search Section -->
 							 <section class="search-filters" th:fragment="searchSectionFragment">
                               	<div class="row">
                 					<div class="col-md-11 col-md-push-2">
 							            <div class="container">
 							                <div class="filter-box">
-							                      <form action="http://libraria.demo.presstigers.com/index.html" method="get">							    
+							                      <form th:action="@{/lifrary/bookDataSearchList}" method="get">							    
 							                        <div class="col-md-3 col-sm-6">
 							                            <div class="form-group">
-							                                <select name="catalog" id="catalog" class="form-control">
+							                                <select name="bclCode" id="bclCode" class="form-control">
 							                                    <option value="bcl001">단행본</option>
 							                                    <option value="bcl002">연속간행물</option>
-							                                    <option value="bcl003">비도서</option>
-						                                    
+							                                    <option value="bcl003">비도서</option>                            
 							                                </select>
 							                            </div>
 							                        </div>
 							                        <div class="col-md-4 col-sm-6">
 							                            <div class="form-group">
 							                                <label class="sr-only" for="keywords">Search by Keyword</label>
-							                                <input class="form-control" placeholder="Search by Keyword" id="keywords" name="keywords" type="text">
+							                                <input id="biName" name="biName" class="form-control" placeholder="Search by Keyword" type="text">
 							                            </div>
 							                        </div>
-							                        <div class="col-md-2 col-sm-6">
+							                        <div class="col-md-2 col-sm-6">					                     
 							                            <div class="form-group">
 							                                <input class="form-control" type="submit" value="Search">
 							                            </div>
@@ -75,8 +92,7 @@
                             
                             <div class="detailed-box">
                                     <div class="col-xs-12 col-sm-5 col-md-3">
-                                        <div class="post-thumbnail">
-                                            <div class="book-list-icon blue-icon"></div>
+                                        <div class="post-thumbnail">                       
                                             <img th:src="${s.bookInformation.biImg}" alt="이미지를 찾을 수 없습니다" >
                                         </div>
                                     </div>
@@ -90,8 +106,7 @@
                                             <p><strong>발행년도:</strong>&emsp;<span th:text="${s.bookInformation.biYear}"></span></p>
                                             <p><strong>총 페이지수:</strong>&emsp;<span th:text="|${s.bsTotalPage}p|"></span></p>
                                             <p><strong>등록번호:</strong>&emsp;<span th:text="${s.bsCode}"></span></p>
-                                            <p><strong>소장기관:</strong>&emsp;<span>오각형 도서관</span></p>
-                                            <p><strong>청구기호:</strong>&emsp;<span>청구기호 출력예정</span></p>
+                                            <p><strong>청구기호:</strong>&emsp;<span th:text="${s.bsCallNum}"></span></p>
                                             <br><br>
                                             <div class="actions">
                                                 <ul>
@@ -131,16 +146,13 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-3 ">
                                         <div class="post-right-content">
-                                            <h4>Available now</h4>
-                                            <p><strong>Total Copies:</strong> 01</p>
-                                            <p><strong>Available:</strong> 019780062419385</p>
-                                            <p><strong>Holds:</strong>  01</p>
-                                            <p><strong>On the shelves now at:</strong> Lawrence Public Library</p>
-                                            <p><strong>Call #:</strong> 747 STRUTT C</p>
-                                            <a href="#." class="available-location">Availability by Location <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                                            <a href="#." class="btn btn-dark-gray">Place a Hold</a> 
-                                            <a href="#." class="btn btn-dark-gray">View sample</a> 
-                                            <a href="#." class="btn btn-dark-gray">Find Similar Titles</a>
+                                            <br>
+                                            <br>  
+                                            <br>                        
+                                            <a href="#." class="btn btn-dark-gray">당일 도서 예약</a> 
+                                            <br>
+                                            <a th:href="@{'http://www.aladin.co.kr/shop/book/wletslookViewer.aspx?ISBN='+${s.bookInformation.biIsbn}}" class="btn btn-dark-gray">도서 미리보기</a> 
+                                            
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -148,7 +160,8 @@
                                 
                                 <div class="clearfix"></div>
                                 <p th:with="s=${stockDetail}"><strong>책 상세설명:</strong> 
-                                	<span th:text="${s.bookInformation.biDtail}"></span>
+                                	<span th:if="${s.bookInformation.biDtail ne null}" th:text="${s.bookInformation.biDtail}"></span>
+                                	<span th:unless="${s.bookInformation.biDtail ne null}"> * 이 도서는 상세설명을 제공 하지 않습니다.</span>
                                 </p>
 
                                 <div class="table-tabs" id="responsiveTabs">
@@ -167,17 +180,26 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td class="align-middle text-center">Oak Park Public Library Main Branch</td>
-                                                        <td class="align-middle text-center">청구기호 출력예정</td>
-                                                        <td class="align-middle text-center">Book</td>
-                                                        <td class="align-middle text-center">In Processing</td> 
-                                                        <td class="align-middle text-center">In Processing</td>                                                                    
-                                                    </tr>
-                                                    
+                                                        <td class="align-middle text-center" th:text="${s.bsCode}"></td>
+                                                        <td class="align-middle text-center" th:text="${s.bsCallNum}"></td>
+                                                        <td class="align-middle text-center">
+                                                        	 <span th:if="${s.bsLendState eq 'O'}">대출가능</span>
+					      									 <span th:unless="${s.bsLendState eq 'O'}">대출불가</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                        	 <span th:text="${returnDate.blScheduleDate}"></span>			      
+                                                        
+                                                        <!--   ${r.blScheduleDate ne null and r.blHoldDate eq null}    -->
+                                                        
+                                                        </td>                 
+                                                        <td class="align-middle text-center">
+                                                        	 <span th:if="${s.bsLendState eq 'O'}">당일예약가능</span>
+					      									 <span th:unless="${s.bsLendState eq 'O'}">당일예약불가</span>
+                                                        </td>                                                                   
+                                                    </tr>   
                                                 </tbody>
                                             </table>
-                                        </div>
-                                       
+                                        </div>                                       
                                     </div>
                                 </div>
                             </div>

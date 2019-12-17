@@ -29,7 +29,38 @@
                         <div class="container">
                             <div class="row">
                                 <!-- Start: Search Section -->
-                                <section th:replace="fragments/library/searchSection :: searchSectionFragment"></section>
+                               <section class="search-filters" th:fragment="searchSectionFragment">
+							          <div class="row">
+                					    <div class="col-md-11 col-md-push-2">
+							              <div class="container">
+							                 <div class="filter-box">
+							                      <form th:action="@{/lifrary/bookDataSearchGrid}" method="get">							    
+							                        <div class="col-md-3 col-sm-6">
+							                            <div class="form-group">
+							                                <select name="bclCode" id="bclCode" class="form-control">
+							                                    <option value="bcl001">단행본</option>
+							                                    <option value="bcl002">연속간행물</option>
+							                                    <option value="bcl003">비도서</option>                            
+							                                </select>
+							                            </div>
+							                        </div>
+							                        <div class="col-md-4 col-sm-6">
+							                            <div class="form-group">
+							                                <label class="sr-only" for="keywords">Search by Keyword</label>
+							                                <input id="biName" name="biName" class="form-control" placeholder="Search by Keyword" type="text">
+							                            </div>
+							                        </div>
+							                        <div class="col-md-2 col-sm-6">					                     
+							                            <div class="form-group">
+							                                <input class="form-control" type="submit" value="Search">
+							                            </div>
+							                        </div>
+							                    </form>
+							                </div>
+							            </div>
+							           </div>
+							          </div>
+							        </section>
                                 <!-- End: Search Section -->
                             </div>
                             <div class="row">
@@ -50,8 +81,10 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 pull-right">
                                                 <div class="filter-toggle">
-                                                    <a th:href="@{/gridView}" class="active"><i class="glyphicon glyphicon-th-large"></i></a>
-                                                    <a th:href="@{/bookListView}"><i class="glyphicon glyphicon-th-list"></i></a>
+                                                	<input type="hidden" name="bclCode" value="${bclCode}">
+				                                	<input type="hidden" name="biName" value="${biName}">				                                 
+                                                    <a th:href="@{/lifrary/bookDataSearchGrid}" class="active"><i class="glyphicon glyphicon-th-large"></i></a>
+                                                    <a th:href="@{/lifrary/bookDataSearchList(bclCode=${bclCode},biName=${biName})}"><i class="glyphicon glyphicon-th-list"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -59,151 +92,39 @@
                                     
                                     <div class="books-gird">
                                         <ul>
-                                            <li>
+                                            <li th:each="sl : ${searchList}">
                                                 <figure>
-                                                    <img src=" http://image.aladin.co.kr/product/6382/10/cover/8927806611_1.jpg" alt="Book">
+                                                    <a th:href="@{/lifrary/bookDetail(bsCode=${sl.bsCode})}">
+				                                     	<img alt="도서 이미지를 찾을 수 없습니다" th:src="${sl.bookInformation.biImg}">
+				                                    </a>
                                                     <figcaption>
-                                                        <p><strong>The Great Gatsby</strong></p>
-                                                        <p><strong>Author:</strong>  F. Scott Fitzgerald</p>
+                                                        <p><strong><span th:text="${sl.bookInformation.biName}"></span></strong></p>
+                                                        <p><strong>Author:</strong>&emsp;<span th:text="${sl.bookInformation.biAuthor}"></span></p>
                                                     </figcaption>
                                                 </figure> 
-                                                <div class="book-list-icon blue-icon"></div>
+                                            
                                                 <div class="single-book-box">
                                                     <div class="post-detail">
                                                         
                                                         
                                                         <header class="entry-header">
-                                                            <h3 class="entry-title"><a th:href="@{/bookDetail}">The Great Gatsby</a></h3>
+                                                            <h3 class="entry-title"><a th:href="@{/lifrary/bookDetail(bsCode=${sl.bsCode})}"><span th:text="${sl.bookInformation.biName}"></a></h3>
                                                             <ul>
-                                                                <li><strong>Author:</strong> F. Scott Fitzgerald</li>
-                                                                <li><strong>ISBN:</strong> 9781581573268</li>
+                                                                <li><strong>Author:</strong>&emsp;<span th:text="${sl.bookInformation.biAuthor}"></span></li>
+                                                                <li><strong>ISBN:</strong>&emsp;<span th:text="${sl.bookInformation.biIsbn}"></span></li>
                                                             </ul>
                                                         </header>
                                                         <div class="entry-content">
                                                             <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
                                                         </div>
                                                         <footer class="entry-footer">
-                                                            <a class="btn btn-primary" th:href="@{/bookDetail}">Read More</a>
+                                                            <a class="btn btn-primary" th:href="@{/lifrary/bookDetail(bsCode=${sl.bsCode})}">Read More</a>
                                                         </footer>
                                                     </div>
                                                 </div>                                       
                                             </li>
                                             
-                                            <li>
-                                                <figure>                                                    
-                                                    <img th:src="@{/library/images/books-media/gird-view/book-media-grid-02.jpg}" alt="Book">
-                                                    <figcaption>
-                                                        <p><strong>The Great Gatsby</strong></p>
-                                                        <p><strong>Author:</strong>  F. Scott Fitzgerald</p>
-                                                    </figcaption>
-                                                </figure>
-                                                <div class="book-list-icon blue-icon"></div>
-                                                <div class="single-book-box">
-                                                    <div class="post-detail">
-                                                        <div class="books-social-sharing">
-                                                            <ul>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-google-plus"></i></a></li>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-rss"></i></a></li>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                       
-                                                        <header class="entry-header">
-                                                            <h3 class="entry-title"><a th:href="@{/bookDetail}">The Great Gatsby</a></h3>
-                                                            <ul>
-                                                                <li><strong>Author:</strong> F. Scott Fitzgerald</li>
-                                                                <li><strong>ISBN:</strong> 9781581573268</li>
-                                                            </ul>
-                                                        </header>
-                                                        <div class="entry-content">
-                                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-                                                        </div>
-                                                        <footer class="entry-footer">
-                                                            <a class="btn btn-primary" th:href="@{/bookDetail}">Read More</a>
-                                                        </footer>
-                                                    </div>
-                                                </div>                                                                                                
-                                            </li>
-                                            
-                                            <li>
-                                            
-                                                <figure>
-                                                    <img th:src="@{/library/images/books-media/gird-view/book-media-grid-03.jpg}" alt="Book">
-                                                    <figcaption>
-                                                        <p><strong>The Great Gatsby</strong></p>
-                                                        <p><strong>Author:</strong>  F. Scott Fitzgerald</p>
-                                                    </figcaption>
-                                                </figure>
-                                                <div class="book-list-icon red-icon"></div>
-                                                <div class="single-book-box">
-                                                    <div class="post-detail">
-                                                        <div class="books-social-sharing">
-                                                            <ul>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-google-plus"></i></a></li>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-rss"></i></a></li>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-                                                            </ul>
-                                                        </div>                                                                                                               
-                                                        <header class="entry-header">
-                                                            <h3 class="entry-title"><a th:href="@{/bookDetail}">The Great Gatsby</a></h3>
-                                                            <ul>
-                                                                <li><strong>Author:</strong> F. Scott Fitzgerald</li>
-                                                                <li><strong>ISBN:</strong> 9781581573268</li>
-                                                            </ul>
-                                                        </header>
-                                                        <div class="entry-content">
-                                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-                                                        </div>
-                                                        <footer class="entry-footer">
-                                                            <a class="btn btn-primary" href="books-media-detail-v1.html">Read More</a>
-                                                        </footer>
-                                                    </div>
-                                                </div>                                                                                                
-                                            </li>
-                                            
-                                            
-                                            <li>
-                                            
-                                                <figure>
-                                                    <img th:src="@{/library/images/books-media/gird-view/book-media-grid-04.jpg}" alt="Book">
-                                                    <figcaption>
-                                                        <p><strong>The Great Gatsby</strong></p>
-                                                        <p><strong>Author:</strong>  F. Scott Fitzgerald</p>
-                                                    </figcaption>
-                                                </figure>
-                                                <div class="book-list-icon yellow-icon"></div>
-                                                <div class="single-book-box">
-                                                    <div class="post-detail">
-                                                        <div class="books-social-sharing">
-                                                            <ul>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-google-plus"></i></a></li>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-rss"></i></a></li>
-                                                                <li><a th:href="@{#}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-                                                            </ul>
-                                                        </div>
-
-                                                        <header class="entry-header">
-                                                            <h3 class="entry-title"><a th:href="@{/bookDetail}">The Great Gatsby</a></h3>
-                                                            <ul>
-                                                                <li><strong>Author:</strong> F. Scott Fitzgerald</li>
-                                                                <li><strong>ISBN:</strong> 9781581573268</li>
-                                                            </ul>
-                                                        </header>
-                                                        <div class="entry-content">
-                                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-                                                        </div>
-                                                        <footer class="entry-footer">
-                                                            <a class="btn btn-primary" th:href="@{/bookDetail}">Read More</a>
-                                                        </footer>
-                                                    </div>
-                                                </div>                                                                                                
-                                            </li>                                                                                    
+                                                                                                                   
                                         </ul>
                                     </div>
                                     <nav class="navigation pagination text-center">

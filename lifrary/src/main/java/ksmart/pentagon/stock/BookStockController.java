@@ -110,7 +110,14 @@ public class BookStockController {
 	 * @author 신다은
 	 */
     @GetMapping("/lifrary/bookDataSearchList")
-    public String bookDataSearchList() {
+    public String bookDataSearchList(Model model , 
+    		@RequestParam(value="bclCode",required=false) String bclCode ,
+    		@RequestParam(value="biName",required=false) String biName) {
+    	
+    	model.addAttribute("searchList", bookStockService.getSearchStockList(bclCode, biName));
+    	model.addAttribute("bclCode", bclCode);
+    	model.addAttribute("biName", biName);
+    	
     	return "/librarypage/bookData/bookDataSearchList";
     }
     
@@ -121,7 +128,14 @@ public class BookStockController {
 	 * @author 신다은
 	 */
     @GetMapping("/lifrary/bookDataSearchGrid")
-    public String bookDataSearchGrid() {
+    public String bookDataSearchGrid(Model model , 
+    		@RequestParam(value="bclCode",required=false) String bclCode ,
+    		@RequestParam(value="biName",required=false) String biName) {
+    	
+    	model.addAttribute("searchList", bookStockService.getSearchStockList(bclCode, biName));
+    	model.addAttribute("bclCode", bclCode);
+    	model.addAttribute("biName", biName);
+    	
     	return "/librarypage/bookData/bookDataSearchGrid";
     }
     
@@ -137,21 +151,13 @@ public class BookStockController {
 	    if(bsCode == null) {
 	    	bsCode = "bs-12092200005";
 	    }
-		model.addAttribute("stockDetail",bookStockService.getStockdetail(bsCode));
+		model.addAttribute("stockDetail",bookStockService.getStockdetail(bsCode));		
+		model.addAttribute("returnDate",bookStockService.getReturnDate(bsCode));
+		
+		
     	return "/librarypage/bookData/bookDetail";
     }
     
-    // (도서관) 도서 미리보기 페이지
-    /****
-	 * @brief  (도서관) 도서 미리보기 페이지 
-	 * @return  /librarypage/bookData/bookPreview
-	 * @author 신다은
-	 */
-    @GetMapping("/lifrary/bookPreview")
-    public String bookPreview() {
-    	return "/librarypage/bookData/bookPreview";
-    }
-     
     // (도서관) 검색창만 있는 페이지
     /****
 	 * @brief (도서관) 검색창만 있는 페이지  

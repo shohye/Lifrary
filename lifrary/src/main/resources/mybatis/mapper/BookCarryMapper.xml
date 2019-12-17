@@ -230,7 +230,7 @@
              , bi_publisher, bi_kdc, bi_detail, bi_img, bi_date)
 		VALUES 
 			(#{biIsbn}, '000000', #{biName}, #{biYear}, #{biAuthor}
-			, #{biPublisher}, #{biKdc}, #{biDtail}, #{biImg}, 'now()')
+			, #{biPublisher}, #{biKdc}, #{biDtail}, #{biImg}, CURDATE())
 	 
 	</insert>
 	
