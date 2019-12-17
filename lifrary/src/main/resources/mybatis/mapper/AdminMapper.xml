@@ -525,7 +525,7 @@
 			,#{uEmailAgree}
 			,''
 			,0
-			,#{uDate}
+			,CURDATE()
 		)
 	</insert>
 	
@@ -547,7 +547,7 @@
 			,#{llBookAdmin}
 			,#{llStats}
 			,#{llBookStock}
-			,#{llUpdate}
+			,CURDATE()
 		)
 	</insert>
 	
@@ -617,6 +617,57 @@
 			</if>
 		</trim>
   	</select>
-	
+  	
+  	<select id="getLibrarianLevelUpdate" resultMap="userResultMap" parameterType="String">
+ 		SELECT
+			*
+		FROM
+			user AS u
+		INNER JOIN  
+			librarian_level AS ll 
+		ON 
+			u.u_id = ll.u_id
+		WHERE 
+			u.u_id = #{uId}
+  	</select>
+  	
+  	<update id="librarianLevelUpdate1" parameterType="ksmart.pentagon.vo.User" >
+		UPDATE 
+			user
+		SET
+			u_id			=#{uId}
+			,l_code			=#{lCode}
+			,u_division		='사서'
+			,u_pw			=#{uPw}
+			,u_name			=#{uName}
+			,u_birth		=#{uBirth}
+			,u_addr			=#{uAddr}
+			,u_tel 			=#{uTel}		
+			,u_email  		=#{uEmail}
+			,u_email_agree	=#{uEmailAgree}
+			,u_appointment	=''
+			,u_overdue_day	=0,
+			,u_date			=CURDATE()
+		WHERE 
+			u_id = #{uId}
+    </update>
+    
+    <update id="librarianLevelUpdate2" parameterType="ksmart.pentagon.vo.LibrarianLevel" >
+		UPDATE 
+			librarian_level
+		SET
+			u_id			=#{uId}
+			,l_code			=#{lCode}
+			,ll_insert		=#{llInsert}
+			,ll_carry		=#{llCarry}
+			,ll_book_admin	=#{llBookAdmin}
+			,ll_stats		=#{llStats}
+			,ll_book_stock	=#{llBookStock}
+			,ll_update		=CURDATE()		
+		WHERE 
+			u_id = #{uId}
+    </update>
+  	
+
 
   </mapper>

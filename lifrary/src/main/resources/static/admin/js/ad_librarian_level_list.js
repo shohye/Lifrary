@@ -6,9 +6,9 @@ $(function() {
           'excel',
           'pdf'
       ],*/
-	  order: [[ 2, 'desc' ]],
+	  order: [[ 0, 'desc' ]],
 	    columnDefs: [ {
-	    targets: [0,1,7],
+	    targets: [2,12],
 	    orderable: false,
 	    }],
 	 language: {

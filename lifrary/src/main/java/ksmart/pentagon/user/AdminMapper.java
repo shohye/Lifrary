@@ -87,13 +87,17 @@ public interface AdminMapper {
 	/**********************************************************/
 	
 	
-	//관리자가 사서 등록
+	//관리자가라는  사서 등록
 	public int librarianInsert1(User user);
 	public int librarianInsert2(LibrarianLevel librarianLevel);
 
-	//관리자 사서 리스트
+	//관리자가보는  사서 리스트
 	public List<User> librarianLevelList1();
 	public List<User> librarianLevelList2();
 	
-	
+	//관리자가 회원정보&권한 수정 - 한개정보만 가져오기
+	public List<User> getLibrarianLevelUpdate(String uId);
+	//관리자가 회원정보&권한 수정
+	public int librarianLevelUpdate1(User user);
+	public int librarianLevelUpdate2(LibrarianLevel librarianLevel);
 }

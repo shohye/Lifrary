@@ -400,11 +400,11 @@ public class AdminController {
    
    /**
 	 * 관리자페이지에서 사서 전체리스트
-	 * @param modelㅊ
-	 * @return librarianSearchList페이지
+	 * @param model
+	 * @return librarianLevelList페이지
 	 * @author 한우리
 	 */
-   	//사서 전체 리스트
+   	//관리자가 보는 사서 전체 리스트
 	@GetMapping("/admin/librarianLevelList")
 	public String librarianLevelList1(Model model) { 
 		 System.out.println("librarianLevelList1 전체사서리스트 @GetMapping");
@@ -414,7 +414,7 @@ public class AdminController {
 		 
 	  return "/adminpage/librarian/librarianLevelList"; 
 	 }
-	
+	//관리자가 보는 사서 전체 리스트2
 	@PostMapping("/admin/librarianLevelList")
 	public String librarianLevelList2(Model model) {
 		 System.out.println("librarianLevelList2 전체사서리스트 @PostMapping ");
@@ -430,8 +430,10 @@ public class AdminController {
 	 */
 	//사서 등록 
 	@GetMapping("/admin/librarianInsert") 
-    public String librarianInsert() {
-      System.out.println("librarianInsert 사서등록 "); 
+    public String librarianInsert(HttpSession session ,User user, LibrarianLevel librarianLevel) {
+      System.out.println("librarianInsert 사서등록 ");
+      String getIcode = (String)session.getAttribute("LIBNUM");
+      System.out.println("getIcode 도서관 코드  >>>" + getIcode );
       
       return "/adminpage/librarian/librarianInsert";
      }
@@ -448,7 +450,38 @@ public class AdminController {
 	   return "redirect:/admin/librarianLevelList";
    } 
 	
+	/**
+	 * 관리자가 사서정보&권한 수정하기 
+	 * @return librarianLevelUpdate폼
+	 * @return librarianLevelList 리스트
+	 * @author 한우리
+	 */
+	//관리자가 사서정보&권한 수정하기 >> 폼
+	@GetMapping("/admin/librarianLevelUpdate")
+	public String getLibrarianLevelUpdate(@RequestParam(value = "uId",required=false) String uId, Model model) {
+		System.out.println("getLibrarianLevelUpdate 관리자가 사서정보&권한 수정하기 @GetMapping");
+		System.out.println("getLibrarianLevelUpdate uId 확인바람  >> " + uId );
+		model.addAttribute("librarianLevelUpdate",adminService.getLibrarianLevelUpdate(uId));
+		
+		return "/adminpage/librarian/librarianLevelUpdate";
+	}
 	
+	//관리자가 사서정보&권한 수정후 리스트로 보내기 
+	@PostMapping("/admin/librarianLevelUpdate")
+	public String librarianLevelUpdate(User user, LibrarianLevel librarianLevel) {
+		System.out.println("librarianLevelUpdate 관리자가 사서정보&권한 수정하기 @PostMapping");
+		System.out.println("user 확인 librarianLevelUpdate ==>> " + user);
+		System.out.println("librarianLevel 확인 librarianLevelUpdate ==>> " + librarianLevel);
+		
+		adminService.librarianLevelUpdate1(user);
+		adminService.librarianLevelUpdate2(librarianLevel);
+		
+		System.out.println("user 확인 librarianLevelUpdate1 ==>> " + user);
+		System.out.println("librarianLevel 확인 librarianLevelUpdate2 ==>> " + librarianLevel);
+		
+		return "redirect:/admin/librarianLevelList";
+		
+	}
 	
 	
 	/*****************************************************************************
@@ -457,18 +490,17 @@ public class AdminController {
 	
 	
    /**
-	 * 관리자페이지에서 사서 권한리스트
+	 * 사서 자신 정보 수정폼
 	 * @param model
-	 * @return librarianLevelList페이지
+	 * @return librarianUpdate페이지
 	 * @author 한우리
 	 */
-   	//사서 권한 리스트
-	
-    @GetMapping("/admin/librarianSearchList") 
-    public String librarianSearchList(Model model) {
-	   System.out.println("librarianSearchList 사서 권한 리스트 ");
+   	//사서 자신 정보 수정폼
+	@GetMapping("/admin/librarianUpdate") 
+    public String librarianUpdate(Model model) {
+	   System.out.println("librarianUpdate 나 사서! 내정보 수정 하는 폼 ");
 	  
-	   return "/adminpage/librarian/librarianSearchList"; 
+	   return "/adminpage/librarian/librarianUpdate"; 
 	  
 	}
 	

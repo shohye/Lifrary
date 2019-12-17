@@ -207,16 +207,28 @@ public class AdminService {
 		return adminMapper.librarianInsert2(librarianLevel);
 	}
 	
-	//관리자 - 사서 리스트 
+	//관리자가보는 사서 리스트 (권한부여가능)
 	public List<User> librarianLevelList1(){
 		System.out.println("librarianLevelList1 서비스진입");
-		
 		return adminMapper.librarianLevelList1();
 	}
 	public List<User> librarianLevelList2(){
 		System.out.println("librarianLevelList2 서비스진입");
-		
 		return adminMapper.librarianLevelList2();
 	}
 	
+	//관리자 회원정보&권한 수정 -한개 정보 가져오기
+	public List<User> getLibrarianLevelUpdate(String uId){
+		System.out.println("getLibrarianLevelUpdate 서비스진입");
+		return adminMapper.getLibrarianLevelUpdate(uId);
+	}
+	//관리자가 회원정보&권한 수정
+	public int librarianLevelUpdate1(User user) {
+		System.out.println("librarianLevelUpdate1 서비스진입");
+		return adminMapper.librarianLevelUpdate1(user);
+	}
+	public int librarianLevelUpdate2(LibrarianLevel librarianLevel) {
+		System.out.println("librarianLevelUpdate2 서비스진입");
+		return adminMapper.librarianLevelUpdate2(librarianLevel);
+	}
 }
