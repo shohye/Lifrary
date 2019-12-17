@@ -52,4 +52,16 @@ public interface BookCarryMapper {
 	// 희망도서 한개정보 출력 => 상세정보 회면
 	BookRequest getRequestDatail(String uId);
 	
+	/*************************************************************/	
+	
+	
+	// 도서정보 가지고 오기 AJAX	
+	BookInformation getBookInfo(String biIsbn);
+	
+	// Api를 통해 가져온 도서정보 인서트	
+	int insertBookInfo(BookInformation bookInformation);
+	
+	
+	
+	
 }

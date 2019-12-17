@@ -68,11 +68,21 @@
 			<!-- db -->
 			<result property="uId" column="u_id"/>
 			<result property="uNumber" column="u_number"/>
-			<result property="uName" column="hu_name"/>
+			<result property="uName" column="u_name"/>
 			<result property="uTel" column="u_tel"/>
 			<result property="uEmail" column="u_email"/>
 			<result property="uEmailAgree" column="u_email_agree"/>
 	 </resultMap>
+	 
+	 <select id="getBookInfo" resultMap="bookInfoResultMap" parameterType="String">
+  			SELECT 
+				* 
+			FROM 
+				book_information
+			where
+				bi_isbn = #{biIsbn}
+			    
+  	</select>
 	 
   	<select id="getRequestList" resultMap="bookRequestResultMap" >
   			SELECT 
@@ -88,7 +98,7 @@
 			on 
 				br.u_id = u.u_id
 			where 
-				br.u_id =#{u_id}
+				br.u_id =#{uId}
   	</select> 
   	  	
 
@@ -180,10 +190,10 @@
 			ON 
 				 bo.bi_isbn = bi.bi_isbn
 			SET
-				 bi.bi_name   = #{biName}
-				,bi.bi_author  = #{biAuthor}
-				,bi.bi_publisher= #{biPublisher}
-				,bi.bi_year    = #{biYear}
+				 bi.bi_name      = #{biName}
+				,bi.bi_author    = #{biAuthor}
+				,bi.bi_publisher = #{biPublisher}
+				,bi.bi_year      = #{biYear}
 			WHERE 
 				 bi.bi_isbn = #{biIsbn}
 
@@ -194,9 +204,9 @@
 		ON 
 			bp.bi_isbn = bi.bi_isbn
 		SET
-			 bp.bp_price= #{bpPrice}
-			,bp.bp_book_num = #{bpBookNum}
-			,bp.bp_additional  = #{bpAdditional}
+			 bp.bp_price      = #{bpPrice}
+			,bp.bp_book_num   = #{bpBookNum}
+			,bp.bp_additional = #{bpAdditional}
 		WHERE 
 			 bi.bi_isbn = #{biIsbn}
     </update>
@@ -206,14 +216,23 @@
 		ON 
 			bp.bi_isbn = bi.bi_isbn
 		SET
-			 bi.bi_name   = #{biName}
-			,bi.bi_author  = #{biAuthor}
+			 bi.bi_name     = #{biName}
+			,bi.bi_author   = #{biAuthor}
 			,bi.bi_publisher= #{biPublisher}
-			,bi.bi_year    = #{biYear}
+			,bi.bi_year     = #{biYear}
 		WHERE 
 			 bi.bi_isbn = #{biIsbn}
     </update>
-
+	<insert id="insertBookInfo" parameterType="ksmart.pentagon.vo.BookInformation">
+		INSERT INTO 
+			book_information
+            (bi_isbn, l_code, bi_name, bi_year, bi_author
+             , bi_publisher, bi_kdc, bi_detail, bi_img, bi_date)
+		VALUES 
+			(#{biIsbn}, '000000', #{biName}, #{biYear}, #{biAuthor}
+			, #{biPublisher}, #{biKdc}, #{biDtail}, #{biImg}, CURDATE())
+	 
+	</insert>
 	
   		
   </mapper>
