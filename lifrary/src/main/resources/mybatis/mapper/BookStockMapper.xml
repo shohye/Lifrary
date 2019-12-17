@@ -24,6 +24,7 @@
 	
 	<resultMap type="ksmart.pentagon.vo.BookStock" id="bookStockResultMap">
 	    <result column="bs_code" property="bsCode"/>
+	    <result column="l_code" property="lCode"/>
 	    <result column="u_id" property="uId"/>
 	    <result column="bi_isbn" property="biIsbn"/>
 	    <result column="bcl_code" property="bclCode"/>
@@ -58,7 +59,7 @@
 	    <result column="bl_overdue_days" property="blOverdueDays"/>
 	</resultMap>
 		
-	<select id="getStockList" resultMap="bookStockResultMap">
+	<select id="getStockList" resultMap="bookStockResultMap" parameterType="String">
 		SELECT 
 			  bs.bs_code
 			, bi.bi_img
@@ -77,6 +78,9 @@
 		left JOIN book_information  bi ON bs.bi_isbn = bi.bi_isbn
 		where
 			bs.bs_delete_id IS NULL
+		and
+			bs.l_code=#{lCode}
+			
 	</select>
 	
 	<select id="getStockdetail" resultMap="bookStockResultMap" parameterType="String">
@@ -108,6 +112,7 @@
 		left JOIN book_cate_medium bcm ON bs.bcm_code = bcm.bcm_code
 		where
 			bs.bs_code=#{bsCode}
+		
 		 
 	</select>
 	<select id="getSearchStockList" resultMap="bookStockResultMap" parameterType="String">
@@ -141,6 +146,8 @@
 		where
 			bs.bcl_code=#{bclCode}
 		and
+			bs.l_code=#{lCode}
+		and
 			bs_book_state = '정상'
 		and
 			bi.bi_name Like CONCAT ('%',#{biName},'%')  	
@@ -159,6 +166,16 @@
 		  bl_lend_date DESC
 		LIMIT 0,1
 	</select>
+	<insert id="insertBookInfoStock" parameterType="ksmart.pentagon.vo.BookInformation">
+		INSERT INTO 
+			book_information
+            (bi_isbn, bi_name, bi_year, bi_author
+             , bi_publisher, bi_kdc, bi_detail, bi_img, bi_date)
+		VALUES 
+			(#{biIsbn}, #{biName}, #{biYear}, #{biAuthor}
+			, #{biPublisher}, #{biKdc}, #{biDtail}, #{biImg}, CURDATE())
+	 
+	</insert>
 	
 	
   </mapper>

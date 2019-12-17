@@ -5,8 +5,7 @@
   <mapper namespace="ksmart.pentagon.bookcarry.BookCarryMapper">
   
   	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfoResultMap">	         
-	         <result property="biIsbn" column="bi_isbn"/>
-	         <result property="lCode" column="l_code"/>
+	         <result property="biIsbn" column="bi_isbn"/>	         
 	         <result property="biName" column="bi_name"/>
 	         <result property="biYear" column="bi_year"/>	         
 	         <result property="biAuthor" column="bi_author"/>
@@ -51,6 +50,7 @@
 	 <resultMap type="ksmart.pentagon.vo.BookRequest" id="bookRequestResultMap">	         
 	         <result property="brCode" column="br_code"/>
 	         <result property="uId" column="u_id"/>
+	         <result property="lCode" column="l_code"/>	         
 	         <result property="brTitle" column="br_title"/>
 	         <result property="brIsbn" column="br_isbn"/>
 	         <result property="brYear" column="br_year"/>	         
@@ -89,6 +89,8 @@
 				* 
 			FROM 
 				book_request
+			where 
+                l_code = #{lCode}
   	</select>
   	<select id="getRequestDatail" resultMap="bookRequestResultMap" parameterType="String">
   			SELECT 
@@ -109,7 +111,9 @@
 			FROM 
 				book_order as bo INNER JOIN book_information as bi
 			ON 
-			    bo.bi_isbn = bi.bi_isbn;  		
+			    bo.bi_isbn = bi.bi_isbn
+			where 
+                bo.l_code = #{lCode}	
   	
   	</select>
   	<select id="getPurchaseList" resultMap="bookCarryResultMap" >
@@ -117,14 +121,17 @@
 				*
 			FROM 
 				book_purchase as bp INNER JOIN book_information as bi
-			ON bp.bi_isbn = bi.bi_isbn;  		
+			ON 
+				bp.bi_isbn = bi.bi_isbn;  		
   	
   	</select>
   	<select id="getDonationList" resultMap="bookCarryResultMap">
 			SELECT 
 				* 
 			FROM 
-				book_donation;  		
+				book_donation
+			where 
+                l_code = #{lCode}		
   	
   	</select>
   	<select id="getOrderUpdate" resultMap="bookCarryResultMap" parameterType="String">
@@ -226,10 +233,10 @@
 	<insert id="insertBookInfo" parameterType="ksmart.pentagon.vo.BookInformation">
 		INSERT INTO 
 			book_information
-            (bi_isbn, l_code, bi_name, bi_year, bi_author
+            (bi_isbn, bi_name, bi_year, bi_author
              , bi_publisher, bi_kdc, bi_detail, bi_img, bi_date)
 		VALUES 
-			(#{biIsbn}, '000000', #{biName}, #{biYear}, #{biAuthor}
+			(#{biIsbn}, #{biName}, #{biYear}, #{biAuthor}
 			, #{biPublisher}, #{biKdc}, #{biDtail}, #{biImg}, CURDATE())
 	 
 	</insert>

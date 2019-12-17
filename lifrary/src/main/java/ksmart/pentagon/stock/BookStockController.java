@@ -1,6 +1,7 @@
 package ksmart.pentagon.stock;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -8,7 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import ksmart.pentagon.vo.BookInformation;
 
 /****
  * @file   BookStockController.java
@@ -30,9 +35,10 @@ public class BookStockController {
 	 * @author 신다은
 	 */
 	@GetMapping("/admin/stockSearchList")
-    public String stockSearchList(Model model) {
+    public String stockSearchList(Model model,HttpSession session){
 		
-		model.addAttribute("stockList", bookStockService.getStockList());
+		String lCode = (String) session.getAttribute("LIBNUM");
+		model.addAttribute("stockList", bookStockService.getStockList(lCode));
 		
     	return "/adminpage/bookStock/stockSearchList";
     }
@@ -55,8 +61,8 @@ public class BookStockController {
 	 * @author 신다은
 	 */
 	@PostMapping("/admin/stockDetailInsert")
-    public String stockDetailInsert2() {
-		
+    public String stockDetailInsert2(HttpSession session) {
+		String lCode = (String) session.getAttribute("LIBNUM");
     	return "redirect:/admin/stockSearchList";
     }
 	
@@ -110,11 +116,13 @@ public class BookStockController {
 	 * @author 신다은
 	 */
     @GetMapping("/lifrary/bookDataSearchList")
-    public String bookDataSearchList(Model model , 
-    		@RequestParam(value="bclCode",required=false) String bclCode ,
-    		@RequestParam(value="biName",required=false) String biName) {
+    public String bookDataSearchList(Model model
+    		, @RequestParam(value="bclCode",required=false) String bclCode
+    		, @RequestParam(value="biName",required=false) String biName
+    		, HttpSession session) {
     	
-    	model.addAttribute("searchList", bookStockService.getSearchStockList(bclCode, biName));
+    	String lCode = (String)session.getAttribute("LIBNUM");
+    	model.addAttribute("searchList", bookStockService.getSearchStockList(bclCode, biName,lCode));
     	model.addAttribute("bclCode", bclCode);
     	model.addAttribute("biName", biName);
     	
@@ -128,11 +136,13 @@ public class BookStockController {
 	 * @author 신다은
 	 */
     @GetMapping("/lifrary/bookDataSearchGrid")
-    public String bookDataSearchGrid(Model model , 
-    		@RequestParam(value="bclCode",required=false) String bclCode ,
-    		@RequestParam(value="biName",required=false) String biName) {
+    public String bookDataSearchGrid(Model model
+    		, @RequestParam(value="bclCode",required=false) String bclCode
+    		, @RequestParam(value="biName",required=false) String biName
+    		, HttpSession session) {
     	
-    	model.addAttribute("searchList", bookStockService.getSearchStockList(bclCode, biName));
+    	String lCode = (String)session.getAttribute("LIBNUM");
+    	model.addAttribute("searchList", bookStockService.getSearchStockList(bclCode, biName,lCode));
     	model.addAttribute("bclCode", bclCode);
     	model.addAttribute("biName", biName);
     	
@@ -203,5 +213,21 @@ public class BookStockController {
     public String myBookRequestList() {
     	return "/librarypage/book/myBookRequestList";
     }
+    
+    
+    /***********************************************************************/
+    
+    
+  //도서정보 가져오기 AJAX
+    @RequestMapping(value="/getBookInfoStock", produces = "application/json")
+	public @ResponseBody BookInformation Ajax(
+			  Model model
+			, @RequestParam(value="biIsbn",required=false)String biIsbn) 
+	{
+    	
+    	System.out.println("*****************************biIsbn=>"+biIsbn);
+    	
+		return bookStockService.getBookInfoStock(biIsbn);	
+	}
 
 }

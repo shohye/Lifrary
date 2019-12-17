@@ -2,7 +2,6 @@ package ksmart.pentagon.vo;
 
 public class BookInformation {
 	private String biIsbn;
-	private String lCode;
 	private String biName;
 	private String biYear;
 	private String biAuthor;
@@ -26,12 +25,7 @@ public class BookInformation {
 	public void setBiIsbn(String biIsbn) {
 		this.biIsbn = biIsbn;
 	}
-	public String getlCode() {
-		return lCode;
-	}
-	public void setlCode(String lCode) {
-		this.lCode = lCode;
-	}
+	
 	public String getBiName() {
 		if(biName != null && "".equals(biName.trim())) this.biName = null;
 		return biName;

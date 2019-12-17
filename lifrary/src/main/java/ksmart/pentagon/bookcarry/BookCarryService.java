@@ -22,8 +22,8 @@ public class BookCarryService {
 	@Autowired BookCarryMapper bookCarryMapper;
 	
 	// 오더리스트 출력
-	public List<BookCarry> getOrderList(){
-		return bookCarryMapper.getOrderList();	
+	public List<BookCarry> getOrderList(String lCode){
+		return bookCarryMapper.getOrderList(lCode);	
 	}
 	// 오더 도서 한개정보출력/ 수정화면	
 	public BookCarry getOrderUpdate(String boCode) {
@@ -42,8 +42,8 @@ public class BookCarryService {
 	
 	
 	// 구매리스트 출력
-	public List<BookCarry> getPurchaseList(){
-		return bookCarryMapper.getPurchaseList();
+	public List<BookCarry> getPurchaseList(String lCode){
+		return bookCarryMapper.getPurchaseList(lCode);
 	}
 	// 구매 도서 한개정보출력/ 수정화면	
 	public BookCarry getPurchaseUpdate(String bpCode) {
@@ -63,8 +63,8 @@ public class BookCarryService {
 	
 	
 	// 기부자리스트 출력
-	public List<BookCarry> getDonationList(){
-		return bookCarryMapper.getDonationList();
+	public List<BookCarry> getDonationList(String lCode){
+		return bookCarryMapper.getDonationList(lCode);
 	}				
 	// 기부자 한개정보출력/ 수정화면	
 	public BookCarry getDonationUpdate(String bdnCode) {
@@ -81,10 +81,10 @@ public class BookCarryService {
 	
 	
 	// 희망도서신청 리스트 출력
-	public List<BookRequest> getRequestList() {
+	public List<BookRequest> getRequestList(String lCode) {
 		
 		System.out.println("서비스 출력 --------------------------");
-		List<BookRequest> br = bookCarryMapper.getRequestList();
+		List<BookRequest> br = bookCarryMapper.getRequestList(lCode);
 		String cancelReason =null;
 		String opinion =null;
 		for(int i =0; i<br.size(); i++) {			
