@@ -10,8 +10,10 @@ import org.springframework.ui.Model;
 
 import ksmart.pentagon.vo.LibrarianLevel;
 import ksmart.pentagon.vo.User;
+import ksmart.pentagon.vo.UserAuthorityHistory;
 import ksmart.pentagon.vo.UserAuthoritySet;
 import ksmart.pentagon.vo.UserLevel;
+import ksmart.pentagon.vo.UserLevelHistory;
 
 /*
  * @file   AdminService.java 
@@ -68,7 +70,7 @@ public class AdminService {
 	//유저 회원 수정 처리 
 	public int adminUserUpdate(User user) {
 		System.out.println("adminUserUpdate 서비스진입");
-		
+		System.out.println("유저 회원 수정처리 =>> "+ adminMapper.adminUserUpdate(user));
 		return adminMapper.adminUserUpdate(user);
 	}
 	
@@ -91,10 +93,10 @@ public class AdminService {
 	 
 	 
 	 //관리자가 회원 등급 등록하기
-	 public int userLevelInsert(UserLevel userLevel) {
-		System.out.println("userAuthorityInsert 서비스진입");
-		int result = adminMapper.userLevelInsert(userLevel);
-		System.out.println(result + "==> adminMapper.userLevelInsert(userLevel) 확인완료");
+	 public int adUserLevelInsert(UserLevel userLevel) {
+		System.out.println("adUserLevelInsert 서비스진입");
+		int result = adminMapper.adUserLevelInsert(userLevel);
+		System.out.println("adminMapper.adUserLevelInsert(userLevel) 확인완료 ==>> " + result);
 		
 		 return result; 
 	 }
@@ -107,6 +109,36 @@ public class AdminService {
 		 return adminMapper.adUserLevelList();
 	 }
 	 
+	 //관리자가 유저 레벨 수정 하기
+	 public UserLevel getAdUserLevelUpdate(String ulLevel) {
+		 System.out.println("getAdUserLevelUpdate 서비스 진입");
+		
+		 return adminMapper.getAdUserLevelUpdate(ulLevel);
+	 }
+	 
+	 //관리자가 회원 등급 수정하고 리스트로넘기기
+	 public int adUserLevelUpdate(UserLevel userLevel) {
+		 System.out.println("adUserLevelUpdate 서비스 진입");
+		 
+		 return adminMapper.adUserLevelUpdate(userLevel); 
+	 }
+	 
+	 //유저 회원등급 내역 리스트 전체 가져오기 
+	 public List<UserLevelHistory> adUserLevelHistorySearchList(){
+		 System.out.println("adUserLevelHistorySearchList 서비스진입");
+		 System.out.println(adminMapper.adUserLevelHistorySearchList());
+		
+		 return adminMapper.adUserLevelHistorySearchList();
+	}
+	
+	//유저 회원등급 내역 검색 리스트 전체 가져오기
+	 public List<UserLevelHistory> adUserLevelHistorySearch(){
+		 System.out.println("adUserLevelHistorySearch 서비스진입");
+		 System.out.println(adminMapper.adUserLevelHistorySearch());
+		
+		 return adminMapper.adUserLevelHistorySearch();
+	}
+	 
 	 
 	 /**************************************************************/
 	 
@@ -115,18 +147,88 @@ public class AdminService {
 	 public int adUserAuthorityInsert(UserAuthoritySet userAuthoritySet) {
 		 System.out.println("adUserAuthorityInsert 서비스진입");
 		 int result = adminMapper.adUserAuthorityInsert(userAuthoritySet);
-		 System.out.println(result + "==> adminMapper.adUserAuthorityInsert(userAuthoritySet) 확인완료");
+		 System.out.println("adminMapper.adUserAuthorityInsert(userAuthoritySet) 확인완료 ==>> " + result);
 		 
 		 return result;
 	 }
 	 
+	 //관리자가 회원 권한 리스트보기
+	 public List<UserAuthoritySet> adUserAuthorityList(){
+		 System.out.println("adUserAuthorityList 서비스 진입");
+		 System.out.println("확인완료 adUserAuthorityList ==>>" + adminMapper.adUserAuthorityList());
+		
+		 return adminMapper.adUserAuthorityList();
+	 }
+	 
+	 //관리자가 회원 권한 수정하기
+	 public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode) {
+		 System.out.println("getAdUserAuthorityUpdate 서비스 진입");
+		 System.out.println("확인완료 getAdUserAuthorityUpdate ==>>" + adminMapper.getAdUserAuthorityUpdate(uasCode));
+		 
+		 return adminMapper.getAdUserAuthorityUpdate(uasCode); 
+	 }
+	 
+	 //관리자가 회원 권한 수정하고 리스트로넘기기
+	 public int adUserAuthorityUpdate(UserAuthoritySet userAuthoritySet) {
+		 System.out.println("adUserAuthorityUpdate 서비스 진입");
+		 
+		 return adminMapper.adUserAuthorityUpdate(userAuthoritySet);
+	 }
+	 
+	 //유저 권한등급 내역 리스트 전체 가져오기 
+	 public List<UserAuthorityHistory> adUserAuthorityHistorySearchList(){
+		 System.out.println("adUserAuthorityHistorySearchList 서비스진입");
+		 System.out.println(adminMapper.adUserAuthorityHistorySearchList());
+		
+		 return adminMapper.adUserAuthorityHistorySearchList();
+	}
+	
+	//유저 권한등급 내역 검색 리스트 전체 가져오기
+	 public List<UserAuthorityHistory> adUserAuthorityHistorySearch(){
+		 System.out.println("adUserAuthorityHistorySearch 서비스진입");
+		 System.out.println(adminMapper.adUserAuthorityHistorySearch());
+		
+		 return adminMapper.adUserAuthorityHistorySearch();
+	}
+	 
+	 
+	 
+	 /**********************************************************************************/
+	 
+	 
 	 
 	//관리자가 사서 등록하기 
-	public int librarianInsert(LibrarianLevel librarianLevel) {
-		System.out.println("librarianInsert 서비스진입");
-		int result = adminMapper.librarianInsert(librarianLevel);
-		System.out.println(result + "==> libraryMapper.librarianInsert(librarianLevel)확인완료");
-			
-		return result;
-	} 
+	public int librarianInsert1(User user) {
+		System.out.println("librarianInsert1 서비스진입");
+		return adminMapper.librarianInsert1(user);
+	}
+	public int librarianInsert2(LibrarianLevel librarianLevel) {
+		System.out.println("librarianInsert2 서비스진입");
+		return adminMapper.librarianInsert2(librarianLevel);
+	}
+	
+	//관리자가보는 사서 리스트 (권한부여가능)
+	public List<User> librarianLevelList1(){
+		System.out.println("librarianLevelList1 서비스진입");
+		return adminMapper.librarianLevelList1();
+	}
+	public List<User> librarianLevelList2(){
+		System.out.println("librarianLevelList2 서비스진입");
+		return adminMapper.librarianLevelList2();
+	}
+	
+	//관리자 회원정보&권한 수정 -한개 정보 가져오기
+	public List<User> getLibrarianLevelUpdate(String uId){
+		System.out.println("getLibrarianLevelUpdate 서비스진입");
+		return adminMapper.getLibrarianLevelUpdate(uId);
+	}
+	//관리자가 회원정보&권한 수정
+	public int librarianLevelUpdate1(User user) {
+		System.out.println("librarianLevelUpdate1 서비스진입");
+		return adminMapper.librarianLevelUpdate1(user);
+	}
+	public int librarianLevelUpdate2(LibrarianLevel librarianLevel) {
+		System.out.println("librarianLevelUpdate2 서비스진입");
+		return adminMapper.librarianLevelUpdate2(librarianLevel);
+	}
 }
