@@ -3,6 +3,57 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
 		
+		<th:block layout:fragment="customScript">
+			<script>
+				$(document).ready(function(){
+					$('#submitBtn').click(function(){
+						var SID = $('#SID').val();
+						var paParticipants = $('#paParticipants').val();
+						var paBirth = $('#paBirth').val();
+						var paAddr = $('#paAddr').val();
+						var paTel = $('#paTel').val();
+						var applyForm = $('#applyForm');
+						
+						if(SID == ""){
+							alert('세션이 만료되었습니다. 다시 로그인 해주세요.');
+							location.href = "/lifrary/login";
+							return false;
+						}
+						if(paParticipants == ""){
+							alert('참여자명을 입력해주세요.');
+							$('#paParticipants').focus();
+							return false;
+						}
+						if(paBirth == ""){
+							alert('생년월일을 입력해주세요.');
+							$('#paBirth').focus();
+							return false;
+						}
+						if(paAddr == ""){
+							alert('주소를 입력해주세요.');
+							$('#paAddr').focus();
+							return false;
+						}	
+						if(paTel == ""){
+							alert('연락처를 입력해주세요.');
+							$('#paTel').focus();
+							return false;
+						}
+						/* console.log(SID);
+						console.log(paParticipants);
+						console.log(paBirth);
+						console.log(paAddr);
+						console.log(paTel); */
+						alert('신청이 완료되었습니다.');
+						applyForm.submit();
+					
+					})
+					
+				})
+			</script>
+		</th:block>
+		
+		
 		<th:block layout:fragment="customContents">
 		
 		<!-- Start: Page Banner -->

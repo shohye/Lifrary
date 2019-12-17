@@ -24,24 +24,49 @@
 		  <li class="sidenav-header small font-weight-semibold">User Management</li>
           <!-- 회원 관리 -->
           <li class="sidenav-item">
-            <a href="javascript:void(0)" class="sidenav-link sidenav-toggle"><i class="sidenav-icon fas fa-user-alt"></i>
+            <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
+            <i class="sidenav-icon fas fa-user-alt"></i>
               <div>1.회원 관리</div>
             </a>
             <ul class="sidenav-menu">
-              <li class="sidenav-item">
+              <li class="sidenav-item ">
                 <a th:href="@{/admin/userSearchList}" class="sidenav-link">
                   <div>!회원 관리</div>
                 </a>
               </li>
               <li class="sidenav-item">
-			    <a th:href="@{/admin/adUserLevelList}" class="sidenav-link">
-                  <div>!회원 등급 설정</div>
+			    <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
+                  <div>!회원 등급 관리</div>
                 </a>
+				<ul class="sidenav-menu">
+                  <li class="sidenav-item">
+                    <a th:href="@{/admin/adUserLevelList}"  class="sidenav-link">
+                      <div>!회원 등급 설정</div>
+                    </a>
+                  </li>
+                  <li class="sidenav-item">
+                    <a th:href="@{/admin/adUserLevelHistorySearchList}"  class="sidenav-link">
+                      <div>!회원 등급 이력</div>
+                    </a>
+                  </li>
+                </ul>
               </li>
               <li class="sidenav-item">
-                <a th:href="@{/admin/adUserAuthorityInsert}" class="sidenav-link">
-                  <div>!회원 권한 설정</div>
+                <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
+                  <div>!회원 권한 관리</div>
                 </a>
+                <ul class="sidenav-menu">
+                  <li class="sidenav-item">
+                    <a th:href="@{/admin/adUserAuthorityList}"  class="sidenav-link">
+                      <div>!회원 권한 설정</div>
+                    </a>
+                  </li>
+                  <li class="sidenav-item">
+                    <a th:href="@{/admin/adUserAuthorityHistorySearchList}"  class="sidenav-link">
+                      <div>!회원 권한 이력</div>
+                    </a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>
@@ -53,13 +78,13 @@
             </a>
             <ul class="sidenav-menu">
               <li class="sidenav-item">
-                <a th:href="@{/admin/librarianInsert}" class="sidenav-link">
+                <a th:href="@{/admin/librarianUpdate}" class="sidenav-link">
                   <div>!사서 관리</div>
                 </a>
               </li>
               <li class="sidenav-item">
-                <a th:href="@{#}" class="sidenav-link">
-                  <div>#사서 권한 설정</div>
+                <a th:href="@{/admin/librarianLevelList}" class="sidenav-link">
+                  <div>!사서 권한 설정</div>
                 </a>
               </li>
             </ul>
@@ -97,8 +122,8 @@
 
             <ul class="sidenav-menu">
               <li class="sidenav-item">
-                <a th:href="@{#}" class="sidenav-link">
-                  <div>#희망도서 관리</div>
+                <a th:href="@{/admin/requestSearchList}" class="sidenav-link">
+                  <div>!희망도서 관리</div>
                 </a>
               </li>
               <li class="sidenav-item">
@@ -123,7 +148,7 @@
 		<!-- 도서관리 -->
 		<li class="sidenav-item">
             <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
-              <i class="sidenav-icon ion ion-md-document"></i>
+              <i class="sidenav-icon fas fa-book"></i>
               <div>5.도서 관리</div>
             </a>
             <ul class="sidenav-menu">
@@ -151,10 +176,6 @@
               </li>
               </ul> 
           </li>
-     
-      
-         
-          
 
           <!-- 대출/반납/예약 관리 -->
           <li class="sidenav-item">
@@ -165,12 +186,12 @@
             <ul class="sidenav-menu">
               <li class="sidenav-item">
                 <a th:href="@{/admin/lendSearchList}" class="sidenav-link">
-                 <div>!대출/반납 관리</div>
+                 <div>대출/반납 관리</div>
                 </a>
               </li>
               <li class="sidenav-item">
-                <a th:href="@{/admin/reservationSearchList}" class="sidenav-link">
-                     <div>!예약 관리</div>
+                <a th:href="@{/admin/holdSearchList}" class="sidenav-link">
+                   <div>예약 관리</div>
                 </a>
               </li>
             </ul>
@@ -187,12 +208,12 @@
             </a>
             <ul class="sidenav-menu">
               <li class="sidenav-item">
-                <a th:href="@{/adminNoticeSearchList}" class="sidenav-link">
+                <a th:href="@{/admin/noticeSearchList(boardLName=${'공지사항'})}" class="sidenav-link">
                   <div>!공지사항</div>
                 </a>
               </li>
               <li class="sidenav-item">
-                <a th:href="@{/adminInquirySearchList}" class="sidenav-link">
+                <a th:href="@{/admin/noticeSearchList(boardLName=${'문의하기'})}" class="sidenav-link">
                   <div>!문의</div>
                 </a>
               </li>
@@ -230,15 +251,15 @@
               <div>9.프로그램 관리</div>
             </a>
 
-            <ul class="sidenav-menu">
+            <ul class="sidenav-menu">              
               <li class="sidenav-item">
-                <a th:href="@{#}" class="sidenav-link">
-                  <div>#프로그램 관리</div>
+                <a th:href="@{/admin/programSearchList}" class="sidenav-link">
+                  <div>!등록 프로그램 리스트</div>
                 </a>
               </li>
               <li class="sidenav-item">
-                <a th:href="@{#}" class="sidenav-link">
-                  <div>#프로그램 신청 내역</div>
+                <a th:href="@{/admin/programApplySearchList}" class="sidenav-link">
+                  <div>!프로그램 신청 내역</div>
                 </a>
               </li>
             </ul>

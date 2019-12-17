@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ksmart.pentagon.vo.User;
 
 /*
- * @file   LibraryController.java 
+ * @file   LibraryController.java
  * @name   library controller 
  * @brief  도서관 관련 매핑된 경로로 이동
  * @author 김상협 
@@ -31,7 +31,7 @@ public class LibraryController {
 	 * @author 김상협
 	 * @date 19/12/05
 	 */	
-	@GetMapping("/lifraryLogin")
+	@GetMapping("/lifrary/login")
 	public String login() {
 		
 		return "librarypage/user/login";
@@ -45,12 +45,14 @@ public class LibraryController {
 	 * @param model
 	 * @return
 	 */
-	@PostMapping("/lifraryLogin")
+	@PostMapping("/lifrary/login")
 	public String login(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw, HttpSession session, Model model) {
 		System.out.println(uId + " <== uId");
 		System.out.println(uPw + " <== uPw");
 		
-		Map<String,Object> map = libraryService.loginCheck(uId, uPw);
+		String libNum = (String)session.getAttribute("LIBNUM");
+		
+		Map<String,Object> map = libraryService.loginCheck(uId, uPw,libNum);
 		User user = (User)map.get("user");
 		String result = (String)map.get("result");
 		System.out.println(result + " <== result controller");
@@ -80,7 +82,7 @@ public class LibraryController {
 	 * @param session
 	 * @return
 	 */
-	@GetMapping("/lifraryLogout")
+	@GetMapping("/lifrary/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("SID");
 		session.removeAttribute("SNAME");

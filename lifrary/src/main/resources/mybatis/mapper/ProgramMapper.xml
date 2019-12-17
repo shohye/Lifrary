@@ -18,21 +18,92 @@
   		<result property="pmEndReceipt" column="pm_end_receipt"/>
   		<result property="pmProgress" column="pm_progress"/>
   		<result property="pmTeacherName" column="pm_teacher_name"/>
+  		<result property="pmApplicant" column="pm_applicant"/>
   		<result property="pmMnop" column="pm_mnop"/>
   		<result property="pmTuition" column="pm_tuition"/>
   		<result property="pmTel" column="pm_tel"/>
   		<result property="pmDetail" column="pm_detail"/>
   		<result property="pmFile" column="pm_file"/>
   		<result property="pmDate" column="pm_date"/>
+  		<collection property="programApply" resultMap="PAResultMap"/>
   	</resultMap>
-  
+  	
+  	<resultMap type="ksmart.pentagon.vo.ProgramApply" id="PAResultMap">
+  		<result property="paCode" column="pa_code"/>
+  		<result property="lCode" column="l_code"/>
+  		<result property="pmCode" column="pm_code"/>
+  		<result property="uId" column="u_id"/>
+  		<result property="paParticipants" column="pa_participants"/>
+  		<result property="paGender" column="pa_gender"/>
+  		<result property="paBirth" column="pa_birth"/>
+  		<result property="paAddr" column="pa_addr"/>
+  		<result property="paTel" column="pa_tel"/>
+  		<result property="paCondition" column="pa_condition"/>
+  		<result property="paDate" column="pa_date"/>
+  		<result property="pmName" column="pm_name"/>
+  	</resultMap>
+  	
+  	
+  	
+	<!-- 프로그램 리스트 전체 출력 -->  
   	<select id="getProgramList" resultMap="PMResultMap">
   		SELECT 
 			*
 		FROM 
 			program_mgr
+		where
+			l_code = #{libNum}
   	</select>
   	
+  	<!-- 프로그램 검색결과 리스트 츨력 -->
+  	<select id="getSearchProgramList" parameterType="String" resultMap="PMResultMap">
+  		SELECT
+			*
+		FROM
+			program_mgr
+		WHERE
+			l_code = #{libNum}
+		<if test="keywords == null and  target == '전체'">
+			 and pm_name LIKE CONCAT('%',#{keywords},'%')
+		</if>
+		<if test="keywords == null and target != '전체'">		
+			 and pm_target = #{target} 
+			 and	pm_name LIKE CONCAT('%',#{keywords},'%')
+		</if>
+		<if test="keywords != null and target != '전체'">		
+			 and pm_target = #{target}
+		</if>
+
+			
+  	</select>
+  	
+  	<!-- 프로그램 신청 리스트 전체 출력(회원 마이페이지용)-->
+  	<select id="getProgramApplyList" parameterType="String" resultMap="PAResultMap">
+  		SELECT 
+ 			*
+		FROM
+			program_apply AS pa INNER JOIN program_mgr AS pm
+		ON pa.pm_code = pm.pm_code
+		WHERE
+		  pa.u_id = #{uId}
+		
+  	</select>
+  	
+  	<!-- 프로그램 신청 리스트 전체 출력 (사서채널용) -->
+  	<select id="adminGetProgramApplyList" parameterType="String" resultMap="PAResultMap">
+  		SELECT 
+ 			*
+		FROM
+			program_apply AS pa INNER JOIN program_mgr AS pm
+		ON pa.pm_code = pm.pm_code
+		WHERE
+			pm.l_code = #{libNum}
+  	</select>
+  	
+  	
+  	
+  	
+  	<!-- 프로그램 상세보기 -->
   	<select id="getProgram" parameterType="String" resultMap="PMResultMap">
   		SELECT 
 			*
@@ -42,11 +113,94 @@
 			pm_code = #{pmCode}
   	</select>
   	
+  	<!-- 프로그램 상세보기 (paCode로 찾기) -->
+  	<select id="getProgramDetail" parameterType="String" resultMap="PMResultMap">
+  		SELECT 
+			*
+		FROM 
+			program_mgr AS pm INNER JOIN program_apply AS pa
+		ON 
+			pm.pm_code = pa.pm_code
+		WHERE pa.pa_code = #{paCode}
+  	</select>
+  	
+  	
+  	
+  	<!-- 도서관 / 프로그램 신청하기 -->
   	<insert id="insertProgram" parameterType="ksmart.pentagon.vo.ProgramApply">
   		INSERT INTO 
 			program_apply
 		(pa_code, l_code, pm_code, u_id, pa_participants, pa_gender, pa_birth, pa_addr, pa_tel, pa_date)
-		VALUES (#{paCode}, '000000', #{pmCode}, #{uId}, #{paParticipants}, #{paGender}, #{paBirth}, #{paAddr}, #{paTel}, NOW())
+		VALUES (#{paCode}, #{lCode}, #{pmCode}, #{uId}, #{paParticipants}, #{paGender}, #{paBirth}, #{paAddr}, #{paTel}, NOW())
   	</insert>
+  	
+  	<!-- 프로그램 취소(회원) -->
+  	<update id="cancleProgram">
+  		UPDATE
+  			program_apply
+		SET
+			pa_condition='취소'
+		WHERE 
+			pa_code = #{paCode}
+  	</update>
+  	
+  	<!-- 프로그램 삭제(사서)  -->
+  	<update id="deleteProgram" parameterType="String">
+  		UPDATE 
+  			program_mgr
+		SET
+			pm_progress='삭제'
+		WHERE 
+			pm_code = #{pmCode}
+  	</update>
+  	
+  	<!-- //프로그램 삭제시 신청한 사람들 취소로 바꾸기 -->
+  	<update id="deleteCancleProgram">
+  		UPDATE 
+  			program_apply
+		SET
+			pa_condition='취소'
+		WHERE
+			pa_condition = '신청완료' AND pm_code = #{pmCode}
+  	</update>
+  	
+  	<!-- 프로그램 신청시 현재 신청자수 +1 / 프로그램 취소시 현재 신청자수 -1-->
+  	<update id="updateApplicant" parameterType="String">
+  		UPDATE program_mgr
+		SET
+		<if test="appUpdate == 'insert'">
+			pm_applicant= pm_applicant+1
+		</if>
+		<if test="appUpdate == 'cancle'">
+			pm_applicant= pm_applicant-1
+		</if>
+		WHERE
+			pm_code = #{pmCode}
+  	</update>
+  	
+  	
+  	<!-- 사서채널 / 프로그램 수정하기 -->
+  	<update id="updateProgram" parameterType="ksmart.pentagon.vo.ProgramManager">
+  		UPDATE 
+  			program_mgr
+		SET
+			u_id=					#{uId},
+			pm_name=				#{pmName},
+			pm_target=				#{pmTarget},
+			pm_place=				#{pmPlace},
+			pm_start_receipt=		#{pmStartReceipt},
+			pm_end_receipt=			#{pmEndReceipt},
+			pm_start_term=			#{pmStartTerm},
+			pm_end_term=			#{pmEndTerm},
+			pm_start_time=			#{pmStartTime},
+			pm_end_time=			#{pmEndTime},
+			pm_teacher_name=		#{pmTeacherName},
+			pm_mnop=				#{pmMnop},
+			pm_tuition=				#{pmTuition},
+			pm_tel=					#{pmTel},
+			pm_detail=				#{pmDetail}
+		WHERE 
+			pm_code=				#{pmCode}
+  	</update>
   	
   </mapper>

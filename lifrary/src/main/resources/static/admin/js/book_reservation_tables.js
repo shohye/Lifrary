@@ -1,8 +1,8 @@
 $(function() {
   $('.datatables-demo').dataTable({
-	  order: [[ 2, 'desc' ]],
+	  order: [[ 4, 'desc' ]],
 	    columnDefs: [ {
-	    targets: [0,1],
+	    targets: [0,1,2,3,6],
 	    orderable: false,
 	    }],
 	 language: {
@@ -14,7 +14,8 @@ $(function() {
 		 "paginate" : {
 	            "next" : "다음",
 	            "previous" : "이전"
-	        }
+	        },
+	     "zeroRecords" : "검색결과가 없습니다"
 	 }
   });
 });

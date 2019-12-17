@@ -7,8 +7,10 @@ import org.springframework.ui.Model;
 
 import ksmart.pentagon.vo.LibrarianLevel;
 import ksmart.pentagon.vo.User;
+import ksmart.pentagon.vo.UserAuthorityHistory;
 import ksmart.pentagon.vo.UserAuthoritySet;
 import ksmart.pentagon.vo.UserLevel;
+import ksmart.pentagon.vo.UserLevelHistory;
 
 /*
  * @file   AdminMapper.java 
@@ -21,8 +23,8 @@ import ksmart.pentagon.vo.UserLevel;
 public interface AdminMapper {
 
 	
-	//사서 채널 로그인 처리 / 회원 정보 유무 확인후 로그인
-	public User adminLoginCheck(String uId);
+	//사서 채널 로그인 처리 / 회원 정보 유무 확인후 로그인 , 도서관코드에 맞는 아이디 로그인.
+	public User adminLoginCheck(String uId, String libNum);
 	
 	//유저 회원 전체 가져오기.
 	public List<User> getUserList();
@@ -42,19 +44,60 @@ public interface AdminMapper {
 	/**********************************************************/
 	 
 	//관리자가 회원등급 등록하기
-	public int userLevelInsert(UserLevel userLevel);
+	public int adUserLevelInsert(UserLevel userLevel);
 	
 	//관리자가 회원등급 리스트
 	public List<UserLevel> adUserLevelList();
-		
+	
+	//관리자가 회원등급수정-getmapping
+	public UserLevel getAdUserLevelUpdate(String ulLevel);
+	
+	//관리자가 회원등급수정 postmapping
+	public int adUserLevelUpdate(UserLevel userLevel);  
+	
+	//회원등급내역리스트
+	public List<UserLevelHistory> adUserLevelHistorySearchList();
+	
+	//회원등급내역리스트
+	public List<UserLevelHistory> adUserLevelHistorySearch();
+	
+	
 	/**********************************************************/
 	
 	
 	//관리자가 회원권한 등록하기.
 	public int adUserAuthorityInsert(UserAuthoritySet userAuthoritySet);
 	
-	//관리자가 사서 등록
-	public int librarianInsert(LibrarianLevel librarianLevel);
-
+	//관리자가 회원 권한 리스트보기
+	public List<UserAuthoritySet> adUserAuthorityList();
 	
+	//관리자가 회원 권한 수정하기 getmapping
+	public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode);
+	 
+	//관리자가 회원 권한 수정하기 postmapping
+	public int adUserAuthorityUpdate(UserAuthoritySet userAuthoritySet);
+	
+	//회원등급내역리스트
+	public List<UserAuthorityHistory> adUserAuthorityHistorySearchList();
+	
+	//회원등급내역리스트
+	public List<UserAuthorityHistory> adUserAuthorityHistorySearch();
+	
+	
+	/**********************************************************/
+	
+	
+	//관리자가라는  사서 등록
+	public int librarianInsert1(User user);
+	public int librarianInsert2(LibrarianLevel librarianLevel);
+
+	//관리자가보는  사서 리스트
+	public List<User> librarianLevelList1();
+	public List<User> librarianLevelList2();
+	
+	//관리자가 회원정보&권한 수정 - 한개정보만 가져오기
+	public List<User> getLibrarianLevelUpdate(String uId);
+	//관리자가 회원정보&권한 수정
+	public int librarianLevelUpdate1(User user);
+	public int librarianLevelUpdate2(LibrarianLevel librarianLevel);
 }

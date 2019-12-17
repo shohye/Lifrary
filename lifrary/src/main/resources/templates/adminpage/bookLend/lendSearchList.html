@@ -26,64 +26,125 @@
 	  /*<![CDATA[*/
 		var searchBook = [[ ${searchBook} ]];//도서검색결과
 		var searchUser = [[ ${searchUser} ]];//회원검색결과
-		var holdId = [[ ${holdId} ]];//예약도서 예약자 ID
-
+		var resultBook = [[ ${resultBook} ]];//도서정보
+		var resultUser = [[ ${resultUser} ]];//회원정보
+		var resultInsert = [[ ${resultInsert} ]];//대출등록결과
+		var resultUpdate = [[ ${resultUpdate} ]];//반납결과
 		/*]]*/
 		
 		if(searchBook == 0){
 			alert('도서 검색결과가 없습니다');
 		}
-		if(searchBook == 2){
-			$('[type="hidden"]').val('');
-		} 
 		if(searchUser == 0){
 			alert('회원 검색결과가 없습니다');
 		}
+		if(resultInsert == 1){
+			alert('정상적으로 대출되었습니다');
+		}
+		if(resultUpdate == 1){
+			alert('정상적으로 반납되었습니다');
+		}
 		
+		//대출,반납 버튼 활성화
+		if(resultBook != null && resultUser != null){
+			var userLevel = resultUser.userLevel;
+			var bookLend = resultBook.bookLend;
+
+			var blId = bookLend.blId //예약자 아이디
+			var uId = resultUser.uId;//회원아이디
+			
+			var bsBookState = resultBook.bsBookState;//도서상태
+			var bsLendState = resultBook.bsLendState;//대출상태
+			var uasLendLimit = resultUser.uasLendLimit;//대출권한
+			var ulLendNum = userLevel.ulLendNum;//대출가능 권수
+
+			//반납도서 등록버튼 활성화
+			if(searchBook == 2){
+				$('.svHidden').val('');
+				
+				$('#lendForm').find('button').attr('class','btn btn-success').text('반납등록');
+			}
+			
+			//예약도서 대출버튼 활성화
+			else if(bsLendState == '예약' && blId == uId){
+				if(bsBookState == '정상' && uasLendLimit == 'O' && ulLendNum > 0){
+					$('#lendForm').find('button').attr('class','btn btn-primary').text('대출등록');
+				}
+			}
+			
+			//소장도서 대출버튼 활성화
+			else if(bsLendState == 'O' && bsBookState == '정상' && uasLendLimit == 'O' && ulLendNum > 0){
+				$('#lendForm').find('button').attr('class','btn btn-primary').text('대출등록');
+			}
+			else{
+				console.log('대출불가');
+			}
+		}
+
 	  	//예약자도서 예약자 체크
 		var holdCheck = $('#holdCheck').children('span').text();
 	
-		if(holdCheck == '예약'){
-			var userId = $('#userId').text();
-			console.log(holdId,'ㅇㅖ약자아이디');
-			console.log(userId,'회원아이디');
-			if(holdId == userId){
-				$('#holdUserCheck').append('<span class="badge badge-outline-info">예약자 일치</span>');
-				console.log('예약자');
+	  	if(resultBook != null && resultUser != null){
+	  		var holdCheck = resultBook.bsLendState; //도서 소장상태
+	  		var bookLend = resultBook.bookLend;
+	  		var blId = bookLend.blId //예약자 아이디
+			var userId = resultUser.uId; //검색 회원 아이디
+	  		
+			if(holdCheck == '예약'){
+				
+				if(blId == userId){
+					$('#holdUserCheck').append('<span class="badge badge-outline-info">예약자 일치</span>');
+					console.log('예약자');
+				}
+				else{
+					$('#holdUserCheck').append('<span class="badge badge-outline-danger">예약자 불일치</span>');
+					console.log('예약자아닌데용?');
+				}
 			}
-			else{
-				console.log('예약자아닌데용?');
-				$('#holdUserCheck').append('<span class="badge badge-outline-danger">예약자 불일치</span>');
-			}
-			
-		}
+	  	}
 		
 	  //도서정보 검색폼을 실행시키는 자바스크립트
 	  $('#bookInfoBtn').click(function(){
 	  
-	  var bookinfo = $('#bookinfo').val();
-	  
-	  if( bookinfo == ''){
-		  alert('검색 도서를 입력해주세요');
-	  }
-	  else{
-		  $('#bookInfoForm').submit();
-	  }
-	  
- 	 });
-	  $('#userInfoBtn').click(function(){
+		  var bookinfo = $('#bookinfo').val();
 		  
-		  var userinfo = $('#userInfo').val();
-		  
-		  if( userinfo == ''){
-			  alert('검색 회원을 입력해주세요');
+		  if( bookinfo == ''){
+			  alert('검색 도서를 입력해주세요');
 		  }
 		  else{
-			  $('#userInfoForm').submit();
+			  $('#bookInfoForm').submit();
 		  }
 		  
-	 	 }); 
+ 	 });
 	  
+	 //회원정보 검색폼을 실행시키는 자바스크립트
+	 $('#userInfoBtn').click(function(){
+		 
+		 var userinfo = $('#userInfo').val();
+		 
+		 if( userinfo == ''){
+			  alert('검색 회원을 입력해주세요');
+		  }
+		 else{
+			  $('#userInfoForm').submit();
+		  }
+
+	 });
+	 
+	//대출,반납 등록폼 실행시키는 자바스크립트
+	 $('#insertBtn').click(function(){
+		 var btnClass = $(this).attr('class');
+	
+		 if(btnClass == 'btn btn-success'){
+			 $("#lendForm").attr("action", "/admin/returnUpdate").submit();
+
+		 }
+		 else if(btnClass == 'btn btn-primary'){
+			 $("#lendForm").submit();
+		 }
+ 		
+	 }); 
+	 
   });//document.ready
  
  </script>
@@ -99,9 +160,10 @@
 			<div>대출 관리</div>
 		</h4>
 
-	<!-- Filters -->
+	<!-- 대출 도서 검색 등록 -->
 	<div class="ui-bordered px-4 pt-4 mb-4">
 		<div class="row">
+		 	<!-- 도서 검색 -->
 			<div class="col-sm-6">
 				<div class="card mb-4">
 					<h5 class="card-header">서지 정보</h5>
@@ -112,7 +174,7 @@
 	                    			<span class="input-group-text">도서코드</span>
 	                 			</div>
 	                       		<input type="text" id="bookInfo" name="svBook" class="form-control" placeholder="Search for...">
-	                       		<input type="hidden" name="svUser" th:if ="${resultUser != null}" th:value=${resultUser.uNumber}>
+	                       		<input type="hidden" name="svUser" class="svHidden" th:if ="${resultUser != null}" th:value=${resultUser.uNumber}>
 	                        	<span class="input-group-append">
 	                         		<button type="button" id="bookInfoBtn" class="btn icon-btn btn-outline-primary">
 	                        			<span class="fas fa-search"></span>
@@ -174,6 +236,8 @@
               		</div>
 		   		</div>
 		 	</div>
+		 	<!-- 도서검색 -->
+		 	<!-- 회원검색 -->
 			<div class="col-sm-6">
 				<div class="card mb-4">
 					<h5 class="card-header">회원 정보</h5>
@@ -184,7 +248,7 @@
 	                    			<span class="input-group-text">회원번호</span>
 	                 			</div>
 	                 			<input type="text" id="userInfo" name="svUser" class="form-control" placeholder="Search for...">
-	                       		<input type="hidden" name="svBook" th:if ="${resultBook != null}" th:value=${resultBook.bsCode}>
+	                       		<input type="hidden" name="svBook" class="svHidden" th:if ="${resultBook != null}" th:value=${resultBook.bsCode}>
 	                        	<span class="input-group-append">
 	                         		<button type="button" id="userInfoBtn" class="btn icon-btn btn-outline-primary">
 	                        			<span class="fas fa-search"></span>
@@ -238,72 +302,76 @@
               		</div>
 		   		</div>
 		 	</div>
+		 	<!-- 회원검색 -->
 		</div>
-		<form>
-			<input type="hidden" name="" value="">
-			<input type="hidden" name="" value="">
-			<div class="text-center form-group">
-				<button type="button" class="btn btn-primary">대출</button>
-				<button type="button" class="btn btn-outline-default">반납</button>
+		<!-- 도서/회원 검색 -->
+		<!-- 대출/반납 등록  -->
+		<form th:action="@{/admin/lendInsert}" id="lendForm" method="post">
+			<input type="hidden" name="blId" th:if ="${resultUser != null && searchBook != 2}" th:value=${resultUser.uId}>
+			<input type="hidden" name="ulLendDay" th:if ="${resultUser != null && searchBook != 2}" th:value=${resultUser.userLevel.ulLendDay}>
+			<input type="hidden" name="bsCode" th:if ="${resultBook != null}" th:value=${resultBook.bsCode}>
+			<input type="hidden" name="blCode" th:if ="${searchBook != null && searchBook == 2}" th:value=${resultBook.bookLend.blCode}>
+			<div class="text-center form-group" th:if ="${session.SALBA eq 'O'}" >
+				<button type="button" id="insertBtn" class="btn btn-outline-default">대출/반납</button>
+			</div>
+			<div class="text-center form-group" th:unless ="${session.SALBA eq 'O'}" >
+				<p>*대출권한이 없습니다.</p>
 			</div>
 		</form>
+		<!-- 대출/반납 등록  -->
 	</div>
-	<!-- / Filters -->
-
-	<div class="card">
-    	<div class="card">
-              <div class="card-datatable table-responsive">
-                <table class="datatables-demo table table-hover table-bordered">
-                  <thead>
-                    <tr>
-                      <th>도서코드</th>
-                      <th>도서명</th>
-                      <th>대출일</th>
-                      <th>반납예정일</th>
-                      <th>반납일</th>
-                      <th>연체일</th>
-                      <th>연장</th>
-                      <th>취소</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-	                  <tr role="row" th:each="L : ${lendList}">
-	                    <td class="align-middle" th:text="${L.bsCode}"></td>
-	                    <td style="min-width: 300px;">
-			               	 	<div class="media align-items-center">
-			               	 		<img class="ui-w-40 d-block" th:src="${L.biImg}" alt="">
-			               	 		<span class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(L.biName,25)}"></span>
-			               	 	</div>
-			               	 </td>
-	                    <td class="align-middle" th:text="${L.blLendDate}"></td>
-	                    <td class="align-middle" th:text="${L.blScheduleDate}"></td>
-	                    <td class="align-middle" th:text="${L.blReturnDate}"></td>
-	                    <td class="align-middle" th:text="|${L.blOverdueDays}일|"></td>
-	                    <td class="align-middle text-center" th:if = "${L.blExtensionDate != null}">
-	                    	<a href="javascript:void(0)">
-	                    		<span class="badge badge-outline-secondary">연장완료</span>
-	                    	</a>	
-	                    </td>
-	                    <td class="align-middle text-center" th:unless = "${L.blExtensionDate != null}">
-	                    	<a href="javascript:void(0)">
-	                    		<span class="badge badge-outline-success">연장하기</span>
-	                    	</a>	
-	                    </td>
-	                    <td class="align-middle">
-			               	<a href="javascript:void(0)" class="btn btn-default btn-xs icon-btn md-btn-flat" title="대출취소" data-original-title="취소" >
-			               	 	<i class="ion ion-ios-refresh"></i>
-			               	</a>
-	                    </td>
-	                  </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>          
-    </div>
-	</th:block>
-	<!-- / Content -->
- 	<!-- scripts -->
+	<!-- 대출 도서 검색 등록 -->
 	
+	<!-- 대출반납도서 리스트 -->
+	 <div class="card">
+         <div class="card-datatable table-responsive">
+           <table class="datatables-demo table table-hover table-bordered">
+             <thead>
+               <tr>
+                 <th>도서코드</th>
+                 <th>도서명</th>
+                 <th>대출일</th>
+                 <th>반납예정일</th>
+                 <th>반납일</th>
+                 <th>연체일</th>
+                 <th>연장</th>
+                 <th>상세보기</th>
+               </tr>
+             </thead>
+             <tbody>
+              <tr role="row" th:each="L : ${lendList}">
+                <td class="align-middle" th:text="${L.bsCode}"></td>
+                <td style="min-width: 300px;">
+             	 	<div class="media align-items-center">
+             	 		<img class="ui-w-40 d-block" th:src="${L.biImg}" alt="">
+             	 		<span class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(L.biName,25)}"></span>
+             	 	</div>
+             	 </td>
+                <td class="align-middle" th:text="${L.blLendDate}"></td>
+                <td class="align-middle" th:text="${L.blScheduleDate}"></td>
+                <td class="align-middle" th:text="${L.blReturnDate}"></td>
+                <td class="align-middle" th:text="|${L.blOverdueDays}일|"></td>
+                <td class="align-middle text-center" th:if = "${L.blExtensionDate != null || L.blReturnDate != null}">
+                	<span class="badge badge-outline-secondary">연장불가</span>
+                </td> 
+                <td class="align-middle text-center" th:unless = "${L.blExtensionDate != null || L.blReturnDate != null}">
+                	<a th:href="@{/admin/extensionUpdate(blCode=${L.blCode})}" th:if ="${session.SALBA eq 'O'}">
+                		<span class="badge badge-outline-success">연장하기</span>
+                	</a>
+                </td>
+                <td class="align-middle">
+	             	<a th:href="@{/admin/stockDetail(bsCode=${L.bsCode})}"class="btn btn-default btn-xs icon-btn md-btn-flat" title="도서정보" data-original-title="도서정보" >
+	             		<i class="fas fa-book"></i>
+	             	</a>
+	             	<a th:href="@{/admin/adminUserDetail(uId=${L.blId})}" class="btn btn-default btn-xs icon-btn md-btn-flat" title="회원정보" data-original-title="회원정보" >
+	             	 	<i class="fas fa-user-alt"></i>
+	             	</a>
+                </td>
+              </tr>
+             </tbody>
+           </table>
+          </div>
+       </div>
 	<th:block layout:fragment="pageScript">
 	
 	<!-- addLibs -->

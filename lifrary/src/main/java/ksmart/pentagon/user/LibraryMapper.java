@@ -16,6 +16,6 @@ import ksmart.pentagon.vo.User;
 
 @Mapper
 public interface LibraryMapper {
-	//입력한 uId에 해당하는    uPw, uDivision 리턴
-	public User loginCheck(String uId);
+	//입력한 uId에 해당하는    uPw, uDivision 리턴 / 도서관코드에 따른 세션 분리
+	public User loginCheck(String uId, String libNum);
 }

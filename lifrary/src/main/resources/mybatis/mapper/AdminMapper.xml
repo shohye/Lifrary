@@ -26,8 +26,10 @@
 	<result property="uOverdueDay" column="u_overdue_day"/>
 	<result property="uDate" column="u_date"/>
 	<result property="uAuthorityDate" column="u_authority_date"/>
+	
 	<collection property="librarianLevel" resultMap="librarian"/>
  </resultMap>
+  
   <resultMap type="ksmart.pentagon.vo.LibrarianLevel" id="librarian">
 	<!-- db -->
 	<result property="uId" column="u_id"/>
@@ -39,6 +41,7 @@
 	<result property="llBookStock" column="ll_book_stock"/>
 	<result property="llUpdate" column="ll_update"/>
  </resultMap>
+ 
  <resultMap type="ksmart.pentagon.vo.UserLevel" id="userLevel">
 	<!-- db -->
 	<result property="uId" column="u_id"/>
@@ -51,6 +54,7 @@
 	<result property="ulLendDay" column="ul_lend_day"/>
 	<result property="ulDate" column="ul_date"/>
  </resultMap>
+ 
  <resultMap type="ksmart.pentagon.vo.UserAuthoritySet" id="userAuthoritySet">
 	<!-- db -->
 	<result property="uasCode" column="uas_code"/>
@@ -63,6 +67,30 @@
 	<result property="uasFacilityLimit" column="uas_facility_limit"/>
 	<result property="uasLimitDate" column="uas_limit_date"/>
 	<result property="uasDate" column="uas_date"/>
+ </resultMap>
+ 
+  <resultMap type="ksmart.pentagon.vo.UserLevelHistory" id="userLevelHistory">
+	<!-- db -->
+	<result property="ulhCode" column="ulh_code"/>
+	<result property="lCode" column="l_code"/>
+	<result property="uId" column="u_id"/> 
+	<result property="ulLevel" column="ul_level"/>
+	<result property="ulName" column="ul_name"/>
+	<result property="uName" column="u_name"/>
+	<result property="ulhReason" column="ulh_reason"/>
+	<result property="ulhDate" column="ulh_date"/>
+ </resultMap>
+ 
+ <resultMap type="ksmart.pentagon.vo.UserAuthorityHistory" id="userAuthorityHistory">
+	<!-- db -->
+	<result property="uahCode" column="uah_code"/>
+	<result property="lCode" column="l_code"/>
+	<result property="uId" column="u_id"/> 
+	<result property="uasCode" column="uas_code"/>
+	<result property="uasName" column="uas_name"/>
+	<result property="uName" column="u_name"/>
+	<result property="uahReason" column="uah_reason"/>
+	<result property="uahDate" column="uah_date"/>
  </resultMap>
  
 	<select id="adminLoginCheck" resultMap="userResultMap">
@@ -81,7 +109,7 @@
 		ON
 			u.u_id = ll.u_id
 		WHERE
-			u.u_id = #{uId}
+			u.u_id = #{uId} and u.l_code = #{libNum}  and (u.u_division = '관리자' or u.u_division = '사서')
 	</select>
  
   	<select id="getUserLevel" resultType="ksmart.pentagon.vo.UserLevel">
@@ -97,7 +125,8 @@
 		FROM 
 			user_level
   	</select>
-  	  	<select id="getUserList" resultType="ksmart.pentagon.vo.User">
+  	
+  	<select id="getUserList" resultType="ksmart.pentagon.vo.User">
 		SELECT 
 			u.u_number 				AS uNumber
 			,u.u_id 	 			AS uId
@@ -155,7 +184,8 @@
 			</if>
 		</trim>
   	</select>
-  	  	<select	id="getAdminUserUpdate"
+  	
+  	<select	id="getAdminUserUpdate"
  	parameterType="String" 
  	resultType="ksmart.pentagon.vo.User">
 		SELECT
@@ -252,7 +282,7 @@
 		 
 	</select>
 	
-    <insert id="userLevelInsert">
+    <insert id="adUserLevelInsert">
 		INSERT INTO user_level(
 			 u_id
 			 ,l_code
@@ -309,6 +339,335 @@
 			user_level
 	</select>
 	
+    <update id="adUserLevelUpdate" parameterType="ksmart.pentagon.vo.UserLevel" >
+		UPDATE 
+			user_level
+		SET
+			 ul_level       = #{ulLevel}
+			,l_code         = #{lCode}
+			,u_id      		= #{uId}
+			,ul_name        = #{ulName}
+			,ul_min   		= #{ulMin}
+			,ul_max         = #{ulMax}
+			,ul_lend_num	= #{ulLendNum}
+			,ul_lend_day    = #{ulLendDay}
+			,ul_date        = #{ulDate}
+		WHERE 
+			 ul_level = #{ulLevel}
+	</update>
 	
+	<select id="getAdUserLevelUpdate" resultMap="userLevel" parameterType="String">
+		SELECT 
+			*
+		FROM 
+			user_level
+		where 
+			ul_level = #{ulLevel}
+	</select>
+	
+	<select id="adUserAuthorityList" resultMap="userAuthoritySet" parameterType="String">
+		SELECT 
+			*
+		FROM 
+			user_authority_set
+	</select>
+	
+	<update id="adUserAuthorityUpdate" parameterType="ksmart.pentagon.vo.UserAuthoritySet" >
+		UPDATE 
+			user_authority_set
+		SET
+			 uas_code       	= #{uasCode}
+			,l_code        	 	= #{lCode}
+			,u_id      			= #{uId}
+			,uas_name        	= #{uasName}
+			,uas_overdue_min   	= #{uasOverdueMin}
+			,uas_overdue_max    = #{uasOverdueMax}
+			,uas_lend_limit		= #{uasLendLimit}
+			,uas_facility_limit    = #{uasFacilityLimit}
+			,uas_limit_date        = #{uasLimitDate}
+			,uas_date        	   = #{uasDate}
+		WHERE 
+			 uas_code = #{uasCode}
+	</update>
+	
+	<select id="getAdUserAuthorityUpdate" resultMap="userAuthoritySet" parameterType="String">
+		SELECT 
+			*
+		FROM 
+			user_authority_set
+		where 
+			uas_code = #{uasCode}
+	</select>
+	
+	<select id="adUserLevelHistorySearchList" resultMap="userLevelHistory">
+		SELECT 
+			ulh.ulh_code
+			, ulh.l_code
+			, ulh.u_id
+			, u.u_name
+			, ulh.ul_level
+			, ul.ul_name
+			, ulh.ulh_reason
+			, ulh.ulh_date
+		FROM 
+			user_level_history AS ulh
+		INNER JOIN 
+			user_level AS ul
+		ON
+			ulh.ul_level = ul.ul_level
+		INNER JOIN 
+			user AS u
+		ON
+			u.u_id = ulh.u_id
+  	</select>
+  	
+  	<select id="adUserLevelHistorySearch" resultMap="userLevelHistory">
+		SELECT 
+			ulh.ulh_code
+			, ulh.l_code
+			, ulh.u_id
+			, u.u_name
+			, ulh.ul_level
+			, ul.ul_name
+			, ulh.ulh_reason
+			, ulh.ulh_date
+		FROM 
+			user_level_history AS ulh
+		INNER JOIN 
+			user_level AS ul
+		ON
+			ulh.ul_level = ul.ul_level
+		INNER JOIN 
+			user AS u
+		ON
+			u.u_id = ulh.u_id
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="sv != null and sv neq ''.toString()"> 
+				AND ${sk} Like CONCAT('%',#{sv},'%')		
+			</if>
+		</trim>
+  	</select>
+  	
+  	<select id="adUserAuthorityHistorySearchList" resultMap="userAuthorityHistory">
+		SELECT 
+			uah_code
+			, uah.l_code
+			, uah.u_id
+			, u.u_name
+			, uah.uas_code
+			, uas.uas_name
+			, uah.uah_reason
+			, uah.uah_date
+		FROM 
+			user_authority_history AS uah
+		INNER JOIN 
+			user_authority_set AS uas
+		ON
+			uas.uas_code = uah.uas_code
+		INNER JOIN 
+			user AS u
+		ON
+			u.u_id = uah.u_id
+  	</select>
+  	
+  	<select id="adUserAuthorityHistorySearch" resultMap="userAuthorityHistory">
+		SELECT 
+			uah_code
+			, uah.l_code
+			, uah.u_id
+			, u.u_name
+			, uah.uas_code
+			, uas.uas_name
+			, uah.uah_reason
+			, uah.uah_date
+		FROM 
+			user_authority_history AS uah
+		INNER JOIN 
+			user_authority_set AS uas
+		ON
+			uas.uas_code = uah.uas_code
+		INNER JOIN 
+			user AS u
+		ON
+			u.u_id = uah.u_id
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="sv != null and sv neq ''.toString()"> 
+				AND ${sk} Like CONCAT('%',#{sv},'%')		
+			</if>
+		</trim>
+  	</select>
+  	
+  	<insert id="librarianInsert1">
+		INSERT INTO user(
+			 u_id
+			 ,l_code 
+			 ,u_division      	 	
+			 ,u_pw
+			 ,u_name
+			 ,u_birth
+			 ,u_addr
+			 ,u_tel
+			 ,u_email
+			 ,u_email_agree
+			 ,u_appointment
+			 ,u_overdue_day
+			 ,u_date
+		)VALUES(
+			 #{uId}
+			,#{lCode}
+			,#{uDivision}
+			,#{uPw}
+			,#{uName}
+			,#{uBirth}
+			,#{uAddr}
+			,#{uTel}
+			,#{uEmail}
+			,#{uEmailAgree}
+			,''
+			,0
+			,CURDATE()
+		)
+	</insert>
+	
+   <insert id="librarianInsert2">
+		INSERT INTO librarian_level(
+			  u_id	
+			 ,l_code
+			 ,ll_insert
+			 ,ll_carry
+			 ,ll_book_admin
+			 ,ll_stats
+			 ,ll_book_stock
+			 ,ll_update
+		)VALUES(
+			 #{uId}
+			,#{lCode}
+			,#{llInsert}
+			,#{llCarry}
+			,#{llBookAdmin}
+			,#{llStats}
+			,#{llBookStock}
+			,CURDATE()
+		)
+	</insert>
+	
+	<select id="librarianLevelList1" resultMap="userResultMap">
+		SELECT 
+			u.u_id
+			, u.l_code
+			, u.u_division
+			, u.u_pw
+			, u.u_name
+			, u.u_birth
+			, u.u_addr
+			, u.u_tel
+			, u.u_email
+			, u.u_email_agree
+			, u.u_appointment
+			, u.u_overdue_day
+			, u.u_date
+			, ll.ll_insert
+			, ll.ll_carry
+			, ll.ll_book_admin
+			, ll.ll_stats
+			, ll.ll_book_stock
+			, ll.ll_update
+		FROM 
+			user AS u
+		INNER JOIN 
+			librarian_level AS ll
+		ON 
+			u.u_id = ll.u_id
+		WHERE 
+		    u_division='사서'
+  	</select>
+  	
+  	<select id="librarianLevelList2" parameterType="String" resultMap="userResultMap">
+		SELECT 
+			u.u_id
+			, u.l_code
+			, u.u_division
+			, u.u_pw
+			, u.u_name
+			, u.u_birth
+			, u.u_addr
+			, u.u_tel
+			, u.u_email
+			, u.u_email_agree
+			, u.u_appointment
+			, u.u_overdue_day
+			, u.u_date
+			, ll.ll_insert
+			, ll.ll_carry
+			, ll.ll_book_admin
+			, ll.ll_stats
+			, ll.ll_book_stock
+			, ll.ll_update
+		FROM 
+			user AS u
+		INNER JOIN 
+			librarian_level AS ll
+		ON 
+			u.u_id = ll.u_id
+		WHERE 
+		    u_division='사서'
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="sv != null and sv neq ''.toString()"> 
+				AND ${sk} Like CONCAT('%',#{sv},'%')		
+			</if>
+		</trim>
+  	</select>
+  	
+  	<select id="getLibrarianLevelUpdate" resultMap="userResultMap" parameterType="String">
+ 		SELECT
+			*
+		FROM
+			user AS u
+		INNER JOIN  
+			librarian_level AS ll 
+		ON 
+			u.u_id = ll.u_id
+		WHERE 
+			u.u_id = #{uId}
+  	</select>
+  	
+  	<update id="librarianLevelUpdate1" parameterType="ksmart.pentagon.vo.User" >
+		UPDATE 
+			user
+		SET
+			u_id			=#{uId}
+			,l_code			=#{lCode}
+			,u_division		='사서'
+			,u_pw			=#{uPw}
+			,u_name			=#{uName}
+			,u_birth		=#{uBirth}
+			,u_addr			=#{uAddr}
+			,u_tel 			=#{uTel}		
+			,u_email  		=#{uEmail}
+			,u_email_agree	=#{uEmailAgree}
+			,u_appointment	=''
+			,u_overdue_day	=0,
+			,u_date			=CURDATE()
+		WHERE 
+			u_id = #{uId}
+    </update>
+    
+    <update id="librarianLevelUpdate2" parameterType="ksmart.pentagon.vo.LibrarianLevel" >
+		UPDATE 
+			librarian_level
+		SET
+			u_id			=#{uId}
+			,l_code			=#{lCode}
+			,ll_insert		=#{llInsert}
+			,ll_carry		=#{llCarry}
+			,ll_book_admin	=#{llBookAdmin}
+			,ll_stats		=#{llStats}
+			,ll_book_stock	=#{llBookStock}
+			,ll_update		=CURDATE()		
+		WHERE 
+			u_id = #{uId}
+    </update>
+  	
+
 
   </mapper>

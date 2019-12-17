@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+  
+  <!-- headAdd(Libs&page) -->
+  <th:block layout:fragment="adminHeadAdd">
+    <link rel="stylesheet" th:href="@{/admin/vendor/libs/select2/select2.css}">
+  	<link rel="stylesheet" th:href="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+  </th:block>
+  <!-- /headAdd(Libs&page) -->
+	 
+	  <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+  
+  <script th:src="@{/admin/js/programValidation.js}"></script> <!-- 유효성 검사 스크립트. -->
+  		
+
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+	 
+	 
+  <!-- Content -->
+         <th:block layout:fragment="adminContents">
+<body>
+  <div class="page-loader">
+    <div class="bg-primary"></div>
+  </div>
+
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-2">
+    <div class="layout-inner">
+
+      <!-- Layout sidenav -->
+      <!-- /Layout sidenav -->
+
+
+      <!-- Layout container -->
+      <div class="layout-container">
+      
+        <!-- Layout navbar -->
+        <!-- /Layout navbar -->
+      
+
+        <!-- Layout content -->
+        <div class="layout-content">
+
+          <!-- Content -->
+          <div class="container-fluid flex-grow-1 container-p-y">
+
+            <h4 class="font-weight-bold py-3 mb-4">
+              <span class="text-muted font-weight-light"></span> 프로그램(행사, 강좌) 수정 폼
+            </h4>
+
+            <div class="card mb-4">
+              <div class="card-body">
+              <th:block th:with="p = ${program}">
+              
+	                <form id="programInUpForm" th:action="@{/admin/programUpdate}" method="post">
+	                		<input type="hidden" name="pmCode" th:value="${p.pmCode}">
+	                		<input type="hidden" name="lCode" th:value="${p.lCode}">
+	                  <div class="form-row">
+		                  <div class="form-group col-md-2">
+		                    <label class="form-label">등록 사서 아이디</label>
+		                    <input id="uId" type="text" class="form-control" name="uId" readonly="readonly" th:value="${p.uId}">
+	                 	 </div>
+		                    <!-- <input type="hidden" class="form-control" name="lCode" th:value="${session.LIBNUM}"> 사서채널 도서관코드 등록시 주석 해제할것.-->                	 
+		              </div>
+		              <div class="form-row">
+		                  <div class="form-group col-md-8" >
+		                    <label class="form-label">프로그램명</label>
+		                    <input id="pmName" type="text" class="form-control" name="pmName" placeholder="프로그램명" th:value="${p.pmName}">
+		                    <small class="form-text text-muted">프로그램명을 입력해주세요.</small>
+		                  </div>
+		              </div>
+		              <div class="form-row">
+		                  <div class="form-group col-md-4" >
+		                    <label class="form-label">장소</label>
+		                    <input id="pmPlace" type="text" class="form-control" name="pmPlace" placeholder="장소" th:value="${p.pmPlace}">
+		                    <small class="form-text text-muted">장소를 입력해주세요.</small>
+		                  </div>
+		                  <div class="form-group col-md-4" >
+		                    <label class="form-label">신청 대상</label>
+		                    <input id="pmTarget" type="text" class="form-control" name="pmTarget" placeholder="신청대상" th:value="${p.pmTarget}">
+		                    <small class="form-text text-muted">신청대상을 입력해주세요.</small>
+		                  </div>
+		              </div>
+		              <div class="form-row">
+		                  <div class="form-group col-md-4">
+		                    <label class="form-label">접수기간(시작일)</label>
+		                    <input id ="pmStartReceipt" type="date" class="form-control" name="pmStartReceipt" min="2000-01-01" th:value="${p.pmStartReceipt}">
+		                  </div>
+		                  
+		                  <div class="form-group col-md-4">
+		                    <label class="form-label">접수기간(종료일)</label>
+		                    <input id="pmEndReceipt" type="date" class="form-control" name="pmEndReceipt" min="2000-01-01" th:value="${p.pmEndReceipt}">
+		                  </div>
+		              </div>
+		              <div class="form-row"> 
+		                  <div class="form-group col-md-4">
+		                    <label class="form-label">운영기간(시작일)</label>
+		                    <input id="pmStartTerm" type="date" class="form-control" name="pmStartTerm" min="2000-01-01" th:value="${p.pmStartTerm}">
+		                  </div>
+		                  <div class="form-group col-md-4">
+		                    <label class="form-label">운영기간(종료일)</label>
+		                    <input id="pmEndTerm" type="date" class="form-control" name="pmEndTerm" min="2000-01-01" th:value="${p.pmEndTerm}">
+		                  </div>
+		              </div>   
+		              <div class="form-row">    
+		                  <div class="form-group col-md-2">
+		                    <label class="form-label">운영시간(시작일)</label>
+		                    <input id="pmStartTime" type="time" class="form-control" name="pmStartTime" min = "09:00" max="17:01" th:value="${p.pmStartTime}">
+		                  </div>
+		                  <div class="form-group col-md-2">
+		                    <label class="form-label">운영시간(종료일)</label>
+		                    <input id="pmEndTime" type="time" class="form-control" name="pmEndTime" min = "09:00" max="17:01" th:value="${p.pmEndTime}"> 
+		                  </div>
+		              </div>
+		              <div class="form-row">
+		                  <div class="form-group col-md-2">
+		                    <label class="form-label">강사명</label>
+		                    <input id="pmTeacherName" type="text" class="form-control" name="pmTeacherName" placeholder="강사명" th:value="${p.pmTeacherName}">
+		                    <small class="form-text text-muted">강사명을 입력해주세요.</small>
+		                  </div>
+		                  <div class="form-group col-md-2">
+		                    <label class="form-label">최대 신청인원</label>
+		                    <input id="pmMnop" type="number" class="form-control" name="pmMnop" placeholder="최대 신청인원" min="0" th:value="${p.pmMnop}">
+		                    <small class="form-text text-muted">최대 신청인원을 입력해주세요.</small>
+		                  </div>
+		              </div>
+		              <div class="form-row">
+		                  <div class="form-group col-md-2">
+		                    <label class="form-label">연락처</label>
+		                    <input id="pmTel" type="tel" class="form-control" name="pmTel" placeholder="강사 연락처" th:value="${p.pmTel}">
+		                    <small class="form-text text-muted">강사 연락처를 입력해주세요.</small>
+		                  </div>
+		                  <div class="form-group col-md-2">
+		                    <label class="form-label">수강료</label>
+		                    <input id="pmTuition" type="text" class="form-control" name="pmTuition" placeholder="수강료" th:value="${p.pmTuition}">
+		                    <small class="form-text text-muted">수강료를 입력해주세요.</small>
+		                  </div>
+		              </div>
+			          <div class="form-row">
+			          	  <div class="form-group col-md-8">
+			          	  	<div class="card mb-2">
+					              <h6 class="card-header">
+					              	  상세정보
+					              </h6>
+					              <div class="card-body">
+					                <textarea id="pmDetail" class="form-control" rows="3" name="pmDetail">[[${p.pmDetail}]]</textarea>
+					              </div>
+					        </div>
+					        <small class="form-text text-muted">상세정보를 입력해주세요.</small>
+			          	  </div>      
+                  	  </div>
+                  	  
+	                 	 <button id = "inUpBtn" type="submit" class="btn btn-primary">수정하기</button>
+	                </form>
+	                
+                </th:block>
+              </div>
+            </div>
+
+          </div>
+          <!-- / Content -->
+
+          <!-- Layout footer -->
+          <!-- / Layout footer -->
+
+        </div>
+        <!-- Layout content -->
+
+      </div>
+      <!-- / Layout container -->
+
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-sidenav-toggle"></div>
+  </div>
+  <!-- / Layout wrapper -->
+  
+ <!--  scripts -->
+  <th:block layout:fragment="pageScript">
+   <script th:src="@{/admin/vendor/libs/validate/validate.js}"></script>
+   <script th:src="@{/admin/vendor/libs/select2/select2.js}"></script>
+   <script th:src="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+  
+   <script th:src="@{/admin/js/forms_validation.js}"></script>  
+  </th:block>
+ <!-- / scripts -->
+</body>
+
+            
+          </th:block>
+          <!-- / Content -->
+</html>

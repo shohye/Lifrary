@@ -2,6 +2,7 @@ package ksmart.pentagon.vo;
 
 public class BookLend {
 	private String blCode; //대출도서코드
+	private String uId; //사서아이디
 	private String lCode; //도서관코드
 	private String blId; //대출자아이디
 	private String bsCode; //소장도서코드
@@ -14,6 +15,9 @@ public class BookLend {
 	private String blReturnDate; //반납일
 	private String blHoldDate; //예약일
 	private int blOverdueDays; //연체일
+	private int ulLendDay; //대출일
+	private String uNumber;
+	private String uName;
 	
 	public String getBlCode() {
 		return blCode;
@@ -26,6 +30,12 @@ public class BookLend {
 	}
 	public void setlCode(String lCode) {
 		this.lCode = lCode;
+	}
+	public String getuId() {
+		return uId;
+	}
+	public void setuId(String uId) {
+		this.uId = uId;
 	}
 	public String getBlId() {
 		return blId;
@@ -93,6 +103,39 @@ public class BookLend {
 	public void setBlOverdueDays(int blOverdueDays) {
 		this.blOverdueDays = blOverdueDays;
 	}
-	
+	public int getUlLendDay() {
+		return ulLendDay;
+	}
+	public void setUlLendDay(int ulLendDay) {
+		this.ulLendDay = ulLendDay;
+	}
+	public String getuNumber() {
+		return uNumber;
+	}
+	public void setuNumber(String uNumber) {
+		this.uNumber = uNumber;
+	}
+	public String getuName() {
+		return uName;
+	}
+	public void setuName(String uName) {
+		this.uName = uName;
+	}
+	@Override
+	public String toString() {
+		return "BookLend [blCode=" + blCode + ", uId=" + uId + ", lCode=" + lCode + ", blId=" + blId + ", bsCode="
+				+ bsCode + ", biIsbn=" + biIsbn + ", biName=" + biName + ", biImg=" + biImg + ", blLendDate="
+				+ blLendDate + ", blExtensionDate=" + blExtensionDate + ", blScheduleDate=" + blScheduleDate
+				+ ", blReturnDate=" + blReturnDate + ", blHoldDate=" + blHoldDate + ", blOverdueDays=" + blOverdueDays
+				+ ", ulLendDay=" + ulLendDay + ", uNumber=" + uNumber + ", uName=" + uName + ", getBlCode()="
+				+ getBlCode() + ", getlCode()=" + getlCode() + ", getuId()=" + getuId() + ", getBlId()=" + getBlId()
+				+ ", getBsCode()=" + getBsCode() + ", getBiIsbn()=" + getBiIsbn() + ", getBiName()=" + getBiName()
+				+ ", getBiImg()=" + getBiImg() + ", getBlLendDate()=" + getBlLendDate() + ", getBlExtensionDate()="
+				+ getBlExtensionDate() + ", getBlScheduleDate()=" + getBlScheduleDate() + ", getBlReturnDate()="
+				+ getBlReturnDate() + ", getBlHoldDate()=" + getBlHoldDate() + ", getBlOverdueDays()="
+				+ getBlOverdueDays() + ", getUlLendDay()=" + getUlLendDay() + ", getuNumber()=" + getuNumber()
+				+ ", getuName()=" + getuName() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
 	
 }

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+
+ <!-- headAdd(Libs&page) -->
+  
+  <th:block layout:fragment="adminHeadAdd">
+  
+  <!-- addLibs -->
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+
+  <!-- addPage -->
+  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
+ 
+  </th:block>
+  
+  <!-- /headAdd(Libs&page) --> 
+  
+      <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+  <script type="text/javascript">
+  //리스트에서 마우스 올리면 클릭해서 상세페이지로 가는 이벤트
+/*    $(document).ready(function(){
+	
+	  $('#rrow').click(function(){
+		  
+	  });
+
+  });//document.ready  */
+  
+ </script>
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+	  
+	<!-- Content -->
+	<th:block layout:fragment="adminContents">   
+		 <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+              <div>관리자가보는 ///전체 사서 (권한)리스트</div>
+              <button type="button" class="btn btn-primary rounded-pill d-block">
+              <a th:href="@{/admin/librarianInsert}">
+              <span class="ion ion-md-add"></span>사서 등록하러 가기</a></button>
+        </h4>
+
+
+            <div class="card">
+              <div class="card">
+                <div class="card-datatable table-responsive">
+				  <table class="datatables-demo table table-hover table-bordered">
+	                <thead>
+                  	<tr>
+                    	<th>아이디</th>
+                    	<th>도서관코드</th>
+                    	<th>구분</th>
+                    	<th>비밀번호</th>
+                    	<th>이름</th>
+                    	<th>핸드폰</th>
+                    	<th>사서</th>
+                    	<th>수서</th>
+                    	<th>도서관리</th>
+                    	<th>장서점검</th>
+                    	<th>통계</th>
+                    	<th>등록일</th>
+                    	<th></th>	
+                    </tr>
+	                </thead>
+	                  <tbody>
+	                   <tr role="row" th:each="ll : ${lList}">
+	               			<td class="align-middle" th:text="${ll.uId}"></td>
+	               			<td class="align-middle" th:text="${ll.lCode}"></td>
+	               			<td class="align-middle" th:text="${ll.uDivision}"></td>
+	               			<td class="align-middle" th:text="${ll.uPw}"></td>
+	               			<td class="align-middle" th:text="${ll.uName}"></td>
+	               			<td class="align-middle" th:text="${ll.uTel}"></td>
+	               			<td style="text-align:center">
+	                			<span th:if="${ll.librarianLevel.llInsert}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.librarianLevel.llInsert} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	               			</td>
+	               			<td style="text-align:center">
+	               				<span th:if="${ll.librarianLevel.llCarry}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.librarianLevel.llCarry} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	               			</td>
+	               			<td style="text-align:center">
+	               				<span th:if="${ll.librarianLevel.llBookAdmin}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.librarianLevel.llBookAdmin} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	               			</td>
+	               			<td style="text-align:center">
+	               				<span th:if="${ll.librarianLevel.llStats}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.librarianLevel.llStats} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	               			</td>
+	               			<td style="text-align:center">
+	               				<span th:if="${ll.librarianLevel.llBookStock}  == O" th:text="권한있음" class="badge badge-outline-success" ></span>
+	                			<span th:unless="${ll.librarianLevel.llBookStock} == O" th:text="권한없음" class="badge badge-outline-danger"></span>
+	               			</td>
+	               			<td class="align-middle" th:text="${ll.librarianLevel.llUpdate}" style="text-align:center"></td>
+	               		
+	               			<td class="text-center text-nowrap">
+	               				<button title="" 
+	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
+	               						type="button" data-original-title="Edit">
+	               					<a th:href="@{/admin/librarianLevelUpdate(uId=${ll.uId})}" title="수정">
+	               				<i class="ion ion-md-create" title="수정"></i>
+	               					</a>
+	               				</button>&nbsp;&nbsp;
+	               				<button title="" 
+	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
+	               						type="button" data-original-title="Edit">
+	               					<a th:href="@{#}" title="상세">
+	               				<i class="ion fas fa-eye" title="상세"></i>
+	               					</a>
+	               				</button>&nbsp;&nbsp;
+	               				<button title="" 
+	               						class="btn btn-default btn-xs icon-btn md-btn-flat dropdown-toggle hide-arrow user-tooltip" 
+	               						type="button" 
+	               						data-original-title="Actions" data-toggle="dropdown">
+	               				<a th:href="@{#}" title="삭제">
+	               				<i class="ion ion-ios-settings" title="삭제"></i>
+	               				</button>
+	                   		</td>
+	                   		
+	                   	</tr> 
+		            </tbody>
+		          </table>
+		      </div>
+           </div>
+    </div>
+	</th:block>
+	<!-- / Content -->
+  <!-- / scripts -->
+	  <th:block layout:fragment="pageScript">
+	  <!-- addLibs -->
+	  <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
+	  <script th:src="@{/admin/vendor/libs/numeral/numeral.js}"></script>
+	  <script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
+		
+	  <!-- addDemo -->
+ 		<script th:src="@{/admin/js/ad_librarian_level_list.js}"></script>
+	  </th:block>
+   <!-- / scripts -->
+	          
+</html>

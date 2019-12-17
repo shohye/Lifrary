@@ -3,6 +3,76 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
+	  
+	  
+	 <th:block layout:fragment="teamHeadScript">
+     <script type="text/javascript" th:inline="javascript">  
+       $(document).ready(function(){  	
+    	   
+    		// 유효성검사 시작
+    		$('#insertBtn').click(function(){   			
+    			var bdnName = $('input[name=bdnName]');
+    			var bdnTel = $('#bdnTel');
+    			var bdnAddr = $('input[name=bdnAddr]');
+    			var bdnNum = $('#bdnNum');
+    			var bdnDate = $('input[name=bdnDate]');
+    			var bdnPersonal = $('input[name=bdnPersonal]:checked');
+    			var bdnSticker = $('input[name=bdnSticker]:checked');
+    			var bdnHonorAgree = $('input[name=bdnHonorAgree]:checked');  			
+    			
+    			console.log(bdnName.val());
+    			console.log(bdnNum.val());
+    			
+    			if(bdnName.val() == ''){
+    				alert('기부자 성명을 입력하세요');
+    				bdnName.focus();
+    				return false;
+    			}
+    			if(bdnTel.val() == ''){
+    				alert('기부자 연락처를 입력하세요');
+    				bdnTel.focus();
+    				return false;
+    			}
+    			if(bdnAddr.val() == ''){
+    				alert('기부자 주소를 입력하세요');
+    				bdnAddr.focus();
+    				return false;
+    			}
+    			if(bdnNum.val() == '0'){
+    				alert('기부 도서수를 입력하세요');
+    				bdnNum.focus();
+    				return false;
+    			}
+    			if(bdnDate.val() == ''){
+    				alert('기부신청 일자를 입력하세요');
+    				bdnDate.focus();
+    				return false;
+    			}
+    			if(bdnPersonal.length <1){
+    				alert('개인정보 수집동의 여부를 선택하세요');
+    				
+    				return false;
+    			}
+    			if(bdnSticker.length <1){
+    				alert('기부스티커 부착 여부를 선택하세요');
+    				
+    				return false;
+    			}
+    			if(bdnHonorAgree.length <1){
+    				alert('명예전당 등록 여부를 선택하세요');
+    				
+    				return false;
+    			}
+    			
+    			
+    			$('#insertForm').submit();
+    			
+    		}); // 유효성검사 끝    		
+    	}); // 처음 function끝
+    	    	
+    	</script>
+  	    </th:block>
+  	    
 	 
 	          <!-- Content -->
 	      <th:block layout:fragment="adminContents">
@@ -15,7 +85,7 @@
 
             <div class="card mb-4">
               <div class="card-body" >
-                <form id="validation-form" action="" method="post">
+                <form id="insertForm" th:action="@{/admin/bookDonationInsert}" method="post">
                   
                   <div class="form-row">
 	                  <div class="form-group col-md-6">
@@ -25,7 +95,7 @@
 	                  </div>
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">연락처</label>
-	                    <input type="text" class="form-control" name="bdnTel" placeholder="telephone">
+	                    <input type="text" class="form-control" id="bdnTel" name="bdnTel" placeholder="telephone">
 	                  </div>
 	              </div>
             	  <div class="form-row"> 
@@ -35,30 +105,39 @@
 	                 </div>
 	                 <div class="form-group col-md-6">
 	                    <label class="form-label" >기증도서권수</label>
-	                    <input type="text" class="form-control" name="bdnNum"  placeholder="book number">
+	                    <select class="form-control" id="bdnNum">
+	                    	<option value="0" selected>::주문권수를 선택해주세요::</option>
+	                   		<option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
+	                    </select>
 	                   <!--  <small class="form-text text-muted">Example block-level help text here.</small> -->
 	                  </div>
                   </div>
                   <div class="form-row">
 	                  <div class="form-group col-md-6">
-	                    <label class="form-label" >기증도서권수</label>
-	                    <input type="text" class="form-control" name="bdnNum"  placeholder="book number">
-	                   <!--  <small class="form-text text-muted">Example block-level help text here.</small> -->
+	                    <label class="form-label">신청일</label>
+	                    <input type="date" class="form-control" name="bdnDate" placeholder="date">
 	                  </div>
 	                  <div class="form-group col-md-6">
-	                    <label class="form-label">신청일</label>
-	                    <input type="text" class="form-control" name="bdnDate" placeholder="date">
+	                   <p>개인정보수집동의여부</p>	                          
+                         <label class="custom-control custom-radio">                  		   
+                   		   	<input id="bdnPersonalO" name="bdnPersonal" type="radio" class="custom-control-input" value="O">
+                   		   	<span class="custom-control-label">동의</span>
+                         </label>
+                         <label class="custom-control custom-radio">
+                   		   	<input id="bdnPersonalX" name="bdnPersonal" type="radio" class="custom-control-input" value="X">                  		   	
+                   		   	<span class="custom-control-label">비동의</span>
+                          </label>	                    
 	                  </div>
                   </div>
 	              <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                   <p>기증스티커</p>
 	                       <label class="custom-control custom-radio">		               		   	
-		               		   	<input name="bdnSticker" type="radio" class="custom-control-input" value="O">
+		               		   	<input id="bdnStickerO" name="bdnSticker" type="radio" class="custom-control-input" value="O">
 		               		   	<span class="custom-control-label">부착</span>
 	                       </label>
 	                       <label class="custom-control custom-radio">
-	                 		   	<input name="bdnSticker" type="radio" class="custom-control-input" value="X">
+	                 		   	<input id="bdnStickerX" name="bdnSticker" type="radio" class="custom-control-input" value="X">
 	                 		   	<span class="custom-control-label">미부착</span>
 	                       </label>	
 	                  </div>
@@ -66,35 +145,23 @@
 	                  <div class="form-group col-md-6">
 	                   <p>명예전당</p>	
 		                   <label class="custom-control custom-radio">
-		               		   	<input name="bdnHonorAgree" type="radio" class="custom-control-input" value="O">
+		               		   	<input id="bdnHonorAgreeO" name="bdnHonorAgree" type="radio" class="custom-control-input" value="O">
 		               		   	<span class="custom-control-label">등록</span>
 	                       </label>
 	                       <label class="custom-control custom-radio">
-	                 		   	<input name="bdnHonorAgree" type="radio" class="custom-control-input" value="X">
+	                 		   	<input id="bdnHonorAgreeX" name="bdnHonorAgree" type="radio" class="custom-control-input" value="X">
 	                 		   	<span class="custom-control-label">미둥록</span>
 	                       </label>		               	                    
 	                  </div>
                   </div> 
                   
-                  <div class="form-row">
-	                  <div class="form-group col-md-6">
-	                   <p>개인정보수집동의여부</p>	                          
-                         <label class="custom-control custom-radio">                  		   
-                   		   	<input name="bdnPersonal" type="radio" class="custom-control-input" value="O">
-                   		   	<span class="custom-control-label">동의</span>
-                         </label>
-                         <label class="custom-control custom-radio">
-                   		   	<input name="bdnPersonal" type="radio" class="custom-control-input" value="X">                  		   	
-                   		   	<span class="custom-control-label">비동의</span>
-                          </label>	                    
-	                  </div>
-                  </div>
+                  
                   
                   <div class="text-right mt-3">
                   	<button type="button" class="btn btn-primary">
 						<a th:href="@{/admin/bookDonationList}" style="color: white">리스트로 이동</a>
 					</button>
-                  	<button type="submit" class="btn btn-primary">입력</button>
+                  	<button type="button" class="btn btn-primary" id="insertBtn">입력</button>
  				  </div>
                 </form>
               </div>

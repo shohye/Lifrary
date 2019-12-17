@@ -4,7 +4,7 @@ public class Board {
 	private String boardCode;		//게시글내용코드
 	private String lCode;			//도서관코드
 	private String uId;				//아이디
-	private String boardICode;		//게시판대분류코드
+	private String boardLCode;		//게시판대분류코드
 	private String boardMCode;		//게시판중분류코드
 	private String boardTitle;		//게시글제목
 	private String boardPw;			//게시글비번
@@ -12,7 +12,10 @@ public class Board {
 	private String boardOpen;		//공개여부
 	private String boardPageView;	//조회수
 	private String boardDate;		//게시글등록일
-	public String getBoardCode() {	
+	private String boardLName;		//대분류명
+	private String boardMName;		//중분류명
+	private int lNum;
+	public String getBoardCode() {
 		return boardCode;
 	}
 	public void setBoardCode(String boardCode) {
@@ -30,11 +33,11 @@ public class Board {
 	public void setuId(String uId) {
 		this.uId = uId;
 	}
-	public String getBoardICode() {
-		return boardICode;
+	public String getBoardLCode() {
+		return boardLCode;
 	}
-	public void setBoardICode(String boardICode) {
-		this.boardICode = boardICode;
+	public void setBoardLCode(String boardLCode) {
+		this.boardLCode = boardLCode;
 	}
 	public String getBoardMCode() {
 		return boardMCode;
@@ -60,6 +63,12 @@ public class Board {
 	public void setBoardContent(String boardContent) {
 		this.boardContent = boardContent;
 	}
+	public String getBoardOpen() {
+		return boardOpen;
+	}
+	public void setBoardOpen(String boardOpen) {
+		this.boardOpen = boardOpen;
+	}
 	public String getBoardPageView() {
 		return boardPageView;
 	}
@@ -72,13 +81,31 @@ public class Board {
 	public void setBoardDate(String boardDate) {
 		this.boardDate = boardDate;
 	}
+	public String getBoardLName() {
+		return boardLName;
+	}
+	public void setBoardLName(String boardLName) {
+		this.boardLName = boardLName;
+	}
+	public String getBoardMName() {
+		return boardMName;
+	}
+	public void setBoardMName(String boardMName) {
+		this.boardMName = boardMName;
+	}
+	public int getlNum() {
+		return lNum;
+	}
+	public void setlNum(int lNum) {
+		this.lNum = lNum;
+	}
 	@Override
 	public String toString() {
-		return "board [boardCode=" + boardCode + ", lCode=" + lCode + ", uId=" + uId + ", boardICode=" + boardICode
+		return "Board [boardCode=" + boardCode + ", lCode=" + lCode + ", uId=" + uId + ", boardLCode=" + boardLCode
 				+ ", boardMCode=" + boardMCode + ", boardTitle=" + boardTitle + ", boardPw=" + boardPw
-				+ ", boardContent=" + boardContent + ", boardPageView=" + boardPageView + ", boardDate=" + boardDate
-				+ "]";
+				+ ", boardContent=" + boardContent + ", boardOpen=" + boardOpen + ", boardPageView=" + boardPageView
+				+ ", boardDate=" + boardDate + ", boardLName=" + boardLName + ", boardMName=" + boardMName + ", lNum="
+				+ lNum + "]";
 	}
-	
 	
 }

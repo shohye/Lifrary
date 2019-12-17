@@ -1,21 +1,53 @@
 <!DOCTYPE html>
-<html 	xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		layout:decorate="~{layout/library/libraryDefault}">
-    
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/library/libraryDefault}">
+
+<th:block layout:fragment="customScript">
+
+<script>
 	
-    
-	<th:block layout:fragment="customContents"> 
-
-
-        <!-- Start: Page Banner -->
-        	<section th:replace="fragments/library/programBanner :: programBannerFragment"></section>
-        <!-- End: Page Banner -->
-
-       <!-- Start: Program List Section -->
-       		<section th:replace="fragments/library/programListSection :: programListSectionFragment"></section>
-       <!-- End: Program List Section -->
+	$(document).ready(function() {
 		
+		
+		$('#findBtn').click(function() {
+			var keywords = $('#keywords');
+			var operation = $('#operation');
+			var startDate = $('#startDate');
+			var endDate = $('#endDate');
+			var target = $('#target');
+			var proSearchForm = $('#proSearchForm');
+			console.log(keywords.val())
+			console.log(operation.val())
+			console.log(startDate.val())
+			console.log(endDate.val())
+			console.log(target.val())
+
+			if (startDate.val() > endDate.val()) {
+				alert('접수시작일보다 접수종료일이 더 큽니다.')
+				startDate.focus();
+				return false;
+			}
+
+			proSearchForm.submit();
+		})
+
+	});
+</script>
+
+<th:block layout:fragment="customContents">
+
+
+	<!-- Start: Page Banner -->
+	<section
+		th:replace="fragments/library/programBanner :: programBannerFragment"></section>
+	<!-- End: Page Banner -->
+
+	<!-- Start: Program List Section -->
+	<section
+		th:replace="fragments/library/programListSection :: programListSectionFragment"></section>
+	<!-- End: Program List Section -->
+
 </th:block>
 
 </html>

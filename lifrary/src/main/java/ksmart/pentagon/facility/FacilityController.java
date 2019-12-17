@@ -18,26 +18,26 @@ public class FacilityController {
 	@Autowired private FacilityService facilityService;
 	
 	
-	@GetMapping("/lifraryReadingRoom")
+	@GetMapping("/lifrary/readingRoom")
 	public String readingRoom(Model model) {
 		model.addAttribute("room", "reading");
 		
 		return "librarypage/facility/readingRoomReservation";
 	}
 	
-	@GetMapping("/lifraryStudyRoom")
+	@GetMapping("/lifrary/studyRoom")
 	public String studyRoom(Model model) {
 		model.addAttribute("room", "study");
 		return "librarypage/facility/studyRoomReservation";
 	}
 	
-	@GetMapping("/lifraryLectureRoom")
+	@GetMapping("/lifrary/lectureRoom")
 	public String lectureRoom(Model model) {
 		model.addAttribute("room", "lecture");
 		return "librarypage/facility/lectureRoomReservation";
 	}
 		
-	@GetMapping("/lifraryLocker")
+	@GetMapping("/lifrary/locker")
 	public String locker(Model model) {
 		model.addAttribute("room", "locker");
 		return "librarypage/facility/lockerReservation";

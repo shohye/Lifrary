@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+	  
+	  <th:block layout:fragment="adminHeadAdd">
+	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
+ 	  </th:block>
+ 
+ 
+  <!-- Content -->
+         <th:block layout:fragment="adminContents" th:with="p=${program}">
+         	<div class="layout-content">
+         		<div class="container-fluid flex-grow-1 container-p-y" >
+        
+         			<div class="media align-items-center py-3 mb-3">
+		              <div class="media-body ml-4" > 
+		                <h4 class="font-weight-bold mb-0" th:text="${p.pmName}"></h4>
+		                <div class="text-muted mb-2">등록자:
+		                	<span th:text="${p.uId}"></span>
+		                </div>
+		              </div>
+		            </div>
+		            <div class="card mb-4">
+		              <div class="card-body">
+		                <table class="table user-view-table m-0" > <!-- th:with="m = ${#}" -->
+		                  <tbody>
+		                    <tr>
+		                      <td>행사명:</td><td th:text="${p.pmName}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>신청 대상:</td><td th:text="${p.pmTarget}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>행사 장소:</td><td th:text="${p.pmPlace}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>접수 기간:</td><td th:text="|${p.pmStartReceipt} ~ ${p.pmEndReceipt}|"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>운영 기간:</td><td th:text="|${p.pmStartTerm} ~ ${p.pmEndTerm}|"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>운영 시간:</td><td th:text="|${p.pmStartTime} ~ ${p.pmEndTime}|"></td>
+		                    </tr>
+		                    
+		                    <tr>
+		                      <td>진행 상태:</td>
+		                      <td>
+		                      	 <button th:if="${p.pmProgress == '진행중'}" type="button" class="btn btn-xs btn-outline-primary">[[${p.pmProgress}]] // 테스트 버튼</button>
+				      			 <button th:unless="${p.pmProgress == '진행중'}" type="button" class="btn btn-xs btn-outline-success">[[${p.pmProgress}]] // 테스트 버튼</button>		                      
+		                      </td>
+		                    </tr>
+		                    
+		                    <tr>
+		                      <td>진행 상태:</td><td th:text="${p.pmProgress}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>강사명:</td><td th:text="${p.pmTeacherName}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>문의 전화:</td><td th:text="${p.pmTel}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>수강료:</td><td th:text="|${p.pmTuition}원|"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>현재 신청 인원 수:</td><td th:text="|(${p.pmApplicant} / ${p.pmMnop})명|"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>신청 최대 인원 수:</td><td th:text="|${p.pmMnop}명|"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>상세내용:</td><td th:text="${p.pmDetail}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>등록일:</td><td th:text="${p.pmDate}"></td>
+		                    </tr>
+		                    
+		                  </tbody>
+		                </table>
+		               <br>
+		 				  
+			              <table>
+			                  <tr>
+			                  	<td>
+					   				<a th:href="@{/admin/programUpdate(pmCode=${p.pmCode})}" style="color: white"> 
+							            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
+						            			<span class="ion ion-md-build"> 수정하기</span>
+										</button>
+					  				</a>
+				  			 	</td>
+				  			 	<th:block th:if="${p.pmProgress} == '접수중'">
+					  			 	<td>
+						 				 <a th:href="@{/admin/programDelete(pmCode=${p.pmCode})}" style="color: white"> 
+								            <button type="button" class="btn btn-danger d-block" style="margin-top: 10px;">
+							            			<span class="ion ion-md-cut"> 삭제하기</span>
+											</button>
+						  				 </a>
+									</td>
+								</th:block>
+									
+				  			  </tr>
+				  		  </table>
+		              </div>
+		              
+		              
+		            </div>
+			         		
+         		</div>
+         		
+         	</div>
+
+          </th:block>
+          
+          <!-- / Content -->
+         
+          <!-- script -->
+          <th:block layout:fragment="pageScript">
+
+		  <!-- addLibs -->
+		  <script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		
+		  <!-- addDemo -->
+		  <script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
+		  </th:block>
+  		  <!-- /script -->
+  		  
+  		  
+          
+</html>
