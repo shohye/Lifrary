@@ -1,71 +1,117 @@
 <!DOCTYPE html>
-<!-- 희망도서신청 페이지 -->
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
     
-
-		<th:block layout:fragment="customContents">                
-	        <!-- Start: Page Banner -->
-	        <section th:replace="fragments/library/bookBanner :: bookBannerFragment"></section>
-	        <!-- End: Page Banner -->
-	
-	        <div id="content" class="site-content" th:fragment="bookListSectionFragment">
+    
+    <th:block layout:fragment="customContents">
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>Book & Diary</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">매일 매일 적어보는 북다이어리</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li>Book & Diary</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <div id="content" class="site-content">
             <div id="primary" class="content-area">
                 <main id="main" class="site-main">
                     <div class="books-media-list">
                         <div class="container">
-                            <div id="requestForm col-md-6" >
-					            <form class="requestF" action="" method="post">		
-					                 <div class="form-row">					               
-						                 <div class="form-group col-md-6">
-						                   <label class="form-label">도서명</label>
-						                   <input type="text" class="form-control" name="bi_publisher" placeholder="publisher">
+                            <div class="row">
+                                <!-- Start: Search Section -->
+                                <section class="search-filters">
+                                    <div class="container">
+                                        <div class="filter-box">
+                                            <h3>내 독서 목표량 진행 상황</h3>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="keywords">년도별 목표량</label>
+                                                        <input class="form-control" placeholder="년별 목표량"  type="text" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="keywords">분기별 목표량</label>
+                                                        <input class="form-control" placeholder="분기별 목표량"  type="text" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="keywords">월별 목표량</label>
+                                                        <input class="form-control" placeholder="월별목표량" type="text" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <!-- End: Search Section -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 col-md-push-3">
+                                  <p><h2 style="color: black">희망도서 신청 </h2></p>
+                                <div class="card mb-4">                      
+                                    <form class="requestF" action="" method="post">		
+						                 <div class="form-row">					               
+							                 <div class="form-group col-md-6">
+							                   <label class="form-label">도서명</label>
+							                   <input type="text" class="form-control" name="brTitle" placeholder="도서명을 입력해주세요.">
+							                 </div>
+							                 <div class="form-group col-md-6">
+							                   <label class="form-label">ISBN</label>
+							                   <input type="text" class="form-control" name="brIsbn" placeholder="ISBN을 입력해주세요.">
+							                 </div>
 						                 </div>
-						                 <div class="form-group col-md-6">
-						                   <label class="form-label">ISBN</label>
-						                   <input type="text" class="form-control" name="bi_year" placeholder="publication year">
-						                 </div>
-					                 </div>
-					             
-					                  <div class="form-row">
-						                  <div class="form-group col-md-6">
-						                    <label class="form-label">발행년도</label>
-						                    <input type="text" class="form-control" name="bi_name" placeholder="bookname">
-						                   <!--  <small class="form-text text-muted">Example block-level help text here.</small> -->
-						                  </div>
-						                  <div class="form-group col-md-6">
-						                    <label class="form-label">가격</label>
-						                    <input type="text" class="form-control" name="bi_author" placeholder="authors">
-						                  </div>
-						              </div>
-					            	  <div class="form-row">
-						                 <div class="form-group col-md-6">
-						                   <label class="form-label">저자명</label>
-						                   <input type="text" class="form-control" name="bi_publisher" placeholder="publisher">
-						                 </div>
-						                 <div class="form-group col-md-6">
-						                   <label class="form-label">발행자</label>
-						                   <input type="text" class="form-control" name="bi_year" placeholder="publication year">
-						                 </div>
-					                  </div>
-					                  
-			                  
-			                  <div class="text-right mt-3">
-			                  	<button type="submit" class="btn btn-primary">Submit</button>
-			 				  </div>
-					       </form> 
-						  <div class="clear"></div>
-						</div> 
-                     </div>
-                   </div>
+						             
+						                  <div class="form-row">
+							                  <div class="form-group col-md-6">
+							                    <label class="form-label">발행년도</label>
+							                    <input type="text" class="form-control" name="brYear" placeholder="발행년도를 입력해주세요.">
+							                   <!--  <small class="form-text text-muted">Example block-level help text here.</small> -->
+							                  </div>
+							                  <div class="form-group col-md-6">
+							                    <label class="form-label">가격</label>
+							                    <input type="text" class="form-control" name="brPrice" placeholder="가격을 입력해주세요.">
+							                  </div>
+							              </div>
+						            	  <div class="form-row">
+							                 <div class="form-group col-md-6">
+							                   <label class="form-label">저자명</label>
+							                   <input type="text" class="form-control" name="brPublisher" placeholder="발행자(출판사)명을 입력해주세요.">
+							                 </div>
+							                 <div class="form-group col-md-6">
+							                   <label class="form-label">발행자(출판사)</label>
+							                   <input type="text" class="form-control" name="brYear" placeholder="발행년도를 입력해주세요.">
+							               </div>
+						              	 </div>				
+						              	 <div class="form-row">
+							                 <div class="form-group">
+							                   <label class="form-label">의견</label>
+							                   <textarea class="form-control" name="brOpinion" placeholder="해당 도서를 신청하는 이유를 작성해주세요."></textarea>
+							                 </div>						  
+						              	 </div>
+							                  			                  
+					                  <div class="text-right mt-3">
+					                  	<button type="submit" class="btn btn-primary">Submit</button>
+					 				  </div>
+							       </form> 
+                                 </div>    
+                                </div>
+                                <!-- 마이페이지 사이드메뉴  -->
+                                <div th:replace="fragments/library/myPageLeftMenu :: myPageLeftMenuFragment"></div>
+                                <!-- 마이페이지 사이드메뉴-->
+                            </div>
+                        </div>
+                    </div>
                 </main>
             </div>
-        </div>        
-        
-	       	
-        </th:block>
-
-        
-
+        </div>
+    </th:block>
 </html>

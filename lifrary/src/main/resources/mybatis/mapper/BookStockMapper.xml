@@ -2,8 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="ksmart.pentagon.stock.BookStockMapper">
-  
+  <mapper namespace="ksmart.pentagon.stock.BookStockMapper">  
   	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfoResultMap">
 	    <result column="bi_isbn" property="biIsbn"/>
 	    <result column="bi_name" property="biName"/>
@@ -43,6 +42,22 @@
 	    <collection property="bookCate" resultMap="bookCateResultMap"/>
 	</resultMap>
 	
+	<resultMap type="ksmart.pentagon.vo.BookLend" id="bookLendResultMap">
+	    <result column="bl_code" property="blCode"/>
+	    <result column="l_code" property="lCode"/>
+	    <result column="bl_id" property="blId"/>
+	    <result column="bs_code" property="bsCode"/>
+	    <result column="bi_isbn" property="biIsbn"/>
+	    <result column="bi_name" property="biName"/>
+	    <result column="bi_img" property="biImg"/>
+	    <result column="bl_lend_date" property="blLendDate"/>
+	    <result column="bl_extension_date" property="blExtensionDate"/>
+	    <result column="bl_schedule_date" property="blScheduleDate"/>
+	    <result column="bl_return_date" property="blReturnDate"/>
+	    <result column="bl_hold_date" property="blHoldDate"/>
+	    <result column="bl_overdue_days" property="blOverdueDays"/>
+	</resultMap>
+		
 	<select id="getStockList" resultMap="bookStockResultMap">
 		SELECT 
 			  bs.bs_code
@@ -50,9 +65,10 @@
 			, bi.bi_name
 			, bi.bi_isbn
 			, bi.bi_kdc
-			, bs_alias_mark
-			, bs_writer_mark
-			, bs_secondary_mark
+			, bs.bs_alias_mark
+			, bs.bs_writer_mark
+			, bs.bs_secondary_mark
+			, bs.bs_total_page
 			, bs.bs_book_state
 			, bs.bs_carry_route
 			, bs.bs_date
@@ -64,6 +80,37 @@
 	</select>
 	
 	<select id="getStockdetail" resultMap="bookStockResultMap" parameterType="String">
+		SELECT 
+			  bs.bs_code
+			, bs.u_id
+			, bi.bi_img
+			, bi.bi_name
+			, bi.bi_isbn
+			, bi.bi_year
+			, bi.bi_author
+			, bi.bi_publisher
+			, bi.bi_kdc
+			, bi.bi_detail
+			, bcl.bcl_name
+			, bcm.bcm_name
+			, bs.bs_alias_mark
+			, bs.bs_writer_mark
+			, bs.bs_secondary_mark
+			, bs.bs_total_page
+			, bs.bs_book_state
+			, bs.bs_lend_state
+			, bs.bs_carry_route
+			, bs.bs_date
+			
+		From  book_stock  bs 
+		left JOIN book_information  bi ON bs.bi_isbn = bi.bi_isbn
+		left JOIN book_cate_large bcl ON bs.bcl_code = bcl.bcl_code
+		left JOIN book_cate_medium bcm ON bs.bcm_code = bcm.bcm_code
+		where
+			bs.bs_code=#{bsCode}
+		 
+	</select>
+	<select id="getSearchStockList" resultMap="bookStockResultMap" parameterType="String">
 		SELECT 
 			  bs.bs_code
 			, bs.u_id
@@ -90,13 +137,28 @@
 		left JOIN book_information  bi ON bs.bi_isbn = bi.bi_isbn
 		left JOIN book_cate_large bcl ON bs.bcl_code = bcl.bcl_code
 		left JOIN book_cate_medium bcm ON bs.bcm_code = bcm.bcm_code
+		<if test = "bclCode neq '' and biName neq ''.toString()"></if>
 		where
-			bs.bs_code=#{bsCode}
-		 
+			bs.bcl_code=#{bclCode}
+		and
+			bs_book_state = '정상'
+		and
+			bi.bi_name Like CONCAT ('%',#{biName},'%')  	
 	</select>
 	
-	
-	
+	<select id="getReturnDate" resultMap="bookLendResultMap" parameterType="String">
+	    SELECT
+		  *
+		FROM
+		  book_lend
+		WHERE
+		  bs_code = #{bsCode}
+		AND 
+		  bl_return_date IS NULL
+		ORDER BY 
+		  bl_lend_date DESC
+		LIMIT 0,1
+	</select>
 	
 	
   </mapper>

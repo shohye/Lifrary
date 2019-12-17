@@ -15,7 +15,7 @@
          		<div class="container-fluid flex-grow-1 container-p-y" >
         
          			<div th:with="s=${stockDetail}" class="media align-items-center py-3 mb-3">
-		              <img th:src="${s.bookInformation.biImg}" alt="" class="d-block ui-w-100 rounded-circle">
+		              <img th:src="${s.bookInformation.biImg}" alt="이미지를 찾을 수 없습니다" class="d-block ui-w-100 rounded-circle">
 		              <div class="media-body ml-4" > 
 		                <h4 class="font-weight-bold mb-0" th:text="${s.bookInformation.biName}"></h4>
 		                <div class="text-muted mb-2">등록자:
@@ -73,8 +73,9 @@
 		                    <tr>
 		                      <td>대출가능상태:</td>
 		                      <td>
-		                      	  <button th:if="${s.bsLendState eq 'O'}" type="button" class="btn btn-xs btn-outline-primary">대출가능</button>
-				      			  <button th:unless="${s.bsLendState eq 'O'}" type="button" class="btn btn-xs btn-outline-success">대출불가</button>
+		                      	  <button th:if="${s.bsLendState eq 'O'}" type="button" class="btn btn-xs btn-outline-success">대출가능</button>
+				      			  <button th:unless="${s.bsLendState eq 'O'}" type="button" class="btn btn-xs btn-outline-danger">대출불가</button>
+				      			  
 		                      </td>
 		                    </tr>
 		                    <tr>
