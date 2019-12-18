@@ -523,11 +523,21 @@ public class AdminController {
 		
 	}
 	
+	//사서 상세보기 폼 
+	@GetMapping("/admin/librarianDetail")
+	public String librarianDetail(Model model, @RequestParam(value="uId",required=false) String uId) {
+		System.out.println("librarianDetail 회원상세보기 화면 "); 
+		
+		model.addAttribute("librarianDetail", adminService.librarianDetail(uId));
+		System.out.println("librarianDetail 확인바람유! >>> " + adminService.librarianDetail(uId));
+		
+		return "/adminpage/librarian/librarianDetail";
+	}
+	
 	
 	/*****************************************************************************
-	 * 사서 권한 리스트 /수정
+	 * 사서 마이페이지 @@@@@
 	 * ****************************************************************************/
-	
 	
    /**
 	 * 사서 자신 정보 수정폼
@@ -544,19 +554,16 @@ public class AdminController {
 	  
 	}
 	
-	//사서 상세보기 폼 
-	@GetMapping("/admin/librarianDetail")
-	public String librarianDetail(Model model, @RequestParam(value="uId",required=false) String uId) {
-		System.out.println("librarianDetail 회원상세보기 화면 "); 
+	@GetMapping("/admin/librarianMyDetail")
+	public String librarianMyDetail(Model model, @RequestParam(value="uId",required=false) String uId) {
+		System.out.println("librarianMyDetail 나 사서! 내정보  상세보기 ");
 		
-		model.addAttribute("librarianDetail", adminService.librarianDetail(uId));
-		System.out.println("librarianDetail 확인바람유! >>> " + adminService.librarianDetail(uId));
+		model.addAttribute("librarianMyDetail", adminService.librarianMyDetail(uId));
+		System.out.println("librarianMyDetail 확인바람유! >>> " + adminService.librarianMyDetail(uId));
 		
-		return "/adminpage/librarian/librarianDetail";
+		return "/adminpage/librarian/librarianMyDetail";
+		
 	}
-	
-	
-	
 	
 	
 	

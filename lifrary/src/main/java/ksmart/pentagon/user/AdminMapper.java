@@ -103,4 +103,7 @@ public interface AdminMapper {
 	
 	//관리자가 사서 회원 상세보기.
 	public User librarianDetail(String uId);
+	
+	//사서 - 사서 내 정보 상세보기.
+	public User librarianMyDetail(String uId);
 }

@@ -239,4 +239,18 @@ public class AdminService {
 		return adminMapper.librarianDetail(uId);
 		
 	}
+	
+	
+/**********************************************************************************/
+	
+	//사서 마이페이지 - 내 정보 상세보기
+	public User librarianMyDetail (String uId) {
+		System.out.println("librarianMyDetail 서비스진입");
+		System.out.println("사서 - 내정보 상세보기  확인바람  =>> "+ adminMapper.librarianMyDetail(uId));
+		
+		return adminMapper.librarianMyDetail(uId);
+	}
+	
+	
+	
 }

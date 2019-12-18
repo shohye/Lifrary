@@ -700,6 +700,25 @@
 			u_id=#{uId}
 		 
 	</select>
+	
+	<select id="librarianMyDetail" resultMap="userResultMap" parameterType="String">
+		SELECT 
+			u_id
+			,l_code
+			,u_division
+			,u_pw
+			,u_name
+			,u_birth
+			,u_addr
+			,u_tel
+			,u_email
+			,u_email_agree
+			,u_date
+		FROM 
+			user 
+		where
+			u_id=#{uId}
+	</select>
   	
 
 
