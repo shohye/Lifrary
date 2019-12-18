@@ -15,13 +15,21 @@ public interface BookStockMapper {
 	public List<BookStock> getStockList(String lCode);
 	
 	// (어드민) 소장도서중 한개도서 상세정보 가져오기
-	public BookStock getStockdetail(String bsCode);
+	public BookStock getStockdetail(String bsCode);	
+	
+	// (어드민) 소장도서에서 삭제된 도서 리스트 출력( 상태를 삭제로 바꾼 도서 리스트)
+	public List<BookStock> getStockDeleteList(String lCode);
+	// (어드민) 소장도서에서 삭제중 한개도서 상세정보 가져오기
+	public BookStock getStockDeleteDetail(String bsCode);
+	
 	
 	// (도서관) 대분류, 도서명으로 검색된 소장도서 리스트 출력
 	public List<BookStock> getSearchStockList(String bclCode,String biName,String lCode);
 	
 	// (도서관) 도서 상세페이지 - 반납예정일 계산하는 메서드
 	public BookLend getReturnDate(String bsCode);
+	
+	
 	
 	
 /*************************************************************/	

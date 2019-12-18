@@ -77,6 +77,43 @@ public class BookStockService {
 		return bs;	
 	}
 	
+	
+	//(어드민) 삭제 도서 리스트 가져오기
+	public List<BookStock> getStockDeleteList(String lCode){
+		return bookStockMapper.getStockDeleteList(lCode);
+	}
+	
+	// (어드민) 소장도서에서 삭제중 한개도서 상세정보 가져오기
+	public BookStock getStockDeleteDetail(String bsCode) {
+		BookStock bs =bookStockMapper.getStockDeleteDetail(bsCode);
+		String bsCallNum = "";		
+		if(bs != null) {		
+			String aliasMark = bs.getBsAliasMark();
+			String kdc = bs.getBookInformation().getBiKdc();
+			String writerMark = bs.getBsWriterMark();
+			String bsSecondaryMark = bs.getBsSecondaryMark();
+		
+			bsCallNum = "";
+			
+			if(aliasMark != null ) {
+				bsCallNum += aliasMark;
+			}			
+			bsCallNum += kdc.trim();
+			bsCallNum += writerMark;		
+			if(bsSecondaryMark != null) {					
+				bsCallNum += bsSecondaryMark;
+			}							
+			bs.setBsCallNum(bsCallNum);			
+		}
+		return bs;	
+	}
+	
+	
+	
+	
+	
+	
+	
 	// (도서관) 대분류, 도서명으로 검색된 소장도서 리스트 출력
 	public List<BookStock> getSearchStockList(String bclCode,String biName,String lCode){
 			

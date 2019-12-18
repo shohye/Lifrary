@@ -65,10 +65,7 @@ public class BookStockController {
 		String lCode = (String) session.getAttribute("LIBNUM");
     	return "redirect:/admin/stockSearchList";
     }
-	
-	
-	
-	
+		
 	// (어드민) 소장도서 상세내용
 	/****
 	 * @param model / bsCode 소장도서 코드
@@ -103,6 +100,24 @@ public class BookStockController {
 		
     	return "/adminpage/bookStock/stockDetailUpdate";
     }
+	
+	
+	//(어드민) 삭제 도서 리스트
+	@GetMapping("/admin/stockDeleteList")
+	public String stockDeleteList(Model model , HttpSession session) {
+		String lCode = (String) session.getAttribute("LIBNUM");
+		model.addAttribute("deleteList",bookStockService.getStockDeleteList(lCode));
+		
+		return "/adminpage/bookStock/stockDeleteList";
+	}
+	//(어드민) 삭제 도서 상세
+		@GetMapping("/admin/stockDeleteDetail")
+		public String stockDeleteDetail(Model model , @RequestParam(value="bsCode",required=false) String bsCode) {
+			
+			model.addAttribute("deleteDetail",bookStockService.getStockDeleteDetail(bsCode));
+			
+			return "/adminpage/bookStock/stockDeleteDetail";
+		}
 	
 	
 				

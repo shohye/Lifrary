@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="ksmart.pentagon.stock.BookStockMapper">  
+ <!--  BookInformation   -->
   	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfoResultMap">
 	    <result column="bi_isbn" property="biIsbn"/>
 	    <result column="bi_name" property="biName"/>
@@ -13,7 +14,8 @@
 	    <result column="bi_img" property="biImg"/>
 	    <result column="bi_detail" property="biDtail"/>
 	</resultMap>
-	
+
+ <!--  BookCate   -->	
 	<resultMap type="ksmart.pentagon.vo.BookCate" id="bookCateResultMap">
 	    <result column="bcl_code" property="bclCode"/>
 	    <result column="bcl_name" property="bclName"/>
@@ -21,7 +23,8 @@
 	    <result column="bcm_name" property="bcmName"/>
 	  
 	</resultMap>
-	
+
+ <!--  BookStock   -->	
 	<resultMap type="ksmart.pentagon.vo.BookStock" id="bookStockResultMap">
 	    <result column="bs_code" property="bsCode"/>
 	    <result column="l_code" property="lCode"/>
@@ -38,11 +41,16 @@
 	    <result column="bs_lend_state" property="bsLendState"/>
 	    <result column="bs_carry_route" property="bsCarryRoute"/>
 	    <result column="bs_date" property="bsDate"/>
+	    <result column="bs_delete" property="bsDelete"/>
+	    <result column="bs_delete_id" property="bsDeleteId"/>
+	    <result column="bs_delete_reason" property="bsDeleteReason"/>
+	    <result column="bs_delete_date" property="bsDeleteDate"/>
 	    
 	    <collection property="bookInformation" resultMap="bookInfoResultMap"/>
 	    <collection property="bookCate" resultMap="bookCateResultMap"/>
 	</resultMap>
 	
+ <!--  BookLend   -->	
 	<resultMap type="ksmart.pentagon.vo.BookLend" id="bookLendResultMap">
 	    <result column="bl_code" property="blCode"/>
 	    <result column="l_code" property="lCode"/>
@@ -58,7 +66,8 @@
 	    <result column="bl_hold_date" property="blHoldDate"/>
 	    <result column="bl_overdue_days" property="blOverdueDays"/>
 	</resultMap>
-		
+
+<!--  (어드민) 삭제하지 않은 모든 소장도서 리스트 가져오기   -->		
 	<select id="getStockList" resultMap="bookStockResultMap" parameterType="String">
 		SELECT 
 			  bs.bs_code
@@ -79,10 +88,67 @@
 		where
 			bs.bs_delete_id IS NULL
 		and
-			bs.l_code=#{lCode}
-			
+			bs.l_code=#{lCode}			
+	</select>
+
+<!--  (어드민) 삭제 도서 리스트 가져오기   -->		
+	<select id="getStockDeleteList" resultMap="bookStockResultMap" parameterType="String">
+		SELECT
+			  bs.bs_code
+			, bs.u_id
+			, bi.bi_img
+			, bi.bi_name
+			, bi.bi_isbn
+			, bs.bs_delete
+			, bs.bs_delete_id
+			, bs.bs_delete_reason
+			, bs.bs_delete_date
+		From  
+			  book_stock  bs
+		left JOIN 
+			  book_information  bi 
+		ON 
+			  bs.bi_isbn = bi.bi_isbn
+		where
+		      bs.bs_delete_id IS not NULL
+     	and
+			  bs.l_code=#{lCode}	
+	</select>
+<!--  (어드민) 삭제 도서 리스트 가져오기   -->		
+	<select id="getStockDeleteDetail" resultMap="bookStockResultMap" parameterType="String">
+		SELECT
+			  bs.bs_code
+			, bs.u_id
+			, bi.bi_img
+			, bi.bi_name
+			, bi.bi_isbn
+			, bi.bi_year
+			, bi.bi_author
+			, bi.bi_publisher
+			, bi.bi_kdc
+			, bi.bi_detail
+			, bcl.bcl_name
+			, bcm.bcm_name
+			, bs.bs_alias_mark
+			, bs.bs_writer_mark
+			, bs.bs_secondary_mark
+			, bs.bs_total_page
+			, bs.bs_book_state
+			, bs.bs_lend_state
+			, bs.bs_carry_route
+			, bs.bs_delete
+			, bs.bs_delete_id
+			, bs.bs_delete_reason
+			, bs.bs_delete_date
+		From  book_stock  bs 
+		left JOIN book_information  bi ON bs.bi_isbn = bi.bi_isbn
+		left JOIN book_cate_large bcl ON bs.bcl_code = bcl.bcl_code
+		left JOIN book_cate_medium bcm ON bs.bcm_code = bcm.bcm_code
+		where
+			bs.bs_code=#{bsCode}		 	
 	</select>
 	
+<!--  (어드민) 소장도서 리스트에서 선택한 도서 1개 상세 정보 가져오기   -->		
 	<select id="getStockdetail" resultMap="bookStockResultMap" parameterType="String">
 		SELECT 
 			  bs.bs_code
@@ -111,10 +177,10 @@
 		left JOIN book_cate_large bcl ON bs.bcl_code = bcl.bcl_code
 		left JOIN book_cate_medium bcm ON bs.bcm_code = bcm.bcm_code
 		where
-			bs.bs_code=#{bsCode}
-		
-		 
+			bs.bs_code=#{bsCode}		 
 	</select>
+	
+<!--  (도서관) 책 상태가 정상인 모든 소장도서 중 검색 조건에 맞는 도서 리스트 가져오기     -->	
 	<select id="getSearchStockList" resultMap="bookStockResultMap" parameterType="String">
 		SELECT 
 			  bs.bs_code
@@ -153,6 +219,7 @@
 			bi.bi_name Like CONCAT ('%',#{biName},'%')  	
 	</select>
 	
+<!--  (도서관) 도서 상세페이지에 명시할 반납예정일 가져오기   -->		
 	<select id="getReturnDate" resultMap="bookLendResultMap" parameterType="String">
 	    SELECT
 		  *
@@ -166,6 +233,8 @@
 		  bl_lend_date DESC
 		LIMIT 0,1
 	</select>
+	
+<!--  (어드민) 소장도서 추가 폼에서 도서정보가져오기 후 '도서정보' 테이블에 해당 정보 인서트 하기  -->
 	<insert id="insertBookInfoStock" parameterType="ksmart.pentagon.vo.BookInformation">
 		INSERT INTO 
 			book_information

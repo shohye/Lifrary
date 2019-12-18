@@ -1,14 +1,14 @@
 $(function() {
-  $('.datatables-demo').dataTable({
+  $('.myTable').dataTable({
 	/*  dom: 'Bfrtip',
       buttons: [
           'copy',
           'excel',
           'pdf'
       ],*/
-	  order: [[ 2, 'desc' ]],
+	  order: [[ 5, 'desc' ]],
 	    columnDefs: [ {
-	    targets: [2,3,8],
+	    targets: [3,6,7],
 	    orderable: false,
 	    }],
 	 language: {
