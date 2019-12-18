@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import codeup.CodeUp;
+import ksmart.pentagon.codeup.CodeUp;
 import ksmart.pentagon.vo.Board;
 import ksmart.pentagon.vo.BookInformation;
 
