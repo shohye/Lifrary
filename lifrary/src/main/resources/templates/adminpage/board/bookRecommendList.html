@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
+
+
+<!-- Content -->
+<th:block layout:fragment="adminContents">
+<style>
+	a {
+	color : #4E5155;
+	}
+</style>
+        <!-- Layout content -->
+        <div class="layout-content">
+
+          <!-- Content -->
+          <div class="container-fluid flex-grow-1 container-p-y" style="width: 100%">
+
+            <h4 class="font-weight-bold py-3 mb-4">
+              <span class="text-muted font-weight-light"></span>문의하기
+            </h4>
+            <div class="card">
+			<div class="card" style="padding-top: 20px; padding-left: 20px; padding-right: 20px;">
+	            <div class="table-responsive">
+	              <table class="datatables-demo table table-striped table-bordered">
+	                <thead>
+	                  <tr>
+	                    <th style="width: 10%;">번호</th>
+	                    <th style="width: 60%;">제목</th>
+	                    <th style="width: 10%;">작성자</th>
+	                    <th style="width: 10%;">조회수</th>
+	                    <th style="width: 10%;">작성일</th>
+	                  </tr>
+	                </thead>
+	                <tbody>
+		                  <tr th:each="l,pro : ${boardList}">
+		                  	<td th:text="${pro.count}"></td>
+		                  	<td><a th:href="@{/admin/inquiryDetail(boardCode=${l.boardCode})}" title="상세보기" th:utext="${l.boardTitle}"></a></td>
+		                  	<td th:text="${l.uId}"></td>
+		                  	<td th:text="${l.boardPageView}"></td>
+		                  	<td th:text="${l.boardDate}"></td>
+		                  </tr>
+	                </tbody>
+	              </table>
+	            </div>
+            </div>
+          </div>
+	   <div>
+	   		<a style="margin-top: 10px;" th:href="@{/admin/noticeInsert(boardLCode=${boardLCode},boardMCode=${boardMCode})}" value="문의하기" id="noticeInsertBtn" class="btn btn-primary">문의하기등록</a>
+	   </div>
+          </div>
+          <!-- / Content -->
+        </div>
+        <!-- Layout content -->
+	   <br>
+	   <br>
+</th:block>
+
+<!-- / Content -->
+
+<!-- script -->
+<th:block layout:fragment="pageScript">
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+  <script th:src="@{/admin/vendor/libs/popper/popper.js}"></script>
+  <script th:src="@{/admin/vendor/js/bootstrap.js}"></script>
+  <script th:src="@{/admin/vendor/js/sidenav.js}"></script>
+
+  <!-- Libs -->
+  <script th:src="@{/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
+  <script th:src="@{/admin/vendor/libs/datatables/datatables2.js}"></script>
+  <!-- Demo -->
+  <script th:src="@{/admin/js/demo.js}"></script>
+  <script th:src="@{/admin/js/tables_datatables.js}"></script>
+</th:block>
+<!-- /script -->
+
+
+
+</html>

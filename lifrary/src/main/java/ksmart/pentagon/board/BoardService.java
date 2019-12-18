@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import codeup.CodeUp;
 import ksmart.pentagon.vo.Board;
+import ksmart.pentagon.vo.BookInformation;
 
 @Service
 public class BoardService {
@@ -27,35 +29,13 @@ public class BoardService {
 		
 //		공지사항 date 등록 후 리스트 date 가져오기
 		public Board noticeInsert(Board board){
-			String total = null;
 			String max = boardmapper.maxBoardCode();
-			Date today = new Date();
-			SimpleDateFormat simpleFormat = new SimpleDateFormat("yyMMdd");
-			int nowDate = Integer.parseInt(simpleFormat.format(today));
-			String count = null;
-			System.out.println(nowDate);
-			System.out.println(count = String.format("%05d", 1));
-			String name = max.substring(0, max.indexOf("-"));
-			String date = max.substring(max.lastIndexOf("-")+1, max.lastIndexOf("-")+7);
-			String subMax = max.substring(max.lastIndexOf("-")+7,max.lastIndexOf("-")+7+5);
-			int intMax = Integer.parseInt(subMax);
-			int intDate = Integer.parseInt(date);
-			System.out.println("코드이름"+name);
-			System.out.println("날짜"+date);
-			System.out.println("맥스번호"+intMax);
-			if(intDate < nowDate) {
-				total = name+"-"+nowDate+count;
-				System.out.println(total);
-			}else {
-				String intMaxFormat = null;
-				total= name+"-"+intDate+(intMaxFormat = String.format("%05d",intMax+1 ));
-				System.out.println(total);
-			}
-			board.setBoardCode(total);
+			String returnCode = CodeUp.codeMaker(max);
+			board.setBoardCode(returnCode);
+			System.out.println("service36: "+returnCode);
 			System.out.println("boardmapper.boardInsert() 메서드 실행");
 			boardmapper.boardInsert(board);
-			
-			return boardmapper.getBoardDatail(total);
+			return boardmapper.getBoardDatail(returnCode);
 			
 		}
 //		공지사항 상세페이지 date가져오기
