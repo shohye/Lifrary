@@ -39,7 +39,6 @@
 	                  <thead>
 	                    <tr role="row">
 	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">회원등급</th>
-	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">도서관코드</th>
 	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">관리자ID</th>
 	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">등급명</th>
 	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">기준최소권수</th>
@@ -53,7 +52,6 @@
 	                   <th:block th:each="ul : ${userLevel}">
 	                   		<tr>
 	                   			<td th:text="${ul.ulLevel}"></td>
-	                   			<td th:text="${ul.lCode}"></td>
 	                   			<td th:text="${ul.uId}"></td>
 	                   			<td th:text="${ul.ulName}"></td>
 	                   			<td th:text="|${ul.ulMin}권|" style="text-align:center"></td>

@@ -52,11 +52,11 @@ public class AdminService {
 	
 	
 	//유저 회원 전체 가져오기 
-	public List<User> getUserList(){
+	public List<User> getUserList(String libNum){
 		System.out.println("getUserList 서비스진입");
-		System.out.println(adminMapper.getUserList());
+		System.out.println(adminMapper.getUserList(libNum));
 		
-		return adminMapper.getUserList();
+		return adminMapper.getUserList(libNum);
 	}
 	
 	//유저 회원 리스트 검색 가져오기
@@ -102,11 +102,11 @@ public class AdminService {
 	 }
 	 
 	 //유저 레벨 전체 가져오기.
-	 public List<UserLevel> adUserLevelList(){
+	 public List<UserLevel> adUserLevelList(String libNum){
 		 System.out.println("adUserLevelList 서비스 진입");
-		 System.out.println(adminMapper.adUserLevelList());
+		 System.out.println(adminMapper.adUserLevelList(libNum));
 		 
-		 return adminMapper.adUserLevelList();
+		 return adminMapper.adUserLevelList(libNum);
 	 }
 	 
 	 //관리자가 유저 레벨 수정 하기
@@ -124,11 +124,11 @@ public class AdminService {
 	 }
 	 
 	 //유저 회원등급 내역 리스트 전체 가져오기 
-	 public List<UserLevelHistory> adUserLevelHistorySearchList(){
+	 public List<UserLevelHistory> adUserLevelHistorySearchList(String libNum){
 		 System.out.println("adUserLevelHistorySearchList 서비스진입");
-		 System.out.println(adminMapper.adUserLevelHistorySearchList());
+		 System.out.println(adminMapper.adUserLevelHistorySearchList(libNum));
 		
-		 return adminMapper.adUserLevelHistorySearchList();
+		 return adminMapper.adUserLevelHistorySearchList(libNum);
 	}
 	
 	//유저 회원등급 내역 검색 리스트 전체 가져오기
@@ -153,11 +153,11 @@ public class AdminService {
 	 }
 	 
 	 //관리자가 회원 권한 리스트보기
-	 public List<UserAuthoritySet> adUserAuthorityList(){
+	 public List<UserAuthoritySet> adUserAuthorityList(String libNum){
 		 System.out.println("adUserAuthorityList 서비스 진입");
-		 System.out.println("확인완료 adUserAuthorityList ==>>" + adminMapper.adUserAuthorityList());
+		 System.out.println("확인완료 adUserAuthorityList ==>>" + adminMapper.adUserAuthorityList(libNum));
 		
-		 return adminMapper.adUserAuthorityList();
+		 return adminMapper.adUserAuthorityList(libNum);
 	 }
 	 
 	 //관리자가 회원 권한 수정하기
@@ -176,11 +176,11 @@ public class AdminService {
 	 }
 	 
 	 //유저 권한등급 내역 리스트 전체 가져오기 
-	 public List<UserAuthorityHistory> adUserAuthorityHistorySearchList(){
+	 public List<UserAuthorityHistory> adUserAuthorityHistorySearchList(String libNum){
 		 System.out.println("adUserAuthorityHistorySearchList 서비스진입");
-		 System.out.println(adminMapper.adUserAuthorityHistorySearchList());
+		 System.out.println(adminMapper.adUserAuthorityHistorySearchList(libNum));
 		
-		 return adminMapper.adUserAuthorityHistorySearchList();
+		 return adminMapper.adUserAuthorityHistorySearchList(libNum);
 	}
 	
 	//유저 권한등급 내역 검색 리스트 전체 가져오기
@@ -208,18 +208,19 @@ public class AdminService {
 	}
 	
 	//관리자가보는 사서 리스트 (권한부여가능)
-	public List<User> librarianLevelList1(){
+	public List<User> librarianLevelList1(String libNum){
 		System.out.println("librarianLevelList1 서비스진입");
-		return adminMapper.librarianLevelList1();
+		return adminMapper.librarianLevelList1(libNum);
 	}
-	public List<User> librarianLevelList2(){
+	public List<User> librarianLevelList2(String libNum){
 		System.out.println("librarianLevelList2 서비스진입");
-		return adminMapper.librarianLevelList2();
+		return adminMapper.librarianLevelList2(libNum);
 	}
 	
 	//관리자 회원정보&권한 수정 -한개 정보 가져오기
 	public List<User> getLibrarianLevelUpdate(String uId){
 		System.out.println("getLibrarianLevelUpdate 서비스진입");
+		System.out.println(adminMapper.getLibrarianLevelUpdate(uId) + "<<== 업데이트");
 		return adminMapper.getLibrarianLevelUpdate(uId);
 	}
 	//관리자가 회원정보&권한 수정
@@ -231,4 +232,25 @@ public class AdminService {
 		System.out.println("librarianLevelUpdate2 서비스진입");
 		return adminMapper.librarianLevelUpdate2(librarianLevel);
 	}
+	
+	//관리자가 사서 상세보기
+	public User librarianDetail (String uId) {
+		System.out.println("librarianDetail 서비스진입");
+		return adminMapper.librarianDetail(uId);
+		
+	}
+	
+	
+/**********************************************************************************/
+	
+	//사서 마이페이지 - 내 정보 상세보기
+	public User librarianMyDetail (String uId) {
+		System.out.println("librarianMyDetail 서비스진입");
+		System.out.println("사서 - 내정보 상세보기  확인바람  =>> "+ adminMapper.librarianMyDetail(uId));
+		
+		return adminMapper.librarianMyDetail(uId);
+	}
+	
+	
+	
 }

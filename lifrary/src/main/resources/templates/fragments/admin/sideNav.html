@@ -77,16 +77,28 @@
               <div>2.사서 관리</div>
             </a>
             <ul class="sidenav-menu">
+            <th:block th:if="${session.SADIV} == '관리자'"> 
               <li class="sidenav-item">
-                <a th:href="@{/admin/librarianUpdate}" class="sidenav-link">
-                  <div>!사서 관리</div>
+                <a th:href="@{/admin/librarianMyDetail}" class="sidenav-link">
+                  <div>!사서 나의관리</div>
                 </a>
               </li>
+            </th:block>
+            <th:block th:unless="${session.SADIV} == '관리자'"> 
+              <li class="sidenav-item">
+                <a th:href="@{/admin/librarianMyDetail}" class="sidenav-link">
+                  <div>!사서 나의관리</div>
+                </a>
+              </li>
+            </th:block>
+             <!-- <th:block th:unless="${session.SADIV} == '사서'"> -->
+             <th:block th:if="${session.SADIV} == '관리자'">
               <li class="sidenav-item">
                 <a th:href="@{/admin/librarianLevelList}" class="sidenav-link">
                   <div>!사서 권한 설정</div>
                 </a>
               </li>
+             </th:block>
             </ul>
           </li>
           

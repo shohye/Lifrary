@@ -39,7 +39,6 @@
 	                  <thead>
 	                    <tr role="row">
 	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">회원제한코드</th>
-	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">도서관코드</th>
 	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">관리자ID</th>
 	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">권한명</th>
 	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">연체일(최소)</th>
@@ -54,7 +53,6 @@
 	                   <th:block th:each="ua : ${userAuthority}">
 	                   		<tr>
 	                   			<td th:text="${ua.uasCode}"></td>
-	                   			<td th:text="${ua.lCode}"></td>
 	                   			<td th:text="${ua.uId}"></td>
 	                   			<td th:text="${ua.uasName}"></td>
 	                   			<td th:text="|${ua.uasOverdueMin}일|" style="text-align:center"></td>

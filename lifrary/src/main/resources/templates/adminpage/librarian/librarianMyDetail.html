@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+	  
+	  <th:block layout:fragment="adminHeadAdd">
+	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
+ 	  </th:block>
+ 
+ 
+  <!-- Content -->
+         <th:block layout:fragment="adminContents">
+         	<div class="layout-content">
+         		<div class="container-fluid flex-grow-1 container-p-y" >
+         			<div th:with="lmd=${librarianMyDetail}" class="media align-items-center py-3 mb-3">
+		              <div class="media-body ml-4" > 
+		                <h4 class="font-weight-bold mb-0" >사서 - 내 정보 상세보기</h4>
+		                <div class="text-muted mb-2">나의 ID :
+		                	<!-- <span th:text="${lmd.uId}"></span> -->
+		                </div>
+		                <a th:href="@{/admin/librarianMyUpdate}" class="btn btn-primary btn-sm">수정하고 싶어요</a>&nbsp;
+		                
+		              </div>
+		            </div>
+         		
+         		
+         		
+        <!-- 
+         			 <div th:with="ud=${userDetail}" class="media align-items-center py-3 mb-3">
+		              <div class="media-body ml-4" > 
+		               <h4 class="font-weight-bold py-3 mb-4">
+		              <span class="text-muted font-weight-light">Forms /</span> 관리자가보는 회원상세페이지
+		            </h4>
+
+		              </div>
+		            </div> -->
+		            <div class="card mb-4">
+		              <div class="card-body">
+		                <table th:with="lmd=${librarianMyDetail}" class="table user-view-table m-0" > <!-- th:with="m = ${#}" -->
+		                  <tbody>
+		                    <tr>
+		                      <td>아이디:</td><td th:text="${lmd.uId}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>비밀번호:</td><td th:text="${lmd.uPw}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>구분:</td><td th:text="${lmd.uDivision}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>이름:</td><td th:text="${lmd.uName}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>생년월일:</td><td th:text="${lmd.uBirth}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>주소:</td><td th:text="${lmd.uAddr}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>연락처:</td><td th:text="${lmd.uTel}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>이메일:</td><td th:text="${lmd.uEmail}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>이메일수신동의:</td>
+		                      <td th:if = "${lmd != null}">
+		                      	<span th:if="${lmd.uEmailAgree eq 'O'}" th:text="동의" class="ion ion-md-checkmark text-primary"></span>
+		                      	<span th:unless = "${lmd.uEmailAgree eq 'O'}"  th:text="비동의" class="ion ion-md-close text-danger"></span>
+		                      	&nbsp;
+		                      </td>
+		                    </tr>
+		                    <tr>
+		                      <td>등록일자:</td><td th:text="${lmd.uDate}"></td>
+		                    </tr>
+		                    
+		                  </tbody>
+		                </table>
+		              </div>
+		              
+		              
+		            </div>
+         	
+    
+         		</div>
+         	</div>
+
+          </th:block>
+          
+          <!-- / Content -->
+         
+          <!-- script -->
+          <th:block layout:fragment="pageScript">
+
+		  <!-- addLibs -->
+		  <script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		
+		  <!-- addDemo -->
+		  <script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
+		  </th:block>
+  		  <!-- /script -->
+  		  
+  		  
+          
+</html>

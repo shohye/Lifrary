@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+    
+    <th:block layout:fragment="customContents">
+	<section th:replace="fragments/library/loginBanner :: loginBannerFragment"></section>
+<!-- Start: Cart Checkout Section -->
+        <div id="content" class="site-content" th:fragment="cartCheckOutSectionFragment">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="checkout-main">
+                        <div class="container">
+                            <div class="row">
+                                <!-- <div class="cart-head">
+                                    <div class="col-xs-12 col-sm-6 account-option">
+                                        <strong>Scott Fitzgerald</strong>
+                                        <ul>
+                                            <li><a th:href="@{#}">Edit Account</a></li>
+                                            <li class="divider">|</li>
+                                            <li><a th:href="@{#}">Edit Pin </a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 library-info">
+                                        <ul>
+                                            <li>
+                                                <strong>Email:</strong>
+                                                <a th:href="@{mailto:scottfitzgerald@gmail.com}">scottfitzgerald@gmail.com</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div> -->
+                                <div class="col-md-12">
+                                    <article class="page type-page status-publish hentry">
+                                        <div class="entry-content">
+                                            <div class="woocommerce">
+                                                <form action="http://libraria.demo.presstigers.com/checkout.html" class="checkout woocommerce-checkout" method="post" name="checkout">
+                                                    <div class="row">
+                                                        <div id="customer_details">
+                                                            <div class="col-xs-12 col-sm-9">
+                                                                <div class="woocommerce-billing-fields">
+                                                                    <h2>회원가입을 해주세요</h2>
+                                                                    <span class="underline left"></span>
+                                                                    <div class="row">
+                                                                        <div class="billing-address-box">
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">아이디 : </label>
+                                                                                <p id="billing_first_name_field" class="form-row form-row form-row-first">
+                                                                                    <input type="text" value="" autocomplete="given-name" placeholder="아이디를 입력해주세요" id="billing_first_name" name="billing_first_name" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">이름 : </label>
+                                                                                <p id="billing_address_1_field" class="form-row form-row form-row-wide address-field validate-required">
+                                                                                    <input type="text" value="" placeholder="이름을 입력해주세요" name="billing_address_1" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">비밀번호 : </label>
+                                                                                <p id="billing_last_name_field" class="form-row form-row form-row-last validate-required">                                                                        
+                                                                                    <input type="password" value="" autocomplete="family-name" placeholder="비밀번호를 입력해주세요" id="billing_last_name" name="billing_last_name" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            <!-- <div class="clear"></div> -->
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">비밀번호 재확인 : </label>
+                                                                                <p id="billing_company_field" class="form-row form-row form-row-wide">
+                                                                                    <input type="text" value="" autocomplete="organization" placeholder="비밀번호 재확인" id="billing_company" name="billing_company" class="input-text ">
+                                                                                </p>
+                                                                            </div>
+                                                                         <div class="form-row">
+                                                                            <div class="col-xs-4 col-sm-4">
+                                                                            	<label class="form-label">생년월일</label>
+                                                                                <p id="billing_city_field" class="form-row form-row form-row-wide address-field validate-required" data-o_class="form-row form-row form-row-wide address-field validate-required">
+                                                                                    <input type="text" value="" placeholder="년" name="billing_city" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-4 col-sm-4">
+                                                                              <label class="form-label">&nbsp</label>
+						                                                      <div class="form-group">
+						                                                        <div class="select"><select name="locations" id="locations" class="form-control select-hidden">
+						                                                            <option>:: 월 선택 ::</option>
+						                                                            <option>01</option>
+						                                                            <option>02</option>
+						                                                            <option>03</option>
+						                                                            <option>04</option>
+						                                                            <option>05</option>
+						                                                            <option>06</option>
+						                                                            <option>07</option>
+						                                                            <option>08</option>
+						                                                            <option>09</option>
+						                                                            <option>10</option>
+						                                                            <option>11</option>
+						                                                            <option>12</option>
+						                                                        </select>
+						                                                        </div>
+						                                                      </div>
+						                                                	</div>
+                                                                            <div class="col-xs-4 col-sm-4">
+                                                                            	 <label class="form-label">&nbsp</label>
+                                                                                <p id="billing_postcode_field" class="form-row form-row form-row-last address-field validate-postcode validate-required" data-o_class="form-row form-row form-row-last address-field validate-required validate-postcode">
+                                                                                    <input type="text" value="" placeholder="일" id="billing_postcode" name="billing_postcode" class="input-text ">
+                                                                                </p>
+                                                                            </div>
+                                                                         </div>
+                                                                            <div class="col-xs-4 col-sm-4">
+                                                                              <label class="form-label">성별 </label>
+						                                                      <div class="form-group">
+						                                                        <div class="select"><select name="locations" id="locations" class="form-control select-hidden">
+						                                                            <option>:: 성별 ::</option>
+						                                                            <option>여자</option>
+						                                                            <option>남자</option>
+						                                                        </select>
+						                                                        </div>
+						                                                      </div>
+						                                                	</div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">이메일 : </label>
+                                                                                <p id="billing_postcode_field" class="form-row form-row form-row-last address-field validate-postcode validate-required" data-o_class="form-row form-row form-row-last address-field validate-required validate-postcode">
+                                                                                    <input type="text" value="" placeholder="이메일입력 해주세요" id="billing_postcode" name="billing_postcode" class="input-text ">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">핸드폰 : </label>
+                                                                                <p id="billing_phone_field" class="form-row form-row form-row-last validate-required validate-phone">
+                                                                                    <input type="tel" value="" autocomplete="tel" placeholder="핸드폰번호 입력해주세요" id="billing_phone" name="billing_phone" class="input-text ">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">주소 : </label>
+                                                                                <p id="billing_phone_field" class="form-row form-row form-row-last validate-required validate-phone">
+                                                                                    <input type="tel" value="" autocomplete="tel" placeholder="주소를 입력해주세요" id="billing_phone" name="billing_phone" class="input-text ">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">메일수신 동의 : </label>
+                                                                                <div class="radio">
+                                                                                    <input id="bill-address" type="radio" value="O" name="bill-address" class="custom-control-input" checked="">
+                                                                                    <label for="bill-address"> 동의 </label>
+                                                                                </div>
+                                                                                <div class="radio">
+                                                                                    <input id="bill-address" type="radio" value="X" name="bill-address" class="custom-control-input" checked="checked">
+                                                                                    <label for="bill-address"> 비동의 </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">임명장 부여  : </label>
+                                                                                <div class="radio">
+                                                                                    <input id="bill-address" type="radio" value="O" name="bill-address" class="custom-control-input" checked="">
+                                                                                    <label for="bill-address"> 동의 </label>
+                                                                                </div>
+                                                                                <div class="radio">
+                                                                                    <input id="bill-address" type="radio" value="X" name="bill-address" class="custom-control-input" checked="checked">
+                                                                                    <label for="bill-address"> 비동의 </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-12">
+                                                                        		<input type="submit" data-value="Place order" value="Place order" id="place_order" 
+                                                                        				name="woocommerce_checkout_place_order" class="button alt btn btn-default">	
+                           													</div>
+                                                                    </div>
+                                                                    <div class="clear"></div>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                        </div>	
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div><!-- .entry-content -->
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <!-- End: Cart Checkout Section -->
+ </th:block>
+</html>
