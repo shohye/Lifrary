@@ -1,80 +1,127 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+	  
+<!-- headAdd(Libs&page) -->
+  
+	  <th:block layout:fragment="adminHeadAdd">
+	  
+	  <!-- addLibs -->
+	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/select.dataTables.min.css}">
+	  <!-- addPage -->
+	  
+	    <script th:src="@{/admin/vendor/js/jquery-3.3.1.min.js}"></script>
+	    <script th:src="@{/admin/vendor/js/jquery.dataTables.js}"></script>
+	    <script th:src="@{/admin/vendor/js/dataTables.responsive.min.js}"></script>
+	    <script th:src="@{/admin/vendor/js/dataTables.buttons.min.js}"></script>
+		<script th:src="@{/admin/vendor/js/buttons.html5.min.js}"></script>
+		<script th:src="@{/admin/js/tables_datatables_purchase.js}"></script>
+	   
+	     
+	 
+	  </th:block>
+	  
+<!-- /headAdd(Libs&page) --> 
+ 
+ 
+  <!-- Content -->
+         <th:block layout:fragment="adminContents">
+         <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+			<div>사서 추천도서</div>			
+		</h4>
+         
+            <!-- DataTable within card -->
 
-
-<!-- Content -->
-<th:block layout:fragment="adminContents">
-<style>
-	a {
-	color : #4E5155;
-	}
-</style>
-        <!-- Layout content -->
-        <div class="layout-content">
-
-          <!-- Content -->
-          <div class="container-fluid flex-grow-1 container-p-y" style="width: 100%">
-
-            <h4 class="font-weight-bold py-3 mb-4">
-              <span class="text-muted font-weight-light"></span>문의하기
-            </h4>
             <div class="card">
-			<div class="card" style="padding-top: 20px; padding-left: 20px; padding-right: 20px;">
-	            <div class="table-responsive">
-	              <table class="datatables-demo table table-striped table-bordered">
-	                <thead>
-	                  <tr>
-	                    <th style="width: 10%;">번호</th>
-	                    <th style="width: 60%;">제목</th>
-	                    <th style="width: 10%;">작성자</th>
-	                    <th style="width: 10%;">조회수</th>
-	                    <th style="width: 10%;">작성일</th>
-	                  </tr>
-	                </thead>
-	                <tbody>
-		                  <tr th:each="l,pro : ${boardList}">
-		                  	<td th:text="${pro.count}"></td>
-		                  	<td><a th:href="@{/admin/inquiryDetail(boardCode=${l.boardCode})}" title="상세보기" th:utext="${l.boardTitle}"></a></td>
-		                  	<td th:text="${l.uId}"></td>
-		                  	<td th:text="${l.boardPageView}"></td>
-		                  	<td th:text="${l.boardDate}"></td>
-		                  </tr>
-	                </tbody>
-	              </table>
-	            </div>
+              
+              <div class="card-datatable table-responsive">
+                <table id="myTable" class="datatables-demo table table-striped table-bordered">
+                
+           
+                  <thead>
+                    <tr>
+                      <th data-orderable="false" style="width: 10px;">번호</th>
+                      <th>행사명</th>
+                      
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+				    <tr>
+				    	<td>
+				    		<img th:src="@{ https://image.aladin.co.kr/product/21168/79/cover/k642636886_2.jpg}" style="width: 120px; height: 180px;">
+				    	</td>
+				    	<td>
+				    		<span style="padding-left: 5px;"><h3 th:text="|제목 : ${'오키오키1'}|">1</h3></span>
+				    		<span style="color: #A2A4A6;" th:text="| 줄거리 : ${'씅랑라ㅓ님런ㅇ리ㅁㄴㅇㄹㄴㅁㅇㄻㄴㅇㄹㄴㅇㄴㅇㅁㄹㄴㅇㄹㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ'}|"></span><br><br>
+				    		<span style="color: #A2A4A6;" th:text="| 저자명 : ${'누구누구누구'}   ㅣ    발행년도 : ${'2019'}">3</span>
+				    	</td>
+				    	
+				    </tr>
+				    <tr>
+				    	<td>
+				    		<img th:src="@{ https://image.aladin.co.kr/product/21168/79/cover/k642636886_2.jpg}" style="width: 120px; height: 180px;">
+				    	</td>
+				    	<td>
+				    		<span style="padding-left: 5px;"><h3 th:text="|제목 : ${'오키오키2'}|">2</h3></span>
+				    		<span style="color: #A2A4A6;" th:text="| 줄거리 : ${'씅랑라ㅓ님런ㅇ리ㅁㄴㅇㄹㄴㅁㅇㄻㄴㅇㄹㄴㅇㄴㅇㅁㄹㄴㅇㄹㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ'}|"></span><br><br>
+				    		<span style="color: #A2A4A6;" th:text="| 저자명 : ${'누구누구누구'}   ㅣ    발행년도 : ${'2019'}">3</span>
+				    	</td>
+				    	
+				    </tr>
+				    <tr>
+				    	<td>
+				    		<img th:src="@{ https://image.aladin.co.kr/product/21168/79/cover/k642636886_2.jpg}" style="width: 120px; height: 180px;">
+				    	</td>
+				    	<td>
+				    		<span style="padding-left: 5px;"><h3 th:text="|제목 : ${'오키오키3'}|">3</h3></span>
+				    		<span style="color: #A2A4A6;" th:text="| 줄거리 : ${'씅랑라ㅓ님런ㅇ리ㅁㄴㅇㄹㄴㅁㅇㄻㄴㅇㄹㄴㅇㄴㅇㅁㄹㄴㅇㄹㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ'}|"></span><br><br>
+				    		<span style="color: #A2A4A6;" th:text="| 저자명 : ${'누구누구누구'}   ㅣ    발행년도 : ${'2019'}">3</span>
+				    	</td>
+				    	
+				    </tr>
+				    <tr>
+				    	<td>
+				    		<img th:src="@{ https://image.aladin.co.kr/product/21168/79/cover/k642636886_2.jpg}" style="width: 120px; height: 180px;">
+				    	</td>
+				    	<td>
+				    		<span style="padding-left: 5px;"><h3 th:text="|제목 : ${'오키오키4'}|">4</h3></span>
+				    		<span style="color: #A2A4A6;" th:text="| 줄거리 : ${'씅랑라ㅓ님런ㅇ리ㅁㄴㅇㄹㄴㅁㅇㄻㄴㅇㄹㄴㅇㄴㅇㅁㄹㄴㅇㄹㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ'}|"></span><br><br>
+				    		<span style="color: #A2A4A6;" th:text="| 저자명 : ${'누구누구누구'}   ㅣ    발행년도 : ${'2019'}">3</span>
+				    	</td>
+				    	
+				    </tr>
+				  </tbody> 
+                </table>
+              </div>
             </div>
-          </div>
-	   <div>
-	   		<a style="margin-top: 10px;" th:href="@{/admin/noticeInsert(boardLCode=${boardLCode},boardMCode=${boardMCode})}" value="문의하기" id="noticeInsertBtn" class="btn btn-primary">문의하기등록</a>
-	   </div>
-          </div>
+	              <div>
+						<a th:href="@{#}" style="color: white"> 
+				            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
+				            	<span class="ion ion-md-add">도서 추천</span>
+							</button>
+						</a>
+				  </div>
+                        
+
+          </th:block>
           <!-- / Content -->
-        </div>
-        <!-- Layout content -->
-	   <br>
-	   <br>
-</th:block>
+         
+          <!-- script -->
+          <th:block layout:fragment="pageScript">
 
-<!-- / Content -->
-
-<!-- script -->
-<th:block layout:fragment="pageScript">
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
-  <script th:src="@{/admin/vendor/libs/popper/popper.js}"></script>
-  <script th:src="@{/admin/vendor/js/bootstrap.js}"></script>
-  <script th:src="@{/admin/vendor/js/sidenav.js}"></script>
-
-  <!-- Libs -->
-  <script th:src="@{/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
-  <script th:src="@{/admin/vendor/libs/datatables/datatables2.js}"></script>
-  <!-- Demo -->
-  <script th:src="@{/admin/js/demo.js}"></script>
-  <script th:src="@{/admin/js/tables_datatables.js}"></script>
-</th:block>
-<!-- /script -->
-
-
-
+		  <!-- addLibs -->
+		    <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script> 
+		    <script th:src="@{/admin/vendor/libs/datatables/dataTables.select.min.js}"></script>
+		
+		  <!-- addDemo -->
+		    
+		  </th:block>
+  		  <!-- /script -->
+  		  
+  		  
+          
 </html>

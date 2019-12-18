@@ -19,11 +19,12 @@
 
 <!-- 공지사항 리스트 불러오는 쿼리문 -->
   	<select id="getBoard" resultMap="boardNoticeList">
-  	SELECT
+  		SELECT
 *
 FROM board AS b INNER JOIN board_large AS bl
 ON b.board_l_code = bl.board_l_code
-WHERE bl.board_l_name = #{boardLName} ORDER BY b.board_date DESC;
+WHERE 
+	bl.board_l_name = #{boardLName} AND b.l_code = #{lCode} ORDER BY b.board_date DESC 
   	</select>
   	
 <!--   	공지사항 PK MAX코드 불러오기 쿼리문 -->
@@ -46,9 +47,9 @@ WHERE bl.board_l_name = #{boardLName} ORDER BY b.board_date DESC;
 	board_pw, 
 	board_content, 
 	board_open, 
-	board_page_view, 
+	board_page_view,
 	board_date)
-	VALUES (#{boardCode}, #{lCode}, #{uId}, #{boardLCode}, #{boardMCode}, #{boardTitle}, #{boardPw}, #{boardContent}, #{boardOpen}, 0, NOW())
+	VALUES (#{boardCode}, #{lCode}, #{uId}, (SELECT board_l_code FROM board_large WHERE board_l_name= #{boardLName}), (SELECT board_m_code FROM board_medium WHERE board_m_name= #{boardMName}), #{boardTitle}, #{boardPw}, #{boardContent}, #{boardOpen}, 0, NOW())
   	</insert>
   	
 <!-- 게시판 공지사항 상세보기 쿼리문   -->

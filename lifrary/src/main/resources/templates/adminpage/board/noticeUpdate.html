@@ -62,7 +62,7 @@ button {
 				<form th:action="@{/admin/noticeUpdate}" method="post">
 				<input type="hidden" th:value="${board.boardCode}" name="boardCode">
 				<input type="hidden" th:value="${session.SAID}" name="uId">
-				<input type="hidden" value="000000" name="lCode">
+				<input type="hidden" th:value="${session.LIBNUM}" name="lCode">
 				<input type="hidden" th:value="${boardLCode}" name="boardLCode">
 				<input type="hidden" th:value="${boardMCode}" name="boardMCode">
 				<input type="hidden" name="boardContent">
@@ -74,7 +74,6 @@ button {
 					<div id="boardTitle" type="text" name="boardTitle" class="form-control" placeholder="제목을 입력해주세요." style="height: 40px;" contenteditable="true" th:utext="${board.boardTitle}"></div>
 				</div>
 			</div>
-			
 			<div style="padding-left: 43%; padding-top: 10px;">
 			</div>
 			<div class="form-group">

@@ -62,7 +62,7 @@ button {
 				<form th:action="@{/admin/noticeUpdate}" method="post">
 				<input type="hidden" th:value="${board.boardCode}" name="boardCode">
 				<input type="hidden" th:value="${session.SAID}" name="uId">
-				<input type="hidden" value="000000" name="lCode">
+				<input type="hidden" th:value="${session.LIBNUM}" name="lCode">
 				<input type="hidden" th:value="${boardLCode}" name="boardLCode">
 				<input type="hidden" th:value="${boardMCode}" name="boardMCode">
 				<input type="hidden" name="boardContent">

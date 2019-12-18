@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,33 +39,29 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping("/admin/noticeSearchList")
-	public String adminNoticeSearchList(Board board,Model model) {
+	public String adminNoticeSearchList(Board board,Model model, HttpSession session) {
 		System.out.println("board 컨트롤러  /admin/noticeSearchList ##Mapping경로 ");
 		//boardList 공지사항 전체 리스트
+		board.setlCode((String)session.getAttribute("LIBNUM"));
 		System.out.println("controller31"+board);
 		List<Board> boardList = boardService.getBoard(board);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("boardList : "+boardList);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		//공지사항 전체 리스트 갯수만큼 리스트 Num에 추가하여 리스트에 번호출력
-		
-		String boardLCode = boardList.get(0).getBoardLCode();
-		String boardMCode = boardList.get(0).getBoardMCode();
-		System.out.println("boardLCode : "+ boardLCode);
-		System.out.println("boardMCode : "+ boardMCode);	
-		model.addAttribute("boardLCode", boardLCode);
-		model.addAttribute("boardMCode", boardMCode);
 		model.addAttribute("boardList", boardList);
 		String returnUrl = null;
 		if("공지사항".equals(board.getBoardLName())) {
+			model.addAttribute("boardLName", board.getBoardLName());
 			System.out.println("공지사항 리스트");
 			returnUrl = "adminpage/board/noticeSearchList";
 			
 		}else if("문의하기".equals(board.getBoardLName())) {
+			model.addAttribute("boardLName", board.getBoardLName());
 			System.out.println("문의하기 리스트");
 			returnUrl =  "adminpage/board/adminInquirySearchList";
 		}else{
-			System.out.println(" 실패 ");
+			System.out.println("실패 ");
 		}
 		return returnUrl;
 	}
@@ -76,10 +74,10 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping("/admin/noticeInsert")
-	public String adminNoticeInsert(@RequestParam(value = "boardLCode")String boardLCode,@RequestParam(value = "boardMCode")String boardMCode,Model model) {
+	public String adminNoticeInsert(@RequestParam(value = "boardLName")String boardLName,@RequestParam(value = "boardMName")String boardMName,Model model) {
 		System.out.println("공지사항 등록 컨트롤러  /admin/noticeInsert ##Mapping경로 ");
-		model.addAttribute("boardLCode", boardLCode);
-		model.addAttribute("boardMCode", boardMCode);
+		model.addAttribute("boardLName", boardLName);
+		model.addAttribute("boardMName", boardMName);
 		return "adminpage/board/noticeInsert";
 	}
 	
@@ -179,6 +177,8 @@ public class BoardController {
 		String URLboardLName = URLEncoder.encode(boardLName);
 		return "redirect:/admin/noticeSearchList?boardLName="+URLboardLName;
 	}
+	
+	
 	
 	
 }

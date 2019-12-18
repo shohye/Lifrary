@@ -63,11 +63,10 @@ button {
 	<div class="card mb-4"style="padding-top: 10px;">
 				<form th:action="@{/admin/noticeInsert}" method="Post">
 				<input type="hidden" th:value="${session.SAID}" name="uId">
-				<input type="hidden" value="000000" name="lCode">
-				<input type="hidden" th:value="${boardLCode}" name="boardLCode">
-				<input type="hidden" th:value="${boardMCode}" name="boardMCode">
+				<input type="hidden" th:value="${session.LIBNUM}" name="lCode">
+				<input type="hidden" th:value="${boardLName}" name="boardLName">
+				<input type="hidden" th:value="${boardMName}" name="boardMName">
 				<input type="hidden" name="boardContent" id="inputContent">
-				<input type="hidden" th:value="${'공지사항'}" name="boardLName">
 			<div>
 				<div>
 					<h4 style="padding-top: 10px;margin-left: 43%;">제목 입력</h4>
