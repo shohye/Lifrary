@@ -128,12 +128,14 @@ public class AdminController {
 	
 	//전체회원리스트
 	@GetMapping("/admin/userSearchList")
-	public String userSearchList(Model model) {
+	public String userSearchList(Model model, HttpSession session) {
 		System.out.println("userSearchList 전체회원리스트  @GetMapping ");
 		
-		List<User> uList = adminService.getUserList();
-		System.out.println(uList + " <<== adminService.getUserList() ");
-		model.addAttribute("uList",uList);
+		String libNum = (String)session.getAttribute("LIBNUM");
+		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+		
+		model.addAttribute("uList",adminService.getUserList(libNum));
+		System.out.println("전체회원리스트 uList 확인바람 =>> "+ adminService.getUserList(libNum));
 		
 		return "/adminpage/userManagement/userSearchList";
 	}
@@ -198,7 +200,7 @@ public class AdminController {
 	public String adminUserDetail(Model model, @RequestParam(value="uId",required=false) String uId) {
 		System.out.println("adminUserDetail 회원상세보기 화면 "); 
 		model.addAttribute("userDetail", adminService.adminUserDetail(uId));
-		System.out.println(adminService.adminUserDetail(uId) + "adminUserDetail 확인바람유!");
+		System.out.println( "adminUserDetail 확인바람유!==> "+ adminService.adminUserDetail(uId));
 		
 		return "/adminpage/userManagement/adminUserDetail";
 	}
@@ -222,11 +224,17 @@ public class AdminController {
 
    //회원등급 등록화면
    @PostMapping("/admin/adUserLevelInsert")
-   public String adUserLevelInsert(UserLevel userLevel , Model model) {
-	   System.out.println("adUserLevelInsert @PostMapping 회원등급등록화면 ");	   
+   public String adUserLevelInsert(UserLevel userLevel , Model model, HttpSession session) {
+	   System.out.println("adUserLevelInsert @PostMapping 회원등급등록화면 ");	  
+	   
+	   String libNum = (String)session.getAttribute("LIBNUM");
+	   System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+	   
+	   userLevel.setlCode(libNum);
+	   System.out.println("userLevel 확인 바람==>> " + userLevel);
+	   
 	   adminService.adUserLevelInsert(userLevel);
-	   System.out.println(userLevel + "==> adminService.adUserLevelInsert(userLevel) 확인완료");
-	
+	   
 	   return "redirect:/admin/adUserLevelList";
    }
    
@@ -238,13 +246,15 @@ public class AdminController {
 	 */
 	//관리자가 유저 회원 등급 리스트
 	@GetMapping("/admin/adUserLevelList")
-	public String adUserLevelList(Model model) {
+	public String adUserLevelList(Model model, HttpSession session) {
 		System.out.println(" adUserLevelList 전체회원리스트  @PostMapping");
-		List<UserLevel> userLevel = adminService.adUserLevelList();
-		System.out.println(userLevel + " <<== adminService.adUserLevelList()");
-		model.addAttribute("userLevel",userLevel);
 		
-	
+		String libNum = (String)session.getAttribute("LIBNUM");
+		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+		
+		model.addAttribute("userLevel",adminService.adUserLevelList(libNum));
+		System.out.println("관리자가 유저회원등급 리스트 userLevel 확인바람 =>> "+ adminService.adUserLevelList(libNum));
+		
 		return "/adminpage/userManagement/adUserLevelList";
 	}
 	
@@ -283,11 +293,14 @@ public class AdminController {
 	 */
 	//관리자 유저 회원 등급 내역 검색리스트 
 	@GetMapping("/admin/adUserLevelHistorySearchList")
-	public String adUserLevelHistorySearchList(Model model) {
+	public String adUserLevelHistorySearchList(Model model, HttpSession session) {
 		System.out.println("adUserLevelHistorySearchList 회원전체 등급내역 리스트 @GetMapping");
-		List<UserLevelHistory> levelHistory = adminService.adUserLevelHistorySearchList();
-		System.out.println("회원등급내역리스트 levelHistory " + adminService.adUserLevelHistorySearchList());
-		model.addAttribute("levelHistory", levelHistory);
+		
+		String libNum = (String)session.getAttribute("LIBNUM");
+		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+		
+		model.addAttribute("levelHistory", adminService.adUserLevelHistorySearchList(libNum));
+		System.out.println("회원등급내역리스트 levelHistory " + adminService.adUserLevelHistorySearchList(libNum));
 		
 		return "/adminpage/userManagement/adUserLevelHistorySearchList";
 	}
@@ -324,8 +337,15 @@ public class AdminController {
 	 * @author 한우리
 	 */
    @PostMapping("/admin/adUserAuthorityInsert")
-   public String adUserAuthorityInsert(UserAuthoritySet userAuthoritySet, Model model ) {
+   public String adUserAuthorityInsert(UserAuthoritySet userAuthoritySet, Model model, HttpSession session) {
 	   System.out.println("adUserAuthorityInsert @PostMapping 회원권한등록화면 "); 
+	   
+	   String libNum = (String)session.getAttribute("LIBNUM");
+	   System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+	   
+	   userAuthoritySet.setlCode(libNum);
+	   System.out.println("userAuthoritySet 확인바람 >>> " + userAuthoritySet);
+	   
 	   adminService.adUserAuthorityInsert(userAuthoritySet);
 	   System.out.println("회원권한등록화면  확인완료  ==>> " + adminService.adUserAuthorityInsert(userAuthoritySet));
 	  
@@ -340,11 +360,14 @@ public class AdminController {
     */
    //관리자가 회원권한 리스트 
    @GetMapping("/admin/adUserAuthorityList")
-   public String adUserAuthorityList(Model model) {
+   public String adUserAuthorityList(Model model, HttpSession session) {
 	   System.out.println("adUserAuthorityList 회원권한 리스트화면 ");
-	   List<UserAuthoritySet> userAuthority = adminService.adUserAuthorityList();
-	   System.out.println("회원권한 리스트 userAuthority 확인완료  ==>>" + userAuthority);
-	   model.addAttribute("userAuthority", userAuthority);
+	   
+	   String libNum = (String)session.getAttribute("LIBNUM");
+	   System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+	   
+	   model.addAttribute("userAuthority", adminService.adUserAuthorityList(libNum));
+	   System.out.println("회원권한 리스트 userAuthority 확인완료  ==>>" + adminService.adUserAuthorityList(libNum));
 	  	  
 	   return "/adminpage/userManagement/adUserAuthorityList";
    }
@@ -378,11 +401,14 @@ public class AdminController {
 	 */
 	//관리자 유저 회원 등급 내역 검색리스트 
 	@GetMapping("/admin/adUserAuthorityHistorySearchList")
-	public String adUserAuthorityHistorySearchList(Model model) {
+	public String adUserAuthorityHistorySearchList(Model model, HttpSession session) {
 		System.out.println("adUserAuthorityHistorySearchList 회원전체 권한내역 리스트 @GetMapping");
-		List<UserAuthorityHistory> authorityHistory = adminService.adUserAuthorityHistorySearchList();
-		System.out.println("회원권한내역리스트 authorityHistory " + adminService.adUserAuthorityHistorySearchList());
-		model.addAttribute("authorityHistory", authorityHistory);
+		
+		String libNum = (String)session.getAttribute("LIBNUM");
+		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+		
+		model.addAttribute("authorityHistory", adminService.adUserAuthorityHistorySearchList(libNum));
+		System.out.println("회원권한내역리스트 authorityHistory " + adminService.adUserAuthorityHistorySearchList(libNum));
 		
 		return "/adminpage/userManagement/adUserAuthorityHistorySearchList";
 	}
@@ -408,19 +434,28 @@ public class AdminController {
 	 */
    	//관리자가 보는 사서 전체 리스트
 	@GetMapping("/admin/librarianLevelList")
-	public String librarianLevelList1(Model model) { 
+	public String librarianLevelList1(Model model, HttpSession session) { 
 		 System.out.println("librarianLevelList1 전체사서리스트 @GetMapping");
-		 List<User> lList = adminService.librarianLevelList1();
-		 System.out.println("회원권한내역리스트 lList " + lList);
-		 model.addAttribute("lList", lList);
 		 
-	  return "/adminpage/librarian/librarianLevelList"; 
+		 String libNum = (String)session.getAttribute("LIBNUM");
+		 System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+			
+		 model.addAttribute("lList", adminService.librarianLevelList1(libNum));
+		 System.out.println("관리자가 보는 전체사서리스트 lList ==>> " + adminService.librarianLevelList1(libNum));
+		 
+		 return "/adminpage/librarian/librarianLevelList"; 
 	 }
-	//관리자가 보는 사서 전체 리스트2
+	
+	//관리자가 보는 사서 검색 전체 리스트2
 	@PostMapping("/admin/librarianLevelList")
-	public String librarianLevelList2(Model model) {
+	public String librarianLevelList2(Model model, HttpSession session) {
 		 System.out.println("librarianLevelList2 전체사서리스트 @PostMapping ");
-		 model.addAttribute("lList", adminService.librarianLevelList2());
+		 
+		 String libNum = (String)session.getAttribute("LIBNUM");
+		 System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+		 
+		 model.addAttribute("lList", adminService.librarianLevelList2(libNum));
+		 System.out.println("관리자가 보는 전체사서 검색리스트 lList ==>> " + adminService.librarianLevelList2(libNum));
 		 
 		return "/adminpage/librarian/librarianLevelList";
 	}
@@ -432,20 +467,23 @@ public class AdminController {
 	 */
 	//사서 등록 
 	@GetMapping("/admin/librarianInsert") 
-    public String librarianInsert(HttpSession session ,User user, LibrarianLevel librarianLevel) {
+    public String librarianInsert() {
       System.out.println("librarianInsert 사서등록 ");
-      String getIcode = (String)session.getAttribute("LIBNUM");
-      System.out.println("getIcode 도서관 코드  >>>" + getIcode );
-      
+
       return "/adminpage/librarian/librarianInsert";
      }
 
 	//사서 등록
 	@PostMapping("/admin/librarianInsert")
-    public String librarianInsert(User user, LibrarianLevel librarianLevel, Model model) {
+    public String librarianInsert(HttpSession session, User user, LibrarianLevel librarianLevel) {
 		System.out.println("user 확인 ==>> " + user);
 		System.out.println("librarianLevel 확인 ==>> " + librarianLevel);
+		String libNum = (String)session.getAttribute("LIBNUM");
+		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
 		
+	      user.setlCode(libNum);
+	      librarianLevel.setlCode(libNum);
+	      System.out.println("user 확인 2222==>> " + user);
 		adminService.librarianInsert1(user);
 		adminService.librarianInsert2(librarianLevel);
 
@@ -460,7 +498,7 @@ public class AdminController {
 	 */
 	//관리자가 사서정보&권한 수정하기 >> 폼
 	@GetMapping("/admin/librarianLevelUpdate")
-	public String getLibrarianLevelUpdate(@RequestParam(value = "uId",required=false) String uId, Model model) {
+	public String getLibrarianLevelUpdate(@RequestParam(value = "uId")String uId, Model model) {
 		System.out.println("getLibrarianLevelUpdate 관리자가 사서정보&권한 수정하기 @GetMapping");
 		System.out.println("getLibrarianLevelUpdate uId 확인바람  >> " + uId );
 		model.addAttribute("librarianLevelUpdate",adminService.getLibrarianLevelUpdate(uId));
@@ -494,16 +532,27 @@ public class AdminController {
    /**
 	 * 사서 자신 정보 수정폼
 	 * @param model
-	 * @return librarianUpdate페이지
+	 * @return librarianMyUpdate페이지
 	 * @author 한우리
 	 */
    	//사서 자신 정보 수정폼
-	@GetMapping("/admin/librarianUpdate") 
-    public String librarianUpdate(Model model) {
-	   System.out.println("librarianUpdate 나 사서! 내정보 수정 하는 폼 ");
+	@GetMapping("/admin/librarianMyUpdate") 
+    public String librarianMyUpdate(Model model) {
+	   System.out.println("librarianMyUpdate 나 사서! 내정보 수정 하는 폼 ");
 	  
-	   return "/adminpage/librarian/librarianUpdate"; 
+	   return "/adminpage/librarian/librarianMyUpdate"; 
 	  
+	}
+	
+	//사서 상세보기 폼 
+	@GetMapping("/admin/librarianDetail")
+	public String librarianDetail(Model model, @RequestParam(value="uId",required=false) String uId) {
+		System.out.println("librarianDetail 회원상세보기 화면 "); 
+		
+		model.addAttribute("librarianDetail", adminService.librarianDetail(uId));
+		System.out.println("librarianDetail 확인바람유! >>> " + adminService.librarianDetail(uId));
+		
+		return "/adminpage/librarian/librarianDetail";
 	}
 	
 	

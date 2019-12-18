@@ -3,11 +3,11 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
-  
+ 
   <!-- headAdd(Libs&page) -->
   <th:block layout:fragment="adminHeadAdd">
-    <link rel="stylesheet" th:href="@{admin/vendor/libs/select2/select2.css}">
-  	<link rel="stylesheet" th:href="@{admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+    <link rel="stylesheet" th:href="@{/admin/vendor/libs/select2/select2.css}">
+  	<link rel="stylesheet" th:href="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
   </th:block>
   <!-- /headAdd(Libs&page) -->
   
@@ -52,17 +52,14 @@
 
             <div class="card mb-4">
               <div class="card-body">
+              
+             
                 <form th:action="@{/admin/librarianLevelUpdate}" id="validation-form" method="post" th:with="llu = ${librarianLevelUpdate}">
 	              <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">구분</label>
 	                    <input type="text" class="form-control" name="uDivision" value="사서" placeholder="구분" readonly="readonly">
                  	  </div>
-	                  <div class="form-group col-md-6">
-	                    <label class="form-label">도서관코드</label>
-	                    <input type="text" class="form-control" name="lCode" th:value="${llu.lCode}" placeholder="도서관코드">
-	                    <small class="form-text text-muted">도서관코드 입력바람</small>
-	                  </div>
 	              </div>
                   <div class="form-row">
 	                  <div class="form-group col-md-6">
@@ -128,7 +125,8 @@
                        </label>
                       </div>
 		          </div>
-		          </div>
+		        </div>
+		        
 	             
 	      	<label class="form-label">권한 부여 해주세요</label>
 	           <div class="form-row">
@@ -163,6 +161,7 @@
                     </div>
                   </div>
               </div>
+           
               
               <div class="form-row">
                  <div class="form-group col-md-6">
