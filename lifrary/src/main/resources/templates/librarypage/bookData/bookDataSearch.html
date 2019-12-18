@@ -17,7 +17,7 @@
                 <div class="breadcrumb">
                     <ul>
                         <li><a th:href="@{/}">Home</a></li>
-                        <li>Books</li>
+                        <li>Search</li>
                     </ul>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                                 <!-- Start: Search Section -->
                                 	<section class="search-filters" th:fragment="searchSectionFragment">
 							          <div class="row">
-                					    <div class="col-md-11 col-md-push-2">
+                					    <div class="col-md-11 col-md-push-0.5">
 							              <div class="container">
 							                 <div class="filter-box">
 							                      <form th:action="@{/lifrary/bookDataSearchList}" method="get">							    
@@ -54,14 +54,18 @@
 							                        </div>
 							                        <div class="col-md-2 col-sm-6">					                     
 							                            <div class="form-group">
-							                                <input class="form-control" type="submit" value="Search">
+							                                <input class="form-control" type="submit" value="검색">
 							                            </div>
 							                        </div>
+							                        <div class="col-md-2 col-sm-6" style="margin-top: 5px">					                     
+							                                <a th:href="@{/lifrary/bookDataSearchDetail}" class="btn btn-dark-gray">상세검색</a>			             
+							                        </div>
+							                        
 							                    </form>
-							                </div>
-							            </div>
+							                 </div>
+							               </div>
+							             </div>
 							           </div>
-							          </div>
 							        </section>
                                 <!-- End: Search Section -->
                             </div>

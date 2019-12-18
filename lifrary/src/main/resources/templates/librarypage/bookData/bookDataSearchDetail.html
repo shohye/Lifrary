@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!-- 도서 검색창 페이지 -->
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+
+		<th:block layout:fragment="customContents">                
+	        <!-- Start: Page Banner -->
+	        <section class="page-banner services-banner" th:fragment="bookBannerFragment">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>Books Search</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">검색어를 입력해주세요</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li>Search</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+	        <!-- End: Page Banner -->
+	
+	        <div id="content" class="site-content" th:fragment="bookListSectionFragment">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="books-media-list">
+                        <div class="container">
+                            <div class="row">
+                                <!-- Start: Search Section -->
+                                	<section class="search-filters" th:fragment="searchSectionFragment">
+							          <div class="row">
+                					    <div class="col-md-11 col-md-push-0">
+							              <div class="container">
+							                 <div class="filter-box">							                      
+							                       
+									            <form th:action="@{#}" method="get">
+									                <div class="col-md-10">
+									                    <div class="row">
+									                        <div class="col-md-4 col-sm-6">
+									                            <div class="form-group">
+									                                <label class="form-label">도서명</label>
+									                                <input class="form-control" placeholder="키워드를 입력해주세요" id="biName" name="biName" type="text">
+									                            </div>
+									                        </div>
+									                        <div class="col-md-4 col-sm-3">
+									                            <div class="form-group">
+									                                <label class="form-label">발행자(출판사)</label>
+									                                <input class="form-control" placeholder="키워드를 입력해주세요" id="biPublisher" name="biPublisher" type="text">
+									                            </div>
+									                        </div>
+									                        <div class="col-md-4 col-sm-3">
+									                            <div class="form-group">
+									                                <label class="form-label">ISBN</label>
+									                                <input class="form-control" placeholder="키워드를 입력해주세요" id="biIsbn" name="biIsbn" type="text">
+									                            </div>
+									                        </div>
+									                        <div class="col-md-4 col-sm-6">
+									                            <div class="form-group">
+									                                <label class="form-label">저자</label>
+									                                <input class="form-control" placeholder="키워드를 입력해주세요" id="biAuthor" name="biAuthor" type="text">
+									                            </div>
+									                        </div>
+									                        <div class="col-md-4 col-sm-3">
+									                            <div class="form-group">
+									                                <label class="form-label">키워드</label>
+									                                <input class="form-control" placeholder="키워드를 입력해주세요" id="biDtail" name="biDtail" type="text">
+									                            </div>
+									                        </div>
+									                        <div class="col-md-4 col-sm-3">
+									                            <div class="form-group">
+									                                <label class="form-label">발행년</label>
+									                                <input class="form-control" placeholder="키워드를 입력해주세요" id="biYear" name="biYear" type="text">
+									                            </div>
+									                        </div>
+									                    </div>
+									                </div>
+									                <div class="col-md-2">
+									                    <div class="row">
+									                         <br><br><br><br>
+									                        <div class="col-md-12 col-sm-6">
+									                            <div class="form-group">
+									                                <input class="form-control" type="submit" value="찾기">
+									                            </div>
+									                            <div class="form-group" style="margin: 3px 0 0 0;">					                     						          
+							                                		<button class="btn btn-dark-gray" type="button">초기화</button>		             
+							                       				 </div>
+									                        </div>
+									                        
+									                    </div>
+									                </div>
+									            </form>
+							                </div>
+							             </div>
+							           </div>
+							          </div>
+							        </section>
+                                <!-- End: Search Section -->
+                            </div>
+                          </div>
+                     </div>
+                </main>
+            </div>
+        </div>
+	       	
+        </th:block>
+
+        
+
+</html>

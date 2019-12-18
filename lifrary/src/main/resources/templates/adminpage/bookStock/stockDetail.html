@@ -21,8 +21,13 @@
 		                <div class="text-muted mb-2">등록자:
 		                	<span th:text="${s.uId}"></span>
 		                </div>
+		                
+		           <th:block th:if="${session.SALBS} == 'O'"> 
 		                <a th:href="@{/admin/stockDetailUpdate(bsCode=${s.bsCode})}" class="btn btn-primary btn-sm">수정</a>&nbsp;
-		                <a href="javascript:void(0)" class="btn btn-default btn-sm">삭제</a>&nbsp;                
+		           </th:block>
+		           <th:block th:if="${session.SADIV} == '관리자'">
+		                <a href="javascript:void(0)" class="btn btn-default btn-sm">삭제</a>&nbsp; 
+		           </th:block>               
 		              </div>
 		            </div>
 		            <div class="card mb-4">

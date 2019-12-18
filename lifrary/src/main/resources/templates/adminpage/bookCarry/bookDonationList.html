@@ -32,9 +32,13 @@
          
          <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
 			<div>도서 기부 신청자 리스트</div>
+			
+	<th:block th:if="${session.SALC} == 'O'">		
 			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span> 
 				 <a th:href="@{/admin/bookDonationInsert}" style="color: white"> 신청자 추가 </a>
 			</button>
+	</th:block>		
+			
 		 </h4>
          
             <!-- DataTable within card -->
@@ -56,7 +60,7 @@
                       <th>명예전당</th>
                       <th>신청일</th> 
                       <th>상세&수정</th>
-                      <th>삭제</th>                   
+                      <th>삭제</th>                 
                     </tr>
                   </thead>
                   
@@ -79,7 +83,7 @@
 				         <span th:unless="${d.bdnHonorAgree eq 'O'}"  class="badge badge-outline-danger">미등록</span>
 				      </td>
 				      <td class="align-middle" th:text="${d.bdnDate}"></td>	
-				      <td class="align-middle align-center">
+				      <td class="align-middle text-center">
 					  	 <a th:href="@{/admin/bookDonationUpdate(bdnCode=${d.bdnCode})}" class="btn btn-default btn-xs icon-btn md-btn-flat" title="수정">
 						 	<i class="ion ion-md-create" title="수정"></i>
 					  	 </a>
@@ -88,7 +92,7 @@
 						   <a href="#" class="btn btn-default btn-xs icon-btn md-btn-flat" title="삭제">
 							 <i class="ion ion-ios-cut d-block"  title="삭제"></i>
 						   </a>
-                      </td>	 	
+                      </td>	
 				    </tr>
 				  </tbody> 
                 </table>

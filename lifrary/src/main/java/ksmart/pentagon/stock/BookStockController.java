@@ -193,6 +193,17 @@ public class BookStockController {
     public String bookDataSearch() {
     	return "/librarypage/bookData/bookDataSearch";
     }
+    
+	 // (도서관) 상세 검색창만 있는 페이지
+    /****
+	 * @brief (도서관) 상세 검색창만 있는 페이지  
+	 * @return  /librarypage/bookData/bookDataSearchDetail
+	 * @author 신다은
+	 */
+    @GetMapping("/lifrary/bookDataSearchDetail")
+    public String bookDataSearchDetail() {
+    	return "/librarypage/bookData/bookDataSearchDetail";
+    }
 
     
     /************************************************************************/
