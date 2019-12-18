@@ -80,18 +80,14 @@
 				      </td>
 				      <td class="align-middle" th:text="${d.bdnDate}"></td>	
 				      <td class="align-middle align-center">
-			      		<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
-						   <a th:href="@{/admin/bookDonationUpdate(bdnCode=${d.bdnCode})}" title="수정">
-							 <i class="ion ion-md-create" title="수정"></i>
-						   </a>
-						</button>
+					  	 <a th:href="@{/admin/bookDonationUpdate(bdnCode=${d.bdnCode})}" class="btn btn-default btn-xs icon-btn md-btn-flat" title="수정">
+						 	<i class="ion ion-md-create" title="수정"></i>
+					  	 </a>
                       </td> 
-                      <td class="align-middle align-center">
-                      	<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
-						   <a href="#" title="삭제">
-							 <i class="ion ion-ios-cut d-block" title="삭제"></i>
+                      <td class="align-middle text-center">                  
+						   <a href="#" class="btn btn-default btn-xs icon-btn md-btn-flat" title="삭제">
+							 <i class="ion ion-ios-cut d-block"  title="삭제"></i>
 						   </a>
-						</button>
                       </td>	 	
 				    </tr>
 				  </tbody> 

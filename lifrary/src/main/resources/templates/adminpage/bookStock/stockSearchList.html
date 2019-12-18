@@ -76,7 +76,7 @@
 	                    <td class="align-middle" th:text="${l.bsCode}"></td>
 	                    <td style="min-width: 170px;">
 			               	 	<div class="media align-items-center">
-			               	 		<img class="ui-w-40 d-block" th:src="${l.bookInformation.biImg}" alt="">
+			               	 		<img class="ui-w-40 d-block" th:src="${l.bookInformation.biImg}" alt="이미지가 제공되지 않는 도서">
 			               	 		<span class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(l.bookInformation.biName,20)}"></span>
 			               	 	</div>
 			            </td>
@@ -107,12 +107,12 @@
 			               	 	<span class="ion ion-ios-paper d-block"></span>			               	 
 			               	</a>
 	                    </td>  -->
-	                   <td class="align-middle align-center">
-			      		<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
-						   <a th:href="@{/admin/stockDetail(bsCode=${l.bsCode})}" title="상세">
+	                   <td class="align-middle text-center">
+			      		
+						   <a th:href="@{/admin/stockDetail(bsCode=${l.bsCode})}"  class="btn btn-default btn-xs icon-btn md-btn-flat" title="상세">
 							 <i class="ion ion-ios-copy" title="상세"></i>
 						   </a>
-						</button>
+						
 					  </td>
 	                  </tr>
                   </tbody>

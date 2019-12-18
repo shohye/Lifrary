@@ -74,19 +74,15 @@
 				      <span th:unless="${ol.bosState eq '수령완료'}" class="badge badge-outline-danger">[[${ol.bosState}]]</span>
 				      </td >				      
 				      <td th:text="${ol.boDate}"></td>
-				      <td class="align-middle align-center">
-			      		<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
-						   <a th:href="@{/admin/bookOrderUpdate(boCode=${ol.boCode})}" title="수정">
+				      <td class="align-middle text-center">
+						   <a th:href="@{/admin/bookOrderUpdate(boCode=${ol.boCode})}" class="btn btn-default btn-xs icon-btn md-btn-flat"title="수정">
 							 <i class="ion ion-md-create" title="수정"></i>
 						   </a>
-						</button>
 					</td>
-					<td class="align-middle align-center">
-						<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
-						   <a href="#" title="삭제">
+					<td class="align-middle text-center">
+						   <a href="#" class="btn btn-default btn-xs icon-btn md-btn-flat"title="삭제">
 							 <i class="ion ion-ios-cut d-block" title="삭제"></i>
 						   </a>
-						</button>
                       </td> 		
 				    </tr>
 				  </tbody> 

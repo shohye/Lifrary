@@ -85,12 +85,12 @@
 		                  
 		                </table>
 		                
-		                 <div class="text-right mt-3">
+		                 <div class="text-right mt-3" th:with="s=${stockDetail}">
 		                  	<button type="submit" class="btn btn-primary">
 		                  		<a th:href="@{/admin/stockSearchList}" style="color: white">리스트로 이동</a>
 		                  	</button>
 		                  	<button type="submit" class="btn btn-primary">
-		                  		<a th:href="@{/admin/stockSearchList}" style="color: white">도서관 상세페이지로 이동</a>
+		                  		<a th:href="@{/lifrary/bookDetail(bsCode=${s.bsCode})}" style="color: white">도서관 상세페이지로 이동</a>
 		                  	</button>
 		 				  </div>
 		              </div>
