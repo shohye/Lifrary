@@ -4,14 +4,27 @@
 		layout:decorate="~{layout/library/libraryDefault}">
 
  <th:block layout:fragment="customScript">
+ 	<script type="text/javascript">
+ 	 $(document).ready(function(){
+ 		 $('li').click(function(){
+ 			 var optvalue = $(this).attr('rel');
+ 			 console.log(optvalue);
+ 		 }); 
+ 	 });
+ 	</script>
  	<style>
 		.myLend td {
 			vertical-align: middle !important;
 		}
-
+		img {
+			width: 40px; 
+			height: auto;
+		}
+		a {
+			cursor: pointer;
+		}
  	</style>
- 	</th:block>      
-    
+ 	</th:block>        
     <th:block layout:fragment="customContents">
        <section class="page-banner services-banner">
             <div class="container">
@@ -38,23 +51,31 @@
                                 <section class="search-filters">
                                     <div class="container">
                                         <div class="filter-box">
-                                            <h3>무엇을 넣어야 좋을까..?</h3>
+                                            <h3>나의 도서 리스트 검색</h3>
                                             <div class="col-md-4 col-sm-6">
                                                 <div class="form-group">
-                                                    <label for="keywords">세모</label>
-                                                    <input class="form-control" placeholder=""  type="text" readonly="readonly">
+                                                    <input class="form-control" placeholder="도서명" type="text" name="biName">
                                                 </div>
                                             </div>
-                                            <div class="col-md-4 col-sm-6">
-                                                <div class="form-group">
-                                                    <label for="keywords">네모</label>
-                                                    <input class="form-control" placeholder=""  type="text" readonly="readonly">
-                                                </div>
+                                            <div class="col-md-3 col-sm-6">
+                                                <select name="skDate" class="form-control">
+                                                    <option value="blLendDate">대출일</option>
+                                                    <option value="blScheduleDate">반납예정일</option>
+                                                    <option value="blReturnDate">반납일</option>
+                                                </select>
                                             </div>
-                                            <div class="col-md-4 col-sm-6">
+                                            <div class="col-md-3 col-sm-6">
+                                                <select name="svDate" class="form-control">
+                                                    <option value="">전체기간</option>
+                                                    <option value="week">최근 1주일</option>
+                                                    <option value="month">최근 1개월</option>
+                                                    <option value="6month">최근 6개월</option>
+                                                    <option value="year">최근 1년</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 col-sm-6">
                                                 <div class="form-group">
-                                                    <label for="keywords">치와와</label>
-                                                    <input class="form-control" placeholder="" type="text" readonly="readonly">
+                                                    <input class="form-control" type="submit" value="검색">
                                                 </div>
                                             </div>
                                         </div>
@@ -73,6 +94,7 @@
 					                      <th>대출일</th>
 					                      <th>반납예정일</th>
 					                      <th>반납일</th>
+					                      <th>연장</th>
 					                      <th>연체일</th>
 					                    </tr>
 					                  </thead>
@@ -81,7 +103,7 @@
 									      <td th:text="${C.count}">번호</td>
 									      <td>
 							         	 	 <div >
-							         	 		<img th:src="${Ml.biImg}" alt="이미지준비중/"  style="width: 40px; height: auto;">
+							         	 		<img th:src="${Ml.biImg}" alt="이미지준비중/">
 							         	 		<a th:href="@{/lifrary/bookDetail(bsCode=${Ml.bsCode})}" style="cursor: pointer;">
 							         	 			<span  th:text="${#strings.abbreviate(Ml.biName,25)}"></span>
 							         	 		</a>
@@ -90,8 +112,15 @@
 									      <td th:text="${Ml.blLendDate}">대출일</td>
 									      <td th:text="${Ml.blScheduleDate}">반납예정일</td>
 									      <td th:text="${Ml.blReturnDate}">반납일</td>
-									      <td th:text="${Ml.blOverdueDays}">연체일</td>		
-									  	</tr>
+									      <td th:if = "${Ml.blExtensionDate != null || Ml.blReturnDate != null}">
+							            	<span class="badge">연장불가</span>
+							             </td> 
+							             <td class="align-middle text-center" th:unless = "${Ml.blExtensionDate != null || Ml.blReturnDate != null}">
+							            	 <a th:href="@{#(blCode=${Ml.blCode})}">
+							            		<span class="badge" style="background-color:#02BC77;">연장하기</span>
+							            	 </a>
+							             </td>
+								        <td th:text="${Ml.blOverdueDays}">연체일</td>
 									  </tbody> 
 						            </table>
                                     <nav class="navigation pagination text-center">

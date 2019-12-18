@@ -5,8 +5,14 @@
     
  <th:block layout:fragment="customScript">
  	<script type="text/javascript">
-
+ 	 $(document).ready(function(){
+ 		 $('li').click(function(){
+ 			 var optvalue = $(this).attr('rel');
+ 			 console.log(optvalue);
+ 		 }); 
+ 	 });
  	</script>
+
  </th:block>  
     <th:block layout:fragment="customContents">
        <section class="page-banner services-banner">
@@ -38,24 +44,24 @@
                                             <form action="#" method="get">
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="form-group">
-                                                        <select name="catalog" id="catalog" class="form-control">
-                                                            <option>::검색어::</option>
-                                                            <option>제목</option>
-                                                            <option>작성자</option>
-                                                            <option>도서명</option>
-                                                            <option>ISBN</option>
+                                                        <select name="sv"  class="form-control">
+                                                            <option value="1">::검색어::</option>
+                                                            <option value="2">제목</option>
+                                                            <option value="3">작성자</option>
+                                                            <option value="4">도서명</option>
+                                                            <option value="5">ISBN</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 col-sm-6">
                                                     <div class="form-group">
                                                         <label class="sr-only" for="keywords">검색내용을 입력해주세요</label>
-                                                        <input class="form-control" placeholder="검색내용을 입력해주세요" id="keywords" name="keywords" type="text">
+                                                        <input class="form-control" placeholder="검색내용을 입력해주세요"  name="keywords" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="form-group">
-                                                        <select name="category" id="category" class="form-control">
+                                                        <select name="category" class="form-control">
                                                             <option>::기간::</option>
                                                             <option>전체기간</option>
                                                             <option>최근 1주일</option>

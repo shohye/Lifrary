@@ -339,13 +339,25 @@
 			book_information AS bi
 		ON 
 			bs.bi_isbn = bi.bi_isbn
-		WHERE 
+		WHERE
 			bl.bl_lend_date IS NOT NULL 
 		AND 
 			bl.l_code = #{libNum}
 		AND 
 			bl.bl_id = #{blId}	
-		ORDER BY 
-			bl.bl_code  DESC	
+		<if test="biName != null and biName neq ''.toString()"> 
+			AND 
+				bi.bi_name Like CONCAT('%',#{biName},'%')		
+		</if>
+		<if test="svDate neq null and svDate neq ''.toString()">
+			AND 
+				bl.${skDate} >= date_add(curdate(), interval ${svDate} ) 
+			ORDER BY 
+				bl.${skDate} DESC	
+		</if>
+		<if test="svDate eq null and svDate eq ''.toString()">
+			ORDER BY 
+				bl.bl_code  DESC
+		</if>
 	</select>
   </mapper>
