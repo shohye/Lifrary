@@ -51,7 +51,7 @@
                                 <section class="search-filters">
                                     <div class="container">
                                         <div class="filter-box">
-                                            <h3>나의 도서 리스트 검색</h3>
+                                            <h3>나의 대출 도서 검색</h3>
                                             <div class="col-md-4 col-sm-6">
                                                 <div class="form-group">
                                                     <input class="form-control" placeholder="도서명" type="text" name="biName">
@@ -99,6 +99,7 @@
 					                    </tr>
 					                  </thead>
 							          <tbody>
+							            <th:block th:if="${#lists.size(myLendList)} > 0">
 									  	<tr th:each="Ml,C : ${myLendList}">	
 									      <td th:text="${C.count}">번호</td>
 									      <td>
@@ -121,6 +122,13 @@
 							            	 </a>
 							             </td>
 								        <td th:text="${Ml.blOverdueDays}">연체일</td>
+								        </tr>
+								        </th:block>
+								        <th:block th:unless="${#lists.size(myLendList)} > 0">
+								             <tr>
+								            	 <td colspan="7" style="height: 150px; text-align: center;">대출도서가 없습니다</td>
+								             </tr>	
+							             </th:block>
 									  </tbody> 
 						            </table>
                                     <nav class="navigation pagination text-center">

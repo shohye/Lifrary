@@ -1,6 +1,7 @@
 package ksmart.pentagon.booklend;
 
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -232,18 +233,18 @@ public class BookLendController {
 							, RedirectAttributes redirectAttributes) {
 
 		int result = bookLendService.holdDelete(blCode, bsCode);
-	
+		
 		redirectAttributes.addFlashAttribute("resultDelete", result);
 		
 		return "redirect:/admin/holdSearchList";
 		
 	}
 	
-	/**
-	 * 
+	/** 
 	 * @param session
+	 * @param model
 	 * @brief 마이페이지 대출도서리스트
-	 * @return
+	 * @return /librarypage/book/myLendList.html
 	 * @author 최지혜
 	 */
 	@GetMapping("/lifrary/myLendList")
@@ -252,18 +253,30 @@ public class BookLendController {
 		
 		String libNum = (String) session.getAttribute("LIBNUM");
 		String blId = (String) session.getAttribute("SID");
+		
 		model.addAttribute("myLendList", bookLendService.myLendList(libNum, blId));
+		 
 		
 		return "/librarypage/book/myLendList.html";
 		
 	}
-	
+	/**
+	 * 
+	 * @param session
+	 * @param model
+	 * @brief 마이페이지 예약도서리스트
+	 * @return
+	 * @author 최지혜
+	 */
 	@GetMapping("/lifrary/myHoldList")
-	public String myHoldList(HttpSession session) {
+	public String myHoldList(HttpSession session
+			 				 , Model model) {
 		
 		String libNum = (String) session.getAttribute("LIBNUM");
-
+		String blId = (String) session.getAttribute("SID");
 		
+		model.addAttribute("myHoldList", bookLendService.myHoldList(libNum, blId));
+				
 		return "/librarypage/book/myHoldList";
 		
 	}

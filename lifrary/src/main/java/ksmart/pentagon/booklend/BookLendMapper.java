@@ -2,6 +2,8 @@ package ksmart.pentagon.booklend;
 
 
 import java.util.List;
+import java.util.*;
+
 import ksmart.pentagon.vo.BookLend;
 import ksmart.pentagon.vo.BookStock;
 import ksmart.pentagon.vo.User;
@@ -33,5 +35,6 @@ public interface BookLendMapper {
 	public int holdDelete(String blCode);
 	//회원 대출 도서 리스트
 	public List<BookLend> myLendList(String libNum, String blId);
-	
+	//회원 예약 도서 리스트
+	public List<BookLend> myHoldList(String libNum, String blId);
 }

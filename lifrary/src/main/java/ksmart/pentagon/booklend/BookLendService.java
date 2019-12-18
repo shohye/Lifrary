@@ -251,4 +251,12 @@ public class BookLendService {
 		}
 		return bookLend;
 	}
+	
+	//회원 예약 리스트
+	public List<BookLend> myHoldList(String libNum, String blId){
+		
+		return bookLendMapper.myHoldList(libNum, blId);
+	
+	}
+	
 }

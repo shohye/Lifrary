@@ -313,7 +313,7 @@
 			WHERE 
 				bl_code = #{blCode}	
 	</update>
-	<select id="myLendList" resultMap="bookLend" parameterType="java.lang.String">
+	<select id="myLendList" resultMap="bookLend" resultType="java.lang.String">
 		SELECT
 			 bl.bl_code
 			,bl.bs_code 
@@ -345,19 +345,39 @@
 			bl.l_code = #{libNum}
 		AND 
 			bl.bl_id = #{blId}	
-		<if test="biName != null and biName neq ''.toString()"> 
-			AND 
-				bi.bi_name Like CONCAT('%',#{biName},'%')		
-		</if>
-		<if test="svDate neq null and svDate neq ''.toString()">
-			AND 
-				bl.${skDate} >= date_add(curdate(), interval ${svDate} ) 
-			ORDER BY 
-				bl.${skDate} DESC	
-		</if>
-		<if test="svDate eq null and svDate eq ''.toString()">
-			ORDER BY 
-				bl.bl_code  DESC
-		</if>
+		ORDER BY 
+			bl.bl_code  DESC
+
+	</select>
+	<select id="myHoldList" resultMap="bookLend" resultType="java.lang.String">
+		SELECT
+			 bl.bl_code
+			,bl.bl_id  
+			,bl.bs_code 
+			,bi.bi_isbn
+			,bi.bi_name
+			,bi.bi_img 
+			,bl.bl_lend_date 
+			,bl.bl_return_date
+			,bl.bl_hold_date
+		FROM 	
+			book_lend AS bl
+		INNER JOIN
+			book_stock AS bs
+		ON 
+			bl.bs_code = bs.bs_code
+		INNER JOIN
+			book_information AS bi
+		ON 
+			bs.bi_isbn = bi.bi_isbn	
+		WHERE 
+			bl.bl_lend_date IS NULL
+		AND 
+			bl.l_code = #{libNum}
+		AND 
+			bl.bl_id = #{blId}	 
+		ORDER BY 
+			bl.bl_code  DESC		
+		
 	</select>
   </mapper>
