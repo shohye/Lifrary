@@ -20,6 +20,13 @@ import ksmart.pentagon.vo.User;
  * @author 김상협 
  */
 
+/*
+ * @file   LibraryController.java
+ * @name   library controller 
+ * @brief  도서관 회원가입
+ * @author 한우리
+ */
+
 @Controller
 public class LibraryController {
 	@Autowired private LibraryService libraryService;
@@ -97,5 +104,39 @@ public class LibraryController {
 			return "redirect:/";
 		}
 	}
+	
+	
+	/***********************************************************************/
+	
+	
+	/***
+	 * 도서관페이지 회원가입 폼 
+	 * @return 
+	 * @author 한우리
+	 */
+	//회원가입 등록 
+	@GetMapping("/lifrary/userInsert")
+	public String userInsert() {
+		System.out.println("userInsert @GetMapping 회원가입폼 ");
+		return "/librarypage/user/userInsert";
+	}
+	
+	//회원가입 등록
+	@PostMapping("/lifrary/userInsert")
+	public String userInsert(HttpSession session, User user) {
+		System.out.println("userInsert @PostMapping 회원가입폼 ");
+		System.out.println("user 확인 ==>> " + user);
+		
+		String libNum = (String)session.getAttribute("LIBNUM");
+		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+		
+		user.setlCode(libNum);
+		System.out.println("user 확인 userInsert ==>> " + user);
+		
+		libraryService.userInsert(user);
+
+		return "redirect:/";
+	}
+	
 	
 }
