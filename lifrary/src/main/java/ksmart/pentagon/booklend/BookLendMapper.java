@@ -27,11 +27,11 @@ public interface BookLendMapper {
 	public int returnUpdate(String blCode);
 	//연장일 등록
 	public int extensionUpdate(String blCode) ;
-	
 	//예약도서 리스트
 	public List<BookLend> holdSearchList(String libNum);
-	
 	//예약취소
 	public int holdDelete(String blCode);
+	//회원 대출 도서 리스트
+	public List<BookLend> myLendList(String libNum, String blId);
 	
 }

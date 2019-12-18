@@ -236,4 +236,10 @@ public class BookLendService {
 		return result;
 		
 	}
+	
+	//회원 대출 리스트
+	public List<BookLend> myLendList(String libNum, String blId) {
+		
+		return bookLendMapper.myLendList(libNum, blId);	
+	}
 }

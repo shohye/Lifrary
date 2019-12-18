@@ -247,9 +247,12 @@ public class BookLendController {
 	 * @author 최지혜
 	 */
 	@GetMapping("/lifrary/myLendList")
-	public String myLendList(HttpSession session) {
+	public String myLendList(HttpSession session
+							 , Model model) {
 		
 		String libNum = (String) session.getAttribute("LIBNUM");
+		String blId = (String) session.getAttribute("SID");
+		model.addAttribute("myLendList", bookLendService.myLendList(libNum, blId));
 		
 		return "/librarypage/book/myLendList.html";
 		
