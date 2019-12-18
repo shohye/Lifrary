@@ -77,15 +77,23 @@
 		                      <td>이메일:</td><td th:text="${ud.uEmail}"></td>
 		                    </tr>
 		                    <tr>
-		                      <td>이메일수신동의:</td><td th:text="${ud.uEmailAgree}"></td>
-		                      <td><span class="ion ion-md-checkmark text-primary"></span>&nbsp; Yes</td>
+		                      <td>이메일수신동의:</td>
+		                      <td th:if = "${ud != null}">
+		                      	<span th:if="${ud.uEmailAgree eq 'O'}" th:text="동의" class="ion ion-md-checkmark text-primary"></span>
+		                      	<span th:unless = "${ud.uEmailAgree eq 'O'}"  th:text="비동의" class="ion ion-md-close text-danger"></span>
+		                      	&nbsp;
+		                      </td>
 		                    </tr>
 		                    <tr>
-		                      <td>임명장수여:</td><td th:text="${ud.uOverdueDay}"></td>
-		                      <td><span class="ion ion-md-checkmark text-primary"></span>&nbsp; Yes</td>
+		                      <td>임명장 수여 :</td>
+		                      <td th:if = "${ud != null}">
+		                      	<span th:if="${ud.uAppointment eq 'O'}" th:text="동의" class="ion ion-md-checkmark text-primary"></span>
+		                      	<span th:unless = "${ud.uAppointment eq 'O'}"  th:text="비동의" class="ion ion-md-close text-danger"></span>
+		                      	&nbsp;
+		                      </td>
 		                    </tr>
 		                    <tr>
-		                      <td>연체일:</td><td th:text="${ud.uAuthorityDate}"></td>
+		                      <td>누적 연체일:</td><td th:text="${ud.uAuthorityDate}"></td>
 		                    </tr>
 		                    <!-- <tr>
 		                      <td>uAuthorityDate(남은 대출기간일):</td><td th:text="${ud.bsCarryRoute}"></td>

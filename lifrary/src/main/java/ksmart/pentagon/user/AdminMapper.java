@@ -27,7 +27,7 @@ public interface AdminMapper {
 	public User adminLoginCheck(String uId, String libNum);
 	
 	//유저 회원 전체 가져오기.
-	public List<User> getUserList();
+	public List<User> getUserList(String libNum);
 	
 	//유저 회원 검색조건 가져오기.
 	public List<User> getUserSearch();
@@ -47,7 +47,7 @@ public interface AdminMapper {
 	public int adUserLevelInsert(UserLevel userLevel);
 	
 	//관리자가 회원등급 리스트
-	public List<UserLevel> adUserLevelList();
+	public List<UserLevel> adUserLevelList(String libNum);
 	
 	//관리자가 회원등급수정-getmapping
 	public UserLevel getAdUserLevelUpdate(String ulLevel);
@@ -56,7 +56,7 @@ public interface AdminMapper {
 	public int adUserLevelUpdate(UserLevel userLevel);  
 	
 	//회원등급내역리스트
-	public List<UserLevelHistory> adUserLevelHistorySearchList();
+	public List<UserLevelHistory> adUserLevelHistorySearchList(String libNum);
 	
 	//회원등급내역리스트
 	public List<UserLevelHistory> adUserLevelHistorySearch();
@@ -69,7 +69,7 @@ public interface AdminMapper {
 	public int adUserAuthorityInsert(UserAuthoritySet userAuthoritySet);
 	
 	//관리자가 회원 권한 리스트보기
-	public List<UserAuthoritySet> adUserAuthorityList();
+	public List<UserAuthoritySet> adUserAuthorityList(String libNum);
 	
 	//관리자가 회원 권한 수정하기 getmapping
 	public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode);
@@ -78,7 +78,7 @@ public interface AdminMapper {
 	public int adUserAuthorityUpdate(UserAuthoritySet userAuthoritySet);
 	
 	//회원등급내역리스트
-	public List<UserAuthorityHistory> adUserAuthorityHistorySearchList();
+	public List<UserAuthorityHistory> adUserAuthorityHistorySearchList(String libNum);
 	
 	//회원등급내역리스트
 	public List<UserAuthorityHistory> adUserAuthorityHistorySearch();
@@ -92,12 +92,18 @@ public interface AdminMapper {
 	public int librarianInsert2(LibrarianLevel librarianLevel);
 
 	//관리자가보는  사서 리스트
-	public List<User> librarianLevelList1();
-	public List<User> librarianLevelList2();
+	public List<User> librarianLevelList1(String libNum);
+	public List<User> librarianLevelList2(String libNum);
 	
 	//관리자가 회원정보&권한 수정 - 한개정보만 가져오기
 	public List<User> getLibrarianLevelUpdate(String uId);
 	//관리자가 회원정보&권한 수정
 	public int librarianLevelUpdate1(User user);
 	public int librarianLevelUpdate2(LibrarianLevel librarianLevel);
+	
+	//관리자가 사서 회원 상세보기.
+	public User librarianDetail(String uId);
+	
+	//사서 - 사서 내 정보 상세보기.
+	public User librarianMyDetail(String uId);
 }
