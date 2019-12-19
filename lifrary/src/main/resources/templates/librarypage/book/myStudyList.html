@@ -3,6 +3,62 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
     <th:block layout:fragment="customScript">
+    <script type="text/javascript">
+   	 $(document).ready(function(){
+   		 
+   		 //서재 카테고리리스트 
+   		 $('#studySet').click(function(){
+   			 
+   			$('#studySetModal').find('ul').html('');
+   			
+   			var request = $.ajax({
+   	   		  url: "/lifrary/studyCateList",
+   	   		  method: "POST",
+   	   		  dataType: "json"
+   	   		});
+   	   		 
+   	   		request.done(function( data ) {
+   	   			console.log(data);
+   	   			
+   	   			if(data.length > 0){
+				   	for(var i = 0; i<data.length; i++){
+				   		var cate = data[i];
+				   		
+				 		var ul = $('#studySetModal').find('ul');
+				   		ul.append('<li></li>');
+				   		var li = ul.children('li').eq(i);
+				   		li.text(cate.scName);
+				   		li.attr('value',cate.scCode); 
+				   	}
+   	   			}
+   	   			else{
+	   	   			var ul = $('#studySetModal').find('ul');
+			   		ul.append('<li></li>');
+			   		var li = ul.children('li')
+			   		li.text('등록된 카테고리가 없습니다');
+			   		li.css( "height", "80px" );
+			   		li.css( "text-align", "center" );	
+   	   			}
+   	   		});
+   	   		 
+   	   		request.fail(function( jqXHR, textStatus ) {
+   	   		  alert( "Request failed: " + textStatus );
+   	   		});
+   		 });
+   		 
+   		//선택된 카테고리명 가져오기
+   		 $('#studySetModal').on('click','li',function(){
+   			 console.log('이벤트 실행');
+   			 var liValue = $(this).val();
+   			 var liText = $(this).text();
+   			$('#studySetModal').find('input').val(liText);
+   		 });
+   		
+   		//새로운 카테고리 등록
+   		
+   	
+	}); //document.ready
+    </script>
  	<style>
  	.category-filter{
  		background-image: none;
@@ -22,6 +78,15 @@
  	}
  	.center-content {
  		margin: 10px 0 10px 0;
+ 	}
+ 	.select-list{
+ 		display: block; 
+ 		position: inherit;
+ 		border-top: 3px solid #f4f4f4;
+ 		margin-top: 5px;
+ 	}
+ 	.col-sm-6{
+ 		margin-top: 5px;
  	}
  	</style>
  	</th:block>  
@@ -89,9 +154,11 @@
                                             </div>
                                             <div class="col-md-4 col-sm-4 pull-right">
                                                 <div >
-                                                	<strong><i class="fa fa-cog"></i>카테고리 설정 </strong>
-                                                	<a href="/lifrary/myStudyCateInsert">&nbsp;등록</a>
-                                                    <a href="/lifrary/myStudyCateUpdate">&nbsp;수정</a>
+                                                	<strong>
+                                                		<i class="fa fa-cog">&nbsp;카테고리 설정</i>
+                                                		<a href="#" data-toggle="modal">등록</a>
+                                                		<a id="studySet" href="#studySetModal" data-toggle="modal">수정</a>
+                                                	</strong>
                                                 </div>
                                             </div>
                                         </div>
@@ -187,7 +254,7 @@
 							                                            <a href="#"><i class="fa fa-pencil"></i>수정</a>
 							                                        </li>
 							                                        <li>
-							                                            <a href="#"> <i class="fa fa-times"></i>삭제</a>
+							                                            <a href="#"><i class="fa fa-times"></i>삭제</a>
 							                                        </li>
 							                                    </ol>
 							                                </div>
@@ -283,5 +350,42 @@
                 </main>
             </div>
         </div>
+		<div class="modal fade" id="studySetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">서재 카테고리 설정</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="row">
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-12">		
+                      	   <p>*최대 20글자까지 설정 가능합니다</p>
+	                       <input class="form-control" type="text" placeholder="카테고리명">
+	                  	</div>
+	                  </div>
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-6">
+	                       <button type="button" id="updateBtn" class="btn btn-primary form-control">수정</button>
+	                  	</div>
+	                  	<div class="col-sm-6">
+	                       <button type="button" id="deleteBtn" class="btn btn-primary form-control">삭제</button>
+	                  	</div>
+                  	 </div>
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-12">
+	                      	<ul class="select-list">
+		                    </ul>
+                      	</div>
+	                  </div>
+                 </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
     </th:block>
 </html>

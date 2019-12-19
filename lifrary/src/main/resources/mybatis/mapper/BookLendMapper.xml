@@ -313,4 +313,71 @@
 			WHERE 
 				bl_code = #{blCode}	
 	</update>
+	<select id="myLendList" resultMap="bookLend" resultType="java.lang.String">
+		SELECT
+			 bl.bl_code
+			,bl.bs_code 
+			,bi.bi_isbn
+			,bi.bi_name
+			,bi.bi_img  
+			,bl.bl_lend_date
+			,bl.bl_extension_date
+			,bl.bl_schedule_date
+			,bl.bl_return_date
+			,bl.bl_overdue_days
+		FROM
+			(SELECT 
+				*
+				,DATEDIFF( bl.bl_return_date, bl.bl_schedule_date ) AS bl_overdue_days 
+			FROM  
+				book_lend AS bl) AS bl
+		INNER JOIN
+			book_stock AS bs
+		ON 
+			bl.bs_code = bs.bs_code
+		INNER JOIN
+			book_information AS bi
+		ON 
+			bs.bi_isbn = bi.bi_isbn
+		WHERE
+			bl.bl_lend_date IS NOT NULL 
+		AND 
+			bl.l_code = #{libNum}
+		AND 
+			bl.bl_id = #{blId}	
+		ORDER BY 
+			bl.bl_code  DESC
+
+	</select>
+	<select id="myHoldList" resultMap="bookLend" resultType="java.lang.String">
+		SELECT
+			 bl.bl_code
+			,bl.bl_id  
+			,bl.bs_code 
+			,bi.bi_isbn
+			,bi.bi_name
+			,bi.bi_img 
+			,bl.bl_lend_date 
+			,bl.bl_return_date
+			,bl.bl_hold_date
+		FROM 	
+			book_lend AS bl
+		INNER JOIN
+			book_stock AS bs
+		ON 
+			bl.bs_code = bs.bs_code
+		INNER JOIN
+			book_information AS bi
+		ON 
+			bs.bi_isbn = bi.bi_isbn	
+		WHERE 
+			bl.bl_lend_date IS NULL
+		AND 
+			bl.l_code = #{libNum}
+		AND 
+			bl.bl_id = #{blId}	 
+		ORDER BY 
+			bl.bl_code  DESC		
+		
+	</select>
   </mapper>

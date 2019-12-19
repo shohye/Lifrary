@@ -8,7 +8,6 @@ public class StudyCate {
 	private String scName;
 	private String scDivision;
 	private String scDate;
-	
 	public String getScCode() {
 		return scCode;
 	}
@@ -45,12 +44,9 @@ public class StudyCate {
 	public void setScDate(String scDate) {
 		this.scDate = scDate;
 	}
-	
 	@Override
 	public String toString() {
 		return "StudyCate [scCode=" + scCode + ", lCode=" + lCode + ", uId=" + uId + ", scName=" + scName
 				+ ", scDivision=" + scDivision + ", scDate=" + scDate + "]";
 	}
-	
-	
 }
