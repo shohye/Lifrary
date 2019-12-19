@@ -4,8 +4,10 @@ package ksmart.pentagon.user;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import ksmart.pentagon.vo.StudyCate;
 import ksmart.pentagon.vo.User;
-import ksmart.pentagon.vo.UserLevel;
+import ksmart.pentagon.vo.UserAuthorityHistory;
+import ksmart.pentagon.vo.UserLevelHistory;
 
 
 /*
@@ -21,5 +23,8 @@ public interface LibraryMapper {
 	public User loginCheck(String uId, String libNum);
 	
 	//회원가입
-	public int userInsert(User user);
+	public int userInsert1(User user);
+	public int userInsert2(UserLevelHistory userLevelHistory);
+	public int userInsert3(UserAuthorityHistory userAuthorityHistory);
+	public int userInsert4(StudyCate studyCate);
 }

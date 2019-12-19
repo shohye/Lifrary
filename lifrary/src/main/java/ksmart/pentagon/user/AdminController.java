@@ -523,16 +523,36 @@ public class AdminController {
 		
 	}
 	
-	//사서 상세보기 폼 
-	@GetMapping("/admin/librarianDetail")
-	public String librarianDetail(Model model, @RequestParam(value="uId",required=false) String uId) {
-		System.out.println("librarianDetail 회원상세보기 화면 "); 
-		
-		model.addAttribute("librarianDetail", adminService.librarianDetail(uId));
-		System.out.println("librarianDetail 확인바람유! >>> " + adminService.librarianDetail(uId));
-		
-		return "/adminpage/librarian/librarianDetail";
-	}
+	/*
+	 * //사서 상세보기 폼
+	 * 
+	 * @GetMapping("/admin/librarianDetail") public String librarianDetail(Model
+	 * model, @RequestParam(value="uId",required=false) String uId) {
+	 * System.out.println("librarianDetail 회원상세보기 화면 ");
+	 * 
+	 * model.addAttribute("librarianDetail", adminService.librarianDetail(uId));
+	 * System.out.println("librarianDetail 확인바람유! >>> " +
+	 * adminService.librarianDetail(uId));
+	 * 
+	 * return "/adminpage/librarian/librarianDetail"; }
+	 */
+	
+	
+	/*
+	 * //사서 상세보기 폼
+	 * 
+	 * @GetMapping("/admin/librarianDetail") public String librarianDetail(Model
+	 * model, HttpSession session) {
+	 * System.out.println("librarianDetail 회원상세보기 화면 ");
+	 * 
+	 * 
+	 * 
+	 * model.addAttribute("librarianDetail", adminService.librarianDetail(uId));
+	 * System.out.println("librarianDetail 확인바람유! >>> " +
+	 * adminService.librarianDetail(uId));
+	 * 
+	 * return "/adminpage/librarian/librarianDetail"; }
+	 */
 	
 	
 	/*****************************************************************************
