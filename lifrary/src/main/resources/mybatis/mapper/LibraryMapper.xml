@@ -3,6 +3,30 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="ksmart.pentagon.user.LibraryMapper">
+<resultMap type="ksmart.pentagon.vo.User" id="userResultMap">
+	<!-- db -->
+	<result property="uId" column="u_id"/>
+	<result property="lCode" column="l_code"/>
+	<result property="ulLevel" column="ul_level"/>
+	<result property="uDivision" column="u_division"/>
+	<result property="ulName" column="ul_name"/>
+	<result property="uasCode" column="uas_code"/>
+	<result property="uasName" column="uas_name"/>
+	<result property="uasLendLimit" column="uas_lend_limit"/>
+	<result property="uasFacilityLimit" column="uas_facility_limit"/>
+	<result property="uNumber" column="u_number"/>
+	<result property="uPw" column="u_pw"/>
+	<result property="uName" column="u_name"/>
+	<result property="uBirth" column="u_birth"/>
+	<result property="uAddr" column="u_addr"/>
+	<result property="uTel" column="u_tel"/>
+	<result property="uEmail" column="u_email"/>
+	<result property="uEmailAgree" column="u_email_agree"/>
+	<result property="uAppointment" column="u_appointment"/>
+	<result property="uOverdueDay" column="u_overdue_day"/>
+	<result property="uDate" column="u_date"/>
+	<result property="uAuthorityDate" column="u_authority_date"/>
+</resultMap> 	
  	<select id="loginCheck" parameterType="String" resultType="ksmart.pentagon.vo.User">
  		SELECT 
  			u_id as uId,
@@ -13,4 +37,41 @@
 			user
 		WHERE u_id = #{uId} and l_code = #{libNum}
  	</select>
+ 	
+ 	<insert id="userInsert">
+		INSERT INTO user(
+			 u_id
+			 ,l_code
+			 ,u_division
+			 ,ulLevel
+			 ,ulName
+			 ,uasCode
+			 ,uasName
+			 ,
+			,u_pw
+			,u_name
+			,u_birth
+			,u_addr
+			,u_tel
+			,u_email
+			,u_email_agree
+			,u_appointment
+			,u_overdue_day
+			,u_date
+		)VALUES(
+			 #{uId}
+			,#{lCode}
+			,#{uDivision}
+			,#{uPw}
+			,#{uName}
+			,#{uBirth}
+			,#{uAddr}
+			,#{uTel}
+			,#{uEmail}
+			,#{uEmailAgree}
+			,#{uAppointment}
+			,#{uOverdueDay}
+			,CRUDATA()
+		)
+	</insert>
  </mapper>

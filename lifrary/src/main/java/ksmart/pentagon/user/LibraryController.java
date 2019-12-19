@@ -127,13 +127,8 @@ public class LibraryController {
 		System.out.println("userInsert @PostMapping 회원가입폼 ");
 		System.out.println("user 확인 ==>> " + user);
 		
-		String libNum = (String)session.getAttribute("LIBNUM");
-		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
-		
-		user.setlCode(libNum);
-		System.out.println("user 확인 userInsert ==>> " + user);
-		
 		libraryService.userInsert(user);
+		System.out.println("user libraryService 확인바람 ==>> " + libraryService.userInsert(user));
 
 		return "redirect:/";
 	}

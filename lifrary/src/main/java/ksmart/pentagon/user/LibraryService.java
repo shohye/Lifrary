@@ -48,6 +48,7 @@ public class LibraryService {
 	//회원가입
 	public int userInsert(User user) {
 		System.out.println("userInsert 서비스진입");
+		System.out.println("userInsert 서비스user ==>>" + libraryMapper.userInsert(user));
 		return libraryMapper.userInsert(user);
 	}
 	
