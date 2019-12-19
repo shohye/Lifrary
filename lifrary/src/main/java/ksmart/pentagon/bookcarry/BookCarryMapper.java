@@ -19,6 +19,13 @@ public interface BookCarryMapper {
 	int updateOrder1(BookCarry bookCarry);
 	int updateOrder2(BookInformation bookInformation);
 	
+	// isbn없는경우 vo2개 같이 인서트
+	public int insertOrderTogether(Map<String, Object> orderMap);
+	
+	 // isbn있는경우 업데이트 + 인서트
+	 // 업데이트는 updateOrder2 사용
+	 public int insertOrderBookCarry(BookCarry bookCarry);
+	
 		
 	/*************************************************************/	
 	
@@ -61,7 +68,7 @@ public interface BookCarryMapper {
 	// Api를 통해 가져온 도서정보 인서트	
 	int insertBookInfo(BookInformation bookInformation);
 	
-	
+   
 	
 	
 }

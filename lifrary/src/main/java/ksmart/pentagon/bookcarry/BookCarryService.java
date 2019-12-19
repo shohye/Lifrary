@@ -21,6 +21,25 @@ public class BookCarryService {
 	
 	@Autowired BookCarryMapper bookCarryMapper;
 	
+	
+	/**********************************************************/
+	 // 도서 정보 있는지 확인
+	public int checkBookInfo(String biIsbn) {
+		BookInformation bi = bookCarryMapper.getBookInfo(biIsbn); 		
+		if(bi == null) {
+			return 1;   // book_information 테이블에 해당 isbn없는 경우
+		}else {
+			return 2;   // book_information 테이블에 해당 isbn있는 경우
+		}
+				
+	}
+	
+	
+		
+		
+	/**********************************************************/
+		
+		
 	// 오더리스트 출력
 	public List<BookCarry> getOrderList(String lCode){
 		return bookCarryMapper.getOrderList(lCode);	
@@ -36,6 +55,36 @@ public class BookCarryService {
 	public int updateOrder2(BookInformation bookInformation) {
 		return bookCarryMapper.updateOrder2(bookInformation);
 	}
+	// 오더 도서 인서트
+	/*
+	public void insertOrder(BookCarry bookCarry,BookInformation bookInformation) {
+		Map<String,Object> orderMap = new HashMap<String,Object>();		
+		bookCarryMapper.insertOrder(bookCarry, bookInformation);
+		
+		String biIsbn = bookInformation.getBiIsbn();
+		int result = checkBookInfo(biIsbn);
+		
+		//정보 없을때 인서트 + 인서트
+		if(result == 1) {
+			orderMap.put("biIsbn", biIsbn);
+			orderMap.put("biName", bookInformation.getBiName());
+			orderMap.put("biAuthor", bookInformation.getBiAuthor());
+			orderMap.put("biPublisher", bookInformation.getBiPublisher());
+			orderMap.put("biYear", bookInformation.getBiYear());
+			orderMap.put("boCompany", bookCarry.getBoCompany());
+			orderMap.put("boBookNum", bookCarry.getBoBookNum());
+			orderMap.put("boPrice", bookCarry.getBoPrice());
+			orderMap.put("lCode", bookCarry.getlCode());
+			orderMap.put("uId", bookCarry.getUid());
+			
+			bookCarryMapper.insertOrderTogether(orderMap);
+		
+		//정보 있을때 업데이트 + 인서트	
+		}else if(result == 2) {
+			bookCarryMapper.updateOrder2(bookInformation);
+			bookCarryMapper.insertOrderBookCarry(bookCarry);
+		}		
+	}*/
 	
 	
 	/*************************************************************/	

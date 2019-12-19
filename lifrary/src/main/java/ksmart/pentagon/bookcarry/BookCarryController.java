@@ -149,10 +149,16 @@ public class BookCarryController {
     	bookCarryService.updateOrder2(bookInformation);
 		return "redirect:/admin/bookOrderList";  	
     }
-    // 기부신청자 입력 처리
+    // 도서 주문 입력 처리
     @PostMapping("/admin/bookOrderInsert")
-    public String bookOrderInsert(HttpSession session){
+    public String bookOrderInsert(HttpSession session,BookCarry bookCarry,BookInformation bookInformation){
+    	
     	String lCode = (String) session.getAttribute("LIBNUM");
+    	String saId = (String) session.getAttribute("SAID");
+    	bookCarry.setlCode(lCode);
+    	bookCarry.setUid(saId);
+    	
+    
 		return "redirect:/admin/bookOrderList";   	
     }
 
@@ -193,6 +199,9 @@ public class BookCarryController {
     	
 		return bookCarryService.getBookInfo(biIsbn);	
 	}
+    
+    
+   
     
     
     

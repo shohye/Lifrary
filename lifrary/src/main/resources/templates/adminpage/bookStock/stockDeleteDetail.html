@@ -69,18 +69,48 @@
 		                  	<button type="submit" class="btn btn-primary">
 		                  		<a th:href="@{/admin/stockDeleteList}" style="color: white">리스트로 이동</a>
 		                  	</button>
-		                  	<button type="submit" class="btn btn-primary">
-		                  		<a th:href="@{#}" style="color: white">복원</a>
-		                  	</button>
+		                  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modals-default">
+	                      		<a th:href="@{#}" style="color: white">복원</a>
+	                        </button> 	                  	
 		 				  </div>
-		              </div>
-		              
-		              
-		            </div>
-         	
-    
+		              </div>		               
+		           </div>            
          		</div>
          	</div>
+         	<div class="modal fade" id="modals-default">
+                  <div class="modal-dialog">
+                    <form class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">
+                          	삭제 도서 복원
+                          
+                          <br>
+                          <small class="text-muted"> 복원을 위하여 본인 id의 password를 작성해 주세요.</small>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                      </div>
+                      <div class="modal-body">
+                      	<div class="form-row">
+                          <div class="form-group col">
+                            <label class="form-label">ID</label>
+                            <input id="uId" type="text" class="form-control" th:value="${session.SAID}">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col">
+                            <label class="form-label">PASSWORD</label>
+                            <input id="uPw" type="password" class="form-control" placeholder="***********">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="deleteBtn" type="button" class="btn btn-primary">복원</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>         
+         	
 
           </th:block>
           

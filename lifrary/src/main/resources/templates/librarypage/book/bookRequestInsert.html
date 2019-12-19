@@ -2,6 +2,70 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
+  
+  
+  <!-- 
+    <th:block layout:fragment="customScript">
+     <script type="text/javascript" th:inline="javascript"> 
+   
+     $(document).ready(function(){  	
+  	   
+ 		// 유효성검사 시작
+ 		$('#insertBtn').click(function(){   			
+ 			var brTitle     = $('#brTitle');
+ 			var brIsbn      = $('#brIsbn');
+ 			var brYear      = $('#brYear');
+ 			var bdnNum      = $('#bdnNum');
+ 			var brPrice     = $('#brPrice);
+ 			var brAuthor    = $('#brAuthor');
+ 			var brPublisher = $('#brPublisher');			
+ 			
+ 			
+ 			if(brTitle.val() == ''){
+ 				alert('희망 도서명을 입력하세요');
+ 				brTitle.focus();
+ 				return false;
+ 			}
+ 			if(brIsbn.val() == ''){
+ 				alert('도서의 ISBN을 입력하세요');
+ 				brIsbn.focus();
+ 				return false;
+ 			}
+ 			if(brYear.val() == ''){
+ 				alert('발행년도를 입력하세요');
+ 				brYear.focus();
+ 				return false;
+ 			}
+ 			if(bdnNum.val() == ''){
+ 				alert('기부 도서수를 입력하세요');
+ 				bdnNum.focus();
+ 				return false;
+ 			}
+ 			if(brPrice.val() == ''){
+ 				alert('가격을 입력하세요');
+ 				brPrice.focus();
+ 				return false;
+ 			}
+ 			if(brAuthor.val() == ''){
+ 				alert('저자명을 입력하세요');
+ 				brAuthor.focus();
+ 				return false;
+ 			}
+ 			if(brPublisher.val() == ''){
+ 				alert('발행자(출판사)를 입력하세요');
+ 				brPublisher.focus();
+ 				return false;
+ 			}
+ 			
+ 			
+ 			$('#insertForm').submit();
+ 			
+ 		}); // 유효성검사 끝    		
+ 	}); // 처음 function끝  
+    	    	
+    	</script>
+  	    </th:block> 
+  	    -->
     
     
     <th:block layout:fragment="customContents">
@@ -30,61 +94,85 @@
                                 
                                 <!-- End: Search Section -->
                             </div>
-                            <div class="row" style="margin-top: 30px">
+                            <div class="row" style="margin-top: 50px">
                                 <div class="col-md-9 col-md-push-2">
-                                  <p><h2 style="color: black">희망도서 신청 </h2></p>
-                                <div class="card mb-4">      
-                                	
-                               
-                                
-                               <form class="requestF" action="" method="post">		
-						                 <div class="form-row">					               
-							                 <div class="form-group col-md-6">
-							                   <label class="form-label">도서명</label>
-							                   <input type="text" class="form-control" name="brTitle" placeholder="도서명을 입력해주세요.">
-							                 </div>
-							                 <div class="form-group col-md-6">
-							                   <label class="form-label">ISBN</label>
-							                   <input type="text" class="form-control" name="brIsbn" placeholder="ISBN을 입력해주세요.">
-							                 </div>
-						                 </div>
-						             
-						                  <div class="form-row">
-							                  <div class="form-group col-md-6">
-							                    <label class="form-label">발행년도</label>
-							                    <input type="text" class="form-control" name="brYear" placeholder="발행년도를 입력해주세요.">
-							                   <!--  <small class="form-text text-muted">Example block-level help text here.</small> -->
-							                  </div>
-							                  <div class="form-group col-md-6">
-							                    <label class="form-label">가격</label>
-							                    <input type="text" class="form-control" name="brPrice" placeholder="가격을 입력해주세요.">
-							                  </div>
-							              </div>
-						            	  <div class="form-row">
-							                 <div class="form-group col-md-6">
-							                   <label class="form-label">저자명</label>
-							                   <input type="text" class="form-control" name="brPublisher" placeholder="발행자(출판사)명을 입력해주세요.">
-							                 </div>
-							                 <div class="form-group col-md-6">
-							                   <label class="form-label">발행자(출판사)</label>
-							                   <input type="text" class="form-control" name="brYear" placeholder="발행년도를 입력해주세요.">
-							               </div>
-						              	 </div>				
-						              	 <div class="form-row">
-							                 <div class="form-group">
-							                   <label class="form-label">의견</label>
-							                   <textarea class="form-control" name="brOpinion" placeholder="해당 도서를 신청하는 이유를 작성해주세요."></textarea>
-							                 </div>						  
-						              	 </div>
-							                  			                  
-					                  <div class="text-right mt-3" style="margin-bottom: 40px">
-					                  	<button type="submit" class="btn btn-primary">Submit</button>
-					 				  </div>
-							       </form> 
-                                 </div>    
+                                    <article class="page type-page status-publish hentry">
+                                        <div class="entry-content">
+                                            <div class="woocommerce">
+                                                <form id="insertForm" th:action="@{#}" class="checkout woocommerce-checkout" method="post">
+                                                    <div class="row">
+                                                        <div id="customer_details">
+                                                            <div class="col-xs-12 col-sm-9">
+                                                                <div class="woocommerce-billing-fields">
+                                                                    <h2>희망도서 신청</h2>
+                                                                    <span class="underline left"></span>
+                                                                    <div class="row">
+                                                                        <div class="billing-address-box">
+                                                                           <div class="col-xs-12">
+                                                                            	<label class="form-label">도서명 : </label>
+                                                                                <p id="billing_first_name_field" class="form-row form-row form-row-first">
+                                                                                    <input type="text" placeholder="도서명을 입력해주세요" id="brTitle" name="brTitle" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12">
+                                                                            	<label class="form-label">ISBN : </label>
+                                                                                <p id="billing_address_1_field" class="form-row form-row form-row-wide address-field validate-required">
+                                                                                    <input type="text" placeholder="ISBN을 입력해주세요" name="brIsbn" id="brIsbn" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">발행년도 : </label>
+                                                                                <p id="billing_last_name_field" class="form-row form-row form-row-last validate-required">                                                                        
+                                                                                    <input type="text" placeholder="빌행년도를 입력해주세요" id="brYear" name="brYear" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">가격 : </label>
+                                                                                <p id="billing_last_name_field" class="form-row form-row form-row-last validate-required">                                                                        
+                                                                                    <input type="text" placeholder="가격을 입력해주세요" id="brPrice" name="brPrice" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            
+                                                                            <div class="col-xs-12">
+                                                                            	<label class="form-label">저자명 : </label>
+                                                                                <p id="billing_company_field" class="form-row form-row form-row-wide">
+                                                                                    <input type="text" id="brAuthor" placeholder="저자명을 입력해주세요" name="brAuthor" class="input-text ">
+                                                                                </p>
+                                                                            </div>
+                                                                         <div class="form-row">
+                                                                            <div class="col-xs-12">
+                                                                            	<label class="form-label">발행자(출판사)</label>
+                                                                                <p id="billing_city_field" class="form-row form-row form-row-wide address-field validate-required">
+                                                                                    <input type="text" placeholder="발행자(출판사)를 입력해주세요" name="brPublisher" id="brPublisher" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12">
+                                                                            	<label class="form-label">의견 : </label>
+                                                                                <p id="billing_postcode_field" class="form-row form-row form-row-last address-field validate-postcode validate-required">
+							                   										<textarea class="form-control" name="brOpinion" placeholder="해당 도서를 신청하는 이유를 작성해주세요."></textarea>
+
+                                                                                </p>
+                                                                            </div>
+                                                                            
+                                                                            <div class="col-xs-12 col-sm-12" style="margin-bottom: 40px">
+                                                                        		<input type="submit" value="신청하기" id="insertBtn" class="button alt btn btn-default">	
+                           													</div>
+                                                                    </div>
+                                                                    <div class="clear"></div>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                        </div>	
+                                                    </div>
+                                                
+                                            </div></form>
+                                        </div><!-- .entry-content -->
+                                    </div></article>
                                 </div>
-                                
                             </div>
+ 
+                         
                         </div>
                     </div>
                 </main>
