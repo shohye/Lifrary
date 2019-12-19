@@ -3,6 +3,7 @@ package ksmart.pentagon.bookcarry;
 import java.io.IOException;
 import java.util.*;
 
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +35,23 @@ public class BookCarryController {
 	
 	// 기부신청자 입력
 	@GetMapping("/admin/bookDonationInsert")
-    public String bookDonationInsert() {
+    public String bookDonationInsert(HttpSession session) {
+		String lCode = (String) session.getAttribute("LIBNUM");
     	return "/adminpage/bookCarry/bookDonationInsert";
     }
 	// 기부신청자 리스트
     @GetMapping("/admin/bookDonationList")
-    public String bookDonationList(Model model) {
-    	model.addAttribute("donationList",bookCarryService.getDonationList());
+    public String bookDonationList(Model model,HttpSession session) {
+    	
+    	String lCode = (String) session.getAttribute("LIBNUM");
+		
+    	model.addAttribute("donationList",bookCarryService.getDonationList(lCode));
     	return "/adminpage/bookCarry/bookDonationList";
     }
     // 기부신청자 수정 화면
     @GetMapping("/admin/bookDonationUpdate")
-    public String bookDonationUpdate(@RequestParam(value="bdnCode",required=false)String bdnCode, Model model) {
+    public String bookDonationUpdate(@RequestParam(value="bdnCode",required=false)String bdnCode, 
+    		Model model) {
     	
     	if(bdnCode == null) {
     		bdnCode ="bdn-19120500001";
@@ -62,8 +68,9 @@ public class BookCarryController {
     }
    // 기부신청자 입력 처리
     @PostMapping("/admin/bookDonationInsert")
-    public String bookDonationInsert2(){
-    	
+    public String bookDonationInsert2(HttpSession session){
+    	String lCode = (String) session.getAttribute("LIBNUM");
+    	String saId = (String) session.getAttribute("SAID");
 		return "redirect:/admin/bookDonationList";   	
     }
     
@@ -72,13 +79,16 @@ public class BookCarryController {
     
     // 도서 구매 입력
     @GetMapping("/admin/bookPurchaseInsert")
-    public String bookPurchaseForm() {
+    public String bookPurchaseForm(HttpSession session) {
+    	String lCode = (String) session.getAttribute("LIBNUM");
+    	String saId = (String) session.getAttribute("SAID");
     	return "/adminpage/bookCarry/bookPurchaseInsert";
     }
     // 도서 구매 리스트
     @GetMapping("/admin/bookPurchaseList")
-    public String bookPurchaseList(Model model) {
-    	model.addAttribute("purchaseList", bookCarryService.getPurchaseList());
+    public String bookPurchaseList(Model model,HttpSession session) {
+    	String lCode = (String) session.getAttribute("LIBNUM");
+    	model.addAttribute("purchaseList", bookCarryService.getPurchaseList(lCode));
     	return "/adminpage/bookCarry/bookPurchaseList";
     }
     // 도서 구매 수정 화면
@@ -101,8 +111,8 @@ public class BookCarryController {
     }
    // 기부신청자 입력 처리
     @PostMapping("/admin/bookPurchaseInsert")
-    public String bookPurchaseInsert(){
-    	
+    public String bookPurchaseInsert(HttpSession session){
+    	String lCode = (String) session.getAttribute("LIBNUM");
 		return "redirect:/admin/bookPurchaseList";   	
     }
 
@@ -111,14 +121,15 @@ public class BookCarryController {
     
     // 도서 주문 입력
     @GetMapping("/admin/bookOrderInsert")
-    public String bookOrderForm() {
+    public String bookOrderForm(HttpSession session) {
+    	String lCode = (String) session.getAttribute("LIBNUM");
     	return "/adminpage/bookCarry/bookOrderInsert";
     }
     // 도서 주문 리스트
     @GetMapping("/admin/bookOrderList")
-    public String bookOrderList(Model model) {
-    	
-    	model.addAttribute("orderList", bookCarryService.getOrderList());
+    public String bookOrderList(Model model,HttpSession session) {
+    	String lCode = (String) session.getAttribute("LIBNUM");
+    	model.addAttribute("orderList", bookCarryService.getOrderList(lCode));
     		
     	return "/adminpage/bookCarry/bookOrderList";
     }
@@ -140,8 +151,8 @@ public class BookCarryController {
     }
     // 기부신청자 입력 처리
     @PostMapping("/admin/bookOrderInsert")
-    public String bookOrderInsert(){
-    	
+    public String bookOrderInsert(HttpSession session){
+    	String lCode = (String) session.getAttribute("LIBNUM");
 		return "redirect:/admin/bookOrderList";   	
     }
 
@@ -150,10 +161,10 @@ public class BookCarryController {
     
     // 희망도서 신청 리스트
     @GetMapping("/admin/requestSearchList")
-    public String requestSearchList(Model model) {
+    public String requestSearchList(Model model,HttpSession session) {
+    	String lCode = (String) session.getAttribute("LIBNUM");
     	
-    	
-    	model.addAttribute("requestList", bookCarryService.getRequestList());
+    	model.addAttribute("requestList", bookCarryService.getRequestList(lCode));
     	return "/adminpage/bookCarry/requestSearchList";
     }
     
@@ -174,12 +185,12 @@ public class BookCarryController {
     //도서정보 가져오기 AJAX
     @RequestMapping(value="/getBookInfo", produces = "application/json")
 	public @ResponseBody BookInformation Ajax(
-			 Model model
-			,@RequestParam(value="biIsbn",required=false)String biIsbn) 
+			  Model model
+			, @RequestParam(value="biIsbn",required=false)String biIsbn) 
 	{
     	
-    	System.out.println("biIsbn=>"+biIsbn);
-			
+    	System.out.println("*****************************biIsbn=>"+biIsbn);
+    	
 		return bookCarryService.getBookInfo(biIsbn);	
 	}
     

@@ -71,10 +71,13 @@
                   </div>
                   
                   <div class="text-right mt-3">
+               <th:block th:if="${session.SALC} == 'O'">
+                    <button type="submit" class="btn btn-primary">수정</button>
+               </th:block>
                   	<button type="submit" class="btn btn-primary">
 						<a th:href="@{/admin/bookPurchaseList}" style="color: white">리스트로 이동</a>
 					</button>
-                  	<button type="submit" class="btn btn-primary">수정</button>
+                  	
                   	
  				  </div>
                 </form>

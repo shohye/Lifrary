@@ -24,6 +24,37 @@
 	 
 	  </th:block>
 	  
+	  <th:block layout:fragment="teamHeadScript">
+	<script type="text/javascript" th:inline="javascript">  
+     $(document).ready(function(){
+    	 
+    	 // 도서 정보 가져오기   
+    	   $('#deleteBtn').click(function(){  			
+  				var uId = $('#uId').val();
+  				var uPw = $('#uPw').val();
+  				
+  				var request = $.ajax({
+  					url:"/deleteInfo",
+  					method: "POST",
+  					data : { 'uId' : uId , 'uPw' : uPw }, 
+  					dataType: "json"
+  				});
+  				 
+  				request.done(function( data ) {
+  					
+  						
+  				});
+  				 
+  				request.fail(function( jqXHR, textStatus ) {
+  					alert( "Request failed: " + textStatus );
+  				});
+  				
+ 		});   		
+ 	 }); // 처음 function끝
+    	    	
+    	</script>
+  	    </th:block>
+	  
 <!-- /headAdd(Libs&page) --> 
  
  
@@ -32,9 +63,13 @@
          
          <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
 			<div>도서 기부 신청자 리스트</div>
+			
+	<th:block th:if="${session.SALC} == 'O'">		
 			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span> 
 				 <a th:href="@{/admin/bookDonationInsert}" style="color: white"> 신청자 추가 </a>
 			</button>
+	</th:block>		
+			
 		 </h4>
          
             <!-- DataTable within card -->
@@ -48,7 +83,7 @@
                   <thead>
                     <tr>
                       <th>성명</th>
-                      <th data-orderable="false">연락처</th>
+                      <th>연락처</th>
                       <th>주소</th>
                       <th>권수</th>
                       <th>개인정보수집</th>
@@ -56,7 +91,7 @@
                       <th>명예전당</th>
                       <th>신청일</th> 
                       <th>상세&수정</th>
-                      <th>삭제</th>                   
+                      <th>삭제</th>                 
                     </tr>
                   </thead>
                   
@@ -79,26 +114,59 @@
 				         <span th:unless="${d.bdnHonorAgree eq 'O'}"  class="badge badge-outline-danger">미등록</span>
 				      </td>
 				      <td class="align-middle" th:text="${d.bdnDate}"></td>	
-				      <td class="align-middle align-center">
-			      		<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
-						   <a th:href="@{/admin/bookDonationUpdate(bdnCode=${d.bdnCode})}" title="수정">
-							 <i class="ion ion-md-create" title="수정"></i>
-						   </a>
-						</button>
+				      <td class="align-middle text-center">
+					  	 <a th:href="@{/admin/bookDonationUpdate(bdnCode=${d.bdnCode})}" class="btn btn-default btn-xs icon-btn md-btn-flat" title="수정">
+						 	<i class="ion ion-md-create" title="수정"></i>
+					  	 </a>
                       </td> 
-                      <td class="align-middle align-center">
-                      	<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
-						   <a href="#" title="삭제">
-							 <i class="ion ion-ios-cut d-block" title="삭제"></i>
-						   </a>
-						</button>
-                      </td>	 	
+                      <td class="align-middle text-center">     
+                      <button type="button" class="btn btn-default btn-xs icon-btn md-btn-flat" data-toggle="modal" data-target="#modals-default">
+                      		<i class="ion ion-ios-cut d-block"  title="삭제"></i>
+                      </button>            
+						   <!-- <a href="#" class="btn btn-default btn-xs icon-btn md-btn-flat" title="삭제">
+							 <i class="ion ion-ios-cut d-block"  title="삭제"></i>
+						   </a> -->
+                      </td>	
 				    </tr>
 				  </tbody> 
                 </table>
               </div>
             </div>
-                        
+            <div class="modal fade" id="modals-default">
+                  <div class="modal-dialog">
+                    <form class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">
+                          	기부 신청자 목록 삭제
+                          
+                          <br>
+                          <small class="text-muted">정말 삭제 하시겠습니까? 삭제하시는 경우 복구가 불가능한 목록입니다.<br>
+                                                            삭제를 위하여 본인 id의 password를 작성해 주세요.</small>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                      </div>
+                      <div class="modal-body">
+                      	<div class="form-row">
+                          <div class="form-group col">
+                            <label class="form-label">ID</label>
+                            <input id="uId" type="text" class="form-control" th:value="${session.SAID}">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col">
+                            <label class="form-label">PASSWORD</label>
+                            <input id="uPw" type="password" class="form-control" placeholder="***********">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="deleteBtn" type="button" class="btn btn-primary">삭제</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+ 
 
           </th:block>
           
