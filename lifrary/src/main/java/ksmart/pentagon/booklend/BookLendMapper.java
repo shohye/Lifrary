@@ -2,12 +2,13 @@ package ksmart.pentagon.booklend;
 
 
 import java.util.List;
-import java.util.*;
+
+import org.apache.ibatis.annotations.Mapper;
 
 import ksmart.pentagon.vo.BookLend;
 import ksmart.pentagon.vo.BookStock;
 import ksmart.pentagon.vo.User;
-
+@Mapper
 public interface BookLendMapper {
 	//대출도서 리스트
 	public List<BookLend> bookSearchList(String libNum);
