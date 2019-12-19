@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+	  
+	  <th:block layout:fragment="adminHeadAdd">
+	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
+ 	  </th:block>
+ 
+ 
+  <!-- Content -->
+         <th:block layout:fragment="adminContents" th:with="f=${facility}">
+         	<div class="layout-content">
+         		<div class="container-fluid flex-grow-1 container-p-y" >
+        
+         			<div class="media align-items-center py-3 mb-3">
+		              <div class="media-body ml-4" > 
+		                <h4 class="font-weight-bold mb-0" th:text="${f.fName}"></h4>
+		                <div class="text-muted mb-2">관리자:
+		                	<span th:text="${f.uId}"></span>
+		                </div>
+		              </div>
+		            </div>
+		            <div class="card mb-4">
+		              <div class="card-body">
+		                <table class="table user-view-table m-0" > <!-- th:with="m = ${#}" -->
+		                  <tbody>
+		                    
+		                    <tr>
+		                      <td>시설명:</td><td th:text="${f.fName}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>시설 종류:</td><td th:text="${f.fKinds}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>시설 위치:</td><td th:text="${f.fLocation}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>수용 인원:</td><td th:text="${f.fAccommodate}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>이용 성별:</td><td th:text="${f.fGender}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>최대 사용시간:</td><td th:text="${f.fTerm}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>좌석 배치:</td><td><div style="width: 500px; height: 500px; border: 2px; solid; background-color: aqua;">이곳에 좌석 배치도 들어감</div></td>
+		                    </tr>		                    
+		                    <tr>
+		                      <td>등록일:</td><td th:text="${f.fDate}"></td>
+		                    </tr>
+		                    
+		                    
+		                  </tbody>
+		                </table>
+		               <br>
+		 				  
+			              <table>
+			                  <tr>
+			                  	<td>
+					   				<a th:href="@{/admin/facilityUpdate(fCode = ${f.fCode})}" style="color: white"> 
+							            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
+						            			<span class="ion ion-md-build"> 수정하기</span>
+										</button>
+					  				</a>
+				  			 	</td>
+					  			 	<td>
+						 				 <a th:href="@{#}" style="color: white"> 
+								            <button type="button" class="btn btn-danger d-block" style="margin-top: 10px;">
+							            			<span class="ion ion-md-cut"> 삭제하기</span>
+											</button>
+						  				 </a>
+									</td>
+									
+				  			  </tr>
+				  		  </table>
+		              </div>
+		              
+		              
+		            </div>
+			         		
+         		</div>
+         		
+         	</div>
+
+          </th:block>
+          
+          <!-- / Content -->
+         
+          <!-- script -->
+          <th:block layout:fragment="pageScript">
+
+		  <!-- addLibs -->
+		  <script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		
+		  <!-- addDemo -->
+		  <script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
+		  </th:block>
+  		  <!-- /script -->
+  		  
+  		  
+          
+</html>
