@@ -16,7 +16,7 @@
   <script th:inline="javascript">
 		$(document).ready(function(){
 			var seatArray = new Array();
-
+		
 			$(document).on('click','.tdClass',function(){
 				console.log($(this).attr('status') + " <== status")
 				console.log($(this).attr('seat') + " <== seat")
@@ -51,6 +51,47 @@
 				
 				console.log(seatArray);
 			})
+			
+			//ajax로 테이블 만들기.
+			$(document).on('click','#tableBtn',function(){
+				seatArray = new Array(); // 테이블만들기 버튼을 다시 누르면 새로운 배열이 생성됨.
+				var garo = $('#garo').val();
+				var sero = $('#sero').val();
+				
+				var request = $.ajax({
+					  url: "/libSeat",
+					  method: "POST",
+					  data: { 'garo' : garo, 'sero':sero },
+					  dataType: "json"
+					});
+					 
+					request.done(function( data ) {
+						var getGaro = data.getGaro; // 가로 배열(리스트)
+						var getSero = data.getSero; // 세로 배열(리스트)
+						var tableDiv = $('#tableDiv');
+						var contents = '';
+						
+						contents += '<table border="2">';
+						for(var i = 0; i < getSero; i++){
+							contents += '<tr>';
+							for(var j = 0; j < getGaro; j++){
+								contents += '<td class="tdClass" style="color:black; text-align: center; font-size:12px;  width: 40px; height: 25px;"'+ 
+								'seat="'+(i+1)+'-'+(j+1)+'" status="true">'+(i+1)+'-'+(j+1)+'</td>';
+							}
+							contents += '</tr>';
+						}
+						contents += '</table>';
+						
+						tableDiv.html(contents);
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
+				
+			})
+			
+			
 			
 			//만들어진 좌석 배열 ajax를 통해 깐뜨롤러로 보내기
 			$('#arrayBtn').click(function(){
@@ -221,24 +262,13 @@
 							세로 입력 : <input type="number" class="form-control" id="sero" name="sero" min="1" max = "40"><br>
 							<small class="form-text text-muted">가로, 세로길이를 입력해주세요.</small>
 							
-							<button type="submit" id="tableBtn">테이블 만들기</button>
+							<button type="button" id="tableBtn">테이블 만들기</button>
 						</form>
 					</div>
 				</div>
 				
-             		 <div>
+             		 <div id="tableDiv">
 							<!-- ex> 가로3 세로 5  //   garo = 5  "${s}*${garo}+${g+1}"-->
-								<table border="2">
-								
-									<th:block th:each="s : ${sList}">
-										<tr>
-											<th:block th:each="g : ${gList}">
-												<td class="tdClass" style="color:black; text-align: center; font-size:12px;  width: 40px; height: 25px;" th:text="|${s+1}-${g+1}|" th:seat="|${s+1}-${g+1}|" th:status="true"></td>
-											</th:block>
-										</tr>
-									</th:block>
-						
-								</table>
 					</div>
 				</div>
               </div>

@@ -1,7 +1,9 @@
 package ksmart.pentagon.facility;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /*
  * @file   FacilityController.java 
@@ -113,31 +116,23 @@ public class FacilityController {
 		return "adminpage/facility/facilityInsert";
 	}
 	
-	
+	/**
+	 * ajax활용. 테이블을 동적으로 만들어준다.
+	 * @param garo
+	 * @param sero
+	 * @return
+	 */
 	
 	@PostMapping("/libSeat")
-	public String libSeat(@RequestParam(value = "garo") int garo, @RequestParam(value = "sero") int sero, Model model) {
+	public @ResponseBody Map<String,Integer> libSeat(@RequestParam(value = "garo") int garo, @RequestParam(value = "sero") int sero) {
 
-		List<Integer> sList = new ArrayList<Integer>();
-		List<Integer> gList = new ArrayList<Integer>();
+		
+		Map<String,Integer> data = new HashMap<String,Integer>();
+		
+		data.put("getGaro", garo);
+		data.put("getSero", sero);
 
-		for (int i = 0; i < garo; i++) {
-			gList.add(i);
-		}
-		for (int i = 0; i < sero; i++) {
-			sList.add(i);
-		}
-
-		model.addAttribute("sList", sList);
-		model.addAttribute("gList", gList);
-		model.addAttribute("garo", garo);
-
-		/*
-		 * for(int i = 0; i < 5; i++) { for(int j = 0; j < 5; i++) {
-		 * System.out.print(i*5+j+" "); } System.out.println(); }
-		 */
-
-		return "adminpage/facility/facilityInsert";
+		return data;
 	}
 	
 	
