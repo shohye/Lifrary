@@ -16,9 +16,9 @@ public class BookLend {
 	private String blHoldDate; //예약일
 	private int blOverdueDays; //연체일
 	private int ulLendDay; //대출일
-	private String uNumber;
-	private String uName;
-	
+	private String uNumber;//회원번호
+	private String uName;//회원이름
+
 	public String getBlCode() {
 		return blCode;
 	}

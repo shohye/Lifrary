@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ksmart.pentagon.vo.BookLend;
-import ksmart.pentagon.vo.BookStock;
+
 
 /***
  * @file BookLendController.java
@@ -232,35 +232,50 @@ public class BookLendController {
 							, RedirectAttributes redirectAttributes) {
 
 		int result = bookLendService.holdDelete(blCode, bsCode);
-	
+		
 		redirectAttributes.addFlashAttribute("resultDelete", result);
 		
 		return "redirect:/admin/holdSearchList";
 		
 	}
 	
-	/**
-	 * 
+	/** 
 	 * @param session
+	 * @param model
 	 * @brief 마이페이지 대출도서리스트
-	 * @return
+	 * @return /librarypage/book/myLendList.html
 	 * @author 최지혜
 	 */
 	@GetMapping("/lifrary/myLendList")
-	public String myLendList(HttpSession session) {
+	public String myLendList(HttpSession session
+							 , Model model) {
 		
 		String libNum = (String) session.getAttribute("LIBNUM");
+		String blId = (String) session.getAttribute("SID");
+		
+		model.addAttribute("myLendList", bookLendService.myLendList(libNum, blId));
+		 
 		
 		return "/librarypage/book/myLendList.html";
 		
 	}
-	
+	/**
+	 * 
+	 * @param session
+	 * @param model
+	 * @brief 마이페이지 예약도서리스트
+	 * @return
+	 * @author 최지혜
+	 */
 	@GetMapping("/lifrary/myHoldList")
-	public String myHoldList(HttpSession session) {
+	public String myHoldList(HttpSession session
+			 				 , Model model) {
 		
 		String libNum = (String) session.getAttribute("LIBNUM");
-
+		String blId = (String) session.getAttribute("SID");
 		
+		model.addAttribute("myHoldList", bookLendService.myHoldList(libNum, blId));
+				
 		return "/librarypage/book/myHoldList";
 		
 	}

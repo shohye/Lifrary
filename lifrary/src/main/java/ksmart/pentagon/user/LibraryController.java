@@ -11,13 +11,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ksmart.pentagon.vo.StudyCate;
 import ksmart.pentagon.vo.User;
+import ksmart.pentagon.vo.UserAuthorityHistory;
+import ksmart.pentagon.vo.UserLevelHistory;
 
 /*
  * @file   LibraryController.java
  * @name   library controller 
  * @brief  도서관 관련 매핑된 경로로 이동
  * @author 김상협 
+ */
+
+/*
+ * @file   LibraryController.java
+ * @name   library controller 
+ * @brief  도서관 회원가입
+ * @author 한우리
  */
 
 @Controller
@@ -97,5 +107,41 @@ public class LibraryController {
 			return "redirect:/";
 		}
 	}
+	
+	
+	/***********************************************************************/
+	
+	
+	/***
+	 * 도서관페이지 회원가입 폼 
+	 * @return 
+	 * @author 한우리
+	 */
+	//회원가입 등록 
+	@GetMapping("/lifrary/userInsert")
+	public String userInsert() {
+		System.out.println("userInsert @GetMapping 회원가입폼 ");
+		return "/librarypage/user/userInsert";
+	}
+	
+	//회원가입 등록
+	@PostMapping("/lifrary/userInsert")
+	public String userInsert(HttpSession session, User user, UserLevelHistory userLevelHistory
+								, UserAuthorityHistory userAuthorityHistory, StudyCate studyCate) {
+		System.out.println("userInsert @PostMapping 회원가입폼 ");
+		System.out.println("user 확인 ==>> " + user);
+		System.out.println("userLevelHistory 확인 ==>> " + userLevelHistory);
+		System.out.println("userAuthorityHistory 확인 ==>> " + userAuthorityHistory);
+		System.out.println("studyCate 확인 ==>> " + studyCate);
+		
+		libraryService.userInsert1(user);
+		libraryService.userInsert2(userLevelHistory);
+		libraryService.userInsert3(userAuthorityHistory);
+		libraryService.userInsert4(studyCate);
+		
+
+		return "redirect:/";
+	}
+	
 	
 }

@@ -20,7 +20,8 @@ $(function() {
 		 "paginate" : {
 	            "next" : "다음",
 	            "previous" : "이전"
-	        }
+	        },
+			 "zeroRecords" : "검색결과가 없습니다"
 	 }
   });
 });

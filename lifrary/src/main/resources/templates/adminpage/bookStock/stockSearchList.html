@@ -17,41 +17,16 @@
   <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
   </th:block>
   
-  <!-- /headAdd(Libs&page) --> 
-  <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
-  <th:block layout:fragment="teamHeadScript">
- <!--  <script type="text/javascript">
-  $(document).ready(function(){
-	  
-	  //도서정보 검색폼을 실행시키는 자바스크립트
-	  $('#bookInfoBtn').click(function(){
-	  
-	  var bookinfo = $('[name="svBook"]').val();
-	  
-	  if( bookinfo == ''){
-		  alert('검색내용을 입력해주세요');
-	  }
-	  else{
-		  $('#bookInfoForm').submit();
-	  }
-	  
- 	 });
-  });//document.ready
  
- </script> -->
- 
- 
-  </th:block>
-  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
-	  
-	 
 	<!-- Content -->
 	<th:block layout:fragment="adminContents">   
 		<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-			<div>전체 도서 관리</div>
+			<div>전체 도서 관리</div> 
+<th:block th:if="${session.SALBS} == 'O'">
 			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; 
 				 <a th:href="@{/admin/stockDetailInsert}" style="color: white"> 도서 추가 </a>
 			</button>
+</th:block>
 		</h4>
 
 	<div class="card">
@@ -76,7 +51,7 @@
 	                    <td class="align-middle" th:text="${l.bsCode}"></td>
 	                    <td style="min-width: 170px;">
 			               	 	<div class="media align-items-center">
-			               	 		<img class="ui-w-40 d-block" th:src="${l.bookInformation.biImg}" alt="">
+			               	 		<img class="ui-w-40 d-block" th:src="${l.bookInformation.biImg}" alt="이미지가 제공되지 않는 도서">
 			               	 		<span class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(l.bookInformation.biName,20)}"></span>
 			               	 	</div>
 			            </td>
@@ -89,31 +64,11 @@
 					    </td>
 	                    <td class="align-middle" th:text="${l.bsCarryRoute}"></td>
 	                    <td class="align-middle" th:text="${l.bsDate}"></td>
-	                    
-	                    <!-- 
-	                    <td class="align-middle text-center" th:if = "${L.blExtensionDate != null}">
-	                    	<a href="javascript:void(0)">
-	                    		<span class="badge badge-outline-secondary">연장완료</span>
-	                    	</a>	
-	                    </td>
-	                    <td class="align-middle text-center" th:unless = "${L.blExtensionDate != null}">
-	                    	<a href="javascript:void(0)">
-	                    		<span class="badge badge-outline-success">연장하기</span>
-	                    	</a>	
-	                    </td> -->
-	                  
-	                    <!-- <td class="align-middle align-center">
-			               	<a th:href="@{/admin/stockDetail(bsCode=${l.bsCode})}" class="btn icon-btn btn-sm btn-outline-secondary" title="상세">
-			               	 	<span class="ion ion-ios-paper d-block"></span>			               	 
-			               	</a>
-	                    </td>  -->
-	                   <td class="align-middle align-center">
-			      		<button title="" class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" type="button" data-original-title="Edit">
-						   <a th:href="@{/admin/stockDetail(bsCode=${l.bsCode})}" title="상세">
+	                    <td class="align-middle text-center">			      		
+						   <a th:href="@{/admin/stockDetail(bsCode=${l.bsCode})}"  class="btn btn-default btn-xs icon-btn md-btn-flat" title="상세">
 							 <i class="ion ion-ios-copy" title="상세"></i>
-						   </a>
-						</button>
-					  </td>
+						   </a>						
+					    </td>
 	                  </tr>
                   </tbody>
                 </table>

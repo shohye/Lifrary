@@ -2,10 +2,13 @@ package ksmart.pentagon.booklend;
 
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
 import ksmart.pentagon.vo.BookLend;
 import ksmart.pentagon.vo.BookStock;
 import ksmart.pentagon.vo.User;
-
+@Mapper
 public interface BookLendMapper {
 	//대출도서 리스트
 	public List<BookLend> bookSearchList(String libNum);
@@ -27,11 +30,12 @@ public interface BookLendMapper {
 	public int returnUpdate(String blCode);
 	//연장일 등록
 	public int extensionUpdate(String blCode) ;
-	
 	//예약도서 리스트
 	public List<BookLend> holdSearchList(String libNum);
-	
 	//예약취소
 	public int holdDelete(String blCode);
-	
+	//회원 대출 도서 리스트
+	public List<BookLend> myLendList(String libNum, String blId);
+	//회원 예약 도서 리스트
+	public List<BookLend> myHoldList(String libNum, String blId);
 }

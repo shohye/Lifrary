@@ -52,7 +52,6 @@
 	                <thead>
                   	<tr>
                     	<th>아이디</th>
-                    	<th>도서관코드</th>
                     	<th>구분</th>
                     	<th>비밀번호</th>
                     	<th>이름</th>
@@ -69,7 +68,6 @@
 	                  <tbody>
 	                   <tr role="row" th:each="ll : ${lList}">
 	               			<td class="align-middle" th:text="${ll.uId}"></td>
-	               			<td class="align-middle" th:text="${ll.lCode}"></td>
 	               			<td class="align-middle" th:text="${ll.uDivision}"></td>
 	               			<td class="align-middle" th:text="${ll.uPw}"></td>
 	               			<td class="align-middle" th:text="${ll.uName}"></td>
@@ -107,7 +105,7 @@
 	               				<button title="" 
 	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
 	               						type="button" data-original-title="Edit">
-	               					<a th:href="@{#}" title="상세">
+	               					<a th:href="@{/admin/librarianDetail(uId=${ll.uId})}" title="상세">
 	               				<i class="ion fas fa-eye" title="상세"></i>
 	               					</a>
 	               				</button>&nbsp;&nbsp;

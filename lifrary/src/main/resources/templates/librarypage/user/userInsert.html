@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+    
+    <th:block layout:fragment="customContents">
+	<section th:replace="fragments/library/loginBanner :: loginBannerFragment"></section>
+<!-- Start: Cart Checkout Section -->
+        <div id="content" class="site-content" th:fragment="cartCheckOutSectionFragment">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="checkout-main">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <article class="page type-page status-publish hentry">
+                                        <div class="entry-content">
+                                            <div class="woocommerce">
+                                                <form th:action="@{/lifrary/userInsert}" class="checkout woocommerce-checkout" method="post" name="checkout">
+                                                    <div class="row">
+                                                        <div id="customer_details">
+                                                            <div class="col-xs-12 col-sm-9">
+                                                                <div class="woocommerce-billing-fields">
+                                                                    <h2>회원가입을 해주세요</h2>
+                                                                    <span class="underline left"></span>
+                                                                    <div class="row">
+                                                                        <div class="billing-address-box">
+                                                                        
+                                                                        		<input type="hidden" name="uDivision" readonly="readonly" value="회원" placeholder="구분">
+                                                                        		<input type="hidden" name="uNumber" readonly="readonly" placeholder="회원번호">
+                                                                        		<input type="hidden" name="uOverdueDay" readonly="readonly" value="0" placeholder="연체일">
+                                                                        		<input type="hidden" name="lCode" readonly="readonly" th:value="${session.LIBNUM}" placeholder="도서관코드">
+                                                                        		
+                                                                        		<input type="hidden" name="ulhCode" readonly="readonly" placeholder="회원등급변동이력코드">
+                                                                        		<input type="hidden" name="ulLevel" readonly="readonly" value="ul001" placeholder="회원등급">
+                                                                        		<!-- <input type="hidden" name="ulName" readonly="readonly" value="씨앗" placeholder="회원등급명"> -->
+                                                                        		<input type="hidden" name="ulhReason" readonly="readonly" value="회원가입" placeholder="등급변동이유"> 
+                                                                        		
+                                                                        		<input type="hidden" name="uahCode" readonly="readonly" placeholder="회원제한코드">
+                                                                        		<input type="hidden" name="uasCode" readonly="readonly" value="uas001" placeholder="회원제한변동이력코드">
+                                                                        		<!-- <input type="hidden" name="uasName" readonly="readonly" value="0단계" placeholder="회원제한등급명"> -->
+                                                                        		<input type="hidden" name="uahReason" readonly="readonly" value="기본입니다" placeholder="제한 변동 이유">
+                                                                        		
+                                                                        		<input type="hidden" name="scCode" readonly="readonly" placeholder="서재 카테고리코드">
+                                                                        		<input type="hidden" name="scName" readonly="readonly" value="완독도서" placeholder="서재 카테고리명">
+                                                                        		<input type="hidden" name="scDivision" readonly="readonly" value="기본" placeholder="서재 카테 구분">
+                                                                        		
+                                                                        		
+                                                                        	
+                                                                        		
+                                                                        		
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">아이디 : </label>
+                                                                                <p id="billing_first_name_field" class="form-row form-row form-row-first">
+                                                                                    <input type="text" value="" autocomplete="given-name" placeholder="아이디를 입력해주세요" id="uId" name="uId" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">이름 : </label>
+                                                                                <p id="billing_address_1_field" class="form-row form-row form-row-wide address-field validate-required">
+                                                                                    <input type="text" value="" placeholder="이름을 입력해주세요" name="uName" id="uName" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">비밀번호 : </label>
+                                                                                <p id="billing_last_name_field" class="form-row form-row form-row-last validate-required">                                                                        
+                                                                                    <input type="password" value="" autocomplete="family-name" placeholder="비밀번호를 입력해주세요" id="uPw" name="uPw" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            <!-- <div class="clear"></div> -->
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">비밀번호 재확인 : </label>
+                                                                                <p id="billing_company_field" class="form-row form-row form-row-wide">
+                                                                                    <input type="password" value="" autocomplete="organization" placeholder="비밀번호 재확인" name="uPwCheck" class="input-text ">
+                                                                                </p>
+                                                                            </div>
+                                                                         <div class="form-row">
+                                                                            <div class="col-xs-4 col-sm-4">
+                                                                            	<label class="form-label">생년월일</label>
+                                                                                <p id="billing_city_field" class="form-row form-row form-row-wide address-field validate-required" data-o_class="form-row form-row form-row-wide address-field validate-required">
+                                                                                    <input type="text" value="" placeholder="생년월일" name="uBirth" id="uBirth" class="input-text">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">이메일 : </label>
+                                                                                <p id="billing_postcode_field" class="form-row form-row form-row-last address-field validate-postcode validate-required" data-o_class="form-row form-row form-row-last address-field validate-required validate-postcode">
+                                                                                    <input type="text" value="" placeholder="이메일입력 해주세요" id="uEmail" name="uEmail" class="input-text ">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">핸드폰 : </label>
+                                                                                <p id="billing_phone_field" class="form-row form-row form-row-last validate-required validate-phone">
+                                                                                    <input type="tel" value="" autocomplete="tel" placeholder="핸드폰번호 입력해주세요" id="uTel" name="uTel" class="input-text ">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">주소 : </label>
+                                                                                <p id="billing_phone_field" class="form-row form-row form-row-last validate-required validate-phone">
+                                                                                    <input type="tel" value="" autocomplete="tel" placeholder="주소를 입력해주세요" id="uAddr" name="uAddr" class="input-text ">
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">메일수신 동의 : </label>
+                                                                                <div class="radio">
+                                                                                    <input id="open" type="radio" value="O" name="uEmailAgree" class="custom-control-input" >
+                                                                                    <label for="open"> 동의 </label>
+                                                                                </div>
+                                                                                <div class="radio">
+                                                                                    <input id="no" type="radio" value="X" name="uEmailAgree" class="custom-control-input" >
+                                                                                    <label for="no"> 비동의 </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">임명장 부여  : </label>
+                                                                                <div class="radio">
+                                                                                    <input id="op" type="radio" value="O" name="uAppointment" class="custom-control-input" >
+                                                                                    <label for="op"> 동의 </label>
+                                                                                </div>
+                                                                                <div class="radio">
+                                                                                    <input id="noo" type="radio" value="X" name="uAppointment" class="custom-control-input">
+                                                                                    <label for="noo"> 비동의 </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-12" style="margin-bottom: 40px">
+                                                                        		<input type="submit" data-value="Place order" value="Place order" id="place_order" 
+                                                                        				name="woocommerce_checkout_place_order" class="button alt btn btn-default">	
+                           													</div>
+                                                                    </div>
+                                                                    <div class="clear"></div>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                        </div>	
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div><!-- .entry-content -->
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <!-- End: Cart Checkout Section -->
+ </th:block>
+</html>
