@@ -33,12 +33,15 @@
   	    			var biAuthor      = $('#biAuthor');
   	    			var biPublisher   = $('#biPublisher');
   	    			var biYear        = $('#biYear');
+  	    			var biKdc         = $('#biKdc');
+  	    			var biDtail       = $('#biDtail');
   					
   		 			biName.val(data.biName);
   		 			biAuthor.val(data.biAuthor);
   		 			biPublisher.val(data.biPublisher);
   		 			biYear.val(data.biYear);
-  					
+  		 			biKdc.val(data.biKdc);
+  		 			biDtail.val(data.biDtail);
   				});
     	   });
 		  
@@ -55,6 +58,7 @@
     			var biYear        = $('#biYear');
     			var bsTotalPage   = $('#bsTotalPage');
     			var bsCarryRoute  = $('#bsCarryRoute');
+    			var biKdc         = $('#biKdc');
     			
     			
     			if(biIsbn.val() == ''){
@@ -70,6 +74,11 @@
     			if(biAuthor.val() == ''){
     				alert('저자명을 입력하세요');
     				biAuthor.focus();
+    				return false;
+    			}
+    			if(biKdc.val() == ''){
+    				alert('KBC를 입력하세요');
+    				biKdc.focus();
     				return false;
     			}
     			if(bsCallNum.val() == ''){
@@ -140,32 +149,53 @@
                   
 				    <form id="insertForm" th:action="@{/admin/stockDetailInsert}" method="post">
 				        <!-- th:action="@{#}" method="post" -->
-					    <div class="form-group ">
-		                   <label class="form-label" >ISBN</label>
-				            <div class="input-group">
-			                  <input type="text" id="biIsbn" name="biIsbn" class="form-control" placeholder="Search for ISBN">		                 
-			                  <span class="input-group-append">
-			                    <button id="bookInfoBtn" class="btn btn-secondary" type="button">도서정보 가져오기</button>
-			                  </span>
-			                </div>        
-		                </div>  
-	                    
-	                    <div class="form-row">
-		                    <div class="form-group col-md-6">
-		                      <label class="form-label">도서명</label>
-	                      <input type="text" class="form-control mb-1" id="biName" name="biName" placeholder="book name"><!-- th:value="${#}"  --> 
-		                    </div>
-		                    <div class="form-group col-md-6">
+				        <div class="form-row">
+						    <div class="form-group col-md-6">
+			                   <label class="form-label" >ISBN</label>
+					            <div class="input-group">
+				                  <input type="text" id="biIsbn" name="biIsbn" class="form-control" placeholder="Search for ISBN">		                 
+				                  <span class="input-group-append">
+				                    <button id="bookInfoBtn" class="btn btn-secondary" type="button">도서정보 가져오기</button>
+				                  </span>
+				                </div>        
+			                </div>  
+			                <div class="form-group col-md-6">
 		                      <label class="form-label">저자</label>
 		                      <input type="text" class="form-control" id="biAuthor" name="biAuthor" placeholder="author">
 		                    </div>
+	                    </div>
+	                    <div class="form-row">
+		                    <div class="form-group col-md-6">
+		                      <label class="form-label">도서명</label>
+	                     	  <input type="text" class="form-control mb-1" id="biName" name="biName" placeholder="book name"><!-- th:value="${#}"  --> 
+		                    </div>
+		                    <div class="form-group col-md-3">
+		                      <label class="form-label">별치기호</label>
+		                      <select class="form-control" id="bsAliasMark" name="bsAliasMark">
+		                      		<option value="" selected>없음-일반 단행본</option>
+	                   				<option value="B.">B-점자도서</option>
+	                   				<option value="R.">R-참고도서</option>
+	                   				<option value="M.">M-지도</option>
+	                   				<option value="P.">P-국내외 일반 연속간행물</option>
+	                   				<option value="T.">T-학위논문</option>
+	                   				<option value="C.">C-만화자료</option>	       
+	                   		  </select>
+		                    </div>
+		                    <div class="form-group col-md-3">
+		                      <label class="form-label">KBC</label>
+		                      <input type="text" class="form-control" id="biKdc" name="biKdc" placeholder="KBC">
+		                    </div>	
 		                </div>
-		                <div class="form-row">		               
+		                <div class="form-row">
+		                	<div class="form-group col-md-3">
+		                      <label class="form-label">부차적기호</label>
+		                      <input type="text" class="form-control" id="bsSecondaryMark" name="bsSecondaryMark" placeholder="복본:c.숫자 , 권호:v.숫자">
+		                    </div>		               
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">청구기호</label>
 		                      <input type="text" class="form-control mb-1" id="bsCallNum" name="bsCallNum" placeholder="call number">	                   
 		                    </div>
-		                    <div class="form-group col-md-6">
+		                    <div class="form-group col-md-3">
 		                      <!-- <label class="form-label">청구기호 생성</label> -->
 		                      <br><button id="callNumberBtn" type="button" class="btn rounded-pill btn-secondary">청구기호 생성</button>              
 		                    </div>

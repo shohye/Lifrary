@@ -4,10 +4,11 @@ public class BookRequest {
 	
 	private String brCode;
 	private String uId;
+	private String lCode;
 	private String brTitle;
 	private String brIsbn;
 	private String brYear;
-	private int brPrice;
+	private int    brPrice;
 	private String brAuthor;
 	private String brPublisher;
 	private String brOpinion;
@@ -19,6 +20,13 @@ public class BookRequest {
 	
 	
 	
+	
+	public String getlCode() {
+		return lCode;
+	}
+	public void setlCode(String lCode) {
+		this.lCode = lCode;
+	}
 	public User getUser() {
 		return user;
 	}

@@ -18,10 +18,12 @@ public class BookStock {
 	private String bsLendState;
 	private String bsCarryRoute;
 	private String bsDate;
+	
 	private String bsDelete;
 	private String bsDeleteId;
 	private String bsDeleteReason;
 	private String bsDeleteDate;
+	
 	private BookInformation bookInformation;
 	private BookCate bookCate;
 	private BookLend bookLend;

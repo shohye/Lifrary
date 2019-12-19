@@ -2,7 +2,6 @@ package ksmart.pentagon.vo;
 
 public class BookInformation {
 	private String biIsbn;
-	private String lCode;
 	private String biName;
 	private String biYear;
 	private String biAuthor;
@@ -11,6 +10,41 @@ public class BookInformation {
 	private String biImg;
 	private String biDate;
 	private String biDtail;
+	
+	
+	// (도서관) 디테일 검색조건을 위한 변수명 추가
+	private String lCode;
+	private String bclCode;
+	private String biYearStart;
+	private String biYearEnd;
+	
+	
+	public String getlCode() {
+		return lCode;
+	}
+	public void setlCode(String lCode) {
+		this.lCode = lCode;
+	}
+	public String getBclCode() {
+		return bclCode;
+	}
+	public void setBclCode(String bclCode) {
+		this.bclCode = bclCode;
+	}
+	public String getBiYearStart() {
+		return biYearStart;
+	}
+	public void setBiYearStart(String biYearStart) {
+		this.biYearStart = biYearStart;
+	}
+	public String getBiYearEnd() {
+		return biYearEnd;
+	}
+	public void setBiYearEnd(String biYearEnd) {
+		this.biYearEnd = biYearEnd;
+	}
+	
+	/////// 
 	
 	
 	public String getBiDtail() {
@@ -26,12 +60,7 @@ public class BookInformation {
 	public void setBiIsbn(String biIsbn) {
 		this.biIsbn = biIsbn;
 	}
-	public String getlCode() {
-		return lCode;
-	}
-	public void setlCode(String lCode) {
-		this.lCode = lCode;
-	}
+	
 	public String getBiName() {
 		if(biName != null && "".equals(biName.trim())) this.biName = null;
 		return biName;
