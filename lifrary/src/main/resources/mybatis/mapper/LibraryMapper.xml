@@ -26,7 +26,42 @@
 	<result property="uOverdueDay" column="u_overdue_day"/>
 	<result property="uDate" column="u_date"/>
 	<result property="uAuthorityDate" column="u_authority_date"/>
-</resultMap> 	
+</resultMap>
+
+<resultMap type="ksmart.pentagon.vo.UserLevelHistory" id="userLevelHistory">
+	<!-- db -->
+	<result property="ulhCode" column="ulh_code"/>
+	<result property="lCode" column="l_code"/>
+	<result property="uId" column="u_id"/> 
+	<result property="ulLevel" column="ul_level"/>
+	<result property="ulName" column="ul_name"/>
+	<result property="uName" column="u_name"/>
+	<result property="ulhReason" column="ulh_reason"/>
+	<result property="ulhDate" column="ulh_date"/>
+</resultMap>
+ 
+<resultMap type="ksmart.pentagon.vo.UserAuthorityHistory" id="userAuthorityHistory">
+	<!-- db -->
+	<result property="uahCode" column="uah_code"/>
+	<result property="lCode" column="l_code"/>
+	<result property="uId" column="u_id"/> 
+	<result property="uasCode" column="uas_code"/>
+	<result property="uasName" column="uas_name"/>
+	<result property="uName" column="u_name"/>
+	<result property="uahReason" column="uah_reason"/>
+	<result property="uahDate" column="uah_date"/>
+</resultMap>
+
+<resultMap type="ksmart.pentagon.vo.StudyCate" id="StudyCate">
+	<!-- db -->
+	<result property="scCode" column="sc_code"/>
+	<result property="lCode" column="l_code"/>
+	<result property="uId" column="u_id"/> 
+	<result property="scName" column="sc_name"/>
+	<result property="scDivision" column="sc_division"/>
+	<result property="scDate" column="sc_date"/>
+</resultMap>
+
  	<select id="loginCheck" parameterType="String" resultType="ksmart.pentagon.vo.User">
  		SELECT 
  			u_id as uId,
@@ -38,16 +73,18 @@
 		WHERE u_id = #{uId} and l_code = #{libNum}
  	</select>
  	
- 	<insert id="userInsert">
+ 	<insert id="userInsert1" parameterType="ksmart.pentagon.vo.User">
+		<selectKey keyProperty="uNumber" resultType="String" order="BEFORE">
+ 			SELECT 
+ 				CONCAT(MAX((u_number)+1))AS uNumber
+			FROM user
+ 		</selectKey>
+		
 		INSERT INTO user(
 			 u_id
 			 ,l_code
 			 ,u_division
-			 ,ulLevel
-			 ,ulName
-			 ,uasCode
-			 ,uasName
-			 ,
+			 ,u_number
 			,u_pw
 			,u_name
 			,u_birth
@@ -62,6 +99,7 @@
 			 #{uId}
 			,#{lCode}
 			,#{uDivision}
+			,#{uNumber}
 			,#{uPw}
 			,#{uName}
 			,#{uBirth}
@@ -70,8 +108,93 @@
 			,#{uEmail}
 			,#{uEmailAgree}
 			,#{uAppointment}
-			,#{uOverdueDay}
-			,CRUDATA()
+			,0
+			,CURDATE()
 		)
 	</insert>
+	
+	<insert id="userInsert2">
+		<selectKey keyProperty="ulhCode" resultType="String" order="BEFORE">
+ 			SELECT 
+			CONCAT('ulh_',DATE_FORMAT(CURDATE(), '%y%m%d'),
+				(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(ulh.ulh_code), '-', -1),6) 
+				, '00001' 
+				,LPAD(RIGHT(MAX(ulh.ulh_code),5)+1,5,'0'))))
+			FROM 
+				user_level_history AS ulh
+ 		</selectKey>
+ 		
+		INSERT INTO user_level_history(
+			 u_id
+			 ,l_code
+			 ,ulh_code
+			,ul_level
+			,ulh_reason
+			,ulh_date
+		)VALUES(
+			 #{uId}
+			,#{lCode}
+			,#{ulhCode}
+			,#{ulLevel}
+			,#{ulhReason}
+			,CURDATE()
+		)
+	</insert>
+	
+	<insert id="userInsert3">
+	 	<selectKey keyProperty="uahCode" resultType="String" order="BEFORE">
+ 			SELECT 
+			CONCAT('uah_',DATE_FORMAT(CURDATE(), '%y%m%d'),
+				(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(uah.uah_code), '-', -1),6) 
+				, '00001' 
+				,LPAD(RIGHT(MAX(uah.uah_code),5)+1,5,'0'))))
+			FROM 
+				user_authority_history AS uah
+ 		</selectKey>
+ 		
+		INSERT INTO user_authority_history(
+			 u_id
+			 ,l_code
+			 ,uah_code
+			,uas_code
+			,uah_reason
+			,uah_date
+		)VALUES(
+			 #{uId}
+			,#{lCode}
+			,#{uahCode}
+			,#{uasCode}
+			,#{uahReason}
+			,CURDATE()
+		)
+	</insert>
+	
+	<insert id="userInsert4">
+		<selectKey keyProperty="scCode" resultType="String" order="BEFORE">
+ 			SELECT 
+			CONCAT('sc_',DATE_FORMAT(CURDATE(), '%y%m%d'),
+				(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(sc.sc_code), '-', -1),6) 
+				, '00001' 
+				,LPAD(RIGHT(MAX(sc.sc_code),5)+1,5,'0'))))
+			FROM 
+	study_cate AS sc
+ 		</selectKey>
+ 		
+		INSERT INTO study_cate(
+			 u_id
+			 ,l_code
+			,sc_code
+			,sc_name
+			,sc_division
+			,sc_date
+		)VALUES(
+			 #{uId}
+			,#{lCode}
+			,#{scCode}
+			,#{scName}
+			,#{scDivision}
+			,CURDATE()
+		)
+	</insert>
+	
  </mapper>

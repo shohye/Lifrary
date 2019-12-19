@@ -460,6 +460,7 @@
   	</select>
   	
   	<select id="adUserAuthorityHistorySearchList" resultMap="userAuthorityHistory">
+		
 		SELECT 
 			uah_code
 			, uah.l_code

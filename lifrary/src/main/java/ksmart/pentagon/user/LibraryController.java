@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ksmart.pentagon.vo.StudyCate;
 import ksmart.pentagon.vo.User;
+import ksmart.pentagon.vo.UserAuthorityHistory;
+import ksmart.pentagon.vo.UserLevelHistory;
 
 /*
  * @file   LibraryController.java
@@ -123,12 +126,19 @@ public class LibraryController {
 	
 	//회원가입 등록
 	@PostMapping("/lifrary/userInsert")
-	public String userInsert(HttpSession session, User user) {
+	public String userInsert(HttpSession session, User user, UserLevelHistory userLevelHistory
+								, UserAuthorityHistory userAuthorityHistory, StudyCate studyCate) {
 		System.out.println("userInsert @PostMapping 회원가입폼 ");
 		System.out.println("user 확인 ==>> " + user);
+		System.out.println("userLevelHistory 확인 ==>> " + userLevelHistory);
+		System.out.println("userAuthorityHistory 확인 ==>> " + userAuthorityHistory);
+		System.out.println("studyCate 확인 ==>> " + studyCate);
 		
-		libraryService.userInsert(user);
-		System.out.println("user libraryService 확인바람 ==>> " + libraryService.userInsert(user));
+		libraryService.userInsert1(user);
+		libraryService.userInsert2(userLevelHistory);
+		libraryService.userInsert3(userAuthorityHistory);
+		libraryService.userInsert4(studyCate);
+		
 
 		return "redirect:/";
 	}

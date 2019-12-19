@@ -6,7 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ksmart.pentagon.vo.StudyCate;
 import ksmart.pentagon.vo.User;
+import ksmart.pentagon.vo.UserAuthorityHistory;
+import ksmart.pentagon.vo.UserLevelHistory;
 
 /*
  * @file   LibraryService.java 
@@ -46,10 +49,24 @@ public class LibraryService {
 	/*****************************************************************/
 	
 	//회원가입
-	public int userInsert(User user) {
-		System.out.println("userInsert 서비스진입");
-		System.out.println("userInsert 서비스user ==>>" + libraryMapper.userInsert(user));
-		return libraryMapper.userInsert(user);
+	public int userInsert1(User user) {
+		System.out.println("userInsert1 서비스진입");
+		
+		return libraryMapper.userInsert1(user);
 	}
-	
+	public int userInsert2(UserLevelHistory userLevelHistory) {
+		System.out.println("userInsert2 서비스진입");
+		
+		return libraryMapper.userInsert2(userLevelHistory);
+	}
+	public int userInsert3(UserAuthorityHistory userAuthorityHistory) {
+		System.out.println("userInsert3 서비스진입");
+		
+		return libraryMapper.userInsert3(userAuthorityHistory);
+	}
+	public int userInsert4(StudyCate studyCate) {
+		System.out.println("userInsert4 서비스진입");
+		
+		return libraryMapper.userInsert4(studyCate);
+	}
 }
