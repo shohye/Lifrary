@@ -122,24 +122,42 @@ public class BookStockController {
 	
 				
 	/************************************************************************/
-	
-	
-    // (도서관) 검색후 결과 도서 리스트
-	/****
-	 * @brief  (도서관) 검색후 결과 도서 리스트
-	 * @return /librarypage/bookData/bookDataSearchList
-	 * @author 신다은
-	 */
+   
+    // (도서관) 상세 검색후 결과 도서 리스트
     @GetMapping("/lifrary/bookDataSearchList")
-    public String bookDataSearchList(Model model
+    public String bookDataDetailSearchList(Model model
     		, @RequestParam(value="bclCode",required=false) String bclCode
     		, @RequestParam(value="biName",required=false) String biName
+    		, @RequestParam(value="biPublisher",required=false) String biPublisher
+    		, @RequestParam(value="biIsbn",required=false) String biIsbn
+    		, @RequestParam(value="biAuthor",required=false) String biAuthor
+    		, @RequestParam(value="biDtail",required=false) String biDtail
+    		, @RequestParam(value="biYearStart",required=false) String biYearStart
+    		, @RequestParam(value="biYearEnd",required=false) String biYearEnd
     		, HttpSession session) {
     	
-    	String lCode = (String)session.getAttribute("LIBNUM");
-    	model.addAttribute("searchList", bookStockService.getSearchStockList(bclCode, biName,lCode));
+    	String lCode = (String)session.getAttribute("LIBNUM");    	
+    	
+    	BookInformation bookInformation = new BookInformation();
+    	bookInformation.setBclCode(bclCode);
+    	bookInformation.setlCode(lCode);
+    	bookInformation.setBiName(biName);
+    	bookInformation.setBiPublisher(biPublisher);
+    	bookInformation.setBiIsbn(biIsbn);
+    	bookInformation.setBiAuthor(biAuthor);
+    	bookInformation.setBiDtail(biDtail);
+    	bookInformation.setBiYearStart(biYearStart);
+    	bookInformation.setBiYearEnd(biYearEnd);
+    	
+    	model.addAttribute("searchList", bookStockService.getDetailSearchStockList(bookInformation));
     	model.addAttribute("bclCode", bclCode);
     	model.addAttribute("biName", biName);
+    	model.addAttribute("biIsbn", biIsbn);
+    	model.addAttribute("biPublisher", biPublisher);
+    	model.addAttribute("biAuthor", biAuthor);
+    	model.addAttribute("biDtail", biDtail);
+    	model.addAttribute("biYearStart", biYearStart);
+    	model.addAttribute("biYearEnd", biYearEnd);
     	
     	return "/librarypage/bookData/bookDataSearchList";
     }
@@ -154,15 +172,45 @@ public class BookStockController {
     public String bookDataSearchGrid(Model model
     		, @RequestParam(value="bclCode",required=false) String bclCode
     		, @RequestParam(value="biName",required=false) String biName
+    		, @RequestParam(value="biPublisher",required=false) String biPublisher
+    		, @RequestParam(value="biIsbn",required=false) String biIsbn
+    		, @RequestParam(value="biAuthor",required=false) String biAuthor
+    		, @RequestParam(value="biDtail",required=false) String biDtail
+    		, @RequestParam(value="biYearStart",required=false) String biYearStart
+    		, @RequestParam(value="biYearEnd",required=false) String biYearEnd
     		, HttpSession session) {
     	
-    	String lCode = (String)session.getAttribute("LIBNUM");
-    	model.addAttribute("searchList", bookStockService.getSearchStockList(bclCode, biName,lCode));
+    	String lCode = (String)session.getAttribute("LIBNUM");    	
+    	
+    	BookInformation bookInformation = new BookInformation();
+    	bookInformation.setBclCode(bclCode);
+    	bookInformation.setlCode(lCode);
+    	bookInformation.setBiName(biName);
+    	bookInformation.setBiPublisher(biPublisher);
+    	bookInformation.setBiIsbn(biIsbn);
+    	bookInformation.setBiAuthor(biAuthor);
+    	bookInformation.setBiDtail(biDtail);
+    	bookInformation.setBiYearStart(biYearStart);
+    	bookInformation.setBiYearEnd(biYearEnd);
+    	
+    	model.addAttribute("searchList", bookStockService.getDetailSearchStockList(bookInformation));
     	model.addAttribute("bclCode", bclCode);
     	model.addAttribute("biName", biName);
+    	model.addAttribute("biIsbn", biIsbn);
+    	model.addAttribute("biPublisher", biPublisher);
+    	model.addAttribute("biAuthor", biAuthor);
+    	model.addAttribute("biDtail", biDtail);
+    	model.addAttribute("biYearStart", biYearStart);
+    	model.addAttribute("biYearEnd", biYearEnd);
     	
     	return "/librarypage/bookData/bookDataSearchGrid";
     }
+    
+    
+    
+    
+    
+    
     
     // (도서관) 도서 상세페이지
     /****

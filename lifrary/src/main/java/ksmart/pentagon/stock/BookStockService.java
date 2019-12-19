@@ -111,14 +111,9 @@ public class BookStockService {
 	
 	
 	
-	
-	
-	
-	// (도서관) 대분류, 도서명으로 검색된 소장도서 리스트 출력
-	public List<BookStock> getSearchStockList(String bclCode,String biName,String lCode){
-			
-		List<BookStock> stockList=bookStockMapper.getSearchStockList(bclCode, biName,lCode);
-		
+	// (도서관) 검색된 소장도서 리스트 출력
+	public List<BookStock> getDetailSearchStockList(BookInformation bookInformation){
+		List<BookStock> stockList = bookStockMapper.getDetailSearchStockList(bookInformation);
 		String bsCallNum = "";		
 		if(stockList!= null) {			
 			for(int i=0; i<stockList.size(); i++) {				
@@ -142,6 +137,9 @@ public class BookStockService {
 		}		
 		return stockList;	
 	}
+		
+		
+		
 		
     // (도서관) 도서 상세페이지 - 반납예정일 계산하는 메서드
     public BookLend getReturnDate(String bsCode) {

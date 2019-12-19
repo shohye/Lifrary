@@ -65,7 +65,7 @@
 				      <td class="align-middle" th:text="${r.brIsbn}"></td>
 				      <td class="align-middle" th:text="${r.brYear}"></td>
 				      <td class="align-middle" th:text="${r.brPrice}"></td>
-				      <td class="align-middle" th:text="${r.brAuthor}"></td>
+				      <td class="align-middle" th:text="${#strings.abbreviate(r.brAuthor,7)}"></td>
 				      <td class="align-middle" th:text="${r.brPublisher}"></td>
 				      <td class="align-middle text-center">
 				      	 <span th:if="${r.brProgress eq '취소'}"  class="badge badge-outline-danger">[[${r.brProgress}]]</span>

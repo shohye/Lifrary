@@ -5,14 +5,14 @@
   <mapper namespace="ksmart.pentagon.stock.BookStockMapper">  
  <!--  BookInformation   -->
   	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfoResultMap">
-	    <result column="bi_isbn" property="biIsbn"/>
-	    <result column="bi_name" property="biName"/>
-	    <result column="bi_year" property="biYear"/>
-	    <result column="bi_author" property="biAuthor"/>
+	    <result column="bi_isbn"      property="biIsbn"/>
+	    <result column="bi_name"      property="biName"/>
+	    <result column="bi_year"      property="biYear"/>
+	    <result column="bi_author"    property="biAuthor"/>
 	    <result column="bi_publisher" property="biPublisher"/>
-	    <result column="bi_kdc" property="biKdc"/>
-	    <result column="bi_img" property="biImg"/>
-	    <result column="bi_detail" property="biDtail"/>
+	    <result column="bi_kdc"       property="biKdc"/>
+	    <result column="bi_img"       property="biImg"/>
+	    <result column="bi_detail"    property="biDtail"/>
 	</resultMap>
 
  <!--  BookCate   -->	
@@ -26,25 +26,25 @@
 
  <!--  BookStock   -->	
 	<resultMap type="ksmart.pentagon.vo.BookStock" id="bookStockResultMap">
-	    <result column="bs_code" property="bsCode"/>
-	    <result column="l_code" property="lCode"/>
-	    <result column="u_id" property="uId"/>
-	    <result column="bi_isbn" property="biIsbn"/>
-	    <result column="bcl_code" property="bclCode"/>
-	    <result column="bcm_code" property="bcmCode"/>
-	    <result column="bs_alias_mark" property="bsAliasMark"/>
-	    <result column="bs_writer_mark" property="bsWriterMark"/>
+	    <result column="bs_code"          property="bsCode"/>
+	    <result column="l_code"           property="lCode"/>
+	    <result column="u_id"             property="uId"/>
+	    <result column="bi_isbn"          property="biIsbn"/>
+	    <result column="bcl_code"         property="bclCode"/>
+	    <result column="bcm_code"         property="bcmCode"/>
+	    <result column="bs_alias_mark"    property="bsAliasMark"/>
+	    <result column="bs_writer_mark"   property="bsWriterMark"/>
 	    <result column="bs_secondary_mark" property="bsSecondaryMark"/>
-	    <result column="bs_total_page" property="bsTotalPage"/>  
-	    <result column="bs_stock_state" property="bsStockState"/>
-	    <result column="bs_book_state" property="bsBookState"/>
-	    <result column="bs_lend_state" property="bsLendState"/>
-	    <result column="bs_carry_route" property="bsCarryRoute"/>
-	    <result column="bs_date" property="bsDate"/>
-	    <result column="bs_delete" property="bsDelete"/>
-	    <result column="bs_delete_id" property="bsDeleteId"/>
+	    <result column="bs_total_page"    property="bsTotalPage"/>  
+	    <result column="bs_stock_state"   property="bsStockState"/>
+	    <result column="bs_book_state"    property="bsBookState"/>
+	    <result column="bs_lend_state"    property="bsLendState"/>
+	    <result column="bs_carry_route"   property="bsCarryRoute"/>
+	    <result column="bs_date"          property="bsDate"/>
+	    <result column="bs_delete"        property="bsDelete"/>
+	    <result column="bs_delete_id"     property="bsDeleteId"/>
 	    <result column="bs_delete_reason" property="bsDeleteReason"/>
-	    <result column="bs_delete_date" property="bsDeleteDate"/>
+	    <result column="bs_delete_date"   property="bsDeleteDate"/>
 	    
 	    <collection property="bookInformation" resultMap="bookInfoResultMap"/>
 	    <collection property="bookCate" resultMap="bookCateResultMap"/>
@@ -52,19 +52,19 @@
 	
  <!--  BookLend   -->	
 	<resultMap type="ksmart.pentagon.vo.BookLend" id="bookLendResultMap">
-	    <result column="bl_code" property="blCode"/>
-	    <result column="l_code" property="lCode"/>
-	    <result column="bl_id" property="blId"/>
-	    <result column="bs_code" property="bsCode"/>
-	    <result column="bi_isbn" property="biIsbn"/>
-	    <result column="bi_name" property="biName"/>
-	    <result column="bi_img" property="biImg"/>
-	    <result column="bl_lend_date" property="blLendDate"/>
+	    <result column="bl_code"           property="blCode"/>
+	    <result column="l_code"            property="lCode"/>
+	    <result column="bl_id"             property="blId"/>
+	    <result column="bs_code"           property="bsCode"/>
+	    <result column="bi_isbn"           property="biIsbn"/>
+	    <result column="bi_name"           property="biName"/>
+	    <result column="bi_img"            property="biImg"/>
+	    <result column="bl_lend_date"      property="blLendDate"/>
 	    <result column="bl_extension_date" property="blExtensionDate"/>
-	    <result column="bl_schedule_date" property="blScheduleDate"/>
-	    <result column="bl_return_date" property="blReturnDate"/>
-	    <result column="bl_hold_date" property="blHoldDate"/>
-	    <result column="bl_overdue_days" property="blOverdueDays"/>
+	    <result column="bl_schedule_date"  property="blScheduleDate"/>
+	    <result column="bl_return_date"    property="blReturnDate"/>
+	    <result column="bl_hold_date"      property="blHoldDate"/>
+	    <result column="bl_overdue_days"   property="blOverdueDays"/>
 	</resultMap>
 
 <!--  (어드민) 삭제하지 않은 모든 소장도서 리스트 가져오기   -->		
@@ -217,6 +217,72 @@
 			bs_book_state = '정상'
 		and
 			bi.bi_name Like CONCAT ('%',#{biName},'%')  	
+	</select>
+	
+<!--  (도서관) 책 상태가 정상인 모든 소장도서 중 상세 검색 조건에 맞는 도서 리스트 가져오기     -->		
+	<select id="getDetailSearchStockList" resultMap="bookStockResultMap"
+    		parameterType="ksmart.pentagon.vo.BookInformation">
+        SELECT 
+			  bs.bs_code
+			, bs.u_id
+			, bi.bi_img
+			, bi.bi_name
+			, bi.bi_isbn
+			, bi.bi_year
+			, bi.bi_author
+			, bi.bi_publisher
+			, bi.bi_kdc
+			, bi.bi_detail
+			, bcl.bcl_name
+			, bcm.bcm_name
+			, bs_alias_mark
+			, bs_writer_mark
+			, bs_secondary_mark
+			, bs.bs_total_page
+			, bs.bs_book_state
+			, bs.bs_lend_state
+			, bs.bs_carry_route
+			, bs.bs_date			
+        From  book_stock  bs 
+        left JOIN book_information  bi ON bs.bi_isbn = bi.bi_isbn
+        left JOIN book_cate_large bcl ON bs.bcl_code = bcl.bcl_code
+        left JOIN book_cate_medium bcm ON bs.bcm_code = bcm.bcm_code
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="bclCode != null and bclCode neq ''.toString()"> 
+			        AND bs.bcl_code=#{bclCode}		
+			</if>
+	
+			<if test="lCode != null and lCode neq ''.toString()"> 
+			        AND bs.l_code=#{lCode}		
+			</if>
+			<if test="biName != null and biName neq ''.toString()"> 
+			        AND bi.bi_name Like CONCAT ('%',#{biName},'%')		
+			</if>
+	
+			<if test="biPublisher != null and biPublisher neq ''.toString()"> 
+			        AND bi.bi_publisher Like CONCAT ('%',#{biPublisher},'%')	
+			</if>
+	
+			<if test="biIsbn != null and biIsbn neq ''.toString()"> 
+			        AND bi.bi_isbn=#{biIsbn}		
+			</if>
+	
+			<if test="biAuthor != null and biAuthor neq ''.toString()"> 
+			        AND bi.bi_author Like CONCAT ('%',#{biAuthor},'%')	
+			</if>
+	
+			<if test="biDtail != null and biDtail neq ''.toString()"> 
+			        AND bi.bi_detail Like CONCAT ('%',#{biDtail},'%')		
+			</if>
+	
+			<if test="biYearStart neq null and biYearStart neq ''
+				  and biYearEnd neq null and biYearEnd neq ''.toString()">
+				AND <![CDATA[
+	    				bi.bi_year >= CAST( #{biYearStart} AS DECIMAL)
+   				    and bi.bi_year <= CAST( #{biYearEnd} AS DECIMAL)
+				]]>
+			</if>
+		</trim>
 	</select>
 	
 <!--  (도서관) 도서 상세페이지에 명시할 반납예정일 가져오기   -->		

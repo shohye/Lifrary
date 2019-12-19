@@ -12,6 +12,41 @@ public class BookInformation {
 	private String biDtail;
 	
 	
+	// (도서관) 디테일 검색조건을 위한 변수명 추가
+	private String lCode;
+	private String bclCode;
+	private String biYearStart;
+	private String biYearEnd;
+	
+	
+	public String getlCode() {
+		return lCode;
+	}
+	public void setlCode(String lCode) {
+		this.lCode = lCode;
+	}
+	public String getBclCode() {
+		return bclCode;
+	}
+	public void setBclCode(String bclCode) {
+		this.bclCode = bclCode;
+	}
+	public String getBiYearStart() {
+		return biYearStart;
+	}
+	public void setBiYearStart(String biYearStart) {
+		this.biYearStart = biYearStart;
+	}
+	public String getBiYearEnd() {
+		return biYearEnd;
+	}
+	public void setBiYearEnd(String biYearEnd) {
+		this.biYearEnd = biYearEnd;
+	}
+	
+	/////// 
+	
+	
 	public String getBiDtail() {
 		if(biDtail != null && "".equals(biDtail.trim())) this.biDtail = null;
 		return biDtail;

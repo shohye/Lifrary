@@ -55,7 +55,7 @@
                       <th>도서명</th>
                       <th>저자명</th>
                       <th>결제가격</th>
-                      <th>예정권수</th>               
+                      <th>권수</th>               
                       <th>등록일</th>
                       <th>상세&수정</th> 
                       <th>삭제</th>             
@@ -65,7 +65,7 @@
                   <tbody>
 				    <tr th:each="pl : ${purchaseList}">
 				      <td class="align-middle" th:text="${pl.bookInformation.biIsbn}"></td>
-				      <td class="align-middle" th:text="${#strings.abbreviate(pl.bookInformation.biName,15)}"></td>
+				      <td class="align-middle" th:text="${#strings.abbreviate(pl.bookInformation.biName,22)}"></td>
 				      <td class="align-middle" th:text="${#strings.abbreviate(pl.bookInformation.biAuthor,15)}"></td>
 				      <td class="align-middle" th:text="${pl.bpPrice}"></td>
 				      <td class="align-middle" th:text="${pl.bpBookNum}"></td>
