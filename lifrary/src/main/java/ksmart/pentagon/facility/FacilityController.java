@@ -95,6 +95,11 @@ public class FacilityController {
 		return "adminpage/facility/facilityDetail";
 	}
 	
+	@GetMapping("/admin/facilityReservationSearchList")
+	public String facilityReservationSearchList() {
+		
+		return "adminpage/facility/facilityReservationSearchList";
+	}
 	
 	@GetMapping("/admin/facilityUpdate")
 	public String facilityUpdate() {
