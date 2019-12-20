@@ -104,6 +104,13 @@ public interface AdminMapper {
 	//관리자가 사서 회원 상세보기.
 	public User librarianDetail(String uId);
 	
+	
+	//사서 - 사서 내 정보 수정하기.
+	public User getLibrarianMyUpdate(String getSAID, String libNum);
+	//사서 - 사서 내정보 수정후 상세페이지로 이동
+	public int librarianMyUpdate(User user);
+	
 	//사서 - 사서 내 정보 상세보기.
-	public User librarianMyDetail(String uId);
+	public User librarianMyDetail(String getSAID, String libNum);
+	
 }

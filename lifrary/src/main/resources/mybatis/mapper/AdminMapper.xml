@@ -704,22 +704,58 @@
 	
 	<select id="librarianMyDetail" resultMap="userResultMap" parameterType="String">
 		SELECT 
-			u_id
-			,l_code
-			,u_division
-			,u_pw
-			,u_name
-			,u_birth
-			,u_addr
-			,u_tel
-			,u_email
-			,u_email_agree
-			,u_date
+			 u.u_id
+			,u.l_code
+			,u.u_division
+			,u.u_pw
+			,u.u_name
+			,u.u_birth
+			,u.u_addr
+			,u.u_tel
+			,u.u_email
+			,u.u_email_agree
+			,u.u_date
+			,ll.ll_insert
+			,ll.ll_carry
+			,ll.ll_book_admin
+			,ll.ll_stats
+			,ll.ll_book_stock
 		FROM 
-			user 
+			user AS u
+		INNER JOIN 
+			librarian_level AS ll
+		ON 
+			u.u_id = ll.u_id
 		where
-			u_id=#{uId}
+			u.u_id= #{getSAID}
 	</select>
+	
+    <select id="getLibrarianMyUpdate" resultMap="userResultMap" parameterType="String">
+		SELECT 
+			*
+		FROM 
+			user
+		where 
+			u_id = #{getSAID}
+	</select>
+	
+	<update id="librarianMyUpdate" parameterType="ksmart.pentagon.vo.User" >
+		UPDATE 
+			user
+		SET
+			u_division		=#{uDivision}
+			,u_pw			=#{uPw}
+			,u_name			=#{uName}
+			,u_birth		=#{uBirth}
+			,u_addr			=#{uAddr}
+			,u_tel			=#{uTel}	
+			,u_email		=#{uEmail}
+			,u_email_agree	=#{uEmailAgree}
+			,u_date			=#{uDate}			
+		WHERE 
+			u_id = #{uId}
+    </update>
+    
   	
 
 

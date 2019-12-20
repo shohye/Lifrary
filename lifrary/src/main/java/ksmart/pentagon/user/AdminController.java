@@ -41,13 +41,6 @@ public class AdminController {
 
 	@Autowired private AdminService adminService;
 	
-	/*
-	 * @GetMapping("/test") public String test(Model model) {
-	 * System.out.println("@@@@@@@@@@@@@@@@@컨트롤러 진입@@@@@@@@@@@@@@@@@@");
-	 * model.addAttribute("getUserLevel", adminService.getUserLevel());
-	 * System.out.println("@@@@@@@@@@@@@@@@@서비스 탈출@@@@@@@@@@@@@@@@@@"); return
-	 * "test"; }
-	 */
 	/**
 	 * 어드민 로그인 페이지로 진입
 	 * @param model
@@ -523,36 +516,20 @@ public class AdminController {
 		
 	}
 	
-	/*
-	 * //사서 상세보기 폼
-	 * 
-	 * @GetMapping("/admin/librarianDetail") public String librarianDetail(Model
-	 * model, @RequestParam(value="uId",required=false) String uId) {
-	 * System.out.println("librarianDetail 회원상세보기 화면 ");
-	 * 
-	 * model.addAttribute("librarianDetail", adminService.librarianDetail(uId));
-	 * System.out.println("librarianDetail 확인바람유! >>> " +
-	 * adminService.librarianDetail(uId));
-	 * 
-	 * return "/adminpage/librarian/librarianDetail"; }
-	 */
 	
+	  //사서 상세보기 폼
+	  
+	 @GetMapping("/admin/librarianDetail") 
+	 public String librarianDetail(Model model, @RequestParam(value="uId",required=false) String uId) {
+		 System.out.println("librarianDetail 회원상세보기 화면 ");
+	  
+		 model.addAttribute("librarianDetail", adminService.librarianDetail(uId));
+		 System.out.println("librarianDetail 확인바람유! >>> " + adminService.librarianDetail(uId));
+	  
+		 return "/adminpage/librarian/librarianDetail"; 
+	}
+	 
 	
-	/*
-	 * //사서 상세보기 폼
-	 * 
-	 * @GetMapping("/admin/librarianDetail") public String librarianDetail(Model
-	 * model, HttpSession session) {
-	 * System.out.println("librarianDetail 회원상세보기 화면 ");
-	 * 
-	 * 
-	 * 
-	 * model.addAttribute("librarianDetail", adminService.librarianDetail(uId));
-	 * System.out.println("librarianDetail 확인바람유! >>> " +
-	 * adminService.librarianDetail(uId));
-	 * 
-	 * return "/adminpage/librarian/librarianDetail"; }
-	 */
 	
 	
 	/*****************************************************************************
@@ -567,19 +544,42 @@ public class AdminController {
 	 */
    	//사서 자신 정보 수정폼
 	@GetMapping("/admin/librarianMyUpdate") 
-    public String librarianMyUpdate(Model model) {
-	   System.out.println("librarianMyUpdate 나 사서! 내정보 수정 하는 폼 ");
-	  
+    public String getLibrarianMyUpdate(Model model, HttpSession session) {
+	   System.out.println("getLibrarianMyUpdate 나 사서! 내정보 수정 하는 폼 ");
+	   
+	   String getSAID = (String) session.getAttribute("SAID");	//세션에서 사서ID
+	   String libNum = (String) session.getAttribute("LIBNUM");
+		System.out.println("getSAID 세션에서가져온 아이디  >>>" + getSAID ); 
+		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+	   
+	   model.addAttribute("librarianMyUpdate", adminService.getLibrarianMyUpdate(getSAID, libNum));
+	   System.out.println("librarianMyUpdate 값 넘어오는지 확인바람");
+	   
 	   return "/adminpage/librarian/librarianMyUpdate"; 
-	  
 	}
 	
+	//사서 자신 정보 수정 //제출하다
+	@PostMapping("/admin/librarianMyUpdate")
+	public String librarianMyUpdate(User user) {
+		System.out.println("librarianMyUpdate 나 사서! 내정보 수정 후 상세보기로  ");
+		
+		adminService.librarianMyUpdate(user);
+		return "redirect:/admin/librarianMyDetail";
+	}
+	
+	
+	//사서 자신 정보 상세보기 
 	@GetMapping("/admin/librarianMyDetail")
-	public String librarianMyDetail(Model model, @RequestParam(value="uId",required=false) String uId) {
+	public String librarianMyDetail(Model model, HttpSession session) {
 		System.out.println("librarianMyDetail 나 사서! 내정보  상세보기 ");
 		
-		model.addAttribute("librarianMyDetail", adminService.librarianMyDetail(uId));
-		System.out.println("librarianMyDetail 확인바람유! >>> " + adminService.librarianMyDetail(uId));
+		String getSAID = (String) session.getAttribute("SAID");	//세션에서 사서ID
+		String libNum = (String) session.getAttribute("LIBNUM");
+		System.out.println("getSAID 세션에서가져온 아이디  >>>" + getSAID ); 
+		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+
+		model.addAttribute("librarianMyDetail", adminService.librarianMyDetail(getSAID, libNum));
+		System.out.println("librarianMyDetail 값 넘어오는지 확인바람"+ adminService.librarianMyDetail(getSAID, libNum));
 		
 		return "/adminpage/librarian/librarianMyDetail";
 		

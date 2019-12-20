@@ -77,23 +77,89 @@
                                                                             </div>
                                                                          <div class="form-row">
                                                                             <div class="col-xs-4 col-sm-4">
-                                                                            	<label class="form-label">생년월일</label>
-                                                                                <p id="billing_city_field" class="form-row form-row form-row-wide address-field validate-required" data-o_class="form-row form-row form-row-wide address-field validate-required">
-                                                                                    <input type="text" value="" placeholder="생년월일" name="uBirth" id="uBirth" class="input-text">
+                                                                            	<label class="form-label">생년월일 :  </label>
+                                                                                <p id="billing_company_field" class="form-row form-row form-row-wide">
+                                                                                    <input type="text" value="" autocomplete="organization" placeholder="년도를 입력해주세요" name="year" class="input-text ">
                                                                                 </p>
                                                                             </div>
-                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            <div class="col-md-4 col-sm-4">
+							                                                   <div class="form-group">
+							                                                    <label class="form-label">&nbsp; </label>
+							                                                        <div class="select">	
+							                                                        <select name="month" id="category" class="form-control select-hidden">
+							                                                        	 <option selected="selected">월을 선택해주세요</option>
+							                                                             <option value="01">01월</option>
+																			             <option value="02">02월</option>
+																			             <option value="03">03월</option>
+																			             <option value="04">04월</option>
+																			             <option value="05">05월</option>
+																			             <option value="06">06월</option>
+																			             <option value="07">07월</option>
+																			             <option value="08">08월</option>
+																			             <option value="09">09월</option>
+																			             <option value="10">10월</option>
+																			             <option value="11">11월</option>
+																			             <option value="12">12월</option>
+							                                                        </select>
+							                                                        </div>
+							                                                    </div>
+							                                                </div>
+							                                                <div class="col-md-4 col-sm-4">
+							                                                    <div class="form-group">
+							                                                    <label class="form-label">&nbsp; </label>
+							                                                        <div class="select">	
+							                                                        <select name="day" id="category" class="form-control select-hidden">
+							                                                        	 <option selected="selected">일을 선택해주세요</option>
+							                                                             <option value="01">01일</option>
+																			             <option value="02">02일</option>
+																			             <option value="03">03일</option>
+																			             <option value="04">04일</option>
+																			             <option value="05">05일</option>
+																			             <option value="06">06일</option>
+																			             <option value="07">07일</option>
+																			             <option value="08">08일</option>
+																			             <option value="09">09일</option>
+																			             <option value="10">10일</option>
+																			             <option value="11">11일</option>
+																			             <option value="12">12일</option>
+																			             <option value="13">13일</option>
+																			             <option value="14">14일</option>
+																			             <option value="15">15일</option>
+																			             <option value="16">16일</option>
+																			             <option value="17">17일</option>
+																			             <option value="18">18일</option>
+																			             <option value="19">19일</option>
+																			             <option value="20">20일</option>
+																			             <option value="21">21일</option>
+																			             <option value="22">22일</option>
+																			             <option value="23">23일</option>
+																			             <option value="24">24일</option>
+																			             <option value="25">25일</option>
+																			             <option value="26">26일</option>
+																			             <option value="27">27일</option>
+																			             <option value="28">28일</option>	
+																			             <option value="29">29일</option>
+																			             <option value="30">30일</option>
+																			             <option value="31">31일</option>
+							                                                        </select>
+							                                                        </div>
+							                                                    </div>
+							                                                </div>
+                                                                           </div>
+                                                                      
+                                                                            <div class="col-xs-6 col-sm-6">
                                                                             	<label class="form-label">이메일 : </label>
                                                                                 <p id="billing_postcode_field" class="form-row form-row form-row-last address-field validate-postcode validate-required" data-o_class="form-row form-row form-row-last address-field validate-required validate-postcode">
                                                                                     <input type="text" value="" placeholder="이메일입력 해주세요" id="uEmail" name="uEmail" class="input-text ">
                                                                                 </p>
                                                                             </div>
-                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            <div class="col-xs-6 col-sm-6">
                                                                             	<label class="form-label">핸드폰 : </label>
                                                                                 <p id="billing_phone_field" class="form-row form-row form-row-last validate-required validate-phone">
                                                                                     <input type="tel" value="" autocomplete="tel" placeholder="핸드폰번호 입력해주세요" id="uTel" name="uTel" class="input-text ">
                                                                                 </p>
                                                                             </div>
+                                                                          
                                                                             <div class="col-xs-12 col-sm-6">
                                                                             	<label class="form-label">주소 : </label>
                                                                                 <p id="billing_phone_field" class="form-row form-row form-row-last validate-required validate-phone">
@@ -126,7 +192,7 @@
                                                                         		<input type="submit" data-value="Place order" value="Place order" id="place_order" 
                                                                         				name="woocommerce_checkout_place_order" class="button alt btn btn-default">	
                            													</div>
-                                                                    </div>
+                                                                    
                                                                     <div class="clear"></div>
                                                                 </div>
                                                             </div>

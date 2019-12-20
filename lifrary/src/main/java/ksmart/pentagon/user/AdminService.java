@@ -243,13 +243,25 @@ public class AdminService {
 	
 /**********************************************************************************/
 	
-	//사서 마이페이지 - 내 정보 상세보기
-	public User librarianMyDetail (String uId) {
-		System.out.println("librarianMyDetail 서비스진입");
-		System.out.println("사서 - 내정보 상세보기  확인바람  =>> "+ adminMapper.librarianMyDetail(uId));
-		
-		return adminMapper.librarianMyDetail(uId);
+	
+	//사서 - 사서 내 정보 수정하기.
+	public User getLibrarianMyUpdate(String getSAID, String libNum) {
+		System.out.println("getLibrarianMyUpdate 서비스진입");
+		return adminMapper.getLibrarianMyUpdate(getSAID, libNum);
 	}
+	public int librarianMyUpdate(User user) {
+		System.out.println("librarianMyUpdate 서비스진입");
+		return adminMapper.librarianMyUpdate(user);
+	}
+	
+	//사서 마이페이지 - 내 정보 상세보기
+	public User librarianMyDetail (String getSAID, String libNum) {
+		System.out.println("librarianMyDetail 서비스진입");
+		
+		System.out.println("사서 내정보 상세보기 세션 확인바람>>>> "+ adminMapper.librarianMyDetail(getSAID,libNum));
+		return adminMapper.librarianMyDetail(getSAID,libNum);
+	}
+	
 	
 	
 	

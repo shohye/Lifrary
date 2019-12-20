@@ -45,13 +45,13 @@
             <div class="card">
               <div class="card">
                 <div class="card-datatable table-responsive">
-				  <table class="datatables-demo table table-hover table-bordered">
+				  <table class="datatables-demo table table-striped table-bordered">
 	                <thead>
                   	<tr>
                     	<th>회원번호</th>
                     	<th>아이디</th>
                     	<th>등급명</th>
-                    	<th>이름</th>
+                    	<th>이름</th>	
                     	<th>메일수신동의</th>
                     	<th>권한명</th>
                     	<th>대출상태</th>
@@ -90,11 +90,9 @@
 	               				<i class="ion ion-md-create" title="수정"></i>
 	               					</a>
 	               				</button>&nbsp;&nbsp;
-	               				<button title="" 
-	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
-	               						type="button" data-original-title="Edit">
-	               					<a th:href="@{/admin/adminUserDetail(uId=${l.uId})}" title="상세">
-	               				<i class="ion fas fa-eye" title="상세"></i>
+	               					<a th:href="@{/admin/adminUserDetail(uId=${l.uId})}" data-original-title="Edit" 
+	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" title="상세">
+	               							<i class="ion ion-ios-copy" title="상세"></i>
 	               					</a>
 	               				</button>&nbsp;&nbsp;
 	               				<button title="" 
