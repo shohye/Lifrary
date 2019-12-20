@@ -20,19 +20,19 @@
 			$(document).on('click','.tdClass',function(){
 				console.log($(this).attr('status') + " <== status")
 				console.log($(this).attr('seat') + " <== seat")
+				var tdClass = $('.tdClass'); // tdClass에 선택자넣기
 				
 				if($(this).attr('status') == 'true'){
 					 
-					seatArray.push($(this).attr('seat')) // 없으면 선택한곳의 'seat'를 배열의 맨 뒤쪽에 넣는다.
-					$(this).css("background-color", 'black'); // 없으면 선택한곳의 배경색을 검정으로 바꾼다.
-					$(this).text(seatArray.indexOf($(this).attr('seat'))+1) // 없으면 선택한곳의 text를 배열+1로 변경한다 (1,2,3,4...)
-					$(this).css("color",'white'); // 없으면 선택한곳의 글자색을 화이트로 변경
-					$(this).attr('status','false'); //없으면 선택한곳의 status속성을 false로 변경 
+					seatArray.push($(this).attr('seat')) // status의 상태가 true이면 선택한곳의 'seat'를 배열의 맨 뒤쪽에 넣는다.
+					$(this).css("background-color", 'black'); //  선택한곳의 배경색을 검정으로 바꾼다.
+					$(this).text(seatArray.indexOf($(this).attr('seat'))+1) //  선택한곳의 text를 배열의 인덱스(0)+1로 변경한다 (1,2,3,4...)
+					$(this).css("color",'white'); // 선택한곳의 글자색을 화이트로 변경
+					$(this).attr('status','false'); // 선택한곳의 status속성을 false로 변경 
 					
 				}else if($(this).attr('status') == 'false'){
 					 var con_test = confirm("이미 선택된 좌석입니다. "+
-							"[선택좌석 : '"+$(this).attr('seat')+"'] 제거하려면 확인을 누르세요.");
-					
+							"[선택좌석 : '"+$(this).attr('seat')+"'] \n제거하려면 확인을 누르세요.");
 					if(con_test == true){
 						console.log('확인누름');						
 						seatArray.splice(seatArray.indexOf($(this).attr('seat')),1); //선택된 배열의 인덱스부터 1개를 지움
@@ -41,14 +41,21 @@
 						$(this).css("color",'black'); // 누른곳의 글자색을 블랙으로 변경
 						$(this).attr('status', 'true'); // 누른곳의 status속성을 true로 변경
 						
-						//$('.tdClass').text(seatArray.indexOf()) // 배열에 있는 인덱스 = attr('seat')
-						//중간값을 눌렀을때 어떻게 뒤의 값들을 당겨올지 생각할것.
-						
+						/* 배열의 index에 따른 선택된값의 text 재배치 */	
+						for(var i = 0 ; i < tdClass.length; i++){ // td 엘리먼트만큼 반복 (테이블 갯수만큼 반복)
+							if(tdClass.eq(i).attr('status') == 'false'){ // i번째의 status속성이 false인것 
+								//console.log(tdClass.eq(i).attr('seat') + '<== false인것의 값');  // false인것의 eq(i)번째의 seat속성값.
+								//console.log(tdClass.eq(i).attr('seat')+'     '+seatArray.indexOf(tdClass.eq(i).attr('seat')) + '<== false인, seatArray의 인덱스')
+								
+								tdClass.eq(i).text(seatArray.indexOf(tdClass.eq(i).attr('seat'))+1) 
+								// tdClass.eq(i)번째의 text를 seatArray배열의 tdClass.eq(i)번째의 속성이'seat'인것의 위치(index)+1로 바꾼다.
+							}
+						} 
 					} else if(con_test == false) {
 						console.log('취소누름');
-					} 
+					} 					
+					
 				}
-				
 				console.log(seatArray);
 			})
 			
@@ -86,7 +93,7 @@
 					});
 					 
 					request.fail(function( jqXHR, textStatus ) {
-					  alert( "Request failed: " + textStatus );
+					  alert( "값을 입력후 버튼을 눌러주세요." );
 					});
 				
 			})
