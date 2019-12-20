@@ -47,7 +47,11 @@
             </div>
           </div>
 	   <div>
-	   		<a style="margin-top: 10px;" th:href="@{/admin/noticeInsert(boardLName=${boardLName},boardMName=${'공지사항'})}" value="공지사항" id="noticeInsertBtn" class="btn btn-primary">공지사항등록</a>
+	   		<a th:href="@{/admin/noticeInsert(boardLName=${boardLName},boardMName=${'공지사항'})}" style="color: white"> 
+				            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
+				            	<span class="ion ion-md-add">공지사항추가</span>
+							</button>
+			</a>
 	   </div>
           </div>
           <!-- / Content -->

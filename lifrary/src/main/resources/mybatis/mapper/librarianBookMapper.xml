@@ -21,8 +21,8 @@
  		<result property="biYear" column="bi_year"/>			<!-- 발행년도 -->
  		<result property="biAuthor" column="bi_author"/>		<!-- 저자명 -->
  		<result property="biPublisher" column="bi_publisher"/>	<!-- 발행자 -->
- 		<result property="biKdc" column="bi_kdc"/>				<!-- 류기호 -->
- 		<result property="biDate" column="bi_detail"/>			<!-- 상세설명 -->
+ 		<result property="biKdc" column="bi_kdc"/>				<!-- 분류기호 -->
+ 		<result property="biDtail" column="bi_detail"/>			<!-- 상세설명 -->
  		<result property="biImg" column="bi_img"/>				<!-- 이미지 -->
  		<result property="biDate" column="bi_date"/>			<!-- 등록일 -->
  	</resultMap>
@@ -31,11 +31,33 @@
 	*
 	FROM librarian_book AS lb INNER JOIN 
 	(SELECT
-	bi.*
+	bi.*,bs.bs_code
 	FROM book_information AS bi INNER JOIN book_stock AS bs
 	ON bi.bi_isbn = bs.bi_isbn
 	GROUP BY bi.bi_isbn)AS si
+	ON lb.bs_code = si.bs_code
 	WHERE lb.l_code = #{lCode}
 	GROUP BY lb.lb_code
+ 	</select>
+ 	
+ 	<select id="bookRecommendDetail" resultMap="LibrarianBookList">
+ 		SELECT
+	*
+	FROM librarian_book AS lb INNER JOIN 
+	(SELECT
+	bi.*,bs.bs_code
+	FROM book_information AS bi INNER JOIN book_stock AS bs
+	ON bi.bi_isbn = bs.bi_isbn
+	GROUP BY bi.bi_isbn)AS si
+	ON lb.bs_code = si.bs_code
+	WHERE lb.l_code = '000000' AND lb.lb_code = #{lbCode}
+	GROUP BY lb.lb_code
+ 	</select>
+ 	
+ 	<select id="bookRecommendDelete" parameterType="String">
+ 		DELETE
+ 		FROM
+ 		librarian_book 
+ 		WHERE lb_code= #{lbCode}
  	</select>
  </mapper>

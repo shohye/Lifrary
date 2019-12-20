@@ -8,45 +8,125 @@
 	<th:block layout:fragment="adminContents">
 	<script type="text/javascript" th:src="@{/library/ckeditor/ckeditor.js}"></script>
 		 	<h2 class="font-weight-bold py-3 mb-4">
-              <span class="text-muted font-weight-light"></span>공지사항
+              <span class="text-muted font-weight-light"></span>사서추천 도서
             </h2>
 			<div class="card mb-4">
-				<div style="margin: 30px;" th:each="l : ${board}" >
-				
-					<h4><span th:utext="${l.boardTitle}"></span></h4>
-					<h6><span style="color: #A2A4A6;" th:text="|작성자 : ${board.uId}  ㅣ  등록일 : ${board.boardDate}  ㅣ  조회수 : ${board.boardPageView}|"></span></h6>
-					<hr style="border-color: #dcdcdc;">
-			
-				<div th:utext="${board.boardContent}">
+				<div>
+					<table>
+						<tr>
+							<td style="padding: 20px; padding-left: 60px;">
+								<div>
+									<img th:src="${Llist.bookInformation.biImg}" style="width: 150px; height: 200px;">
+								</div>
+							</td>
+							<td>
+								<h3><strong>제목</strong></h3>
+								<h5><strong>저자명</strong></h5>
+								<h5><strong>출판사</strong></h5>
+								<h5><strong>출판년도</strong></h5>
+							</td>
+							<td style="padding: 20px; padding-left: 40px;">
+								<h3><span style="color: #848484;" >:&ensp; [[${Llist.bookInformation.biName}]]</span></h3>
+								<h5><span style="color: #848484;" >:&ensp; [[${Llist.bookInformation.biAuthor}]]</span></h5>
+								<h5><span style="color: #848484;" >:&ensp; [[${Llist.bookInformation.biPublisher}]]</span></h5>
+								<h5><span style="color: #848484;" >:&ensp; [[${Llist.bookInformation.biYear}]]</span></h5>
+								<ul></ul>
+							</td>
+						</tr>
+					</table>
+				<hr style="border-color: #BDBDBD; width: 90%">
+				<div style="padding: 20px; padding-left: 70px;">
+					<table>
+						<tr>
+							<td style="width: 20px;">
+								<span><h3><a class="btn-primary d-block" style="width: 10px; height: 20px;"></a></h3></span>
+							</td>
+							<td>
+							<h3><span>책 내용</span></h3>
+							</td>
+							<td colspan="2">
+								<span><h3> &emsp;</h3></span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<span>[[${Llist.bookInformation.biDtail}]]</span>
+							</td>
+						</tr>
+					</table>
 				</div>
-				<hr style="border-color: #dcdcdc;">
-			<table>
-				<tr>
-				<td style="width: 130px;">
-				<button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
-	   				<a th:href="@{/admin/noticeUpdate(boardCode=${l.boardCode},boardLName=${'공지사항'})}" style="color: white">
-	            			<span class="ion ion-md-build"> 수정하기</span>
-	  				</a>
-				</button>
-				</td>
-				<td style="width: 130px;">
-				<button type="button" class="btn btn-danger d-block" style="margin-top: 10px;">
-					<a th:href="@{/admin/noticeDelete(boardCode=${l.boardCode},boardLName=${'공지사항'})}" style="color: white"> 
-	          			<span class="ion ion-md-cut"> 삭제하기</span>
-	       			</a>
-				</button>
-				</td>
-				<td>
-				<button type="button" class="btn d-block btn-secondary" style="margin-top: 10px;">
-					<a th:href="@{/admin/noticeSearchList(boardLName=${'공지사항'})}" style="color: white"> 
-	          			<span class="far fa-list-alt"> 리스트 </span>
-	       			</a>
-				</button>
-				
-				</td>
-				</tr>
-			</table>
+				<hr style="border-color: #BDBDBD; width: 90%">
+				<div style="padding: 20px; padding-left: 70px;">
+					<table>
+						<tr>
+							<td style="width: 20px;">
+								<span><h3><a class="btn-primary d-block" style="width: 10px; height: 20px;"></a></h3></span>
+							</td>
+							<td>
+							<h3><span>추천인 서평</span></h3>
+							</td>
+							<td colspan="2">
+								<span><h3> &emsp;</h3></span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<span>[[${Llist.lbContent}]]</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<hr style="border-color: #BDBDBD; width: 90%">
+				<div style="padding: 20px; padding-left: 70px;">
+					<table>
+						<tr>
+							<td style="width: 20px;">
+								<span><h3><a class="btn-primary d-block" style="width: 10px; height: 20px;"></a></h3></span>
+							</td>
+							<td>
+							<h3><span>추천인</span></h3>
+							</td>
+							<td colspan="2">
+								<span><h3> &emsp;</h3></span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<span>[[${Llist.lbId}]]</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<hr style="border-color: #BDBDBD; width: 90%">
+			<div style="padding: 20px; padding-left: 60px;">
+				<table>
+					<tr>
+					<td style="width: 130px;">
+					<button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
+		   				<a th:href="@{#}" style="color: white">
+		            			<span class="ion ion-md-build">수정하기</span>
+		  				</a>
+					</button>
+					</td>
+					<td style="width: 130px;">
+					<button type="button" class="btn btn-danger d-block" style="margin-top: 10px;">
+						<a th:href="@{/admin/bookRecommendDelete(lbCode=${Llist.lbCode})}" style="color: white"> 
+		          			<span class="ion ion-md-cut">삭제하기</span>
+		       			</a>
+					</button>
+					</td>
+					<td>
+					<button type="button" class="btn d-block btn-secondary" style="margin-top: 10px;">
+						<a th:href="@{/admin/bookRecommendList}" style="color: white"> 
+		          			<span class="far fa-list-alt">리스트</span>
+		       			</a>
+					</button>
+					
+					</td>
+					</tr>
+				</table>
 			</div>
+		</div>
 		</div>
 	</th:block>
 	
