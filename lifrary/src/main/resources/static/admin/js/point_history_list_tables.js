@@ -1,9 +1,10 @@
 $(function() {
+
   $('.datatables-demo').dataTable({
 	  ajax: {
 		  serverSide: true,
 	      type : 'POST',
-	      url : '/admin/pointAjax',
+	      url : '/admin/pointHistoryAjax',
 	      dataType: 'JSON',
 	      dataSrc : '',
 	      dataFilter: function(data){
@@ -15,19 +16,25 @@ $(function() {
              return JSON.stringify( json );   
 	       }
 	  },
-	  order: [[ 2, 'desc' ]],
+	  order: [[ 6, 'desc' ]],
 	    columnDefs: [ {
-	    targets: [0,1,3,4,5],
+	    targets: [0,1,2,3,4,7],
 	    orderable: false,
 	    }],
 	    columns: [
+		      { "data": "uNumber" ,
+		    	"defaultContent": ""},
+		      { "data": "uName",
+		    	"defaultContent": ""},
 		      { "data": "pName" ,
 		    	"defaultContent": ""},
 		      { "data": "pStandard",
 		    	"defaultContent": ""},
 		      { "data": "pPoint",
 		    	"defaultContent": ""},
-		      { "data": "pDate",
+		      { "data": "phPoint",
+		    	"defaultContent": ""},
+		      { "data": "phDate",
 		    	"defaultContent": ""},
 		      { "data": "",
 			    "defaultContent": ""},	
@@ -47,11 +54,11 @@ $(function() {
 	     "zeroRecords" : "검색결과가 없습니다"   
 	 },
 	 createdRow: function (row, data, index) {
-		 $('td', row).eq(4).addClass('text-center').html('').append(
-		    '<a href="#?uId='+data.pCode+'" class="btn btn-default btn-xs icon-btn md-btn-flat" title="수정" ><i class="ion ion-md-create"></i></a>'
+		 $('td', row).eq(7).addClass('text-center').html('').append(
+		    '<a href="/admin/adminUserDetail?uId='+data.uId+'" class="btn btn-default btn-xs icon-btn md-btn-flat" title="상세보기" ><i class="ion ion-ios-copy"></i></a>'
 				);
-		 $('td', row).eq(5).addClass('text-center').html('').append(
-			'<a href="#?phCode='+data.pCode+'" class="btn btn-default btn-xs icon-btn md-btn-flat" title="삭제" ><i class="ion ion-ios-cut d-block"></i></a>'
+		 $('td', row).eq(8).addClass('text-center').html('').append(
+			'<a href="/admin/pointHistoryDelete?phCode='+data.phCode+'" class="btn btn-default btn-xs icon-btn md-btn-flat" title="삭제" ><i class="ion ion-ios-cut d-block"></i></a>'
 		);
 		 
 	 }

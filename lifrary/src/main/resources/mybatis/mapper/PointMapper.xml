@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.point.PointMapper">
+  	<resultMap type="ksmart.pentagon.vo.Point" id="point">	         
+	         <result property="pCode" column="p_code"/>	         
+	         <result property="lCode" column="l_code"/>
+	         <result property="uId" column="u_id"/>	         
+	         <result property="uName" column="u_name"/>
+	         <result property="uNumber" column="u_number"/>
+	         <result property="pName" column="p_name"/>	         
+	         <result property="pStandard" column="p_standard"/>
+	         <result property="pPoint" column="p_point"/>
+	         <result property="pDate" column="p_date"/>	              
+	         <result property="phCode" column="ph_code"/>	              
+	         <result property="phPoint" column="ph_point"/>	              
+	         <result property="phDate" column="ph_date"/>	              
+	 </resultMap>
+  
+  	<select id="pointHistorySearchList" parameterType="java.lang.String" resultMap="point">
+  		SELECT
+			ph.*
+			,p.p_name
+			,p.p_standard
+			,p.p_point
+			,u.u_number
+			,u.u_name
+		FROM
+			point_history AS ph
+		INNER JOIN
+			point AS p
+		ON
+			ph.p_code = p.p_code		
+		INNER JOIN
+			user AS u
+		ON
+			ph.u_id = u.u_id		
+		WHERE
+			ph.l_code = #{libNum}
+  	</select>
+  	<delete id="pointHistoryDelete">
+  		DELETE FROM point_history 
+  		WHERE 
+  			ph_code= #{phCode}
+  	</delete>
+  	<select id="pointList" parameterType="java.lang.String" resultMap="point">
+  		SELECT
+			*
+		FROM
+			point
+		WHERE
+		 l_code = #{libNum}
+  	</select>
+  </mapper>
