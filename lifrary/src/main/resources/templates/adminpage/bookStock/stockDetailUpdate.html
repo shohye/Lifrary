@@ -10,19 +10,23 @@
  	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
  	  </th:block>
  	  
+ 	  <th:block layout:fragment="teamHeadScript">
  	  <script type="text/javascript" th:inline="javascript">
 	     $(document).ready(function(){
-		  	  
-		  $('#text').keyup(function() {
-			  
-			  var bsBookState1 = $('#bsBookState1');
-			  bsBookState1.prop('checked',false);
-			  
-	     });		  
+	    	 var etc1 = $('input[name=bsBookState]').eq(0);
+	    	 var etc2 = $('input[name=bsBookState]').eq(1);
+	    	 
+	    	 etc1.focus(function() {				  
+			 $('#text').prop('readonly', true);	    	 
+	    	 });
+	    	 
+	    	 etc2.focus(function() {			  
+			 $('#text').prop('readonly', false);			  
+	     	});		  
 	  }); //// 어떻게해야,,,
 	 
 	 </script>
-	 
+	  </th:block>
  
   <!-- Content -->
       <th:block layout:fragment="adminContents">
@@ -111,19 +115,19 @@
 	                    </div>
 	                    <div class="form-row">
 		                    <div class="form-group col-md-6" id="bookState">
-		   					   <p>책상태__※수정이 필요합니다 잊지말자 !!※</p>	
+		   					   <p>책상태</p>	
 		   					   
 		   					     <label class="custom-control custom-radio">
-		                  		   	<input th:if="${s.bsBookState eq '정상'}" id="bsBookState1" type="radio" class="custom-control-input" checked="">
-		                  		   	<input th:unless="${s.bsBookState eq '정상'}" id="bsBookState1" type="radio" class="custom-control-input" >
-		                  		   	<span class="custom-control-label">정상</span>
+		                  		   	<input th:if="${s.bsBookState eq '정상'}" id="bsBookState" name="bsBookState" type="radio" class="custom-control-input" value="정상" checked="">
+		                  		   	<input th:unless="${s.bsBookState eq '정상'}" id="bsBookState" name="bsBookState" type="radio" class="custom-control-input" value="정상">
+		                  		   		<span class="custom-control-label">정상</span>
 		                        </label>
 		                        <label class="custom-control custom-radio">
-		                  		   	<input th:if="${s.bsBookState ne '정상'}" id="bsBookState2" type="radio" class="custom-control-input" checked="">
-		                  		   	<input th:unless="${s.bsBookState ne '정상'}" id="bsBookState2" type="radio" class="custom-control-input" >
-		                  		   	<span class="custom-control-label">기타</span>
-		                  		   	 <input type="text" th:if="${s.bsBookState eq '정상'}" class="form-control" id="text" name="bsBookState" placeholder="정상이 아닌경우 작성"  >
-	                              <input type="text" th:unless="${s.bsBookState eq '정상'}" class="form-control" id="text" name="bsBookState" th:placeholder="${s.bsBookState}" >
+		                  		   	<input th:if="${s.bsBookState ne '정상'}" id="bsBookState" name="bsBookState" type="radio" class="custom-control-input" checked="">
+		                  		   	<input th:unless="${s.bsBookState ne '정상'}" id="bsBookState" name="bsBookState" type="radio" class="custom-control-input" >
+		                  		   		<span class="custom-control-label">기타</span>
+		                  		   	<input type="text" th:if="${s.bsBookState eq '정상'}" class="form-control" id="text" name="bsBookState" placeholder="정상이 아닌경우 작성" readonly >
+	                                <input type="text" th:unless="${s.bsBookState eq '정상'}" class="form-control" id="text" name="bsBookState" th:placeholder="${s.bsBookState}" >
 		                        </label>		                        		   					 
 		                    </div>
 		                    <div class="form-group col-md-6">

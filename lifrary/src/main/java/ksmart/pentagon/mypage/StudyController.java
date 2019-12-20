@@ -1,7 +1,17 @@
 package ksmart.pentagon.mypage;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import ksmart.pentagon.vo.StudyCate;
 
 /***
  * @file StudyController.java
@@ -13,18 +23,36 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class StudyController {
 
+	@Autowired private StudyService studyService;
+	
 	/**
 	 * @brief 서재 리스트
 	 * @return /librarypage/book/myStudyCateList
 	 * @author 최지혜
 	 */
 	@GetMapping("/lifrary/myStudyList")
-	public String myStudyCateList() {
+	public String myStudyList() {
 		
 		return "/librarypage/book/myStudyList";
 	
 	}
 	
+	/**
+	 * 
+	 * @param session
+	 * @brief 서재 카테고리 리스트
+	 * @return
+	 * @author 최지혜
+	 */
+	@RequestMapping(value="/lifrary/studyCateList", produces = "application/json")
+	public @ResponseBody List<StudyCate> studyCateList(HttpSession session) {
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
+		String sId = (String) session.getAttribute("SID");
+				
+		return studyService.studyCateList(libNum, sId);
+		
+	}
 	
 	/**
 	 * @brief 카테고리 등록

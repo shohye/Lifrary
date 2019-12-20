@@ -8,14 +8,14 @@
        <section class="page-banner services-banner">
             <div class="container">
                 <div class="banner-header">
-                    <h2>Book & Diary</h2>
+                    <h2>Book Request</h2>
                     <span class="underline center"></span>
-                    <p class="lead">매일 매일 적어보는 북다이어리</p>
+                    <p class="lead">희망 도서 신청</p>
                 </div>
                 <div class="breadcrumb">
                     <ul>
                         <li><a th:href="@{/}">Home</a></li>
-                        <li>Book & Diary</li>
+                        <li>Book Request</li>
                     </ul>
                 </div>
             </div>
@@ -27,38 +27,17 @@
                         <div class="container">
                             <div class="row">
                                 <!-- Start: Search Section -->
-                                <section class="search-filters">
-                                    <div class="container">
-                                        <div class="filter-box">
-                                            <h3>내 독서 목표량 진행 상황</h3>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">년도별 목표량</label>
-                                                        <input class="form-control" placeholder="년별 목표량"  type="text" readonly="readonly">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">분기별 목표량</label>
-                                                        <input class="form-control" placeholder="분기별 목표량"  type="text" readonly="readonly">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">월별 목표량</label>
-                                                        <input class="form-control" placeholder="월별목표량" type="text" readonly="readonly">
-                                                    </div>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </section>
+                                
                                 <!-- End: Search Section -->
                             </div>
-                            <div class="row">
-                                <div class="col-md-9 col-md-push-3">
+                            <div class="row" style="margin-top: 30px">
+                                <div class="col-md-9 col-md-push-2">
                                   <p><h2 style="color: black">희망도서 신청 </h2></p>
-                                <div class="card mb-4">                      
-                                    <form class="requestF" action="" method="post">		
+                                <div class="card mb-4">      
+                                	
+                               
+                                
+                               <form class="requestF" action="" method="post">		
 						                 <div class="form-row">					               
 							                 <div class="form-group col-md-6">
 							                   <label class="form-label">도서명</label>
@@ -98,15 +77,13 @@
 							                 </div>						  
 						              	 </div>
 							                  			                  
-					                  <div class="text-right mt-3">
+					                  <div class="text-right mt-3" style="margin-bottom: 40px">
 					                  	<button type="submit" class="btn btn-primary">Submit</button>
 					 				  </div>
 							       </form> 
                                  </div>    
                                 </div>
-                                <!-- 마이페이지 사이드메뉴  -->
-                                <div th:replace="fragments/library/myPageLeftMenu :: myPageLeftMenuFragment"></div>
-                                <!-- 마이페이지 사이드메뉴-->
+                                
                             </div>
                         </div>
                     </div>

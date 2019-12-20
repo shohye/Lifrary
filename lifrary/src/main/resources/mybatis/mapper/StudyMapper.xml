@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.mypage.StudyMapper">
+  
+  <resultMap type="ksmart.pentagon.vo.StudyCate" id="studyCate">
+	<result column="sc_code" property="scCode"/>
+	<result column="l_code" property="lCode"/>
+	<result column="u_id" property="uId"/>
+	<result column="sc_name" property="scName"/>
+	<result column="sc_division" property="scDivision"/>
+	<result column="sc_date" property="scDate"/>
+  </resultMap>
+  <select id="studyCateList" resultMap="studyCate" parameterType="java.lang.String">
+  	SELECT
+		*
+	FROM
+		study_cate
+	WHERE
+		l_code = #{libNum}
+	AND 
+		u_id = #{sId}
+  </select>
+  </mapper>

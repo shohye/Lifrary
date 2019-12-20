@@ -8,14 +8,14 @@
        <section class="page-banner services-banner">
             <div class="container">
                 <div class="banner-header">
-                    <h2>Book & Diary</h2>
+                    <h2>Book Request</h2>
                     <span class="underline center"></span>
-                    <p class="lead">매일 매일 적어보는 북다이어리</p>
+                    <p class="lead">희망 도서 신청</p>
                 </div>
                 <div class="breadcrumb">
                     <ul>
                         <li><a th:href="@{/}">Home</a></li>
-                        <li>Book & Diary</li>
+                        <li>Book Request</li>
                     </ul>
                 </div>
             </div>
@@ -30,8 +30,8 @@
                                
                                 <!-- End: Search Section -->
                             </div>
-                            <div class="row">
-                                <div class="col-md-9 col-md-push-3">
+                            <div class="row" style="margin-top: 30px;">
+                                <div class="col-md-9 col-md-push-2">
                                   <p><h2 style="color: black">희망도서 신청 안내</h2></p>
                                 
                                 <ul class="basic_ul">
@@ -130,14 +130,12 @@
                                 <br>
                                 <div class="entry-content search-buttons align-middle text-center"> 
                                 	<a th:href="@{/lifrary/bookRequestInsert}" class="btn btn-dark-gray">신청하기</a> 
-                                	<a th:href="@{#}" class="btn btn-dark-gray">신청확인</a>
+                                	<a th:href="@{/lifrary/myBookRequestList}" class="btn btn-dark-gray">신청확인</a>
                                 </div>
                                 <br>
                                 <br>
                                 </div>
-                                <!-- 마이페이지 사이드메뉴  -->
-                                <div th:replace="fragments/library/myPageLeftMenu :: myPageLeftMenuFragment"></div>
-                                <!-- 마이페이지 사이드메뉴-->
+                               
                             </div>
                         </div>
                     </div>

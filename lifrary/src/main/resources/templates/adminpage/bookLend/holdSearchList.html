@@ -64,9 +64,10 @@
 	            <td class="align-middle" th:text="${H.uName}"></td>
 	            <td class="align-middle" th:text="${H.blHoldDate}"></td>
 	            <td class="align-middle text-center" th:if = "${H.blReturnDate == null}">
-	            	<a th:href="@{/admin/holdDelete(blCode=${H.blCode}, bsCode=${H.bsCode})}">
+	            	<a th:if ="${session.SALBA eq 'O'}" th:href="@{/admin/holdDelete(blCode=${H.blCode}, bsCode=${H.bsCode})}">
 			    		<span class="badge badge-outline-success">예약취소</span>
-			    	</a>	
+			    	</a>
+			    	<span th:unless ="${session.SALBA eq 'O'}" class="badge badge-outline-success">예약</span>	
                 </td>
                 <td class="align-middle text-center" th:unless = "${H.blReturnDate == null}">
                 	<span class="badge badge-outline-secondary">취소완료</span>

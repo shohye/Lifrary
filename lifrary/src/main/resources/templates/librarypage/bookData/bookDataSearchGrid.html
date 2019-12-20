@@ -3,6 +3,28 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
+     <th:block layout:fragment="customScript">
+     <script type="text/javascript" th:inline="javascript">  
+       $(document).ready(function(){  	
+    	   
+    		// 유효성검사 시작
+    		$('#searchBtn').click(function(){   			
+    			var biName = $('#biName');
+    			console.log(biName.val());
+    			
+    			if(biName.val() == ''){
+    				alert('검색어를 입력해주세요');
+    				biName.focus();
+    				return false;
+    			}
+    			    			
+    			$('#searchForm').submit();
+    			
+    		}); // 유효성검사 끝    		
+    	}); // 처음 function끝
+    	    	
+    	</script>
+  	    </th:block>
 
 
 
@@ -30,37 +52,41 @@
                             <div class="row">
                                 <!-- Start: Search Section -->
                                <section class="search-filters" th:fragment="searchSectionFragment">
-							          <div class="row">
-                					    <div class="col-md-11 col-md-push-2">
-							              <div class="container">
-							                 <div class="filter-box">
-							                      <form th:action="@{/lifrary/bookDataSearchGrid}" method="get">							    
-							                        <div class="col-md-3 col-sm-6">
-							                            <div class="form-group">
-							                                <select name="bclCode" id="bclCode" class="form-control">
-							                                    <option value="bcl001">단행본</option>
-							                                    <option value="bcl002">연속간행물</option>
-							                                    <option value="bcl003">비도서</option>                            
-							                                </select>
-							                            </div>
-							                        </div>
-							                        <div class="col-md-4 col-sm-6">
-							                            <div class="form-group">
-							                                <label class="sr-only" for="keywords">Search by Keyword</label>
-							                                <input id="biName" name="biName" class="form-control" placeholder="Search by Keyword" type="text">
-							                            </div>
-							                        </div>
-							                        <div class="col-md-2 col-sm-6">					                     
-							                            <div class="form-group">
-							                                <input class="form-control" type="submit" value="Search">
-							                            </div>
-							                        </div>
-							                    </form>
-							                </div>
-							            </div>
-							           </div>
-							          </div>
-							        </section>
+						          <div class="row">
+			            					    <div class="col-md-11 col-md-push-1">
+						              <div class="container">
+						                 <div class="filter-box">
+						                      <form id="searchForm" th:action="@{/lifrary/bookDataSearchList}" method="get">							    
+						                        <div class="col-md-3 col-sm-6">
+						                            <div class="form-group">
+						                                <select name="bclCode" id="bclCode" class="form-control">
+						                                    <option value="bcl001">단행본</option>
+						                                    <option value="bcl002">연속간행물</option>
+						                                    <option value="bcl003">비도서</option>                            
+						                                </select>
+						                            </div>
+						                        </div>
+						                        <div class="col-md-4 col-sm-6">
+						                            <div class="form-group">
+						                                <label class="sr-only" for="keywords">Search by Keyword</label>
+						                                <input id="biName" name="biName" class="form-control" placeholder="Search by Keyword" type="text">
+						                            </div>
+						                        </div>
+						                        <div class="col-md-2 col-sm-6">					                     
+						                            <div class="form-group">
+						                                <input id="searchBtn" class="form-control" type="submit" value="검색">
+						                            </div>
+						                        </div>
+						                        <div class="col-md-2 col-sm-6" style="margin-top: 5px">					                     
+						                                <a th:href="@{/lifrary/bookDataSearchDetail}" class="btn btn-dark-gray">상세검색</a>			             
+						                        </div>
+						                        
+						                    </form>
+						                 </div>
+						               </div>
+						             </div>
+						           </div>
+						        </section>
                                 <!-- End: Search Section -->
                             </div>
                             <div class="row">
@@ -69,7 +95,7 @@
                                         <div class="row">                                            
                                             <div class="col-md-4 col-sm-4">
                                                 <select name="orderby">
-                                                    <option selected="selected">Default sorting</option>
+                                                    <option selected>Default sorting</option>
                                                     <option>Sort by popularity</option>
                                                     <option>Sort by rating</option>
                                                     <option>Sort by newness</option>
@@ -79,18 +105,20 @@
                                             <div class="col-md-4 col-sm-4">
                                                 <div class="filter-result">Showing items 1 to 9 of 19 total</div>
                                             </div>
-                                            <div class="col-md-3 col-sm-3 pull-right">
+                                            <div class="col-md-3 col-sm-3 pull-right" >
                                                 <div class="filter-toggle">
                                                 	<input type="hidden" name="bclCode" value="${bclCode}">
 				                                	<input type="hidden" name="biName" value="${biName}">				                                 
                                                     <a th:href="@{/lifrary/bookDataSearchGrid}" class="active"><i class="glyphicon glyphicon-th-large"></i></a>
-                                                    <a th:href="@{/lifrary/bookDataSearchList(bclCode=${bclCode},biName=${biName})}"><i class="glyphicon glyphicon-th-list"></i></a>
+                                                    <a th:href="@{/lifrary/bookDataSearchList(bclCode=${bclCode},biName=${biName},biPublisher=${biPublisher},
+                                                          biIsbn=${biIsbn},biAuthor=${biAuthor},biDtail=${biDtail},biYearStart=${biYearStart},biYearEnd=${biYearEnd})}">
+                                     					<i class="glyphicon glyphicon-th-list"></i></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     
-                                    <div class="books-gird">
+                                    <div class="books-gird" style="margin-top: 5px">
                                         <ul>
                                             <li th:each="sl : ${searchList}">
                                                 <figure>

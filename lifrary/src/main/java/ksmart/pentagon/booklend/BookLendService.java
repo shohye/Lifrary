@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ksmart.pentagon.codeup.CodeUp;
 import ksmart.pentagon.vo.BookLend;
 import ksmart.pentagon.vo.BookStock;
 import ksmart.pentagon.vo.User;
@@ -28,7 +29,6 @@ public class BookLendService {
 			if(overdueDays < 0) {
 				bl.setBlOverdueDays(0);
 			}
-			
 		}
 		return bookLend;
 		
@@ -159,7 +159,7 @@ public class BookLendService {
 	public int lendInsert(BookLend booklend) {
 		int result = 0;
 		
-		String recode = Code.codeCreate(bookLendMapper.maxCode());
+		String recode = CodeUp.codeMaker(bookLendMapper.maxCode());
 		
 		booklend.setBlCode(recode); 
 		
@@ -236,4 +236,27 @@ public class BookLendService {
 		return result;
 		
 	}
+	
+	//회원 대출 리스트
+	public List<BookLend> myLendList(String libNum, String blId) {
+		List<BookLend> bookLend = bookLendMapper.myLendList(libNum, blId);
+		
+		//연체일이 0보다 작은 경우 0으로 셋팅
+		for(int i = 0; i < bookLend.size(); i++) {
+			BookLend bl = bookLend.get(i);
+			int overdueDays= bl.getBlOverdueDays();
+			if(overdueDays < 0) {
+				bl.setBlOverdueDays(0);
+			}
+		}
+		return bookLend;
+	}
+	
+	//회원 예약 리스트
+	public List<BookLend> myHoldList(String libNum, String blId){
+		
+		return bookLendMapper.myHoldList(libNum, blId);
+	
+	}
+	
 }

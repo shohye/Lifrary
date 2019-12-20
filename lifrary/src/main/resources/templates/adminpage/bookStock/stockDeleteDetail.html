@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+	  
+	  <th:block layout:fragment="adminHeadAdd">
+	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
+ 	  </th:block>
+ 
+ 
+  <!-- Content -->
+         <th:block layout:fragment="adminContents">
+         	<div class="layout-content">
+         		<div class="container-fluid flex-grow-1 container-p-y" >
+        
+         			<div th:with="d=${deleteDetail}" class="media align-items-center py-3 mb-3">
+		              <img th:src="${d.bookInformation.biImg}" alt="이미지를 찾을 수 없습니다" class="d-block ui-w-100 rounded-circle">
+		              <div class="media-body ml-4" > 
+		                <h4 class="font-weight-bold mb-0" th:text="${d.bookInformation.biName}"></h4>
+		                <br>
+		                <div class="text-muted mb-2" style="font-size:20px;">삭제자:
+		                	<span th:text="${d.bsDeleteId}" ></span>
+		                </div>              
+		              </div>
+		            </div>
+		            <div class="card mb-4">
+		              <div class="card-body">
+		                <table th:with="d=${deleteDetail}" class="table user-view-table m-0" > <!-- th:with="m = ${#}" -->
+		                  <tbody>
+		                  	<tr>
+		                      <td style="font-size:20px;">삭제사유:</td><td style="font-size:20px;" th:text="${d.bsDeleteReason}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td style="font-size:20px;">삭제일자:</td><td style="font-size:20px;" th:text="${d.bsDeleteDate}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>도서코드:</td><td th:text="${d.bsCode}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>ISBN:</td><td th:text="${d.bookInformation.biIsbn}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>청구기호:</td><td th:text="${d.bsCallNum}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>저자:</td><td th:text="${d.bookInformation.biAuthor}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>발행자:</td><td th:text="${d.bookInformation.biPublisher}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>발행년도:</td><td th:text="${d.bookInformation.biYear}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>총페이지수:</td><td th:text="|${d.bsTotalPage}p|"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>상세내용:</td><td th:text="${d.bookInformation.biDtail}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>반입구:</td><td th:text="${d.bsCarryRoute}"></td>
+		                    </tr> 
+		                  </tbody>
+		                  
+		                </table>
+		                
+		                 <div class="text-right mt-3" th:with="s=${stockDetail}">
+		                  	<button type="submit" class="btn btn-primary">
+		                  		<a th:href="@{/admin/stockDeleteList}" style="color: white">리스트로 이동</a>
+		                  	</button>
+		                  	<button type="submit" class="btn btn-primary">
+		                  		<a th:href="@{#}" style="color: white">복원</a>
+		                  	</button>
+		 				  </div>
+		              </div>
+		              
+		              
+		            </div>
+         	
+    
+         		</div>
+         	</div>
+
+          </th:block>
+          
+          <!-- / Content -->
+         
+          <!-- script -->
+          <th:block layout:fragment="pageScript">
+
+		  <!-- addLibs -->
+		  <script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		
+		  <!-- addDemo -->
+		  <script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
+		  </th:block>
+  		  <!-- /script -->
+  		  
+  		  
+          
+</html>

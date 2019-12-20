@@ -4,4 +4,41 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="ksmart.pentagon.facility.FacilityMapper">
   
+  <resultMap type="ksmart.pentagon.vo.Facility" id="FResultMap">
+  	<result property="fCode" column="f_code"/>
+  	<result property="lCode" column="l_code"/>
+  	<result property="uId" column="u_id"/>
+  	<result property="fName" column="f_name"/>
+  	<result property="fKinds" column="f_kinds"/>
+  	<result property="fLocation" column="f_location"/>
+  	<result property="fAccommodate" column="f_accommodate"/>
+  	<result property="fGender" column="f_gender"/>
+  	<result property="fTerm" column="f_term"/>
+  	<result property="fImg" column="f_img"/>
+  	<result property="fDate" column="f_date"/>
+  </resultMap>
+  
+  <!-- 시설종류가 xx 인것의 리스트를 출력 -->
+  <select id="getFacilityList" parameterType="String" resultMap="FResultMap">
+  	SELECT 
+	*
+	FROM 
+		facility
+	WHERE
+		l_code = #{libNum}
+	<if test="fKinds != '전체'">
+		AND f_kinds = #{fKinds}
+	</if>
+  </select>
+  
+  <!-- fCode 1개를 조회하여 상세정보 출력 -->
+  <select id="getFacility" parameterType="String" resultMap="FResultMap">
+	SELECT 
+		*
+	FROM 
+		facility
+	WHERE
+		f_code=#{fCode} AND l_code= #{libNum}
+  </select>
+  
   </mapper>
