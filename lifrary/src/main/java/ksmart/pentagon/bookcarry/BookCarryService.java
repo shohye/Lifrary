@@ -15,6 +15,7 @@ import org.xml.sax.SAXException;
 import ksmart.pentagon.vo.BookCarry;
 import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.BookRequest;
+import ksmart.pentagon.vo.User;
 
 @Service
 public class BookCarryService {
@@ -50,12 +51,27 @@ public class BookCarryService {
 	}
 	// 오더 도서 업데이트
 	public int updateOrder1(BookCarry bookCarry) {
-		return bookCarryMapper.updateOrder1(bookCarry);
+		return bookCarryMapper.updateOrder(bookCarry);
 	}
 	public int updateOrder2(BookInformation bookInformation) {
-		return bookCarryMapper.updateOrder2(bookInformation);
+		return bookCarryMapper.updateBookInformation(bookInformation);
 	}
 	// 오더 도서 인서트
+		public void insertOrder(BookCarry bookCarry,BookInformation bookInformation) {
+			int result = checkBookInfo(bookInformation.getBiIsbn());
+			
+			if(result == 1) {
+				// 오더도서 인서트 ver1
+				bookCarryMapper.insertBookInformation(bookInformation);
+				bookCarryMapper.insertOrderBookCarry(bookCarry);
+				
+			}else if(result == 2) {
+				// 오더도서 인서트 ver2
+				bookCarryMapper.updateBookInformation(bookInformation);
+				bookCarryMapper.insertOrderBookCarry(bookCarry);
+			}
+
+		}
 	/*
 	public void insertOrder(BookCarry bookCarry,BookInformation bookInformation) {
 		Map<String,Object> orderMap = new HashMap<String,Object>();		
@@ -101,13 +117,30 @@ public class BookCarryService {
 	}
 	// 구매 도서 업데이트
 	public int updatePurchase1(BookCarry bookCarry) {
-		return bookCarryMapper.updatePurchase1(bookCarry);
+		return bookCarryMapper.updatePurchase(bookCarry);
 	}
 	public int updatePurchase2(BookInformation bookInformation) {
-		return bookCarryMapper.updatePurchase2(bookInformation);
+		return bookCarryMapper.updateBookInformation(bookInformation);
 	}
 	
 	
+	// 구매도서 인서트 
+	public void insertPurchase(BookCarry bookCarry,BookInformation bookInformation) {
+		int result = checkBookInfo(bookInformation.getBiIsbn());
+		
+		if(result == 1) {
+			// 구매도서 인서트 ver1
+			bookCarryMapper.insertBookInformation(bookInformation);
+			bookCarryMapper.insertPurchaseBookCarry(bookCarry);
+			
+		}else if(result == 2) {
+			// 구매도서 인서트 ver2
+			bookCarryMapper.updateBookInformation(bookInformation);
+			bookCarryMapper.insertPurchaseBookCarry(bookCarry);
+		}
+
+	}
+		
 	/*************************************************************/		
 	
 	
@@ -122,6 +155,10 @@ public class BookCarryService {
 	// 기부자 업데이트
 	public int updateDonation(BookCarry bookCarry) {
 		return bookCarryMapper.updateDonation(bookCarry);
+	}
+	// 기부자 인서트
+	public int insertDonation(BookCarry bookCarry) {
+		return bookCarryMapper.insertDonation(bookCarry);
 	}
 	
 	
@@ -155,8 +192,8 @@ public class BookCarryService {
 	}
 	
 	// 희망도서 한개정보 출력 => 상세정보 회면
-	public BookRequest getRequestDatail(String uId) {
-		BookRequest br = bookCarryMapper.getRequestDatail(uId);
+	public BookRequest getRequestDatail(String brCode) {
+		BookRequest br = bookCarryMapper.getRequestDatail(brCode);
 		
 		String cancelReason =null;
 		String opinion =null;
@@ -179,8 +216,21 @@ public class BookCarryService {
 		
 		return br;		
 	}
+	// 희망도서 인서트
+	public int insertRequest(BookRequest bookRequest) {
+		return bookCarryMapper.insertRequest(bookRequest);		
+	}
 	
 	
+
+    /*************************************************************/	
+	// 사서 비밀번호 가져오는 AJAX
+	public	int deleteOrder(String said, String write , String boCode) {
+		int result = bookCarryMapper.deleteOrder(said, write, boCode);
+		System.out.println("deleteOrder result=>"+result);
+		return result;
+	}
+		
 	/**
 	 * @throws ParserConfigurationException 
 	 * @throws IOException 
@@ -250,6 +300,7 @@ public class BookCarryService {
 			}
 		 		      
 		}
+		
 		return bi;
 
 	}

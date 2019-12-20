@@ -9,29 +9,27 @@ public class BookCarry {
 	private String boCode;
 	private String boCompany;
 	private int boBookNum;
-	private int boPrice;
+	private String boPrice;
 	private String bosState;
 	private String boDate;    // 주문
 	
 	private String bpCode;
-	private int bpPrice;
+	private String bpPrice;
 	private int bpBookNum;
 	private String bpAdditional;
 	private String bpDate;    // 구매	
 		
 	private BookInformation bookInformation;
 	
-	private String bdnCode;      //bdn_code
-	private String bdnName;     //bdn_name
-	private String bdnAddr;     //bdn_addr
-	private String bdnTel;      //bdn_tel
-	private String bdnNum;      //bdn_num
-	private String bdnPersonal; //bdn_personal
-	private String bdnSticker;  //bdn_sticker
+	private String bdnCode;         //bdn_code
+	private String bdnName;         //bdn_name
+	private String bdnAddr;         //bdn_addr
+	private String bdnTel;          //bdn_tel
+	private String bdnNum;          //bdn_num
+	private String bdnPersonal;     //bdn_personal
+	private String bdnSticker;      //bdn_sticker
 	private String bdnHonorAgree;   //bdn_honor_agree
-	private String bdnDate;     //bdn_date    => 기증자	
-	
-
+	private String bdnDate;         //bdn_date    => 기증자	
 	public String getUid() {
 		return uid;
 	}
@@ -68,10 +66,10 @@ public class BookCarry {
 	public void setBoBookNum(int boBookNum) {
 		this.boBookNum = boBookNum;
 	}
-	public int getBoPrice() {
+	public String getBoPrice() {
 		return boPrice;
 	}
-	public void setBoPrice(int boPrice) {
+	public void setBoPrice(String boPrice) {
 		this.boPrice = boPrice;
 	}
 	public String getBosState() {
@@ -92,10 +90,10 @@ public class BookCarry {
 	public void setBpCode(String bpCode) {
 		this.bpCode = bpCode;
 	}
-	public int getBpPrice() {
+	public String getBpPrice() {
 		return bpPrice;
 	}
-	public void setBpPrice(int bpPrice) {
+	public void setBpPrice(String bpPrice) {
 		this.bpPrice = bpPrice;
 	}
 	public int getBpBookNum() {
@@ -116,7 +114,6 @@ public class BookCarry {
 	public void setBpDate(String bpDate) {
 		this.bpDate = bpDate;
 	}
-	
 	public BookInformation getBookInformation() {
 		return bookInformation;
 	}
@@ -178,6 +175,18 @@ public class BookCarry {
 		this.bdnDate = bdnDate;
 	}
 	
+	@Override
+	public String toString() {
+		return "BookCarry [uid=" + uid + ", lCode=" + lCode + ", biIsbn=" + biIsbn + ", boCode=" + boCode
+				+ ", boCompany=" + boCompany + ", boBookNum=" + boBookNum + ", boPrice=" + boPrice + ", bosState="
+				+ bosState + ", boDate=" + boDate + ", bpCode=" + bpCode + ", bpPrice=" + bpPrice + ", bpBookNum="
+				+ bpBookNum + ", bpAdditional=" + bpAdditional + ", bpDate=" + bpDate + ", bookInformation="
+				+ bookInformation + ", bdnCode=" + bdnCode + ", bdnName=" + bdnName + ", bdnAddr=" + bdnAddr
+				+ ", bdnTel=" + bdnTel + ", bdnNum=" + bdnNum + ", bdnPersonal=" + bdnPersonal + ", bdnSticker="
+				+ bdnSticker + ", bdnHonorAgree=" + bdnHonorAgree + ", bdnDate=" + bdnDate + "]";
+	}
+	
+
 	
 	
 	

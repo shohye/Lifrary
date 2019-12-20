@@ -1,4 +1,4 @@
-package ksmart.pentagon.stock;
+package ksmart.pentagon.bookstock;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -254,39 +254,6 @@ public class BookStockController {
     }
 
     
-    /************************************************************************/
-    
-    // (도서관) 희망도서 신청 안내 화면
-    /****
-	 * @brief  (도서관) 희망도서 신청 안내 화면
-	 * @return  /librarypage/book/bookRequestIntro
-	 * @author 신다은
-	 */
-    @GetMapping("/lifrary/bookRequestIntro")
-    public String bookRequestIntro() {
-    	return "/librarypage/book/bookRequestIntro";
-    }
-    
-    // (도서관) 희망도서 신청 폼
-    /****
-	 * @brief (도서관) 희망도서 신청 폼  
-	 * @return  /librarypage/book/bookRequestInsert
-	 * @author 신다은
-	 */
-    @GetMapping("/lifrary/bookRequestInsert")
-    public String bookRequestInsert() {
-    	return "/librarypage/book/bookRequestInsert";
-    }
-    // (도서관) 마이페이지 희망도서 신청 리스트
-    /****
-	 * @brief   (도서관) 마이페이지 희망도서 신청 리스트
-	 * @return /librarypage/book/myBookRequestList 
-	 * @author 신다은
-	 */
-    @GetMapping("/lifrary/myBookRequestList")
-    public String myBookRequestList() {
-    	return "/librarypage/book/myBookRequestList";
-    }
     
     
     /***********************************************************************/

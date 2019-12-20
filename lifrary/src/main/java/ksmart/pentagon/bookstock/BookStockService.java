@@ -1,4 +1,4 @@
-package ksmart.pentagon.stock;
+package ksmart.pentagon.bookstock;
 
 import java.io.IOException;
 import java.util.List;

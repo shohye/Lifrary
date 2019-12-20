@@ -1,4 +1,4 @@
-package ksmart.pentagon.stock;
+package ksmart.pentagon.bookstock;
 
 import java.util.List;
 

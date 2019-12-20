@@ -13,10 +13,12 @@
 				var biIsbn = $('#biIsbn').val();
 				console.log($.trim(biIsbn));
 				
+				var trimBiIsbn = $.trim(biIsbn);
+				
 				var request = $.ajax({
 					url:"/getBookInfo",
 					method: "POST",
-					data : { 'biIsbn' : biIsbn }, 
+					data : { 'biIsbn' : trimBiIsbn }, 
 					dataType: "json"
 				});
 				 
@@ -149,7 +151,7 @@
 	                  </div>
 	                  <div class="form-group col-md-4">
 	                    <label class="form-label">주문권수</label>
-	                    <select class="form-control" id="boBookNum">
+	                    <select class="form-control" id="boBookNum" name="boBookNum">
 	                    	<option value="0" selected>::주문권수를 선택해주세요::</option>
 	                   		<option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
 	                    </select>

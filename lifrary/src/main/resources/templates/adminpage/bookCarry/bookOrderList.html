@@ -6,25 +6,55 @@
 	  
 <!-- headAdd(Libs&page) -->
   
-	  <th:block layout:fragment="adminHeadAdd">
-	  
+	  <th:block layout:fragment="adminHeadAdd">	  
 	  <!-- addLibs -->
 	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
 	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/select.dataTables.min.css}">
-	  <!-- addPage -->
-	  
+	  <!-- addPage -->	  
 	    <script th:src="@{/admin/vendor/js/jquery-3.3.1.min.js}"></script>
 	    <script th:src="@{/admin/vendor/js/jquery.dataTables.js}"></script>
 	    <script th:src="@{/admin/vendor/js/dataTables.responsive.min.js}"></script>
 	    <script th:src="@{/admin/vendor/js/dataTables.buttons.min.js}"></script>
 		<script th:src="@{/admin/vendor/js/buttons.html5.min.js}"></script>
 		<script th:src="@{/admin/js/tables_datatables_order.js}"></script>
-	   
-	     
-	 
 	  </th:block>
 	  
 <!-- /headAdd(Libs&page) --> 
+
+     <th:block layout:fragment="teamHeadScript">
+     <script type="text/javascript" th:inline="javascript">  
+       $(document).ready(function(){  	
+    	   
+    	   $('#deleteBtn').click(function(){
+    		   var SAID = [[${session.SAID}]]
+    		   console.log(SAID);
+    		   var write = $('#uPw').val();
+    		   console.log(write);
+    		   var boCode = $('#boCode').val();
+    		   
+    		   var request = $.ajax({
+					url:"/deleteOrder",
+					method: "POST",
+					data : { 'said' : SAID , 'write' : write ,'boCode' :boCode }, 
+					dataType: "text"
+				});
+				 
+				request.done(function( data ) {
+
+					 console.log(result);
+					
+						
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				}); 
+				
+    	   });   				
+    	}); // 처음 function끝
+    	    	
+    	</script>
+  	    </th:block>
  
  
   <!-- Content -->
@@ -46,9 +76,7 @@
             <div class="card">
               
               <div class="card-datatable table-responsive">
-                <table id="myTable" class="datatables-demo table table-striped table-bordered">
-                
-               
+                <table id="myTable" class="datatables-demo table table-striped table-bordered">               
                 
                   <thead>
                     <tr>
@@ -67,6 +95,7 @@
                   
                   <tbody>
 				    <tr th:each="ol : ${orderList}">
+				 
 				      <td class="align-middle" th:text="${ol.bookInformation.biIsbn}"></td>
 				      <td class="align-middle" th:text="${#strings.abbreviate(ol.bookInformation.biName,20)}"></td>
 				      <td class="align-middle" th:text="${#strings.abbreviate(ol.bookInformation.biAuthor,12)}"></td>
@@ -79,11 +108,13 @@
 				      </td >				      
 				      <td th:text="${ol.boDate}"></td>
 				      <td class="align-middle text-center">
+				      
 						   <a th:href="@{/admin/bookOrderUpdate(boCode=${ol.boCode})}" class="btn btn-default btn-xs icon-btn md-btn-flat"title="수정">
 							 <i class="ion ion-md-create" title="수정"></i>
 						   </a>
 					</td>
-					<td class="align-middle text-center">     
+					<td class="align-middle text-center">    
+					  <input type="hidden" name="boCode" id="boCode" th:value="${ol.boCode}">
                       <button type="button" class="btn btn-default btn-xs icon-btn md-btn-flat" data-toggle="modal" data-target="#modals-default">
                       		<i class="ion ion-ios-cut d-block"  title="삭제"></i>
                       </button>            
