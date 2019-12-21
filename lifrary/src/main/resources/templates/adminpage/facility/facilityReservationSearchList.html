@@ -41,7 +41,7 @@
   				var fKinds = $(this).val(); 													//누른 라디오버튼의 value를 fKinds에 저장
   				if(fKinds == '전체'){															//value가 '전체'이면
 	  				location.href = '/admin/facilityReservationSearchList.html';				//fKinds가 없이 경로로 보내줌. (컨트롤러에서 전체 리스트 가져옴)
-  				}else{																			//value가 '전체가 아니면
+  				}else{																			//value가 '전체'가 아니면
 	  				location.href = '/admin/facilityReservationSearchList.html?fKinds='+fKinds;	//fKinds를 get방식으로 보내줌. (컨트롤러에서 받은 종류의 리스트를 가져옴)
   				}
   			})

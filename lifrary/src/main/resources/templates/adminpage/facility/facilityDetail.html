@@ -8,7 +8,69 @@
 	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
  	  </th:block>
  
- 
+ 		 <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+	  <script th:inline="javascript">
+			$(document).ready(function(){
+				
+				/* Detail페이지에 테이블 뿌려주기 */
+				var fRow = [[${facility.fRow}]];
+				var fCol = [[${facility.fCol}]];				
+				var fRowfCol = fRow * fCol	;							  // 상세보기 페이지에서 들어왔을때 좌석이 있는지없는지 체크하기위한 변수. 
+																		  // 0이면 좌석 선택을 안하는 스터디룸, 강연실
+																		  // 0이 아니면 좌석을 선택하는 열람실, 사물함
+																		  
+				if(fRowfCol == 0) { 									  // fRowfCol이 0인경우 = 좌석선택을 안해서 자동으로 DB에 0이 들어간 경우.
+					console.log('스터디룸, 강연실을 선택하였습니다.')
+					//이미지 출력해주면 될거같습니다.
+					//<img th:src="@{아 여기는 참 경로.. 경로는 어차피 DB에 저장되있지 참 .. ^^}"></img>
+				} else{ 												  // 좌석이 있는경우는 0이 아닐것이므로, 열람실  / 사물함
+					console.log('열람실, 사물함을 선택하였습니다.')
+					
+					var fSeat = [[${facility.fSeatOrImg}]];   			  // 좌석이 있는경우 DB에 저장되어있는 문자열을 가져옵니다.( ex> 1-1,2-2,3-3 )
+					var seatArray = fSeat.split(',');					  // , 를 기준으로 배열에 박아넣습니다.( ex> ['1-1','2-2','3-3'] )
+					
+					var tableDiv = $('#tableDiv');
+					var contents = '';
+					
+					
+					contents += '<table border="2">';
+					for(var i = 1; i <= fCol; i++){
+						contents += '<tr>';
+						for(var j = 1; j <= fRow; j++){
+							contents += '<td class="tdClass" style="color:black; text-align: center; font-size:12px;  width: 40px; height: 35px;"'+ 
+							'seat="'+i+'-'+j+'" status="true">'+i+'-'+j+'</td>';
+						}
+						contents += '</tr>';
+					}
+					contents += '</table>';
+					
+					tableDiv.html(contents); // 만들어진 테이블을 뿌려줌
+					
+					var tdClass = $('.tdClass'); // 테이블이 만들어진 후 변수에 대입해줌.
+					
+					
+				/* 뿌려준 테이블에 가져온 배열(선택된 좌석)색칠해주기 */
+				 for(var i = 0; i < tdClass.length; i++){
+					if(seatArray.indexOf(tdClass.eq(i).attr('seat')) >= 0){ // 배열에서 tdClass의 seat값과 같은 게있는가.
+					//console.log(tdClass.eq(i).attr('seat') + ' <= 배열안에 tdClass의 seat와 같은것');
+					tdClass.eq(i).css("background-color",'black');
+					tdClass.eq(i).css("color",'white');
+					tdClass.eq(i).text(seatArray.indexOf(tdClass.eq(i).attr('seat'))+1);
+					}else{
+						tdClass.eq(i).css("color",'white')
+					}
+				} 
+
+				
+				
+				}
+			})
+			
+	  </script>
+  	
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
   <!-- Content -->
          <th:block layout:fragment="adminContents" th:with="f=${facility}">
          	<div class="layout-content">
@@ -22,11 +84,12 @@
 		                </div>
 		              </div>
 		            </div>
+		            
 		            <div class="card mb-4">
 		              <div class="card-body">
 		                <table class="table user-view-table m-0" > <!-- th:with="m = ${#}" -->
 		                  <tbody>
-		                    
+		                     
 		                    <tr>
 		                      <td>시설명:</td><td th:text="${f.fName}"></td>
 		                    </tr>
@@ -44,17 +107,24 @@
 		                    </tr>
 		                    <tr>
 		                      <td>최대 사용시간:</td><td th:text="${f.fTerm}"></td>
-		                    </tr>
-		                    <tr>
-		                      <td>좌석 배치:</td><td><div style="width: 500px; height: 500px; border: 2px; solid; background-color: aqua;">이곳에 좌석 배치도 들어감</div></td>
 		                    </tr>		                    
 		                    <tr>
 		                      <td>등록일:</td><td th:text="${f.fDate}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>가로:</td><td th:text="${f.fRow}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>세로:</td><td th:text="${f.fCol}"></td>
+		                    </tr>
+		                    <tr>
+		                      <td>좌석문자열:</td><td th:text="${f.fSeatOrImg}"></td>
 		                    </tr>
 		                    
 		                    
 		                  </tbody>
 		                </table>
+				  		     배치도 : <div id="tableDiv" style="margin-left: 80px;"></div>
 		               <br>
 		 				  
 			              <table>
@@ -76,9 +146,10 @@
 									
 				  			  </tr>
 				  		  </table>
+				  		  
 		              </div>
 		              
-		              
+		             
 		            </div>
 			         		
          		</div>

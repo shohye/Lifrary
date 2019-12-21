@@ -1,10 +1,201 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+  
+  <!-- headAdd(Libs&page) -->
+  <th:block layout:fragment="adminHeadAdd">
+    <link rel="stylesheet" th:href="@{/admin/vendor/libs/select2/select2.css}">
+  	<link rel="stylesheet" th:href="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+  </th:block>
+  <!-- /headAdd(Libs&page) -->
+	 
+	 <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+  <script th:inline="javascript">
+		$(document).ready(function(){
+				var fKinds = [[${facility.fKinds}]]
+				console.log(fKinds)
+			/* 업데이트 페이지 들어왔을때 열람실, 사물함이면 테이블 보이게, 그 외의것은 안보이게 설정하기. */
+			
+		})
+		</script>
+  	
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+	 
+  <!-- Content -->
+         <th:block layout:fragment="adminContents">
 <body>
+  <div class="page-loader">
+    <div class="bg-primary"></div>
+  </div>
 
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-2">
+    <div class="layout-inner">
+
+      <!-- Layout sidenav -->
+      <!-- /Layout sidenav -->
+
+
+      <!-- Layout container -->
+      <div class="layout-container">
+      
+        <!-- Layout navbar -->
+        <!-- /Layout navbar -->
+      
+
+        <!-- Layout content -->
+        <div class="layout-content">
+
+          <!-- Content -->
+          <div class="container-fluid flex-grow-1 container-p-y">
+
+            <h4 class="font-weight-bold py-3 mb-4">
+              <span class="text-muted font-weight-light"></span> 공공시설 등록 폼
+            </h4>
+		<th:block th:with="f = ${facility}">
+            <div class="card mb-4">
+              <div class="card-body" style="border: 1px solid;">
+                <form id="facilityInUpForm" th:action="@{/admin/facilityInsert}" method="post">
+                  <div class="form-row">
+	                  <div class="form-group col-md-3">
+	                    <label class="form-label">등록 사서 아이디</label>
+	                    <input id="uId" type="text" class="form-control" name="uId" readonly="readonly" th:value="${f.uId}">
+                 	 </div>
+	                    <input type="hidden" class="form-control" name="lCode" th:value="${f.lCode}">           	 
+	              </div>
+	              <div class="form-row">
+	                  
+	                  <div class="form-group col-md-3" >
+	                    <label class="form-label">시설명</label>
+	                    <input id="fName" type="text" class="form-control" name="fName" placeholder="시설명" th:value=${f.fName}>
+	                    <small class="form-text text-muted">시설명을 입력해주세요.</small>
+	                  </div>
+	              </div>
+	              <div class="form-row">
+	                  <div class="form-group col-md-3" >
+	                    <label class="form-label">시설 위치</label>
+	                    <input id="fLocation" type="text" class="form-control" name="fLocation" placeholder="시설 위치" th:value=${f.fLocation}>
+	                    <small class="form-text text-muted">시설 위치를 입력해주세요.</small>
+	                  </div>
+	                  <div class="form-group col-md-3" >
+	                    <label class="form-label">최대 사용 인원</label>
+	                    <input id="fAccommodate" type="number" class="form-control" name="fAccommodate" placeholder="최대 사용 인원" min="1" th:value=${f.fAccommodate}>
+	                    <small class="form-text text-muted">최대 사용 인원을 입력해주세요.</small>
+	                  </div>
+	              </div>
+	              <div class = "form-row">
+	              	<div class="form-group col-md-3" >
+	                    <label class="form-label">사용 성별</label>
+	                    	<select id="fGender" name ="fGender" class="form-control">
+				                  <option value="선택">:: 선택 ::</option>
+				                  <option value="남성" th:selected="${f.fGender == '남성'}">남성</option>
+				                  <option value="여성" th:selected="${f.fGender == '여성'}">여성</option>
+				                  <option value="공용" th:selected="${f.fGender == '공용'}">공용</option>
+			                </select>
+	                    <small class="form-text text-muted">사용 성별을 선택해주세요.</small>
+	                  </div>
+	                  <div class="form-group col-md-3" >
+	                    <label class="form-label">이용 시간</label>
+	                    <input id="fTerm" type="text" class="form-control" name="fTerm" placeholder="시설 종류를 선택해주세요." readonly="readonly" th:value="${f.fTerm}">
+	                    <small class="form-text text-muted">시설 종류에 따라 시간이 자동 입력</small>
+	                  </div>
+	              </div>
+		          <div class = "form-row">
+	              	<div style="display: none;" class="form-group col-md-8 seatClass" >
+	              		<label class="form-label">선택된 좌석 문자열</label>
+	              		<input type="text" id="seatSelected" name="fSeatOrImg" class="form-control" readonly="readonly" th:value=${f.fSeatOrImg}>
+		                <small class="form-text text-muted">아래에서 좌석을 만들어주세요.</small>
+	                </div>
+	              </div>
+	              <div class = "form-row">
+	              	<div style="display: none;" class="form-group col-md-2 seatClass" >
+	              		<label class="form-label">입력된 가로</label>
+	              		<input type="text" id="fRow" name="fRow" class="form-control" readonly="readonly" th:value=${f.fRow}>
+		                <small class="form-text text-muted">가로 값</small>
+	                </div>
+	                <div style="display: none;" class="form-group col-md-2 seatClass" >
+	              		<label class="form-label">입력된 세로</label>
+	              		<input type="text" id="fCol" name="fCol" class="form-control" readonly="readonly" th:value=${f.fCol}>
+		                <small class="form-text text-muted">세로 값</small>
+	                </div>
+	              	
+	              </div>
+                 	 <button id = "inUpBtn" type="button" class="btn btn-primary">등록하기</button>
+                </form>
+                
+	        <!-- 열람실 / 사물함 선택시에만 보여주기. -->
+	        <div class="seatClass" style="padding-left: 20px; margin-top: 10px; display: none;">      
+	             <div class = "form-row">
+	              	<div class="form-group col-md-3" >
+	              		
+				 	</div>
+				 </div>
+	             <div class = "form-row">
+	              	<div class="form-group col-md-3" >
+	              		
+				 	</div>
+				 </div>
+				 
+                <div class = "form-row">
+	              	<div class="form-group col-md-3" >
+	              		<label class="form-label">좌석 만들기</label>
+		                <form th:action="@{/libSeat}" method="post">
+							가로 입력 : <input type="number" class="form-control" id="garo" name="garo" min="1" max = "40"><br> 
+							세로 입력 : <input type="number" class="form-control" id="sero" name="sero" min="1" max = "40"><br>
+							<small class="form-text text-muted">가로, 세로길이를 입력해주세요.</small>
+							
+							<button type="button" id="tableBtn" class="btn btn-primary">테이블 만들기</button>
+						</form>
+					</div>
+				</div>
+				
+             		 <div id="tableDiv">
+							<!-- ex> 가로3 세로 5  //   garo = 5  "${s}*${garo}+${g+1}"-->
+					</div>
+				</div> 
+				 <!-- 열람실 / 사물함 선택시에만 보여주기. -->
+				 
+				 
+				</div>
+              </div>
+              </th:block>
+              
+            </div>
+          </div>
+          <!-- / Content -->
+
+          <!-- Layout footer -->
+          <!-- / Layout footer -->
+
+        </div>
+        <!-- Layout content -->
+
+      </div>
+      <!-- / Layout container -->
+
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-sidenav-toggle"></div>
+  
+  <!-- / Layout wrapper -->
+  
+ <!--  scripts -->
+  <th:block layout:fragment="pageScript">
+   <script th:src="@{/admin/vendor/libs/validate/validate.js}"></script>
+   <script th:src="@{/admin/vendor/libs/select2/select2.js}"></script>
+   <script th:src="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+  
+   <script th:src="@{/admin/js/forms_validation.js}"></script>  
+  </th:block>
+ <!-- / scripts -->
 </body>
+
+            
+          </th:block>
+          <!-- / Content -->
 </html>

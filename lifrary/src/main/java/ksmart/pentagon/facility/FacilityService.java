@@ -17,15 +17,21 @@ import ksmart.pentagon.vo.Facility;
 @Service
 public class FacilityService {
 
-	@Autowired private FacilityMapper facilityMapper;
-	
-	//시설종류, 시설코드를 받아 리스트 받아오는 메서드
-	public List<Facility> getFacilityList(String fKinds, String libNum){
+	@Autowired
+	private FacilityMapper facilityMapper;
+
+	// 시설종류, 시설코드를 받아 리스트 받아오는 메서드
+	public List<Facility> getFacilityList(String fKinds, String libNum) {
 		return facilityMapper.getFacilityList(fKinds, libNum);
 	}
-	
-	//선택한 시설의 코드를 이용하여 , 해당 시설의 상세정보 리스트 보여주기
-		public Facility getFacility(String fCode, String libNum) {
-			return facilityMapper.getFacility(fCode, libNum);
-		}
+
+	// 선택한 시설의 코드를 이용하여 , 해당 시설의 상세정보 리스트 보여주기
+	public Facility getFacility(String fCode, String libNum) {
+		return facilityMapper.getFacility(fCode, libNum);
+	}
+
+	// 시설 등록하기.
+	public void insertFacility(Facility facility) {
+		facilityMapper.insertFacility(facility);
+	}
 }
