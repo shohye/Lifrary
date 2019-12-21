@@ -10,12 +10,111 @@
   <!-- addLibs -->  
   <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
   <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendor/libs/bootstrap-select/bootstrap-select.css}">
   </th:block>
   
   <!-- /headAdd(Libs&page) --> 
   
   <!-- teamScript -->
   <th:block layout:fragment="teamHeadScript">
+  <script type="text/javascript" th:inline="javascript">
+  $(document).ready(function(){
+	  
+	  /*<![CDATA[*/
+		var resultInsert = [[ ${resultInsert} ]]; //등록결과
+		var resultUpdate = [[ ${resultUpdate} ]]; //수정결과
+		var resultDelete = [[ ${resultDelete} ]]; //삭제결과
+		/*]]*/
+	  
+		//포인트등록 결과
+		if(resultInsert != null){
+		  if(resultInsert == 1){
+			  alert('정상적으로 등록되었습니다');
+		  }
+	 	} 
+		//포인트수정 결과
+		if(resultUpdate != null){
+		  if(resultUpdate == 1){
+			  alert('정상적으로 수정되었습니다');
+		  }
+	 	} 
+		//포인트삭제 결과
+		if(resultDelete != null){
+		  if(resultDelete == 1){
+			  alert('정상적으로 수정되었습니다');
+		  }
+	 	} 	
+	  //포인트 등록
+	  $('#insertBtn').click(function(){
+
+		  var pName = $('#insertForm [name="pName"]').val();
+		  var pPoint = $('#insertForm [name="pPoint"]').val();
+		  var pStandard = $('#insertForm [name="pStandard"]').val();
+		  
+		  if(pName == null || pName == ''){
+			  alert('포인트명을 입력해주세요');
+		  }
+		  else if(pPoint == null || pPoint == ''){
+			  alert('포인트를 입력해주세요');
+		  }
+		  else if(pStandard == null || pStandard == ''){
+			  alert('포인트 지급 기준을 입력해주세요');
+		  }else if(pStandard.length > 20){
+              alert('포인트 지급 기준은 20글자 이하로 적어 주세요');
+              console.log(pStandard.length);
+          }else{
+			  $('#insertForm').submit();
+		  }	 	  
+ 	 });
+	  //포인트 수정정보 가져오기
+	  $(document).on("click", ".updatePoint", function () {
+		 var pCode = $(this).data('id');
+		 console.log(pCode);
+		 var request = $.ajax({
+			  url: "/admin/getPoint",
+			  method: "POST",
+			  data: { pCode : pCode },
+			  dataType: "JSON"
+			});
+
+			request.done(function( data ) {
+				console.log(data);
+				$('#updateForm [name="pCode"]').val(pCode);
+				$('#updateForm [name="pName"]').val(data.pName);
+				$('#updateForm [name="pPoint"]').val(data.pPoint);
+				$('#updateForm [name="pStandard"]').val(data.pStandard);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+				alert( "Request failed: " + textStatus );
+			});
+	  });
+	  //포인트수정 등록
+	  $('#updateBtn').click(function(){
+
+		  var pName = $('#updateForm [name="pName"]').val();
+		  var pPoint = $('#updateForm [name="pPoint"]').val();
+		  var pStandard = $('#updateForm [name="pStandard"]').val();
+		  
+		  if(pName == null || pName == ''){
+			  alert('포인트명을 입력해주세요');
+		  }
+		  else if(pPoint == null || pPoint == ''){
+			  alert('포인트를 입력해주세요');
+		  }
+		  else if(pStandard == null || pStandard == ''){
+			  alert('포인트 지급 기준을 입력해주세요');
+		  }else if(pStandard.length > 20){
+              alert('포인트 지급 기준은 20글자 이하로 적어 주세요');
+              console.log(pStandard.length);
+          }else{
+			  $('#updateForm').submit();
+		  }	 	  
+ 	 });
+	  
+	  
+  });
+  </script>
   
   </th:block>
   <!-- / teamScript  -->
@@ -23,9 +122,11 @@
   <!-- Content -->
   <th:block layout:fragment="adminContents">
 	<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-			<div>포인트 관리</div>
+		<div>포인트 관리</div>
+		<button type="button" class="btn btn-primary rounded-pill d-block" data-toggle="modal" data-target="#insertPoint">
+			<span class="ion ion-md-add">포인트 등록</span>
+		</button>
 	</h4>
-	<h6>포인트리스트, 포인트등록, 수정, 삭제</h6>  
 	<div class="card">
 	    <div class="card-datatable table-responsive">
 	      <table class="datatables-demo table table-striped table-bordered">
@@ -36,12 +137,81 @@
 	            <th>포인트</th>
 	            <th>등록일</th>
 	            <th>수정</th>
-	            <th>취소</th>
+	            <th>삭제</th>
 	          </tr>
 	        </thead>
 	      </table>
 	    </div>
-	  </div>
+	</div>
+	<div class="modal fade" id="insertPoint">
+        <div class="modal-dialog">
+          <form id="insertForm" class="modal-content" th:action="@{/admin/pointInsert}" method="post">
+            <div class="modal-header">
+              <h4 class="modal-title">포인트 등록 </h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="form-row">
+    			<div class="form-group col mb-0">
+                  <label class="form-label">포인트명</label>
+                  <input type="text" class="form-control" name="pName" placeholder="포인트명">
+                </div>
+                <div class="form-group col mb-0">
+                  <label class="form-label">포인트</label>
+                  <input type="number" class="form-control" name="pPoint" placeholder="포인트">
+                  <small class="text-muted">*차감시 ( - )를 붙여주세요</small>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col">
+                  <label class="form-label">포인트 지급 기준</label>
+                  <input type="text" class="form-control" name="pStandard" placeholder="포인트 지급 기준">
+                  <small class="text-muted">*최대 20글자까지 입력해주세요</small>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+              <button type="button" class="btn btn-primary" id="insertBtn">등록</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal fade" id="updatePoint">
+        <div class="modal-dialog">
+          <form id="updateForm" class="modal-content" th:action="@{/admin/updatePoint}" method="post">
+            <div class="modal-header">
+              <h4 class="modal-title">포인트 수정 </h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="form-row">
+    			<div class="form-group col mb-0">
+                  <label class="form-label">포인트명</label>
+                  <input type="hidden" class="form-control" name="pCode">
+                  <input type="text" class="form-control" name="pName" placeholder="포인트명">
+                </div>
+                <div class="form-group col mb-0">
+                  <label class="form-label">포인트</label>
+                  <input type="number" class="form-control" name="pPoint" placeholder="포인트">
+                  <small class="text-muted">*차감시 ( - )를 붙여주세요</small>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col">
+                  <label class="form-label">포인트 지급 기준</label>
+                  <input type="text" class="form-control" name="pStandard" placeholder="포인트 지급 기준">
+                  <small class="text-muted">*최대 20글자까지 입력해주세요</small>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+              <button type="button" class="btn btn-primary" id="updateBtn">수정</button>
+            </div>
+          </form>
+        </div>
+      </div>
   </th:block>
   <!-- Content -->
  
@@ -50,10 +220,10 @@
   
   <!-- addLibs -->
   <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
+  <script th:src="@{/admin/vendor/libs/bootstrap-select/bootstrap-select.js}"></script>
 
   <!-- addDemo -->
   <script th:src="@{/admin/js/point_list_tables.js}"></script>
-  
   </th:block>
    
   <!-- teamScript  -->

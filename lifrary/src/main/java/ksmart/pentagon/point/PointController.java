@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,14 +46,83 @@ public class PointController {
 	 * @return List<Point>
 	 * @author 최지혜
 	 */
-	
-	@RequestMapping(value="/admin/pointAjax", produces = "application/json")
-	public @ResponseBody List<Point> pointAjax(HttpSession session) {
+	@RequestMapping(value="/admin/getPointList", produces = "application/json")
+	public @ResponseBody List<Point> pointList(HttpSession session) {
 		
 		String libNum = (String) session.getAttribute("LIBNUM");
 		
 		return pointService.pointList(libNum);
 		}
+	
+	/**
+	 * @param session
+	 * @param point 화면에서 입력받은 포인트 정보
+	 * @param redirectAttributes
+	 * @brief 포인트등록
+	 * @return /admin/pointList
+	 * @author 최지혜
+	 */
+	@PostMapping("/admin/pointInsert")
+	public String pointInsert(HttpSession session
+							   , Point point
+							   , RedirectAttributes redirectAttributes) {
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
+		String saId = (String) session.getAttribute("SAID");
+		
+		point.setlCode(libNum);
+		point.setuId(saId);
+		
+		redirectAttributes.addFlashAttribute("resultInsert", pointService.pointInsert(point));
+		
+		return "redirect:/admin/pointList";
+		}
+	/**
+	 * @param pCode 포인트코드
+	 * @brief 포인트정보 가져오기
+	 * @return 포인트정보
+	 * @author 최지혜
+	 */
+	@RequestMapping(value="/admin/getPoint", produces = "application/json")
+	public @ResponseBody Point getPoint(@RequestParam(value="pCode" ) String pCode) {
+		
+		return pointService.getPoint(pCode);
+		}	
+	/**
+	 * @param session
+	 * @param point 포인트수정 정보
+	 * @param redirectAttributes
+	 * @brief 포인트수정
+	 * @return /admin/pointList
+	 * @author 최지혜
+	 */
+	@PostMapping("/admin/updatePoint")
+	public String updatePoint(HttpSession session
+							   , Point point
+							   , RedirectAttributes redirectAttributes) {
+		
+		String saId = (String) session.getAttribute("SAID");
+		point.setuId(saId);
+		
+		redirectAttributes.addFlashAttribute("resultUpdate", pointService.updatePoint(point));
+		
+		return "redirect:/admin/pointList";
+	}
+	/**
+	 * @param phCode 포인트사용이력 코드
+	 * @param redirectAttributes
+	 * @brief 포인트사용이력삭제
+	 * @return /admin/pointHistoryList
+	 * @author 최지혜
+	 */
+	@GetMapping("/admin/pointDelete")
+	public String pointDelete(@RequestParam(value="pCode" ) String pCode
+									 , RedirectAttributes redirectAttributes) {
+		
+		redirectAttributes.addFlashAttribute("resultDelete", pointService.pointDelete(pCode));
+		
+		return "redirect:/admin/pointHistoryList";
+	}
 	
 	/***
 	 * @param 
@@ -73,15 +143,21 @@ public class PointController {
 	 * @return List<Point>
 	 * @author 최지혜
 	 */
-	
-	@RequestMapping(value="/admin/pointHistoryAjax", produces = "application/json")
-	public @ResponseBody List<Point> pointHistoryAjax(HttpSession session) {
+	@RequestMapping(value="/admin/getPointHistory", produces = "application/json")
+	public @ResponseBody List<Point> pointHistorySearchList(HttpSession session) {
 		
 		String libNum = (String) session.getAttribute("LIBNUM");
 		
 		return pointService.pointHistorySearchList(libNum);
 		}
 	
+	/**
+	 * @param phCode 포인트사용이력 코드
+	 * @param redirectAttributes
+	 * @brief 포인트사용이력삭제
+	 * @return /admin/pointHistoryList
+	 * @author 최지혜
+	 */
 	@GetMapping("/admin/pointHistoryDelete")
 	public String pointHistoryDelete(@RequestParam(value="phCode" ) String phCode
 									 , RedirectAttributes redirectAttributes) {

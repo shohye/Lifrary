@@ -3,21 +3,16 @@ $(function() {
 	  ajax: {
 		  serverSide: true,
 	      type : 'POST',
-	      url : '/admin/pointAjax',
+	      url : '/admin/getPointList',
 	      dataType: 'JSON',
 	      dataSrc : '',
 	      dataFilter: function(data){
-             var json = jQuery.parseJSON( data );
-             json.recordsTotal = json.total;
-             json.recordsFiltered = json.total;
-             json.data = json.list;
-             console.log(json);
-             return JSON.stringify( json );   
+             return data;
 	       }
 	  },
-	  order: [[ 2, 'desc' ]],
+	  order: [[ 3, 'desc' ]],
 	    columnDefs: [ {
-	    targets: [0,1,3,4,5],
+	    targets: [0,1,2,4,5],
 	    orderable: false,
 	    }],
 	    columns: [
@@ -48,12 +43,11 @@ $(function() {
 	 },
 	 createdRow: function (row, data, index) {
 		 $('td', row).eq(4).addClass('text-center').html('').append(
-		    '<a href="#?uId='+data.pCode+'" class="btn btn-default btn-xs icon-btn md-btn-flat" title="수정" ><i class="ion ion-md-create"></i></a>'
-				);
+		    '<a href="#updatePoint" class="btn btn-default btn-xs icon-btn md-btn-flat updatePoint" title="수정" data-id="'+data.pCode+'" data-toggle="modal"><i class="ion ion-md-create"></i></a>'
+		 );
 		 $('td', row).eq(5).addClass('text-center').html('').append(
-			'<a href="#?phCode='+data.pCode+'" class="btn btn-default btn-xs icon-btn md-btn-flat" title="삭제" ><i class="ion ion-ios-cut d-block"></i></a>'
-		);
-		 
+			'<a href="/admin/pointDelete?pCode='+data.pCode+'" class="btn btn-default btn-xs icon-btn md-btn-flat deletePoint" title="삭제" ><i class="ion ion-ios-cut d-block"></i></a>'
+		 );
 	 }
   });
 });

@@ -50,6 +50,64 @@
 		FROM
 			point
 		WHERE
-		 l_code = #{libNum}
+		 	l_code = #{libNum}
+		ORDER BY p_code DESC 
   	</select>
+  	<insert id="pointInsert" parameterType="ksmart.pentagon.vo.Point">
+	  	<selectKey keyProperty="pCode" resultType="String" order="BEFORE">
+	  		SELECT 
+				CONCAT('p',(SELECT LPAD(RIGHT(MAX(p.p_code),3)+1,3,'0')))as pCode
+			FROM point AS p
+	  	</selectKey>
+	  	INSERT INTO point(
+			p_code
+			, l_code
+			, u_id
+			, p_name
+			, p_standard
+			, p_point
+			, p_date)
+	VALUES (
+			#{pCode}
+			, #{lCode}
+			, #{uId}
+			, #{pName}
+			, #{pStandard}
+			, #{pPoint}
+			, CURDATE())
+  	</insert>
+  	<select id="getPoint" resultMap="point" parameterType="java.lang.String">
+  		SELECT
+			p_name
+			,p_standard
+			,p_point
+		FROM
+			point
+		WHERE p_code = #{pCode}
+  	</select>
+  	<update id="updatePoint" parameterType="ksmart.pentagon.vo.Point">
+ 		UPDATE point
+ 		<trim prefix="SET" suffixOverrides=",">
+ 			<if test="uId neq null and uId neq ''.toString()">
+ 				u_id=#{uId},
+ 			</if>
+ 			<if test="pName neq null and pName neq ''.toString()">
+ 				p_name=#{pName},
+ 			</if>
+ 			<if test="pStandard neq null and pStandard neq ''.toString()">
+ 				p_standard=#{pStandard},
+ 			</if>
+ 			<if test="pPoint neq null and pPoint neq ''.toString()">
+ 				p_point=#{pPoint},
+ 			</if>
+ 		</trim>
+	 			, p_date=CURDATE()
+	 		WHERE 
+	 			p_code = #{pCode}
+ 	</update>
+ 	<delete id="pointDelete" parameterType="java.lang.String">
+ 		DELETE FROM point 
+		WHERE 
+			p_code=#{pCode}
+ 	</delete>
   </mapper>

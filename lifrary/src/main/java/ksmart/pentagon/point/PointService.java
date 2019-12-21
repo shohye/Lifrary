@@ -11,23 +11,42 @@ import ksmart.pentagon.vo.Point;
 @Service
 public class PointService {
 	@Autowired private PointMapper pointMapper;
-	
+	//포인트 사용 내역 리스트
 	public List<Point> pointHistorySearchList(String libNum){
 		
 		return pointMapper.pointHistorySearchList(libNum);
 	
 	}
-	
+	//포인트 사용 내역 삭제
 	public int pointHistoryDelete(String phCode) {
 		
 		return pointMapper.pointHistoryDelete(phCode);
 
 	}
-	
-public List<Point> pointList(String libNum){
+	//포인트 리스트
+	public List<Point> pointList(String libNum){
 		
 		return pointMapper.pointList(libNum);
 	
+	}
+	//포인트 등록
+	public int pointInsert(Point point) {
+		
+		return pointMapper.pointInsert(point);
+
+	}
+	//포인트 정보
+	public Point getPoint(String pCode) {
+		
+		return pointMapper.getPoint(pCode);
+	}
+	//포인트 수정
+	public int updatePoint(Point point) {
+		return pointMapper.updatePoint(point);
+	}
+	//포인트 삭제
+	public int pointDelete(String pCode) {
+		return pointMapper.pointDelete(pCode);
 	}
 
 }

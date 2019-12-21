@@ -64,19 +64,16 @@
 				
 				$('#lendForm').find('button').attr('class','btn btn-success').text('반납등록');
 			}
-			
 			//예약도서 대출버튼 활성화
 			else if(bsLendState == '예약' && blId == uId){
 				if(bsBookState == '정상' && uasLendLimit == 'O' && ulLendNum > 0){
 					$('#lendForm').find('button').attr('class','btn btn-primary').text('대출등록');
 				}
 			}
-			
 			//소장도서 대출버튼 활성화
 			else if(bsLendState == 'O' && bsBookState == '정상' && uasLendLimit == 'O' && ulLendNum > 0){
 				$('#lendForm').find('button').attr('class','btn btn-primary').text('대출등록');
-			}
-			else{
+			}else{
 				console.log('대출불가');
 			}
 		}
@@ -95,8 +92,7 @@
 				if(blId == userId){
 					$('#holdUserCheck').append('<span class="badge badge-outline-info">예약자 일치</span>');
 					console.log('예약자');
-				}
-				else{
+				}else{
 					$('#holdUserCheck').append('<span class="badge badge-outline-danger">예약자 불일치</span>');
 					console.log('예약자아닌데용?');
 				}
@@ -110,11 +106,9 @@
 		  
 		  if( bookinfo == ''){
 			  alert('검색 도서를 입력해주세요');
-		  }
-		  else{
+		  }else{
 			  $('#bookInfoForm').submit();
-		  }
-		  
+		  }  
  	 });
 	  
 	 //회원정보 검색폼을 실행시키는 자바스크립트
@@ -124,21 +118,20 @@
 		 
 		 if( userinfo == ''){
 			  alert('검색 회원을 입력해주세요');
-		  }
-		 else{
+		  }else{
 			  $('#userInfoForm').submit();
 		  }
-
 	 });
 	 
 	//대출,반납 등록폼 실행시키는 자바스크립트
 	 $('#insertBtn').click(function(){
 		 var btnClass = $(this).attr('class');
-	
+		
+		 //반납등록
 		 if(btnClass == 'btn btn-success'){
 			 $("#lendForm").attr("action", "/admin/returnUpdate").submit();
-
 		 }
+		 //대출등록
 		 else if(btnClass == 'btn btn-primary'){
 			 $("#lendForm").submit();
 		 }

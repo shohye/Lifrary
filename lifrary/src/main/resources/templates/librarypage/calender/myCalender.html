@@ -33,7 +33,32 @@
           header: {
               left: 'book month',
               center: 'title'
-            }
+            },
+            {$.ajax 
+                ({ 
+                 type: "POST", 
+                 contentType: "application/json; charset=utf-8", 
+                 url: "/lifrary/myCalender", 
+                 dataType: 'json', 
+                 success: function (data) 
+                 { 
+                  var events = []; 
+                  $.each(data, function (index, value) { 
+
+                   events.push({ 
+                    id: value['id'], 
+                    title: value['title'], 
+                    date: value['date'] 
+                   }); 
+                   console.log(value) 
+                  }); 
+                  callback(events); 
+                 }, 
+                 error: function (xhr, err) { 
+                  alert("ERROR! - readyState: " + xhr.readyState + "<br/>status: " + xhr.status + "<br/>responseText: " + xhr.responseText); 
+                 } 
+                }); 
+               }  
           });
 
         calendar.render();

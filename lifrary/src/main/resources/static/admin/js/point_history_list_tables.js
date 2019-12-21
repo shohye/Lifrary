@@ -4,16 +4,11 @@ $(function() {
 	  ajax: {
 		  serverSide: true,
 	      type : 'POST',
-	      url : '/admin/pointHistoryAjax',
+	      url : '/admin/getPointHistory',
 	      dataType: 'JSON',
 	      dataSrc : '',
 	      dataFilter: function(data){
-             var json = jQuery.parseJSON( data );
-             json.recordsTotal = json.total;
-             json.recordsFiltered = json.total;
-             json.data = json.list;
-             console.log(json);
-             return JSON.stringify( json );   
+             return data;   
 	       }
 	  },
 	  order: [[ 6, 'desc' ]],
