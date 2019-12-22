@@ -27,4 +27,11 @@ public interface LibraryMapper {
 	public int userInsert2(UserLevelHistory userLevelHistory);
 	public int userInsert3(UserAuthorityHistory userAuthorityHistory);
 	public int userInsert4(StudyCate studyCate);
+	
+	//마이페이지 - 내정보
+	public User myUserDetail(String uId, String libNum);
+	
+	public User getMyUserUpdate(String uId, String libNum);
+	//사서 - 사서 내정보 수정후 상세페이지로 이동
+	public int myUserUpdate(User user);
 }

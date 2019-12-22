@@ -26,6 +26,7 @@
 	<result property="uOverdueDay" column="u_overdue_day"/>
 	<result property="uDate" column="u_date"/>
 	<result property="uAuthorityDate" column="u_authority_date"/>
+	
 </resultMap>
 
 <resultMap type="ksmart.pentagon.vo.UserLevelHistory" id="userLevelHistory">
@@ -196,5 +197,62 @@
 			,CURDATE()
 		)
 	</insert>
+	
+	<select id="myUserDetail" resultMap="userResultMap" parameterType="String">
+		SELECT 
+			 u.u_id
+			,u.l_code
+			,u.u_number
+			,u.u_division
+			,u.u_pw
+			,u.u_name
+			,u.u_birth
+			,u.u_addr
+			,u.u_tel
+			,u.u_email
+			,u.u_email_agree
+			,u.u_date
+			,u.u_appointment
+			,uas.uas_name
+			,ul.ul_name
+		FROM 
+			user AS u
+		INNER JOIN 
+			user_authority_set AS uas
+		ON 
+			u.uas_code = uas.uas_code
+		INNER JOIN 
+			user_level AS ul
+		ON 
+			u.ul_level = ul.ul_level
+		where
+			u.u_id = #{uId} AND u.l_code = #{libNum}
+	</select>
+	
+	<select id="getMyUserUpdate" resultMap="userResultMap" parameterType="String">
+		SELECT 
+			*
+		FROM 
+			user
+		where 
+			u_id = #{uId}
+	</select>
+	
+	<update id="myUserUpdate" parameterType="ksmart.pentagon.vo.User" >
+		UPDATE 
+			user
+		SET
+			u_division		=#{uDivision}
+			,u_pw			=#{uPw}
+			,u_name			=#{uName}
+			,u_birth		=#{uBirth}
+			,u_addr			=#{uAddr}
+			,u_tel			=#{uTel}	
+			,u_email		=#{uEmail}
+			,u_email_agree	=#{uEmailAgree}
+			,u_appointment	=#{uAppointment}			
+		WHERE 
+			u_id = #{uId}
+    </update>
 	
  </mapper>
