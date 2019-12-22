@@ -35,8 +35,6 @@ public class BookCarryService {
 				
 	}
 	
-	
-		
 		
 	/**********************************************************/
 		
@@ -62,7 +60,7 @@ public class BookCarryService {
 			
 			if(result == 1) {
 				// 오더도서 인서트 ver1
-				bookCarryMapper.insertBookInformation(bookInformation);
+				bookCarryMapper.insertBookInfo(bookInformation);
 				bookCarryMapper.insertOrderBookCarry(bookCarry);
 				
 			}else if(result == 2) {
@@ -130,7 +128,7 @@ public class BookCarryService {
 		
 		if(result == 1) {
 			// 구매도서 인서트 ver1
-			bookCarryMapper.insertBookInformation(bookInformation);
+			bookCarryMapper.insertBookInfo(bookInformation);
 			bookCarryMapper.insertPurchaseBookCarry(bookCarry);
 			
 		}else if(result == 2) {
@@ -224,12 +222,25 @@ public class BookCarryService {
 	
 
     /*************************************************************/	
-	// 사서 비밀번호 가져오는 AJAX
-	public	int deleteOrder(String said, String write , String boCode) {
+	// order 삭제
+	public int deleteOrder(String said, String write , String boCode) {
 		int result = bookCarryMapper.deleteOrder(said, write, boCode);
 		System.out.println("deleteOrder result=>"+result);
 		return result;
 	}
+	// purchase 삭제
+	public int deletePurchase(String said, String write , String bpCode) {
+		int result = bookCarryMapper.deletePurchase(said, write, bpCode);
+		System.out.println("deletePurchase result=>"+result);
+		return result;
+	}
+	// purchase 삭제
+	public int deleteDonation(String said, String write , String bdnCode) {
+		int result = bookCarryMapper.deleteDonation(said, write, bdnCode);
+		System.out.println("deletePurchase result=>"+result);
+		return result;
+	}
+		
 		
 	/**
 	 * @throws ParserConfigurationException 
@@ -247,7 +258,7 @@ public class BookCarryService {
 		}else if(bi == null){
 			
 	       String url="http://data4library.kr/api/srchDtlList?"
-		   +"authKey=86b2aa39b6cd044028fdadb621d0907b5982a7b8a9f5e77514e3bebd85cfccb5&"
+		   +"authKey=a4bc8d9739b4123747517ab223a62c1d1efa993902db2c95725a3e95171e27f4&"
 		   +"isbn13="+biIsbn+"&loaninfoYN=Y";
 			
 	 		try{
@@ -277,8 +288,7 @@ public class BookCarryService {
 	 					String biPublisher = getTagValue("publisher",eElement).trim();
 	 					String biKdc       = getTagValue("class_no",eElement).trim();
 	 					String biImg       = getTagValue("bookImageURL",eElement).trim();
-	 					String biDtail     = getTagValue("description",eElement);
-	 					
+	 					String biDtail     = getTagValue("description",eElement);	 					
 	 					
 	 					bi.setBiIsbn(biIsbn);
 	 					bi.setBiYear(biYear);
@@ -288,9 +298,7 @@ public class BookCarryService {
 	 					bi.setBiDtail(biDtail);
 	 					bi.setBiImg(biImg);
 	 					bi.setBiKdc(biKdc);
-	 					
-	 					
-	 					
+ 					
 	 					bookCarryMapper.insertBookInfo(bi);
 	 					
 	 				}
@@ -316,7 +324,6 @@ public class BookCarryService {
 					val = nValue.getNodeValue();									
 				}
 			}
-
 		}		
 		return val;
 	 }

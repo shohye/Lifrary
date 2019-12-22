@@ -267,16 +267,55 @@ public class BookCarryController {
 		return bookCarryService.getBookInfo(biIsbn);	
 	}
     
+    
     // order 삭제 결과값 가져오는 ajax
     @RequestMapping(value="/deleteOrder", produces = "text/plain")
-    public @ResponseBody String getPassword( 
-    	     @RequestParam(value="said",required=false)String said
+    public @ResponseBody String deleteOrder( Model model
+    	   , @RequestParam(value="said",required=false)String said
     	   , @RequestParam(value="write",required=false)String write
     	   , @RequestParam(value="boCode",required=false)String boCode) {
     	
     	int result = bookCarryService.deleteOrder(said, write, boCode);	
-		
- 		return null;
+    	String text ="";
+    	if(result == 0) {
+    		text = "비밀번호가 틀렸습니다";
+		}else if(result == 1) {
+			text = "도서 삭제가 완료되었습니다";
+		}			
+ 		return text;
+    }
+    
+    // purchase 삭제 결과값 가져오는 ajax
+    @RequestMapping(value="/deletePurchase", produces = "text/plain")
+    public @ResponseBody String deletePurchase( Model model
+    	   , @RequestParam(value="said",required=false)String said
+    	   , @RequestParam(value="write",required=false)String write
+    	   , @RequestParam(value="bpCode",required=false)String bpCode) {
+    	
+    	int result = bookCarryService.deletePurchase(said, write, bpCode);	
+    	String text ="";
+    	if(result == 0) {
+    		text = "비밀번호가 틀렸습니다";
+		}else if(result == 1) {
+			text = "도서 삭제가 완료되었습니다";
+		}				
+ 		return text;
+    }
+    // donation 삭제 결과값 가져오는 ajax
+    @RequestMapping(value="/deleteDonation", produces = "text/plain")
+    public @ResponseBody String deleteDonation( Model model
+    	   , @RequestParam(value="said",required=false)String said
+    	   , @RequestParam(value="write",required=false)String write
+    	   , @RequestParam(value="bdnCode",required=false)String bdnCode) {
+    	
+    	int result = bookCarryService.deleteDonation(said, write, bdnCode);	
+    	String text ="";
+    	if(result == 0) {
+    		text = "비밀번호가 틀렸습니다";
+		}else if(result == 1) {
+			text = "신청자 삭제가 완료되었습니다";
+		}				
+ 		return text;
     }
     
     

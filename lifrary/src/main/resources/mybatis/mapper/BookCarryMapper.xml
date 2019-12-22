@@ -90,6 +90,33 @@
 	 	AND  u.u_id     = #{said}
 	 	AND  u.u_pw 	= #{write}				    
 	 </delete>
+	 <delete id="deletePurchase" parameterType="String">
+	  	DELETE 
+	 		bp.*
+	 	FROM  book_purchase bp INNER JOIN user u
+	 	WHERE 
+	 		 bp.bp_code = #{bpCode}
+	 	AND  u.u_id     = #{said}
+	 	AND  u.u_pw 	= #{write}				    
+	 </delete>
+	 <delete id="deleteDonation" parameterType="String">
+	  	DELETE 
+	 		bdn.*
+	 	FROM  book_donation bdn INNER JOIN user u
+	 	WHERE 
+	 		 bdn.bdn_code = #{bdnCode}
+	 	AND  u.u_id     = #{said}
+	 	AND  u.u_pw 	= #{write}				    
+	 </delete>
+	 
+	 <select id="getBookInfo" resultMap="bookInfoResultMap" parameterType="String">
+  			SELECT 
+				* 
+			FROM 
+				book_information
+			where
+				bi_isbn = #{biIsbn}	 		    
+  	 </select>
 
 
 <!-- (어드민) 희망도서 신청리스트 전부 가져오기   -->		 
@@ -357,30 +384,6 @@
 			 , #{bpBookNum}
 			 , #{bpAdditional}
 			 , CURDATE())
-
-	</insert>
-
-<!-- (어드민) api에 도서 정보 없는경우 ,도서 정보 인서트   --> 
-	<insert id="insertBookInformation">		
-		INSERT INTO book_information
-			(  bi_isbn
-			 , bi_name
-			 , bi_year
-			 , bi_author
-			 , bi_publisher
-			 , bi_kdc
-			 , bi_detail
-			 , bi_img
-			 , bi_date)
-	    VALUES (  #{biIsbn}
-	    		, #{biName}
-	    		, #{biYear}
-	    		, #{biAuthor}
-	    		, #{biPublisher}
-	    		, #{biKdc}
-	    		, #{biImg}
-	    		, #{biDtail}
-	    		, CURDATE())
 
 	</insert>
 	

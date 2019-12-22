@@ -39,7 +39,7 @@ public interface BookCarryMapper {
 
 	// 구매도서 인서트 ver1(insert+insert)
 	// int insertPurchaseBookCarry(BookCarry bookCarry);
-	int insertBookInformation(BookInformation bookInformation);
+	// int insertBookInfo(BookInformation bookInformation);
 	
 	/*************************************************************/	
 	
@@ -76,6 +76,10 @@ public interface BookCarryMapper {
 	// delete AJAX( 사서  비번과 비교 후 맞으면 삭제 )
 	// book_order
 	int deleteOrder(String said, String write, String boCode);
+	// book_purchase
+	int deletePurchase(String said, String write, String bpCode);
+	// book_donation
+	int deleteDonation(String said, String write, String bdnCode);
 	
 	
 	

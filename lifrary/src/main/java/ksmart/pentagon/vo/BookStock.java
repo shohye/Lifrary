@@ -169,6 +169,18 @@ public class BookStock {
 		this.bookLend = bookLend;
 	}
 	
+	@Override
+	public String toString() {
+		return "BookStock [bsCode=" + bsCode + ", lCode=" + lCode + ", uId=" + uId + ", bclCode=" + bclCode
+				+ ", bcmCode=" + bcmCode + ", biIsbn=" + biIsbn + ", bsCallNum=" + bsCallNum + ", bsAliasMark="
+				+ bsAliasMark + ", bsWriterMark=" + bsWriterMark + ", bsSecondaryMark=" + bsSecondaryMark
+				+ ", bsTotalPage=" + bsTotalPage + ", bsStockState=" + bsStockState + ", bsBookState=" + bsBookState
+				+ ", bsLendState=" + bsLendState + ", bsCarryRoute=" + bsCarryRoute + ", bsDate=" + bsDate
+				+ ", bsDelete=" + bsDelete + ", bsDeleteId=" + bsDeleteId + ", bsDeleteReason=" + bsDeleteReason
+				+ ", bsDeleteDate=" + bsDeleteDate + ", bookInformation=" + bookInformation + ", bookCate=" + bookCate
+				+ ", bookLend=" + bookLend + "]";
+	}
+	
 	
 	
 	

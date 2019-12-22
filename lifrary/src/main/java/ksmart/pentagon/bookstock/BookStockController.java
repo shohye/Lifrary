@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ksmart.pentagon.vo.BookCarry;
+import ksmart.pentagon.vo.BookCate;
 import ksmart.pentagon.vo.BookInformation;
+import ksmart.pentagon.vo.BookStock;
 
 /****
  * @file   BookStockController.java
@@ -100,6 +103,19 @@ public class BookStockController {
 		
     	return "/adminpage/bookStock/stockDetailUpdate";
     }
+	// (어드민) 소장도서 상세수정 처리
+	@PostMapping("/admin/stockDetailUpdate")
+	public String stockDetailUpdate(BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
+		
+		System.out.println("stockDetailUpdate bookInformation=>"+bookInformation.toString());
+		System.out.println("stockDetailUpdate bookStock=>"+bookStock.toString());
+		System.out.println("stockDetailUpdate bookCate=>"+bookCate.toString());
+		
+		bookStockService.updateStock(bookInformation, bookStock, bookCate);
+		
+		return "redirect:/admin/stockSearchList";
+	}
+	
 	
 	
 	//(어드민) 삭제 도서 리스트
@@ -270,5 +286,42 @@ public class BookStockController {
     	
 		return bookStockService.getBookInfoStock(biIsbn);	
 	}
+    
+  // stock 삭제 결과값 가져오는 ajax
+    @RequestMapping(value="/updateStockDelete", produces = "text/plain")
+    public @ResponseBody String updateStockDelete( Model model
+    	   , @RequestParam(value="said",required=false)String said
+    	   , @RequestParam(value="write",required=false)String write
+    	   , @RequestParam(value="bsCode",required=false)String bsCode
+    	   , @RequestParam(value="bsDeleteReason",required=false)String bsDeleteReason) {
+    	
+    	String text = "";
+    	int result = bookStockService.updateStockDelete(said, write, bsCode, bsDeleteReason);
+    	if(result == 1) {
+    		text = "비밀번호가 틀렸습니다";
+		}else if(result == 2) {
+			text = "도서 삭제가 완료되었습니다";
+		}		   	
+ 		return text;
+    }
+    
+    // stock 삭제 결과값 가져오는 ajax
+    @RequestMapping(value="/resetStock", produces = "text/plain")
+    public @ResponseBody String resetStock( Model model
+    	   , @RequestParam(value="said",required=false)String said
+    	   , @RequestParam(value="write",required=false)String write
+    	   , @RequestParam(value="bsCode",required=false)String bsCode) {
+   	
+    	
+    	System.out.println("resetStock bsCode=>"+bsCode);
+    	String text = "";
+    	int result = bookStockService.updateStockReset(said, write, bsCode);
+    	if(result == 1) {
+    		text = "비밀번호가 틀렸습니다";
+		}else if(result == 2) {
+			text = "도서 복구가 완료되었습니다";
+		}		   	
+ 		return text;
+    }
 
 }

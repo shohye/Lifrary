@@ -21,8 +21,21 @@
 	    	 });
 	    	 
 	    	 etc2.focus(function() {			  
-			 $('#text').prop('readonly', false);			  
-	     	});		  
+			 $('#text').prop('readonly', false);	
+			 });
+	    	 
+	    	 $('#callNumBtn').click(function(){
+	    		 if ($(this).attr("mode") == "hide") {
+	    				$("#callNumBtn").text("숨기기");
+	    				$('#callNumDiv').slideDown(350);
+	    				$(this).attr("mode", "show");
+	    			} else {
+
+	    				$("#callNumBtn").text("청구기호 수정");
+	    				$('#callNumDiv').slideUp(350);
+	    				$(this).attr("mode", "hide");
+	    			} 	    		 
+	    	 });
 	  }); //// 어떻게해야,,,
 	 
 	 </script>
@@ -54,19 +67,20 @@
                   </div>
                   <hr class="border-light m-0">
                   <div class="card-body pb-2" th:with="s=${stockDetail}" >
-				    <form th:action="@{#}" id="stockDetailUpdateForm" method="post" >
+				    <form th:action="@{/admin/stockDetailUpdate}" id="stockDetailUpdateForm" method="post" >
 	                    <div class="form-group">
 	                      <label class="form-label">도서명</label>
+	                      
 	                      <input type="text" class="form-control mb-1" name="biName" th:value="${s.bookInformation.biName}">     <!-- th:value="${#}"  -->            
 	                    </div>
 	                    <div class="form-row">
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">도서코드</label>
-		                      <input type="text" class="form-control" name="bsCode" th:value="${s.bsCode}">
+		                      <input type="text" class="form-control" name="bsCode" th:value="${s.bsCode}" readonly>
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">ISBN</label>
-		                      <input type="text" class="form-control mb-1" name="biIsbn" th:value="${s.bookInformation.biIsbn}">
+		                      <input type="text" class="form-control mb-1" name="biIsbn" th:value="${s.bookInformation.biIsbn}" readonly>
 		                    </div>
 		                </div>
 		                <div class="form-row">
@@ -74,19 +88,67 @@
 		                      <label class="form-label">저자</label>
 		                      <input type="text" class="form-control" name="biAuthor" th:value="${s.bookInformation.biAuthor}">
 		                    </div>
-		                    <div class="form-group col-md-6">
+		                    <div class="form-group col-md-3">
 		                      <label class="form-label">청구기호</label>
-		                      <input type="text" class="form-control mb-1" name="bsCallNum" th:value="${s.bsCallNum}">	                   
+		                      <input type="text" class="form-control mb-1" name="bsCallNum" th:value="${s.bsCallNum}" readonly>	                   
 		                    </div>
+		                    <div class="form-group col-md-3">		                   
+		                      <br><button id="callNumBtn" mode="hide" type="button" class="btn rounded-pill btn-secondary">청구기호 수정</button>              
+		                    </div>
+		                </div>
+		                <div class="form-row" id="callNumDiv" style="display:none">
+		                	 <div class="form-group col-md-3">
+		                      <label class="form-label">별치기호</label>
+		                      <select class="form-control" name="bsAliasMark" id="bsAliasMark">
+		                      		<option value="" selected>없음-일반 단행본</option>
+	                   				<option value="B.">B-점자도서</option>
+	                   				<option value="R.">R-참고도서</option>
+	                   				<option value="M.">M-지도</option>
+	                   				<option value="P.">P-국내외 일반 연속간행물</option>
+	                   				<option value="T.">T-학위논문</option>
+	                   				<option value="C.">C-만화자료</option>	       
+	                   		  </select>
+		                    </div>
+		                     <div class="form-group col-md-2">
+		                      <label class="form-label">KBC</label>
+		                      <input type="text" class="form-control" id="biKdc" name="biKdc" th:value="${s.bookInformation.biKdc}">
+		                    </div>
+		                    <div class="form-group col-md-1">		                   
+		                      <br><button id="kbcSearch" type="button" class="btn rounded-pill btn-secondary">찾기</button>              
+		                    </div>
+		                    <div class="form-group col-md-3">
+		                      <label class="form-label">저작기호</label>
+		                      <input type="text" class="form-control" id="bsWriterMark" name="bsWriterMark" th:value="${s.bsWriterMark}">
+		                    </div>
+		                    <div class="form-group col-md-3">
+		                      <label class="form-label">부차적기호</label>
+		                      <input type="text" class="form-control" id="bsSecondaryMark" name="bsSecondaryMark" th:value="${s.bsSecondaryMark}">
+		                    </div>
+		          
 		                </div>
 		                 <div class="form-row">
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">대분류</label>
-		                      <input type="text" class="form-control" name="bclName" th:value="${s.bookCate.bclName}">
+		                      <select class="form-control" name="bclCode" id="bclCode">
+	                   			<option value="bcl001" th:selected="${'단행본' eq s.bookCate.bclName}">단행본</option>
+	                   			<option value="bcl002" th:selected="${'연속간행물' eq s.bookCate.bclName}">연속간행물</option>
+	                   			<option value="bcl003" th:selected="${'비도서' eq s.bookCate.bclName}">비도서</option>
+	                    	  </select>		              
 		                    </div>
 		                    <div class="form-group col-md-6">
-		                      <label class="form-label">중분류</label>
-		                      <input type="text" class="form-control mb-1" name="bcmName" th:value="${s.bookCate.bcmName}">
+		                      <label class="form-label">중분류</label>	                  
+		                      <select class="form-control" name="bcmName" id="bcmName">
+	                   			<option value="총류" th:selected="${'총류' eq s.bookCate.bcmName}">총류</option>
+	                   			<option value="철학" th:selected="${'철학' eq s.bookCate.bcmName}">철학</option>
+	                   			<option value="종교" th:selected="${'종교' eq s.bookCate.bcmName}">종교</option>
+	                   			<option value="사회과학" th:selected="${'사회과학' eq s.bookCate.bcmName}">사회과학</option>
+	                   			<option value="자연과학" th:selected="${'자연과학' eq s.bookCate.bcmName}">자연과학</option>
+	                   			<option value="기술과학" th:selected="${'기술과학' eq s.bookCate.bcmName}">기술과학</option>
+	                   			<option value="예술" th:selected="${'예술' eq s.bookCate.bcmName}">예술</option>
+	                   			<option value="언어" th:selected="${'언어' eq s.bookCate.bcmName}">언어</option>
+	                   			<option value="문학" th:selected="${'문학' eq s.bookCate.bcmName}">문학</option>
+	                   			<option value="역사" th:selected="${'역사' eq s.bookCate.bcmName}">역사</option>
+	                    	  </select>	
 		                    </div>
 		                </div>
 		                 <div class="form-row">
@@ -106,7 +168,11 @@
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">반입구</label>
-		                      <input type="text" class="form-control mb-1" name="bsCarryRoute" th:value="${s.bsCarryRoute}">
+		                      <select class="form-control" id="bsCarryRoute" name="bsCarryRoute">
+	                   				<option value="구매" th:selected="${'구매' eq s.bsCarryRoute}">구매</option>
+	                   				<option value="기부" th:selected="${'기부' eq s.bsCarryRoute}">기부</option>
+	                   				<option value="기타" th:selected="${'기타' eq s.bsCarryRoute}">기타</option>       
+	                   		  </select>
 		                    </div>
 		                </div>
 		                <div class="form-group">
@@ -142,19 +208,15 @@
 		                  		   	<input th:unless="${s.bsLendState eq 'X'}" name="bsLendState" type="radio" class="custom-control-input" value="X">                  		   	
 		                  		   	<span class="custom-control-label">불가능</span>
 		                       </label>	                          
-		                    </div>	     
-		                    
+		                    </div>	     		                    
 		                </div>
-		               	              
+		                <div class="text-right mt-3">
+			              <button type="submit" class="btn btn-primary">수정</button>&nbsp;            
+			            </div>		               	              
 	                 </form>     
                   </div>
-                </div>
-                
+                </div>                
               </div>
-            </div>
-
-            <div class="text-right mt-3">
-              <button type="button" class="btn btn-primary">수정</button>&nbsp;            
             </div>
           </div>
           

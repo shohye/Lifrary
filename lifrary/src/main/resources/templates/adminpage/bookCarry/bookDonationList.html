@@ -24,32 +24,44 @@
 	 
 	  </th:block>
 	  
-	  <th:block layout:fragment="teamHeadScript">
-	<script type="text/javascript" th:inline="javascript">  
-     $(document).ready(function(){
-    
-    	   $('#deleteBtn').click(function(){  			
-  				var uId = $('#uId').val();
-  				var uPw = $('#uPw').val();
-  				
-  				var request = $.ajax({
-  					url:"/deleteInfo",
-  					method: "POST",
-  					data : { 'uId' : uId , 'uPw' : uPw }, 
-  					dataType: "json"
-  				});
-  				 
-  				request.done(function( data ) {
-  					
-  						
-  				});
-  				 
-  				request.fail(function( jqXHR, textStatus ) {
-  					alert( "Request failed: " + textStatus );
-  				});
-  				
- 		});   		
- 	 }); // 처음 function끝
+	 <th:block layout:fragment="teamHeadScript">
+     <script type="text/javascript" th:inline="javascript">  
+       $(document).ready(function(){  	
+    	   
+    	   $('#deleteBtn').click(function(){
+    		   var SAID = [[${session.SAID}]]
+    		   console.log(SAID);
+    		   var write = $('#uPw').val();
+    		   console.log(write);
+    		   var bdnCode = $('#bdnCode').val();
+    		   
+    		   var request = $.ajax({
+					url:"/deleteDonation",
+					method: "POST",
+					data : { 'said' : SAID , 'write' : write ,'bdnCode' : bdnCode }, 
+					dataType: "text"
+				});
+				 
+				request.done(function( data ) {
+
+					 console.log(data);
+					 if(data == '비밀번호가 틀렸습니다'){
+						 alert(data);
+						 $('#uPw').focus();
+					 }else if(data =='도서 삭제가 완료되었습니다'){
+						 alert(data);
+						 $('#modals-default').modal('hide');
+						
+					 }
+						
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				}); 
+				
+    	   });   				
+    	}); // 처음 function끝
     	    	
     	</script>
   	    </th:block>
@@ -118,7 +130,8 @@
 						 	<i class="ion ion-md-create" title="수정"></i>
 					  	 </a>
                       </td> 
-                      <td class="align-middle text-center">     
+                      <td class="align-middle text-center">
+                      <input type="hidden" name="bdnCode" id="bdnCode" th:value="${d.bdnCode}">    
                       <button type="button" class="btn btn-default btn-xs icon-btn md-btn-flat" data-toggle="modal" data-target="#modals-default">
                       		<i class="ion ion-ios-cut d-block"  title="삭제"></i>
                       </button>            
@@ -140,7 +153,7 @@
                           <small class="text-muted">정말 삭제 하시겠습니까? 삭제하시는 경우 복구가 불가능한 목록입니다.<br>
                                                             삭제를 위하여 본인 id의 password를 작성해 주세요.</small>
                         </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                        <a th:href="@{/admin/bookDonationList}" type="button" class="close" data-dismiss="modal" aria-label="Close">×</a>
                       </div>
                       <div class="modal-body">
                       	<div class="form-row">
@@ -158,7 +171,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button id="deleteBtn" type="button" class="btn btn-primary">삭제</button>
+                        <a th:href="@{/admin/bookDonationList}" id="deleteBtn" type="button" class="btn btn-primary">삭제</a>
                       </div>
                     </form>
                   </div>

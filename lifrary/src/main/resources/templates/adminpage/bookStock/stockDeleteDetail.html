@@ -7,7 +7,45 @@
 	  <th:block layout:fragment="adminHeadAdd">
 	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
  	  </th:block>
- 
+ 	  
+ 	  <th:block layout:fragment="teamHeadScript">
+   	  <script type="text/javascript" th:inline="javascript">  
+       $(document).ready(function(){  	
+    	   
+    	   // 복구 버튼
+    	   $('#resetBtn').click(function(){
+    		   var SAID = [[${session.SAID}]]
+    		   console.log(SAID);
+    		   var write = $('#uPw').val();
+    		   console.log(write);
+    		   var bsCode = $('#bsCode').val();
+    		   console.log(bsCode);
+    		   
+    		   var request = $.ajax({
+					url:"/resetStock",
+					method: "POST",
+					data : { 'said' : SAID , 'write' : write ,'bsCode' :bsCode }, 
+					dataType: "text"
+				});				 
+				request.done(function( data ) {
+
+					 console.log(data);
+					 if(data == '비밀번호가 틀렸습니다'){
+						 alert(data);
+						 $('#uPw').focus();
+					 }else if(data =='도서 복구가 완료되었습니다'){
+						 alert(data);
+						 $('#modals-default').modal('hide');						
+					 }						
+				});				 
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				}); 				
+    	   });   				
+    	}); // 처음 function끝
+    	    	
+    	</script>
+  	    </th:block>
  
   <!-- Content -->
          <th:block layout:fragment="adminContents">
@@ -15,6 +53,7 @@
          		<div class="container-fluid flex-grow-1 container-p-y" >
         
          			<div th:with="d=${deleteDetail}" class="media align-items-center py-3 mb-3">
+         			  <input type="hidden" id="bsCode" th:value="${d.bsCode}">
 		              <img th:src="${d.bookInformation.biImg}" alt="이미지를 찾을 수 없습니다" class="d-block ui-w-100 rounded-circle">
 		              <div class="media-body ml-4" > 
 		                <h4 class="font-weight-bold mb-0" th:text="${d.bookInformation.biName}"></h4>
@@ -87,7 +126,7 @@
                           <br>
                           <small class="text-muted"> 복원을 위하여 본인 id의 password를 작성해 주세요.</small>
                         </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                        <a th:href="@{/admin/stockDeleteList}"  type="button" class="close" data-dismiss="modal" aria-label="Close">×</a>
                       </div>
                       <div class="modal-body">
                       	<div class="form-row">
@@ -104,8 +143,8 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button id="deleteBtn" type="button" class="btn btn-primary">복원</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+                        <a th:href="@{/admin/stockDeleteList}" id="resetBtn" type="button" class="btn btn-primary">삭제</a>
                       </div>
                     </form>
                   </div>

@@ -10,15 +10,15 @@
     	 
        // 도서 정보 가져오기   
   	   $('#bookInfoBtn').click(function(){  			
-				var biIsbn = $('#biIsbn').val();
-				console.log($.trim(biIsbn));
+				var abiIsbn = $('#biIsbn').val();
+				console.log($.trim(abiIsbn));
 				
-				var trimBiIsbn = $.trim(biIsbn);
+				var biIsbn = $.trim(abiIsbn);
 				
 				var request = $.ajax({
 					url:"/getBookInfo",
 					method: "POST",
-					data : { 'biIsbn' : trimBiIsbn }, 
+					data : { 'biIsbn' : biIsbn }, 
 					dataType: "json"
 				});
 				 

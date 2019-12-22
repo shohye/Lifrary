@@ -66,6 +66,81 @@
 	    <result column="bl_hold_date"      property="blHoldDate"/>
 	    <result column="bl_overdue_days"   property="blOverdueDays"/>
 	</resultMap>
+	 <!--   User    --> 	 
+   	 <resultMap type="ksmart.pentagon.vo.User" id="userResultMap">
+			<!-- db -->
+			<result property="uId" column="u_id"/>
+			<result property="uPw" column="u_pw"/>
+			<result property="uNumber" column="u_number"/>
+			<result property="uName" column="u_name"/>
+			<result property="uTel" column="u_tel"/>
+			<result property="uEmail" column="u_email"/>
+			<result property="uEmailAgree" column="u_email_agree"/>
+	 </resultMap>
+	 
+	 <select id="checkPw" resultMap="userResultMap" parameterType="String">
+  			SELECT 
+				* 
+			FROM 
+				user
+			where
+				u_id = #{said}
+			and 
+				u_pw = #{write} 		    
+  	 </select>
+ <!--  (어드민) 소장도서 목록에서 삭제상태로 변경 => 삭제 도서로 이동   -->	
+  	 <update id="updateStockDelete" parameterType="String">
+  			UPDATE 
+				book_stock
+			SET
+				 bs_delete         = 'O'
+				,bs_delete_id      = #{said}
+				,bs_delete_reason  = #{bsDeleteReason}
+				,bs_delete_date    = CURDATE()
+			WHERE 
+				 bs_code = #{bsCode}			    
+  	 </update>
+<!--  (어드민) 소장도서 삭제목록에서 복구하기   -->	
+  	 <update id="updateStockReset" parameterType="String">
+  			UPDATE 
+				book_stock
+			SET
+				 bs_delete         = 'X'
+				,bs_delete_id      = null
+				,bs_delete_reason  = null
+				,bs_delete_date    = null
+			WHERE 
+				 bs_code = #{bsCode}			    
+  	 </update>
+<!--  (어드민) 소장도서 수정   -->	
+	<update id="updateStock" parameterType="hashMap">
+  			UPDATE 
+				book_stock bs
+			INNER JOIN
+				book_information bi
+			on bi.bi_isbn = bs.bi_isbn
+			SET
+				 bi.bi_name       = #{biName}
+				,bi.bi_author     = #{biAuthor}
+				,bi.bi_publisher  = #{biPublisher}
+				,bi.bi_detail     = #{biDtail}
+				,bi.bi_kdc        = #{biKdc}
+				,bs.bcl_code      = #{bclCode}
+				,bs.bcm_code      = (SELECT bcm_code FROM book_cate_medium 
+								    WHERE bcl_code = #{bclCode}  
+									AND bcm_name= #{bcmName} )				
+				,bs.bs_alias_mark = #{bsAliasMark}
+				,bs.bs_writer_mark= #{bsWriterMark}
+				,bs.bs_secondary_mark = #{bsSecondaryMark}
+				,bs.bs_total_page  = #{bsTotalPage}
+				,bs.bs_book_state  = #{bsBookState}
+				,bs.bs_lend_state  = #{bsLendState}
+				,bs.bs_carry_route = #{bsCarryRoute}
+			WHERE 
+				 bs.bs_code = #{bsCode}		    
+  	 </update>
+	 
+	 
 
 <!--  (어드민) 삭제하지 않은 모든 소장도서 리스트 가져오기   -->		
 	<select id="getStockList" resultMap="bookStockResultMap" parameterType="String">
@@ -311,6 +386,15 @@
 			, #{biPublisher}, #{biKdc}, #{biDtail}, #{biImg}, CURDATE())
 	 
 	</insert>
+	 <select id="getBookInfoStock" resultMap="bookInfoResultMap" parameterType="String">
+  			SELECT 
+				* 
+			FROM 
+				book_information
+			where
+				bi_isbn = #{biIsbn}
+			    
+  	</select>
 	
 	
   </mapper>
