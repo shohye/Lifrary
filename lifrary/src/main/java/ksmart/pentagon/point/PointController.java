@@ -47,11 +47,11 @@ public class PointController {
 	 * @author 최지혜
 	 */
 	@RequestMapping(value="/admin/getPointList", produces = "application/json")
-	public @ResponseBody List<Point> pointList(HttpSession session) {
+	public @ResponseBody List<Point> getPointList(HttpSession session) {
 		
 		String libNum = (String) session.getAttribute("LIBNUM");
 		
-		return pointService.pointList(libNum);
+		return pointService.getPointList(libNum);
 		}
 	
 	/**

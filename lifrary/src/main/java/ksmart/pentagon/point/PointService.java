@@ -24,9 +24,9 @@ public class PointService {
 
 	}
 	//포인트 리스트
-	public List<Point> pointList(String libNum){
+	public List<Point> getPointList(String libNum){
 		
-		return pointMapper.pointList(libNum);
+		return pointMapper.getPointList(libNum);
 	
 	}
 	//포인트 등록
