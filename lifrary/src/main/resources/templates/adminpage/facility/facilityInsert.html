@@ -31,8 +31,8 @@
 					$(this).attr('status','false'); // 선택한곳의 status속성을 false로 변경 
 					
 				}else if($(this).attr('status') == 'false'){
-					 var con_test = confirm("이미 선택된 좌석입니다. "+
-							"[선택좌석 : '"+$(this).attr('seat')+"'] \n제거하려면 확인을 누르세요.");
+					 var con_test = confirm("이미 선택된 자리입니다. "+
+							"[선택자리 : '"+$(this).attr('seat')+"'] \n제거하려면 확인을 누르세요.");
 					if(con_test == true){
 						//console.log('확인누름');						
 						seatArray.splice(seatArray.indexOf($(this).attr('seat')),1); //선택된 배열의 인덱스부터 1개를 지움
@@ -88,8 +88,8 @@
 							contents += '</tr>';
 						}
 						contents += '</table>';
-						contents += '<small class="form-text text-muted">만들어줄 좌석을 선택후 선택완료 버튼을 눌러주세요.</small>'
-						contents += '<br><button type = "button" id = "seatMakeBtn" class="btn btn-primary">좌석 선택완료</button>'
+						contents += '<small class="form-text text-muted">만들어줄 자리을 선택후 선택완료 버튼을 눌러주세요.</small>'
+						contents += '<br><button type = "button" id = "seatMakeBtn" class="btn btn-primary">자리 선택완료</button>'
 						tableDiv.html(contents); // 만들어진 테이블을 뿌려줌
 						
 					});
@@ -100,7 +100,7 @@
 				
 			})
 			
-			//만들어진 좌석 배열 ajax를 통해 컨트롤러로 보내기
+			//만들어진 자리 배열 ajax를 통해 컨트롤러로 보내기
 			$(document).on('click','#seatMakeBtn',function(){
 				if(seatArray.length > 0){ // 배열이 1개 이상 있어야 ajax 실행
 					var dataMap = {'seatArray' : seatArray}
@@ -141,24 +141,20 @@
   					fTerm.val('3시간');
   					if($('.seatClass').css("display") == "none"){
   						$('.seatClass').css("display", "block");
-  						$('.seatClass').css("display", "block");
   					}
   				}else if(fKinds == '스터디룸'){
   					fTerm.val('5시간');
   					if($('.seatClass').css("display") == "block"){
-  						$('.seatClass').css("display", "none");
   						$('.seatClass').css("display", "none");
   					}
   				}else if(fKinds == '강연실'){
   					fTerm.val('하루');
   					if($('.seatClass').css("display") == "block"){
   						$('.seatClass').css("display", "none");
-  						$('.seatClass').css("display", "none");
   					}
   				}else if(fKinds == '사물함'){
   					fTerm.val('한달');
   					if($('.seatClass').css("display") == "none"){
-  						$('.seatClass').css("display", "block");
   						$('.seatClass').css("display", "block");
   					}
   				}
@@ -332,9 +328,9 @@
 	              </div>
 		          <div class = "form-row">
 	              	<div style="display: none;" class="form-group col-md-8 seatClass" >
-	              		<label class="form-label">선택된 좌석 문자열</label>
+	              		<label class="form-label">선택된 자리 문자열</label>
 	              		<input type="text" id="seatSelected" name="fSeatOrImg" class="form-control" readonly="readonly">
-		                <small class="form-text text-muted">아래에서 좌석을 만들어주세요.</small>
+		                <small class="form-text text-muted">아래에서 자리을 만들어주세요.</small>
 	                </div>
 	              </div>
 	              <div class = "form-row">
@@ -368,7 +364,7 @@
 				 
                 <div class = "form-row">
 	              	<div class="form-group col-md-3" >
-	              		<label class="form-label">좌석 만들기</label>
+	              		<label class="form-label">자리 만들기</label>
 		                <form th:action="@{/libSeat}" method="post">
 							가로 입력 : <input type="number" class="form-control" id="garo" name="garo" min="1" max = "40"><br> 
 							세로 입력 : <input type="number" class="form-control" id="sero" name="sero" min="1" max = "40"><br>

@@ -34,4 +34,9 @@ public class FacilityService {
 	public void insertFacility(Facility facility) {
 		facilityMapper.insertFacility(facility);
 	}
+
+	// 시설 수정하기.
+	public void updateFacility(Facility facility) {
+		facilityMapper.updateFacility(facility);
+	}
 }

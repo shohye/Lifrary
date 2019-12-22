@@ -49,4 +49,21 @@
 	(f_code, l_code, u_id, f_name, f_kinds, f_location, f_accommodate, f_gender, f_term, f_row, f_col, f_seat_or_img, f_date)
 	VALUES (#{fCode}, #{lCode}, #{uId}, #{fName}, #{fKinds}, #{fLocation}, #{fAccommodate}, #{fGender}, #{fTerm}, #{fRow}, #{fCol}, #{fSeatOrImg}, NOW())
   </insert>
+  
+  <!-- 공공시설 수정하기 / 열람실,사물함 / 스터디룸,강연실 다르게 해줘야함. fCode를 받아서 처리-->
+  <update id="updateFacility" parameterType="ksmart.pentagon.vo.Facility">
+  	UPDATE 
+  		facility
+	SET
+		f_name=			#{fName},
+		f_location=		#{fLocation},
+		f_accommodate=	#{fAccommodate},
+		f_gender=		#{fGender},
+		f_row=			#{fRow},
+		f_col=			#{fCol},
+		f_seat_or_img=	#{fSeatOrImg}
+	WHERE 
+		 f_code = #{fCode}
+  </update>
+  
   </mapper>

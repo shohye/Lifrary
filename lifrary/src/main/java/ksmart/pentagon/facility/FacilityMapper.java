@@ -26,4 +26,7 @@ public interface FacilityMapper {
 	//시설 등록하기.
 	public void insertFacility(Facility facility);
 	
+	//시설 수정하기.
+	public void updateFacility(Facility facility);
+	
 }

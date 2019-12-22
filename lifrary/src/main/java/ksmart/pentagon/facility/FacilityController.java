@@ -112,7 +112,7 @@ public class FacilityController {
 	 */
 	@PostMapping("/admin/facilityInsert")
 	public String facilityInsert(Facility facility) {
-		facility.setfCode("f-19122100001");
+		facility.setfCode("f-19122200002");
 		System.out.println(facility);
 		facilityService.insertFacility(facility);
 
@@ -132,10 +132,19 @@ public class FacilityController {
 		model.addAttribute("facility", facilityService.getFacility(fCode, libNum));
 		return "adminpage/facility/facilityUpdate";
 	}
+
+	@PostMapping("/admin/facilityUpdate")
+	public String facilityUpdate(Facility facility) {
+		System.out.println(facility);
+		facilityService.updateFacility(facility);
+		return "redirect:/admin/facilityDetail?fCode="+facility.getfCode();
+	}
+	
 	
 	@GetMapping("/admin/facilityReservationSearchList")
 	public String facilityReservationSearchList() {
-
+		
+		
 		return "adminpage/facility/facilityReservationSearchList";
 	}
 
