@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.LibrarianBook;
 
 @Controller
@@ -38,7 +39,7 @@ public class LibrarianBookController {
 			LibrarianBook Llist = librarianBookService.librarianBookDetail(librarianBook);
 			System.out.println("LibrarianBookController36"+Llist);
 			model.addAttribute("Llist", Llist);
-			return "adminpage/board/bookRecommendDetail";
+			return "/adminpage/board/bookRecommendDetail";
 		}
 		
 		@GetMapping("/admin/bookRecommendDelete")
@@ -53,9 +54,17 @@ public class LibrarianBookController {
 		
 		@GetMapping("/admin/bookRecommendInsert")
 		public String bookRecommendInsert() {
-			return "adminpage/board/bookRecommendInsert";
+			return "/adminpage/board/bookRecommendInsert";
 		}
 		
+		@PostMapping("/admin/bookRecommendInsert")
+		public @ResponseBody BookInformation bookRecommendInsert(@RequestParam(value = "isbnVal")String isbnVal) {
+			System.out.println("LibrarianBookController클래스 bookRecommendInsert메서드 실행");
+			System.out.println("LibrarianBookController61"+isbnVal);
+			BookInformation bookInformation = librarianBookService.getBookInformation(isbnVal);
+			System.out.println("LibrarianBookController65" + bookInformation);
+			return bookInformation;
+		}
 		@PostMapping("/testVal")
 		public @ResponseBody String test11(@RequestParam(value = "textVal")String textVal) {
 			System.out.println("11111111111111111111"+textVal);

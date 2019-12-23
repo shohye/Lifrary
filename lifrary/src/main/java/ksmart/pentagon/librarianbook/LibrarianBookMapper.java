@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.LibrarianBook;
 
 @Mapper
@@ -15,4 +16,6 @@ public interface LibrarianBookMapper {
 	public LibrarianBook bookRecommendDetail(LibrarianBook librarianBook);
 	
 	public void bookRecommendDelete(@RequestParam(value = "lbCode")String lbCode);
+	
+	public BookInformation getBookInformation(@RequestParam(value = "isbnVal")String isbnVal);
 }

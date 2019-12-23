@@ -60,4 +60,10 @@
  		librarian_book 
  		WHERE lb_code= #{lbCode}
  	</select>
+ 	
+ 	<select id="getBookInformation" parameterType="String" resultMap="bookInformation1">
+ 		SELECT *
+		FROM book_information
+		WHERE bi_isbn = #{isbnVal}
+ 	</select>
  </mapper>

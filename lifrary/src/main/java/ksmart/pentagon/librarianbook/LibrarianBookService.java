@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.LibrarianBook;
 
 @Service
@@ -22,5 +23,9 @@ public class LibrarianBookService {
 	
 	public void bookRecommendDelete(@RequestParam(value = "lbCode")String lbCode) {
 		librarianBookMapper.bookRecommendDelete(lbCode);
+	}
+	
+	public BookInformation getBookInformation(@RequestParam(value = "isbnVal")String isbnVal) {
+		return librarianBookMapper.getBookInformation(isbnVal);
 	}
 }
