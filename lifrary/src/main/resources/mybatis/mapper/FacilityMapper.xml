@@ -76,6 +76,8 @@
 	WHERE 
 		 f_code = #{fCode}
   </update>
+  
+  <!-- 예약일자 <= 현재날짜 <= 예약종료일자   현재날짜가 사이에 있는것만 출력.-->
   <select id="getReservationSeat" parameterType="String" resultMap="reserveResultMap">
   	SELECT
 		fr_select_num

@@ -1,11 +1,13 @@
 package ksmart.pentagon.facility;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ksmart.pentagon.vo.Facility;
+import ksmart.pentagon.vo.FacilityReservation;
 
 /*
  * @file   facilityService.java 
@@ -40,5 +42,15 @@ public class FacilityService {
 		facilityMapper.updateFacility(facility);
 	}
 
-	
+	// 시설코드를 하나 받아 (예약시작 < 현재시간 < 예약종료) 시작과 종료 사이에 있는지 체크후 사이에 해당되는것을 카운트.
+	public List<String> getReservationSeat(String fCode){
+		List<FacilityReservation> frList = facilityMapper.getReservationSeat(fCode); // 결과를 frList에 담는다.
+		List<String> frStringList = new ArrayList<String>();
+		for(int i = 0; i < frList.size(); i++) {
+			System.out.println(frList.get(i));
+			frStringList.add(frList.get(i).getFrSelectNum()); // frList에서 사용중인 자리만 뽑아서 frStringList에 add한다.
+		}
+		return frStringList;
+	}
+
 }

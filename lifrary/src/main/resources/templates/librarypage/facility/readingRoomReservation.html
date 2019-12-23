@@ -10,7 +10,18 @@ table.makeTbLine tbody tr td {color: black; text-align: center; font-size: 12px;
 	<script th:inline="javascript">
 		$(document).ready(function(){
 			
-		
+			/* 예약하는거 생각해서 만들어보기. */
+			$(document).on('click','.tdClass',function(){
+				if($(this).attr("status") == 'true'){
+					console.log('이것은 true')
+					var confirmd = confirm($(this).text()+' 를 선택하셨습니다. ')
+				} else {
+					console.log('이것은 false')
+				}
+			})
+			
+			
+			
 			$(document).on('click', '.fTable', function(){
 				var fCode = $(this).find('input[name=fCode]').val();
 				var fKinds = $(this).find('input[name=fKinds]').val();
@@ -23,6 +34,7 @@ table.makeTbLine tbody tr td {color: black; text-align: center; font-size: 12px;
 					console.log('열람실 / 사물함임')
 					var fRow = $(this).find('input[name=fRow]').val();
 					var fCol = $(this).find('input[name=fCol]').val();
+					var reserveArray = new Array(); // ajax로 가져온 결과를 담는 배열. 예약된 자리를 담는 배열
 					
 					 /* 테이블 그려주기 */
 					var seatArray = fSeatOrImg.split(',');
@@ -49,29 +61,36 @@ table.makeTbLine tbody tr td {color: black; text-align: center; font-size: 12px;
 						  dataType: "json"
 						});
 						 
-						request.done(function( data ) {
-							console.log(data)
+						request.done(function(data) {
+							reserveArray = data.seatNum; // 결과물을 reserveArray에 대입한다. 
+							console.log(reserveArray)
+							
+							
+							/* 뿌려준 테이블에 가져온 배열(선택된 자리)색칠해주기 */
+							 for(var i = 0; i < tdClass.length; i++){
+								if(seatArray.indexOf(tdClass.eq(i).attr('seat')) >= 0){ // 배열에서 tdClass의 seat값과 같은 게있는가.
+								tdClass.eq(i).text(seatArray.indexOf(tdClass.eq(i).attr('seat'))+1); // seat배열과 같은 index로 text변경
+								
+									if(reserveArray.indexOf(tdClass.eq(i).attr('seat'))+1 > 0){ // ajax로 가져와 담은 배열에 테이블의 seat속성과 같은게 있으면, true
+										tdClass.eq(i).css("background-color",'orange'); // #FA5858 = 빨강
+										tdClass.eq(i).attr("status",'false');
+									}else {
+										tdClass.eq(i).css("background-color",'black'); //#58FA58  = 초록
+										tdClass.eq(i).css("color",'white')
+										tdClass.eq(i).attr("status",'true');
+									}
+								
+								}else{
+									tdClass.eq(i).css("background-color",'white')		// seat값과 다르면 글자색을 흰색으로 변경
+									tdClass.eq(i).text('');								// 글자 없애기
+								}
+							}
 						});
 						 
 						request.fail(function( jqXHR, textStatus ) {
 						  alert( "Request failed: " + textStatus );
 						});
-					 
-					 
-					 
-					 
-					 /* 뿌려준 테이블에 가져온 배열(선택된 자리)색칠해주기 */
-					 for(var i = 0; i < tdClass.length; i++){
-						if(seatArray.indexOf(tdClass.eq(i).attr('seat')) >= 0){ // 배열에서 tdClass의 seat값과 같은 게있는가.
-						//console.log(tdClass.eq(i).attr('seat') + ' <= 배열안에 tdClass의 seat와 같은것');
-						tdClass.eq(i).css("background-color",'#58FA58'); //#58FA58  = 초록      #FA5858 = 빨강
-						tdClass.eq(i).text(seatArray.indexOf(tdClass.eq(i).attr('seat'))+1);
-						}else{
-							tdClass.eq(i).css("color",'white')					// seat값과 다르면 글자색을 흰색으로 변경
-							tdClass.eq(i).text('');								// 글자 없애기
-						}
-					} 
-				 
+						
 				} else if(fKinds == '스터디룸' || fKinds == '강연실'){
 					console.log('스터디룸 / 강연실')
 				}

@@ -58,7 +58,8 @@
 						tdClass.eq(i).css("color",'white');
 						tdClass.eq(i).text(seatArray.indexOf(tdClass.eq(i).attr('seat'))+1);
 						}else{
-							tdClass.eq(i).css("color",'white')					// seat값과 다르면 글자색을 흰색으로 변경
+							tdClass.eq(i).css("color",'white');					// seat값과 다르면 글자색을 흰색으로 변경
+							tdClass.eq(i).text('');								// 불필요한 칸의 text를 공백으로 만들어준다.
 						}
 					} 
 				}

@@ -33,7 +33,7 @@ public class FacilityController {
 	@GetMapping("/lifrary/readingRoom")
 	public String readingRoom(Model model, HttpSession session) {
 		String fKinds = "열람실";
-		String libNum = (String)session.getAttribute("LIBNUM");
+		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("room", "reading");
 		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/readingRoomReservation";
@@ -44,7 +44,7 @@ public class FacilityController {
 	@GetMapping("/lifrary/studyRoom")
 	public String studyRoom(Model model, HttpSession session) {
 		String fKinds = "스터디룸";
-		String libNum = (String)session.getAttribute("LIBNUM");
+		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("room", "study");
 		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/studyRoomReservation";
@@ -55,7 +55,7 @@ public class FacilityController {
 	@GetMapping("/lifrary/lectureRoom")
 	public String lectureRoom(Model model, HttpSession session) {
 		String fKinds = "강연실";
-		String libNum = (String)session.getAttribute("LIBNUM");
+		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("room", "lecture");
 		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/lectureRoomReservation";
@@ -66,21 +66,19 @@ public class FacilityController {
 	@GetMapping("/lifrary/locker")
 	public String locker(Model model, HttpSession session) {
 		String fKinds = "사물함";
-		String libNum = (String)session.getAttribute("LIBNUM");
+		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("room", "locker");
 		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/lockerReservation";
 	}
-	
-	
-	/*
-	 * @GetMapping("/lifrary/reservationAjax") public @ResponseBody Map<String,
-	 * List<String>> getSeat(@RequestParam(value = "fCode")String fCode){
-	 * Map<String, List<String>> data = new HashMap<String, List<String>>();
-	 * 
-	 * return data; }
-	 */
-	 
+
+	@PostMapping("/lifrary/reservationAjax")
+	public @ResponseBody Map<String, List<String>> getSeat(@RequestParam(value = "fCode") String fCode) {
+		Map<String, List<String>> data = new HashMap<String, List<String>>(); // ajax의 결과물을 보내기 위해 Map을 만들어준다.
+		data.put("seatNum", facilityService.getReservationSeat(fCode)); //integer타입을 담는 리스트를 seatNum이라는 키값과 함께 put한다.
+		System.out.println(facilityService.getReservationSeat(fCode));
+		return data;
+	}
 
 	/* ======================================================== */
 	/* ======================================================== */
@@ -139,17 +137,18 @@ public class FacilityController {
 
 		return "redirect:/admin/facilityList";
 	}
-	
+
 	/**
-	 * 공공시설 상세보기 페이지에서 수정페이지로 이동. 
+	 * 공공시설 상세보기 페이지에서 수정페이지로 이동.
+	 * 
 	 * @param fCode
 	 * @param session
 	 * @param model
 	 * @return
 	 */
 	@GetMapping("/admin/facilityUpdate")
-	public String facilityUpdate(@RequestParam(value = "fCode")String fCode, HttpSession session ,Model model) {
-		String libNum = (String)session.getAttribute("LIBNUM");
+	public String facilityUpdate(@RequestParam(value = "fCode") String fCode, HttpSession session, Model model) {
+		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("facility", facilityService.getFacility(fCode, libNum));
 		return "adminpage/facility/facilityUpdate";
 	}
@@ -158,17 +157,14 @@ public class FacilityController {
 	public String facilityUpdate(Facility facility) {
 		System.out.println(facility);
 		facilityService.updateFacility(facility);
-		return "redirect:/admin/facilityDetail?fCode="+facility.getfCode();
-	}
-	
-	
-	@GetMapping("/admin/facilityReservationSearchList")
-	public String facilityReservationSearchList() {
-		
-		
-		return "adminpage/facility/facilityReservationSearchList";
+		return "redirect:/admin/facilityDetail?fCode=" + facility.getfCode();
 	}
 
+	@GetMapping("/admin/facilityReservationSearchList")
+	public String facilityReservationSearchList() {
+
+		return "adminpage/facility/facilityReservationSearchList";
+	}
 
 	/**
 	 * ajax활용. 테이블을 동적으로 만들어준다.

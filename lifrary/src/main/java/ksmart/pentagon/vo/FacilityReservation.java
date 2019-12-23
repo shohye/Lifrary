@@ -5,7 +5,7 @@ public class FacilityReservation {
 	private String lCode;
 	private String uId;
 	private String fCode;
-	private int frSelectNum;
+	private String frSelectNum;
 	private String frTel;
 	private String frExtension;
 	private String frReserveDate;
@@ -43,11 +43,11 @@ public class FacilityReservation {
 		this.fCode = fCode;
 	}
 
-	public int getFrSelectNum() {
+	public String getFrSelectNum() {
 		return frSelectNum;
 	}
 
-	public void setFrSelectNum(int frSelectNum) {
+	public void setFrSelectNum(String frSelectNum) {
 		this.frSelectNum = frSelectNum;
 	}
 
