@@ -3,6 +3,9 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
+<th:block layout:fragment="adminTitle">
+	<title>대출/반납 도서</title>
+ </th:block>
 
  <!-- headAdd(Libs&page) -->
   
@@ -10,11 +13,11 @@
   
   
   <!-- addLibs -->
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
 
   <!-- addPage -->
-  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/products.css}">
   </th:block>
   
   <!-- /headAdd(Libs&page) --> 
@@ -368,12 +371,12 @@
 	<th:block layout:fragment="pageScript">
 	
 	<!-- addLibs -->
-	<script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
-	<script th:src="@{/admin/vendor/libs/numeral/numeral.js}"></script>
-	<script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
+	<script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+	<script th:src="@{/adminStatic/vendor/libs/numeral/numeral.js}"></script>
+	<script th:src="@{/adminStatic/vendor/libs/nouislider/nouislider.js}"></script>
 
 	<!-- addDemo -->
-	<script th:src="@{/admin/js/book_lend_tables.js}"></script>
+	<script th:src="@{/adminStatic/js/book_lend_tables.js}"></script>
 	</th:block>
 	<!-- / scripts -->
 	          

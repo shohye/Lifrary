@@ -2,8 +2,10 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
-    
-    
+    <th:block layout:fragment="libraryTitle">
+		<title>독후감 상세</title>
+	</th:block>
+  
     <th:block layout:fragment="customContents">
        <section class="page-banner services-banner">
             <div class="container">
@@ -50,7 +52,7 @@
                                                         </div>
                                                     </div>
                                                     <figure>
-                                                        <img alt="blog" src="/library/images/bookReportDetail.jpg" />
+                                                        <img alt="blog" src="/libraryStatic/images/bookReportDetail.jpg" />
                                                     </figure>
                                                 </div>
                                                 <div class="post-detail">
@@ -86,7 +88,7 @@
                                                     <li class="comment even thread-even depth-1 parent">
                                                         <div class="comment-body">
                                                             <div class="comment-author vcard">
-                                                                <img class="avatar avatar-32 photo avatar-default" src="/library/images/user.png" alt="Comment Author">
+                                                                <img class="avatar avatar-32 photo avatar-default" src="/libraryStatic/images/user.png" alt="Comment Author">
                                                                 <b class="fn">
                                                                     <a class="url" rel="external nofollow" href="#">회원아이디</a>
                                                                 </b>					
@@ -115,7 +117,7 @@
                                                         </div>
                                                         <div class="comment-body">
                                                             <div class="comment-author vcard">
-                                                                <img class="avatar avatar-32 photo avatar-default" src="/library/images/user.png" alt="Comment Author">
+                                                                <img class="avatar avatar-32 photo avatar-default" src="/libraryStatic/images/user.png" alt="Comment Author">
                                                                 <b class="fn">
                                                                     <a class="url" rel="external nofollow" href="#">회원아이디</a>
                                                                 </b>					

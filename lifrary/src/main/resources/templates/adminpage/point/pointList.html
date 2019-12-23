@@ -4,13 +4,15 @@
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
  <!-- headAdd(Libs&page) -->
-  
+  <th:block layout:fragment="adminTitle">
+	<title>포인트</title>
+  </th:block>  
   <th:block layout:fragment="adminHeadAdd">
   
   <!-- addLibs -->  
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/bootstrap-select/bootstrap-select.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-select/bootstrap-select.css}">
   </th:block>
   
   <!-- /headAdd(Libs&page) --> 
@@ -219,11 +221,11 @@
   <th:block layout:fragment="pageScript">
   
   <!-- addLibs -->
-  <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
-  <script th:src="@{/admin/vendor/libs/bootstrap-select/bootstrap-select.js}"></script>
+  <script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+  <script th:src="@{/adminStatic/vendor/libs/bootstrap-select/bootstrap-select.js}"></script>
 
   <!-- addDemo -->
-  <script th:src="@{/admin/js/point_list_tables.js}"></script>
+  <script th:src="@{/adminStatic/js/point_list_tables.js}"></script>
   </th:block>
    
   <!-- teamScript  -->

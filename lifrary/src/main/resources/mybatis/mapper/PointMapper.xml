@@ -44,7 +44,7 @@
   		WHERE 
   			ph_code= #{phCode}
   	</delete>
-  	<select id="pointList" parameterType="java.lang.String" resultMap="point">
+  	<select id="getPointList" parameterType="java.lang.String" resultMap="point">
   		SELECT
 			*
 		FROM

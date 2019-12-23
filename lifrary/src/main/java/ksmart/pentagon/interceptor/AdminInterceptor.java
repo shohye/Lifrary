@@ -1,4 +1,4 @@
-package ksmart.pentagon.controller;
+package ksmart.pentagon.interceptor;
 
 import java.io.PrintWriter;
 
