@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.Calender;
 import ksmart.pentagon.vo.Point;
 
@@ -59,6 +61,15 @@ public class BookCalenderController {
 	public String myCalenderInsert() {
 		
 		return "/librarypage/calender/myCalenderInsert";
+	}
+	
+	@RequestMapping(value="/lifrary/getBooKInfo", produces = "application/json")
+	public @ResponseBody List<BookInformation> getBooKInfo(HttpSession session
+													 ,@RequestParam(value="biName" ) String biName) {
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
+		
+		return bookCalenderService.getBooKInfo(libNum, biName);
 	}
 	
 }

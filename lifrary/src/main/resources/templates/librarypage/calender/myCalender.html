@@ -4,23 +4,22 @@
 		layout:decorate="~{layout/library/libraryDefault}">
 	<th:block layout:fragment="libraryTitle">
 		<title>나의 북캘린더</title>
- 	</th:block>   	
+ 	</th:block> 
+ 	  	
 	<th:block layout:fragment="customScript">
 	<link th:href="@{/libraryStatic/fullcalendar/packages/core/main.css}" rel="stylesheet" />
-   	<link th:href="@{/libraryStatic/fullcalendar/packages/daygrid/main.css}" rel="stylesheet" />   
-   	<link th:href="@{/libraryStatic/fullcalendar/packages/timegrid/main.css}" rel="stylesheet" />   
+   	<link th:href="@{/libraryStatic/fullcalendar/packages/daygrid/main.css}" rel="stylesheet" /> 
    	<script th:src="@{/libraryStatic/fullcalendar/packages/core/main.js}"></script>
    	<script th:src="@{/libraryStatic/fullcalendar/packages/daygrid/main.js}"></script>
-   	<script th:src="@{/libraryStatic/fullcalendar/packages/timegrid/main.js}"></script>
    	<script th:src="@{/libraryStatic/fullcalendar/packages/interaction/main.js}"></script>
    	<script th:src="@{/libraryStatic/fullcalendar/packages/core/locales/ko.js}"></script>
    	<script type="text/javascript">
    	$(document).ready(function() {
 		//캘린더 생성
         var calendar = new FullCalendar.Calendar($('#bookCalendar')[0], {
-	          plugins: [ 'dayGrid', 'timeGrid','interaction'],
+	          plugins: [ 'dayGrid','interaction'],
 	          header: {
-	              left: 'dayGridMonth,timeGridWeek,timeGridDay',
+	              left: 'dayGridMonth',
 	              center: 'title'
 	            },
 	          eventLimit: true,  
@@ -42,7 +41,7 @@
 		        	      $.each(data, function(index, list) { 
 		        	      	events.push({
 		        	      	   id: list.cCode,	
-		        	      	   start: list.cStartDate,
+		        	      	   start: list.cDate,
 		        	      	   imageurl: list.biImg
 		        	      	}); 
 		        	      }); 
@@ -51,7 +50,7 @@
 	        	     } //success
 	        	 });//ajax
 	          },
-	         //이미지 넣기
+	         //날짜에 이미지 넣기
 	         eventRender: function(info) {
 	              if (info.event.extendedProps.imageurl) {
 	                  info.el.firstChild.innerHTML = info.el.firstChild.innerHTML + '<img src="' + info.event.extendedProps.imageurl +'" style="height: 90px; width=100%;">';
@@ -64,12 +63,100 @@
 	          } */
 	        contentHeight: 750,
 	        dateClick: function(info) {
-	        	console.log(info);
-	            alert('Date: ' + info.dateStr);
+	            $('#bookInsertModal').modal('show');
 	          }
           });//calendar
-        calendar.render();
-            
+        
+          calendar.render();
+ 		
+         var bookInfoList = []; 
+		 //도서 검색 & 검색 리스트
+		 $('#bookInfoBtn').click(function(){
+			
+			//리스트출력부분 초기화
+			$('#bookInsertModal').find('ul').css("display","none").html('');
+			
+			var biName = $('#bookName').val();
+			var request = $.ajax({
+	   		  url: "/lifrary/getBooKInfo",
+	   		  data: { biName : biName },
+	   		  method: "POST",
+	   		  dataType: "json"
+	   		});
+	   		 
+	   		request.done(function( data ) {
+	   			console.log(data);
+	   			bookInfoList = data;
+	   			if(data.length > 0){
+				   	for(var i = 0; i<data.length; i++){
+				   		var list = data[i];
+				 		var ul = $('#bookInsertModal').find('ul');
+				 		ul.css("display","block");
+				   		ul.append('<li></li>');
+				   		var li = ul.children('li').eq(i);
+				   		li.text(list.biName);
+				   		li.attr('value',i); 
+				   	}
+	   			}
+	   			else{
+ 	   			var ul = $('#bookInsertModal').find('ul');
+ 	   			ul.css("display","block");
+		   		ul.append('<li></li>');
+		   		var li = ul.children('li')
+		   		li.text('검색조건에 맞는 도서가 없습니다');
+		   		li.css( "height", "50px" );
+		   		li.css( "text-align", "center" );	
+			   			}
+			});//request.done
+	   		 
+	   		request.fail(function( jqXHR, textStatus ) {
+	   		  alert( "Request failed: " + textStatus );
+	   		});//request.fail
+		 });
+		 
+		 //도서검색 리스트 클릭시 해당 도서 정보 화면에 출력
+		 $('#bookInsertModal').on('click','li',function(){
+			 $('#bookInsertModal').find('ul').css("display","none");
+
+			 var liText = $(this).text();
+			 $('#bookInsertModal input').eq(0).val(liText);
+   			
+			 var i = $(this).val();
+   			 var selectBook = bookInfoList[i];
+   			 $('#bookInsertModal strong').eq(1).text(selectBook.biName);//도서명
+   			 $('#bookInsertModal strong').eq(3).text(selectBook.biIsbn);//ISBN
+   			 $('#bookInsertModal strong').eq(5).text(selectBook.biAuthor);//저자명
+   			 $('#bookInsertModal strong').eq(7).text(selectBook.biPublisher);//발행자
+   			 $('#bookInsertModal strong').eq(7).text(selectBook.biPublisher);//발행자
+   			 $('#bookInsertModal input').eq(3).attr('placeholder','전체페이지:  /'+selectBook.bsTotalPage);
+   			 $('#bookInsertModal [name="bsCode"]').val(selectBook.bsCode);
+   			 
+   		 });
+		 $('#bookInsertModal [name="cCurrentPage"]').change(function(){
+			var currentPage = $(this).val();
+			var totalPage = $('#bookInsertModal input').eq(3).attr('placeholder');
+			var tatalPageArray = totalPage.split("/");
+			
+			if(tatalPageArray[1] != null && tatalPageArray[1] != ''){
+				if(currentPage > tatalPageArray[1]){
+					alert('전체페이지보다 큰 수는 입력할 수 없습니다');
+				}
+				else if(currentPage == tatalPageArray[1] ){
+					alert('완독도서에 등록하시겠습니까?');
+				}
+				else{
+				$('#bookInsertModal input').eq(3).attr('placeholder','전체페이지: '+currentPage+'/'+tatalPageArray[1]);	
+				}
+			}
+			 
+		 });
+		
+		 //모달 초기화
+		 $('.modal').on('hidden.bs.modal', function (e) {
+			    console.log('modal close');
+			  $(this).find('form')[0].reset()
+		 });
+ 
       });//document.ready
      
     </script>
@@ -87,6 +174,15 @@
     .fc-event{
     	border: rgba(0, 0, 0, 0);
     }
+    textarea{
+    	width: 100%;
+    }
+    .select-list{
+ 		display: block; 
+ 		position: inherit;
+ 		border-top: 3px solid #f4f4f4;
+ 		margin-top: 5px;
+ 	}
 
 </style>
   
@@ -118,24 +214,24 @@
                                     <div class="container">
                                         <div class="filter-box">
                                             <h3>내 독서 목표량 진행 상황</h3>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">년도별 목표량</label>
-                                                        <input class="form-control" placeholder="년별 목표량"  type="text" readonly="readonly">
-                                                    </div>
+                                            <div class="col-md-4 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="keywords">년도별 목표량</label>
+                                                    <input class="form-control" placeholder="년별 목표량"  type="text" readonly="readonly">
                                                 </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">분기별 목표량</label>
-                                                        <input class="form-control" placeholder="분기별 목표량"  type="text" readonly="readonly">
-                                                    </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="keywords">분기별 목표량</label>
+                                                    <input class="form-control" placeholder="분기별 목표량"  type="text" readonly="readonly">
                                                 </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">월별 목표량</label>
-                                                        <input class="form-control" placeholder="월별목표량" type="text" readonly="readonly">
-                                                    </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="keywords">월별 목표량</label>
+                                                    <input class="form-control" placeholder="월별목표량" type="text" readonly="readonly">
                                                 </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </section>
@@ -154,35 +250,84 @@
                 </main>
             </div>
         </div>
-        <div class="modal fade" id="studySetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="bookInsertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
-		    <div class="modal-content">
+		    <form id="insertForm" class="modal-content" th:action="@{#}" method="post">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">서재 카테고리 설정</h4>
+		        <h4 class="modal-title" id="myModalLabel">일정 등록</h4>
 		      </div>
 		      <div class="modal-body">
-		      	<div class="row">
+		      	  <div class="row">
 	                  <div class="col-md-12">
-	                  	<div class="col-sm-12">		
-                      	   <p>*최대 20글자까지 설정 가능합니다</p>
-	                       <input class="form-control" type="text" placeholder="카테고리명">
+	                  	<div class="col-sm-8">
+	                       	<input id="bookName" class="form-control" type="text" placeholder="도서명" >
+		                    <ul class="select-list" style="display: none;">
+			                </ul>
+	                  	</div>
+	                  	<div class="col-sm-4">
+	                       	<button type="button" id="bookInfoBtn" class="btn btn-primary form-control" >도서검색</button>
+	                  	</div>
+                  	 </div>
+               
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide" style="margin-top: 20px;">
+	                       	<strong>도서명:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide" style="margin-top: 20px;">
+	                       	<strong>ISBN:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+                  	 </div>
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide">
+	                       	<strong>저자명:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide">
+	                       	<strong>발행사:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+                  	 </div>
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-12">	
+	                       <p class="form-row form-row form-row-wide">
+	                       	<input name="cTitle" class="form-control" type="text" placeholder="제목">
+	                       </p>
+	                  	</div>
+	                  </div>
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-12">	
+	                       <p class="form-row form-row form-row-wide">
+	                       	<textarea name="cContent" rows="5" style=" padding: 5px 10px;" placeholder="내용"></textarea>
+	                       </p>
 	                  	</div>
 	                  </div>
 	                  <div class="col-md-12">
 	                  	<div class="col-sm-6">
-	                       <button type="button" id="updateBtn" class="btn btn-primary form-control">수정</button>
+	                       <p class="form-row form-row form-row-wide">
+	                       	<input name="cCurrentPage" class="form-control" type="number" min="0" placeholder="읽은 페이지">
+	                       </p>
 	                  	</div>
 	                  	<div class="col-sm-6">
-	                       <button type="button" id="deleteBtn" class="btn btn-primary form-control">삭제</button>
+	                       <p class="form-row form-row form-row-wide">
+	                       	<input class="form-control" type="text" placeholder="전체페이지: /" readonly="readonly">
+	                       	<input type="hidden" name="bsCode">
+	                       </p>
 	                  	</div>
                   	 </div>
                  </div>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
+		        <button type="button" id="insertBtn" class="btn btn-primary" data-dismiss="modal" >등록</button>
 		      </div>
-		    </div>
+		    </form>
 		  </div>
 		</div>
     </th:block>

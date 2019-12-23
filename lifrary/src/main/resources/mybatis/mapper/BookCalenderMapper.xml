@@ -17,7 +17,19 @@
 	<result property="cDate" column="c_date"/>	                        
 	<result property="biImg" column="bi_img"/>	                        
  </resultMap>
- 
+ <resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfo">
+	    <result column="bi_isbn"      property="biIsbn"/>
+	    <result column="bi_name"      property="biName"/>
+	    <result column="bi_year"      property="biYear"/>
+	    <result column="bi_author"    property="biAuthor"/>
+	    <result column="bi_publisher" property="biPublisher"/>
+	    <result column="bi_kdc"       property="biKdc"/>
+	    <result column="bi_img"       property="biImg"/>
+	    <result column="bi_detail"    property="biDtail"/>
+	    <result column="bs_code"      property="bsCode"/>
+	    <result column="bs_total_page" property="bsTotalPage"/>
+ </resultMap>
+
  <select id="getMyCalenderList" resultMap="Calender" parameterType="java.lang.String">
 	SELECT
 		c.*
@@ -37,4 +49,22 @@
 	AND 
 		c.u_id = #{uId}
  </select>
+ <select id="getBooKInfo" resultMap="bookInfo" parameterType="java.lang.String">
+	SELECT 
+		bs.bs_code
+		, bs.bs_total_page
+		, bi.bi_name
+		, bi.bi_isbn
+		, bi.bi_author
+		, bi.bi_publisher
+	FROM  
+		book_stock  bs 
+	INNER JOIN 
+		book_information  bi 
+	ON bs.bi_isbn = bi.bi_isbn
+	WHERE
+		bs.l_code = #{libNum}
+	and
+		bi.bi_name Like CONCAT ('%',#{biName},'%')		
+	</select>
 </mapper>
