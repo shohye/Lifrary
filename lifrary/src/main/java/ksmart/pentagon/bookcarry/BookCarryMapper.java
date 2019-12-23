@@ -52,7 +52,10 @@ public interface BookCarryMapper {
 	int updateDonation(BookCarry bookCarry);
 	// 기부자 인서트
 	int insertDonation(BookCarry bookCarry);
-	
+	// 기부자 리스트 버튼으로 상태변경
+	//1. 기부자스티커
+	int updateStickerO(String bdnCode);
+	int updateStickerX(String bdnCode);
 	
 	/*************************************************************/	
 	

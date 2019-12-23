@@ -30,8 +30,7 @@
 	  
 	 <th:block layout:fragment="teamHeadScript">
      <script type="text/javascript" th:inline="javascript">  
-       $(document).ready(function(){  	
-    	   
+       $(document).ready(function(){  	   	   
     	   $('#deleteBtn').click(function(){
     		   var SAID = [[${session.SAID}]]
     		   console.log(SAID);
@@ -44,27 +43,42 @@
 					method: "POST",
 					data : { 'said' : SAID , 'write' : write ,'bdnCode' : bdnCode }, 
 					dataType: "text"
-				});
-				 
+				});				 
 				request.done(function( data ) {
-
 					 console.log(data);
 					 if(data == '비밀번호가 틀렸습니다'){
 						 alert(data);
 						 $('#uPw').focus();
 					 }else if(data =='도서 삭제가 완료되었습니다'){
 						 alert(data);
-						 $('#modals-default').modal('hide');
-						
-					 }
-						
-				});
-				 
+						 $('#modals-default').modal('hide');						
+					 }						
+				});				 
 				request.fail(function( jqXHR, textStatus ) {
 					alert( "Request failed: " + textStatus );
-				}); 
-				
-    	   });   				
+				}); 				
+    	   });
+    	     	   
+        	   $('#bdnStickerX').click(function(){
+        
+        		   var bdnCode = $('#bdnCode').val();
+        		   
+        		   var request = $.ajax({
+    					url:"/updateStickerO",
+    					method: "POST",
+    					data : { 'bdnCode' : bdnCode }, 
+    					dataType: "text"
+    				});				 
+    				request.done(function( data ) {
+    					console.log(data);
+    				});				 
+    				request.fail(function( jqXHR, textStatus ) {
+    					alert( "Request failed: " + textStatus );
+    				}); 				
+        	   });
+    	   
+    	   
+    	   
     	}); // 처음 function끝
     	    	
     	</script>
@@ -120,12 +134,16 @@
 				     	 <span th:unless="${d.bdnPersonal eq 'O'}" class="badge badge-outline-danger">비동의</span>
 				      </td>
 				      <td class="align-middle text-center">
-				      	 <span th:if="${d.bdnSticker eq 'O'}" class="badge badge-outline-success">부착</span>
-				      	 <span th:unless="${d.bdnSticker eq 'O'}" class="badge badge-outline-danger">미부착</span>				      
+				      	 <span th:if="${d.bdnSticker eq 'O'}" id="bdnStickerO">
+				      	 	<a href="#" class="badge badge-outline-success">부착</a>
+				      	 </span>
+				      	 <span th:unless="${d.bdnSticker eq 'O'}" id="bdnStickerX">
+				      	 	<a href="#" class="badge badge-outline-danger">미부착</a>
+				      	 </span>				      
 				      </td>
 				      <td class="align-middle text-center">
-				      	 <span th:if="${d.bdnHonorAgree eq 'O'}"  class="badge badge-outline-success">등록</span>
-				         <span th:unless="${d.bdnHonorAgree eq 'O'}"  class="badge badge-outline-danger">미등록</span>
+				      	 <span id="bdnHonorAgreeO" th:if="${d.bdnHonorAgree eq 'O'}" class="badge badge-outline-success">등록</span>
+				         <span id="bdnHonorAgreeX" th:unless="${d.bdnHonorAgree eq 'O'}" class="badge badge-outline-danger">미등록</span>
 				      </td>
 				      <td class="align-middle" th:text="${d.bdnDate}"></td>	
 				      <td class="align-middle text-center">

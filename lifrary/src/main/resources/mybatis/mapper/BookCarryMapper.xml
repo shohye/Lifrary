@@ -235,6 +235,14 @@
 		WHERE 
 			 bdn_code = #{bdnCode};	
 	</update>
+	<update id="updateStickerO" parameterType="String" >
+		UPDATE 
+			book_donation
+		SET
+			bdn_sticker    = 'O'
+		WHERE 
+			 bdn_code = #{bdnCode};	
+	</update>
 	
  <!-- (어드민) 주문도서 상세 수정 처리 1  --> 	
 	<update id="updateOrder" parameterType="ksmart.pentagon.vo.BookCarry" >

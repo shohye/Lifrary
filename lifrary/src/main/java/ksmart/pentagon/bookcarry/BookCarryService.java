@@ -130,7 +130,14 @@ public class BookCarryService {
 	public int insertDonation(BookCarry bookCarry) {
 		return bookCarryMapper.insertDonation(bookCarry);
 	}
-	
+	// 기부자 리스트 버튼으로 상태변경
+	//1. 기부자스티커
+	public int updateStickerO(String bdnCode) {
+		return bookCarryMapper.updateStickerO(bdnCode);
+	}
+	public int updateStickerX(String bdnCode) {
+		return bookCarryMapper.updateStickerX(bdnCode);
+	}
 	
 	
 	/*************************************************************/	

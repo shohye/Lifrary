@@ -83,6 +83,15 @@ public class BookCarryController {
     	
 		return "redirect:/admin/bookDonationList";   	
     }
+    // 기부자 리스트 버튼으로 상태변경
+ 	//1. 기부자스티커
+    @RequestMapping(value="/updateStickerO", produces = "text/plain")
+    public @ResponseBody int updateStickerO(@RequestParam(value="bdnCode",required=false)String bdnCode) {
+    	int result = bookCarryService.updateStickerO(bdnCode);
+    	return result;   
+    }
+    
+    
     
     
     /***************************************************************************/
