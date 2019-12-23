@@ -218,10 +218,9 @@ public class AdminService {
 	}
 	
 	//관리자 회원정보&권한 수정 -한개 정보 가져오기
-	public List<User> getLibrarianLevelUpdate(String uId){
+	public User getLibrarianLevelUpdate(String uId, String libNum){
 		System.out.println("getLibrarianLevelUpdate 서비스진입");
-		System.out.println(adminMapper.getLibrarianLevelUpdate(uId) + "<<== 업데이트");
-		return adminMapper.getLibrarianLevelUpdate(uId);
+		return adminMapper.getLibrarianLevelUpdate(uId, libNum);
 	}
 	//관리자가 회원정보&권한 수정
 	public int librarianLevelUpdate1(User user) {
@@ -258,7 +257,7 @@ public class AdminService {
 	public User librarianMyDetail (String getSAID, String libNum) {
 		System.out.println("librarianMyDetail 서비스진입");
 		
-		System.out.println("사서 내정보 상세보기 세션 확인바람>>>> "+ adminMapper.librarianMyDetail(getSAID,libNum));
+		System.out.println("사서 내정보 상세보기 세션 확인바람>>>> ");
 		return adminMapper.librarianMyDetail(getSAID,libNum);
 	}
 	

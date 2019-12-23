@@ -661,7 +661,6 @@
 			,u_email_agree	=#{uEmailAgree}
 			,u_appointment	=''
 			,u_overdue_day	=0,
-			,u_date			=CURDATE()
 		WHERE 
 			u_id = #{uId}
     </update>
@@ -676,8 +675,7 @@
 			,ll_carry		=#{llCarry}
 			,ll_book_admin	=#{llBookAdmin}
 			,ll_stats		=#{llStats}
-			,ll_book_stock	=#{llBookStock}
-			,ll_update		=CURDATE()		
+			,ll_book_stock	=#{llBookStock}	
 		WHERE 
 			u_id = #{uId}
     </update>
@@ -736,7 +734,7 @@
 		FROM 
 			user
 		where 
-			u_id = #{getSAID}
+			u_id = #{getSAID} and l_code = #{libNum}
 	</select>
 	
 	<update id="librarianMyUpdate" parameterType="ksmart.pentagon.vo.User" >
@@ -753,11 +751,10 @@
 			,u_email_agree	=#{uEmailAgree}
 			,u_date			=#{uDate}			
 		WHERE 
-			u_id = #{uId}
+			u_id = #{getSAID}
+		AND l_code = #{libNum}
+			
     </update>
-    
-  	
-
 
 
   </mapper>

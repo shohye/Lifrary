@@ -19,6 +19,64 @@
 <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
   <th:block layout:fragment="teamHeadScript">
     <script type="text/javascript">
+    $(document).ready(function(){
+    	
+    	//유효성검사
+    	$('#upBtn').click(function(){
+    		
+    		var uName = $('#uName').val();
+			var uPw = $('#uPw').val();
+			var uPwCheck = $('#uPwCheck').val();
+			var uBirth = $('#uBirth').val();
+			var uEmail = $('#uEmail').val();
+			var uTel = $('#uTel').val();
+			var uAddr = $('#uAddr').val();
+    		var upForm =$('#upForm');
+    		
+    		
+    		if(uName == ""){
+				alert('이름을 입력해주세요.');
+				$('#uName').focus();
+				return false;
+			}
+			if(uPw == ""){
+				alert('비밀번호를을 입력해주세요.');
+				$('#uPw').focus();
+				return false;
+			}
+			if(uPwCheck != uPw){
+				alert('비밀번호가 틀립니다.');
+				$('#uPwCheck').focus();
+				return false;
+			}
+			if(uBirth == ""){
+				alert('생년월일을 입력해주세요.');
+				$('#uBirth').focus();
+				return false;
+			}
+			if(uEmail == ""){
+				alert('이메일을 입력해주세요.');
+				$('#uEmail').focus();
+				return false;
+			}
+			if(uTel == ""){
+				alert('핸드폰 번호를 입력해주세요.');
+				$('#uTel').focus();
+				return false;
+			}
+			if(uAddr == ""){
+				alert('주소를 입력해주세요.');
+				$('#uAddr').focus();
+				return false;	
+			}
+			else{
+				alert('수정이 완료되었습니다.');
+				upForm.submit();
+			}
+    	});
+    });
+    
+    
    </script>
   </th:block>
 <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
@@ -57,52 +115,57 @@
 
             <div class="card mb-4">
               <div class="card-body">
-                <form th:action="@{/admin/librarianMyUpdate}" id="validation-form" method="post" th:with="llu = ${librarianMyUpdate}">
+                <form th:action="@{/admin/librarianMyUpdate}" id="upForm" method="post" th:with="llu = ${librarianMyUpdate}">
 	              <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">구분</label>
 	                    <input type="text" class="form-control" name="uDivision" value="사서" placeholder="구분" readonly="readonly">
                  	  </div>
-	              </div>
-                  <div class="form-row">
 	                  <div class="form-group col-md-6">
-	                    <label class="form-label">사서 아이디</label>
-	                    <input type="text" class="form-control" name="uId" th:value="${session.SAID}" placeholder="아이디" readonly="readonly">
+	                    <label class="form-label">사서 아이디 : </label>
+	                    <input type="text" class="form-control" name="uId" th:value="${llu.uId}" placeholder="아이디" readonly="readonly">
 	                    <small class="form-text text-muted">아이디를 입력해주세요.</small>
                  	 </div>
+	              </div>
+                  <div class="form-row">
 	                  <div class="form-group col-md-6" >
-	                    <label class="form-label">비밀번호</label>
-	                    <input type="password" class="form-control" name="uPw" th:value="${llu.uPw}" placeholder="비밀번호">
+	                    <label class="form-label">비밀번호 : </label>
+	                    <input type="password" class="form-control" id="uPw" name="uPw" th:value="${llu.uPw}" placeholder="비밀번호">
+	                    <small class="form-text text-muted">비밀번호를 입력해주세요.</small>
+	                  </div>
+	                  <div class="form-group col-md-6" >
+	                    <label class="form-label">비밀번호 확인 : </label>
+	                    <input type="password" class="form-control" id="uPwCheck" name="uPwCheck" placeholder="비밀번호">
 	                    <small class="form-text text-muted">비밀번호를 입력해주세요.</small>
 	                  </div>
 	              </div>
 	              <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">이름</label>
-	                    <input type="text" class="form-control" name="uName" th:value="${llu.uName}" placeholder="이름">
+	                    <input type="text" class="form-control" id="uName" name="uName" th:value="${llu.uName}" placeholder="이름">
 	                    <small class="form-text text-muted">이름을 입력해주세요.</small>
 	                  </div>
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">핸드폰</label>
-	                    <input type="text" class="form-control" name="uTel" th:value="${llu.uTel}" placeholder="핸드폰">
+	                    <input type="text" class="form-control" id="uTel" name="uTel" th:value="${llu.uTel}" placeholder="핸드폰">
 	                    <small class="form-text text-muted">핸드폰번호를 입력해주세요.</small>
 	                  </div>
 	              </div>
 	              <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">이메일</label>
-	                    <input type="text" class="form-control" name="uEmail" th:value="${llu.uEmail}" placeholder="이메일">
+	                    <input type="text" class="form-control" id="uEmail" name="uEmail" th:value="${llu.uEmail}" placeholder="이메일">
 	                    <small class="form-text text-muted">이메일을 입력해주세요.</small>
 	                  </div>
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">생년월일</label>
-	                    <input type="text" class="form-control" name="uBirth" th:value="${llu.uBirth}" placeholder="생년월일">
+	                    <input type="date" class="form-control" id="uBirth" name="uBirth" th:value="${llu.uBirth}" placeholder="생년월일">
 	                  </div>
 	              </div>
 	              <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">주소</label>
-	                    <input type="text" class="form-control" name="uAddr" th:value="${llu.uAddr}" placeholder="주소">
+	                    <input type="text" class="form-control" id="uAddr" name="uAddr" th:value="${llu.uAddr}" placeholder="주소">
 	                    <small class="form-text text-muted">주소를 입력해주세요.</small>
 	                  </div> 
 	                    <input type="hidden" class="form-control" name="uDate" th:value="${llu.uDate}" placeholder="회원 등록일">
@@ -124,7 +187,7 @@
 	                      </div>
 			          </div>
 		          
-                  <button type="submit" class="btn btn-primary">수정완료</button>
+                  <button type="button" id="upBtn" class="btn btn-primary">수정완료</button>
                 </form>
               </div>
             </div>

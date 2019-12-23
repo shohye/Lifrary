@@ -95,8 +95,9 @@ public interface AdminMapper {
 	public List<User> librarianLevelList1(String libNum);
 	public List<User> librarianLevelList2(String libNum);
 	
+	
 	//관리자가 회원정보&권한 수정 - 한개정보만 가져오기
-	public List<User> getLibrarianLevelUpdate(String uId);
+	public User getLibrarianLevelUpdate(String uId, String libNum);
 	//관리자가 회원정보&권한 수정
 	public int librarianLevelUpdate1(User user);
 	public int librarianLevelUpdate2(LibrarianLevel librarianLevel);

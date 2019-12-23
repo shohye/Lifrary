@@ -491,10 +491,14 @@ public class AdminController {
 	 */
 	//관리자가 사서정보&권한 수정하기 >> 폼
 	@GetMapping("/admin/librarianLevelUpdate")
-	public String getLibrarianLevelUpdate(@RequestParam(value = "uId")String uId, Model model) {
+	public String getLibrarianLevelUpdate(@RequestParam(value = "uId",required=false)String uId
+										, HttpSession session, Model model) {
 		System.out.println("getLibrarianLevelUpdate 관리자가 사서정보&권한 수정하기 @GetMapping");
-		System.out.println("getLibrarianLevelUpdate uId 확인바람  >> " + uId );
-		model.addAttribute("librarianLevelUpdate",adminService.getLibrarianLevelUpdate(uId));
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
+		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+		model.addAttribute("librarianLevelUpdate",adminService.getLibrarianLevelUpdate(uId, libNum));
+		System.out.println("관리자가 사서 수정하는거 제발 확인 @!" + adminService.getLibrarianLevelUpdate(uId, libNum));
 		
 		return "/adminpage/librarian/librarianLevelUpdate";
 	}
@@ -508,7 +512,6 @@ public class AdminController {
 		
 		adminService.librarianLevelUpdate1(user);
 		adminService.librarianLevelUpdate2(librarianLevel);
-		
 		System.out.println("user 확인 librarianLevelUpdate1 ==>> " + user);
 		System.out.println("librarianLevel 확인 librarianLevelUpdate2 ==>> " + librarianLevel);
 		
