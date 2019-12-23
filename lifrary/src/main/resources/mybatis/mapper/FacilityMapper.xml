@@ -19,7 +19,18 @@
   	<result property="fSeatOrImg" column="f_seat_or_img"/>
   	<result property="fDate" column="f_date"/>
   </resultMap>
-  
+		
+  <resultMap type="ksmart.pentagon.vo.FacilityReservation" id="reserveResultMap">
+  	<result property="frCode" column="fr_code"/>
+  	<result property="lCode" column="l_code"/>
+  	<result property="uId" column="u_id"/>
+  	<result property="fCode" column="f_code"/>
+  	<result property="frSelectNum" column="fr_select_num"/>
+  	<result property="frTel" column="fr_tel"/>
+  	<result property="frExtension" column="fr_extension"/>
+  	<result property="frReserveDate" column="fr_reserve_date"/>
+  	<result property="frEndDate" column="fr_end_date"/>
+  </resultMap>  
   <!-- 시설종류가 xx 인것의 리스트를 출력 -->
   <select id="getFacilityList" parameterType="String" resultMap="FResultMap">
   	SELECT 
@@ -65,5 +76,14 @@
 	WHERE 
 		 f_code = #{fCode}
   </update>
-  
+  <select id="getReservationSeat" parameterType="String" resultMap="reserveResultMap">
+  	SELECT
+		fr_select_num
+	FROM
+		facility_reservation
+	WHERE
+		f_code = #{fCode}
+		<![CDATA[ AND fr_reserve_date <= NOW() AND fr_end_date >= NOW() ]]>
+  </select>
+ 
   </mapper>

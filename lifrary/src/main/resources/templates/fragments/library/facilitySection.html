@@ -30,7 +30,6 @@
 													<thead>
 														<tr>
 															<td>시설명</td>
-															<td>시설종류</td>
 															<td>시설위치</td>
 															<td>최대 사용인원</td>
 															<td>사용 성별</td>
@@ -39,12 +38,14 @@
 													</thead>
 													<tbody>
 														<th:block th:each="fList : ${f}">
-															<tr class="abcd">
-																<td>
-																	<input type="hidden" th:value="${fList.fCode}">
-																	<span>[[${fList.fName}]]</span>
-																</td>
-																<td th:text="${fList.fKinds}"></td>
+															<tr class="fTable">
+																<input type="hidden" name= "fCode" th:value="${fList.fCode}">
+																<input type="hidden" name = "fKinds" th:value="${fList.fKinds}">
+																<input type="hidden" name = "fSeatOrImg" th:value="${fList.fSeatOrImg}">
+																<input type="hidden" name = "fRow" th:value="${fList.fRow}">
+																<input type="hidden" name = "fCol" th:value="${fList.fCol}">
+																<input type="hidden" name = "fName" th:value="${fList.fName}">
+																<td th:text="${fList.fName}"></td>
 																<td th:text="${fList.fLocation}"></td>
 																<td th:text="${fList.fAccommodate}"></td>
 																<td th:text="${fList.fGender}"></td>
@@ -55,6 +56,11 @@
 												
 												</table>
 											</div>                                      
+	                                       	<div>
+	                                        	<div id = "tdTable" style="padding-left: 50px;padding-right: 50px;">
+	                                        	
+	                                        	</div>
+	                                        </div>
 	                                        </section>
 	                                        <div class="clearfix"></div>
 	                                     </th:block>   
@@ -71,28 +77,34 @@
 											<div style="margin-top: 30px;">
 												<table border="1">
 												
-													<tr>
-														<td>시설명</td>
-														<td>시설종류</td>
-														<td>시설위치</td>
-														<td>최대 사용인원</td>
-														<td>사용 성별</td>
-														<td>사용시간</td>
-													</tr>
-												<th:block th:each="fList : ${f}">
-													<tr>
-														<td th:text="${fList.fName}"></td>
-														<td th:text="${fList.fKinds}"></td>
-														<td th:text="${fList.fLocation}"></td>
-														<td th:text="${fList.fAccommodate}"></td>
-														<td th:text="${fList.fGender}"></td>
-														<td th:text="${fList.fTerm}"></td>
-													</tr>
-												</th:block>
-												
+													<thead>
+														<tr>
+															<td>시설명</td>
+															<td>시설위치</td>
+															<td>최대 사용인원</td>
+															<td>사용 성별</td>
+															<td>사용시간</td>
+														</tr>
+													</thead>
+													<tbody>
+														<th:block th:each="fList : ${f}">
+															<tr class="fTable">
+																<input type="hidden" name= "fCode" th:value="${fList.fCode}">
+																<input type="hidden" name = "fKinds" th:value="${fList.fKinds}">
+																<input type="hidden" name = "fSeatOrImg" th:value="${fList.fSeatOrImg}">
+																<td th:text="${fList.fName}"></td>
+																<td th:text="${fList.fLocation}"></td>
+																<td th:text="${fList.fAccommodate}"></td>
+																<td th:text="${fList.fGender}"></td>
+																<td th:text="${fList.fTerm}"></td>
+															</tr>
+														</th:block>
+													</tbody>
+													
 												</table>
 											</div>	                                        
 	                                        </section>
+	                                        
 	                                        <div class="clearfix"></div>
 	                                     </th:block>
 	                                     
@@ -108,25 +120,29 @@
 											<div style="margin-top: 30px;">
 												<table border="1">
 												
-													<tr>
-														<td>시설명</td>
-														<td>시설종류</td>
-														<td>시설위치</td>
-														<td>최대 사용인원</td>
-														<td>사용 성별</td>
-														<td>사용시간</td>
-													</tr>
-												<th:block th:each="fList : ${f}">
-													<tr>
-														<td th:text="${fList.fName}"></td>
-														<td th:text="${fList.fKinds}"></td>
-														<td th:text="${fList.fLocation}"></td>
-														<td th:text="${fList.fAccommodate}"></td>
-														<td th:text="${fList.fGender}"></td>
-														<td th:text="${fList.fTerm}"></td>
-													</tr>
-												</th:block>
-												
+													<thead>
+														<tr>
+															<td>시설명</td>
+															<td>시설위치</td>
+															<td>최대 사용인원</td>
+															<td>사용 성별</td>
+															<td>사용시간</td>
+														</tr>
+													</thead>
+													<tbody>
+														<th:block th:each="fList : ${f}">
+															<tr class="fTable">
+																<input type="hidden" name= "fCode" th:value="${fList.fCode}">
+																<input type="hidden" name = "fKinds" th:value="${fList.fKinds}">
+																<input type="hidden" name = "fSeatOrImg" th:value="${fList.fSeatOrImg}">
+																<td th:text="${fList.fName}"></td>
+																<td th:text="${fList.fLocation}"></td>
+																<td th:text="${fList.fAccommodate}"></td>
+																<td th:text="${fList.fGender}"></td>
+																<td th:text="${fList.fTerm}"></td>
+															</tr>
+														</th:block>
+													</tbody>
 												</table>
 											</div>	                                        
 	                                        </section>
@@ -145,27 +161,38 @@
 											<div style="margin-top: 30px;">
 												<table border="1">
 												
-													<tr>
-														<td>시설명</td>
-														<td>시설종류</td>
-														<td>시설위치</td>
-														<td>최대 사용인원</td>
-														<td>사용 성별</td>
-														<td>사용시간</td>
-													</tr>
-												<th:block th:each="fList : ${f}">
-													<tr>
-														<td th:text="${fList.fName}"></td>
-														<td th:text="${fList.fKinds}"></td>
-														<td th:text="${fList.fLocation}"></td>
-														<td th:text="${fList.fAccommodate}"></td>
-														<td th:text="${fList.fGender}"></td>
-														<td th:text="${fList.fTerm}"></td>
-													</tr>
-												</th:block>
-												
+													<thead>
+														<tr>
+															<td>시설명</td>
+															<td>시설위치</td>
+															<td>최대 사용인원</td>
+															<td>사용 성별</td>
+															<td>사용시간</td>
+														</tr>
+													</thead>
+													<tbody>
+														<th:block th:each="fList : ${f}">
+															<tr class="fTable">
+																<input type="hidden" name= "fCode" th:value="${fList.fCode}">
+																<input type="hidden" name = "fKinds" th:value="${fList.fKinds}">
+																<input type="hidden" name = "fSeatOrImg" th:value="${fList.fSeatOrImg}">
+																<input type="hidden" name = "fRow" th:value="${fList.fRow}">
+																<input type="hidden" name = "fCol" th:value="${fList.fCol}">
+																<td th:text="${fList.fName}"></td>
+																<td th:text="${fList.fLocation}"></td>
+																<td th:text="${fList.fAccommodate}"></td>
+																<td th:text="${fList.fGender}"></td>
+																<td th:text="${fList.fTerm}"></td>
+															</tr>
+														</th:block>
+													</tbody>
 												</table>
-											</div>	                                        
+											</div>
+											<div>
+	                                        	<div id = "tdTable">
+	                                        	
+	                                        	</div>
+	                                        </div>                                       
 	                                        </section>
 	                                        <div class="clearfix"></div>
 	                                     </th:block>

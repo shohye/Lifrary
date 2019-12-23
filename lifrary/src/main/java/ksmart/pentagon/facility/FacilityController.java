@@ -71,6 +71,16 @@ public class FacilityController {
 		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/lockerReservation";
 	}
+	
+	
+	/*
+	 * @GetMapping("/lifrary/reservationAjax") public @ResponseBody Map<String,
+	 * List<String>> getSeat(@RequestParam(value = "fCode")String fCode){
+	 * Map<String, List<String>> data = new HashMap<String, List<String>>();
+	 * 
+	 * return data; }
+	 */
+	 
 
 	/* ======================================================== */
 	/* ======================================================== */

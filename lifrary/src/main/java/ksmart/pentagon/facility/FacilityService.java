@@ -39,4 +39,6 @@ public class FacilityService {
 	public void updateFacility(Facility facility) {
 		facilityMapper.updateFacility(facility);
 	}
+
+	
 }
