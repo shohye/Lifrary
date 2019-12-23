@@ -23,6 +23,10 @@ public interface BookStockMapper {
 	// (어드민) 소장도서에서 삭제중 한개도서 상세정보 가져오기
 	public BookStock getStockDeleteDetail(String bsCode);
 			
+	// (어드민) 소장도서 인서트 ( book_stock insert/ book_information update)
+	public void insertStock(Map<String , Object> insertMap);
+	public void updateBookInfoStock(BookInformation bookInformation);
+	
 	// (도서관) 검색된 소장도서 리스트 출력
 	public List<BookStock> getDetailSearchStockList(BookInformation bookInformation);
 	
@@ -30,7 +34,7 @@ public interface BookStockMapper {
 	public BookLend getReturnDate(String bsCode);
 	
 	// (어드민) 도서 정보 업데이트하는 메서드
-	public void updateStock(Map<String , Object> updateMap);
+	public void updateStock(Map<String , Object> stockMap);
 	
 	
 	
@@ -50,4 +54,6 @@ public interface BookStockMapper {
 	// resetStock update ajax
 	// 아이디 ,비번체크 사용
 	int updateStockReset(String bsCode);
+
+	
 }

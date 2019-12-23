@@ -33,6 +33,7 @@
 	    <result column="bcl_code"         property="bclCode"/>
 	    <result column="bcm_code"         property="bcmCode"/>
 	    <result column="bs_alias_mark"    property="bsAliasMark"/>
+	    <result column="bs_author_mark"    property="bsAuthorMark"/>
 	    <result column="bs_writer_mark"   property="bsWriterMark"/>
 	    <result column="bs_secondary_mark" property="bsSecondaryMark"/>
 	    <result column="bs_total_page"    property="bsTotalPage"/>  
@@ -120,24 +121,24 @@
 				book_information bi
 			on bi.bi_isbn = bs.bi_isbn
 			SET
-				 bi.bi_name       = #{biName}
-				,bi.bi_author     = #{biAuthor}
-				,bi.bi_publisher  = #{biPublisher}
-				,bi.bi_detail     = #{biDtail}
-				,bi.bi_kdc        = #{biKdc}
-				,bs.bcl_code      = #{bclCode}
-				,bs.bcm_code      = (SELECT bcm_code FROM book_cate_medium 
-								    WHERE bcl_code = #{bclCode}  
-									AND bcm_name= #{bcmName} )				
-				,bs.bs_alias_mark = #{bsAliasMark}
-				,bs.bs_writer_mark= #{bsWriterMark}
+				 bi.bi_name      	 = #{biName}
+				,bi.bi_author     	 = #{biAuthor}
+				,bi.bi_publisher  	 = #{biPublisher}
+				,bi.bi_detail     	 = #{biDtail}
+				,bi.bi_kdc        	 = #{biKdc}
+				,bs.bcl_code      	 = #{bclCode}
+				,bs.bcm_code      	 = (SELECT bcm_code FROM book_cate_medium 
+								   	    WHERE bcl_code = #{bclCode}  
+										AND bcm_name= #{bcmName} )				
+				,bs.bs_alias_mark 	 = #{bsAliasMark}
+				,bs.bs_writer_mark	 = #{bsWriterMark}
 				,bs.bs_secondary_mark = #{bsSecondaryMark}
-				,bs.bs_total_page  = #{bsTotalPage}
-				,bs.bs_book_state  = #{bsBookState}
-				,bs.bs_lend_state  = #{bsLendState}
-				,bs.bs_carry_route = #{bsCarryRoute}
+				,bs.bs_total_page 	 = #{bsTotalPage}
+				,bs.bs_book_state    = #{bsBookState}
+				,bs.bs_lend_state    = #{bsLendState}
+				,bs.bs_carry_route   = #{bsCarryRoute}
 			WHERE 
-				 bs.bs_code = #{bsCode}		    
+				 bs.bs_code 		 = #{bsCode}		    
   	 </update>
 	 
 	 
@@ -396,5 +397,74 @@
 			    
   	</select>
 	
+<!--  (어드민) 소장도서 인서트  -->
+	<insert id="insertStock">
+	<selectKey keyProperty="bsCode" resultType="String" order="BEFORE">
+ 		SELECT 
+		CONCAT('bs_',DATE_FORMAT(CURDATE(), '%y%m%d'),
+			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(bs.bs_code), '-', -1),6) 
+			, '00001' 
+			,LPAD(RIGHT(MAX(bs.bs_code),5)+1,5,'0'))))
+		FROM 
+			book_stock AS bs
+ 	</selectKey>	
+	INSERT INTO book_stock
+	( 	  bs_code
+		, l_code
+		, u_id
+		, bcl_code
+		, bcm_code
+		, bi_isbn
+		, bs_alias_mark
+		, bs_author_mark
+		, bs_writer_mark
+		, bs_secondary_mark
+		, bs_total_page
+		, bs_stock_state
+		, bs_book_state
+		, bs_lend_state
+		, bs_carry_route
+		, bs_date
+		, bs_delete
+		, bs_delete_id
+		, bs_delete_reason
+		, bs_delete_date)
+	VALUES (
+		  #{bsCode}
+		, #{lCode}
+		, #{uId}
+		, #{bclCode}
+		, (SELECT bcm_code FROM book_cate_medium 
+		   WHERE bcl_code = #{bclCode}  
+		   AND bcm_name= #{bcmName} )	
+		, #{biIsbn}
+		, #{bsAliasMark}
+		, #{bsAuthorMark}
+		, #{bsWriterMark}
+		, #{bsSecondaryMark}
+		, #{bsTotalPage}
+		, '소장'
+		, '정상'
+		, 'O'
+		, #{bsCarryRoute}
+		, CURDATE()
+		, 'X'
+		, null
+		, null
+		, null)
+
+	</insert>
+	<update id="updateBookInfoStock" parameterType="ksmart.pentagon.vo.BookInformation" >
+		UPDATE 
+			book_information
+		SET
+			 bi_name      = #{biName}
+			,bi_author    = #{biAuthor}
+			,bi_publisher = #{biPublisher}
+			,bi_year      = #{biYear}
+			,bi_kdc       = #{biKdc}
+		WHERE 
+			 bi_isbn = #{biIsbn}
+    </update>
 	
   </mapper>

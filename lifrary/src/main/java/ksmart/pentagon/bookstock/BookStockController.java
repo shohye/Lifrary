@@ -54,7 +54,7 @@ public class BookStockController {
 	 */
 	@GetMapping("/admin/stockDetailInsert")
     public String stockDetailInsert() {
-		
+	
     	return "/adminpage/bookStock/stockDetailInsert";
     }
 	// (어드민) 소장도서 인서트 처리
@@ -64,8 +64,15 @@ public class BookStockController {
 	 * @author 신다은
 	 */
 	@PostMapping("/admin/stockDetailInsert")
-    public String stockDetailInsert2(HttpSession session) {
+    public String stockDetailInsert2(HttpSession session , BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
 		String lCode = (String) session.getAttribute("LIBNUM");
+		String uId = (String) session.getAttribute("SAID");
+		
+		System.out.println("stockDetailInsert2 lCode=>"+lCode);
+		bookStock.setlCode(lCode);
+		bookStock.setuId(uId);
+		bookStockService.insertStock(bookInformation, bookStock, bookCate);
+		
     	return "redirect:/admin/stockSearchList";
     }
 		

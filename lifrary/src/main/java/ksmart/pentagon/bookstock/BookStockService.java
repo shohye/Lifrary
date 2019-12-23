@@ -182,12 +182,32 @@ public class BookStockService {
     	stockMap.put("bsWriterMark",bookStock.getBsWriterMark());
     	stockMap.put("bsSecondaryMark",bookStock.getBsSecondaryMark());
     	stockMap.put("bsTotalPage",bookStock.getBsTotalPage());    	
-    	stockMap.put("bsBookState",bookStock.getBsBookState());
-    	stockMap.put("bsLendState",bookStock.getBsLendState());
     	stockMap.put("bsCarryRoute",bookStock.getBsCarryRoute());  
     	
     	bookStockMapper.updateStock(stockMap);
 		
+    }
+    
+    public void insertStock(BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
+    	Map<String,Object> insertMap = new HashMap<String,Object>();
+    	
+    	insertMap.put("bsCode",bookStock.getBsCode());
+    	insertMap.put("lCode",bookStock.getlCode());
+    	insertMap.put("uId",bookStock.getuId());
+    	insertMap.put("bclCode",bookStock.getBclCode());
+    	insertMap.put("bcmName",bookCate.getBcmName());
+    	insertMap.put("biIsbn",bookStock.getBiIsbn());
+    	insertMap.put("bsAliasMark",bookStock.getBsAliasMark());
+    	insertMap.put("bsAuthorMark",bookStock.getBsAuthorMark());
+    	insertMap.put("bsWriterMark",bookStock.getBsWriterMark());
+    	insertMap.put("bsSecondaryMark",bookStock.getBsSecondaryMark());
+    	insertMap.put("bsTotalPage",bookStock.getBsTotalPage());
+    	insertMap.put("bsBookState",bookStock.getBsBookState());
+    	insertMap.put("bsLendState",bookStock.getBsLendState());
+    	insertMap.put("bsCarryRoute",bookStock.getBsCarryRoute());  
+    	
+    	bookStockMapper.insertStock(insertMap);   	
+    	bookStockMapper.updateBookInfoStock(bookInformation);
     }
 	  
 	  
