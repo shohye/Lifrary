@@ -57,6 +57,7 @@
                     	<th>등급명</th>
                     	<th>이름</th>	
                     	<th>메일수신동의</th>
+                    	<th>임명장수여</th>
                     	<th>권한명</th>
                     	<th>대출상태</th>
                     	<th>공공시설</th>
@@ -74,6 +75,7 @@
 	               			<td class="align-middle" th:text="${l.ulName}"></td>
 	               			<td class="align-middle" th:text="${l.uName}"></td>
 	               			<td class="align-middle" th:text="${l.uEmailAgree}" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="${l.uAppointment}" style="text-align:center"></td>
 	               			<td class="align-middle" th:text="${l.uasName}"></td>
 	               			<td style="text-align:center">
 	                			<span th:if="${l.uasLendLimit}  == O" th:text="대출가능" class="badge badge-outline-success" ></span>

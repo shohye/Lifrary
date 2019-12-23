@@ -111,13 +111,13 @@
 					             <div class="form-row align-items-center">	
 					               <!--  <form th:action="@{/getUserSearch}" method="post"> -->
 				                  <label class="form-label">회원등급</label>
-				                  <select id="ullevel" class="custom-select" name="ullevel">
+				                  <select class="custom-select" name="ullevel">
 				                 	<option value="ul001">씨앗</option>
 				                    <option value="ul002">새싹</option>
 				                    <option value="ul003">꽃잎</option>
 				                    <option value="ul004">열매</option>
 				                    <option value="ul005">나무</option>
-				                  </select>
+				                  </select> 
 					             </div>
 					             <div class="form-row align-items-center">
 								 	<!--  <form th:action="@{/getUserSearch}" method="post"> -->
@@ -131,7 +131,8 @@
 								</div>
     						 </div>
 				   		   </div>
-		                 <div class="form-group">
+				   	   <div class="form-row">
+		                 <div class="form-group col-md-6">
 		                    <label class="form-label">이메일수신</label>
 		                     <div class="form-check">
 		                      <label class="custom-control custom-radio">
@@ -146,7 +147,7 @@
 	                          </label>
 		                    </div>
 		                  </div>
-		                  <div class="form-group">
+		                  <div class="form-group col-md-6">
 		                    <label class="form-label">임명장 수여 </label>
 		                     <div class="form-check">
 		                      <label class="custom-control custom-radio">
@@ -161,10 +162,11 @@
 	                          </label>
 		                    </div>
 		                  </div>
-							<button type="submit" class="btn btn-primary">수정완료</button>
-		                </form>
-		              </div>
-		          	</div>
+		               </div>
+					  <button type="submit" class="btn btn-primary">수정완료</button>
+	                </form>
+	              </div>
+	          	</div>
 	          </div>
 	          <!-- / Content -->
 	

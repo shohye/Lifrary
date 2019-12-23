@@ -32,7 +32,8 @@
 				var uTel = $('#uTel').val();
 				var uAddr = $('#uAddr').val();
 				var lluForm =$('#lluForm');
-				
+				console.log(uPw)
+				console.log(uPwCheck)
 				
 				if(uPw == ""){
 					alert('비밀번호를 입력해주세요.');
@@ -136,7 +137,7 @@
 	                  </div>
 	                  <div class="form-group col-md-6" >
 	                    <label class="form-label">비밀번호 확인 : </label>
-	                    <input type="password" class="form-control" name="uPwCkeck" id="uPwCkeck" placeholder="비밀번호 확인">
+	                    <input type="password" class="form-control" name="uPwCheck" id="uPwCheck" placeholder="비밀번호 확인">
 	                    <small class="form-text text-muted">비밀번호 다시 입력해주세요.</small>
 	                  </div>
 	              </div>
@@ -170,13 +171,13 @@
 	                    <small class="form-text text-muted">주소를 입력해주세요.</small>
 	                  </div>
 	              
-	              <!-- <div class="form-row">
+	              <div class="form-row">
 	                  <div class="form-group col-md-6">
-	                    <label class="form-label">등록날짜</label>
-	                    <input type="text" class="form-control" name="uDate" placeholder="등록날짜">
-	                    <small class="form-text text-muted">자동으로 등록일이 들오가유.</small>
+	                    
+	                    <input type="hidden" class="form-control" name="lCode" th:value="${session.LIBNUM}" placeholder="도서관코드">
+	                   
 	                  </div>
-	              </div> -->
+	              </div>
 	              <div class="form-group col-md-6">
                     <label class="form-label">이메일수신 : </label>
                       <div class="form-check">

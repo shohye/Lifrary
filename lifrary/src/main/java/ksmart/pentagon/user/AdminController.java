@@ -260,10 +260,16 @@ public class AdminController {
 	 */
 	//관리자가 유저 회원 등급 수정 
 	@GetMapping("/admin/adUserLevelUpdate")
-	public String getAdUserLevelUpdate(@RequestParam(value = "ulLevel",required=false)String ulLevel, Model model) {
-		System.out.println(" getAdUserLevelUpdate 회원등급 수정  @GetMapping");
-		model.addAttribute("lUpdate", adminService.getAdUserLevelUpdate(ulLevel));
-		System.out.println("userLevel 확인바람  ==>>" + adminService.getAdUserLevelUpdate(ulLevel));
+	public String getAdUserLevelUpdate(@RequestParam(value = "ulLevel",required=false)String ulLevel,
+										HttpSession session ,Model model) {
+		System.out.println("getAdUserLevelUpdate 회원등급 수정  @GetMapping");
+		String getSAID = (String)session.getAttribute("getSAID");
+		String libNum = (String) session.getAttribute("LIBNUM");	
+		System.out.println("getSAID 세션에서가져온 아이디  >>>" + getSAID );
+		System.out.println("LIBNUM 세션에서가져온 도서코드  >>>" + libNum );
+		
+		model.addAttribute("lUpdate", adminService.getAdUserLevelUpdate(ulLevel, getSAID));
+		System.out.println("userLevel 확인바람  ==>>" + adminService.getAdUserLevelUpdate(ulLevel, getSAID));
 		
 		return "/adminpage/userManagement/adUserLevelUpdate";
 	}

@@ -110,10 +110,10 @@ public class AdminService {
 	 }
 	 
 	 //관리자가 유저 레벨 수정 하기
-	 public UserLevel getAdUserLevelUpdate(String ulLevel) {
+	 public UserLevel getAdUserLevelUpdate(String ulLevel ,String getSAID) {
 		 System.out.println("getAdUserLevelUpdate 서비스 진입");
 		
-		 return adminMapper.getAdUserLevelUpdate(ulLevel);
+		 return adminMapper.getAdUserLevelUpdate(ulLevel, getSAID);
 	 }
 	 
 	 //관리자가 회원 등급 수정하고 리스트로넘기기

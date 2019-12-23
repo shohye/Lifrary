@@ -4,9 +4,38 @@
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
 	  
-<th:block layout:fragment="adminTitle">
-	<title>회원등급 수정 페이지</title>
-</th:block>
+		<th:block layout:fragment="adminTitle">
+			<title>회원등급 수정 페이지</title>
+		</th:block>
+
+		<th:block layout:fragment="customScript">
+			<script type="text/javascript">
+				$(document).ready(function(){
+					
+					//용탁선생님께 물어보기
+					//유효성 검사 - 수정하기 위한
+					$('#luBtn').click(function(){
+						
+						var ulName = $('#ulName').val();
+						var upForm = $('#upForm');
+						console.log('asdf')
+						
+					/* 	if(ulName == ''){
+							alert('등급명을 입력해 주세요.');
+							$('#ulName').focus();
+							return false;
+						}
+						else{
+							alert('등급이 수정되었습니다.');
+							upForm.submit();
+						} */
+						
+					});
+					
+			});
+
+			</script>
+		</th:block>   
 
    <!-- Content -->
    		<th:block layout:fragment="adminContents">
@@ -45,59 +74,53 @@
               	  등급 수정 중입니다 
               </h6>
               <div class="card-body">
-                <form th:action="@{/admin/adUserLevelUpdate}" id="validation-form" method="post" th:with="lup = ${lUpdate}">
+                <form th:action="@{/admin/adUserLevelUpdate}" id="upForm" method="post" th:with="lup = ${lUpdate}">
                 
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label class="form-label">회원등급</label>
-                      <input type="text" class="form-control" name="ulLevel" th:value="${lup.ulLevel}" placeholder="회원등급" readonly="readonly">
+                      <input type="text" class="form-control" name="ulLevel" id="ulLevel" th:value="${lup.ulLevel}" placeholder="회원등급" readonly="readonly">
                     </div>
                     <div class="form-group col-md-6">
                       <label class="form-label">(관리자)아이디</label>
-                      <input type="text" class="form-control" name="uId" th:value="${lup.uId}" placeholder="작성자아이디">
+                      <input type="text" class="form-control" name="uId" id="uId" th:value="${session.SAID}" placeholder="작성자아이디" readonly="readonly">
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="form-label">등급 명</label>
-                    <input type="text" class="form-control" name="ulName" th:value="${lup.ulName}" placeholder="등급 명">
+                    <input type="text" class="form-control" name="ulName" id="ulName" th:value="${lup.ulName}" placeholder="등급 명">
                   </div>
                   <div class="form-group">
-                    <label class="form-label">도서관코드</label>
-                    <input type="text" class="form-control" name="lCode" th:value="${lup.lCode}" placeholder="도서관 코드" readonly="readonly">
+                    <input type="hidden" class="form-control" name="lCode" id="lCode" th:value="${lup.lCode}" placeholder="도서관 코드" readonly="readonly">
                   </div>
                  <div class="form-row">
                   <div class="form-group col-md-6">
                     <label class="form-label">기준권수(최소)</label>
-                    <input type="text" class="form-control" name="ulMin" th:value="${lup.ulMin}" placeholder="최소 권수">
+                    <input type="text" class="form-control" name="ulMin" id="ulMin" th:value="${lup.ulMin}" placeholder="최소 권수">
                   </div>
                   <div class="form-group col-md-6">
                     <label class="form-label">기준권수(최대)</label>
-                    <input type="text" class="form-control" name="ulMax" th:value="${lup.ulMax}" placeholder="최대 권수">
+                    <input type="text" class="form-control" name="ulMax" id="ulMax" th:value="${lup.ulMax}" placeholder="최대 권수">
                   </div>
                  </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label class="form-label">대출가능 권수</label>
-                      <input type="text" class="form-control" name="ulLendNum" th:value="${lup.ulLendNum}" placeholder="대출 가능 권수">
+                      <input type="text" class="form-control" name="ulLendNum" id="ulLendNum" th:value="${lup.ulLendNum}" placeholder="대출 가능 권수">
                     </div>
                     <div class="form-group col-md-6">
                       <label class="form-label">대출 가능일 수 </label>
-                      <input type="text" class="form-control" name="ulLendDay" th:value="${lup.ulLendDay}" placeholder="대출 가능 일">
+                      <input type="text" class="form-control" name="ulLendDay" id="ulLendDay" th:value="${lup.ulLendDay}" placeholder="대출 가능 일">
                     </div>
                   </div>
                  <div class="form-row">
                   <div class="form-group col-md-6">
                     <label class="form-label">등록날짜 (자동)</label>
-                    <input type="text" class="form-control" name="ulDate" th:value="${lup.ulDate}" placeholder="등급 등록날짜">
+                    <input type="text" class="form-control" name="ulDate" id="ulDate" th:value="${lup.ulDate}" placeholder="등급 등록날짜">
                   </div>
                  </div>
-                  <div class="form-group">
-                    <label class="custom-control custom-checkbox m-0">
-                      <input type="checkbox" class="custom-control-input">
-                      <span class="custom-control-label">작성일과 등급코드는 자동 </span>
-                    </label>
-                  </div>
-                  <button type="submit" class="btn btn-primary">등급 수정완료</button>
+                 
+                  <button type="button" id="luBtn" class="btn btn-primary">등급 수정완료</button>
                 </form>
               </div>
             </div>

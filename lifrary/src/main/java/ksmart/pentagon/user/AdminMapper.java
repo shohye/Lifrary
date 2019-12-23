@@ -50,7 +50,7 @@ public interface AdminMapper {
 	public List<UserLevel> adUserLevelList(String libNum);
 	
 	//관리자가 회원등급수정-getmapping
-	public UserLevel getAdUserLevelUpdate(String ulLevel);
+	public UserLevel getAdUserLevelUpdate(String ulLevel, String getSAID);
 	
 	//관리자가 회원등급수정 postmapping
 	public int adUserLevelUpdate(UserLevel userLevel);  
