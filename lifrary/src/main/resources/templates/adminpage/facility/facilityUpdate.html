@@ -104,44 +104,49 @@
 
   					//ajax로 테이블 만들기.
 			$(document).on('click','#tableBtn',function(){
-				seatArray = new Array(); // 테이블만들기 버튼을 다시 누르면 새로운 배열이 생성됨.
-				var garo = $('#garo').val();
-				var sero = $('#sero').val();
-				
-				var request = $.ajax({
-					  url: "/libSeat",
-					  method: "POST",
-					  data: { 'garo' : garo, 'sero':sero },
-					  dataType: "json"
-					});
-					 
-					request.done(function( data ) {
-						var getGaro = data.getGaro; // 가로 배열(리스트)
-						var getSero = data.getSero; // 세로 배열(리스트)
-						var tableDiv = $('#tableDiv');
-						var contents = '';
-						
-						contents += '<table border="2">';
-						for(var i = 1; i <= getSero; i++){
-							contents += '<tr>';
-							for(var j = 1; j <= getGaro; j++){
-								contents += '<td class="tdClass" style="color:black; text-align: center; font-size:12px;  width: 40px; height: 35px;"'+ 
-								'seat="'+i+'-'+j+'" status="true">'+i+'-'+j+'</td>';
+				if($('#seatSelected').val == ''){ // 테이블 다시만들기 버튼을 눌렀을때 선택된 좌석이 나오는 곳이 빈칸이라면 로직 실행
+					seatArray = new Array(); // 테이블 다시 만들기 버튼을 다시 누르면 새로운 배열이 생성됨.
+					var garo = $('#garo').val();
+					var sero = $('#sero').val();
+					
+					var request = $.ajax({
+						  url: "/libSeat",
+						  method: "POST",
+						  data: { 'garo' : garo, 'sero':sero },
+						  dataType: "json"
+						});
+						 
+						request.done(function( data ) {
+							var getGaro = data.getGaro; // 가로 배열(리스트)
+							var getSero = data.getSero; // 세로 배열(리스트)
+							var tableDiv = $('#tableDiv');
+							var contents = '';
+							
+							contents += '<table border="2">';
+							for(var i = 1; i <= getSero; i++){
+								contents += '<tr>';
+								for(var j = 1; j <= getGaro; j++){
+									contents += '<td class="tdClass" style="color:black; text-align: center; font-size:12px;  width: 40px; height: 35px;"'+ 
+									'seat="'+i+'-'+j+'" status="true">'+i+'-'+j+'</td>';
+								}
+								contents += '</tr>';
 							}
-							contents += '</tr>';
-						}
-						contents += '</table>';
-						contents += '<small class="form-text text-muted">만들어줄 자리를 선택후 선택완료 버튼을 눌러주세요.</small>'
-						contents += '<br><button type = "button" id = "seatMakeBtn" class="btn btn-primary">자리 선택완료</button>'
-						tableDiv.html(contents); // 만들어진 테이블을 뿌려줌
-						
-					});
-					 
-					request.fail(function( jqXHR, textStatus ) {
-					  alert( "값을 입력후 버튼을 눌러주세요." );
-					});
+							contents += '</table>';
+							contents += '<small class="form-text text-muted">만들어줄 자리를 선택후 선택완료 버튼을 눌러주세요.</small>'
+							contents += '<br><button type = "button" id = "seatMakeBtn" class="btn btn-primary">자리 선택완료</button>'
+							tableDiv.html(contents); // 만들어진 테이블을 뿌려줌
+							
+						});
+						 
+						request.fail(function( jqXHR, textStatus ) {
+						  alert( "값을 입력후 버튼을 눌러주세요." );
+						});
+					} else { // 좌석 문자열부분이 빈칸이 아니라면, 빈칸으로 초기화해준다.
+						$('#seatSelected').val('');
+					}
 				
 			})
+			
 			
 			//만들어진 자리 배열 ajax를 통해 컨트롤러로 보내기
 			$(document).on('click','#seatMakeBtn',function(){
@@ -283,7 +288,7 @@
 						<div class="container-fluid flex-grow-1 container-p-y">
 
 							<h4 class="font-weight-bold py-3 mb-4">
-								<span class="text-muted font-weight-light"></span> 공공시설 등록 폼
+								<span class="text-muted font-weight-light"></span> 공공시설 수정 폼
 							</h4>
 							<th:block th:with="f = ${facility}">
 								<div class="card mb-4">
@@ -392,7 +397,7 @@
 															입력해주세요.</small>
 
 														<button type="button" id="tableBtn"
-															class="btn btn-primary">테이블 만들기</button>
+															class="btn btn-primary">테이블 다시 만들기</button>
 													</form>
 												</div>
 											</div>

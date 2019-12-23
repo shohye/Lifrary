@@ -29,4 +29,5 @@ public interface FacilityMapper {
 	//시설 수정하기.
 	public void updateFacility(Facility facility);
 	
+	
 }

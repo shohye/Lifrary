@@ -31,40 +31,51 @@ public class FacilityController {
 	// 열람실 관련 메서드
 
 	@GetMapping("/lifrary/readingRoom")
-	public String readingRoom(Model model) {
+	public String readingRoom(Model model, HttpSession session) {
+		String fKinds = "열람실";
+		String libNum = (String)session.getAttribute("LIBNUM");
 		model.addAttribute("room", "reading");
-
+		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/readingRoomReservation";
 	}
 
 	// 스터디룸 관련 메서드
 
 	@GetMapping("/lifrary/studyRoom")
-	public String studyRoom(Model model) {
+	public String studyRoom(Model model, HttpSession session) {
+		String fKinds = "스터디룸";
+		String libNum = (String)session.getAttribute("LIBNUM");
 		model.addAttribute("room", "study");
+		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/studyRoomReservation";
 	}
 
 	// 강연실 관련 메서드
 
 	@GetMapping("/lifrary/lectureRoom")
-	public String lectureRoom(Model model) {
+	public String lectureRoom(Model model, HttpSession session) {
+		String fKinds = "강연실";
+		String libNum = (String)session.getAttribute("LIBNUM");
 		model.addAttribute("room", "lecture");
+		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/lectureRoomReservation";
 	}
 
 	// 사물함 관련 메서드
 
 	@GetMapping("/lifrary/locker")
-	public String locker(Model model) {
+	public String locker(Model model, HttpSession session) {
+		String fKinds = "사물함";
+		String libNum = (String)session.getAttribute("LIBNUM");
 		model.addAttribute("room", "locker");
+		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/lockerReservation";
 	}
 
 	/* ======================================================== */
 	/* ======================================================== */
 	/* ======================================================== */
-	/* ==========================사서채널============================ */
+	/* ==========================사서채널============================= */
 
 	/**
 	 * 시설종류, 도서관코드를 받아 리스트 출력.
