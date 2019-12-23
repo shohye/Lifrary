@@ -3,9 +3,12 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
+	  <th:block layout:fragment="adminTitle">
+		 <title>삭제도서 상세정보</title>
+	  </th:block>
 	  
 	  <th:block layout:fragment="adminHeadAdd">
-	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
+	  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/users.css}">
  	  </th:block>
  	  
  	  <th:block layout:fragment="teamHeadScript">
@@ -159,10 +162,10 @@
           <th:block layout:fragment="pageScript">
 
 		  <!-- addLibs -->
-		  <script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		  <script th:src="@{/adminStatic/vendor/libs/chartjs/chartjs.js}"></script>
 		
 		  <!-- addDemo -->
-		  <script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
+		  <script th:src="@{/adminStatic/js/dashboards_dashboard-1.js}"></script>
 		  </th:block>
   		  <!-- /script -->
   		  

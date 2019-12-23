@@ -5,16 +5,20 @@
 	  class="default-style">
 
  <!-- headAdd(Libs&page) -->
+ 
+ <th:block layout:fragment="adminTitle">
+	<title>삭제도서목록</title>
+ </th:block>
   
   <th:block layout:fragment="adminHeadAdd">
   
   
   <!-- addLibs -->
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
 
   <!-- addPage -->
-  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/products.css}">
   </th:block>
   
    <th:block layout:fragment="teamHeadScript">
@@ -156,12 +160,12 @@
 	<th:block layout:fragment="pageScript">
 	
 	<!-- addLibs -->
-	<script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
-	<script th:src="@{/admin/vendor/libs/numeral/numeral.js}"></script>
-	<script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
+	<script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+	<script th:src="@{/adminStatic/vendor/libs/numeral/numeral.js}"></script>
+	<script th:src="@{/adminStatic/vendor/libs/nouislider/nouislider.js}"></script>
 
 	<!-- addDemo -->
-	<script th:src="@{/admin/js/book_stock_list_tables.js}"></script>
+	<script th:src="@{/adminStatic/js/book_stock_list_tables.js}"></script>
 	</th:block>
 	<!-- / scripts -->
 	          

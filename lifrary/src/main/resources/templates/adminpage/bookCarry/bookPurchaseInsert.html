@@ -3,6 +3,11 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"	
 	  class="default-style">
+	  
+	<th:block layout:fragment="adminTitle">
+		<title>수서-구매관리</title>
+	</th:block>
+	
 	<th:block layout:fragment="teamHeadScript">
 	<script type="text/javascript" th:inline="javascript">  
      $(document).ready(function(){

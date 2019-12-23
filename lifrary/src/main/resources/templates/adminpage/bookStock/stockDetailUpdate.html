@@ -4,10 +4,14 @@
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
 	  
+	  <th:block layout:fragment="adminTitle">
+		 <title>도서정보수정</title>
+	  </th:block>
+	  
 	  <th:block layout:fragment="adminHeadAdd">
-	  <link rel="stylesheet" th:href="@{/admin/vendor/libs/select2/select2.css}">
- 	  <link rel="stylesheet" th:href="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
- 	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
+	  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/select2/select2.css}">
+ 	  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+ 	  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/users.css}">
  	  </th:block>
  	  
  	  <th:block layout:fragment="teamHeadScript">
@@ -229,18 +233,18 @@
           <th:block layout:fragment="pageScript">
 
 		  <!-- addLibs -->
-		  <script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		  <script th:src="@{/adminStatic/vendor/libs/chartjs/chartjs.js}"></script>
 		
 		  <!-- addDemo -->
-		  <script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
+		  <script th:src="@{/adminStatic/js/dashboards_dashboard-1.js}"></script>
 		  </th:block>
   		  <!-- /script -->
   		  
   		  <th:block layout:fragment="adminFootScript">
-  		  <script th:src="@{/admin/vendor/libs/select2/select2.js}"></script>
-  		  <script th:src="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+  		  <script th:src="@{/adminStatic/vendor/libs/select2/select2.js}"></script>
+  		  <script th:src="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
   		  
-  		  <script th:src="@{/admin/js/pages_users_edit.js}"></script>
+  		  <script th:src="@{/adminStatic/js/pages_users_edit.js}"></script>
   		  
   		  </th:block>
   		  
