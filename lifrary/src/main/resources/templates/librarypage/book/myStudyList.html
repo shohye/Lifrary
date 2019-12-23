@@ -2,6 +2,10 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
+    <th:block layout:fragment="libraryTitle">
+		<title>나의 서재</title>
+    </th:block>   
+    
     <th:block layout:fragment="customScript">
     <script type="text/javascript">
    	 $(document).ready(function(){
@@ -168,7 +172,7 @@
 							                <ul class="category-list">
 							                    <li class="category-item adults">
 							                        <figure>
-							                            <img src="/library/images/studyPlus.png" alt="이미지 준비중" />
+							                            <img src="/libraryStatic/images/studyPlus.png" alt="이미지 준비중" />
 							                            <figcaption class="bg-orange">
 							                                <div class="info-block">
 							                                    <h4>도서 추가</h4>

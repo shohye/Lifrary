@@ -8,22 +8,22 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
         
         <!-- Title -->
-        <title>..:: LIBRARIA ::..</title>
-        
+        <th:block layout:fragment="libraryTitle"></th:block>
+       
         <!-- Favicon -->
-        <link th:href="@{/library/images/favicon.ico}" rel="icon" type="image/x-icon" />
+        <link th:href="@{/libraryStatic/images/favicon.ico}" rel="icon" type="image/x-icon" />
         
         <!-- Fonts -->
         <link th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i%7CLato:100,100i,300,300i,400,400i,700,700i,900,900i}" rel="stylesheet" />
-        <link th:href="@{/library/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/libraryStatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
         
         <!-- Mobile Menu -->
-        <link th:href="@{/library/css/mmenu.css}" rel="stylesheet" type="text/css" />
-        <link th:href="@{/library/css/mmenu.positioning.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/libraryStatic/css/mmenu.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/libraryStatic/css/mmenu.positioning.css}" rel="stylesheet" type="text/css" />
         
-        <link th:href="@{/library/css/jquery.accordion.css}" rel="stylesheet" type="text/css" /> 
+        <link th:href="@{/libraryStatic/css/jquery.accordion.css}" rel="stylesheet" type="text/css" /> 
         <!-- Stylesheet -->
-        <link th:href="@{/library/css/style.css}" rel="stylesheet" type="text/css" />      
+        <link th:href="@{/libraryStatic/css/style.css}" rel="stylesheet" type="text/css" />      
         
         <th:block th:replace="fragments/library/oldScript :: oldScript"></th:block>
         <th:block layout:fragment="customScript"></th:block>

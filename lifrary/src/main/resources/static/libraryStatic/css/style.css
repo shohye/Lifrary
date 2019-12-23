@@ -308,8 +308,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url("/library/fonts/glyphicons-halflings-regular.eot");
-  src: url("/library/fonts/glyphicons-halflings-regulard41d.eot?#iefix") format('embedded-opentype'), url("/library/fonts/glyphicons-halflings-regular.html") format('woff2'), url("/library/fonts/glyphicons-halflings-regular.woff") format('woff'), url("/library/fonts/glyphicons-halflings-regular.ttf") format('truetype'), url("/library/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format('svg');
+  src: url("/libraryStatic/fonts/glyphicons-halflings-regular.eot");
+  src: url("/libraryStatic/fonts/glyphicons-halflings-regulard41d.eot?#iefix") format('embedded-opentype'), url("/libraryStatic/fonts/glyphicons-halflings-regular.html") format('woff2'), url("/libraryStatic/fonts/glyphicons-halflings-regular.woff") format('woff'), url("/libraryStatic/fonts/glyphicons-halflings-regular.ttf") format('truetype'), url("/libraryStatic/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format('svg');
 }
 .glyphicon {
   position: relative;
@@ -7314,7 +7314,7 @@ th {
   width: 100%;
 }
 .underline {
-  background-image: url("/library/images/underline.png");
+  background-image: url("/libraryStatic/images/underline.png");
   background-repeat: no-repeat;
   float: left;
   height: 1px;
@@ -7331,7 +7331,7 @@ th {
   background-position: right top;
 }
 .layout-v2 .underline {
-  background-image: url("/library/images/green-underline.png");
+  background-image: url("/libraryStatic/images/green-underline.png");
 }
 .rating {
   display: block;
@@ -9250,7 +9250,7 @@ a:focus {
   z-index: -1;
 }
 .mm-list > li .close {
-  background: url("/library/images/close_icon.png") no-repeat;
+  background: url("/libraryStatic/images/close_icon.png") no-repeat;
   border: 0px;
   cursor: pointer;
   float: right;
@@ -9272,7 +9272,7 @@ a:focus {
   background-color: transparent;
 }
 .mm-list > li.mm-selected > a.close:not(.mm-subopen) {
-  background: url("/library/images/close_icon.png") no-repeat;
+  background: url("/libraryStatic/images/close_icon.png") no-repeat;
 }
 .mobile-top-head {
   background-color: rgba(255, 255, 255, 0.94);
@@ -9429,7 +9429,7 @@ a:focus {
   position: relative;
 }
 .welcome-section .welcome-image {
-  background-image: url("/library/images/welcome-img-home-v1.jpg");
+  background-image: url("/libraryStatic/images/welcome-img-home-v1.jpg");
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
@@ -9540,7 +9540,7 @@ a:focus {
   width: 64px;
 }
 .facts-counter ul li .fact-item .fact-icon i {
-  background-image: url("/library/images/facts-count-icons-v1.png");
+  background-image: url("/libraryStatic/images/facts-count-icons-v1.png");
   background-position: 300px 300px;
   background-repeat: no-repeat;
   display: inline-block;
@@ -9572,7 +9572,7 @@ a:focus {
 }
 .category-filter {
   background-attachment: fixed;
-  background-image: url("/library/images/project-filter-bg-home-v1.jpg");
+  background-image: url("/libraryStatic/images/project-filter-bg-home-v1.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -9847,7 +9847,7 @@ a:focus {
   }
 }
 .features ul li .feature-box i {
-  background-image: url("/library/images/features-icons-home-v1.png");
+  background-image: url("/libraryStatic/images/features-icons-home-v1.png");
   background-position: 500px 500px;
   background-repeat: no-repeat;
   display: inline-block;
@@ -10335,7 +10335,7 @@ a:focus {
 }
 .news-events.banner {
   background-attachment: fixed;
-  background-image: url("/library/images/news-event/home-v1-news-event-banner.jpg");
+  background-image: url("/libraryStatic/images/news-event/home-v1-news-event-banner.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -10708,7 +10708,7 @@ a:focus {
 }
 .testimonials {
   background-attachment: fixed;
-  background-image: url("/library/images/testimonials-bg.jpg");
+  background-image: url("/libraryStatic/images/testimonials-bg.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -10772,7 +10772,7 @@ a:focus {
 }
 .latest-blog.banner {
   background-attachment: fixed;
-  background-image: url("/library/images/latest-blog-bg-home-v1.jpg");
+  background-image: url("/libraryStatic/images/latest-blog-bg-home-v1.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -10886,7 +10886,7 @@ a:focus {
   }
 }
 .latest-blog .tabs-container .tabs-menu ul li a i {
-  background-image: url("/library/images/features-icons-home-v1.png");
+  background-image: url("/libraryStatic/images/features-icons-home-v1.png");
   background-position: 500px 500px;
   background-repeat: no-repeat;
   display: inline-block;
@@ -11997,7 +11997,7 @@ a:focus {
   color: #282828;
 }
 .layout-v2 .category-filter {
-  background-image: url("/library/images/project-filter-bg-home-v2.jpg");
+  background-image: url("/libraryStatic/images/project-filter-bg-home-v2.jpg");
 }
 .layout-v2 .category-filter .filter-buttons .btn.active,
 .layout-v2 .category-filter .filter-buttons .btn:hover {
@@ -12080,7 +12080,7 @@ a:focus {
   width: 50px;
 }
 .layout-v2 .category-filter .category-list .category-item .diamond i {
-  background-image: url("/library/images/books-media-icons.png");
+  background-image: url("/libraryStatic/images/books-media-icons.png");
   background-position: 500px 500px;
   background-repeat: no-repeat;
   display: block;
@@ -12286,7 +12286,7 @@ a:focus {
 }
 .layout-v2 .layout-v2-counter {
   background-attachment: fixed;
-  background-image: url("/library/images/wellcome-counter-bg.jpg");
+  background-image: url("/libraryStatic/images/wellcome-counter-bg.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -12352,7 +12352,7 @@ a:focus {
   transform: none;
 }
 .layout-v2 .layout-v2-counter .facts-counter ul li .fact-item .fact-icon i {
-  background-image: url("/library/images/facts-count-icons-v2.png");
+  background-image: url("/libraryStatic/images/facts-count-icons-v2.png");
 }
 .layout-v2 .layout-v2-counter .facts-counter ul li .fact-item .fact-icon i.ebook {
   background-position: 0 0;
@@ -12475,7 +12475,7 @@ a:focus {
 }
 .layout-v2 .team {
   background-attachment: fixed;
-  background-image: url("/library/images/meet-staff-bg.jpg");
+  background-image: url("/libraryStatic/images/meet-staff-bg.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -12896,7 +12896,7 @@ a:focus {
 12.3. Home-V3
 --------------------------------------------------------------*/
 .layout-v3 .underline {
-  background-image: url("/library/images/underline-v3.png");
+  background-image: url("/libraryStatic/images/underline-v3.png");
 }
 .layout-v3 .features {
   padding: 0;
@@ -12953,7 +12953,7 @@ a:focus {
 	font-size: 15px;
 }
 .layout-v3 .welcome-section .welcome-image {
-  background-image: url("/library/images/welcome-img-home-v3.jpg");
+  background-image: url("/libraryStatic/images/welcome-img-home-v3.jpg");
 }
 .layout-v3 .welcome-section .btn {
   color: #fff;
@@ -12966,7 +12966,7 @@ a:focus {
   background-color: #288feb;
 }
 .layout-v3 .newsletter .underline {
-  background-image: url("/library/images/underline-white.png");
+  background-image: url("/libraryStatic/images/underline-white.png");
 }
 .layout-v3 .newsletter .section-title,
 .layout-v3 .newsletter .lead {
@@ -13676,25 +13676,25 @@ a:focus {
   width: 100%;
 }
 .page-banner.about-banner {
-  background-image: url("/library/images/page-banners/about-banner.jpg");
+  background-image: url("/libraryStatic/images/page-banners/about-banner.jpg");
 }
 .page-banner.blog-banner {
-  background-image: url("/library/images/page-banners/blog-banner.jpg");
+  background-image: url("/libraryStatic/images/page-banners/blog-banner.jpg");
 }
 .page-banner.contact-banner {
-  background-image: url("/library/images/page-banners/contact-banner.jpg");
+  background-image: url("/libraryStatic/images/page-banners/contact-banner.jpg");
 }
 .page-banner.portfolio-banner {
-  background-image: url("/library/images/page-banners/portfolio-banner.jpg");
+  background-image: url("/libraryStatic/images/page-banners/portfolio-banner.jpg");
 }
 .page-banner.product-banner {
-  background-image: url("/library/images/page-banners/product-banner.jpg");
+  background-image: url("/libraryStatic/images/page-banners/product-banner.jpg");
 }
 .page-banner.services-banner {
-  background-image: url("/library/images/page-banners/services-banner.jpg");
+  background-image: url("/libraryStatic/images/page-banners/services-banner.jpg");
 }
 .page-banner.signin-banner {
-  background-image: url("/library/images/page-banners/signin-banner.jpg");
+  background-image: url("/libraryStatic/images/page-banners/signin-banner.jpg");
 }
 .page-banner .banner-header {
   display: block;
@@ -15891,7 +15891,7 @@ a:focus {
   }
 }
 .who-we-are .company-info .company-image {
-  background-image: url("/library/images/who-we-are-image.jpg");
+  background-image: url("/libraryStatic/images/who-we-are-image.jpg");
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
@@ -15962,7 +15962,7 @@ a:focus {
   color: #00adef;
 }
 .company-info-box {
-  background: url("/library/images/company-serives-bg-left.jpg"), url("/library/images/company-serives-bg-right.jpg");
+  background: url("/libraryStatic/images/company-serives-bg-left.jpg"), url("/libraryStatic/images/company-serives-bg-right.jpg");
   background-position: center left, center right;
   background-repeat: no-repeat, no-repeat;
   background-size: 50% 73%, 50% 73%;
@@ -16655,7 +16655,7 @@ a:focus {
   box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.07);
 }
 .book-list-icon {
-  background-image: url("/library/images/book-list-icons.png");
+  background-image: url("/libraryStatic/images/book-list-icons.png");
   background-repeat: no-repeat;
   height: 55px;
   left: -10px;
@@ -16710,7 +16710,7 @@ a:focus {
 }
 .staff-picks {
   background-attachment: fixed;
-  background-image: url("/library/images/staff-picks-bg.jpg");
+  background-image: url("/libraryStatic/images/staff-picks-bg.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -18495,7 +18495,7 @@ a:focus {
   left: 0;
   height: 1px;
   width: 72px;
-  background: url("/library/images/underline.png") center center no-repeat;
+  background: url("/libraryStatic/images/underline.png") center center no-repeat;
 }
 .sidebar .widget-sub-title {
   border-bottom: 1px solid #f4f4f4;
@@ -19003,7 +19003,7 @@ a:focus {
 }
 #home-v1-header-carousel .carousel-control {
   background-color: transparent;
-  background-image: url("/library/images/header-slider/home-v1/slider-controls.png");
+  background-image: url("/libraryStatic/images/header-slider/home-v1/slider-controls.png");
   background-repeat: no-repeat;
   bottom: auto;
   height: 58px;
