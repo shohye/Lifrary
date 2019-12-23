@@ -35,8 +35,9 @@
                                    <h3>나의 정보 상세보기 </h3> <br>
                                    
                                    <div class="member-info">
-                                                    <strong><span>등록자</span> : <span th:text="${d.uId}"></span></strong> <br>
-                                                    <strong><span>모바일 회원번호</span> : <span th:text="${d.uNumber}"></span></strong> <br><br>
+                                                    <strong><span>등록자</span> : <span th:text="${session.getSID}"></span></strong> <br>
+                                                    <strong><span>모바일 회원번호</span> : <span th:text="${d.uNumber}"></span>							  
+                                                    </strong> <br><br>
                                                     <ul class="news-event-info">
                                                         <li>
                                                            <span>비번 : </span>
@@ -82,6 +83,9 @@
                                                            <span>권한 명 : </span>
                                                            <span th:text="${d.uasName}"></span>
                                                         </li>
+                                                        
+                                                           <input type="hidden" placeholder="구분" id="uDivision" name="uDivision" th:value="${d.uDivision}" class="input-text">
+                                                        
                                                         
                                                     </ul>
                                                     <br>

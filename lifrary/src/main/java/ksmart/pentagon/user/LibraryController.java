@@ -144,31 +144,35 @@ public class LibraryController {
 	
 	//도서관페이지-마이페이지 내정보 상세보기
 	@GetMapping("/lifrary/myUserDetail")
-	public String myUserDetail(@RequestParam(value = "uId",required=false)String uId, Model model, HttpSession session) {
+	public String myUserDetail(Model model, HttpSession session) {
 		System.out.println("myUserDetail @GetMapping 내정보 상세보기 ");
 		
-		String getSID = (String) session.getAttribute("SID");	//세션에서 회원ID
+		String getSID = (String) session.getAttribute("SID");//세션에서 회원ID
+		String getSAID = (String) session.getAttribute("SAID");
 		String libNum = (String) session.getAttribute("LIBNUM");	//세션에서 도서관코드
-		System.out.println("getSID 세션에서가져온 아이디  >>>" + getSID ); 
+		System.out.println("getSID 세션에서가져온 아이디  >>>" + getSID );
+		System.out.println("getSID 세션에서가져온 아이디  >>>" + getSAID ); 
 		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
 		
-		model.addAttribute("myUserDetail", libraryService.myUserDetail(uId, libNum));
-		System.out.println("myUserDetail 값 넘어오는지 확인바람"+ libraryService.myUserDetail(uId, libNum));
+		model.addAttribute("myUserDetail", libraryService.myUserDetail(getSID ,libNum));
+		System.out.println("myUserDetail 값 넘어오는지 확인바람"+ libraryService.myUserDetail(getSID ,libNum));
 		return "/librarypage/user/myUserDetail";
 	}
 	
 	//도서관페이지 - 마이페이지 내정보 수정하기 
 	@GetMapping("/lifrary/myUserUpdate")
-	public String getMyUserUpdate(Model model, HttpSession session, @RequestParam(value = "uId")String uId) {
+	public String getMyUserUpdate(Model model, HttpSession session) {
 	   System.out.println("getLibrarianMyUpdate 내정보 수정 하는 폼 ");
 	   
-		/* String getSID = (String) session.getAttribute("SID"); */
+	   String getSID = (String) session.getAttribute("SID");
+	   String getSAID = (String) session.getAttribute("SAID");
 	   String libNum = (String) session.getAttribute("LIBNUM");
-		/* System.out.println("getSID 세션에서가져온 아이디  >>>" + getSID ); */
+	   System.out.println("getSID 세션에서가져온 아이디  >>>" + getSID );
+	   System.out.println("getSAID 세션에서가져온 아이디  >>>" + getSAID );
 	   System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
 	   
-	   model.addAttribute("myUserUpdate", libraryService.getMyUserUpdate(uId, libNum));
-	   System.out.println("myUserUpdate 값 넘어오는지 확인바람");
+	   model.addAttribute("myUserUpdate", libraryService.getMyUserUpdate(getSID ,libNum));
+	   System.out.println("myUserUpdate 값 넘어오는지 확인바람  >>>> ");
 		
 	   return "/librarypage/user/myUserUpdate";
 		

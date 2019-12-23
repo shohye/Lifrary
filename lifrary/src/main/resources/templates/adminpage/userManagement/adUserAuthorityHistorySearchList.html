@@ -56,6 +56,7 @@
                     	<th>권한명</th>
                     	<th>회원권한변동사유</th>
                     	<th>등록일</th>
+                    	<th></th>
                     </tr>
 	                </thead>
 	                  <tbody>
@@ -68,6 +69,12 @@
 	               			<td class="align-middle" th:text="${ah.uasName}" style="text-align:center"></td>
 	               			<td class="align-middle" th:text="${#strings.abbreviate(ah.uahReason,20)}" style="text-align:center"></td>
 	               			<td class="align-middle" th:text="|${ah.uahDate}일|" style="text-align:center"></td>
+	               			<td class="text-center text-nowrap">
+	               				<a th:href="@{#}" data-original-title="Edit" 
+	               					class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" title="삭제">
+	               					<i class="ion ion-ios-settings" title="삭제"></i>
+	               				</a>&nbsp;&nbsp;
+	               			</td>
 	                   	</tr> 
 		            </tbody>
 		          </table>

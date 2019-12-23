@@ -83,27 +83,19 @@
 	               			<td class="align-middle" th:text="${l.uDate}"></td>
 	               		
 	               			<td class="text-center text-nowrap">
-	               				<button title="" 
-	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
-	               						type="button" data-original-title="Edit">
-	               					<a th:href="@{/admin/adminUserUpdate(uId=${l.uId})}" title="수정">
-	               				<i class="ion ion-md-create" title="수정"></i>
-	               					</a>
-	               				</button>&nbsp;&nbsp;
+	               					<a th:href="@{/admin/adminUserUpdate(uId=${l.uId})}"  data-original-title="Edit" 
+	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" title="상세">
+	               							<i class="ion ion-md-create" title="수정"></i>
+	               					</a>&nbsp;&nbsp;
 	               					<a th:href="@{/admin/adminUserDetail(uId=${l.uId})}" data-original-title="Edit" 
 	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" title="상세">
 	               							<i class="ion ion-ios-copy" title="상세"></i>
-	               					</a>
-	               				</button>&nbsp;&nbsp;
-	               				<button title="" 
-	               						class="btn btn-default btn-xs icon-btn md-btn-flat dropdown-toggle hide-arrow user-tooltip" 
-	               						type="button" 
-	               						data-original-title="Actions" data-toggle="dropdown">
-	               				<a th:href="@{#}" title="삭제">
-	               				<i class="ion ion-ios-settings" title="삭제"></i>
-	               				</button>
+	               					</a>&nbsp;&nbsp;
+	               					<a th:href="@{#}" data-original-title="Edit" 
+	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" title="상세">
+	               							<i class="ion ion-ios-settings" title="삭제"></i>
+	               					</a>&nbsp;&nbsp;
 	                   		</td>
-	                   		
 	                   	</tr> 
 		            </tbody>
 		          </table>

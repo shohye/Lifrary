@@ -86,6 +86,8 @@
 			 ,l_code
 			 ,u_division
 			 ,u_number
+			 ,ul_level
+			 ,uas_code
 			,u_pw
 			,u_name
 			,u_birth
@@ -101,6 +103,8 @@
 			,#{lCode}
 			,#{uDivision}
 			,#{uNumber}
+			,#{ulLevel}
+			,#{uasCode}
 			,#{uPw}
 			,#{uName}
 			,#{uBirth}
@@ -226,7 +230,8 @@
 		ON 
 			u.ul_level = ul.ul_level
 		where
-			u.u_id = #{uId} AND u.l_code = #{libNum}
+			u.u_id = #{getSID}
+			AND u.l_code = #{libNum}
 	</select>
 	
 	<select id="getMyUserUpdate" resultMap="userResultMap" parameterType="String">
@@ -235,7 +240,8 @@
 		FROM 
 			user
 		where 
-			u_id = #{uId}
+			u_id = #{getSID}
+		AND l_code = #{libNum}
 	</select>
 	
 	<update id="myUserUpdate" parameterType="ksmart.pentagon.vo.User" >
@@ -252,7 +258,8 @@
 			,u_email_agree	=#{uEmailAgree}
 			,u_appointment	=#{uAppointment}			
 		WHERE 
-			u_id = #{uId}
+			u_id = #{getSID}
+		AND l_code = #{libNum}
     </update>
 	
  </mapper>
