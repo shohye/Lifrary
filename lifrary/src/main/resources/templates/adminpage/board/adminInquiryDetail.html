@@ -3,6 +3,9 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
 
+<th:block layout:fragment="adminTitle">
+	<title>사서추천 도서리스트</title>
+</th:block>
 
 	<!-- Content -->
 	<th:block layout:fragment="adminContents">
@@ -55,7 +58,7 @@
 	<th:block layout:fragment="pageScript">
 	
 		<!-- addLibs -->
-		<script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		<script th:src="@{/adminStatic/vendor/libs/chartjs/chartjs.js}"></script>
 		
 		<!-- addDemo -->
 	</th:block>
