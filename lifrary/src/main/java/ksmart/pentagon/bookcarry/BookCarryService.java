@@ -70,35 +70,7 @@ public class BookCarryService {
 			}
 
 		}
-	/*
-	public void insertOrder(BookCarry bookCarry,BookInformation bookInformation) {
-		Map<String,Object> orderMap = new HashMap<String,Object>();		
-		bookCarryMapper.insertOrder(bookCarry, bookInformation);
-		
-		String biIsbn = bookInformation.getBiIsbn();
-		int result = checkBookInfo(biIsbn);
-		
-		//정보 없을때 인서트 + 인서트
-		if(result == 1) {
-			orderMap.put("biIsbn", biIsbn);
-			orderMap.put("biName", bookInformation.getBiName());
-			orderMap.put("biAuthor", bookInformation.getBiAuthor());
-			orderMap.put("biPublisher", bookInformation.getBiPublisher());
-			orderMap.put("biYear", bookInformation.getBiYear());
-			orderMap.put("boCompany", bookCarry.getBoCompany());
-			orderMap.put("boBookNum", bookCarry.getBoBookNum());
-			orderMap.put("boPrice", bookCarry.getBoPrice());
-			orderMap.put("lCode", bookCarry.getlCode());
-			orderMap.put("uId", bookCarry.getUid());
-			
-			bookCarryMapper.insertOrderTogether(orderMap);
-		
-		//정보 있을때 업데이트 + 인서트	
-		}else if(result == 2) {
-			bookCarryMapper.updateOrder2(bookInformation);
-			bookCarryMapper.insertOrderBookCarry(bookCarry);
-		}		
-	}*/
+	
 	
 	
 	/*************************************************************/	
@@ -218,7 +190,10 @@ public class BookCarryService {
 	public int insertRequest(BookRequest bookRequest) {
 		return bookCarryMapper.insertRequest(bookRequest);		
 	}
-	
+	//( 도서관 ) 사용자 id를 기준으로 하는 희망도서 신청 리스트
+	public List<BookRequest> getMyRequestList(String uid){
+		return bookCarryMapper.getMyRequestList(uid);	
+	}
 	
 
     /*************************************************************/	

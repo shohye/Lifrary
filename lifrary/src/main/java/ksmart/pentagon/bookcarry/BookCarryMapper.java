@@ -63,6 +63,9 @@ public interface BookCarryMapper {
 	BookRequest getRequestDatail(String brCode);
 	// 희망도서 인서트
 	int insertRequest(BookRequest bookRequest);
+	//( 도서관 ) 사용자 id를 기준으로 하는 희망도서 신청 리스트
+	List<BookRequest> getMyRequestList(String uid);
+	
 	
 	/*************************************************************/	
 	

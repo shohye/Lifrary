@@ -221,6 +221,7 @@ public class BookCarryController {
     public String bookRequestInsert() {
     	return "/librarypage/book/bookRequestInsert";
     }
+    
     // (도서관) 마이페이지 희망도서 신청 리스트
     /****
 	 * @brief   (도서관) 마이페이지 희망도서 신청 리스트
@@ -228,7 +229,10 @@ public class BookCarryController {
 	 * @author 신다은
 	 */
     @GetMapping("/lifrary/myBookRequestList")
-    public String myBookRequestList() {
+    public String myBookRequestList(Model model,HttpSession session) {
+    	String uid = (String) session.getAttribute("SID");
+    	model.addAttribute("myRequestList", bookCarryService.getMyRequestList(uid));
+    	
     	return "/librarypage/book/myBookRequestList";
     }
     

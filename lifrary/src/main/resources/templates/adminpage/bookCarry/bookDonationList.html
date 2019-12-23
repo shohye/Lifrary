@@ -80,9 +80,8 @@
 			<div>도서 기부 신청자 리스트</div>
 			
 	<th:block th:if="${session.SALC} == 'O'">		
-			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span> 
-				 <a th:href="@{/admin/bookDonationInsert}" style="color: white"> 신청자 추가 </a>
-			</button>
+		<a th:href="@{/admin/bookDonationInsert}" style="color: white" class="btn btn-primary rounded-pill d-block"> 
+		<span class="ion ion-md-add"></span>신청자 추가 </a>
 	</th:block>		
 			
 		 </h4>

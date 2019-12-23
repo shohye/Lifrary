@@ -25,9 +25,9 @@
 		<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
 			<div>전체 도서 관리</div> 
 <th:block th:if="${session.SALBS} == 'O'">
-			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; 
-				 <a th:href="@{/admin/stockDetailInsert}" style="color: white"> 도서 추가 </a>
-			</button>
+ 	 <a th:href="@{/admin/stockDetailInsert}" class="btn btn-primary rounded-pill d-block"> 도서 추가 
+ 	   <span class="ion ion-md-add"></span>
+ 	 </a>
 </th:block>
 		</h4>
 

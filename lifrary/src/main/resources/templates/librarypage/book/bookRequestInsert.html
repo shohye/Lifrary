@@ -7,69 +7,68 @@
 	 <title>희망도서 신청</title>
   </th:block>
   
-  
-  <!-- 
-    <th:block layout:fragment="customScript">
+  <!--  
+     <th:block layout:fragment="customScript">
      <script type="text/javascript" th:inline="javascript"> 
    
-     $(document).ready(function(){  	
-  	   
- 		// 유효성검사 시작
- 		$('#insertBtn').click(function(){   			
- 			var brTitle     = $('#brTitle');
- 			var brIsbn      = $('#brIsbn');
- 			var brYear      = $('#brYear');
- 			var bdnNum      = $('#bdnNum');
- 			var brPrice     = $('#brPrice);
- 			var brAuthor    = $('#brAuthor');
- 			var brPublisher = $('#brPublisher');			
- 			
- 			
- 			if(brTitle.val() == ''){
- 				alert('희망 도서명을 입력하세요');
- 				brTitle.focus();
- 				return false;
- 			}
- 			if(brIsbn.val() == ''){
- 				alert('도서의 ISBN을 입력하세요');
- 				brIsbn.focus();
- 				return false;
- 			}
- 			if(brYear.val() == ''){
- 				alert('발행년도를 입력하세요');
- 				brYear.focus();
- 				return false;
- 			}
- 			if(bdnNum.val() == ''){
- 				alert('기부 도서수를 입력하세요');
- 				bdnNum.focus();
- 				return false;
- 			}
- 			if(brPrice.val() == ''){
- 				alert('가격을 입력하세요');
- 				brPrice.focus();
- 				return false;
- 			}
- 			if(brAuthor.val() == ''){
- 				alert('저자명을 입력하세요');
- 				brAuthor.focus();
- 				return false;
- 			}
- 			if(brPublisher.val() == ''){
- 				alert('발행자(출판사)를 입력하세요');
- 				brPublisher.focus();
- 				return false;
- 			}
- 			
- 			
- 			$('#insertForm').submit();
- 			
- 		}); // 유효성검사 끝    		
- 	}); // 처음 function끝  
+	     $(document).ready(function(){  	
+	  	   
+	 		// 유효성검사 시작
+	 		$('#insertBtn').click(function(){   			
+	 			var brTitle     = $('#brTitle');
+	 			var brIsbn      = $('#brIsbn');
+	 			var brYear      = $('#brYear');
+	 			var bdnNum      = $('#bdnNum');
+	 			var brPrice     = $('#brPrice);
+	 			var brAuthor    = $('#brAuthor');
+	 			var brPublisher = $('#brPublisher');			
+	 			
+	 			
+	 			if(brTitle.val() == ''){
+	 				alert('희망 도서명을 입력하세요');
+	 				brTitle.focus();
+	 				return false;
+	 			}
+	 			if(brIsbn.val() == ''){
+	 				alert('도서의 ISBN을 입력하세요');
+	 				brIsbn.focus();
+	 				return false;
+	 			}
+	 			if(brYear.val() == ''){
+	 				alert('발행년도를 입력하세요');
+	 				brYear.focus();
+	 				return false;
+	 			}
+	 			if(bdnNum.val() == ''){
+	 				alert('기부 도서수를 입력하세요');
+	 				bdnNum.focus();
+	 				return false;
+	 			}
+	 			if(brPrice.val() == ''){
+	 				alert('가격을 입력하세요');
+	 				brPrice.focus();
+	 				return false;
+	 			}
+	 			if(brAuthor.val() == ''){
+	 				alert('저자명을 입력하세요');
+	 				brAuthor.focus();
+	 				return false;
+	 			}
+	 			if(brPublisher.val() == ''){
+	 				alert('발행자(출판사)를 입력하세요');
+	 				brPublisher.focus();
+	 				return false;
+	 			}
+	 			
+	 			
+	 			$('#insertForm').submit();
+	 			
+	 		}); // 유효성검사 끝    		
+	 	}); // 처음 function끝  
     	    	
     	</script>
   	    </th:block> 
-  	    -->
+  	   -->
     
     
     <th:block layout:fragment="customContents">
@@ -159,7 +158,7 @@
                                                                             </div>
                                                                             
                                                                             <div class="col-xs-12 col-sm-12" style="margin-bottom: 40px">
-                                                                        		<input type="submit" value="신청하기" id="insertBtn" class="button alt btn btn-default">	
+                                                                        		<button type="button" id="insertBtn" class="button alt btn btn-default">신청하기</button>
                            													</div>
                                                                     </div>
                                                                     <div class="clear"></div>

@@ -165,7 +165,7 @@ public class BookStockService {
 	  return bl;		  
     }
     
-     // ( 어드민 ) 도서 정보 업데이트  // 하는중!!!!!!!!!!!!!!!!!!!
+     // ( 어드민 ) 소장도서 업데이트  // 하는중!!!!!!!!!!!!!!!!!!!
     public void updateStock(BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
  
     	Map<String,Object> stockMap = new HashMap<String,Object>();
@@ -182,12 +182,17 @@ public class BookStockService {
     	stockMap.put("bsWriterMark",bookStock.getBsWriterMark());
     	stockMap.put("bsSecondaryMark",bookStock.getBsSecondaryMark());
     	stockMap.put("bsTotalPage",bookStock.getBsTotalPage());    	
+    	stockMap.put("bsCarryRoute",bookStock.getBsCarryRoute()); 
+    	stockMap.put("bsBookState",bookStock.getBsBookState());
+    	stockMap.put("bsLendState",bookStock.getBsLendState());
     	stockMap.put("bsCarryRoute",bookStock.getBsCarryRoute());  
     	
     	bookStockMapper.updateStock(stockMap);
 		
     }
     
+    
+    // ( 어드민 ) 소장도서 인서트
     public void insertStock(BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
     	Map<String,Object> insertMap = new HashMap<String,Object>();
     	
@@ -211,6 +216,9 @@ public class BookStockService {
     }
 	  
 	  
+    
+    
+    
 	/****************************************************************************/
     
     

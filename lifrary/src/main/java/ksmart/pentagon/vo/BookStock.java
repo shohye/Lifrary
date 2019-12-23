@@ -25,10 +25,30 @@ public class BookStock {
 	private String bsDeleteReason;
 	private String bsDeleteDate;
 	
+	private String bsBookStateText;  // 책상태 정상 아닐경우 상태 담는 변수
+	private String orderBy;          // 정렬할 기준 선택
+	private String sort; 
+	
+	
 	private BookInformation bookInformation;
 	private BookCate bookCate;
 	private BookLend bookLend;
 	
+	
+	
+	
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+	public String getOrderBy() {
+		return orderBy;
+	}
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
 	
 	
 	public String getBsCode() {
@@ -157,6 +177,12 @@ public class BookStock {
 	public void setBsDeleteDate(String bsDeleteDate) {
 		this.bsDeleteDate = bsDeleteDate;
 	}
+	public String getBsBookStateText() {
+		return bsBookStateText;
+	}
+	public void setBsBookStateText(String bsBookStateText) {
+		this.bsBookStateText = bsBookStateText;
+	}
 	public BookInformation getBookInformation() {
 		return bookInformation;
 	}
@@ -176,6 +202,7 @@ public class BookStock {
 		this.bookLend = bookLend;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "BookStock [bsCode=" + bsCode + ", lCode=" + lCode + ", uId=" + uId + ", bclCode=" + bclCode
@@ -184,9 +211,14 @@ public class BookStock {
 				+ ", bsSecondaryMark=" + bsSecondaryMark + ", bsTotalPage=" + bsTotalPage + ", bsStockState="
 				+ bsStockState + ", bsBookState=" + bsBookState + ", bsLendState=" + bsLendState + ", bsCarryRoute="
 				+ bsCarryRoute + ", bsDate=" + bsDate + ", bsDelete=" + bsDelete + ", bsDeleteId=" + bsDeleteId
-				+ ", bsDeleteReason=" + bsDeleteReason + ", bsDeleteDate=" + bsDeleteDate + ", bookInformation="
-				+ bookInformation + ", bookCate=" + bookCate + ", bookLend=" + bookLend + "]";
+				+ ", bsDeleteReason=" + bsDeleteReason + ", bsDeleteDate=" + bsDeleteDate + ", bsBookStateText="
+				+ bsBookStateText + ", bookInformation=" + bookInformation + ", bookCate=" + bookCate + ", bookLend="
+				+ bookLend + "]";
 	}
+	
+	
+	
+	
 	
 	
 }

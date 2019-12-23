@@ -132,8 +132,14 @@
 								</ul>
                                 <br>
                                 <div class="entry-content search-buttons align-middle text-center"> 
-                                	<a th:href="@{/lifrary/bookRequestInsert}" class="btn btn-dark-gray">신청하기</a> 
-                                	<a th:href="@{/lifrary/myBookRequestList(uId=${session.SAID})}" class="btn btn-dark-gray">신청확인</a>
+                                <th:block th:if="${session.SID} neq null"> 
+                                	<a th:href="@{/lifrary/bookRequestInsert}" class="btn btn-dark-gray">신청하기</a>
+                                	<a th:href="@{/lifrary/myBookRequestList}" class="btn btn-dark-gray">신청확인</a>
+                                </th:block>	
+                                 <th:block th:unless="${session.SID} neq null">
+                                   <br>
+                                   <p class="basic_p"> ** 희망도서 신청은 로그인 후 가능합니다. **</p> 
+                                 </th:block>	
                                 </div>
                                 <br>
                                 <br>

@@ -21,11 +21,11 @@
 	    	 var etc2 = $('input[name=bsBookState]').eq(1);
 	    	 
 	    	 etc1.focus(function() {				  
-			 $('#text').prop('readonly', true);	    	 
+			 $('#bsBookStateText').prop('readonly', true);	    	 
 	    	 });
 	    	 
-	    	 etc2.focus(function() {			  
-			 $('#text').prop('readonly', false);	
+	    	 etc2.focus(function() {	    		 
+			 $('#bsBookStateText').prop('readonly', false);
 			 });
 	    	 
 	    	 $('#callNumBtn').click(function(){
@@ -193,11 +193,11 @@
 		                  		   		<span class="custom-control-label">정상</span>
 		                        </label>
 		                        <label class="custom-control custom-radio">
-		                  		   	<input th:if="${s.bsBookState ne '정상'}" id="bsBookState" name="bsBookState" type="radio" class="custom-control-input" checked="">
-		                  		   	<input th:unless="${s.bsBookState ne '정상'}" id="bsBookState" name="bsBookState" type="radio" class="custom-control-input" >
+		                  		   	<input th:if="${s.bsBookState ne '정상'}" id="bsBookState" name="bsBookState" type="radio" class="custom-control-input" value="" checked="">
+		                  		   	<input th:unless="${s.bsBookState ne '정상'}" id="bsBookState" name="bsBookState" type="radio" class="custom-control-input" value="" >
 		                  		   		<span class="custom-control-label">기타</span>
-		                  		   	<input type="text" th:if="${s.bsBookState eq '정상'}" class="form-control" id="text" name="bsBookState" placeholder="정상이 아닌경우 작성" readonly >
-	                                <input type="text" th:unless="${s.bsBookState eq '정상'}" class="form-control" id="text" name="bsBookState" th:placeholder="${s.bsBookState}" >
+		                  		   	<input type="text" th:if="${s.bsBookState eq '정상'}" class="form-control" id="bsBookStateText" name="bsBookStateText" placeholder="정상이 아닌경우 작성" readonly >
+	                                <input type="text" th:unless="${s.bsBookState eq '정상'}" class="form-control" id="bsBookStateText" name="bsBookStateText" th:placeholder="${s.bsBookState}" >
 		                        </label>		                        		   					 
 		                    </div>
 		                    <div class="form-group col-md-6">

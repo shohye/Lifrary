@@ -401,7 +401,7 @@
 	<insert id="insertStock">
 	<selectKey keyProperty="bsCode" resultType="String" order="BEFORE">
  		SELECT 
-		CONCAT('bs_',DATE_FORMAT(CURDATE(), '%y%m%d'),
+		CONCAT('bs-',DATE_FORMAT(CURDATE(), '%y%m%d'),
 			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(bs.bs_code), '-', -1),6) 
 			, '00001' 
 			,LPAD(RIGHT(MAX(bs.bs_code),5)+1,5,'0'))))

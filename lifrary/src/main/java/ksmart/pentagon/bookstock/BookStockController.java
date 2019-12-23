@@ -114,9 +114,13 @@ public class BookStockController {
 	@PostMapping("/admin/stockDetailUpdate")
 	public String stockDetailUpdate(BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
 		
-		System.out.println("stockDetailUpdate bookInformation=>"+bookInformation.toString());
-		System.out.println("stockDetailUpdate bookStock=>"+bookStock.toString());
-		System.out.println("stockDetailUpdate bookCate=>"+bookCate.toString());
+	    String bookState = bookStock.getBsBookState();
+	    System.out.println("bookState1 =>"+bookState);
+	    if( bookState == "" ) {
+	    	bookState = bookStock.getBsBookStateText();
+	    	System.out.println("bookState2 =>"+bookState);
+	    	bookStock.setBsBookState(bookState);
+	    }
 		
 		bookStockService.updateStock(bookInformation, bookStock, bookCate);
 		

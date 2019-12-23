@@ -78,10 +78,10 @@
          <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
 			<div>구매예정 도서 리스트</div>
 			
-	<th:block th:if="${session.SALC} == 'O'">		
-			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>
-				 <a th:href="@{/admin/bookPurchaseInsert}" style="color: white"> 도서 추가 </a>
-			</button>
+	<th:block th:if="${session.SALC} == 'O'">
+		<a th:href="@{/admin/bookPurchaseInsert}" class="btn btn-primary rounded-pill d-block"> 
+			<span class="ion ion-md-add"></span>도서 추가
+		</a>	
 	</th:block>	
 		
 		</h4>

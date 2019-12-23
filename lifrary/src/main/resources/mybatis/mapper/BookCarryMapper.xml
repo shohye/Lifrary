@@ -139,7 +139,16 @@
 				br.u_id = u.u_id
 			where 
 				br.br_code =#{brCode}
-  	</select> 
+  	</select>
+ <!-- (어드민) 희망도서 신청리스트에서 세션 id의 리스트 모두 가져오기   --> 
+ 	<select id="getMyRequestList" resultMap="bookRequestResultMap" >
+  			SELECT 
+				* 
+			FROM 
+				book_request
+			where 
+                u_id = #{uid}
+  	</select>
   	  	
 <!-- (어드민) 주문도서리스트 전부 가져오기   -->	
   	<select id="getOrderList" resultMap="bookCarryResultMap">
@@ -281,7 +290,7 @@
 	<insert id="insertDonation">
 	<selectKey keyProperty="bdnCode" resultType="String" order="BEFORE">
  		SELECT 
-		CONCAT('bdn_',DATE_FORMAT(CURDATE(), '%y%m%d'),
+		CONCAT('bdn-',DATE_FORMAT(CURDATE(), '%y%m%d'),
 			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(bdn.bdn_code), '-', -1),6) 
 			, '00001' 
 			,LPAD(RIGHT(MAX(bdn.bdn_code),5)+1,5,'0'))))
@@ -319,7 +328,7 @@
 	<insert id="insertRequest">
 	<selectKey keyProperty="brCode" resultType="String" order="BEFORE">
  		SELECT 
-		CONCAT('br_',DATE_FORMAT(CURDATE(), '%y%m%d'),
+		CONCAT('br-',DATE_FORMAT(CURDATE(), '%y%m%d'),
 			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(br.br_code), '-', -1),6) 
 			, '00001' 
 			,LPAD(RIGHT(MAX(br.br_code),5)+1,5,'0'))))
@@ -360,7 +369,7 @@
 	<insert id="insertPurchaseBookCarry">
 	<selectKey keyProperty="bpCode" resultType="String" order="BEFORE">
  		SELECT 
-		CONCAT('bp_',DATE_FORMAT(CURDATE(), '%y%m%d'),
+		CONCAT('bp-',DATE_FORMAT(CURDATE(), '%y%m%d'),
 			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(bp.bp_code), '-', -1),6) 
 			, '00001' 
 			,LPAD(RIGHT(MAX(bp.bp_code),5)+1,5,'0'))))
@@ -391,7 +400,7 @@
 	<insert id="insertOrderBookCarry">
 	<selectKey keyProperty="boCode" resultType="String" order="BEFORE">
  		SELECT 
-		CONCAT('bo_',DATE_FORMAT(CURDATE(), '%y%m%d'),
+		CONCAT('bo-',DATE_FORMAT(CURDATE(), '%y%m%d'),
 			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(bo.bo_code), '-', -1),6) 
 			, '00001' 
 			,LPAD(RIGHT(MAX(bo.bo_code),5)+1,5,'0'))))
