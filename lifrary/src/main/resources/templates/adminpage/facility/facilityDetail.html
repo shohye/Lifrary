@@ -5,7 +5,7 @@
 	  class="default-style">
 	  
 	  <th:block layout:fragment="adminHeadAdd">
-	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
+	  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/users.css}">
  	  </th:block>
  
  		 <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
@@ -24,9 +24,9 @@
 																		  
 				if(fRowfCol == 0) { 									  // fRowfCol이 0인경우 = 자리선택을 안해서 자동으로 DB에 0이 들어간 경우.
 					console.log('스터디룸, 강연실을 선택하였습니다.')
-					contents += '<img alt="이미지를 표시할 수 없습니다." src="/admin/img/avatars/1.png">'
-					contents += '<img alt="이미지를 표시할 수 없습니다." src="/admin/img/avatars/1.png">'
-					contents += '<img alt="이미지를 표시할 수 없습니다." src="/admin/img/avatars/1.png">'
+					contents += '<img alt="이미지를 표시할 수 없습니다." src="/adminStatic/img/avatars/1.png">'
+					contents += '<img alt="이미지를 표시할 수 없습니다." src="/adminStatic/img/avatars/1.png">'
+					contents += '<img alt="이미지를 표시할 수 없습니다." src="/adminStatic/img/avatars/1.png">'
 					tableDiv.html(contents);
 					//이런식으로 이미지 출력해주면 될거같습니다.
 				} else{ 												  // 자리이 있는경우는 0이 아닐것이므로, 열람실  / 사물함
@@ -151,10 +151,10 @@
           <th:block layout:fragment="pageScript">
 
 		  <!-- addLibs -->
-		  <script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		  <script th:src="@{/adminStatic/vendor/libs/chartjs/chartjs.js}"></script>
 		
 		  <!-- addDemo -->
-		  <script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
+		  <script th:src="@{/adminStatic/js/dashboards_dashboard-1.js}"></script>
 		  </th:block>
   		  <!-- /script -->
   		  
