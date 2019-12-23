@@ -2,6 +2,10 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
+  <th:block layout:fragment="libraryTitle">
+	<title>나의 예약도서 목록</title>
+ </th:block>    
+    
     <th:block layout:fragment="customScript">
  	<script type="text/javascript">
  	 $(document).ready(function(){
@@ -15,7 +19,7 @@
 		.myHold td {
 			vertical-align: middle !important;
 		}
-		img {
+		.myHold img {
 			width: 40px; 
 			height: auto;
 		}
