@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.point.PointMapper">
+  	<resultMap type="ksmart.pentagon.vo.Point" id="point">	         
+       <result property="pCode" column="p_code"/>	         
+       <result property="lCode" column="l_code"/>
+       <result property="uId" column="u_id"/>	         
+       <result property="uName" column="u_name"/>
+       <result property="uNumber" column="u_number"/>
+       <result property="pName" column="p_name"/>	         
+       <result property="pStandard" column="p_standard"/>
+       <result property="pPoint" column="p_point"/>
+       <result property="pDate" column="p_date"/>	              
+       <result property="phCode" column="ph_code"/>	              
+       <result property="phPoint" column="ph_point"/>	              
+       <result property="phDate" column="ph_date"/>	              
+	 </resultMap>
+  
+  	<select id="pointHistorySearchList" parameterType="java.lang.String" resultMap="point">
+  		SELECT
+			ph.*
+			,p.p_name
+			,p.p_standard
+			,p.p_point
+			,u.u_number
+			,u.u_name
+		FROM
+			point_history AS ph
+		INNER JOIN
+			point AS p
+		ON
+			ph.p_code = p.p_code		
+		INNER JOIN
+			user AS u
+		ON
+			ph.u_id = u.u_id		
+		WHERE
+			ph.l_code = #{libNum}
+  	</select>
+  	<delete id="pointHistoryDelete">
+  		DELETE FROM point_history 
+  		WHERE 
+  			ph_code= #{phCode}
+  	</delete>
+  	<select id="getPointList" parameterType="java.lang.String" resultMap="point">
+  		SELECT
+			*
+		FROM
+			point
+		WHERE
+		 	l_code = #{libNum}
+		ORDER BY p_code DESC 
+  	</select>
+  	<insert id="pointInsert" parameterType="ksmart.pentagon.vo.Point">
+	  	<selectKey keyProperty="pCode" resultType="String" order="BEFORE">
+	  		SELECT 
+				CONCAT('p',(SELECT LPAD(RIGHT(MAX(p.p_code),3)+1,3,'0')))as pCode
+			FROM point AS p
+	  	</selectKey>
+	  	INSERT INTO point(
+			p_code
+			, l_code
+			, u_id
+			, p_name
+			, p_standard
+			, p_point
+			, p_date)
+	VALUES (
+			#{pCode}
+			, #{lCode}
+			, #{uId}
+			, #{pName}
+			, #{pStandard}
+			, #{pPoint}
+			, CURDATE())
+  	</insert>
+  	<select id="getPoint" resultMap="point" parameterType="java.lang.String">
+  		SELECT
+			p_name
+			,p_standard
+			,p_point
+		FROM
+			point
+		WHERE p_code = #{pCode}
+  	</select>
+  	<update id="updatePoint" parameterType="ksmart.pentagon.vo.Point">
+ 		UPDATE point
+ 		<trim prefix="SET" suffixOverrides=",">
+ 			<if test="uId neq null and uId neq ''.toString()">
+ 				u_id=#{uId},
+ 			</if>
+ 			<if test="pName neq null and pName neq ''.toString()">
+ 				p_name=#{pName},
+ 			</if>
+ 			<if test="pStandard neq null and pStandard neq ''.toString()">
+ 				p_standard=#{pStandard},
+ 			</if>
+ 			<if test="pPoint neq null and pPoint neq ''.toString()">
+ 				p_point=#{pPoint},
+ 			</if>
+ 		</trim>
+	 			, p_date=CURDATE()
+	 		WHERE 
+	 			p_code = #{pCode}
+ 	</update>
+ 	<delete id="pointDelete" parameterType="java.lang.String">
+ 		DELETE FROM point 
+		WHERE 
+			p_code=#{pCode}
+ 	</delete>
+  </mapper>

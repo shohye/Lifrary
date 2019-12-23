@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="ksmart.pentagon.calendar.BookCalenderMapper">
+ <resultMap type="ksmart.pentagon.vo.Calender" id="Calender">	         
+	<result property="cCode" column="c_code"/>	         
+	<result property="lCode" column="l_code"/>
+	<result property="uId" column="u_id"/>	         
+	<result property="bsCode" column="bs_code"/>
+	<result property="cCurrentPage" column="c_current_page"/>
+	<result property="cBookFinish" column="c_book_finish"/>	         
+	<result property="cTitle" column="c_title"/>
+	<result property="cContent" column="c_content"/>
+	<result property="cStartDate" column="c_start_date"/>	              
+	<result property="cEndDate" column="c_end_date"/>	              
+	<result property="cDate" column="c_date"/>	                        
+	<result property="biImg" column="bi_img"/>	                        
+ </resultMap>
+ 
+ <select id="getMyCalenderList" resultMap="Calender" parameterType="java.lang.String">
+	SELECT
+		c.*
+		,bi.bi_img 
+	FROM
+		calender AS c
+	INNER JOIN
+		book_stock AS bs
+	ON
+	 c.bs_code = bs.bs_code
+	LEFT JOIN
+		book_information AS bi
+	ON
+		bs.bi_isbn = bi.bi_isbn	 	 	
+	WHERE
+		c.l_code =#{libNum}
+	AND 
+		c.u_id = #{uId}
+ </select>
+</mapper>
