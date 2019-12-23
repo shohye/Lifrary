@@ -4,16 +4,20 @@
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
 
+<th:block layout:fragment="adminTitle">
+	<title>회원 권한 리스트</title>
+</th:block>
+
  <!-- headAdd(Libs&page) -->
   
   <th:block layout:fragment="adminHeadAdd">
   
   <!-- addLibs -->
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
 
   <!-- addPage -->
-  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/products.css}">
  
   </th:block>
   
@@ -124,9 +128,9 @@
   <!-- / scripts -->
 	  <th:block layout:fragment="pageScript">
 	  <!-- addLibs -->
-	  <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
-	  <script th:src="@{/admin/vendor/libs/numeral/numeral.js}"></script>
-	  <script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
+	  <script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+	  <script th:src="@{/adminStatic/vendor/libs/numeral/numeral.js}"></script>
+	  <script th:src="@{/adminStatic/vendor/libs/nouislider/nouislider.js}"></script>
 		
 	  <!-- addDemo -->
  

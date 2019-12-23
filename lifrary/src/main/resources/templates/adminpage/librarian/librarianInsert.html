@@ -3,11 +3,15 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
-  
+
+<th:block layout:fragment="adminTitle">
+	<title>사서 등록 페이지</title>
+</th:block>
+
   <!-- headAdd(Libs&page) -->
   <th:block layout:fragment="adminHeadAdd">
-    <link rel="stylesheet" th:href="@{admin/vendor/libs/select2/select2.css}">
-  	<link rel="stylesheet" th:href="@{admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+    <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/select2/select2.css}">
+  	<link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
   </th:block>
   <!-- /headAdd(Libs&page) -->
   
@@ -52,7 +56,7 @@
 
             <div class="card mb-4">
               <div class="card-body">
-                <form th:action="@{/admin/librarianInsert}" id="validation-form" method="post">
+                <form th:action="@{/adminStatic/librarianInsert}" id="validation-form" method="post">
 	              <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">구분</label>
@@ -224,11 +228,11 @@
   
  <!--  scripts -->
   <th:block layout:fragment="pageScript">
-   <script th:src="@{/admin/vendor/libs/validate/validate.js}"></script>
-   <script th:src="@{/admin/vendor/libs/select2/select2.js}"></script>
-   <script th:src="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+   <script th:src="@{/adminStatic/vendor/libs/validate/validate.js}"></script>
+   <script th:src="@{/adminStatic/vendor/libs/select2/select2.js}"></script>
+   <script th:src="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
   
-   <script th:src="@{/admin/js/forms_validation.js}"></script>  
+   <script th:src="@{/adminStatic/js/forms_validation.js}"></script>  
   </th:block>
  <!-- / scripts -->
 </body>

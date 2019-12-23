@@ -3,7 +3,10 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
-
+	  
+<th:block layout:fragment="adminTitle">
+	<title>회원등급 수정 페이지</title>
+</th:block>
 
    <!-- Content -->
    		<th:block layout:fragment="adminContents">
