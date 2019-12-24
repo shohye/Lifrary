@@ -16,6 +16,9 @@
    	<script th:src="@{/libraryStatic/fullcalendar/packages/core/locales/ko.js}"></script>
    	<script type="text/javascript">
    	$(document).ready(function() {
+   		var bookInfoList = []; //도서 검색 리스트 담을 변수
+        var totalPage = 0; //전체페이지
+   		
 		//캘린더 생성
         var calendar = new FullCalendar.Calendar($('#bookCalendar')[0], {
 	          plugins: [ 'dayGrid','interaction'],
@@ -76,29 +79,38 @@
 	            var cCode = info.event.id;
 	            $('#bookUpdateModal').modal('show');
 	            var request = $.ajax({
-	  	   		  url: "/",
+	  	   		  url: "/lifrary/getMyCalender",
 	  	   		  data: { cCode : cCode },
 	  	   		  method: "POST",
 	  	   		  dataType: "json"
 	  	   		});
 	  	   		 
-	  	   		request.done(function( data ) {
-	  	
-	  			 
+	  	   		request.done(function(data) {
+	  	   			console.log(data);
+	  	   			var bookInfo = data.bookInformation;
+	  	   			totalPage = bookInfo.bsTotalPage;
+	  	   			
+		  	   		 $('#updateForm strong').eq(1).text(bookInfo.biName);//도서명
+		   			 $('#updateForm strong').eq(3).text(bookInfo.biIsbn);//ISBN
+		   			 $('#updateForm strong').eq(5).text(bookInfo.biAuthor);//저자명
+		   			 $('#updateForm strong').eq(7).text(bookInfo.biPublisher);//발행자
+		   			 $('#updateForm [name="cTitle"]').val(data.cTitle);//읽은 페이지
+		   			 $('#updateForm [name="cContent"]').val(data.cContent);//읽은 페이지
+		   			 $('#updateForm [name="cCurrentPage"]').val(data.cCurrentPage);//읽은 페이지
+		   			 $('#updateForm input').eq(3).attr('placeholder','전체페이지:  '+data.cCurrentPage+'/'+ totalPage);
+		   			 $('#updateForm [name="cStartDate"]').val(data.cStartDate);//등록한 날짜
+	  	   				  	   			
 	  			});//request.done
 	  	   		 
 	  	   		request.fail(function( jqXHR, textStatus ) {
 	  	   		  alert('수정도서 정보를 불러오는데 실패하였습니다');
 	  	   		});//request.fail
-	  		 });
-	            
+	  		
 	        }          
           });//calendar
         
           calendar.render();
  		
-         var bookInfoList = []; //도서 검색 리스트 담을 변수
-         var totalPage = 0; //전체페이지
 		 //도서 검색 & 검색 리스트
 		 $('#bookInfoBtn').click(function(){
 			
@@ -158,27 +170,24 @@
    			 $('#insertForm strong').eq(3).text(selectBook.biIsbn);//ISBN
    			 $('#insertForm strong').eq(5).text(selectBook.biAuthor);//저자명
    			 $('#insertForm strong').eq(7).text(selectBook.biPublisher);//발행자
-   			 $('#insertForm strong').eq(7).text(selectBook.biPublisher);//발행자
    			 $('#insertForm input').eq(3).attr('placeholder','전체페이지:  /'+totalPage);
    			 $('#insertForm [name="bsCode"]').val(selectBook.bsCode);
    			 
    		 });
 		
 		 //읽은 페이지 표시		 
-		 $('#insertForm [name="cCurrentPage"]').change(function(){
+		 $('.modal [name="cCurrentPage"]').change(function(){
 			var currentPage = parseInt($(this).val());
-			
+			console.log('이벤트실행');
 			if(totalPage != 0){
 				if(currentPage > totalPage){
 					alert('전체페이지보다 큰 수는 입력할 수 없습니다');
-					console.log(currentPage);
-					console.log(totalPage);
 				}else if(currentPage == totalPage ){
 					alert('완독도서에 등록하시겠습니까?');
-					$('#insertForm [name="cBookFinish"]').val('O');
+					$('.modal [name="cBookFinish"]').val('O');
 				}else{
-					$('#insertForm input').eq(3).attr('placeholder','전체페이지: '+currentPage+'/'+totalPage);	
-					$('#insertForm [name="cBookFinish"]').val('X');
+					$('.modal .totalPage').attr('placeholder','전체페이지: '+currentPage+'/'+totalPage);	
+					$('.modal [name="cBookFinish"]').val('X');
 				}
 			}
 		 });
@@ -212,7 +221,6 @@
 			$('.modal strong').eq(1).text('');//도서명
 			$('.modal strong').eq(3).text('');//ISBN
 			$('.modal strong').eq(5).text('');//저자명
-			$('.modal strong').eq(7).text('');//발행자
 			$('.modal strong').eq(7).text('');//발행자
 			$('.modal input').eq(3).attr('placeholder','전체페이지:  /');
 		});
@@ -380,7 +388,7 @@
 	                  	</div>
 	                  	<div class="col-sm-4">
 	                       <p class="form-row form-row form-row-wide">&nbsp;진행상황
-	                       	<input class="form-control" type="text" placeholder="전체페이지: /" readonly="readonly">
+	                       	<input class="form-control totalPage" type="text" placeholder="전체페이지: /" readonly="readonly">
 	                       </p>
 	                  	</div>
 	                  	<div class="col-sm-4">
@@ -402,7 +410,7 @@
 		</div>
 		<div class="modal fade" id="bookUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
-		    <form id="insertForm" class="modal-content" th:action="@{/lifrary/myCalenderInsert}" method="post">
+		    <form id="updateForm" class="modal-content" th:action="@{/lifrary/myCalenderInsert}" method="post">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel">일정 수정</h4>
@@ -436,6 +444,7 @@
                   	 <div class="col-md-12">
 	                  	<div class="col-sm-12">	
 	                       <p class="form-row form-row form-row-wide">&nbsp;제목
+	                        <input type="hidden" name="cCode">
 	                       	<input name="cTitle" class="form-control" type="text" placeholder="제목">
 	                       </p>
 	                  	</div>
@@ -455,13 +464,12 @@
 	                  	</div>
 	                  	<div class="col-sm-4">
 	                       <p class="form-row form-row form-row-wide">&nbsp;진행상황
-	                       	<input class="form-control" type="text" placeholder="전체페이지: /" readonly="readonly">
+	                       	<input class="form-control totalPage" type="text" placeholder="전체페이지: /" readonly="readonly">
 	                       </p>
 	                  	</div>
 	                  	<div class="col-sm-4">
-	                       <p class="form-row form-row form-row-wide">&nbsp;선택일
-	                       	<input class="form-control" type="date" name="cStartDate">
-	                       	<input type="hidden" name="bsCode">
+	                       <p class="form-row form-row form-row-wide">&nbsp;등록일
+	                       	<input class="form-control" type="date" name="cStartDate" readonly="readonly">
 	                       	<input type="hidden" name="cBookFinish">
 	                       </p>
 	                  	</div>
@@ -470,7 +478,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
-		        <button type="button" id="insertBtn" class="btn btn-primary" >등록</button>
+		        <button type="button" id="updateBtn" class="btn btn-primary" >등록</button>
 		      </div>
 		    </form>
 		  </div>

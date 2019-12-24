@@ -27,6 +27,7 @@ import ksmart.pentagon.vo.Point;
 @Controller
 public class BookCalenderController {
 	@Autowired private BookCalenderService bookCalenderService;
+	
 	/***
 	 * @brief 마이페이지 북다이어리 이동
 	 * @return /librarypage/calender/myCalender
@@ -91,5 +92,20 @@ public class BookCalenderController {
 		
 		return bookCalenderService.getBooKInfo(libNum, biName);
 	}
+	
+	/**
+	 * @param cCode 캘린더 코드
+	 * @brief 캘린더 정보 가져오기
+	 * @return 캘린더 정보
+	 * @author 최지혜
+	 */
+	@RequestMapping(value="/lifrary/getMyCalender", produces = "application/json")
+	public @ResponseBody Calender getMyCalender(@RequestParam(value="cCode") String cCode) {
+		
+		System.out.println("cCode: "+cCode);
+		
+		return bookCalenderService.getMyCalender(cCode);
+	}
+	
 	
 }

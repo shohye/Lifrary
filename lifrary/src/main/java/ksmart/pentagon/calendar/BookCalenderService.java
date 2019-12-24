@@ -21,8 +21,14 @@ public class BookCalenderService {
 		
 		return bookCalenderMapper.getBooKInfo(libNum, biName);
 	}
+	//캘린더 일정 등록
 	public int myCalenderInsert(Calender calender) {
 		
 		return bookCalenderMapper.myCalenderInsert(calender);
 	}
+	//수정할 캘린더 데이터
+	public Calender getMyCalender(String cCode) {
+		return bookCalenderMapper.getMyCalender(cCode);
+	}
+	
 }

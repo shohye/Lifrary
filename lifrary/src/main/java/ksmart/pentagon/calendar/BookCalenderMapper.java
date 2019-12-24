@@ -15,4 +15,6 @@ public interface BookCalenderMapper {
 	public List<BookInformation> getBooKInfo(String libNum, String biName);
 	//캘린더 등록
 	public int myCalenderInsert(Calender calender);
+	//수정할 캘린더 데이터
+	public Calender getMyCalender(String cCode);
 }

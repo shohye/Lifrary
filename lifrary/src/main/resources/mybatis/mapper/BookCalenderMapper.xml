@@ -15,7 +15,8 @@
 	<result property="cStartDate" column="c_start_date"/>	              
 	<result property="cEndDate" column="c_end_date"/>	              
 	<result property="cDate" column="c_date"/>	                        
-	<result property="biImg" column="bi_img"/>	                        
+	<result property="biImg" column="bi_img"/>
+	<collection property="bookInformation" resultMap="bookInfo"/>	                        
  </resultMap>
  <resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfo">
 	    <result column="bi_isbn"      property="biIsbn"/>
@@ -100,4 +101,40 @@
 			, #{cStartDate}
 			, curdate())
 	</insert>
+	<update id="">
+		UPDATE calender
+		SET
+			c_current_page = ${cCurrentPage}
+			,c_book_finish = #{cBookFinish}
+			,c_title = #{cTitle}
+			,c_content = #{cContent}
+		WHERE 
+		 	c_code = #{cCode}
+	</update>
+	<select id="getMyCalender" resultMap="Calender" parameterType="java.lang.String">
+		SELECT
+			c.c_code
+			,c.c_current_page
+			,c.c_book_finish
+			,c.c_title
+			,c.c_content
+			,c.c_start_date
+			,bs.bs_total_page
+			,bi.bi_isbn
+			,bi.bi_name
+			,bi.bi_author
+			,bi.bi_publisher
+		FROM 
+			calender AS c
+		INNER JOIN
+			book_stock AS bs
+		ON 
+			c.bs_code = bs.bs_code
+		INNER JOIN
+			book_information AS bi
+		ON
+			bs.bi_isbn = bi.bi_isbn				
+		WHERE
+			c.c_code = #{cCode}	
+	</select>
 </mapper>
