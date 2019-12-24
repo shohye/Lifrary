@@ -9,7 +9,7 @@
 
 	<!-- Content -->
 	<th:block layout:fragment="adminContents">
-	<script type="text/javascript" th:src="@{/library/ckeditor/ckeditor.js}"></script>
+	<script type="text/javascript" th:src="@{/libraryStatic/ckeditor/ckeditor.js}"></script>
 		 	<h2 class="font-weight-bold py-3 mb-4">
               <span class="text-muted font-weight-light"></span>사서추천 도서
             </h2>
@@ -106,7 +106,7 @@
 					<tr>
 					<td style="width: 130px;">
 					<button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
-		   				<a th:href="@{#}" style="color: white">
+		   				<a th:href="@{/admin/bookRecommendUpdate(lbCode=${Llist.lbCode})}" style="color: white">
 		            			<span class="ion ion-md-build">수정하기</span>
 		  				</a>
 					</button>

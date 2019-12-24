@@ -12,6 +12,8 @@ public class LibrarianBook {
 	private String lbOpen;		//공개여부
 	private String lbDate;		//등록일
 	private BookInformation bookInformation; //도서정보 테이블 vo
+	
+	
 	public String getLbCode() {
 		return lbCode;
 	}

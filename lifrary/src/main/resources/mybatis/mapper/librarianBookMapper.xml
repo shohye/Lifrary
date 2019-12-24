@@ -62,8 +62,29 @@
  	</select>
  	
  	<select id="getBookInformation" parameterType="String" resultMap="bookInformation1">
- 		SELECT *
-		FROM book_information
-		WHERE bi_isbn = #{isbnVal}
+		SELECT *
+		FROM book_information AS bi INNER JOIN book_stock AS bs
+		ON bi.bi_isbn = bs.bi_isbn
+		WHERE bi.bi_isbn = #{isbnVal}
  	</select>
+ 	
+ 	<select id="maxlbCode" resultType="String">
+ 		SELECT
+  		max(lb_code)
+  		AS max
+  		FROM librarian_book
+ 	</select>
+ 	
+ 	<select id="checkBsCode" parameterType="String" resultType="String">
+ 		SELECT
+		bs_code
+		FROM book_stock
+		WHERE bi_isbn = #{putIsbn}
+ 	</select>
+ 	
+ 	<insert id="bookRecommendInsert" parameterType="ksmart.pentagon.vo.BookInformation">
+		INSERT INTO librarian_book
+		(lb_code, l_code, u_id, bs_code, lb_title, lb_content, lb_id, lb_open, lb_date)
+		VALUES (#{lbCode}, #{lCode}, #{uId}, #{bsCode}, '', #{lbContent}, #{lbId}, #{lbOpen}, NOW())
+ 	</insert>
  </mapper>

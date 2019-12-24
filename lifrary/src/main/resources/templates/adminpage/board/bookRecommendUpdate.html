@@ -2,122 +2,151 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
+	
+	
+<th:block layout:fragment="teamHeadScript">
+
+	<script>
+		$(document).ready(function(){
+			$('#updateBtn').click(function(){
+				var lbContent = $('#lbContent1').html();
+				$('#lbContent').val(lbContent);
+				console.log(lbContent)
+			})
+		});
+	</script>
+
+</th:block>
+
 
 <th:block layout:fragment="adminTitle">
-	<title>추천도서 수정</title>
+	<title>추천도서 상세보기</title>
 </th:block>
 
-<!-- Content -->
-<th:block layout:fragment="adminContents">
-	<script type="text/javascript" th:src="@{/library/ckeditor/ckeditor.js}"></script>
-
-	<style type="text/css">
-#text {
-	-moz-appearance: textfield-multiline;
-	-webkit-appearance: textarea;
-	border: 1px solid gray;
-	font: medium -moz-fixed;
-	font: -webkit-small-control;
-	overflow: auto;
-	padding: 2px;
-	resize: both;
-}
-
-button {
-	-moz-box-shadow: 0px 1px 0px 0px #fff6af;
-	-webkit-box-shadow: 0px 1px 0px 0px #fff6af;
-	box-shadow: 0px 1px 0px 0px #fff6af;
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffec64
-		), color-stop(1, #ffab23));
-	background: -moz-linear-gradient(top, #ffec64 5%, #ffab23 100%);
-	background: -webkit-linear-gradient(top, #ffec64 5%, #ffab23 100%);
-	background: -o-linear-gradient(top, #ffec64 5%, #ffab23 100%);
-	background: -ms-linear-gradient(top, #ffec64 5%, #ffab23 100%);
-	background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64',
-		endColorstr='#ffab23', GradientType=0);
-	background-color: #ffec64;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
-	border-radius: 10px;
-	border: 1px solid #ffaa22;
-	display: inline-block;
-	cursor: pointer;
-	color: #333333;
-	font-family: Arial;
-	font-size: 15px;
-	font-weight: bold;
-	padding: 5px 10px;
-	text-decoration: none;
-	text-shadow: 0px 1px 0px #ffee66;
-}
-</style>
-	
-	
-	<h4 class="font-weight-bold py-3 mb-4">
-		<span class="text-muted font-weight-light"></span>사서 추천도서 수정
-	
-	</h4>
-	<div style="padding-left: 1140px; margin-bottom: 10px;">
-	<a th:href="@{#}" class="btn btn-primary">리스트로 이동</a>
-	</div>
-	<div class="card mb-4"style="padding-top: 10px;">
-				<form th:action="@{/admin/noticeUpdate}" method="post">
-				<input type="hidden" th:value="${board.boardCode}" name="boardCode">
-				<input type="hidden" th:value="${session.SAID}" name="uId">
-				<input type="hidden" th:value="${session.LIBNUM}" name="lCode">
-				<input type="hidden" th:value="${boardLCode}" name="boardLCode">
-				<input type="hidden" th:value="${boardMCode}" name="boardMCode">
-				<input type="hidden" name="boardContent">
-				<input type="hidden" th:value="${'사서추천도서'}" name="boardLName">
-				<input type="hidden" th:value="${'사서추천도서'}" name="boardTitle">
-			<div>
+	<!-- Content -->
+	<th:block layout:fragment="adminContents">
+		 	<h2 class="font-weight-bold py-3 mb-4">
+              <span class="text-muted font-weight-light"></span>사서추천 도서
+            </h2>
+			<div class="card mb-4">
+			<form>
 				<div>
-					<h4 style="padding-top: 10px;margin-left: 43%;">제목 입력</h4>
-					<div id="boardTitle" type="text" name="boardTitle" class="form-control" placeholder="제목을 입력해주세요." style="height: 40px;" contenteditable="true" th:utext="${board.boardTitle}"></div>
+					<table>
+						<tr>
+							<td style="padding: 20px; padding-left: 60px;">
+								<div>
+									<img th:src="${Llist.bookInformation.biImg}" style="width: 150px; height: 200px;">
+								</div>
+							</td>
+							<td>
+								<h3><strong>제목</strong></h3>
+								<h5><strong>저자명</strong></h5>
+								<h5><strong>출판사</strong></h5>
+								<h5><strong>출판년도</strong></h5>
+							</td>
+							<td style="padding: 20px; padding-left: 40px;">
+								<h3><span style="color: #848484;" >:&ensp; [[${Llist.bookInformation.biName}]]</span></h3>
+								<h5><span style="color: #848484;" >:&ensp; [[${Llist.bookInformation.biAuthor}]]</span></h5>
+								<h5><span style="color: #848484;" >:&ensp; [[${Llist.bookInformation.biPublisher}]]</span></h5>
+								<h5><span style="color: #848484;" >:&ensp; [[${Llist.bookInformation.biYear}]]</span></h5>
+								<ul></ul>
+							</td>
+						</tr>
+					</table>
+				<hr style="border-color: #BDBDBD; width: 90%">
+				<div style="padding: 20px; padding-left: 70px;">
+					<table>
+						<tr>
+							<td style="width: 20px;">
+								<span><h3><a class="btn-primary d-block" style="width: 10px; height: 20px;"></a></h3></span>
+							</td>
+							<td>
+							<h3><span>책 내용</span></h3>
+							</td>
+							<td colspan="2">
+								<span><h3> &emsp;</h3></span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<span>[[${Llist.bookInformation.biDtail}]]</span>
+							</td>
+						</tr>
+					</table>
 				</div>
+				<hr style="border-color: #BDBDBD; width: 90%">
+				<div style="padding: 20px; padding-left: 70px;">
+					<table>
+						<tr style="width: 100%">
+							<td style="width: 20px;">
+								<h3><a class="btn-primary d-block" style="width: 10px; height: 20px;"></a></h3>
+							
+							</td>
+							<td>
+								<h3 style="width: 200px;">추천인 서평</h3>
+							</td>
+						</tr>
+						<tr style="width: 100%">
+							<td colspan="2"  style="width: 100%">
+							<div>
+								<input type="hidden" id="lbContent" name="lbContent">
+								<div id="lbContent1" contenteditable="true" style="width: 1000px; height: 200px; background-color: #CEF6F5;" th:text="${Llist.lbContent}"></div>
+							</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<hr style="border-color: #BDBDBD; width: 90%">
+				<div style="padding: 20px; padding-left: 70px;">
+					<table>
+						<tr>
+							<td style="width: 20px;">
+								<span><h3><a class="btn-primary d-block" style="width: 10px; height: 20px;"></a></h3></span>
+							</td>
+							<td>
+							<h3><span>추천인</span></h3>
+							</td>
+							<td colspan="2">
+								<span><h3> &emsp;</h3></span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+							<input type="text" id="lbId" name="lbId" placeholder="추천인  ID를입력해주세요." style="width: 180px;" th:value="${Llist.lbId}">
+							</td>
+						</tr>
+					</table>
+				</div>
+				<hr style="border-color: #BDBDBD; width: 90%">
+			<div style="padding: 20px; padding-left: 60px;">
+				<table>
+					<tr>
+					<td style="width: 130px;">
+					<button type="button" class="btn btn-primary d-block" style="margin-top: 10px;" id="updateBtn">
+		   				<a style="color: white">
+		            			<span class="ion ion-md-build">수정완료</span>
+		  				</a>
+					</button>
+					</td>
+					</tr>
+				</table>
 			</div>
-			
-			<div style="padding-left: 43%; padding-top: 10px;">
-			</div>
-			<div class="form-group">
-		    </div>
-			<textarea id="boardContent" class="form-control" rows="10" th:utext="${board.boardContent}"></textarea>
-			<div style="padding: 10px;">
-			<input type="submit" id="nsbtn" value="공지사항 수정 완료" class="btn btn-primary">
-			<a onclick="history.go(-1)" class="btn btn-secondary">수정취소</a>
-			
-			</div>
-			</form>
-			
 		</div>
-	</div>
-	<script type="text/javascript">
-		 CKEDITOR.replace('boardContent' , {height: 500   });
-		 
-		 $(document).ready(function() {
-				$('#nsbtn').click(function(){
-					var boardContent1 = CKEDITOR.instances.boardContent.getData();
-					var boardTitle1 = CKEDITOR.instances.boardTitle.getData();
-					var boardContentHtml = $('input[name="boardContent"]').val(boardContent1);
-					var boardtitleHtml = $('input[name="boardTitle"]').val(boardTitle1);
-					console.log(boardContentHtml.val());
-					console.log(boardtitleHtml.val());
-				})
-			});
-		
-	</script>
+			</form>
+		</div>
+	</th:block>
 	
-</th:block>
-
-<!-- / Content -->
-
-<!-- script -->
-<th:block layout:fragment="pageScript">
-
-
-</th:block>
-<!-- /script -->
+	<!-- / Content -->
+	
+	<!-- script -->
+	<th:block layout:fragment="pageScript">
+	
+		<!-- addLibs -->
+		<script th:src="@{/adminStatic/vendor/libs/chartjs/chartjs.js}"></script>
+		
+		<!-- addDemo -->
+	</th:block>
+	<!-- /script -->
 
 
 

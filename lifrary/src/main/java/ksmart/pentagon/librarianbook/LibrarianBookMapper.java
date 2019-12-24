@@ -18,4 +18,10 @@ public interface LibrarianBookMapper {
 	public void bookRecommendDelete(@RequestParam(value = "lbCode")String lbCode);
 	
 	public BookInformation getBookInformation(@RequestParam(value = "isbnVal")String isbnVal);
+	
+	public String maxlbCode();
+	
+	public String checkBsCode(@RequestParam(value = "putIsbn")String putIsbn);
+	
+	public void bookRecommendInsert(LibrarianBook librarianBook);
 }
