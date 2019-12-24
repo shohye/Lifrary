@@ -15,55 +15,135 @@
                                     <div class="news-list-box">
                                         <div class="single-news-list">  
                                          
+                                   <th:block th:with="f = ${facility}">    
                                          <!-- ==== 열람실 ==== -->                                    
 										<th:block th:if=" ${room} == 'reading'">
 											<span style="font-size: 40px;">열람실 신청 안내</span>											
 	                                        <section class = "section-padding">
-											<div style="background-color: #CCCC99; font-size: 15px; font-style: italic">
-												위치 : 3층, 4층 <br>
-												규모 : 806석 (노트북실 포함) <br>
-												이용시간 : 07:00 - 23:00 (단, 금요일은 09:00 - 18:00) <br>
-												이용대상 : 중학생 이상의 청소년과 일반인 <br>
-												일반열람실Ⅰ(3층, 152석, 장애인석 1석 포함), 일반열람실Ⅱ(4층, 254석)은 일반인을 대상으로 운영하고 있습니다. <br>
-												여자열람실(3층, 108석), 남자열람실(4층, 108석)은 청소년과 일반인 모두를 대상으로 운영하고 있습니다. <br>
-												청소년ㆍ일반열람실(4층, 92석)은 청소년과 일반인 남·여 모두를 대상으로 운영하고 있습니다. <br>
-												노트북실(3층, 92석)은 노트북과 태블릿PC 이용자를 대상으로 운영하며, 청소년과 일반인 남·여 모두 이용 가능합니다.
-											</div>	                                        
+											<div style="background-color: #CCCC99; font-size: 15px;">
+												열람실 신청 안내 들어갈것.
+												시설명 / 시설종류 / 시설 위치 / 최대 사용인원 / 사용성별 / 사용시간(3시간)
+												
+											</div>
+											<div style="margin-top: 30px;">
+												<table border="1">
+													<thead>
+														<tr>
+															<td>시설명</td>
+															<td>시설위치</td>
+															<td>최대 사용인원</td>
+															<td>사용 성별</td>
+															<td>사용시간</td>
+														</tr>
+													</thead>
+													<tbody>
+														<th:block th:each="fList : ${f}">
+															<tr class="fTable">
+																<input type="hidden" name= "fCode" th:value="${fList.fCode}">
+																<input type="hidden" name = "fKinds" th:value="${fList.fKinds}">
+																<input type="hidden" name = "fSeatOrImg" th:value="${fList.fSeatOrImg}">
+																<input type="hidden" name = "fRow" th:value="${fList.fRow}">
+																<input type="hidden" name = "fCol" th:value="${fList.fCol}">
+																<input type="hidden" name = "fName" th:value="${fList.fName}">
+																<td th:text="${fList.fName}"></td>
+																<td th:text="${fList.fLocation}"></td>
+																<td th:text="${fList.fAccommodate}"></td>
+																<td th:text="${fList.fGender}"></td>
+																<td th:text="${fList.fTerm}"></td>
+															</tr>
+														</th:block>
+													</tbody>
+												
+												</table>
+											</div>                                      
+	                                       	<div>
+	                                        	<div id = "tdTable" style="padding-left: 50px;padding-right: 50px;">
+	                                        	
+	                                        	</div>
+	                                        </div>
 	                                        </section>
 	                                        <div class="clearfix"></div>
 	                                     </th:block>   
 	                                    
-	                                    <!-- ====  강연실 ====  -->
+	                                    <!-- ====  스터디룸  ====  -->
 	                                    <th:block th:if=" ${room} == 'study'">
 											<span style="font-size: 40px;">스터디룸 신청 안내</span>											
 	                                        <section class = "section-padding">
-											<div style="background-color: #CCCC99; font-size: 15px; font-style: italic">
-												위치 : 3층, 4층 <br>
-												규모 : 806석 (노트북실 포함) <br>
-												이용시간 : 07:00 - 23:00 (단, 금요일은 09:00 - 18:00) <br>
-												이용대상 : 중학생 이상의 청소년과 일반인 <br>
-												일반열람실Ⅰ(3층, 152석, 장애인석 1석 포함), 일반열람실Ⅱ(4층, 254석)은 일반인을 대상으로 운영하고 있습니다. <br>
-												여자열람실(3층, 108석), 남자열람실(4층, 108석)은 청소년과 일반인 모두를 대상으로 운영하고 있습니다. <br>
-												청소년ㆍ일반열람실(4층, 92석)은 청소년과 일반인 남·여 모두를 대상으로 운영하고 있습니다. <br>
-												노트북실(3층, 92석)은 노트북과 태블릿PC 이용자를 대상으로 운영하며, 청소년과 일반인 남·여 모두 이용 가능합니다.
+											<div style="background-color: #CCCC99; font-size: 15px;">
+												스터디룸 신청 안내 들어갈것.
+												시설명 / 시설종류 / 시설 위치 / 최대 사용인원  / 사용성별 / 사용시간(5시간)
+												
+											</div>
+											<div style="margin-top: 30px;">
+												<table border="1">
+												
+													<thead>
+														<tr>
+															<td>시설명</td>
+															<td>시설위치</td>
+															<td>최대 사용인원</td>
+															<td>사용 성별</td>
+															<td>사용시간</td>
+														</tr>
+													</thead>
+													<tbody>
+														<th:block th:each="fList : ${f}">
+															<tr class="fTable">
+																<input type="hidden" name= "fCode" th:value="${fList.fCode}">
+																<input type="hidden" name = "fKinds" th:value="${fList.fKinds}">
+																<input type="hidden" name = "fSeatOrImg" th:value="${fList.fSeatOrImg}">
+																<td th:text="${fList.fName}"></td>
+																<td th:text="${fList.fLocation}"></td>
+																<td th:text="${fList.fAccommodate}"></td>
+																<td th:text="${fList.fGender}"></td>
+																<td th:text="${fList.fTerm}"></td>
+															</tr>
+														</th:block>
+													</tbody>
+													
+												</table>
 											</div>	                                        
 	                                        </section>
+	                                        
 	                                        <div class="clearfix"></div>
 	                                     </th:block>
 	                                     
-	                                     <!-- ==== 스터디룸 ==== -->
+	                                     <!-- ==== 강연실 ==== -->
 	                                    <th:block th:if=" ${room} == 'lecture'">
 											<span style="font-size: 40px;">강연실 신청 안내</span>											
 	                                        <section class = "section-padding">
-											<div style="background-color: #CCCC99; font-size: 15px; font-style: italic">
-												위치 : 3층, 4층 <br>
-												규모 : 806석 (노트북실 포함) <br>
-												이용시간 : 07:00 - 23:00 (단, 금요일은 09:00 - 18:00) <br>
-												이용대상 : 중학생 이상의 청소년과 일반인 <br>
-												일반열람실Ⅰ(3층, 152석, 장애인석 1석 포함), 일반열람실Ⅱ(4층, 254석)은 일반인을 대상으로 운영하고 있습니다. <br>
-												여자열람실(3층, 108석), 남자열람실(4층, 108석)은 청소년과 일반인 모두를 대상으로 운영하고 있습니다. <br>
-												청소년ㆍ일반열람실(4층, 92석)은 청소년과 일반인 남·여 모두를 대상으로 운영하고 있습니다. <br>
-												노트북실(3층, 92석)은 노트북과 태블릿PC 이용자를 대상으로 운영하며, 청소년과 일반인 남·여 모두 이용 가능합니다.
+											<div style="background-color: #CCCC99; font-size: 15px;">
+												강연실 신청 안내 들어갈것.
+												시설명 / 시설종류 / 시설 위치 / 최대 사용인원  / 사용성별 / 사용시간(하루)
+												
+											</div>
+											<div style="margin-top: 30px;">
+												<table border="1">
+												
+													<thead>
+														<tr>
+															<td>시설명</td>
+															<td>시설위치</td>
+															<td>최대 사용인원</td>
+															<td>사용 성별</td>
+															<td>사용시간</td>
+														</tr>
+													</thead>
+													<tbody>
+														<th:block th:each="fList : ${f}">
+															<tr class="fTable">
+																<input type="hidden" name= "fCode" th:value="${fList.fCode}">
+																<input type="hidden" name = "fKinds" th:value="${fList.fKinds}">
+																<input type="hidden" name = "fSeatOrImg" th:value="${fList.fSeatOrImg}">
+																<td th:text="${fList.fName}"></td>
+																<td th:text="${fList.fLocation}"></td>
+																<td th:text="${fList.fAccommodate}"></td>
+																<td th:text="${fList.fGender}"></td>
+																<td th:text="${fList.fTerm}"></td>
+															</tr>
+														</th:block>
+													</tbody>
+												</table>
 											</div>	                                        
 	                                        </section>
 	                                        <div class="clearfix"></div>
@@ -73,20 +153,50 @@
 	                                    <th:block th:if=" ${room} == 'locker'">
 											<span style="font-size: 40px;">사물함 신청 안내</span>											
 	                                        <section class = "section-padding">
-											<div style="background-color: #CCCC99; font-size: 15px; font-style: bold">
-												위치 : 3층, 4층 <br>
-												규모 : 806석 (노트북실 포함) <br>
-												이용시간 : 07:00 - 23:00 (단, 금요일은 09:00 - 18:00) <br>
-												이용대상 : 중학생 이상의 청소년과 일반인 <br>
-												일반열람실Ⅰ(3층, 152석, 장애인석 1석 포함), 일반열람실Ⅱ(4층, 254석)은 일반인을 대상으로 운영하고 있습니다. <br>
-												여자열람실(3층, 108석), 남자열람실(4층, 108석)은 청소년과 일반인 모두를 대상으로 운영하고 있습니다. <br>
-												청소년ㆍ일반열람실(4층, 92석)은 청소년과 일반인 남·여 모두를 대상으로 운영하고 있습니다. <br>
-												노트북실(3층, 92석)은 노트북과 태블릿PC 이용자를 대상으로 운영하며, 청소년과 일반인 남·여 모두 이용 가능합니다.
-											</div>	                                        
+											<div style="background-color: #CCCC99; font-size: 15px;">
+												사물함 신청 안내 들어갈것
+												시설명 / 시설종류 / 시설 위치 / 최대 사용인원  / 사용성별 / 사용시간(한달)
+												
+											</div>
+											<div style="margin-top: 30px;">
+												<table border="1">
+												
+													<thead>
+														<tr>
+															<td>시설명</td>
+															<td>시설위치</td>
+															<td>최대 사용인원</td>
+															<td>사용 성별</td>
+															<td>사용시간</td>
+														</tr>
+													</thead>
+													<tbody>
+														<th:block th:each="fList : ${f}">
+															<tr class="fTable">
+																<input type="hidden" name= "fCode" th:value="${fList.fCode}">
+																<input type="hidden" name = "fKinds" th:value="${fList.fKinds}">
+																<input type="hidden" name = "fSeatOrImg" th:value="${fList.fSeatOrImg}">
+																<input type="hidden" name = "fRow" th:value="${fList.fRow}">
+																<input type="hidden" name = "fCol" th:value="${fList.fCol}">
+																<td th:text="${fList.fName}"></td>
+																<td th:text="${fList.fLocation}"></td>
+																<td th:text="${fList.fAccommodate}"></td>
+																<td th:text="${fList.fGender}"></td>
+																<td th:text="${fList.fTerm}"></td>
+															</tr>
+														</th:block>
+													</tbody>
+												</table>
+											</div>
+											<div>
+	                                        	<div id = "tdTable">
+	                                        	
+	                                        	</div>
+	                                        </div>                                       
 	                                        </section>
 	                                        <div class="clearfix"></div>
 	                                     </th:block>
-	                                        
+	                                  </th:block>      
 	                                    </div>
                               	 </div>                                                                                                          
                           </div>

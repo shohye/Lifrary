@@ -17,6 +17,9 @@ import ksmart.pentagon.vo.ProgramManager;
 @Mapper
 public interface ProgramMapper {
 
+	// 프로그램 좌측메뉴에 최근등록 프로그램 3개까지 뿌려주기.
+	public List<ProgramManager> getLatelyProgram(String libNum);
+	
 	// 프로그램 리스트 전체 가져오기
 	public List<ProgramManager> getProgramList(String libNum);
 
@@ -36,7 +39,10 @@ public interface ProgramMapper {
 	public ProgramManager getProgramDetail(String paCode);
 	
 	// 프로그램 신청하기
-	public void insertProgram(ProgramApply pa);
+	public void applyProgram(ProgramApply pa);
+	
+	// 프로그램 등록하기
+	public void insertProgram(ProgramManager pm);
 	
 	// 프로그램 수정하기
 	public void updateProgram(ProgramManager pm);

@@ -72,10 +72,19 @@
 		</if>
 		<if test="keywords != null and target != '전체'">		
 			 and pm_target = #{target}
-		</if>
-
-			
+		</if>		
   	</select>
+  	
+  	<select id="getLatelyProgram" resultMap="PMResultMap">
+  		SELECT
+			*
+		FROM
+			program_mgr
+		WHERE l_code = #{lCode}
+			ORDER BY pm_date desc
+			LIMIT 3
+  	</select>
+  	
   	
   	<!-- 프로그램 신청 리스트 전체 출력(회원 마이페이지용)-->
   	<select id="getProgramApplyList" parameterType="String" resultMap="PAResultMap">
@@ -127,12 +136,40 @@
   	
   	
   	<!-- 도서관 / 프로그램 신청하기 -->
-  	<insert id="insertProgram" parameterType="ksmart.pentagon.vo.ProgramApply">
+  	<insert id="applyProgram" parameterType="ksmart.pentagon.vo.ProgramApply">
+  		<selectKey keyProperty="paCode" resultType="String" order="BEFORE">
+  			SELECT 
+			CONCAT('pa-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+				(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(pa.pa_code), '-', -1),6) 
+				, '00001' 
+				,LPAD(RIGHT(MAX(pa.pa_code),5)+1,5,'0'))))
+			FROM 
+				program_apply AS pa
+  		</selectKey>
+  	
   		INSERT INTO 
 			program_apply
 		(pa_code, l_code, pm_code, u_id, pa_participants, pa_gender, pa_birth, pa_addr, pa_tel, pa_date)
 		VALUES (#{paCode}, #{lCode}, #{pmCode}, #{uId}, #{paParticipants}, #{paGender}, #{paBirth}, #{paAddr}, #{paTel}, NOW())
   	</insert>
+  	
+  	<insert id="insertProgram" parameterType="ksmart.pentagon.vo.ProgramManager">
+  		<selectKey keyProperty="pmCode" resultType="String" order="BEFORE">
+  		SELECT 
+		CONCAT('pm-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(pm.pm_code), '-', -1),6) 
+			, '00001' 
+			,LPAD(RIGHT(MAX(pm.pm_code),5)+1,5,'0'))))
+		FROM 
+			program_mgr AS pm
+  		</selectKey>
+  		
+  		INSERT INTO program_mgr
+		(pm_code, l_code, u_id, pm_name, pm_target, pm_place, pm_start_receipt, pm_end_receipt, pm_start_term, pm_end_term, pm_start_time, pm_end_time, pm_teacher_name, pm_mnop, pm_tuition, pm_tel, pm_detail, pm_file, pm_date)
+		VALUES (#{pmCode}, #{lCode}, #{uId}, #{pmName}, #{pmTarget}, #{pmPlace}, #{pmStartReceipt}, #{pmEndReceipt}, #{pmStartTerm}, #{pmEndTerm}, #{pmStartTime}, #{pmEndTime}, #{pmTeacherName}, #{pmMnop}, #{pmTuition}, #{pmTel}, #{pmDetail}, #{pmFile}, NOW())
+  	</insert>
+  	
+  	
   	
   	<!-- 프로그램 취소(회원) -->
   	<update id="cancleProgram">

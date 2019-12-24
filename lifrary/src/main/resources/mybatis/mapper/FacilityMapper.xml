@@ -14,10 +14,23 @@
   	<result property="fAccommodate" column="f_accommodate"/>
   	<result property="fGender" column="f_gender"/>
   	<result property="fTerm" column="f_term"/>
-  	<result property="fImg" column="f_img"/>
+  	<result property="fRow" column="f_row"/>
+  	<result property="fCol" column="f_col"/>
+  	<result property="fSeatOrImg" column="f_seat_or_img"/>
   	<result property="fDate" column="f_date"/>
   </resultMap>
-  
+		
+  <resultMap type="ksmart.pentagon.vo.FacilityReservation" id="reserveResultMap">
+  	<result property="frCode" column="fr_code"/>
+  	<result property="lCode" column="l_code"/>
+  	<result property="uId" column="u_id"/>
+  	<result property="fCode" column="f_code"/>
+  	<result property="frSelectNum" column="fr_select_num"/>
+  	<result property="frTel" column="fr_tel"/>
+  	<result property="frExtension" column="fr_extension"/>
+  	<result property="frReserveDate" column="fr_reserve_date"/>
+  	<result property="frEndDate" column="fr_end_date"/>
+  </resultMap>  
   <!-- 시설종류가 xx 인것의 리스트를 출력 -->
   <select id="getFacilityList" parameterType="String" resultMap="FResultMap">
   	SELECT 
@@ -41,4 +54,47 @@
 		f_code=#{fCode} AND l_code= #{libNum}
   </select>
   
+  <!-- 공공시설 등록하기. -->
+  <insert id="insertFacility">
+  	<selectKey keyProperty="fCode" resultType="String" order="BEFORE">
+  		SELECT 
+		CONCAT('f-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(f.f_code), '-', -1),6) 
+			, '00001' 
+			,LPAD(RIGHT(MAX(f.f_code),5)+1,5,'0'))))
+		FROM 
+			facility AS f
+  	</selectKey>
+  	INSERT INTO facility
+	(f_code, l_code, u_id, f_name, f_kinds, f_location, f_accommodate, f_gender, f_term, f_row, f_col, f_seat_or_img, f_date)
+	VALUES (#{fCode}, #{lCode}, #{uId}, #{fName}, #{fKinds}, #{fLocation}, #{fAccommodate}, #{fGender}, #{fTerm}, #{fRow}, #{fCol}, #{fSeatOrImg}, NOW())
+  </insert>
+  
+  <!-- 공공시설 수정하기 / 열람실,사물함 / 스터디룸,강연실 다르게 해줘야함. fCode를 받아서 처리-->
+  <update id="updateFacility" parameterType="ksmart.pentagon.vo.Facility">
+  	UPDATE 
+  		facility
+	SET
+		f_name=			#{fName},
+		f_location=		#{fLocation},
+		f_accommodate=	#{fAccommodate},
+		f_gender=		#{fGender},
+		f_row=			#{fRow},
+		f_col=			#{fCol},
+		f_seat_or_img=	#{fSeatOrImg}
+	WHERE 
+		 f_code = #{fCode}
+  </update>
+  
+  <!-- 예약일자 <= 현재날짜 <= 예약종료일자   현재날짜가 사이에 있는것만 출력.-->
+  <select id="getReservationSeat" parameterType="String" resultMap="reserveResultMap">
+  	SELECT
+		fr_select_num
+	FROM
+		facility_reservation
+	WHERE
+		f_code = #{fCode}
+		<![CDATA[ AND fr_reserve_date <= NOW() AND fr_end_date >= NOW() ]]>
+  </select>
+ 
   </mapper>
