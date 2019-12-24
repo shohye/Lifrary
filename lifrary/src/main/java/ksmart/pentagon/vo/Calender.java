@@ -14,6 +14,8 @@ public class Calender {
 	private String cEndDate;
 	private String cDate;
 	private String biImg;
+	private BookInformation bookInformation;
+	
 	public String getcCode() {
 		return cCode;
 	}
@@ -86,6 +88,18 @@ public class Calender {
 	public void setBiImg(String biImg) {
 		this.biImg = biImg;
 	}
-	
-	
+	public BookInformation getBookInformation() {
+		return bookInformation;
+	}
+	public void setBookInformation(BookInformation bookInformation) {
+		this.bookInformation = bookInformation;
+	}
+	@Override
+	public String toString() {
+		return "Calender [cCode=" + cCode + ", lCode=" + lCode + ", uId=" + uId + ", bsCode=" + bsCode
+				+ ", cCurrentPage=" + cCurrentPage + ", cBookFinish=" + cBookFinish + ", cTitle=" + cTitle
+				+ ", cContent=" + cContent + ", cStartDate=" + cStartDate + ", cEndDate=" + cEndDate + ", cDate="
+				+ cDate + ", biImg=" + biImg + ", bookInformation=" + bookInformation + "]";
+	}
+
 }

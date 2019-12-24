@@ -73,7 +73,7 @@
 			, #{uId}
 			, #{pName}
 			, #{pStandard}
-			, #{pPoint}
+			, ${pPoint}
 			, CURDATE())
   	</insert>
   	<select id="getPoint" resultMap="point" parameterType="java.lang.String">

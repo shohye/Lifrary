@@ -10,6 +10,8 @@ public class BookInformation {
 	private String biImg;
 	private String biDate;
 	private String biDtail;
+	private String bsCode;
+	private String bsTotalPage;
 	
 	
 	// (도서관) 디테일 검색조건을 위한 변수명 추가
@@ -17,7 +19,6 @@ public class BookInformation {
 	private String bclCode;
 	private String biYearStart;
 	private String biYearEnd;
-	
 	
 	
 	public String getBiIsbn() {
@@ -74,6 +75,18 @@ public class BookInformation {
 	public void setBiDtail(String biDtail) {
 		this.biDtail = biDtail;
 	}
+	public String getBsCode() {
+		return bsCode;
+	}
+	public void setBsCode(String bsCode) {
+		this.bsCode = bsCode;
+	}
+	public String getBsTotalPage() {
+		return bsTotalPage;
+	}
+	public void setBsTotalPage(String bsTotalPage) {
+		this.bsTotalPage = bsTotalPage;
+	}
 	public String getlCode() {
 		return lCode;
 	}
@@ -99,13 +112,18 @@ public class BookInformation {
 		this.biYearEnd = biYearEnd;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "BookInformation [biIsbn=" + biIsbn + ", biName=" + biName + ", biYear=" + biYear + ", biAuthor="
 				+ biAuthor + ", biPublisher=" + biPublisher + ", biKdc=" + biKdc + ", biImg=" + biImg + ", biDate="
-				+ biDate + ", biDtail=" + biDtail + ", lCode=" + lCode + ", bclCode=" + bclCode + ", biYearStart="
-				+ biYearStart + ", biYearEnd=" + biYearEnd + "]";
+				+ biDate + ", biDtail=" + biDtail + ", bsCode=" + bsCode + ", bsTotalPage=" + bsTotalPage + ", lCode="
+				+ lCode + ", bclCode=" + bclCode + ", biYearStart=" + biYearStart + ", biYearEnd=" + biYearEnd + "]";
 	}
+	
+	
+	
+	
 	
 	
 	
