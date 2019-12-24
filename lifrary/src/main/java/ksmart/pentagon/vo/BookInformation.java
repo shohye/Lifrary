@@ -1,15 +1,17 @@
 package ksmart.pentagon.vo;
 
 public class BookInformation {
-	private String biIsbn;		//도서정보코드
-	private String biName;		//도서명
-	private String biYear;		//발행년도
-	private String biAuthor;	//저자명
-	private String biPublisher;	//발행자
-	private String biKdc;		//분류기호
-	private String biImg;		//이미지
-	private String biDate;		//등록일
-	private String biDtail;		//상세설명
+	private String biIsbn;
+	private String biName;
+	private String biYear;
+	private String biAuthor;
+	private String biPublisher;
+	private String biKdc;
+	private String biImg;
+	private String biDate;
+	private String biDtail;
+	private String bsCode;
+	private String bsTotalPage;
 	
 	
 	// (도서관) 디테일 검색조건을 위한 변수명 추가
@@ -110,12 +112,17 @@ public class BookInformation {
 	public void setBiDate(String biDate) {
 		this.biDate = biDate;
 	}
-	@Override
-	public String toString() {
-		return "BookInformation [biIsbn=" + biIsbn + ", biName=" + biName + ", biYear=" + biYear + ", biAuthor="
-				+ biAuthor + ", biPublisher=" + biPublisher + ", biKdc=" + biKdc + ", biImg=" + biImg + ", biDate="
-				+ biDate + ", biDtail=" + biDtail + ", lCode=" + lCode + ", bclCode=" + bclCode + ", biYearStart="
-				+ biYearStart + ", biYearEnd=" + biYearEnd + "]";
+	public String getBsCode() {
+		return bsCode;
+	}
+	public void setBsCode(String bsCode) {
+		this.bsCode = bsCode;
+	}
+	public String getBsTotalPage() {
+		return bsTotalPage;
+	}
+	public void setBsTotalPage(String bsTotalPage) {
+		this.bsTotalPage = bsTotalPage;
 	}
 	
 }
