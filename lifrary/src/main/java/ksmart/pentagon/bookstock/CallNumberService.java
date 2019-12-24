@@ -40,15 +40,33 @@ public class CallNumberService {
 				resultStr += makeBsmarkNum(reJun.toString());
 			}
 			
-			
-		/*	String authorMark = callNumberMapper.checkAuthor(resultStr);
+			// informaton 작가명
+			List<String> author = callNumberMapper.checkAuthor(biAuthor);
+			// stock 작가기호
+			List<String> authorMark = callNumberMapper.checkAuthorMark(resultStr);
 			String plus = "1";
-			if(authorMark == null) {
+			String resultStrPlus = "";
+			
+			// 작가명 자체가 겹치지 않을때
+			if(author.size()<0) {
 				
+				if(authorMark.size()<0) { // 작가명이 겹치지 않고 작가기호도 겹치지 않을때
+					
+				}else { // 작가명이 겹치지 않으나, 작가기호가 겹칠때
+					
+					resultStr += plus;
+					
+			    /*  List<String> authorMark2 = callNumberMapper.checkAuthorMark(resultStr);
+					if(authorMark2.size()>0) {
+						resultStrPlus = resultStr+"2";					
+					}*/
+				}
+			
+			// 작가명 자체가 겹칠때 = 같은작가(동일 인물)   //이라고 예를 들자.. 동명이인은 알아서 하시기를,,
 			}else {
-				resultStr += plus;
-				callNumberMapper.checkAuthor(resultStr);
-			}*/
+				
+			}
+			
 		}				
 		return resultStr;
 	}

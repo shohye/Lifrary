@@ -15,7 +15,8 @@ public interface CallNumberMapper {
 	
 	public String makeBsmarkNum(String text);
 	
-	public String checkAuthor(String resultStr);
+	public List<String> checkAuthor(String biAuthor);
 	
+	public List<String> checkAuthorMark(String resultStr);
 
 }
