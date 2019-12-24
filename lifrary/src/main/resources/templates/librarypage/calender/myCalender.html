@@ -8,8 +8,9 @@
  	  	
 	<th:block layout:fragment="customScript">
 	<link th:href="@{/libraryStatic/fullcalendar/packages/core/main.css}" rel="stylesheet" />
-   	<link th:href="@{/libraryStatic/fullcalendar/packages/daygrid/main.css}" rel="stylesheet" /> 
+   	<link th:href="@{/libraryStatic/fullcalendar/packages/daygrid/main.css}" rel="stylesheet" />
    	<script th:src="@{/libraryStatic/fullcalendar/packages/core/main.js}"></script>
+   	<script th:src="@{/libraryStatic/fullcalendar/packages/moment.js}"></script>
    	<script th:src="@{/libraryStatic/fullcalendar/packages/daygrid/main.js}"></script>
    	<script th:src="@{/libraryStatic/fullcalendar/packages/interaction/main.js}"></script>
    	<script th:src="@{/libraryStatic/fullcalendar/packages/core/locales/ko.js}"></script>
@@ -22,7 +23,10 @@
 	              left: 'dayGridMonth',
 	              center: 'title'
 	            },
-	          eventLimit: true,  
+	          eventLimit: true, 
+	          fixedWeekCount: false,
+	          contentHeight: 720,
+		      navLinks: true,
 	          events: function(info, successCallback, failureCallback ){
 	        	//ajax로 DB에서 data가져오기
 	        	  $.ajax({ 
@@ -41,7 +45,7 @@
 		        	      $.each(data, function(index, list) { 
 		        	      	events.push({
 		        	      	   id: list.cCode,	
-		        	      	   start: list.cDate,
+		        	      	   start: list.cStartDate,
 		        	      	   imageurl: list.biImg
 		        	      	}); 
 		        	      }); 
@@ -53,7 +57,7 @@
 	         //날짜에 이미지 넣기
 	         eventRender: function(info) {
 	              if (info.event.extendedProps.imageurl) {
-	                  info.el.firstChild.innerHTML = info.el.firstChild.innerHTML + '<img src="' + info.event.extendedProps.imageurl +'" style="height: 90px; width=100%;">';
+	                  info.el.firstChild.innerHTML = info.el.firstChild.innerHTML + '<img src="' + info.event.extendedProps.imageurl +'" style="height: 100px; width=100%;">';
 	              }
 	          },
 	        /*  eventRender: function(info) {
@@ -61,20 +65,45 @@
 	            	  info.el.firstChild.innerHTML ='<div><a href="#">'+ info.event.title +'</a><img src="' + info.event.extendedProps.imageurl +'" width="40" height="40"></div>';
 	              }
 	          } */
-	        contentHeight: 750,
-	        dateClick: function(info) {
+	        navLinkDayClick: function(date, jsEvent){     	
+	        	var selectDate =moment(date).format('YYYY-MM-DD');
+	        	console.log(selectDate);
 	            $('#bookInsertModal').modal('show');
-	          }
+	            $('#selectDate').text(selectDate);
+	            $('#insertForm [name="cStartDate"]').val(selectDate);
+	        },
+	        eventClick: function(info) {
+	            var cCode = info.event.id;
+	            $('#bookUpdateModal').modal('show');
+	            var request = $.ajax({
+	  	   		  url: "/",
+	  	   		  data: { cCode : cCode },
+	  	   		  method: "POST",
+	  	   		  dataType: "json"
+	  	   		});
+	  	   		 
+	  	   		request.done(function( data ) {
+	  	
+	  			 
+	  			});//request.done
+	  	   		 
+	  	   		request.fail(function( jqXHR, textStatus ) {
+	  	   		  alert('수정도서 정보를 불러오는데 실패하였습니다');
+	  	   		});//request.fail
+	  		 });
+	            
+	        }          
           });//calendar
         
           calendar.render();
  		
-         var bookInfoList = []; 
+         var bookInfoList = []; //도서 검색 리스트 담을 변수
+         var totalPage = 0; //전체페이지
 		 //도서 검색 & 검색 리스트
 		 $('#bookInfoBtn').click(function(){
 			
 			//리스트출력부분 초기화
-			$('#bookInsertModal').find('ul').css("display","none").html('');
+			$('#insertForm').find('ul').css("display","none").html('');
 			
 			var biName = $('#bookName').val();
 			var request = $.ajax({
@@ -90,7 +119,7 @@
 	   			if(data.length > 0){
 				   	for(var i = 0; i<data.length; i++){
 				   		var list = data[i];
-				 		var ul = $('#bookInsertModal').find('ul');
+				 		var ul = $('#insertForm').find('ul');
 				 		ul.css("display","block");
 				   		ul.append('<li></li>');
 				   		var li = ul.children('li').eq(i);
@@ -99,7 +128,7 @@
 				   	}
 	   			}
 	   			else{
- 	   			var ul = $('#bookInsertModal').find('ul');
+ 	   			var ul = $('#insertForm').find('ul');
  	   			ul.css("display","block");
 		   		ul.append('<li></li>');
 		   		var li = ul.children('li')
@@ -110,52 +139,83 @@
 			});//request.done
 	   		 
 	   		request.fail(function( jqXHR, textStatus ) {
-	   		  alert( "Request failed: " + textStatus );
+	   		  alert('검색도서 정볼를 불러오는데 실패하였습니다');
 	   		});//request.fail
 		 });
 		 
 		 //도서검색 리스트 클릭시 해당 도서 정보 화면에 출력
-		 $('#bookInsertModal').on('click','li',function(){
-			 $('#bookInsertModal').find('ul').css("display","none");
+		 $('#insertForm').on('click','li',function(){
+			 $('#insertForm').find('ul').css("display","none");
 
-			 var liText = $(this).text();
-			 $('#bookInsertModal input').eq(0).val(liText);
+			 var liText = $(this).text();//검색도서명
+			 $('#insertForm input').eq(0).val(liText);
    			
 			 var i = $(this).val();
-   			 var selectBook = bookInfoList[i];
-   			 $('#bookInsertModal strong').eq(1).text(selectBook.biName);//도서명
-   			 $('#bookInsertModal strong').eq(3).text(selectBook.biIsbn);//ISBN
-   			 $('#bookInsertModal strong').eq(5).text(selectBook.biAuthor);//저자명
-   			 $('#bookInsertModal strong').eq(7).text(selectBook.biPublisher);//발행자
-   			 $('#bookInsertModal strong').eq(7).text(selectBook.biPublisher);//발행자
-   			 $('#bookInsertModal input').eq(3).attr('placeholder','전체페이지:  /'+selectBook.bsTotalPage);
-   			 $('#bookInsertModal [name="bsCode"]').val(selectBook.bsCode);
+   			 var selectBook = bookInfoList[i];//검색도서 정보
+   			 totalPage = selectBook.bsTotalPage
+   			 //검색도서 정보 화면에 출력
+   			 $('#insertForm strong').eq(1).text(selectBook.biName);//도서명
+   			 $('#insertForm strong').eq(3).text(selectBook.biIsbn);//ISBN
+   			 $('#insertForm strong').eq(5).text(selectBook.biAuthor);//저자명
+   			 $('#insertForm strong').eq(7).text(selectBook.biPublisher);//발행자
+   			 $('#insertForm strong').eq(7).text(selectBook.biPublisher);//발행자
+   			 $('#insertForm input').eq(3).attr('placeholder','전체페이지:  /'+totalPage);
+   			 $('#insertForm [name="bsCode"]').val(selectBook.bsCode);
    			 
    		 });
-		 $('#bookInsertModal [name="cCurrentPage"]').change(function(){
-			var currentPage = $(this).val();
-			var totalPage = $('#bookInsertModal input').eq(3).attr('placeholder');
-			var tatalPageArray = totalPage.split("/");
+		
+		 //읽은 페이지 표시		 
+		 $('#insertForm [name="cCurrentPage"]').change(function(){
+			var currentPage = parseInt($(this).val());
 			
-			if(tatalPageArray[1] != null && tatalPageArray[1] != ''){
-				if(currentPage > tatalPageArray[1]){
+			if(totalPage != 0){
+				if(currentPage > totalPage){
 					alert('전체페이지보다 큰 수는 입력할 수 없습니다');
-				}
-				else if(currentPage == tatalPageArray[1] ){
+					console.log(currentPage);
+					console.log(totalPage);
+				}else if(currentPage == totalPage ){
 					alert('완독도서에 등록하시겠습니까?');
-				}
-				else{
-				$('#bookInsertModal input').eq(3).attr('placeholder','전체페이지: '+currentPage+'/'+tatalPageArray[1]);	
+					$('#insertForm [name="cBookFinish"]').val('O');
+				}else{
+					$('#insertForm input').eq(3).attr('placeholder','전체페이지: '+currentPage+'/'+totalPage);	
+					$('#insertForm [name="cBookFinish"]').val('X');
 				}
 			}
-			 
 		 });
-		
+		 //일정등록
+		 $('#insertBtn').click(function(){
+			 var cTitle = $('#insertForm [name="cTitle"]').val();
+			 var cContent = $('#insertForm [name="cContent"]').val();
+			 var cCurrentPage = $('#insertForm [name="cCurrentPage"]').val();
+			 var bsCode = $('#insertForm [name="bsCode"]').val();
+			 var currentPage = parseInt($('#insertForm [name="cCurrentPage"]').val());
+
+			 if(bsCode == null || bsCode ==''){
+				 alert('도서를 검색해주세요');		
+			 }else if(cTitle == ''){
+				 alert('제목을 입력해주세요');
+			 }else if(cContent == ''){
+				 alert('내용을 입력해주세요');
+			 }else if(cContent.length > 250){
+	             alert('내용은 250자 이하로 적어 주세요');
+	         }else if(currentPage > totalPage){
+					alert('전체페이지보다 큰 수는 등록할 수 없습니다');
+		 	 }else{
+		 		$('#insertForm').submit();
+		 	}
+		 });
+		 
 		 //모달 초기화
 		 $('.modal').on('hidden.bs.modal', function (e) {
-			    console.log('modal close');
-			  $(this).find('form')[0].reset()
-		 });
+			
+			$(this).find('form')[0].reset()
+			$('.modal strong').eq(1).text('');//도서명
+			$('.modal strong').eq(3).text('');//ISBN
+			$('.modal strong').eq(5).text('');//저자명
+			$('.modal strong').eq(7).text('');//발행자
+			$('.modal strong').eq(7).text('');//발행자
+			$('.modal input').eq(3).attr('placeholder','전체페이지:  /');
+		});
  
       });//document.ready
      
@@ -174,6 +234,9 @@
     .fc-event{
     	border: rgba(0, 0, 0, 0);
     }
+    .fc-event-container a{
+    	 display:inline-block;
+    }
     textarea{
     	width: 100%;
     }
@@ -183,7 +246,9 @@
  		border-top: 3px solid #f4f4f4;
  		margin-top: 5px;
  	}
-
+ 	strong:nth-child(odd) {
+ 		color: #ff7236;
+ 	}
 </style>
   
 	<th:block layout:fragment="customContents">
@@ -252,7 +317,7 @@
         </div>
         <div class="modal fade" id="bookInsertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
-		    <form id="insertForm" class="modal-content" th:action="@{#}" method="post">
+		    <form id="insertForm" class="modal-content" th:action="@{/lifrary/myCalenderInsert}" method="post">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel">일정 등록</h4>
@@ -269,7 +334,6 @@
 	                       	<button type="button" id="bookInfoBtn" class="btn btn-primary form-control" >도서검색</button>
 	                  	</div>
                   	 </div>
-               
                   	 <div class="col-md-12">
 	                  	<div class="col-sm-6">
 	                  	   <p class="form-row form-row form-row-wide" style="margin-top: 20px;">
@@ -296,28 +360,34 @@
                   	 </div>
                   	 <div class="col-md-12">
 	                  	<div class="col-sm-12">	
-	                       <p class="form-row form-row form-row-wide">
+	                       <p class="form-row form-row form-row-wide">&nbsp;제목
 	                       	<input name="cTitle" class="form-control" type="text" placeholder="제목">
 	                       </p>
 	                  	</div>
 	                  </div>
 	                  <div class="col-md-12">
-	                  	<div class="col-sm-12">	
-	                       <p class="form-row form-row form-row-wide">
+	                  	<div class="col-sm-12">
+	                       <p class="form-row form-row form-row-wide">&nbsp;내용
 	                       	<textarea name="cContent" rows="5" style=" padding: 5px 10px;" placeholder="내용"></textarea>
 	                       </p>
 	                  	</div>
 	                  </div>
 	                  <div class="col-md-12">
-	                  	<div class="col-sm-6">
-	                       <p class="form-row form-row form-row-wide">
-	                       	<input name="cCurrentPage" class="form-control" type="number" min="0" placeholder="읽은 페이지">
+	                  	<div class="col-sm-4">
+	                       <p class="form-row form-row form-row-wide">&nbsp;읽은페이지
+	                       	<input name="cCurrentPage" class="form-control" type="number" min="0" value="0">
 	                       </p>
 	                  	</div>
-	                  	<div class="col-sm-6">
-	                       <p class="form-row form-row form-row-wide">
+	                  	<div class="col-sm-4">
+	                       <p class="form-row form-row form-row-wide">&nbsp;진행상황
 	                       	<input class="form-control" type="text" placeholder="전체페이지: /" readonly="readonly">
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-4">
+	                       <p class="form-row form-row form-row-wide">&nbsp;선택일
+	                       	<input class="form-control" type="date" name="cStartDate">
 	                       	<input type="hidden" name="bsCode">
+	                       	<input type="hidden" name="cBookFinish">
 	                       </p>
 	                  	</div>
                   	 </div>
@@ -325,7 +395,82 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
-		        <button type="button" id="insertBtn" class="btn btn-primary" data-dismiss="modal" >등록</button>
+		        <button type="button" id="insertBtn" class="btn btn-primary" >등록</button>
+		      </div>
+		    </form>
+		  </div>
+		</div>
+		<div class="modal fade" id="bookUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <form id="insertForm" class="modal-content" th:action="@{/lifrary/myCalenderInsert}" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">일정 수정</h4>
+		      </div>
+		      <div class="modal-body">
+		      	  <div class="row">
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide" style="margin-top: 20px;">
+	                       	<strong>도서명:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide" style="margin-top: 20px;">
+	                       	<strong>ISBN:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+                  	 </div>
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide">
+	                       	<strong>저자명:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide">
+	                       	<strong>발행사:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+                  	 </div>
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-12">	
+	                       <p class="form-row form-row form-row-wide">&nbsp;제목
+	                       	<input name="cTitle" class="form-control" type="text" placeholder="제목">
+	                       </p>
+	                  	</div>
+	                  </div>
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-12">
+	                       <p class="form-row form-row form-row-wide">&nbsp;내용
+	                       	<textarea name="cContent" rows="5" style=" padding: 5px 10px;" placeholder="내용"></textarea>
+	                       </p>
+	                  	</div>
+	                  </div>
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-4">
+	                       <p class="form-row form-row form-row-wide">&nbsp;읽은페이지
+	                       	<input name="cCurrentPage" class="form-control" type="number" min="0" value="0">
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-4">
+	                       <p class="form-row form-row form-row-wide">&nbsp;진행상황
+	                       	<input class="form-control" type="text" placeholder="전체페이지: /" readonly="readonly">
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-4">
+	                       <p class="form-row form-row form-row-wide">&nbsp;선택일
+	                       	<input class="form-control" type="date" name="cStartDate">
+	                       	<input type="hidden" name="bsCode">
+	                       	<input type="hidden" name="cBookFinish">
+	                       </p>
+	                  	</div>
+                  	 </div>
+                 </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
+		        <button type="button" id="insertBtn" class="btn btn-primary" >등록</button>
 		      </div>
 		    </form>
 		  </div>

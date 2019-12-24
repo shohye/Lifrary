@@ -21,4 +21,8 @@ public class BookCalenderService {
 		
 		return bookCalenderMapper.getBooKInfo(libNum, biName);
 	}
+	public int myCalenderInsert(Calender calender) {
+		
+		return bookCalenderMapper.myCalenderInsert(calender);
+	}
 }

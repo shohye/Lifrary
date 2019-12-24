@@ -7,9 +7,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.Calender;
@@ -53,16 +55,34 @@ public class BookCalenderController {
 		}
 	
 	/**
-	 * @brief 마이페이지 북다이어리(캘린더) 등록 화면
+	 * @brief 마이페이지 북다이어리(캘린더) 등록
 	 * @return /librarypage/calender/myCalenderInser
 	 * @author 최지혜
 	 */
-	@GetMapping("/lifrary/myCalenderInsert")
-	public String myCalenderInsert() {
+	@PostMapping("/lifrary/myCalenderInsert")
+	public String myCalenderInsert(Calender calender
+								  , HttpSession session
+								  , RedirectAttributes redirectAttributes) {
 		
-		return "/librarypage/calender/myCalenderInsert";
+		String libNum = (String) session.getAttribute("LIBNUM");
+		String uId = (String) session.getAttribute("SID");
+		
+		calender.setlCode(libNum);
+		calender.setuId(uId);
+		System.out.println(calender.toString());
+		
+		redirectAttributes.addFlashAttribute("resultInsert", bookCalenderService.myCalenderInsert(calender));
+		
+		return "redirect:/lifrary/myCalender";
 	}
 	
+	/** 
+	 * @param session
+	 * @param biName 도서이름
+	 * @brief 검색도서정보
+	 * @return List<BookInformation>
+	 * @author 최지혜
+	 */
 	@RequestMapping(value="/lifrary/getBooKInfo", produces = "application/json")
 	public @ResponseBody List<BookInformation> getBooKInfo(HttpSession session
 													 ,@RequestParam(value="biName" ) String biName) {

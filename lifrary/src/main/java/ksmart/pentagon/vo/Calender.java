@@ -86,6 +86,18 @@ public class Calender {
 	public void setBiImg(String biImg) {
 		this.biImg = biImg;
 	}
+	@Override
+	public String toString() {
+		return "Calender [cCode=" + cCode + ", lCode=" + lCode + ", uId=" + uId + ", bsCode=" + bsCode
+				+ ", cCurrentPage=" + cCurrentPage + ", cBookFinish=" + cBookFinish + ", cTitle=" + cTitle
+				+ ", cContent=" + cContent + ", cStartDate=" + cStartDate + ", cEndDate=" + cEndDate + ", cDate="
+				+ cDate + ", biImg=" + biImg + ", getcCode()=" + getcCode() + ", getlCode()=" + getlCode()
+				+ ", getuId()=" + getuId() + ", getBsCode()=" + getBsCode() + ", getcCurrentPage()=" + getcCurrentPage()
+				+ ", getcBookFinish()=" + getcBookFinish() + ", getcTitle()=" + getcTitle() + ", getcContent()="
+				+ getcContent() + ", getcStartDate()=" + getcStartDate() + ", getcEndDate()=" + getcEndDate()
+				+ ", getcDate()=" + getcDate() + ", getBiImg()=" + getBiImg() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
 	
 	
 }

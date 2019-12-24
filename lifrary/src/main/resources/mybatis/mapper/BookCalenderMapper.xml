@@ -30,41 +30,74 @@
 	    <result column="bs_total_page" property="bsTotalPage"/>
  </resultMap>
 
- <select id="getMyCalenderList" resultMap="Calender" parameterType="java.lang.String">
-	SELECT
-		c.*
-		,bi.bi_img 
-	FROM
-		calender AS c
-	INNER JOIN
-		book_stock AS bs
-	ON
-	 c.bs_code = bs.bs_code
-	LEFT JOIN
-		book_information AS bi
-	ON
-		bs.bi_isbn = bi.bi_isbn	 	 	
-	WHERE
-		c.l_code =#{libNum}
-	AND 
-		c.u_id = #{uId}
- </select>
- <select id="getBooKInfo" resultMap="bookInfo" parameterType="java.lang.String">
-	SELECT 
-		bs.bs_code
-		, bs.bs_total_page
-		, bi.bi_name
-		, bi.bi_isbn
-		, bi.bi_author
-		, bi.bi_publisher
-	FROM  
-		book_stock  bs 
-	INNER JOIN 
-		book_information  bi 
-	ON bs.bi_isbn = bi.bi_isbn
-	WHERE
-		bs.l_code = #{libNum}
-	and
-		bi.bi_name Like CONCAT ('%',#{biName},'%')		
+	<select id="getMyCalenderList" resultMap="Calender" parameterType="java.lang.String">
+		SELECT
+			c.*
+			,bi.bi_img 
+		FROM
+			calender AS c
+		INNER JOIN
+			book_stock AS bs
+		ON
+		 c.bs_code = bs.bs_code
+		LEFT JOIN
+			book_information AS bi
+		ON
+			bs.bi_isbn = bi.bi_isbn	 	 	
+		WHERE
+			c.l_code =#{libNum}
+		AND 
+			c.u_id = #{uId}
+ 	</select>
+	<select id="getBooKInfo" resultMap="bookInfo" parameterType="java.lang.String">
+		SELECT 
+			bs.bs_code
+			, bs.bs_total_page
+			, bi.bi_name
+			, bi.bi_isbn
+			, bi.bi_author
+			, bi.bi_publisher
+		FROM  
+			book_stock  bs 
+		INNER JOIN 
+			book_information  bi 
+		ON bs.bi_isbn = bi.bi_isbn
+		WHERE
+			bs.l_code = #{libNum}
+		and
+			bi.bi_name Like CONCAT ('%',#{biName},'%')		
 	</select>
+	<insert id="myCalenderInsert" parameterType="ksmart.pentagon.vo.Calender">
+		<selectKey keyProperty="cCode" resultType="String" order="BEFORE">
+	  		SELECT 
+			CONCAT('c-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+				(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(c.c_code), '-', -1),6) 
+				, '00001' 
+				,LPAD(RIGHT(MAX(c.c_code),5)+1,5,'0')))) AS cCode
+			FROM 
+				calender AS c
+	  	</selectKey>
+		INSERT INTO calender(
+			c_code
+			, l_code
+			, u_id
+			, bs_code
+			, c_current_page
+			, c_book_finish
+			, c_title
+			, c_content
+			, c_start_date
+			, c_date)
+		VALUES (
+			#{cCode}
+			, #{lCode}
+			, #{uId}
+			, #{bsCode}
+			, ${cCurrentPage}
+			, #{cBookFinish}
+			, #{cTitle}
+			, #{cContent}
+			, #{cStartDate}
+			, curdate())
+	</insert>
 </mapper>
