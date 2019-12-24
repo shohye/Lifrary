@@ -24,4 +24,6 @@ public interface LibrarianBookMapper {
 	public String checkBsCode(@RequestParam(value = "putIsbn")String putIsbn);
 	
 	public void bookRecommendInsert(LibrarianBook librarianBook);
+	
+	public void bookRecommendUpdate(LibrarianBook librarianBook);
 }

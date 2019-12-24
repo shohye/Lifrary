@@ -53,7 +53,8 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<span>[[${Llist.bookInformation.biDtail}]]</span>
+								<div th:utext="${Llist.bookInformation.biDtail}">
+								</div>
 							</td>
 						</tr>
 					</table>
@@ -74,7 +75,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<span>[[${Llist.lbContent}]]</span>
+								<span th:utext="${Llist.lbContent}"></span>
 							</td>
 						</tr>
 					</table>

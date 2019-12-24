@@ -94,7 +94,9 @@ public class LibrarianBookController {
 		@PostMapping("/admin/bookRecommendUpdate")
 		public String bookRecommendUpdate(LibrarianBook librarianBook) {
 			System.out.println("controller96 : " + librarianBook);
-			return null;
+			librarianBookService.bookRecommendUpdate(librarianBook);
+			String lbCode = librarianBook.getLbCode();
+			return "redirect:/admin/bookRecommendDetail?lbCode="+lbCode;
 		}
 		
 		
