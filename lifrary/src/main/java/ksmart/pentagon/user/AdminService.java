@@ -110,10 +110,10 @@ public class AdminService {
 	 }
 	 
 	 //관리자가 유저 레벨 수정 하기
-	 public UserLevel getAdUserLevelUpdate(String ulLevel) {
+	 public UserLevel getAdUserLevelUpdate(String ulLevel ,String getSAID) {
 		 System.out.println("getAdUserLevelUpdate 서비스 진입");
 		
-		 return adminMapper.getAdUserLevelUpdate(ulLevel);
+		 return adminMapper.getAdUserLevelUpdate(ulLevel, getSAID);
 	 }
 	 
 	 //관리자가 회원 등급 수정하고 리스트로넘기기
@@ -161,11 +161,11 @@ public class AdminService {
 	 }
 	 
 	 //관리자가 회원 권한 수정하기
-	 public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode) {
+	 public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode, String getSAID) {
 		 System.out.println("getAdUserAuthorityUpdate 서비스 진입");
-		 System.out.println("확인완료 getAdUserAuthorityUpdate ==>>" + adminMapper.getAdUserAuthorityUpdate(uasCode));
+		 System.out.println("확인완료 getAdUserAuthorityUpdate ==>>   ");
 		 
-		 return adminMapper.getAdUserAuthorityUpdate(uasCode); 
+		 return adminMapper.getAdUserAuthorityUpdate(uasCode, getSAID); 
 	 }
 	 
 	 //관리자가 회원 권한 수정하고 리스트로넘기기
@@ -218,10 +218,9 @@ public class AdminService {
 	}
 	
 	//관리자 회원정보&권한 수정 -한개 정보 가져오기
-	public List<User> getLibrarianLevelUpdate(String uId){
+	public User getLibrarianLevelUpdate(String uId, String libNum){
 		System.out.println("getLibrarianLevelUpdate 서비스진입");
-		System.out.println(adminMapper.getLibrarianLevelUpdate(uId) + "<<== 업데이트");
-		return adminMapper.getLibrarianLevelUpdate(uId);
+		return adminMapper.getLibrarianLevelUpdate(uId, libNum);
 	}
 	//관리자가 회원정보&권한 수정
 	public int librarianLevelUpdate1(User user) {
@@ -243,13 +242,25 @@ public class AdminService {
 	
 /**********************************************************************************/
 	
-	//사서 마이페이지 - 내 정보 상세보기
-	public User librarianMyDetail (String uId) {
-		System.out.println("librarianMyDetail 서비스진입");
-		System.out.println("사서 - 내정보 상세보기  확인바람  =>> "+ adminMapper.librarianMyDetail(uId));
-		
-		return adminMapper.librarianMyDetail(uId);
+	
+	//사서 - 사서 내 정보 수정하기.
+	public User getLibrarianMyUpdate(String getSAID, String libNum) {
+		System.out.println("getLibrarianMyUpdate 서비스진입");
+		return adminMapper.getLibrarianMyUpdate(getSAID, libNum);
 	}
+	public int librarianMyUpdate(User user) {
+		System.out.println("librarianMyUpdate 서비스진입");
+		return adminMapper.librarianMyUpdate(user);
+	}
+	
+	//사서 마이페이지 - 내 정보 상세보기
+	public User librarianMyDetail (String getSAID, String libNum) {
+		System.out.println("librarianMyDetail 서비스진입");
+		
+		System.out.println("사서 내정보 상세보기 세션 확인바람>>>> ");
+		return adminMapper.librarianMyDetail(getSAID,libNum);
+	}
+	
 	
 	
 	

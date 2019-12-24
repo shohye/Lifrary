@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+<!-- 검색 ajax처리 -->
+
+<th:block layout:fragment="libraryTitle">
+	<title>회원정보 상세보기</title>
+</th:block>
+
+<th:block layout:fragment="customContents">
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>MY PROFILE</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">나의 정보 한눈에 보기</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">메인메뉴</a></li>
+                        <li>MY DETAIL</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- Start: Program List Section -->
+	<section class ="section-padding" th:fragment="programListSectionFragment">
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="main-news-list">
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-md-9 col-md-push-3 news-events-list-view" style="padding: 20px;" th:with="d=${myUserDetail}">
+                                   
+                                   <!-- 프로그램 리스트 반복 출력 --> 
+                                   <h3>나의 정보 상세보기 </h3> <br>
+                                   
+                                   <div class="member-info">
+                                                    <strong><span>등록자</span> : <span th:text="${session.getSID}"></span></strong> <br>
+                                                    <strong><span>모바일 회원번호</span> : <span th:text="${d.uNumber}"></span>							  
+                                                    </strong> <br><br>
+                                                    <ul class="news-event-info">
+                                                        <li>
+                                                           <span>비번 : </span>
+                                                           <span th:text="${d.uPw}"></span>
+                                                        </li>
+                                                        <li>
+                                                           <span>이름 : </span>
+                                                           <span th:text="${d.uName}"></span>
+                                                        </li>
+                                                        <li>
+                                                           <span>생년월일 : </span>
+                                                           <span th:text="${d.uBirth}"></span>
+                                                        </li>
+                                                        <li>
+                                                           <span>핸드폰 : </span>
+                                                           <span th:text="${d.uTel}"></span>
+                                                        </li>
+                                                        <li>
+                                                           <span>메일 : </span>
+                                                           <span th:text="${d.uEmail}"></span>
+                                                        </li>
+                                                        <li>
+                                                           <span>주소 : </span>
+                                                           <span th:text="${d.uAddr}"></span>
+                                                        </li>
+                                                        <li>
+                                                           <span>메일 수신 동의 : </span>
+                                                           <span th:if="${d.uEmailAgree eq 'O'}" th:text="동의"></span>
+									                      	<span th:unless = "${d.uEmailAgree eq 'O'}"  th:text="비동의"></span>
+									                      	&nbsp;
+                                                        </li>
+                                                        <li>
+                                                           <span>임명장 부여 : </span>
+                                                           <span th:if="${d.uAppointment eq 'O'}" th:text="동의"></span>
+									                      	<span th:unless = "${d.uAppointment eq 'O'}"  th:text="비동의"></span>
+									                      	&nbsp;
+                                                        </li>
+                                                        <li>
+                                                           <span>등급 명 : </span>
+                                                           <span th:text="${d.ulName}"></span>
+                                                        </li>
+                                                        <li>
+                                                           <span>권한 명 : </span>
+                                                           <span th:text="${d.uasName}"></span>
+                                                        </li>
+                                                        
+                                                           <input type="hidden" placeholder="구분" id="uDivision" name="uDivision" th:value="${d.uDivision}" class="input-text">
+                                                        
+                                                        
+                                                    </ul>
+                                                    <br>
+                                                    <br>     
+                                                   		<a class="btn btn-primary" th:href="@{/lifrary/myUserUpdate}">수정하고싶어요</a>
+                                                   		<a class="btn btn-primary" th:href="@{#}">악 탈퇴할래요</a>
+                                                </div>
+                                    
+                                   
+                                </div>
+                                <!-- 마이페이지 사이드메뉴  -->
+                                <div th:replace="fragments/library/myPageLeftMenu :: myPageLeftMenuFragment"></div>
+                                <!-- 마이페이지 사이드메뉴-->
+                            
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <!-- End: Program List Section -->
+        </section>
+    </th:block>
+</html>
