@@ -41,14 +41,14 @@ public class CallNumberService {
 			}
 			
 			
-			String authorMark = callNumberMapper.checkAuthor(resultStr);
+		/*	String authorMark = callNumberMapper.checkAuthor(resultStr);
 			String plus = "1";
 			if(authorMark == null) {
 				
 			}else {
 				resultStr += plus;
 				callNumberMapper.checkAuthor(resultStr);
-			}
+			}*/
 		}				
 		return resultStr;
 	}
@@ -78,13 +78,10 @@ public class CallNumberService {
 			
 			if(reCho != null && !"".equals(reCho.toString()))  {
 				resultStr += reCho.toString();
-			}
-			
+			}			
 		}				
-		return resultStr;
-		
+		return resultStr;		
 	}
-
 }
 
 

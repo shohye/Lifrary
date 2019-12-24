@@ -18,9 +18,9 @@ public class MakeBsmarkService {
 		if(!isChartype) intList = new ArrayList<Map<String, Integer>>();
 		if(isChartype) charList = new ArrayList<Map<String, Character>>();
 					
-		for(int i = 0 ; i < str.length(); i++){
+		if( str != null ) {
 			
-			if( str != null ) {
+			for(int i = 0 ; i < str.length(); i++){			
 												
 				char character = str.charAt(i);
 								
