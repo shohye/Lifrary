@@ -5,6 +5,9 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}"
 		class="default-style">
+	 <th:block layout:fragment="libraryTitle">
+		<title>검색도서 목록</title>
+	 </th:block>
     
      <th:block layout:fragment="customScript">
      <style>
@@ -101,19 +104,28 @@
                  <!-- 정렬  -->
                      <div class="filter-options margin-list">
                          <div class="row">                                            
-                             <div class="col-md-4 col-sm-4">
-                                 <div class="select"><select name="orderby" class="select-hidden">
-                                     <option selected="selected">Default sorting</option>
-                                     <option>Sort by popularity</option>
-                                     <option>Sort by rating</option>
-                                     <option>Sort by newness</option>
-                                     <option>Sort by price</option>
-                                 </select><div class="select-styled">Default sorting</div><ul class="select-list" style="display: none;"><li rel="Default sorting">Default sorting</li><li rel="Sort by popularity">Sort by popularity</li><li rel="Sort by rating">Sort by rating</li><li rel="Sort by newness">Sort by newness</li><li rel="Sort by price">Sort by price</li></ul></div>
+                           <div class="col-md-4 col-sm-4">
+                              <div class="select">
+                                 <select name="orderBy" class="select-hidden">
+                                     <option value="bi.bi_name" selected="selected">도서명</option>
+                                     <option value="bi.bi_author">저자명</option>
+                                     <option value="bi.bi_year">발행년도</option>
+                                     <option value="bi.bi_publisher">발행자(출판사)</option>
+                                 </select>
+                               </div>
                              </div>
                              <div class="col-md-4 col-sm-4">
+                              <div class="select">
+                                 <select name="sort" class="select-hidden">
+                                     <option value="ASC" selected="selected">오름차순</option>
+                                     <option value="DESC">내림차순</option>
+                                 </select>
+                               </div>
+                             </div>
+                             <!-- <div class="col-md-4 col-sm-4">
                                  <div class="filter-result">Showing items 1 to 9 of 19 total</div>
-                             </div>
-                             <div class="col-md-3 col-sm-3 pull-right">
+                             </div> -->
+                             <div class="col-md-3 col-sm-3 pull-right" style="margin-bottom: 30px">
                                  <div class="filter-toggle" >
                                 	 <input type="hidden" name="bclCode" value="${bclCode}">
                                 	 <input type="hidden" name="biName" value="${biName}">
@@ -128,6 +140,7 @@
                      
                       <!-- 책정보 하나씩  -->
                      <div class="books-list">
+                      <th:block th:if="${#lists.size(searchList)} > 0">
                          <article th:each="sl : ${searchList}"> 
                              <div class="single-book-box">                                                
                                  <div class="post-thumbnail">                                     
@@ -138,7 +151,7 @@
                                  <div class="post-detail">           
                                      <header class="entry-header">
                                          <div class="row">
-                                             <div class="col-sm-6">
+                                             <div class="col-sm-12">
                                                  <h3 class="entry-title">
                                                      <a th:href="@{/lifrary/bookDetail(bsCode=${sl.bsCode})}">
                                                      	<span th:text="${sl.bookInformation.biName}"></span>
@@ -147,28 +160,14 @@
                                                  <ul>
                                                      <li><strong>저자:</strong>&emsp;<span th:text="${sl.bookInformation.biAuthor}"></span></li>
                                                      <li><strong>ISBN:</strong>&emsp;<span th:text="${sl.bookInformation.biIsbn}"></span></li>
+                                                     <li><strong>청구기호:</strong>&emsp;<span th:text="${sl.bsCallNum}"></span></li>
                                                  </ul>
                                              </div>
-                                             <div class="col-sm-6">
-                                                 <ul>
-                                                     <li><strong>Edition:</strong> First editio</li>
-                                                     <li><strong>Local Availability:</strong> 0 (of 1)</li>
-                                                     <li>
-                                                         <div class="rating">
-                                                             <strong>Rating: </strong>
-                                                             <span>☆</span>
-                                                             <span>☆</span>
-                                                             <span>☆</span>
-                                                             <span>☆</span>
-                                                             <span>☆</span>
-                                                         </div>
-                                                     </li>
-                                                 </ul>                                                                
-                                             </div>
+                                             
                                          </div>
                                      </header>
                                      <div class="entry-content">
-                                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                         <p th:text="${#strings.abbreviate(sl.bookInformation.biDtail,70)}"></p>
                                      </div>
                                      <footer class="entry-footer">
                                          <a class="btn btn-dark-gray" th:href="@{/lifrary/bookDetail(bsCode=${sl.bsCode})}">Read More</a>
@@ -176,9 +175,17 @@
                                  </div>
                                  <div class="clear"></div>
                              </div>
-                         </article>
+                           </article>
+                         </th:block>
+                         <th:block th:unless="${#lists.size(searchList)} > 0">
+                         
+                          <article style="margin-bottom: 40px">
+                              <div class="align-middle text-center" ><p>검색 결과가 없습니다.</p></div>
+                          </article>
+                         
+                         </th:block>
                       </div>
-                     <nav class="navigation pagination text-center">
+                     <nav class="navigation pagination text-center" style="margin-bottom: 40px">
                          <h2 class="screen-reader-text">Posts navigation</h2>
                          <div class="nav-links">
                              <a class="prev page-numbers" href="#."><i class="fa fa-long-arrow-left"></i> Previous</a>

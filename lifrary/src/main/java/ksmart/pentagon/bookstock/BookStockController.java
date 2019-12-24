@@ -1,4 +1,4 @@
-package ksmart.pentagon.stock;
+package ksmart.pentagon.bookstock;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ksmart.pentagon.vo.BookCarry;
+import ksmart.pentagon.vo.BookCate;
 import ksmart.pentagon.vo.BookInformation;
+import ksmart.pentagon.vo.BookStock;
 
 /****
  * @file   BookStockController.java
@@ -51,7 +54,7 @@ public class BookStockController {
 	 */
 	@GetMapping("/admin/stockDetailInsert")
     public String stockDetailInsert() {
-		
+	
     	return "/adminpage/bookStock/stockDetailInsert";
     }
 	// (어드민) 소장도서 인서트 처리
@@ -61,8 +64,15 @@ public class BookStockController {
 	 * @author 신다은
 	 */
 	@PostMapping("/admin/stockDetailInsert")
-    public String stockDetailInsert2(HttpSession session) {
+    public String stockDetailInsert2(HttpSession session , BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
 		String lCode = (String) session.getAttribute("LIBNUM");
+		String uId = (String) session.getAttribute("SAID");
+		
+		System.out.println("stockDetailInsert2 lCode=>"+lCode);
+		bookStock.setlCode(lCode);
+		bookStock.setuId(uId);
+		bookStockService.insertStock(bookInformation, bookStock, bookCate);
+		
     	return "redirect:/admin/stockSearchList";
     }
 		
@@ -100,6 +110,23 @@ public class BookStockController {
 		
     	return "/adminpage/bookStock/stockDetailUpdate";
     }
+	// (어드민) 소장도서 상세수정 처리
+	@PostMapping("/admin/stockDetailUpdate")
+	public String stockDetailUpdate(BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
+		
+	    String bookState = bookStock.getBsBookState();
+	    System.out.println("bookState1 =>"+bookState);
+	    if( bookState == "" ) {
+	    	bookState = bookStock.getBsBookStateText();
+	    	System.out.println("bookState2 =>"+bookState);
+	    	bookStock.setBsBookState(bookState);
+	    }
+		
+		bookStockService.updateStock(bookInformation, bookStock, bookCate);
+		
+		return "redirect:/admin/stockSearchList";
+	}
+	
 	
 	
 	//(어드민) 삭제 도서 리스트
@@ -254,39 +281,6 @@ public class BookStockController {
     }
 
     
-    /************************************************************************/
-    
-    // (도서관) 희망도서 신청 안내 화면
-    /****
-	 * @brief  (도서관) 희망도서 신청 안내 화면
-	 * @return  /librarypage/book/bookRequestIntro
-	 * @author 신다은
-	 */
-    @GetMapping("/lifrary/bookRequestIntro")
-    public String bookRequestIntro() {
-    	return "/librarypage/book/bookRequestIntro";
-    }
-    
-    // (도서관) 희망도서 신청 폼
-    /****
-	 * @brief (도서관) 희망도서 신청 폼  
-	 * @return  /librarypage/book/bookRequestInsert
-	 * @author 신다은
-	 */
-    @GetMapping("/lifrary/bookRequestInsert")
-    public String bookRequestInsert() {
-    	return "/librarypage/book/bookRequestInsert";
-    }
-    // (도서관) 마이페이지 희망도서 신청 리스트
-    /****
-	 * @brief   (도서관) 마이페이지 희망도서 신청 리스트
-	 * @return /librarypage/book/myBookRequestList 
-	 * @author 신다은
-	 */
-    @GetMapping("/lifrary/myBookRequestList")
-    public String myBookRequestList() {
-    	return "/librarypage/book/myBookRequestList";
-    }
     
     
     /***********************************************************************/
@@ -303,5 +297,42 @@ public class BookStockController {
     	
 		return bookStockService.getBookInfoStock(biIsbn);	
 	}
+    
+  // stock 삭제 결과값 가져오는 ajax
+    @RequestMapping(value="/updateStockDelete", produces = "text/plain")
+    public @ResponseBody String updateStockDelete( Model model
+    	   , @RequestParam(value="said",required=false)String said
+    	   , @RequestParam(value="write",required=false)String write
+    	   , @RequestParam(value="bsCode",required=false)String bsCode
+    	   , @RequestParam(value="bsDeleteReason",required=false)String bsDeleteReason) {
+    	
+    	String text = "";
+    	int result = bookStockService.updateStockDelete(said, write, bsCode, bsDeleteReason);
+    	if(result == 1) {
+    		text = "비밀번호가 틀렸습니다";
+		}else if(result == 2) {
+			text = "도서 삭제가 완료되었습니다";
+		}		   	
+ 		return text;
+    }
+    
+    // stock 삭제 결과값 가져오는 ajax
+    @RequestMapping(value="/resetStock", produces = "text/plain")
+    public @ResponseBody String resetStock( Model model
+    	   , @RequestParam(value="said",required=false)String said
+    	   , @RequestParam(value="write",required=false)String write
+    	   , @RequestParam(value="bsCode",required=false)String bsCode) {
+   	
+    	
+    	System.out.println("resetStock bsCode=>"+bsCode);
+    	String text = "";
+    	int result = bookStockService.updateStockReset(said, write, bsCode);
+    	if(result == 1) {
+    		text = "비밀번호가 틀렸습니다";
+		}else if(result == 2) {
+			text = "도서 복구가 완료되었습니다";
+		}		   	
+ 		return text;
+    }
 
 }

@@ -1,7 +1,7 @@
-package ksmart.pentagon.stock;
+package ksmart.pentagon.bookstock;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,9 +15,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import ksmart.pentagon.vo.BookCarry;
+import ksmart.pentagon.vo.BookCate;
 import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.BookLend;
 import ksmart.pentagon.vo.BookStock;
+import ksmart.pentagon.vo.User;
 import ksmart.pentagon.vo.UserLevel;
 
 @Service
@@ -161,9 +164,96 @@ public class BookStockService {
     	}
 	  return bl;		  
     }
+    
+     // ( 어드민 ) 소장도서 업데이트  // 하는중!!!!!!!!!!!!!!!!!!!
+    public void updateStock(BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
+ 
+    	Map<String,Object> stockMap = new HashMap<String,Object>();
+    	
+    	stockMap.put("bsCode",bookStock.getBsCode());
+    	stockMap.put("biName",bookInformation.getBiName());
+    	stockMap.put("biAuthor",bookInformation.getBiAuthor());
+    	stockMap.put("biPublisher",bookInformation.getBiPublisher());
+    	stockMap.put("biKdc",bookInformation.getBiKdc());
+    	stockMap.put("biDtail",bookInformation.getBiDtail());
+    	stockMap.put("bclCode",bookStock.getBclCode());
+    	stockMap.put("bcmName",bookCate.getBcmName());
+    	stockMap.put("bsAliasMark",bookStock.getBsAliasMark());
+    	stockMap.put("bsWriterMark",bookStock.getBsWriterMark());
+    	stockMap.put("bsSecondaryMark",bookStock.getBsSecondaryMark());
+    	stockMap.put("bsTotalPage",bookStock.getBsTotalPage());    	
+    	stockMap.put("bsCarryRoute",bookStock.getBsCarryRoute()); 
+    	stockMap.put("bsBookState",bookStock.getBsBookState());
+    	stockMap.put("bsLendState",bookStock.getBsLendState());
+    	stockMap.put("bsCarryRoute",bookStock.getBsCarryRoute());  
+    	
+    	bookStockMapper.updateStock(stockMap);
+		
+    }
+    
+    
+    // ( 어드민 ) 소장도서 인서트
+    public void insertStock(BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
+    	Map<String,Object> insertMap = new HashMap<String,Object>();
+    	
+    	insertMap.put("bsCode",bookStock.getBsCode());
+    	insertMap.put("lCode",bookStock.getlCode());
+    	insertMap.put("uId",bookStock.getuId());
+    	insertMap.put("bclCode",bookStock.getBclCode());
+    	insertMap.put("bcmName",bookCate.getBcmName());
+    	insertMap.put("biIsbn",bookStock.getBiIsbn());
+    	insertMap.put("bsAliasMark",bookStock.getBsAliasMark());
+    	insertMap.put("bsAuthorMark",bookStock.getBsAuthorMark());
+    	insertMap.put("bsWriterMark",bookStock.getBsWriterMark());
+    	insertMap.put("bsSecondaryMark",bookStock.getBsSecondaryMark());
+    	insertMap.put("bsTotalPage",bookStock.getBsTotalPage());
+    	insertMap.put("bsBookState",bookStock.getBsBookState());
+    	insertMap.put("bsLendState",bookStock.getBsLendState());
+    	insertMap.put("bsCarryRoute",bookStock.getBsCarryRoute());  
+    	
+    	bookStockMapper.insertStock(insertMap);   	
+    	bookStockMapper.updateBookInfoStock(bookInformation);
+    }
 	  
 	  
-	  
+    
+    
+    
+	/****************************************************************************/
+    
+    
+    // deleteStock update ajax
+    // id,pw 확인하는 메서드 1개 & 삭제상태 업데이트하는 메서드 1개( 복구도 같음, 복구는 다 공백으로 업데이트하는 메서드)
+ 	public int updateStockDelete(String said, String write, String bsCode, String bsDeleteReason) {
+ 		
+ 		User user = bookStockMapper.checkPw(said, write);
+ 		int result = 0;
+ 		
+ 		if( user == null) {
+ 			result = 1;
+ 		}else { 			
+ 			bookStockMapper.updateStockDelete(said, bsCode, bsDeleteReason);
+ 			result = 2;
+ 		}
+ 	
+ 		return result;	
+ 	}
+ 	// resetStock update ajax
+ 	// 아이디 ,비번체크 사용
+ 	public int updateStockReset(String said, String write, String bsCode) {
+ 		User user = bookStockMapper.checkPw(said, write);
+ 		int result = 0;
+ 		
+ 		if( user == null) {
+ 			result = 1;
+ 		}else { 
+ 			result = 2;
+ 			bookStockMapper.updateStockReset(bsCode);
+ 		}		
+ 		return result;
+ 	}
+    
+    
     /**
 	 * @throws ParserConfigurationException 
 	 * @throws IOException 

@@ -7,6 +7,28 @@
     	<title>..:: WELCOME LIFRARY ::..</title>
   </th:block>
     <th:block layout:fragment="customContents">
+  <th:block layout:fragment="customScript">
+	   <script type="text/javascript" th:inline="javascript">  
+	      $(document).ready(function(){  
+	   	   
+	   		// 유효성검사 시작
+	   		$('#searchBtn').click(function(){   			
+	   			var biName = $('#biName');
+	   			console.log(biName.val());
+	   			
+	   			if(biName.val() == ''){
+	   				alert('검색어를 입력해주세요');
+	   				biName.focus();
+	   				return false;
+	   			}
+	   			    			
+	   			$('#searchForm').submit();
+	   			
+	   		}); // 유효성검사 끝    		
+	   	}); // 처음 function끝
+	   	    	
+	   	</script>
+   </th:block>
        
         <!-- Start: Slider Section -->
         	<div th:replace="fragments/library/sliderSection :: sliderSectionFragment"></div>

@@ -3,9 +3,11 @@ $(function() {
   function updateOutput(e) {
     var list   = e.length ? e : $(e.target);
     var output = list.data('output');
-
-    output.val(window.JSON ? window.JSON.stringify(list.nestable('serialize')) :
-                             'JSON browser support required for this demo.');
+    
+    if(output != undefined){    	
+    	output.val(window.JSON ? window.JSON.stringify(list.nestable('serialize')) :
+    	'JSON browser support required for this demo.');
+    }
   };
 
   $('#nestable').nestable({ group: 1 }).on('change', updateOutput);

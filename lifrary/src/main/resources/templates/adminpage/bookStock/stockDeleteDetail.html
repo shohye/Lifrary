@@ -3,11 +3,52 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
+	  <th:block layout:fragment="adminTitle">
+		 <title>삭제도서 상세정보</title>
+	  </th:block>
 	  
 	  <th:block layout:fragment="adminHeadAdd">
-	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
+	  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/users.css}">
  	  </th:block>
- 
+ 	  
+ 	  <th:block layout:fragment="teamHeadScript">
+   	  <script type="text/javascript" th:inline="javascript">  
+       $(document).ready(function(){  	
+    	   
+    	   // 복구 버튼
+    	   $('#resetBtn').click(function(){
+    		   var SAID = [[${session.SAID}]]
+    		   console.log(SAID);
+    		   var write = $('#uPw').val();
+    		   console.log(write);
+    		   var bsCode = $('#bsCode').val();
+    		   console.log(bsCode);
+    		   
+    		   var request = $.ajax({
+					url:"/resetStock",
+					method: "POST",
+					data : { 'said' : SAID , 'write' : write ,'bsCode' :bsCode }, 
+					dataType: "text"
+				});				 
+				request.done(function( data ) {
+
+					 console.log(data);
+					 if(data == '비밀번호가 틀렸습니다'){
+						 alert(data);
+						 $('#uPw').focus();
+					 }else if(data =='도서 복구가 완료되었습니다'){
+						 alert(data);
+						 $('#modals-default').modal('hide');						
+					 }						
+				});				 
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				}); 				
+    	   });   				
+    	}); // 처음 function끝
+    	    	
+    	</script>
+  	    </th:block>
  
   <!-- Content -->
          <th:block layout:fragment="adminContents">
@@ -15,6 +56,7 @@
          		<div class="container-fluid flex-grow-1 container-p-y" >
         
          			<div th:with="d=${deleteDetail}" class="media align-items-center py-3 mb-3">
+         			  <input type="hidden" id="bsCode" th:value="${d.bsCode}">
 		              <img th:src="${d.bookInformation.biImg}" alt="이미지를 찾을 수 없습니다" class="d-block ui-w-100 rounded-circle">
 		              <div class="media-body ml-4" > 
 		                <h4 class="font-weight-bold mb-0" th:text="${d.bookInformation.biName}"></h4>
@@ -69,18 +111,48 @@
 		                  	<button type="submit" class="btn btn-primary">
 		                  		<a th:href="@{/admin/stockDeleteList}" style="color: white">리스트로 이동</a>
 		                  	</button>
-		                  	<button type="submit" class="btn btn-primary">
-		                  		<a th:href="@{#}" style="color: white">복원</a>
-		                  	</button>
+		                  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modals-default">
+	                      		<a th:href="@{#}" style="color: white">복원</a>
+	                        </button> 	                  	
 		 				  </div>
-		              </div>
-		              
-		              
-		            </div>
-         	
-    
+		              </div>		               
+		           </div>            
          		</div>
          	</div>
+         	<div class="modal fade" id="modals-default">
+                  <div class="modal-dialog">
+                    <form class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">
+                          	삭제 도서 복원
+                          
+                          <br>
+                          <small class="text-muted"> 복원을 위하여 본인 id의 password를 작성해 주세요.</small>
+                        </h5>
+                        <a th:href="@{/admin/stockDeleteList}"  type="button" class="close" data-dismiss="modal" aria-label="Close">×</a>
+                      </div>
+                      <div class="modal-body">
+                      	<div class="form-row">
+                          <div class="form-group col">
+                            <label class="form-label">ID</label>
+                            <input id="uId" type="text" class="form-control" th:value="${session.SAID}">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col">
+                            <label class="form-label">PASSWORD</label>
+                            <input id="uPw" type="password" class="form-control" placeholder="***********">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+                        <a th:href="@{/admin/stockDeleteList}" id="resetBtn" type="button" class="btn btn-primary">삭제</a>
+                      </div>
+                    </form>
+                  </div>
+                </div>         
+         	
 
           </th:block>
           
@@ -90,10 +162,10 @@
           <th:block layout:fragment="pageScript">
 
 		  <!-- addLibs -->
-		  <script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		  <script th:src="@{/adminStatic/vendor/libs/chartjs/chartjs.js}"></script>
 		
 		  <!-- addDemo -->
-		  <script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
+		  <script th:src="@{/adminStatic/js/dashboards_dashboard-1.js}"></script>
 		  </th:block>
   		  <!-- /script -->
   		  

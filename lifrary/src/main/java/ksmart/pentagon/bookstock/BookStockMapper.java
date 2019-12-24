@@ -1,12 +1,13 @@
-package ksmart.pentagon.stock;
+package ksmart.pentagon.bookstock;
 
-import java.util.List;
+import java.util.*;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.BookLend;
 import ksmart.pentagon.vo.BookStock;
+import ksmart.pentagon.vo.User;
 
 @Mapper
 public interface BookStockMapper {
@@ -22,14 +23,18 @@ public interface BookStockMapper {
 	// (어드민) 소장도서에서 삭제중 한개도서 상세정보 가져오기
 	public BookStock getStockDeleteDetail(String bsCode);
 			
+	// (어드민) 소장도서 인서트 ( book_stock insert/ book_information update)
+	public void insertStock(Map<String , Object> insertMap);
+	public void updateBookInfoStock(BookInformation bookInformation);
+	
 	// (도서관) 검색된 소장도서 리스트 출력
 	public List<BookStock> getDetailSearchStockList(BookInformation bookInformation);
-	
 	
 	// (도서관) 도서 상세페이지 - 반납예정일 계산하는 메서드
 	public BookLend getReturnDate(String bsCode);
 	
-	
+	// (어드민) 도서 정보 업데이트하는 메서드
+	public void updateStock(Map<String , Object> stockMap);
 	
 	
 	
@@ -42,6 +47,14 @@ public interface BookStockMapper {
 	
 	// Api를 통해 가져온 도서정보 인서트	
 	int insertBookInfoStock(BookInformation bookInformation);
+
+	// deleteStock update ajax
+	User checkPw(String said,String write);
+	int updateStockDelete(String said,String bsCode, String bsDeleteReason);
+	
+	// resetStock update ajax
+	// 아이디 ,비번체크 사용
+	int updateStockReset(String bsCode);
 
 	
 }
