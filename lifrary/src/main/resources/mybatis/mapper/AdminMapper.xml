@@ -198,6 +198,7 @@
  			u.u_number 	AS uNumber 
 			,u.u_tel 	AS uTel
 			,u.u_id 	AS uId
+			,u.u_pw 	AS uPw
 			,u.u_name 	AS uName
 			,u.u_addr	AS uAddr
 			,u.u_email 	AS uEmail
@@ -316,7 +317,7 @@
 			,#{ulMax}
 			,#{ulLendNum}
 			,#{ulLendDay}
-			,#{ulDate}
+			,CURDATE()
 		)
 	</insert>
 	
@@ -342,7 +343,7 @@
 			,#{uasLendLimit}
 			,#{uasFacilityLimit}
 			,#{uasLimitDate}
-			,#{uasDate}
+			,CURDATE()
 		)
 	</insert>
 	
@@ -761,8 +762,7 @@
 			,u_email_agree	=#{uEmailAgree}
 			,u_date			=#{uDate}			
 		WHERE 
-			u_id = #{getSAID}
-		AND l_code = #{libNum}
+			u_id = #{uId}
 			
     </update>
 

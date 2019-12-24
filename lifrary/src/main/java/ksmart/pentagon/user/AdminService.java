@@ -161,11 +161,11 @@ public class AdminService {
 	 }
 	 
 	 //관리자가 회원 권한 수정하기
-	 public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode) {
+	 public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode, String getSAID) {
 		 System.out.println("getAdUserAuthorityUpdate 서비스 진입");
-		 System.out.println("확인완료 getAdUserAuthorityUpdate ==>>" + adminMapper.getAdUserAuthorityUpdate(uasCode));
+		 System.out.println("확인완료 getAdUserAuthorityUpdate ==>>   ");
 		 
-		 return adminMapper.getAdUserAuthorityUpdate(uasCode); 
+		 return adminMapper.getAdUserAuthorityUpdate(uasCode, getSAID); 
 	 }
 	 
 	 //관리자가 회원 권한 수정하고 리스트로넘기기

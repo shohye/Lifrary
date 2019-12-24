@@ -4,31 +4,54 @@
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
 	  
-		<th:block layout:fragment="adminTitle">
-			<title>회원등급 수정 페이지</title>
-		</th:block>
+<th:block layout:fragment="adminTitle">
+	<title>회원 등급 수정 페이지</title>
+</th:block>
 
-		<th:block layout:fragment="customScript">
+		<th:block layout:fragment="teamHeadScript">
 			<script type="text/javascript">
 				$(document).ready(function(){
 					
-					//용탁선생님께 물어보기
 					//유효성 검사 - 수정하기 위한
 					$('#luBtn').click(function(){
 						
 						var ulName = $('#ulName').val();
+						var ulMin = $('#ulMin').val();
+						var ulMax = $('#ulMax').val();
+						var ulLendNum = $('#ulLendNum').val();
+						var ulLendDay = $('#ulLendDay').val();
 						var upForm = $('#upForm');
-						console.log('asdf')
 						
-					/* 	if(ulName == ''){
+						
+						if(ulName == ''){
 							alert('등급명을 입력해 주세요.');
 							$('#ulName').focus();
+							return false;
+						}
+						if(ulMin == ''){
+							alert('최소 기준 권수를 입력해 주세요.');
+							$('#ulMin').focus();
+							return false;
+						}
+						if(ulMax == ''){
+							alert('최대 기준 권수를 입력해 주세요.');
+							$('#ulMax').focus();
+							return false;
+						}
+						if(ulLendNum == ''){
+							alert('대출 가능 권수를 입력해 주세요.');
+							$('#ulLendNum').focus();
+							return false;
+						}
+						if(ulLendDay == ''){
+							alert('대출 가능일 수를 입력해 주세요.');
+							$('#ulLendDay').focus();
 							return false;
 						}
 						else{
 							alert('등급이 수정되었습니다.');
 							upForm.submit();
-						} */
+						} 
 						
 					});
 					
@@ -67,8 +90,6 @@
             <h4 class="font-weight-bold py-3 mb-4">
               <span class="text-muted font-weight-light">Forms /</span> 회원등급 수정 화면
             </h4>
-
-            
             <div class="card mb-4">
               <h6 class="card-header">
               	  등급 수정 중입니다 
@@ -114,12 +135,10 @@
                     </div>
                   </div>
                  <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label class="form-label">등록날짜 (자동)</label>
-                    <input type="text" class="form-control" name="ulDate" id="ulDate" th:value="${lup.ulDate}" placeholder="등급 등록날짜">
+                  <div class="form-group col-md-6"> 
+                    <input type="hidden" class="form-control" name="ulDate" id="ulDate" th:value="${lup.ulDate}" placeholder="등급 등록날짜">
                   </div>
                  </div>
-                 
                   <button type="button" id="luBtn" class="btn btn-primary">등급 수정완료</button>
                 </form>
               </div>

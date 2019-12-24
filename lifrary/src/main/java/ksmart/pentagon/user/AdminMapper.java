@@ -72,7 +72,7 @@ public interface AdminMapper {
 	public List<UserAuthoritySet> adUserAuthorityList(String libNum);
 	
 	//관리자가 회원 권한 수정하기 getmapping
-	public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode);
+	public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode, String getSAID);
 	 
 	//관리자가 회원 권한 수정하기 postmapping
 	public int adUserAuthorityUpdate(UserAuthoritySet userAuthoritySet);

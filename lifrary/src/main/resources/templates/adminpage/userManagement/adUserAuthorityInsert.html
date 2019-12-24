@@ -8,6 +8,67 @@
 	<title>회원 권한등급 페이지</title>
 </th:block>
 
+<!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+<th:block layout:fragment="teamHeadScript">
+    <script type="text/javascript">
+    
+    $(document).ready(function(){    
+		
+		//유효성 검사 
+		$('#alBtn').click(function(){ 
+			
+			var uasName = $('#uasName').val();
+			var uasOverdueMin = $('#uasOverdueMin').val();
+			var uasOverdueMax = $('#uasOverdueMax').val();
+			var uasLimitDate = $('#uasLimitDate').val();
+			var authorityForm = $('#authorityForm');
+			var uasLendLimit = $('input[name=uasLendLimit]:checked');
+			var uasFacilityLimit = $('input[name=uasFacilityLimit]:checked');
+			
+			
+			if(uasName == ""){
+				alert('생년월일을 입력해주세요.');
+				$('#uasName').focus();
+				return false;
+			}
+			if(uasOverdueMin == ""){
+				alert('이메일을 입력해주세요.');
+				$('#uasOverdueMin').focus();
+				return false;
+			}
+			if(uasOverdueMax == ""){
+				alert('핸드폰 번호를 입력해주세요.');
+				$('#uasOverdueMax').focus();
+				return false;
+			}
+			if(uasLimitDate == ""){
+				alert('주소를 입력해주세요.');
+				$('#uasLimitDate').focus();
+				return false;	
+			}
+			if(uasLendLimit.length <1){
+				alert('대출 권한을 선택해주세요');
+				
+				return false;
+			}
+			if(uasFacilityLimit.length <1){
+				alert('공공시설 사용여부를선택해주세요');
+				
+				return false;
+			}
+			else{
+				alert('권한이 생성되었습니다.');
+				authorityForm.submit();
+			}
+			
+		});
+
+});
+
+   </script>
+</th:block>
+<!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+
    <!-- Content -->
    		<th:block layout:fragment="adminContents">
 
@@ -45,38 +106,40 @@
                 권한을 등록하세요
               </h6>
               <div class="card-body">
-                <form th:action="@{/admin/adUserAuthorityInsert}" id="validation-form" method="post">
+                <form th:action="@{/admin/adUserAuthorityInsert}" id="authorityForm" method="post">
                   <div class="form-row">
 	              <div class="form-group col-md-6">
-	                 <label class="form-label">제한코드</label>
+	                 <label class="form-label">제한코드 자동증가 넣어야함 </label>
 	                 <input type="text" class="form-control" name="uasCode" placeholder="제한코드">
 	              </div>
 	              <div class="form-group col-md-6">
 	                 <label class="form-label">작성자 아이디</label>
-	                 <input type="text" class="form-control" name="uId" placeholder="작성자 아이디">
+	                 <input type="text" class="form-control" name="uId" th:value="${session.SAID}" placeholder="작성자 아이디" readonly="readonly">
+	                 <input type="hidden" class="form-control" name="lCode" th:value="${session.LIBNUM}" placeholder="도서관코드">
 	              </div>
                   </div>
                   <div class="form-group">
                     <label class="form-label">제한 명</label>
-                    <input type="text" class="form-control" name="uasName" placeholder="제한 명">
+                    <input type="text" class="form-control" name="uasName" id="uasName" placeholder="제한 명">
                   </div>
                   <div class="form-row">
 	                 <div class="form-group col-md-6">
 	                   <label class="form-label">연체일(최소)</label>
-	                   <input type="text" class="form-control" name="uasOverdueMin" placeholder="최소 연체일">
+	                   <input type="text" class="form-control" name="uasOverdueMin" id="uasOverdueMin" placeholder="최소 연체일">
 	                 </div>
 	                 <div class="form-group col-md-6">
 	                   <label class="form-label">연체일(최대)</label>
-	                   <input type="text" class="form-control" name="uasOverdueMax" placeholder="최대 연체일">
+	                   <input type="text" class="form-control" name="uasOverdueMax" id="uasOverdueMax" placeholder="최대 연체일">
 	                 </div>
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label class="form-label">제한 일</label>
-                      <input type="text" class="form-control" name="uasLimitDate" placeholder="제한 일">
+                      <input type="text" class="form-control" name="uasLimitDate" id="uasLimitDate" placeholder="제한 일">
                     </div>
                   </div>
-             	 <div class="form-group">
+                <div class="form-row">
+             	 <div class="form-group col-md-6">
                    <label class="form-label">대출권한</label>
                     <div class="form-check">
                      <label class="custom-control custom-radio">
@@ -89,7 +152,7 @@
                      </label>
                     </div>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group col-md-6">
                    <label class="form-label">공공시설</label>
                     <div class="form-check">
                      <label class="custom-control custom-radio">
@@ -102,21 +165,14 @@
                      </label>
                     </div>
                   </div>
+                </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label class="form-label">제한 등록일</label>
-                      <input type="text" class="form-control" name="uasDate" placeholder="제한 등록일">
+                      <label class="form-label">제한 등록일은 오늘날짜로 자동으로 들어갑니다 </label>
+                      <input type="hidden" class="form-control" name="uasDate" placeholder="제한 등록일">
                     </div>
                   </div>
-                    
-                 
-                  <div class="form-group">
-                    <label class="custom-control custom-checkbox m-0">
-                      <input type="checkbox" class="custom-control-input">
-                      <span class="custom-control-label">작성일과 권한코드는 등록 날짜자동 </span>
-                    </label>
-                  </div>
-                  <button type="submit" class="btn btn-primary">권한 등록</button>
+                  <button type="button" id="alBtn" class="btn btn-primary">권한 등록</button>
                 </form>
               </div>
             </div>

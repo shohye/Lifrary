@@ -220,11 +220,15 @@ public class AdminController {
    public String adUserLevelInsert(UserLevel userLevel , Model model, HttpSession session) {
 	   System.out.println("adUserLevelInsert @PostMapping 회원등급등록화면 ");	  
 	   
+	   String getSAID = (String)session.getAttribute("SAID");
 	   String libNum = (String)session.getAttribute("LIBNUM");
+	   System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + getSAID );
 	   System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
 	   
-	   userLevel.setlCode(libNum);
-	   System.out.println("userLevel 확인 바람==>> " + userLevel);
+		/*
+		 * userLevel.setlCode(libNum); userLevel.setuId(getSAID);
+		 * System.out.println("userLevel 확인 바람==>> " + userLevel);
+		 */
 	   
 	   adminService.adUserLevelInsert(userLevel);
 	   
@@ -339,14 +343,16 @@ public class AdminController {
    public String adUserAuthorityInsert(UserAuthoritySet userAuthoritySet, Model model, HttpSession session) {
 	   System.out.println("adUserAuthorityInsert @PostMapping 회원권한등록화면 "); 
 	   
+	   String getSAID = (String)session.getAttribute("SAID");
 	   String libNum = (String)session.getAttribute("LIBNUM");
+	   System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + getSAID );
 	   System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
 	   
 	   userAuthoritySet.setlCode(libNum);
+	   userAuthoritySet.setuId(getSAID);
 	   System.out.println("userAuthoritySet 확인바람 >>> " + userAuthoritySet);
-	   
 	   adminService.adUserAuthorityInsert(userAuthoritySet);
-	   System.out.println("회원권한등록화면  확인완료  ==>> " + adminService.adUserAuthorityInsert(userAuthoritySet));
+	   System.out.println("회원권한등록화면  확인완료  ==>> ");
 	  
 	  return "redirect:/admin/adUserAuthorityList"; 
    }
@@ -373,10 +379,14 @@ public class AdminController {
    
    //관리자가 회원권한 수정
    @GetMapping("/admin/adUserAuthorityUpdate")
-   public String getAdUserAuthorityUpdate(@RequestParam(value = "uasCode",required=false) String uasCode, Model model) {
+   public String getAdUserAuthorityUpdate(@RequestParam(value = "uasCode",required=false) String uasCode,
+		   										HttpSession session , Model model) {
 	   System.out.println("getAdUserAuthorityUpdate 회원권한 수정화면 @GetMapping");
-	   model.addAttribute("aUpdate", adminService.getAdUserAuthorityUpdate(uasCode));
-	   System.out.println("aUpdate 확인바람  ==>>" + adminService.getAdUserAuthorityUpdate(uasCode));
+	   
+	   String getSAID = (String)session.getAttribute("SAID");
+	   System.out.println("SAID 세션에서가져온 관리자ID  >>>" + getSAID );
+	   model.addAttribute("aUpdate", adminService.getAdUserAuthorityUpdate(uasCode, getSAID));
+	   System.out.println("aUpdate 확인바람  ==>>" );
 	
 	   return "/adminpage/userManagement/adUserAuthorityUpdate";
    }

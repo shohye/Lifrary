@@ -7,24 +7,67 @@
 <th:block layout:fragment="adminTitle">
 	<title>회원 수정 페이지</title>
 </th:block>
+
+<!-- headAdd(Libs&page) -->
+<th:block layout:fragment="adminHeadAdd">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/select2/select2.css}">
+	<link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+</th:block>
+<!-- /headAdd(Libs&page) -->
   
-  <!-- headAdd(Libs&page) -->
-  <th:block layout:fragment="adminHeadAdd">
-    <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/select2/select2.css}">
-  	<link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
-  </th:block>
-  <!-- /headAdd(Libs&page) -->
-  
-    <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
-  <th:block layout:fragment="teamHeadScript">
-  
-  <script type="text/javascript">
- 
-  
- </script>
-  </th:block>
-  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
-	 
+<th:block layout:fragment="teamHeadScript">
+   <script type="text/javascript">
+   $(document).ready(function(){    
+		
+		//유효성 검사 
+		$('#userUpBtn').click(function(){ 
+			
+			var uName = $('#uName').val();
+			var uPw = $('#uPw').val();
+			var uBirth = $('#uBirth').val();
+			var uEmail = $('#uEmail').val();
+			var uTel = $('#uTel').val();
+			var uAddr = $('#uAddr').val();
+			var userUpForm = $('#userUpForm');
+			
+			if(uName == ""){
+				alert('이름을 입력해주세요.');
+				$('#uName').focus();
+				return false;
+			}
+			if(uBirth == ""){
+				alert('생년월일을 입력해주세요.');
+				$('#uBirth').focus();
+				return false;
+			}
+			if(uEmail == ""){
+				alert('이메일을 입력해주세요.');
+				$('#uEmail').focus();
+				return false;
+			}
+			if(uTel == ""){
+				alert('핸드폰 번호를 입력해주세요.');
+				$('#uTel').focus();
+				return false;
+			}
+			if(uAddr == ""){
+				alert('주소를 입력해주세요.');
+				$('#uAddr').focus();
+				return false;	
+			}
+			else{
+				alert('회원수정이  완료되었습니다.');
+				userUpForm.submit();
+			}
+			
+		});
+
+});
+   
+   </script>
+</th:block>
+<!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+
   <!-- Content -->
          <th:block layout:fragment="adminContents">
 	
@@ -59,59 +102,61 @@
 		
 		         <div class="card mb-4">
 		              <div class="card-body">
-		                <form th:action="@{/admin/adminUserUpdate}" id="validation-form" method="post" th:with="uup = ${uUpdate}">
+		                <form th:action="@{/admin/adminUserUpdate}" id="userUpForm" method="post" th:with="uup = ${uUpdate}">
 		                  <div class="form-row">
-			                  <div class="form-group col-md-6" >
-			                    <label class="form-label">회원번호</label>
+			                  <div class="form-group col-md-4" >
+			                    <label class="form-label">회원번호 : </label>
 			                    <input type="text" class="form-control" name="uNumber" th:value="${uup.uNumber}" readonly="readonly">
 			                  </div>
-			                  <div class="form-group col-md-6">
-			                    <label class="form-label">아이디</label>
+			                  <div class="form-group col-md-4">
+			                    <label class="form-label">아이디 : </label>
 			                    <input type="text" class="form-control" name="uId" th:value="${uup.uId}" readonly="readonly">
+			                  </div>
+			                  <div class="form-group col-md-4">
+			                    <label class="form-label">비밀번호 : </label>
+			                    <input type="password" class="form-control" name="uPw" th:value="${uup.uPw}" readonly="readonly">
 			                  </div>
 			              </div>
 			              <div class="form-row">
 			                  <div class="form-group col-md-6">
-			                    <label class="form-label">이름</label>
+			                    <label class="form-label">이름 : </label>
 			                    <input type="text" class="form-control" name="uName" th:value="${uup.uName}" placeholder="이름">
 			                  </div>
 			               	  <div class="form-group col-md-6">
-			                    <label class="form-label">연락처</label>
+			                    <label class="form-label">연락처(-을 넣어서 입력해주세요) : </label>
 			                    <input type="text" class="form-control" name="uTel" th:value="${uup.uTel}" placeholder="연락처">
 			                  </div>
 			               </div>
 			               <div class="form-row">   
 			                  <div class="form-group col-md-6">
-			                    <label class="form-label">이메일</label>
+			                    <label class="form-label">이메일 : </label>
 			                    <input type="text" class="form-control" name="uEmail" th:value="${uup.uEmail}" placeholder="이메일">
 			                  </div>
 			                  <div class="form-group col-md-6">
-			                    <label class="form-label">주소</label>
+			                    <label class="form-label">주소 : </label>
 			                    <input type="text" class="form-control" name="uAddr" th:value="${uup.uAddr}" placeholder="주소">
 			                  </div>
 			               </div>
 			               <div class="form-row">   
 			                  <div class="form-group col-md-6">
-			                    <label class="form-label">연체일</label>
+			                    <label class="form-label">연체일 : </label>
 			                    <input type="text" class="form-control" name="uOverdueDay" th:value="${uup.uOverdueDay}" placeholder="Required">
 			                  </div>
 			                  <div class="form-group col-md-6">
-			                    <label class="form-label">생년월일</label>
-			                    <input type="text" class="form-control" name="uBirth" th:value="${uup.uBirth}" placeholder="Required">
+			                    <label class="form-label">생년월일 : </label>
+			                    <input type="date" class="form-control" name="uBirth" th:value="${uup.uBirth}" placeholder="Required">
 			                  </div>
 			               </div>
 			               <div class="form-row">
 			                  <div class="form-group col-md-6">
-			                    <label class="form-label">등록일</label>
-			                    <input type="text" class="form-control" name="uDate" th:value="${uup.uDate}" placeholder="Required">
+			                    <input type="hidden" class="form-control" name="uDate" th:value="${uup.uDate}" placeholder="Required">
 			                  </div>
 			               </div>
 							<div class="ui md-6">
 							  <div class="form-group col-md-6">
 					             <div class="form-row align-items-center">	
-					               <!--  <form th:action="@{/getUserSearch}" method="post"> -->
-				                  <label class="form-label">회원등급</label>
-				                  <select class="custom-select" name="ullevel">
+				                  <label class="form-label">회원등급 : </label>
+				                  <select class="custom-select" name="ullevel" id="ullevel">
 				                 	<option value="ul001">씨앗</option>
 				                    <option value="ul002">새싹</option>
 				                    <option value="ul003">꽃잎</option>
@@ -120,20 +165,19 @@
 				                  </select> 
 					             </div>
 					             <div class="form-row align-items-center">
-								 	<!--  <form th:action="@{/getUserSearch}" method="post"> -->
-				                  <label class="form-label">회원권한</label>
-				                  <select class="custom-select" name="uasCode">
-				                    <option value="uas001">0단계</option>
-				                    <option value="uas002">1단계</option>
-				                    <option value="uas003">2단계</option>
-				                    <option value="uas004">3단계</option>
+				                  <label class="form-label">회원권한 : </label>
+				                  <select class="custom-select" name="uasCode" id="uasCode">
+				                    <option value="uas001" id="uas001">0단계</option>
+				                    <option value="uas002" id="uas002">1단계</option>
+				                    <option value="uas003" id="uas003">2단계</option>
+				                    <option value="uas004" id="uas004">3단계</option>
 				                  </select>
 								</div>
     						 </div>
 				   		   </div>
 				   	   <div class="form-row">
 		                 <div class="form-group col-md-6">
-		                    <label class="form-label">이메일수신</label>
+		                    <label class="form-label">이메일수신 : </label>
 		                     <div class="form-check">
 		                      <label class="custom-control custom-radio">
 	                   		   	<input th:if="${uup.uEmailAgree eq 'O'}" name="uEmailAgree" type="radio" class="custom-control-input" value="O" checked="">
@@ -148,7 +192,7 @@
 		                    </div>
 		                  </div>
 		                  <div class="form-group col-md-6">
-		                    <label class="form-label">임명장 수여 </label>
+		                    <label class="form-label">임명장 수여 :  </label>
 		                     <div class="form-check">
 		                      <label class="custom-control custom-radio">
 	                   		   	<input th:if="${uup.uAppointment eq 'O'}" name="uAppointment" type="radio" class="custom-control-input" value="O" checked="">
@@ -163,7 +207,7 @@
 		                    </div>
 		                  </div>
 		               </div>
-					  <button type="submit" class="btn btn-primary">수정완료</button>
+					  <button type="button" id="userUpBtn" class="btn btn-primary">수정완료</button>
 	                </form>
 	              </div>
 	          	</div>
