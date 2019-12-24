@@ -37,12 +37,12 @@
   					}
   				}
   			}	  						  				
-  			$(document).on('click','.kRadio',function(){					//라디오버튼 클릭시
-  				var fKinds = $(this).val(); 								//누른 라디오버튼의 value를 fKinds에 저장
-  				if(fKinds == '전체'){											//value가 '전체'이면
-	  				location.href = '/admin/facilityList';					//fKinds가 없이 경로로 보내줌. (컨트롤러에서 전체 리스트 가져옴)
-  				}else{														//value가 '전체가 아니면
-	  				location.href = '/admin/facilityList?fKinds='+fKinds;	//fKinds를 get방식으로 보내줌. (컨트롤러에서 받은 종류의 리스트를 가져옴)
+  			$(document).on('click','.kRadio',function(){										//라디오버튼 클릭시
+  				var fKinds = $(this).val(); 													//누른 라디오버튼의 value를 fKinds에 저장
+  				if(fKinds == '전체'){															//value가 '전체'이면
+	  				location.href = '/admin/facilityReservationSearchList.html';				//fKinds가 없이 경로로 보내줌. (컨트롤러에서 전체 리스트 가져옴)
+  				}else{																			//value가 '전체'가 아니면
+	  				location.href = '/admin/facilityReservationSearchList.html?fKinds='+fKinds;	//fKinds를 get방식으로 보내줌. (컨트롤러에서 받은 종류의 리스트를 가져옴)
   				}
   			})
   		})
@@ -56,7 +56,7 @@
   <!-- Content -->
          <th:block layout:fragment="adminContents">
          <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-			<div>공공시설 등록 리스트</div>			
+			<div>공공시설 신청 내역 리스트</div>			
 		 </h4>
          
             <!-- DataTable within card -->

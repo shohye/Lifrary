@@ -2,7 +2,112 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
-		
+		<!-- 열람실 스크립트 -->
+<th:block layout:fragment="customScript">
+<style>
+table.makeTbLine tbody tr td {color: black; text-align: center; font-size: 12px; width: 40px; height: 35px; border: 1px solid #000;}
+</style>
+	<script th:inline="javascript">
+		$(document).ready(function(){
+			
+			/* 예약하는거 생각해서 만들어보기. 테스트중*/
+			/* $(document).on('click','.tdClass',function(){
+				if($(this).attr("status") == 'true'){
+					console.log('이것은 true')
+					$(this).css("background-color",'yellow') // 선택된 자리의 색이 변경
+					var confirmd = confirm($(this).text()+'번을 선택하셨습니다. \n선택한 자리를 예약 하시겠습니까?')
+					if(confirmd){
+						
+					}else{
+						$(this).css("background-color",'black') // 선택된 자리의 색이 변경
+					}
+					
+				} else {
+					console.log('이것은 false')
+				}
+			}) */
+			
+			
+			
+			$(document).on('click', '.fTable', function(){
+				var fCode = $(this).find('input[name=fCode]').val();
+				var fKinds = $(this).find('input[name=fKinds]').val();
+				var fSeatOrImg = $(this).find('input[name=fSeatOrImg]').val();
+				var fName = $(this).find('input[name=fName]').val();				
+				var tdTable = $('#tdTable')
+				var contents = '';
+				
+				if(fKinds == '열람실' || fKinds == '사물함'){
+					console.log('열람실 / 사물함임')
+					var fRow = $(this).find('input[name=fRow]').val();
+					var fCol = $(this).find('input[name=fCol]').val();
+					var reserveArray = new Array(); // ajax로 가져온 결과를 담는 배열. 예약된 자리를 담는 배열
+					
+					 /* 테이블 그려주기 */
+					var seatArray = fSeatOrImg.split(',');
+					 console.log(seatArray);
+						contents += '<br><h3>자리 배치도&emsp;&emsp;'+fName+'</h3><br>'
+						contents += '<table class="makeTbLine" border="0px;" style="display: inline-block;">';
+						for(var i = 1; i <= fCol; i++){
+							contents += '<tr>';
+							for(var j = 1; j <= fRow; j++){
+								contents += '<td class="tdClass" style="color:black; text-align: center; font-size:12px;  width: 40px; height: 35px;"'+ 
+								'seat="'+i+'-'+j+'" status="true">'+i+'-'+j+'</td>';
+							}
+							contents += '</tr>';
+						}
+						contents += '</table>';
+					 tdTable.html(contents)
+					 var tdClass = $('.tdClass');
+					 
+					 /* DB에서 해당 시설코드에 대한 예약자를 문자열(배열로만들수있게)가져온다. */
+					 var request = $.ajax({
+						  url: "/lifrary/reservationAjax",
+						  method: "POST",
+						  data: { 'fCode' : fCode },
+						  dataType: "json"
+						});
+						 
+						request.done(function(data) {
+							reserveArray = data.seatNum; // 결과물을 reserveArray에 대입한다. 
+							console.log(reserveArray)
+							
+							
+							/* 뿌려준 테이블에 가져온 배열(선택된 자리)색칠해주기 */
+							 for(var i = 0; i < tdClass.length; i++){
+								if(seatArray.indexOf(tdClass.eq(i).attr('seat')) >= 0){ // 배열에서 tdClass의 seat값과 같은 게있는가.
+								tdClass.eq(i).text(seatArray.indexOf(tdClass.eq(i).attr('seat'))+1); // seat배열과 같은 index로 text변경
+								
+									if(reserveArray.indexOf(tdClass.eq(i).attr('seat'))+1 > 0){ // ajax로 가져와 담은 배열에 테이블의 seat속성과 같은게 있으면, true
+										tdClass.eq(i).css("background-color",'orange'); // #FA5858 = 빨강
+										tdClass.eq(i).attr("status",'false');
+									}else {
+										tdClass.eq(i).css("background-color",'black'); //#58FA58  = 초록
+										tdClass.eq(i).css("color",'white')
+										tdClass.eq(i).attr("status",'true');
+									}
+								
+								}else{
+									tdClass.eq(i).css("background-color",'white')		// seat값과 다르면 글자색을 흰색으로 변경
+									tdClass.eq(i).text('');								// 글자 없애기
+									tdClass.eq(i).attr("status",'false')				// 속성을 false로 바꿔 누를수도 없게 만든다.
+								}
+							}
+						});
+						 
+						request.fail(function( jqXHR, textStatus ) {
+						  alert( "Request failed: " + textStatus );
+						});
+						
+				} else if(fKinds == '스터디룸' || fKinds == '강연실'){
+					console.log('스터디룸 / 강연실')
+				}
+					
+			})
+		})
+	</script>
+</th:block>		
+
 		<th:block layout:fragment="customContents">
 			<!-- Start: Page Banner -->
 	        	<section th:replace="fragments/library/facilityBanner :: facilityBannerFragment"></section>
