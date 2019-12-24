@@ -12,13 +12,14 @@ public class CallNumberService {
 	
 	@Autowired private CallNumberMapper callNumberMapper;
 	
+	@Autowired private MakeBsmarkService makeBsmarkService;
+	
 	// 저작기호 = 저자기호 + 도서기호
 
     // 저자기호 구하기
 	public String makeBsmarkAuthor(String biAuthor) {	
-		System.out.println("============ makeBsmarkAuthor ============");
-		MakeBsmark makeBsmark = MakeBsmark.getinstance();		
-		List<Map<String, Character>> charList = makeBsmark.getCharList(biAuthor);
+		
+		List<Map<String, Character>> charList = makeBsmarkService.getCharList(biAuthor);
 		
 		String resultStr = "";
 		
@@ -62,9 +63,8 @@ public class CallNumberService {
 	
 	// 도서 기호 구하기
 	public String makeBsmarkName(String biName) {
-		System.out.println("============ makeBsmarkName ============");
-		MakeBsmark makeBsmark = MakeBsmark.getinstance();		
-		List<Map<String, Character>> nameList = makeBsmark.getNameList(biName);
+		System.out.println("============ makeBsmarkName ============");	
+		List<Map<String, Character>> nameList = makeBsmarkService.getCharList(biName);
 		
 		String resultStr = "";
 		

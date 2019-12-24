@@ -135,10 +135,10 @@
 				      </td>
 				      <td class="align-middle text-center">
 				      	 <span th:if="${d.bdnSticker eq 'O'}" id="bdnStickerO">
-				      	 	<a href="#" class="badge badge-outline-success">부착</a>
+				      	 	<a id="bdnStickerO" href="#" class="badge badge-outline-success" type="button">부착</a>
 				      	 </span>
-				      	 <span th:unless="${d.bdnSticker eq 'O'}" id="bdnStickerX">
-				      	 	<a href="#" class="badge badge-outline-danger">미부착</a>
+				      	 <span th:unless="${d.bdnSticker eq 'O'}">
+				      	 	<a id="bdnStickerX" href="#" class="badge badge-outline-danger" type="button">미부착</a>
 				      	 </span>				      
 				      </td>
 				      <td class="align-middle text-center">

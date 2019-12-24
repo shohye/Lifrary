@@ -55,7 +55,7 @@
  	  </th:block>
  	  
  	  <th:block layout:fragment="teamHeadScript">
- 	  <script type="text/javascript" th:inline="javascript">
+ 	  <script type="text/javascript">
  	  
 	   $(document).ready(function(){  	
 		// 도서 정보 가져오기   
@@ -82,8 +82,21 @@
   	    			var biKdc         = $('#biKdc');
   	    			var biDtail       = $('#biDtail');
   					
+  	    			if(data.biAuthor != undefined && data.biAuthor != ''){
+  	    				data.biAuthor = data.biAuthor.replace('지은이:', '');
+  	    				data.biAuthor = data.biAuthor.replace('지은이: ', '');
+  	    				data.biAuthor = data.biAuthor.replace('글:', '');
+  	    				data.biAuthor = data.biAuthor.replace('글: ', '');
+  	    				data.biAuthor = data.biAuthor.replace('글·그림:', '');
+  	    				data.biAuthor = data.biAuthor.replace('글·그림: ', '');
+  	    				data.biAuthor = data.biAuthor.replace('저자:', '');
+  	    				data.biAuthor = data.biAuthor.replace('저자: ', '');
+  	    			}
+  	    			
+  	    			var author = $.trim(data.biAuthor);
+  	    			
   		 			biName.val(data.biName);
-  		 			biAuthor.val(data.biAuthor);
+  		 			biAuthor.val(author);
   		 			biPublisher.val(data.biPublisher);
   		 			biYear.val(data.biYear);
   		 			biKdc.val(data.biKdc);
