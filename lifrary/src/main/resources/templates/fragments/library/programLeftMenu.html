@@ -6,32 +6,22 @@
 	<div class="col-md-3 col-md-pull-9" th:fragment="programLeftMenuFragment">
          <aside id="secondary" class="sidebar widget-area">
              
-             <div class="widget widget_related_search">
-                 <h4 class="widget-title" data-control>주제</h4>
-                 <div class="widget_categories">
-                     <ul>
-                         <li><a th:href="@{#}">Love stories <span>(18)</span></a></li>
-                         <li><a th:href="@{#}">Texas <span>(04)</span></a></li>
-                         <li><a th:href="@{#}">Rich people <span>(03)</span></a></li>
-                         <li><a th:href="@{#}">Humorous stories <span>(02)</span></a></li>
-                         <li><a th:href="@{#}">Widows <span>(02)</span></a></li>
-                     </ul>
-                 </div>
-             </div>
+             
              <div class="widget widget_recent_entries">
              <!-- 등록된 행사 th:each로 뿌려주기 -->
                  <h4 class="widget-title" data-control>최근 등록된 프로그램</h4>
                  <ul>
-                     <li>
-                         <figure>
-                             <img th:src="@{/libraryStatic/images/order-item-04.jpg}" alt="product" />
-                         </figure>
-                         <a th:href="@{#}">It uses a dictionary</a>
-                         <span><i class="fa fa-calendar"></i> &nbsp; July 25, 2016</span>
-                         <span><i class="fa fa-clock-o"></i> &nbsp; 10:15 AM - 10:15 PM</span>
-                         <span><i class="fa fa-map-marker"></i> &nbsp; New York, USA</span>
-                         <div class="clearfix"></div>
-                     </li>                
+                 	<th:block th:each="lp : ${latelyProgram}">
+	                     <li>
+	                         <figure>
+	                             <img th:src="@{/libraryStatic/images/order-item-04.jpg}" alt="product" />
+	                         </figure>
+	                         <a th:href="@{/lifrary/programDetail(pmCode=${lp.pmCode})}" th:text="${lp.pmName}"></a>
+	                      	       등록일<span th:text="${lp.pmDate}"> </span><br>
+	                         <div class="clearfix"></div>
+	                     </li> 
+                     </th:block>
+                                    
                  </ul>
              </div>
              

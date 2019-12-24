@@ -10,15 +10,22 @@ table.makeTbLine tbody tr td {color: black; text-align: center; font-size: 12px;
 	<script th:inline="javascript">
 		$(document).ready(function(){
 			
-			/* 예약하는거 생각해서 만들어보기. */
-			$(document).on('click','.tdClass',function(){
+			/* 예약하는거 생각해서 만들어보기. 테스트중*/
+			/* $(document).on('click','.tdClass',function(){
 				if($(this).attr("status") == 'true'){
 					console.log('이것은 true')
-					var confirmd = confirm($(this).text()+' 를 선택하셨습니다. ')
+					$(this).css("background-color",'yellow') // 선택된 자리의 색이 변경
+					var confirmd = confirm($(this).text()+'번을 선택하셨습니다. \n선택한 자리를 예약 하시겠습니까?')
+					if(confirmd){
+						
+					}else{
+						$(this).css("background-color",'black') // 선택된 자리의 색이 변경
+					}
+					
 				} else {
 					console.log('이것은 false')
 				}
-			})
+			}) */
 			
 			
 			
@@ -83,6 +90,7 @@ table.makeTbLine tbody tr td {color: black; text-align: center; font-size: 12px;
 								}else{
 									tdClass.eq(i).css("background-color",'white')		// seat값과 다르면 글자색을 흰색으로 변경
 									tdClass.eq(i).text('');								// 글자 없애기
+									tdClass.eq(i).attr("status",'false')				// 속성을 false로 바꿔 누를수도 없게 만든다.
 								}
 							}
 						});

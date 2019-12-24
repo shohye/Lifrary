@@ -131,7 +131,6 @@ public class FacilityController {
 	 */
 	@PostMapping("/admin/facilityInsert")
 	public String facilityInsert(Facility facility) {
-		facility.setfCode("f-19122200002");
 		System.out.println(facility);
 		facilityService.insertFacility(facility);
 
