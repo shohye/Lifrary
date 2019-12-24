@@ -6,8 +6,8 @@
   
   <!-- headAdd(Libs&page) -->
   <th:block layout:fragment="adminHeadAdd">
-    <link rel="stylesheet" th:href="@{/admin/vendor/libs/select2/select2.css}">
-  	<link rel="stylesheet" th:href="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+    <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/select2/select2.css}">
+  	<link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
   </th:block>
   <!-- /headAdd(Libs&page) -->
 	 
@@ -16,85 +16,219 @@
   <script th:inline="javascript">
 		$(document).ready(function(){
 			var seatArray = new Array();
-
+		
 			$(document).on('click','.tdClass',function(){
-				console.log($(this).attr('status') + " <== status")
-				console.log($(this).attr('seat') + " <== seat")
+				//console.log($(this).attr('status') + " <== status")
+				//console.log($(this).attr('seat') + " <== seat")
+				var tdClass = $('.tdClass'); // tdClass에 선택자넣기
 				
 				if($(this).attr('status') == 'true'){
 					 
-					seatArray.push($(this).attr('seat')) // 없으면 선택한곳의 'seat'를 배열의 맨 뒤쪽에 넣는다.
-					$(this).css("background-color", 'black'); // 없으면 선택한곳의 배경색을 검정으로 바꾼다.
-					$(this).text(seatArray.indexOf($(this).attr('seat'))+1) // 없으면 선택한곳의 text를 배열+1로 변경한다 (1,2,3,4...)
-					$(this).css("color",'white'); // 없으면 선택한곳의 글자색을 화이트로 변경
-					$(this).attr('status','false'); //없으면 선택한곳의 status속성을 false로 변경 
+					seatArray.push($(this).attr('seat')) // status의 상태가 true이면 선택한곳의 'seat'를 배열의 맨 뒤쪽에 넣는다.
+					$(this).css("background-color", 'black'); //  선택한곳의 배경색을 검정으로 바꾼다.
+					$(this).text(seatArray.indexOf($(this).attr('seat'))+1) //  선택한곳의 text를 배열의 인덱스(0)+1로 변경한다 (1,2,3,4...)
+					$(this).css("color",'white'); // 선택한곳의 글자색을 화이트로 변경
+					$(this).attr('status','false'); // 선택한곳의 status속성을 false로 변경 
 					
 				}else if($(this).attr('status') == 'false'){
-					 var con_test = confirm("이미 선택된 좌석입니다. "+
-							"[선택좌석 : '"+$(this).attr('seat')+"'] 제거하려면 확인을 누르세요.");
-					
+					 var con_test = confirm("이미 선택된 자리입니다. "+
+							"[선택자리 : '"+$(this).attr('seat')+"'] \n제거하려면 확인을 누르세요.");
 					if(con_test == true){
-						console.log('확인누름');						
+						//console.log('확인누름');						
 						seatArray.splice(seatArray.indexOf($(this).attr('seat')),1); //선택된 배열의 인덱스부터 1개를 지움
 						$(this).css("background-color", 'white'); // 누른곳의 배경색을 하얀색으로 바꾼다.
 						$(this).text($(this).attr('seat')); // 누른곳의 text를 누른곳의 seat속성으로 변경한다.
 						$(this).css("color",'black'); // 누른곳의 글자색을 블랙으로 변경
 						$(this).attr('status', 'true'); // 누른곳의 status속성을 true로 변경
 						
-						//$('.tdClass').text(seatArray.indexOf()) // 배열에 있는 인덱스 = attr('seat')
-						//중간값을 눌렀을때 어떻게 뒤의 값들을 당겨올지 생각할것.
-						
+						/* 배열의 index에 따른 선택된값의 text 재배치 */	
+						for(var i = 0 ; i < tdClass.length; i++){ // td 엘리먼트만큼 반복 (테이블 갯수만큼 반복)
+							if(tdClass.eq(i).attr('status') == 'false'){ // i번째의 status속성이 false인것 
+								//console.log(tdClass.eq(i).attr('seat') + '<== false인것의 값');  // false인것의 eq(i)번째의 seat속성값.
+								//console.log(tdClass.eq(i).attr('seat')+'     '+seatArray.indexOf(tdClass.eq(i).attr('seat')) + '<== false인, seatArray의 인덱스')
+								
+								tdClass.eq(i).text(seatArray.indexOf(tdClass.eq(i).attr('seat'))+1) 
+								// tdClass.eq(i)번째의 text를 seatArray배열의 tdClass.eq(i)번째의 속성이'seat'인것의 위치(index)+1로 바꾼다.
+							}
+						} 
 					} else if(con_test == false) {
-						console.log('취소누름');
-					} 
+						//console.log('취소누름');
+					} 					
+					
 				}
-				
-				console.log(seatArray);
+				//console.log(seatArray);
 			})
 			
-			//만들어진 좌석 배열 ajax를 통해 깐뜨롤러로 보내기
-			$('#arrayBtn').click(function(){
-				if(seatArray.length > 1){ // 배열이 1개 이상 있어야 ajax 실행
+			//ajax로 테이블 만들기.
+			$(document).on('click','#tableBtn',function(){
+				seatArray = new Array(); // 테이블만들기 버튼을 다시 누르면 새로운 배열이 생성됨.
+				var garo = $('#garo').val();
+				var sero = $('#sero').val();
+				
+				var request = $.ajax({
+					  url: "/libSeat",
+					  method: "POST",
+					  data: { 'garo' : garo, 'sero':sero },
+					  dataType: "json"
+					});
+					 
+					request.done(function( data ) {
+						var getGaro = data.getGaro; // 가로 배열(리스트)
+						var getSero = data.getSero; // 세로 배열(리스트)
+						var tableDiv = $('#tableDiv');
+						var contents = '';
+						
+						contents += '<table border="2">';
+						for(var i = 1; i <= getSero; i++){
+							contents += '<tr>';
+							for(var j = 1; j <= getGaro; j++){
+								contents += '<td class="tdClass" style="color:black; text-align: center; font-size:12px;  width: 40px; height: 35px;"'+ 
+								'seat="'+i+'-'+j+'" status="true">'+i+'-'+j+'</td>';
+							}
+							contents += '</tr>';
+						}
+						contents += '</table>';
+						contents += '<small class="form-text text-muted">만들어줄 자리을 선택후 선택완료 버튼을 눌러주세요.</small>'
+						contents += '<br><button type = "button" id = "seatMakeBtn" class="btn btn-primary">자리 선택완료</button>'
+						tableDiv.html(contents); // 만들어진 테이블을 뿌려줌
+						
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "값을 입력후 버튼을 눌러주세요." );
+					});
+				
+			})
+			
+			//만들어진 자리 배열 ajax를 통해 컨트롤러로 보내기
+			$(document).on('click','#seatMakeBtn',function(){
+				if(seatArray.length > 0){ // 배열이 1개 이상 있어야 ajax 실행
 					var dataMap = {'seatArray' : seatArray}
-					$.ajax({
-						type: "post",
+				
+					var request = $.ajax({
 						url: "/getArray",
+						type: "post",
 						traditional : true,
 						data: dataMap,
-						success: function (data) {
-							console.log('완료');
-							}
+						dataType :"text"
+						});
+						 
+						request.done(function( data ) {
+							//console.log(data);
+							$('#seatSelected').val(data)
+							$('#fRow').val($('#garo').val())
+							$('#fCol').val($('#sero').val())
+						});
+						 
+						request.fail(function( jqXHR, textStatus ) {
+						  alert( "Request failed: " + textStatus );
 						});
 					} else {
 						alert('자리를 한곳 이상 선택해주세요')
 					}
 			})
+			
+			
+			
+			
+			
 			/* 아래부터는 유효성검사 */
 			$('#fKinds').change(function(){
   				var fKinds = $(this).val();
-  				var fTerm = $('#fTerm'); 
+  				var fTerm = $('#fTerm');
+  				
   				if(fKinds == '열람실'){
   					fTerm.val('3시간');
+  					if($('.seatClass').css("display") == "none"){
+  						$('.seatClass').css("display", "block");
+  					}
   				}else if(fKinds == '스터디룸'){
   					fTerm.val('5시간');
+  					if($('.seatClass').css("display") == "block"){
+  						$('.seatClass').css("display", "none");
+  					}
   				}else if(fKinds == '강연실'){
   					fTerm.val('하루');
+  					if($('.seatClass').css("display") == "block"){
+  						$('.seatClass').css("display", "none");
+  					}
   				}else if(fKinds == '사물함'){
   					fTerm.val('한달');
+  					if($('.seatClass').css("display") == "none"){
+  						$('.seatClass').css("display", "block");
+  					}
   				}
+  				
   			})
   			
   			$('#inUpBtn').click(function(){
-  				var uId = $('#uId').val();
+  				var uId = $('#uId');
+  				var fName = $('#fName');
+  				var fKinds = $('#fKinds'); // "선택"이면 선택하도록 만들어줘야함.
+  				var fLocation = $('#fLocation');
+  				var fAccommodate = $('#fAccommodate');
+  				var fGender = $('#fGender');
+  				
+  				var seatSelected = $('#seatSelected'); // 선택된 문자열
+				var fRow = $('#fRow');
+  				var fCol = $('#fCol');
+  				
   				var facilityInUpForm = $('#facilityInUpForm');
-  				if(uId == ''){
+  				
+  				if(uId.val() == ''){
   					alert('세션이 종료되었습니다. 다시 로그인 해주세요.');
   					location.href = '/admin/login';
   					return false;
   				}
-  				
+  				if(fKinds.val() == '선택'){
+  					alert('시설 종류를 선택해주세요.')
+  					fKinds.focus();
+  					return false;
+  				} 
+  			
+  				if(fName.val() == ''){
+  					alert('시설명을 입력해주세요');
+  					fName.focus();
+  					return false;
+  				}
+  				if(fLocation.val() == ''){
+  					alert('시설 위치를 입력해주세요.');
+  					fLocation.focus();
+  					return false;
+  				}
+  				if(fAccommodate.val() == '') {
+  					alert('최대 사용 인원을 입력해주세요.');
+  					fAccommodate.focus();
+  					return false;
+  				}
+  				if(fGender.val() == '선택'){
+  					alert('사용 성별을 선택해주세요.');
+  					fGender.focus();
+  					return false;
+  				}
+  				//seatSelected
+  				if(fKinds.val() == '열람실' || fKinds.val() == '사물함'){
+  					if(seatSelected.val() == ''){
+  						alert('테이블을 먼저 선택해주세요.')
+  						$('#garo').focus();
+  						return false;
+  					}
+	  				if(fAccommodate.val() >= seatArray.length+1){ // 자리가 수용인원보다 적으면 (배열은 0부터 시작하니까 +1해서 계산.)
+	  					alert('사용할수 있는 인원보다 자리가 적습니다.');
+	  					fAccommodate.focus();
+	  					return false;
+	  				} 
+  				}
+ 				if(fRow.val() == ''){
+ 					fRow.val(0);
+ 				}
+ 				if(fCol.val() == ''){
+ 					fCol.val(0);
+ 				}
+ 				//console.log('등록완료')
   				facilityInUpForm.submit();
   			})
+  			
 			
 		})
 		</script>
@@ -135,7 +269,7 @@
             </h4>
 
             <div class="card mb-4">
-              <div class="card-body">
+              <div class="card-body" style="border: 1px solid;">
                 <form id="facilityInUpForm" th:action="@{/admin/facilityInsert}" method="post">
                   <div class="form-row">
 	                  <div class="form-group col-md-3">
@@ -145,21 +279,22 @@
 	                    <input type="hidden" class="form-control" name="lCode" th:value="${session.LIBNUM}">           	 
 	              </div>
 	              <div class="form-row">
+	                  
+	                  <div class="form-group col-md-3" >
+	                  <label class="form-label">시설 종류</label>
+		                   <select id = "fKinds" name = "fKinds" class="form-control">
+			                  <option value = "선택">:: 선택 ::</option>
+			                  <option value = "열람실">열람실</option>
+			                  <option value = "스터디룸">스터디룸</option>
+			                  <option value = "강연실">강연실</option>
+			                  <option value = "사물함">사물함</option>
+			                </select>
+	                    <small class="form-text text-muted">시설 종류를 선택해주세요.</small>
+	                  </div>
 	                  <div class="form-group col-md-3" >
 	                    <label class="form-label">시설명</label>
 	                    <input id="fName" type="text" class="form-control" name="fName" placeholder="시설명">
 	                    <small class="form-text text-muted">시설명을 입력해주세요.</small>
-	                  </div>
-	                  <div class="form-group col-md-3" >
-	                  <label class="form-label">시설 종류</label>
-		                   <select id = "fKinds" class="form-control">
-			                  <option>:: 선택 ::</option>
-			                  <option value = "열람실">열람실</option>
-			                  <option value = '스터디룸'>스터디룸</option>
-			                  <option value = '강연실'>강연실</option>
-			                  <option value = '사물함'>사물함</option>
-			                </select>
-	                    <small class="form-text text-muted">시설 종류를 선택해주세요.</small>
 	                  </div>
 	              </div>
 	              <div class="form-row">
@@ -169,16 +304,16 @@
 	                    <small class="form-text text-muted">시설 위치를 입력해주세요.</small>
 	                  </div>
 	                  <div class="form-group col-md-3" >
-	                    <label class="form-label">수용 인원</label>
-	                    <input id="fAccommodate" type="number" class="form-control" name="fAccommodate" placeholder="수용 인원">
-	                    <small class="form-text text-muted">수용 인원을 입력해주세요.</small>
+	                    <label class="form-label">최대 사용 인원</label>
+	                    <input id="fAccommodate" type="number" class="form-control" name="fAccommodate" placeholder="최대 사용 인원" min="1">
+	                    <small class="form-text text-muted">최대 사용 인원을 입력해주세요.</small>
 	                  </div>
 	              </div>
 	              <div class = "form-row">
 	              	<div class="form-group col-md-3" >
 	                    <label class="form-label">사용 성별</label>
-	                    	<select id="fGender" class="form-control">
-			                  <option>:: 선택 ::</option>
+	                    	<select id="fGender" name ="fGender" class="form-control">
+			                  <option value="선택">:: 선택 ::</option>
 			                  <option value="남성">남성</option>
 			                  <option value="여성">여성</option>
 			                  <option value="공용">공용</option>
@@ -192,46 +327,64 @@
 	                  </div>
 	              </div>
 		          <div class = "form-row">
-	              	<div class="form-group col-md-8" >
-	              		<label class="form-label">선택된 좌석 문자열</label>
-	              		<input type="text" class="form-control" readonly="readonly">
-		                <small class="form-text text-muted">아래에서 자리를 만들어주세요.</small>
+	              	<div style="display: none;" class="form-group col-md-8 seatClass" >
+	              		<label class="form-label">선택된 자리 문자열</label>
+	              		<input type="text" id="seatSelected" name="fSeatOrImg" class="form-control" readonly="readonly">
+		                <small class="form-text text-muted">아래에서 자리을 만들어주세요.</small>
 	                </div>
+	              </div>
+	              <div class = "form-row">
+	              	<div style="display: none;" class="form-group col-md-2 seatClass" >
+	              		<label class="form-label">입력된 가로</label>
+	              		<input type="text" id="fRow" name="fRow" class="form-control" readonly="readonly">
+		                <small class="form-text text-muted">가로 값</small>
+	                </div>
+	                <div style="display: none;" class="form-group col-md-2 seatClass" >
+	              		<label class="form-label">입력된 세로</label>
+	              		<input type="text" id="fCol" name="fCol" class="form-control" readonly="readonly">
+		                <small class="form-text text-muted">세로 값</small>
+	                </div>
+	              	
 	              </div>
                  	 <button id = "inUpBtn" type="button" class="btn btn-primary">등록하기</button>
                 </form>
-	             
+                
+	        <!-- 열람실 / 사물함 선택시에만 보여주기. -->
+	        <div class="seatClass" style="padding-left: 20px; margin-top: 10px; display: none;">      
+	             <div class = "form-row">
+	              	<div class="form-group col-md-3" >
+	              		
+				 	</div>
+				 </div>
+	             <div class = "form-row">
+	              	<div class="form-group col-md-3" >
+	              		
+				 	</div>
+				 </div>
+				 
                 <div class = "form-row">
 	              	<div class="form-group col-md-3" >
-	              		<label class="form-label">좌석 만들기</label>
+	              		<label class="form-label">자리 만들기</label>
 		                <form th:action="@{/libSeat}" method="post">
-							가로 입력 : <input type="text" class="form-control" id="garo" name="garo"><br> 
-							세로 입력 : <input type="text" class="form-control" id="sero" name="sero"><br>
+							가로 입력 : <input type="number" class="form-control" id="garo" name="garo" min="1" max = "40"><br> 
+							세로 입력 : <input type="number" class="form-control" id="sero" name="sero" min="1" max = "40"><br>
 							<small class="form-text text-muted">가로, 세로길이를 입력해주세요.</small>
 							
-							<button type="submit" id="tableBtn">테이블 만들기</button>
+							<button type="button" id="tableBtn" class="btn btn-primary">테이블 만들기</button>
 						</form>
 					</div>
 				</div>
 				
-             		 <div>
+             		 <div id="tableDiv">
 							<!-- ex> 가로3 세로 5  //   garo = 5  "${s}*${garo}+${g+1}"-->
-								<table border="2">
-								
-									<th:block th:each="s : ${sList}">
-										<tr>
-											<th:block th:each="g : ${gList}">
-												<td class="tdClass" style="color:black; text-align: center; font-size:12px;  width: 40px; height: 25px;" th:text="|${s+1}-${g+1}|" th:seat="|${s+1}-${g+1}|" th:status="true"></td>
-											</th:block>
-										</tr>
-									</th:block>
-						
-								</table>
 					</div>
-				
+				</div> 
+				 <!-- 열람실 / 사물함 선택시에만 보여주기. -->
+				 
+				 
+				</div>
               </div>
             </div>
-
           </div>
           <!-- / Content -->
 
@@ -248,16 +401,16 @@
 
     <!-- Overlay -->
     <div class="layout-overlay layout-sidenav-toggle"></div>
-  </div>
+  
   <!-- / Layout wrapper -->
   
  <!--  scripts -->
   <th:block layout:fragment="pageScript">
-   <script th:src="@{/admin/vendor/libs/validate/validate.js}"></script>
-   <script th:src="@{/admin/vendor/libs/select2/select2.js}"></script>
-   <script th:src="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+   <script th:src="@{/adminStatic/vendor/libs/validate/validate.js}"></script>
+   <script th:src="@{/adminStatic/vendor/libs/select2/select2.js}"></script>
+   <script th:src="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
   
-   <script th:src="@{/admin/js/forms_validation.js}"></script>  
+   <script th:src="@{/adminStatic/js/forms_validation.js}"></script>  
   </th:block>
  <!-- / scripts -->
 </body>

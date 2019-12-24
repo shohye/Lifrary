@@ -7,12 +7,12 @@ public class ProgramManager {
 	private String pmName;
 	private String pmTarget;
 	private String pmPlace;
+	private String pmStartReceipt;
+	private String pmEndReceipt;
 	private String pmStartTerm;
 	private String pmEndTerm;
 	private String pmStartTime;
 	private String pmEndTime;
-	private String pmStartReceipt;
-	private String pmEndReceipt;
 	private String pmProgress;
 	private String pmTeacherName;
 	private int pmApplicant; // 현재 신청 인원

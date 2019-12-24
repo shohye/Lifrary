@@ -2,7 +2,51 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
-		
+
+<th:block layout:fragment="customScript">
+	<script th:inline="javascript">
+		$(document).ready(function(){
+			
+			$(document).on('click', '.fTable', function(){
+				var fCode = $(this).find('input[name=fCode]').val();
+				var fKinds = $(this).find('input[name=fKinds]').val();
+				var fSeatOrImg = $(this).find('input[name=fSeatOrImg]').val();
+				var tdTable = $('#tdTable')
+				var contents = '';
+				
+				if(fKinds == '열람실' || fKinds == '사물함'){
+					console.log('열람실 / 사물함임')
+					var fRow = $(this).find('input[name=fRow]').val();
+					var fCol = $(this).find('input[name=fCol]').val();
+					
+					 /* 테이블 그려주기 */
+					var seatArray = fSeatOrImg.split(',');
+					 console.log(seatArray);
+
+						contents += '<table border="2">';
+						for(var i = 1; i <= fCol; i++){
+							contents += '<tr>';
+							for(var j = 1; j <= fRow; j++){
+								contents += '<td class="tdClass" style="color:black; text-align: center; font-size:12px;  width: 40px; height: 35px;"'+ 
+								'seat="'+i+'-'+j+'" status="true">'+i+'-'+j+'</td>';
+							}
+							contents += '</tr>';
+						}
+						contents += '</table>';
+					 
+					 
+					 tdTable.html(contents)
+				 
+				} else if(fKinds == '스터디룸' || fKinds == '강연실'){
+					console.log('스터디룸 / 강연실')
+				}
+					
+			})
+			
+		})
+	</script>
+</th:block>
+				
 		<th:block layout:fragment="customContents">
 			<!-- Start: Page Banner -->
 	        	<section th:replace="fragments/library/facilityBanner :: facilityBannerFragment"></section>
