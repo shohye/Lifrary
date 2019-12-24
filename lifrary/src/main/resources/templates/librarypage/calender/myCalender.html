@@ -14,8 +14,26 @@
    	<script th:src="@{/libraryStatic/fullcalendar/packages/daygrid/main.js}"></script>
    	<script th:src="@{/libraryStatic/fullcalendar/packages/interaction/main.js}"></script>
    	<script th:src="@{/libraryStatic/fullcalendar/packages/core/locales/ko.js}"></script>
-   	<script type="text/javascript">
+   	<script type="text/javascript" th:inline="javascript">
    	$(document).ready(function() {
+   		
+   	  
+  	  /*<![CDATA[*/
+  		var resultInsert = [[ ${resultInsert} ]];//일정 등록 결과
+  		var resultUpdate = [[ ${resultUpdate} ]];//일정 수정 결과
+  		var resultDelete = [[ ${resultDelete} ]];//일정 수정 결과
+  		/*]]*/
+  		
+  		if(resultInsert == 1){
+  			alert('정상적으로 일정이 등록되었습니다');
+  		}
+		if(resultUpdate == 1){
+			alert('정상적으로 일정이 수정되었습니다');
+  		}
+		if(resultDelete == 1){
+			alert('정상적으로 일정이 삭제되었습니다');
+  		}
+   		
    		var bookInfoList = []; //도서 검색 리스트 담을 변수
         var totalPage = 0; //전체페이지
    		
@@ -94,12 +112,14 @@
 		   			 $('#updateForm strong').eq(3).text(bookInfo.biIsbn);//ISBN
 		   			 $('#updateForm strong').eq(5).text(bookInfo.biAuthor);//저자명
 		   			 $('#updateForm strong').eq(7).text(bookInfo.biPublisher);//발행자
+		   			 $('#updateForm [name="cCode"]').val(data.cCode);//읽은 페이지
 		   			 $('#updateForm [name="cTitle"]').val(data.cTitle);//읽은 페이지
 		   			 $('#updateForm [name="cContent"]').val(data.cContent);//읽은 페이지
 		   			 $('#updateForm [name="cCurrentPage"]').val(data.cCurrentPage);//읽은 페이지
 		   			 $('#updateForm input').eq(3).attr('placeholder','전체페이지:  '+data.cCurrentPage+'/'+ totalPage);
 		   			 $('#updateForm [name="cStartDate"]').val(data.cStartDate);//등록한 날짜
-	  	   				  	   			
+		   			 $('#updateForm [name="cBookFinish"]').val(data.cBookFinish);//등록한 날짜
+		   			 	  	   				  	   			
 	  			});//request.done
 	  	   		 
 	  	   		request.fail(function( jqXHR, textStatus ) {
@@ -212,6 +232,28 @@
 		 	 }else{
 		 		$('#insertForm').submit();
 		 	}
+		 });
+		//일정수정
+		 $('#updateBtn').click(function(){
+			 var cTitle = $('#updateForm [name="cTitle"]').val();
+			 var cContent = $('#updateForm [name="cContent"]').val();
+			 var cCurrentPage = $('#updateForm [name="cCurrentPage"]').val();
+			 var currentPage = parseInt($('#updateForm [name="cCurrentPage"]').val());
+
+			 if(cTitle == ''){
+				 alert('제목을 입력해주세요');
+			 }else if(cContent == ''){
+				 alert('내용을 입력해주세요');
+			 }else if(cContent.length > 250){
+	             alert('내용은 250자 이하로 적어 주세요');
+	         }else if(currentPage > totalPage){
+					alert('전체페이지보다 큰 수는 등록할 수 없습니다');
+		 	 }else{
+		 		$('#updateForm').submit();
+		 	}
+		 });
+		 $('#deleteBtn').click(function(){
+			 $('#updateForm').attr('action','/lifrary/myCalenderDelete').submit();
 		 });
 		 
 		 //모달 초기화
@@ -410,7 +452,7 @@
 		</div>
 		<div class="modal fade" id="bookUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
-		    <form id="updateForm" class="modal-content" th:action="@{/lifrary/myCalenderInsert}" method="post">
+		    <form id="updateForm" class="modal-content" th:action="@{/lifrary/myCalenderUpdate}" method="post">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel">일정 수정</h4>
@@ -478,7 +520,8 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
-		        <button type="button" id="updateBtn" class="btn btn-primary" >등록</button>
+		        <button type="button" id="updateBtn" class="btn btn-primary" >수정</button>
+		        <button type="button" id="deleteBtn" class="btn btn-primary" >삭제</button>
 		      </div>
 		    </form>
 		  </div>
