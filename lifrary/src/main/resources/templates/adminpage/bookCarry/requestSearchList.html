@@ -71,7 +71,7 @@
 				      <td class="align-middle" th:text="${r.brPrice}"></td>
 				      <td class="align-middle" th:text="${#strings.abbreviate(r.brAuthor,7)}"></td>
 				      <td class="align-middle" th:text="${r.brPublisher}"></td>
-				      <td class="align-middle text-center">
+				      <td class="align-middle text-center" data-toggle="modal" data-target="#modals-default">
 				      	 <span th:if="${r.brProgress eq '취소'}"  class="badge badge-outline-danger">[[${r.brProgress}]]</span>
 				         <span th:unless="${r.brProgress eq '취소'}"  class="badge badge-outline-success">[[${r.brProgress}]]</span>
 				      </td>
@@ -88,6 +88,47 @@
                 </table>
               </div>
             </div>
+            
+            <div class="modal fade" id="modals-default">
+               <div class="modal-dialog">
+                 <form class="modal-content">
+                   <div class="modal-header">
+                     <h5 class="modal-title">
+                       	진행상황 변경
+                     </h5>
+                     <a th:href="@{/admin/bookOrderList}"  type="button" class="close" data-dismiss="modal" aria-label="Close">×</a>
+                   </div>
+                   <div class="modal-body">
+                   	  <div class="form-row">
+	                    <div class="form-group col-md-6">
+	                       <label class="custom-control custom-radio">		               		   	
+		               		   	<input name="brProgress" type="radio" class="custom-control-input" value="O">
+		               		   	<span class="custom-control-label">접수완료</span>
+	                       </label>
+	                       <label class="custom-control custom-radio">
+	                 		   	<input name="brProgress" type="radio" class="custom-control-input" value="X">
+	                 		   	<span class="custom-control-label">심사중</span>
+	                       </label>	
+	                       <label class="custom-control custom-radio">
+	                 		   	<input name="brProgress" type="radio" class="custom-control-input" value="X">
+	                 		   	<span class="custom-control-label">취소</span>
+	                       </label>	
+	                    </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col">
+                          <label class="form-label">취소 사유 (상태를 취소로 변경하는 경우 꼭 사유를 작성해 주세요)</label>
+                          <input id="brCancelReason" type="text" class="form-control" >
+                        </div>
+                      </div>
+                   </div>
+                   <div class="modal-footer">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     <a th:href="@{#}" id="applyBtn" type="button" class="btn btn-primary">적용</a></button>
+                   </div>
+                 </form>
+               </div>
+             </div>
                         
 
           </th:block>
