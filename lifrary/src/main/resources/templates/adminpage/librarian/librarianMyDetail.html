@@ -4,22 +4,27 @@
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
 	  
+<th:block layout:fragment="adminTitle">
+	<title>사서-내정보 상세보기</title>
+</th:block>
+
+	  
 	  <th:block layout:fragment="adminHeadAdd">
-	  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/users.css}">
+	  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/users.css}">
  	  </th:block>
  
  
   <!-- Content -->
-         <th:block layout:fragment="adminContents">
+         <th:block layout:fragment="adminContents" th:with="lmd=${librarianMyDetail}">
          	<div class="layout-content">
          		<div class="container-fluid flex-grow-1 container-p-y" >
-         			<div th:with="lmd=${librarianMyDetail}" class="media align-items-center py-3 mb-3">
-		              <div class="media-body ml-4" > 
+         			<div  class="media align-items-center py-3 mb-3">
+		              <div class="media-body ml-4"> 
 		                <h4 class="font-weight-bold mb-0" >사서 - 내 정보 상세보기</h4>
 		                <div class="text-muted mb-2">나의 ID :
-		                	<span th:text="${lmd.uId}"></span>
+		                	<span th:text="${session.SAID}"></span>
 		                </div>
-		                <a th:href="@{/admin/librarianMyUpdate}" class="btn btn-primary btn-sm">수정하고 싶어요</a>&nbsp;
+		                <a th:href="@{/admin/librarianMyUpdate(SAID=${session.SAID})}" class="btn btn-primary btn-sm">수정하고 싶어요</a>&nbsp;
 		                
 		              </div>
 		            </div>
@@ -37,10 +42,10 @@
 		            </div> -->
 		            <div class="card mb-4">
 		              <div class="card-body">
-		                <table th:with="lmd=${librarianMyDetail}" class="table user-view-table m-0" > <!-- th:with="m = ${#}" -->
+		                <table class="table user-view-table m-0" > <!-- th:with="m = ${#}" -->
 		                  <tbody>
 		                    <tr>
-		                      <td>아이디:</td><td th:text="${lmd.uId}"></td>
+		                      <td>아이디:</td><td th:text="${session.SAID}"></td>
 		                    </tr>
 		                    <tr>
 		                      <td>비밀번호:</td><td th:text="${lmd.uPw}"></td>
@@ -72,6 +77,46 @@
 		                      </td>
 		                    </tr>
 		                    <tr>
+		                      <td>사서 권한 :</td>
+		                      <td th:if = "${lmd != null}">
+		                      	<span th:if="${lmd.librarianLevel.llInsert eq 'O'}" th:text="권한있음" class="ion ion-md-checkmark text-primary"></span>
+		                      	<span th:unless = "${lmd.librarianLevel.llInsert eq 'O'}"  th:text="권한없음"	 class="ion ion-md-close text-danger"></span>
+		                      	&nbsp;
+		                      </td>
+		                    </tr>
+		                    <tr>
+		                      <td>수서 권한 :</td>
+		                      <td th:if = "${lmd != null}">
+		                      	<span th:if="${lmd.librarianLevel.llCarry eq 'O'}" th:text="권한있음" class="ion ion-md-checkmark text-primary"></span>
+		                      	<span th:unless = "${lmd.librarianLevel.llCarry eq 'O'}"  th:text="권한없음"	 class="ion ion-md-close text-danger"></span>
+		                      	&nbsp;
+		                      </td>
+		                    </tr>
+		                    <tr>
+		                      <td>도서 권한 :</td>
+		                      <td th:if = "${lmd != null}">
+		                      	<span th:if="${lmd.librarianLevel.llBookAdmin eq 'O'}" th:text="권한있음" class="ion ion-md-checkmark text-primary"></span>
+		                      	<span th:unless = "${lmd.librarianLevel.llBookAdmin eq 'O'}"  th:text="권한없음"	 class="ion ion-md-close text-danger"></span>
+		                      	&nbsp;
+		                      </td>
+		                    </tr>
+		                    <tr>
+		                      <td>장서점검 권한 :</td>
+		                      <td th:if = "${lmd != null}">
+		                      	<span th:if="${lmd.librarianLevel.llBookStock eq 'O'}" th:text="권한있음" class="ion ion-md-checkmark text-primary"></span>
+		                      	<span th:unless = "${lmd.librarianLevel.llBookStock eq 'O'}"  th:text="권한없음"	 class="ion ion-md-close text-danger"></span>
+		                      	&nbsp;
+		                      </td>
+		                    </tr>
+		                    <tr>
+		                      <td>통계 권한 :</td>
+		                      <td th:if = "${lmd != null}">
+		                      	<span th:if="${lmd.librarianLevel.llStats eq 'O'}" th:text="권한있음" class="ion ion-md-checkmark text-primary"></span>
+		                      	<span th:unless = "${lmd.librarianLevel.llStats eq 'O'}"  th:text="권한없음"	 class="ion ion-md-close text-danger"></span>
+		                      	&nbsp;
+		                      </td>
+		                    </tr>
+		                    <tr>
 		                      <td>등록일자:</td><td th:text="${lmd.uDate}"></td>
 		                    </tr>
 		                    
@@ -94,10 +139,10 @@
           <th:block layout:fragment="pageScript">
 
 		  <!-- addLibs -->
-		  <script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		  <script th:src="@{/adminStatic/vendor/libs/chartjs/chartjs.js}"></script>
 		
 		  <!-- addDemo -->
-		  <script th:src="@{/admin/js/dashboards_dashboard-1.js}"></script>
+		  <script th:src="@{/adminStatic/js/dashboards_dashboard-1.js}"></script>
 		  </th:block>
   		  <!-- /script -->
   		  

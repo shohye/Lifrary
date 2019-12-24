@@ -69,4 +69,21 @@ public class LibraryService {
 		
 		return libraryMapper.userInsert4(studyCate);
 	}
+	
+	//회원 마이페이지 - 내정보 상세보기
+	public User myUserDetail(String getSID ,String libNum) {
+		System.out.println("myUserDetail 서비스진입");
+		return libraryMapper.myUserDetail(getSID, libNum);
+	}
+	
+	//사서 - 사서 내 정보 수정하기.
+	public User getMyUserUpdate(String getSID ,String libNum) {
+		System.out.println("getMyUserUpdate 서비스진입");
+		return libraryMapper.getMyUserUpdate(getSID, libNum);
+	}
+	public int myUserUpdate(User user) {
+		System.out.println("myUserUpdate 서비스진입");
+		return libraryMapper.myUserUpdate(user);
+	}
+	
 }

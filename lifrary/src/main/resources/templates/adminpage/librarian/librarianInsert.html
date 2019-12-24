@@ -3,17 +3,79 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
-  
+
+<th:block layout:fragment="adminTitle">
+	<title>사서 등록 페이지</title>
+</th:block>
+
   <!-- headAdd(Libs&page) -->
   <th:block layout:fragment="adminHeadAdd">
-    <link rel="stylesheet" th:href="@{admin/vendor/libs/select2/select2.css}">
-  	<link rel="stylesheet" th:href="@{admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+    <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/select2/select2.css}">
+  	<link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
   </th:block>
   <!-- /headAdd(Libs&page) -->
   
 <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
   <th:block layout:fragment="teamHeadScript">
     <script type="text/javascript">
+    
+    $(document).ready(function(){    
+		
+		//유효성 검사 
+		$('#llBtn').click(function(){ 
+			
+			var uId = $('#uId').val();
+			var uName = $('#uName').val();
+			var uPw = $('#uPw').val();
+			var uBirth = $('#uBirth').val();
+			var uEmail = $('#uEmail').val();
+			var uTel = $('#uTel').val();
+			var uAddr = $('#uAddr').val();
+			var llForm = $('#llForm');
+			
+			if(uId == ""){
+				alert('아이디를 입력해주세요.');
+				$('#uId').focus();
+				return false;
+			}
+			if(uPw == ""){
+				alert('비밀번호를 입력해주세요.');
+				$('#uPw').focus();
+				return false;
+			}
+			if(uName == ""){
+				alert('이름을 입력해주세요.');
+				$('#uName').focus();
+				return false;
+			}
+			if(uBirth == ""){
+				alert('생년월일을 입력해주세요.');
+				$('#uBirth').focus();
+				return false;
+			}
+			if(uEmail == ""){
+				alert('이메일을 입력해주세요.');
+				$('#uEmail').focus();
+				return false;
+			}
+			if(uTel == ""){
+				alert('핸드폰 번호를 입력해주세요.');
+				$('#uTel').focus();
+				return false;
+			}
+			if(uAddr == ""){
+				alert('주소를 입력해주세요.');
+				$('#uAddr').focus();
+				return false;	
+			}
+			else{
+				alert('사서 등록이 완료되었습니다.');
+				llForm.submit();
+			}
+			
+		});
+
+});
    </script>
   </th:block>
 <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
@@ -52,54 +114,54 @@
 
             <div class="card mb-4">
               <div class="card-body">
-                <form th:action="@{/admin/librarianInsert}" id="validation-form" method="post">
+                <form th:action="@{/admin/librarianInsert}" id="llForm" method="post">
 	              <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">구분</label>
 	                    <input type="text" class="form-control" name="uDivision" value="사서" placeholder="구분" readonly="readonly">
                  	  </div>
-	              </div>
-                  <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">사서 아이디</label>
-	                    <input type="text" class="form-control" name="uId" placeholder="아이디">
+	                    <input type="text" class="form-control" name="uId" id="uId" placeholder="아이디">
 	                    <small class="form-text text-muted">아이디를 입력해주세요.</small>
                  	 </div>
+	              </div>
+                  <div class="form-row">
 	                  <div class="form-group col-md-6" >
 	                    <label class="form-label">비밀번호</label>
-	                    <input type="password" class="form-control" name="uPw" placeholder="비밀번호">
+	                    <input type="password" class="form-control" name="uPw" id="uPw" placeholder="비밀번호">
 	                    <small class="form-text text-muted">비밀번호를 입력해주세요.</small>
 	                  </div>
-	              </div>
-	              <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">이름</label>
-	                    <input type="text" class="form-control" name="uName" placeholder="이름">
+	                    <input type="text" class="form-control" name="uName" id="uName" placeholder="이름">
 	                    <small class="form-text text-muted">이름을 입력해주세요.</small>
 	                  </div>
+	              </div>
+	              <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">핸드폰</label>
-	                    <input type="text" class="form-control" name="uTel" placeholder="핸드폰">
+	                    <input type="text" class="form-control" name="uTel" id="uTel" placeholder="핸드폰">
 	                    <small class="form-text text-muted">핸드폰번호를 입력해주세요.</small>
 	                  </div>
-	              </div>
-	              <div class="form-row">
 	                  <div class="form-group col-md-6">
 	                    <label class="form-label">이메일</label>
-	                    <input type="text" class="form-control" name="uEmail" placeholder="이메일">
+	                    <input type="text" class="form-control" name="uEmail" id="uEmail" placeholder="이메일">
 	                    <small class="form-text text-muted">이메일을 입력해주세요.</small>
-	                  </div>
-	                  <div class="form-group col-md-6">
-	                    <label class="form-label">생년월일</label>
-	                    <input type="text" class="form-control" name="uBirth" placeholder="생년월일">
 	                  </div>
 	              </div>
 	              <div class="form-row">
 	                  <div class="form-group col-md-6">
+	                    <label class="form-label">생년월일</label>
+	                    <input type="date" class="form-control" name="uBirth" id="uBirth" placeholder="생년월일">
+	                  </div>
+	                  <div class="form-group col-md-6">
 	                    <label class="form-label">주소</label>
-	                    <input type="text" class="form-control" name="uAddr" placeholder="주소">
+	                    <input type="text" class="form-control" name="uAddr" id="uAddr" placeholder="주소">
 	                    <small class="form-text text-muted">주소를 입력해주세요.</small>
 	                  </div>
+	              </div>
+	              <div class="form-row">
 	              
 	              <!-- <div class="form-row">
 	                  <div class="form-group col-md-6">
@@ -198,7 +260,7 @@
                    </div>
                  </div>
 
-                  <button type="submit" class="btn btn-primary">회원가입</button>
+                  <button type="button" id="llBtn" class="btn btn-primary">회원가입</button>
                 </form>
               </div>
             </div>
@@ -224,11 +286,11 @@
   
  <!--  scripts -->
   <th:block layout:fragment="pageScript">
-   <script th:src="@{/admin/vendor/libs/validate/validate.js}"></script>
-   <script th:src="@{/admin/vendor/libs/select2/select2.js}"></script>
-   <script th:src="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+   <script th:src="@{/adminStatic/vendor/libs/validate/validate.js}"></script>
+   <script th:src="@{/adminStatic/vendor/libs/select2/select2.js}"></script>
+   <script th:src="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
   
-   <script th:src="@{/admin/js/forms_validation.js}"></script>  
+   <script th:src="@{/adminStatic/js/forms_validation.js}"></script>  
   </th:block>
  <!-- / scripts -->
 </body>
