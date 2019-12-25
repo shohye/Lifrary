@@ -148,10 +148,10 @@
                                                             </ul>
                                                         </header>
                                                         <div class="entry-content">
-                                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                                            <p th:text="${#strings.abbreviate(sl.bookInformation.biDtail,70)}"></p>
                                                         </div>
                                                         <footer class="entry-footer">
-                                                            <a class="btn btn-primary" th:href="@{/lifrary/bookDetail(bsCode=${sl.bsCode})}">Read More</a>
+                                                            <a class="btn btn-primary" th:href="@{/lifrary/bookDetail(bsCode=${sl.bsCode})}">상세보기</a>
                                                         </footer>
                                                     </div>
                                                 </div>                                       

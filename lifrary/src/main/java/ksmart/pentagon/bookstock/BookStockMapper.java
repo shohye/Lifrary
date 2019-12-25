@@ -24,8 +24,11 @@ public interface BookStockMapper {
 	public BookStock getStockDeleteDetail(String bsCode);
 			
 	// (어드민) 소장도서 인서트 ( book_stock insert/ book_information update)
+	// information에 해당도서가 있는지 확인하는 메서드
+	public BookInformation checkBookInfo(String biIsbn);
 	public void insertStock(Map<String , Object> insertMap);
 	public void updateBookInfoStock(BookInformation bookInformation);
+	// api정보 없을때 +insertBookInfoStock
 	
 	// (도서관) 검색된 소장도서 리스트 출력
 	public List<BookStock> getDetailSearchStockList(BookInformation bookInformation);

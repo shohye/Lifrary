@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ksmart.pentagon.vo.BookStock;
+
 @Controller
 public class CallNumberController {
 	
@@ -41,9 +43,21 @@ public class CallNumberController {
 		String name = callNumberService.makeBsmarkName(biName);
 		System.out.println("author=>"+author);
 		System.out.println("name=>"+name);
-		
 		writer += author + name ;
-		bsMark+=  bsAliasMark + biKdc + writer + bsSecondaryMark;
+		
+		List<String> bs = callNumberService.checkWriterMark(writer);		
+		if(bs.size() > 0) {
+			name="";
+			writer="-";
+			name = callNumberService.makeBsmarkName2(biName);
+			writer += author + name ;
+			bsMark+=  bsAliasMark + biKdc + writer + bsSecondaryMark;
+			
+		}else {
+			
+			bsMark+=  bsAliasMark + biKdc + writer + bsSecondaryMark;
+		}
+		
 		
 		map.put("author", author);
 		map.put("bsMark", bsMark);

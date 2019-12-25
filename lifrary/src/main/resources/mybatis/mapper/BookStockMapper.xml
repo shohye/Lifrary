@@ -400,6 +400,15 @@
   	</select>
 	
 <!--  (어드민) 소장도서 인서트  -->
+	<select id="checkBookInfo" resultMap="bookInfoResultMap" parameterType="String">
+  			SELECT 
+				* 
+			FROM 
+				book_information
+			where
+				bi_isbn = #{biIsbn} 		    
+  	</select>
+  	 
 	<insert id="insertStock">
 	<selectKey keyProperty="bsCode" resultType="String" order="BEFORE">
  		SELECT 

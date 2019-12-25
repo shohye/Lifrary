@@ -48,4 +48,13 @@
 				bi_author=#{biAuthor}
 			
 		</select>
+		<select id="checkWriterMark" parameterType="String" resultType="hashMap">
+			SELECT
+				bs_writer_mark
+			FROM
+				book_stock
+			WHERE
+				bs_writer_mark=#{writer}
+			
+		</select>
  	</mapper>

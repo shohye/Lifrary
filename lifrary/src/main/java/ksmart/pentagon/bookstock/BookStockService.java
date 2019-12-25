@@ -194,6 +194,11 @@ public class BookStockService {
     
     // ( 어드민 ) 소장도서 인서트
     public void insertStock(BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
+    	
+    	String biIsbn =  bookInformation.getBiIsbn();
+    	
+    	BookInformation bi =  bookStockMapper.checkBookInfo(biIsbn);
+    	
     	Map<String,Object> insertMap = new HashMap<String,Object>();
     	
     	insertMap.put("bsCode",bookStock.getBsCode());
@@ -211,8 +216,13 @@ public class BookStockService {
     	insertMap.put("bsLendState",bookStock.getBsLendState());
     	insertMap.put("bsCarryRoute",bookStock.getBsCarryRoute());  
     	
-    	bookStockMapper.insertStock(insertMap);   	
-    	bookStockMapper.updateBookInfoStock(bookInformation);
+        if(bi == null) {
+        	bookStockMapper.insertBookInfoStock(bookInformation);
+        	bookStockMapper.updateBookInfoStock(bookInformation);        	
+        }else {       	
+        	bookStockMapper.insertStock(insertMap);   	
+        	bookStockMapper.updateBookInfoStock(bookInformation);
+        }    	
     }
 	  
 	  
