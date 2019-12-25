@@ -13,7 +13,7 @@
        <result property="pStandard" column="p_standard"/>
        <result property="pPoint" column="p_point"/>
        <result property="pDate" column="p_date"/>	              
-       <result property="phCode" column="ph_code"/>	              
+       <result property="phCode" column="ph_code"/>	                          
        <result property="phPoint" column="ph_point"/>	              
        <result property="phDate" column="ph_date"/>	              
 	 </resultMap>
@@ -110,4 +110,32 @@
 		WHERE 
 			p_code=#{pCode}
  	</delete>
+ 	<select id="myPointList" parameterType="java.lang.String" resultMap="point">
+ 		SELECT
+			 p.p_name
+			,p.p_standard
+			,p.p_point
+			,ph.ph_date
+		FROM
+			point_history AS ph
+		INNER JOIN
+			point AS p
+		ON
+			ph.p_code = p.p_code		
+		WHERE
+			ph.u_id = #{uId}
+		ORDER BY ph.ph_date DESC	
+ 	</select>
+ 	<select id="myTotalPoint" parameterType="java.lang.String" resultType="java.lang.String">
+ 		SELECT
+			sum(p.p_point) AS total_point
+		FROM
+			point_history AS ph
+		INNER JOIN
+			point AS p
+		ON
+			ph.p_code = p.p_code		
+		WHERE
+			ph.u_id = #{uId}
+ 	</select>
   </mapper>

@@ -13,6 +13,7 @@ public class Point {
 	private String phCode;
 	private int phPoint;//누적포인트
 	private String phDate;
+
 	public String getpCode() {
 		return pCode;
 	}
@@ -91,6 +92,5 @@ public class Point {
 				+ uNumber + ", pName=" + pName + ", pStandard=" + pStandard + ", pPoint=" + pPoint + ", pDate=" + pDate
 				+ ", phCode=" + phCode + ", phPoint=" + phPoint + ", phDate=" + phDate + "]";
 	}
-	
 	
 }

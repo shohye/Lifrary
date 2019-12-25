@@ -2,9 +2,20 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
-    
-    
-    <th:block layout:fragment="customContents">
+   <th:block layout:fragment="libraryTitle">
+		<title>나의 포인트</title>
+   </th:block> 
+   <th:block layout:fragment="customScript">
+	   <script type="text/javascript" th:inline="javascript">
+		   	$(document).ready(function() {
+			   	$('.modal').on('hidden.bs.modal', function (e) {
+					 $(this).find('form')[0].reset()
+				});
+		   });//document.ready
+	   
+	   </script>
+   </th:block>
+   <th:block layout:fragment="customContents">
        <section class="page-banner services-banner">
             <div class="container">
                 <div class="banner-header">
@@ -59,21 +70,15 @@
                                 	<h3>나의 포인트</h3> <br>
                                 	<div class="filter-options margin-list">
                                         <div class="row">                                            
-                                            <div class="col-md-3 col-sm-3">
-                                                <select name="orderby">
-                                                    <option selected="selected">::카테고리 선택::</option>
-                                                    <option>완독 도서</option>
-                                                    <option>읽는 중인 도서</option>
-                                                    <option>노잼 도서</option>
-                                                    <option>꿀잼도서</option>
-                                                </select>
+                                            <div class="col-md-3 col-sm-3" th:if="${myTotalPoint != null}">
+                                                <h4 th:text="|총 포인트:&nbsp&nbsp${myTotalPoint}|" style="color: #ff7236;"></h4>
                                             </div>
-                                            <div class="col-md-4 col-sm-3">
-                                                <div class="filter-result">total 29</div>
+                                            <div class="col-md-3 col-sm-3" th:unless="${myTotalPoint != null}">
+                                                <h4 style="color: #ff7236;">총 포인트:&nbsp&nbsp 0</h4>
                                             </div>
                                             <div class="col-md-3 col-sm-3 pull-right">
                                                 <div >
-                                                	<a href="/lifrary/myPoint" class="btn btn-dark-gray">포인트 사용</a>
+                                                	<a href="#insertModal" class="btn btn-dark-gray" data-toggle="modal">포인트 사용</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -85,43 +90,24 @@
 					                      <th>포인트명</th>
 					                      <th>상세설명</th>
 					                      <th>포인트</th>
-					                      <th>누적포인트</th>
 					                      <th>등록일</th>
 					                    </tr>
 					                  </thead>
 							          <tbody>
-									  	<tr>	
-									      <td class="align-middle">번호</td>
-									      <td class="align-middle">포인트명</td>
-									      <td class="align-middle">상세설명</td>
-									      <td class="align-middle">포인트</td>
-									      <td class="align-middle">누적포인트</td>		
-									      <td class="align-middle">등록일</td>		
+							          	<th:block th:if="${#lists.size(myPointList)} > 0">
+									  	<tr th:each="Mpl,C : ${myPointList}">	
+									      <td class="align-middle" th:text="${C.count}">번호</td>
+									      <td class="align-middle" th:text="${Mpl.pName}">포인트명</td>
+									      <td class="align-middle" th:text="${Mpl.pStandard}">상세설명</td>
+									      <td class="align-middle" th:text="${Mpl.pPoint}">포인트</td>
+									      <td class="align-middle" th:text="${Mpl.phDate}">등록일</td>		
 									  	</tr>
-									  	<tr>	
-									      <td class="align-middle">번호</td>
-									      <td class="align-middle">포인트명</td>
-									      <td class="align-middle">상세설명</td>
-									      <td class="align-middle">포인트</td>
-									      <td class="align-middle">누적포인트</td>		
-									      <td class="align-middle">등록일</td>		
-									  	</tr>
-									  	<tr>	
-									      <td class="align-middle">번호</td>
-									      <td class="align-middle">포인트명</td>
-									      <td class="align-middle">상세설명</td>
-									      <td class="align-middle">포인트</td>
-									      <td class="align-middle">누적포인트</td>		
-									      <td class="align-middle">등록일</td>	
-									  	</tr>
-									  	<tr>	
-									      <td class="align-middle">번호</td>
-									      <td class="align-middle">포인트명</td>
-									      <td class="align-middle">상세설명</td>
-									      <td class="align-middle">포인트</td>
-									      <td class="align-middle">누적포인트</td>		
-									      <td class="align-middle">등록일</td>	
-									  	</tr>
+									  	 </th:block>
+									  	 <th:block th:unless="${#lists.size(myPointList)} > 0">
+								             <tr>
+								            	 <td colspan="7" style="height: 150px; text-align: center; vertical-align: middle;">포인트이력이 없습니다</td>
+								             </tr>	
+							             </th:block>
 									  </tbody> 
 						            </table>
                                     <nav class="navigation pagination text-center">
@@ -145,5 +131,46 @@
                 </main>
             </div>
         </div>
+        <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <form id="updateForm" class="modal-content" th:action="@{/lifrary/myCalenderUpdate}" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">포인트 사용</h4>
+		      </div>
+		      <div class="modal-body">
+		      	  <div class="row">
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-12">
+	                  		<p class="form-row form-row form-row-wide">
+		                  	   <select name="" class="form-control">
+	                              <option>::카테고리 선택::</option>
+	                              <option>책갈피(-300)</option>
+	                              <option>오천원 문화상품권(-500)</option>
+	                              <option>만원 문화상품권(-1000)</option>
+	                          </select>
+                           </p>
+	                  	</div>
+                  	 </div>
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">	
+	                       <p class="form-row form-row form-row-wide">&nbsp;사용포인트
+	                       	<input name="cTitle" class="form-control" type="text" readonly="readonly">
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">	
+	                       <p class="form-row form-row form-row-wide">&nbsp;총 포인트
+	                       	<input name="cTitle" class="form-control" type="text" readonly="readonly">
+	                       </p>
+	                  	</div>
+	                </div>
+                 </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
+		      </div>
+		    </form>
+		  </div>
+		</div>
     </th:block>
 </html>

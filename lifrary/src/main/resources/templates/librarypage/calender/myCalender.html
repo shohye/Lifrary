@@ -53,12 +53,6 @@
 	        	  $.ajax({ 
 	        	     url: '/lifrary/getMyCalenderList', 
 	        	     dataType: 'json',
-	        	   /*   data:{
-	        	    	 start: moment(info.startStr).format('YYYY-MM-DD'),
-	        	    	 end: moment(info.endStr).format('YYYY-MM-DD')
-	        	    	 start: info.start.valueOf(),
-        				 end: info.end.valueOf()
-	        	     }, */
 	        	     success: function(data) { 
 		        	     console.log(data);
 		        	      var events = [];
@@ -260,6 +254,7 @@
 		 $('.modal').on('hidden.bs.modal', function (e) {
 			
 			$(this).find('form')[0].reset()
+			$('form').find('ul').css("display","none").html('');
 			$('.modal strong').eq(1).text('');//도서명
 			$('.modal strong').eq(3).text('');//ISBN
 			$('.modal strong').eq(5).text('');//저자명
@@ -299,8 +294,8 @@
  	strong:nth-child(odd) {
  		color: #ff7236;
  	}
-</style>
-  
+	</style>
+	</th:block>
 	<th:block layout:fragment="customContents">
 
        <section class="page-banner services-banner">

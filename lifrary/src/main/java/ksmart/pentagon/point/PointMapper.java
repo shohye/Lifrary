@@ -1,6 +1,7 @@
 package ksmart.pentagon.point;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -22,6 +23,8 @@ public interface PointMapper {
 	public int updatePoint(Point point);
 	//포인트 삭제
 	public int pointDelete(String pCode);
-	
-	
+	//회원 포인트 리스트
+	public List<Point> myPointList(String uId);
+	//회원 총포인트
+	public String myTotalPoint(String uId);
 }
