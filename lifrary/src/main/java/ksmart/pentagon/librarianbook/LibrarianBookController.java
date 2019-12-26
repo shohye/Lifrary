@@ -71,6 +71,8 @@ public class LibrarianBookController {
 			}
 			
 		}
+		
+//		추천도서 등록
 		@PostMapping("/admin/bookRecommendInsert")
 		public String bookRecommendInsert(LibrarianBook librarianBook , @RequestParam(value = "isbn")String isbn,HttpSession httpSession) {
 			librarianBook.setlCode((String)httpSession.getAttribute("LIBNUM"));

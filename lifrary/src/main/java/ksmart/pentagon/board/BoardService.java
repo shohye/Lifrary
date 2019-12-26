@@ -21,13 +21,13 @@ public class BoardService {
 
 	@Autowired private BoardMapper boardmapper;
 
-//		공지사항 리스트 date 가져오기
+//		공지사항 리스트 data 가져오기
 		public List<Board> getBoard(Board board){
 			System.out.println("BoardService 파일");
 			return boardmapper.getBoard(board);
 		}
 		
-//		공지사항 date 등록 후 리스트 date 가져오기
+//		공지사항 data 등록 후 리스트 data 가져오기
 		public Board noticeInsert(Board board){
 			String max = boardmapper.maxBoardCode();
 			String returnCode = CodeUp.codeMaker(max);
@@ -35,14 +35,16 @@ public class BoardService {
 			System.out.println("service36: "+returnCode);
 			System.out.println("boardmapper.boardInsert() 메서드 실행");
 			boardmapper.boardInsert(board);
-			return boardmapper.getBoardDatail(returnCode);
+			return boardmapper.getBoardDatail(board);
 			
 		}
-//		공지사항 상세페이지 date가져오기
-		public Board getBoardDetail(String boardCode) {
-			boardmapper.boardPageViewUp(boardCode);
+//		공지사항 상세페이지 data가져오기
+		public Board getBoardDetail(Board Dboard) {
+			boardmapper.boardPageViewUp(Dboard);
 			System.out.println();
-			return boardmapper.getBoardDatail(boardCode);
+			Board board = boardmapper.getBoardDatail(Dboard);
+			System.out.println("service46 : "+board);
+			return board;
 		}
 		
 		public void setBoardUpdate(Board board) {

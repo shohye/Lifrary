@@ -42,7 +42,14 @@
 				    	<td>
 							<label><span style="color: #615F5F"><h3><a th:href="@{/admin/bookRecommendDetail(lbCode=${l.lbCode})}" th:text="| 제 목 : ${l.bookInformation.biName}|"></a></h3></span>				    		
 							<span><h5><a th:text="|줄거리 : ${l.bookInformation.biDtail}|"></a></h5></span>				    		
-							<span><h5><a th:text="|저자명 : ${l.bookInformation.biAuthor}    ㅣ        발행자 : ${l.bookInformation.biPublisher}|" style="color: #a2a4a6;"></a></h5></span>		</label>		    		
+							<span><h5><a th:text="|저자명 : ${l.bookInformation.biAuthor}    ㅣ        발행자 : ${l.bookInformation.biPublisher}|" style="color: #a2a4a6;"></a></h5></span>		</label>
+							
+							<th:block th:if="${l.lbOpen} == 'O'">		    		
+							<span class="badge badge-outline-success" >공개</span>
+							</th:block>
+							<th:block th:if="${l.lbOpen} == 'X'">		    		
+							<span class="badge badge-outline-danger" >비공개</span>
+							</th:block>
 				    	</td>
 		                  </tr>
 	                </tbody>

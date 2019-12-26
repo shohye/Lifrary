@@ -35,6 +35,7 @@
 				  var biYear = data.biYear;
 				  var biDtail = data.biDtail;
 				  var biImg = data.biImg;
+				  var bsCode = data.bsCode;
 				  
 				  $('#biImg').attr("src",biImg);
 				  $('#biName').text(biName);
@@ -42,6 +43,7 @@
 				  $('#biPublisher').text(biPublisher);
 				  $('#biYear').text(biYear);
 				  $('#biDtail').text(biDtail);
+				  $('#bsCode').text(bsCode);
 				  }
 				  
 				  
@@ -95,6 +97,7 @@
             </h2>
 			<div class="card mb-4">
 			<form th:href="@{/admin/bookRecommendInsert}" method="post">
+				<input type="hidden" id="bsCode" name="bsCode">
 				<div>
 					<table style="width: 100%;">
 						<tr style="width: 100%">

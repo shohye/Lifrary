@@ -53,7 +53,7 @@ WHERE
   	</insert>
   	
 <!-- 게시판 공지사항 상세보기 쿼리문   -->
-	<update id="boardPageViewUp" parameterType="String">
+	<update id="boardPageViewUp" parameterType="ksmart.pentagon.vo.Board">
   	UPDATE 
   	board 
   	SET 
@@ -61,12 +61,12 @@ WHERE
   	WHERE board_code = #{boardCode}
   	</update>
   	
-  	
-  	<select id="getBoardDatail" resultMap="boardNoticeList">
+<!--   	공지사항 상세 보기정보 업뎃으로 정보가져오는 쿼리문 -->
+  	<select id="getBoardDatail" resultMap="boardNoticeList" parameterType="ksmart.pentagon.vo.Board">
   	SELECT
 	*
 	FROM board AS b
-	WHERE b.board_code = #{boardCode}
+	WHERE b.board_code = #{boardCode} AND b.l_code = #{lCode}
   	</select>
   	
   	<update id="setBoardUpdate" parameterType="ksmart.pentagon.vo.Board">

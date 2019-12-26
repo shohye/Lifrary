@@ -25,6 +25,7 @@
  		<result property="biDtail" column="bi_detail"/>			<!-- 상세설명 -->
  		<result property="biImg" column="bi_img"/>				<!-- 이미지 -->
  		<result property="biDate" column="bi_date"/>			<!-- 등록일 -->
+ 		<result property="bsCode" column="bs_code"/>			<!-- 소장도서코드 -->
  	</resultMap>
  	<select id="librarianBookList" resultMap="LibrarianBookList">
 	 	SELECT

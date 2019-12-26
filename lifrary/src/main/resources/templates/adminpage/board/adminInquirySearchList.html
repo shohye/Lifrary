@@ -27,7 +27,8 @@
 	                <thead>
 	                  <tr>
 	                    <th style="width: 10%;">번호</th>
-	                    <th style="width: 60%;">제목</th>
+	                    <th style="width: 50%;">제목</th>
+	                    <th style="width: 10%;">댓글</th>
 	                    <th style="width: 10%;">작성자</th>
 	                    <th style="width: 10%;">조회수</th>
 	                    <th style="width: 10%;">작성일</th>
@@ -37,6 +38,7 @@
 		                  <tr th:each="l,pro : ${boardList}">
 		                  	<td th:text="${pro.count}"></td>
 		                  	<td><a th:href="@{/admin/inquiryDetail(boardCode=${l.boardCode})}" title="상세보기" th:utext="${l.boardTitle}"></a></td>
+		                  	<td></td>
 		                  	<td th:text="${l.uId}"></td>
 		                  	<td th:text="${l.boardPageView}"></td>
 		                  	<td th:text="${l.boardDate}"></td>
@@ -61,7 +63,7 @@
 
 <!-- script -->
 <th:block layout:fragment="pageScript">
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
   <script th:src="@{/adminStatic/vendor/libs/popper/popper.js}"></script>
   <script th:src="@{/adminStatic/vendor/js/bootstrap.js}"></script>
   <script th:src="@{/adminStatic/vendor/js/sidenav.js}"></script>

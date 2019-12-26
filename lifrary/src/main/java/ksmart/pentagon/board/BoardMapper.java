@@ -19,10 +19,10 @@ public interface BoardMapper {
 	public void boardInsert(Board board);
 	
 	//board테이블 한개 row가져오는 메서드
-	public Board getBoardDatail(String boardCode);
+	public Board getBoardDatail(Board Dboard);
 	
 	//board테이블 조회수 +1 시켜주는 메서드
-	public void boardPageViewUp(String boardCode);
+	public void boardPageViewUp(Board board);
 	
 	//board테이블 있던 date를 update하는 메서드
 	public void setBoardUpdate(Board board);

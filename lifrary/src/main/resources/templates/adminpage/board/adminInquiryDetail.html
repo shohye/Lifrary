@@ -4,14 +4,13 @@
 	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
 
 <th:block layout:fragment="adminTitle">
-	<title>사서추천 도서리스트</title>
+	<title>문의하기</title>
 </th:block>
-
 	<!-- Content -->
 	<th:block layout:fragment="adminContents">
-	<script type="text/javascript" th:src="@{/library/ckeditor/ckeditor.js}"></script>
+	<script type="text/javascript" th:src="@{/libraryStatic/ckeditor/ckeditor.js}"></script>
 		 	<h2 class="font-weight-bold py-3 mb-4">
-              <span class="text-muted font-weight-light"></span>문의하기
+              <span class="text-muted font-weight-light"></span>문의하기 상세보기
             </h2>
 			<div class="card mb-4">
 				<div style="margin: 30px;" th:each="l : ${board}" >
@@ -27,7 +26,7 @@
 				<tr>
 					<td style="width: 130px;">
 						<button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
-			   				<a th:href="@{/admin/noticeUpdate(boardCode=${l.boardCode},boardLName=${'문의하기'})}" style="color: white">
+			   				<a th:href="@{/admin/adminInquiryUpdate(boardCode=${l.boardCode},boardLName=${'문의하기'})}" style="color: white">
 			            		<span class="ion ion-md-build">수정하기</span>
 			  				</a>
 						</button>

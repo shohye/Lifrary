@@ -1,24 +1,14 @@
 package ksmart.pentagon.board;
 
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.fasterxml.jackson.annotation.JacksonInject.Value;
-
 import ksmart.pentagon.vo.Board;
 /*
  * @file   BoardController.java
@@ -105,10 +95,11 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping("/admin/noticeDetail")
-	public String adminNoticeDetail(@RequestParam(value = "boardCode", required = false ) String boardCode, Model model) {
+	public String adminNoticeDetail(Board Dboard,HttpSession session, Model model) {
 		System.out.println("공지사항 상세보기 컨트롤러 /admin/noticeDetail ##Mapping경로");
-		System.out.println("공지사항 상세보기 겟방식 코드 : " + boardCode);
-		Board board = boardService.getBoardDetail(boardCode);
+		System.out.println("공지사항 상세보기 겟방식 코드 : " + Dboard);
+		Dboard.setlCode((String)session.getAttribute("LIBNUM"));
+		Board board = boardService.getBoardDetail(Dboard);
 		System.out.println("controller96상세 Board 결과 : "+ board);
 		model.addAttribute("board", board);
 		return "adminpage/board/noticeDetail";
@@ -121,10 +112,11 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping("/admin/inquiryDetail")
-	public String adminInquiryDetail(@RequestParam(value = "boardCode", required = false ) String boardCode, Model model) {
+	public String adminInquiryDetail(Board Dboard,HttpSession session ,Model model) {
 		System.out.println("공지사항 상세보기 컨트롤러 /admin/noticeDetail ##Mapping경로");
-		System.out.println("공지사항 상세보기 겟방식 코드 : " + boardCode);
-		Board board = boardService.getBoardDetail(boardCode);
+		System.out.println("공지사항 상세보기 겟방식 코드 : " + Dboard);
+		Dboard.setlCode((String	)session.getAttribute("LIBNUM"));
+		Board board = boardService.getBoardDetail(Dboard);
 		System.out.println("controller96상세 Board 결과 : "+ board);
 		model.addAttribute("board", board);
 		return "adminpage/board/adminInquiryDetail";
@@ -137,11 +129,11 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping("/admin/noticeUpdate")
-	public String adminNoticeUpdate(@RequestParam(value = "boardCode", required = false)String boardCode, Model model) {
+	public String adminNoticeUpdate(Board Dboard,HttpSession session , Model model) {
 		System.out.println("공지사항 수정 컨트롤러 /admin/noticeUpdate ##Mapping경로");
-		System.out.println(boardCode);
-		Board board = boardService.getBoardDetail(boardCode);
-		board.setBoardCode(boardCode);
+		System.out.println("Controller143 : " + Dboard);
+		Dboard.setlCode((String)session.getAttribute("LIBNUM"));	
+		Board board = boardService.getBoardDetail(Dboard);
 		System.out.println("공지사항 수정화면으로 이동 " + board);
 		model.addAttribute("board", board);
 		return "adminpage/board/noticeUpdate";
@@ -157,7 +149,7 @@ public class BoardController {
 			System.out.println("공지사항 수정완료후 등록 /admin/noticeUpdate 경로 adminNoticeUpdate메서드 실행 ");
 			System.out.println("controller105board : " + board);
 			boardService.setBoardUpdate(board);
-			boardService.getBoardDetail(board.getBoardCode());
+			boardService.getBoardDetail(board);
 			return "adminpage/board/noticeDetail";
 	}
 	
@@ -178,7 +170,14 @@ public class BoardController {
 		return "redirect:/admin/noticeSearchList?boardLName="+URLboardLName;
 	}
 	
-	
+	@GetMapping("/admin/adminInquiryUpdate")
+	public String adminInquiryUpdate(Board Dboard,HttpSession session,Model model) {
+		Dboard.setlCode((String)session.getAttribute("LIBNUM"));
+		Board board = boardService.getBoardDetail(Dboard);
+		System.out.println("Controller187 : " + board);
+		model.addAttribute("board",board);
+		return "/adminpage/board/adminInquiryUpdate";
+	}
 	
 	
 }
