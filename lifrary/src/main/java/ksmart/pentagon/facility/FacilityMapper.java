@@ -33,4 +33,7 @@ public interface FacilityMapper {
 	//시설코드를 하나 받아  (예약시작 < 현재시간 < 예약종료) 시작과 종료 사이에 있는지 체크후 사이에 해당되는것을 가져오기
 	public List<FacilityReservation> getReservationSeat(String fCode);
 	
+	//시설코드 하나를 받아 공공시설 삭제하기
+	public void deleteFacility(String fCode);
+	
 }

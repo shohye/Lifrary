@@ -97,4 +97,11 @@
 		<![CDATA[ AND fr_reserve_date <= NOW() AND fr_end_date >= NOW() ]]>
   </select>
  
+ <delete id="deleteFacility" parameterType="String">
+ 	DELETE FROM 
+ 		facility 
+ 	WHERE 
+ 		f_code=#{fCode}
+ </delete>
+ 
   </mapper>

@@ -152,6 +152,11 @@ public class FacilityController {
 		return "adminpage/facility/facilityUpdate";
 	}
 
+	/**
+	 * 공공시설 수정후 디테일로 이동하기
+	 * @param facility
+	 * @return
+	 */
 	@PostMapping("/admin/facilityUpdate")
 	public String facilityUpdate(Facility facility) {
 		System.out.println(facility);
@@ -159,6 +164,18 @@ public class FacilityController {
 		return "redirect:/admin/facilityDetail?fCode=" + facility.getfCode();
 	}
 
+	/**
+	 * 공공시설 삭제후 리스트로 이동
+	 * @param fCode
+	 * @return
+	 */
+	@GetMapping("/admin/facilityDelete")
+	public String facilityDelete(@RequestParam(value = "fCode")String fCode) {
+		facilityService.deleteFacility(fCode);
+		return "redirect:/admin/facilityList";
+	}
+	
+	
 	@GetMapping("/admin/facilityReservationSearchList")
 	public String facilityReservationSearchList() {
 
