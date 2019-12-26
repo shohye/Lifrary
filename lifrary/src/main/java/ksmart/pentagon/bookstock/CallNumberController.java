@@ -3,6 +3,7 @@ package ksmart.pentagon.bookstock;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,10 +29,14 @@ public class CallNumberController {
 			,@RequestParam(value="biName",required=false)String biName
 			,@RequestParam(value="bsAliasMark",required=false)String bsAliasMark
 			,@RequestParam(value="biKdc",required=false)String biKdc 
-			,@RequestParam(value="bsSecondaryMark",required=false)String bsSecondaryMark   ) 
+			,@RequestParam(value="bsSecondaryMark",required=false)String bsSecondaryMark 
+			,HttpSession session) 
 	{
 		
 		Map<String,String> map = new HashMap<String, String>();
+		String lCode = (String) session.getAttribute("LIBNUM");
+		
+		System.out.println("getCallName lCode=>"+lCode);
 		
 		String bsMark ="";     // 청구기호  ex) 810-글43ㅈ
 		String author = "";    // 저자기호  ex) 글43
@@ -39,13 +44,13 @@ public class CallNumberController {
 		System.out.println("biAuthor=>"+biAuthor);
 		System.out.println("biName=>"+biName);
 		
-		author = callNumberService.makeBsmarkAuthor(biAuthor);
+		author = callNumberService.makeBsmarkAuthor(biAuthor,lCode);
 		String name = callNumberService.makeBsmarkName(biName);
 		System.out.println("author=>"+author);
 		System.out.println("name=>"+name);
 		writer += author + name ;
 		
-		List<String> bs = callNumberService.checkWriterMark(writer);		
+		List<String> bs = callNumberService.checkWriterMark(writer,lCode);		
 		if(bs.size() > 0) {
 			name="";
 			writer="-";

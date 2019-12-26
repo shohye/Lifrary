@@ -18,7 +18,7 @@ public class CallNumberService {
 	// 저작기호 = 저자기호 + 도서기호
 
     // 저자기호 구하기
-	public String makeBsmarkAuthor(String biAuthor) {	
+	public String makeBsmarkAuthor(String biAuthor, String lCode) {	
 		
 		List<Map<String, Character>> charList = makeBsmarkService.getCharList(biAuthor);
 		
@@ -44,7 +44,7 @@ public class CallNumberService {
 			// informaton 작가명
 			List<String> author = callNumberMapper.checkAuthor(biAuthor);
 			// stock 작가기호
-			List<String> authorMark = callNumberMapper.checkAuthorMark(resultStr);
+			List<String> authorMark = callNumberMapper.checkAuthorMark(resultStr,lCode);
 			String plus = "1";
 			String resultStrPlus = "";
 			
@@ -122,8 +122,8 @@ public class CallNumberService {
 	}
 	
 	
-	public List<String> checkWriterMark(String writer) {
-		return callNumberMapper.checkWriterMark(writer);
+	public List<String> checkWriterMark(String writer, String lCode) {
+		return callNumberMapper.checkWriterMark(writer,lCode);
 	}
 	
 	

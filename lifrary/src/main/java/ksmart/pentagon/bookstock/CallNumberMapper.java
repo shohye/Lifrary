@@ -19,9 +19,9 @@ public interface CallNumberMapper {
 	public List<String> checkAuthor(String biAuthor);
 	
 	//저자기호 있는지 체크
-	public List<String> checkAuthorMark(String resultStr);
+	public List<String> checkAuthorMark(String resultStr, String lCode);
 	
 	//해당 저작기호 있는지 체크
-	public List<String> checkWriterMark(String writer);
+	public List<String> checkWriterMark(String writer, String lCode);
 
 }

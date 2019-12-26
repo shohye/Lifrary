@@ -91,7 +91,8 @@
   	    				data.biAuthor = data.biAuthor.replace('글·그림: ', '');
   	    				data.biAuthor = data.biAuthor.replace('저자:', '');
   	    				data.biAuthor = data.biAuthor.replace('저자: ', '');
-  	    				data.biAuthor = data.biAuthor.replace('글·사진: ', '');
+  	    				data.biAuthor = data.biAuthor.replace('글·사진: ', ''); 
+  	    				data.biAuthor = data.biAuthor.replace('원작: ', '');
   	    			}
   	    			
   	    			var author = $.trim(data.biAuthor);
@@ -336,7 +337,7 @@
 		                <div class="form-row">
 		                	<div class="form-group col-md-3">
 		                      <label class="form-label">부차적기호</label>
-		                      <input type="text" class="form-control" id="bsSecondaryMark" name="bsSecondaryMark" placeholder="복본:c.숫자 , 권호:v.숫자">
+		                      <input type="text" class="form-control" id="bsSecondaryMark" name="bsSecondaryMark" placeholder="복본:=숫자 , 권호:-숫자">
 		                    </div>		               
 		                    <div class="form-group col-md-6">
 		                      <label class="form-label">청구기호</label>
