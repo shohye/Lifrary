@@ -2,85 +2,103 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 	<mapper namespace="ksmart.pentagon.board.BoardMapper">
- 		<resultMap type="ksmart.pentagon.vo.Board" id="boardNoticeList">
- 			<result property="boardCode" column="board_code"/>
- 			<result property="lCode" column="l_code"/>
- 			<result property="uId" column="u_id"/>
- 			<result property="boardLCode" column="board_l_code"/>
- 			<result property="boardMCode" column="board_m_code"/>
- 			<result property="boardTitle" column="board_title"/>
- 			<result property="boardPw" column="board_pw"/>
- 			<result property="boardContent" column="board_content"/>
- 			<result property="boardOpen" column="board_open"/>
- 			<result property="boardPageView" column="board_page_view"/>
- 			<result property="boardDate" column="board_date"/>
- 		</resultMap>
+<mapper namespace="ksmart.pentagon.board.BoardMapper">
+	<resultMap type="ksmart.pentagon.vo.Board" id="boardNoticeList">
+		<result property="boardCode" column="board_code" />
+		<result property="lCode" column="l_code" />
+		<result property="uId" column="u_id" />
+		<result property="boardLCode" column="board_l_code" />
+		<result property="boardMCode" column="board_m_code" />
+		<result property="boardTitle" column="board_title" />
+		<result property="boardPw" column="board_pw" />
+		<result property="boardContent" column="board_content" />
+		<result property="boardOpen" column="board_open" />
+		<result property="boardPageView" column="board_page_view" />
+		<result property="boardDate" column="board_date" />
+		<result property="boardCCode" column="board_c_code"/>
+	</resultMap>
 
-<!-- 공지사항 리스트 불러오는 쿼리문 -->
-  	<select id="getBoard" resultMap="boardNoticeList">
-  		SELECT
-*
-FROM board AS b INNER JOIN board_large AS bl
-ON b.board_l_code = bl.board_l_code
-WHERE 
-	bl.board_l_name = #{boardLName} AND b.l_code = #{lCode} ORDER BY b.board_date DESC 
-  	</select>
-  	
-<!--   	공지사항 PK MAX코드 불러오기 쿼리문 -->
-  	<select id="maxBoardCode" resultType="String">
-  		SELECT
-  		max(board_code)
-  		AS max
-  		FROM board
-  	</select>
-  	
-<!-- 공지사항 등록 쿼리문 -->
-  	<insert id="boardInsert" parameterType="ksmart.pentagon.vo.Board">
- 		INSERT INTO board
-	(board_code, 
-	l_code, 
-	u_id, 
-	board_l_code, 
-	board_m_code, 
-	board_title, 
-	board_pw, 
-	board_content, 
-	board_open, 
-	board_page_view,
-	board_date)
-	VALUES (#{boardCode}, #{lCode}, #{uId}, (SELECT board_l_code FROM board_large WHERE board_l_name= #{boardLName}), (SELECT board_m_code FROM board_medium WHERE board_m_name= #{boardMName}), #{boardTitle}, #{boardPw}, #{boardContent}, #{boardOpen}, 0, NOW())
-  	</insert>
-  	
-<!-- 게시판 공지사항 상세보기 쿼리문   -->
-	<update id="boardPageViewUp" parameterType="ksmart.pentagon.vo.Board">
-  	UPDATE 
-  	board 
-  	SET 
-  	board_page_view = board.board_page_view + 1 
-  	WHERE board_code = #{boardCode}
-  	</update>
-  	
-<!--   	공지사항 상세 보기정보 업뎃으로 정보가져오는 쿼리문 -->
-  	<select id="getBoardDatail" resultMap="boardNoticeList" parameterType="ksmart.pentagon.vo.Board">
-  	SELECT
-	*
-	FROM board AS b
-	WHERE b.board_code = #{boardCode} AND b.l_code = #{lCode}
-  	</select>
-  	
-  	<update id="setBoardUpdate" parameterType="ksmart.pentagon.vo.Board">
-  	UPDATE board
-	SET
+	<!-- 공지사항 리스트 불러오는 쿼리문 -->
+	<select id="getBoard" resultMap="boardNoticeList">
+		SELECT
+		*
+		FROM board AS b INNER JOIN board_large AS bl
+		ON b.board_l_code = bl.board_l_code
+		WHERE
+		bl.board_l_name = #{boardLName} AND b.l_code = #{lCode} ORDER BY b.board_date DESC
+	</select>
+
+	<!-- 공지사항 PK MAX코드 불러오기 쿼리문 -->
+	<select id="maxBoardCode" resultType="String">
+		SELECT
+		max(board_code)
+		AS max
+		FROM board
+	</select>
+
+	<!-- 공지사항 등록 쿼리문 -->
+	<insert id="boardInsert"
+		parameterType="ksmart.pentagon.vo.Board">
+		INSERT INTO board
+		(board_code,
+		l_code,
+		u_id,
+		board_l_code,
+		board_m_code,
+		board_title,
+		board_pw,
+		board_content,
+		board_open,
+		board_page_view,
+		board_date)
+		VALUES (#{boardCode}, #{lCode}, #{uId}, (SELECT
+		board_l_code FROM board_large WHERE board_l_name= #{boardLName}),
+		(SELECT board_m_code FROM board_medium WHERE board_m_name=
+		#{boardMName}), #{boardTitle}, #{boardPw}, #{boardContent},
+		#{boardOpen}, 0, NOW())
+	</insert>
+
+	<!-- 게시판 공지사항 상세보기 쿼리문 -->
+	<update id="boardPageViewUp"
+		parameterType="ksmart.pentagon.vo.Board">
+		UPDATE
+		board
+		SET
+		board_page_view = board.board_page_view + 1
+		WHERE board_code = #{boardCode}
+	</update>
+
+	<!-- 공지사항 상세 보기정보 업뎃으로 정보가져오는 쿼리문 -->
+	<select id="getBoardDatail" resultMap="boardNoticeList"
+		parameterType="ksmart.pentagon.vo.Board">
+		SELECT
+		*
+		FROM board AS b
+		WHERE b.board_code = #{boardCode} AND b.l_code =
+		#{lCode}
+	</select>
+
+	<update id="setBoardUpdate"
+		parameterType="ksmart.pentagon.vo.Board">
+		UPDATE board
+		SET
 		board_title= #{boardTitle},
 		board_content= #{boardContent}
-	WHERE board_code = #{boardCode}
-  	</update>
-  	
-  	<delete id="boardDelete" parameterType="String">
-  		DELETE 
-  		FROM 
-  		board 
-  		WHERE board_code= #{boardCode}
-  	</delete>
-  	</mapper>
+		WHERE board_code = #{boardCode}
+	</update>
+
+	<delete id="boardDelete" parameterType="String">
+		DELETE
+		FROM
+		board
+		WHERE board_code= #{boardCode}
+	</delete>
+
+	<select id="commentCheck" parameterType="String" resultType="String">
+		SELECT bc.board_code
+		FROM board_comment AS bc INNER JOIN board AS b
+		ON
+		bc.board_code = b.board_code
+		WHERE bc.board_code = #{boardCode}
+	</select>
+</mapper>

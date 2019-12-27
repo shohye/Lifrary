@@ -170,13 +170,13 @@ public class BoardController {
 		return "redirect:/admin/noticeSearchList?boardLName="+URLboardLName;
 	}
 	
-	@GetMapping("/admin/adminInquiryUpdate")
-	public String adminInquiryUpdate(Board Dboard,HttpSession session,Model model) {
+	@GetMapping("/admin/adminInquiryComment")
+	public String adminInquiryComment(Board Dboard,HttpSession session,Model model) {
 		Dboard.setlCode((String)session.getAttribute("LIBNUM"));
 		Board board = boardService.getBoardDetail(Dboard);
 		System.out.println("Controller187 : " + board);
 		model.addAttribute("board",board);
-		return "/adminpage/board/adminInquiryUpdate";
+		return "/adminpage/board/adminInquiryComment";
 	}
 	
 	

@@ -23,8 +23,14 @@ public class BoardService {
 
 //		공지사항 리스트 data 가져오기
 		public List<Board> getBoard(Board board){
+			List<Board> boardList = boardmapper.getBoard(board);
 			System.out.println("BoardService 파일");
-			return boardmapper.getBoard(board);
+			for(int i = 0; i < boardList.size(); i++) {
+				boardList.get(i).setBoardCCode(boardmapper.commentCheck(boardList.get(i).getBoardCode()));	
+				System.out.println("boardList.size() : "+ boardList.size());
+				System.out.println("service31 : "+ boardList.get(i).getBoardCCode());
+			}
+			return boardList;
 		}
 		
 //		공지사항 data 등록 후 리스트 data 가져오기

@@ -6,24 +6,11 @@
 <th:block layout:fragment="adminTitle">
 	<title>문의하기</title>
 </th:block>
- <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
-  <th:block layout:fragment="teamHeadScript">
-  	<script th:inline="javascript">
-  		$(document).ready(function(){
-  			$('#commetBtn').click(function(){
-  				$('#commet').html('<div><span style="color: #A2A4A6;">관리자 : [[${session.SAID}]]</span></div>')
-  				
-  			})
-  		})
-  	</script>
-  
-  </th:block>
-  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
 	<!-- Content -->
 	<th:block layout:fragment="adminContents">
 	<script type="text/javascript" th:src="@{/libraryStatic/ckeditor/ckeditor.js}"></script>
 		 	<h2 class="font-weight-bold py-3 mb-4">
-              <span class="text-muted font-weight-light"></span>문의하기 상세보기
+              <span class="text-muted font-weight-light"></span>
             </h2>
 			<div class="card mb-4">
 				<div style="margin: 30px;" th:each="l : ${board}" >
@@ -35,17 +22,13 @@
 				<div th:utext="${board.boardContent}">
 				</div>
 				<hr style="border-color: #dcdcdc;">
-				<div id="commet">
-				
-				</div>
 			<table>
 				<tr>
 					<td style="width: 130px;">
-						<button type="button" class="btn btn-primary d-block" style="margin-top: 10px;" id="commetBtn" name="commetBtn">
-			            		<span class="ion ion-md-build">댓글달기</span>
-			            	<a style="color: white">
+						<button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
+			   				<a th:href="@{/admin/adminInquiryUpdate(boardCode=${l.boardCode},boardLName=${'문의하기'})}" style="color: white">
+			            		<span class="ion ion-md-build">수정하기</span>
 			  				</a>
-<!-- 			   				<a th:href="@{/admin/adminInquiryComment(boardCode=${l.boardCode},boardLName=${'문의하기'})}" style="color: white"> -->
 						</button>
 					</td>
 					<td style="width: 130px;">

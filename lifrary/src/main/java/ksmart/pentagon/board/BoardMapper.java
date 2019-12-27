@@ -29,4 +29,7 @@ public interface BoardMapper {
 	
 	//board테이블 row값 삭제 하는 메서드
 	public void boardDelete(String boardCode);
+	
+	//board 문의 댓글 상태 확인
+	public String commentCheck(String boardCCode);
 }
