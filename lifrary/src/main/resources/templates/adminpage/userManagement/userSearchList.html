@@ -23,18 +23,41 @@
   
   <!-- /headAdd(Libs&page) --> 
   
-      <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
   <th:block layout:fragment="teamHeadScript">
   <script type="text/javascript">
-  //리스트에서 마우스 올리면 클릭해서 상세페이지로 가는 이벤트
-/*    $(document).ready(function(){
-	
-	  $('#rrow').click(function(){
-		  
-	  });
-
-  });//document.ready  */
   
+  $(document).ready(function(){ 
+	  
+	  $('#deleteBtn').click(function(){
+	   var SAID = [[${session.SAID}]]
+	   console.log(SAID);
+	   var write = $('#uPw').val();
+	   console.log(write);
+	   
+	   var request = $.ajax({
+			url:"/deleteUser",
+			method: "POST",
+			data : { 'said' : SAID , 'write' : write }, 
+			dataType: "text"
+		});		
+	   //응답완료 후 실행 - 정상처리
+		request.done(function( data ) {
+			 console.log(data);
+			 if(data == '비밀번호가 틀렸습니다'){
+				 alert(data);
+				 $('#uPw').focus();
+			 }else if(data =='회원 삭제가 완료되었습니다'){
+				 alert(data);
+				 $('#modals-default').modal('hide');						
+			 }						
+		});				 
+		request.fail(function( jqXHR, textStatus ) {
+			alert( "Request failed: " + textStatus );
+		}); 				
+ 	 });
+	  
+ });
  </script>
   </th:block>
   <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
@@ -97,17 +120,55 @@
 	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip">
 	               							<i class="ion ion-ios-copy" title="상세"></i>
 	               					</a>&nbsp;&nbsp;
-	               					<a th:href="@{#}" data-original-title="Edit" 
-	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip">
-	               							<i class="ion ion-ios-settings" title="삭제"></i>
-	               					</a>&nbsp;&nbsp;
+										<input type="hidden" name="uId" id="uId" th:value="${l.uId}">    
+	               					<button type="button" class="btn btn-default btn-xs icon-btn md-btn-flat" data-toggle="modal" data-target="#modals-default">
+                      					<i class="ion ion-ios-cut d-block"  title="삭제"></i>
+	               					</button>&nbsp;&nbsp;
 	                   		</td>
 	                   	</tr> 
 		            </tbody>
 		          </table>
-		      </div>
-           </div>
-    </div>
+			      </div>
+	           </div>
+	    	</div>
+	    	<div class="modal fade" id="modals-default">
+              <div class="modal-dialog">
+                <form class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">
+                      	회원 목록 삭제
+                      
+                      <br>
+                      <small class="text-muted">정말 삭제 하시겠습니까? 삭제하시는 경우 복구가 불가능한 목록입니다.<br>
+                                                        삭제를 위하여 본인 id의 password를 작성해 주세요.</small>
+                    </h5>
+                    <a th:href="@{/admin/userSearchList}" type="button" class="close" data-dismiss="modal" aria-label="Close">X</a>
+                  </div>
+                  <div class="modal-body">
+                  	<div class="form-row">
+                      <div class="form-group col">
+                        <label class="form-label">ID</label>
+                        <input id="uId" type="text" class="form-control" th:value="${session.SAID}">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col">
+                        <label class="form-label">PASSWORD</label>
+                        <input id="uPw" type="password" class="form-control" placeholder="********">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a th:href="@{/admin/userSearchList}" id="deleteBtn" type="button" class="btn btn-primary">삭제</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+ 
+    
+    
+    
 	</th:block>
 	<!-- / Content -->
   <!-- / scripts -->
