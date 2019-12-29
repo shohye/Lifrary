@@ -132,11 +132,13 @@ public class BookCarryService {
 	}
 	// 기부자 리스트 버튼으로 상태변경
 	//1. 기부자스티커
-	public int updateStickerO(String bdnCode) {
-		return bookCarryMapper.updateStickerO(bdnCode);
+	public int updateStickerO(String bdnCode) {		
+		bookCarryMapper.updateStickerO(bdnCode);
+		return 0;
 	}
-	public int updateStickerX(String bdnCode) {
-		return bookCarryMapper.updateStickerX(bdnCode);
+	public int updateStickerX(String bdnCode) {		
+		bookCarryMapper.updateStickerX(bdnCode);
+		return 1;
 	}
 	
 	

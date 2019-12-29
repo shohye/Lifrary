@@ -85,9 +85,16 @@ public class BookCarryController {
     }
     // 기부자 리스트 버튼으로 상태변경
  	//1. 기부자스티커
-    @RequestMapping(value="/updateStickerO", produces = "text/plain")
-    public @ResponseBody int updateStickerO(@RequestParam(value="bdnCode",required=false)String bdnCode) {
-    	int result = bookCarryService.updateStickerO(bdnCode);
+    @RequestMapping(value="/updateSticker", produces = "application/json")
+    public @ResponseBody int updateStickerO(
+    				 @RequestParam(value="bdnCode",required=false)String bdnCode
+    			   , @RequestParam(value="bdnSticker",required=false)String bdnSticker) {    	
+    	int result = 0;
+    	if( bdnSticker == "부착") {   		
+    		result = bookCarryService.updateStickerX(bdnCode);
+    	}else {    		
+    		result = bookCarryService.updateStickerO(bdnCode);
+    	}    	
     	return result;   
     }
     

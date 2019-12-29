@@ -186,6 +186,23 @@
   	
   	</select>
   	
+  	<update id="updateStickerO" parameterType="String" >
+		UPDATE 
+			book_donation
+		SET
+			 bdn_sticker      = 'O'
+		WHERE 
+			 bdn_code = #{bdnCode}
+    </update>
+    <update id="updateStickerX" parameterType="String" >
+		UPDATE 
+			book_donation
+		SET
+			bdn_sticker      = 'X'
+		WHERE 
+			bdn_code = #{bdnCode}
+    </update>
+  	
  <!-- (어드민) 주문도서 리스트에서 선택한 도서 1개의 상세 정보 가져오기(수정폼& 상세페이지 역할도 함)   --> 	
   	<select id="getOrderUpdate" resultMap="bookCarryResultMap" parameterType="String">
   		   SELECT 
@@ -235,14 +252,7 @@
 		WHERE 
 			 bdn_code = #{bdnCode};	
 	</update>
-	<update id="updateStickerO" parameterType="String" >
-		UPDATE 
-			book_donation
-		SET
-			bdn_sticker    = 'O'
-		WHERE 
-			 bdn_code = #{bdnCode};	
-	</update>
+	
 	
  <!-- (어드민) 주문도서 상세 수정 처리 1  --> 	
 	<update id="updateOrder" parameterType="ksmart.pentagon.vo.BookCarry" >
@@ -393,14 +403,14 @@
 			, bp_book_num
 			, bp_additional
 			, bp_date)
-	VALUES (   #{bpCode}
-			 , #{lCode}
-			 , #{uid}
-			 , #{biIsbn}
-			 , #{bpPrice}
-			 , #{bpBookNum}
-			 , #{bpAdditional}
-			 , CURDATE())
+		VALUES (   #{bpCode}
+			   	 , #{lCode}
+			 	 , #{uid}
+			 	 , #{biIsbn}
+			 	 , #{bpPrice}
+			 	 , #{bpBookNum}
+				 , #{bpAdditional}
+			 	 , CURDATE())
 
 	</insert>
 	
@@ -436,6 +446,7 @@
 			, '주문완료'
 			, CURDATE())
 
-	</insert>	
+	</insert>
+	
   		
   </mapper>
