@@ -149,6 +149,21 @@
 			where 
                 u_id = #{uid}
   	</select>
+ <!-- (어드민) 희망도서 상태변경 메서드   -->
+    <update id="updateProgress" parameterType="String" >
+		UPDATE 
+			 book_request
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="brProgress neq null and brProgress neq ''.toString()">
+			 br_progress         = #{brProgress},
+			</if>
+			<if test="brCancelReason neq null and brCancelReason neq ''.toString()">
+			 br_cancel_reason    = #{brCancelReason}
+			</if>
+		</trim>
+		WHERE 
+			 br_code = #{brCode}
+    </update>
   	  	
 <!-- (어드민) 주문도서리스트 전부 가져오기   -->	
   	<select id="getOrderList" resultMap="bookCarryResultMap">
@@ -163,6 +178,23 @@
                 bo.l_code = #{lCode}	
   	
   	</select>
+ <!-- (어드민) 주문도서 상태변경 -->
+  	 <update id="updateOrderState1" parameterType="String" >
+		UPDATE 
+			book_order
+		SET
+			bo_state      = '주문완료'
+		WHERE 
+			bo_code = #{boCode}
+    </update>
+    <update id="updateOrderState2" parameterType="String" >
+		UPDATE 
+			book_order
+		SET
+			bo_state      = '수령완료'
+		WHERE 
+			bo_code = #{boCode}
+    </update>
   	
  <!-- (어드민) 구매예정 도서리스트 전부 가져오기   -->	 	
   	<select id="getPurchaseList" resultMap="bookCarryResultMap" >
@@ -185,7 +217,7 @@
                 l_code = #{lCode}		
   	
   	</select>
-  	
+ <!-- (어드민) 기부신청자 스티커,명예전당 상태변경   -->  	
   	<update id="updateStickerO" parameterType="String" >
 		UPDATE 
 			book_donation
@@ -199,6 +231,22 @@
 			book_donation
 		SET
 			bdn_sticker      = 'X'
+		WHERE 
+			bdn_code = #{bdnCode}
+    </update>
+    <update id="updateHonorO" parameterType="String" >
+		UPDATE 
+			book_donation
+		SET
+			 bdn_honor_agree      = 'O'
+		WHERE 
+			 bdn_code = #{bdnCode}
+    </update>
+    <update id="updateHonorX" parameterType="String" >
+		UPDATE 
+			book_donation
+		SET
+			bdn_honor_agree      = 'X'
 		WHERE 
 			bdn_code = #{bdnCode}
     </update>

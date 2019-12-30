@@ -85,20 +85,29 @@ public class BookCarryController {
     }
     // 기부자 리스트 버튼으로 상태변경
  	//1. 기부자스티커
-    @RequestMapping(value="/updateSticker", produces = "application/json")
-    public @ResponseBody int updateStickerO(
-    				 @RequestParam(value="bdnCode",required=false)String bdnCode
-    			   , @RequestParam(value="bdnSticker",required=false)String bdnSticker) {    	
-    	int result = 0;
-    	if( bdnSticker == "부착") {   		
-    		result = bookCarryService.updateStickerX(bdnCode);
-    	}else {    		
-    		result = bookCarryService.updateStickerO(bdnCode);
-    	}    	
-    	return result;   
+    
+    @GetMapping("/updateSticker")
+    public String updateSticker(@RequestParam(value="bdnCode",required=false)String bdnCode
+    						   , @RequestParam(value="bdnSticker",required=false)String bdnSticker) {
+    	if( "O".equals(bdnSticker) ) {   		
+    		 bookCarryService.updateStickerX(bdnCode);
+    	}else if("X".equals(bdnSticker) ) {    		
+    		 bookCarryService.updateStickerO(bdnCode);
+    	}   
+    	return "redirect:/admin/bookDonationList";
     }
+    //2.명예전당
     
-    
+    @GetMapping("/updateHonor")
+    public String updateHonor(@RequestParam(value="bdnCode",required=false)String bdnCode
+    						   , @RequestParam(value="bdnHonorAgree",required=false)String bdnHonorAgree) {
+    	if( "O".equals(bdnHonorAgree) ) {   		
+    		 bookCarryService.updateHonorX(bdnCode);
+    	}else if("X".equals(bdnHonorAgree) ) {    		
+    		 bookCarryService.updateHonorO(bdnCode);
+    	}   
+    	return "redirect:/admin/bookDonationList";
+    }
     
     
     /***************************************************************************/
@@ -195,6 +204,18 @@ public class BookCarryController {
 		return "redirect:/admin/bookOrderList";   	
     }
 
+    // 주문상태 변경
+    @GetMapping("/updateOrderState")
+    public String updateOrderState(
+    		@RequestParam(value="bosState",required=false)String bosState
+    	  , @RequestParam(value="boCode",required=false)String boCode) {
+    	if( "주문완료".equals(bosState) ) {   		
+    		bookCarryService.updateOrderState2(boCode);
+    	}else if("수령완료".equals(bosState) ) {    		
+    		bookCarryService.updateOrderState1(boCode);
+    	}   
+    	return "redirect:/admin/bookOrderList";
+    }
     
     /***************************************************************************/
     
@@ -338,6 +359,20 @@ public class BookCarryController {
  		return text;
     }
     
-    
-    
+    //희망도서 상태변경 Ajax    
+    @RequestMapping(value="/updateProgress", produces = "application/json")
+    public @ResponseBody int updateProgress( Model model
+    	   , @RequestParam(value="brCode",required=false)String brCode
+    	   , @RequestParam(value="brProgress",required=false)String brProgress
+    	   , @RequestParam(value="brCancelReason",required=false)String brCancelReason) {
+    	
+    	System.out.println("brCode===========>"+brCode);
+    	System.out.println("brProgress=======>"+brProgress);
+    	System.out.println("brCancelReason===>"+brCancelReason);
+    	
+    	int result = 0;
+    	result = bookCarryService.updateProgress(brCode, brProgress, brCancelReason);
+    	
+		return result;
+    }
 }

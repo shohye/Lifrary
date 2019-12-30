@@ -53,6 +53,7 @@
 					 }else if(data =='도서 삭제가 완료되었습니다'){
 						 alert(data);
 						 $('#modals-default').modal('hide');
+						 location.reload(true);
 						
 					 }
 						
@@ -115,8 +116,12 @@
 				      <td class="align-middle" th:text="${ol.boBookNum}"></td>
 				      <td class="align-middle" th:text="${ol.boPrice}"></td>
 				      <td class="align-middle text-center"> 
-				      <span th:if="${ol.bosState eq '수령완료'}" class="badge badge-outline-success">[[${ol.bosState}]]</span>
-				      <span th:unless="${ol.bosState eq '수령완료'}" class="badge badge-outline-danger">[[${ol.bosState}]]</span>
+					      <span th:if="${ol.bosState eq '수령완료'}">
+					      	 <a th:href="@{/updateOrderState(boCode=${ol.boCode},bosState=${ol.bosState})}" class="badge badge-outline-success">[[${ol.bosState}]]</a>
+					      </span>
+					      <span th:unless="${ol.bosState eq '수령완료'}">
+					      	 <a th:href="@{/updateOrderState(boCode=${ol.boCode},bosState=${ol.bosState})}" class="badge badge-outline-danger">[[${ol.bosState}]]</a>
+					      </span>
 				      </td >				      
 				      <td th:text="${ol.boDate}"></td>
 				      <td class="align-middle text-center">

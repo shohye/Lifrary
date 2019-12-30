@@ -20,6 +20,7 @@ import ksmart.pentagon.vo.BookCate;
 import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.BookLend;
 import ksmart.pentagon.vo.BookStock;
+import ksmart.pentagon.vo.Paging;
 import ksmart.pentagon.vo.User;
 import ksmart.pentagon.vo.UserLevel;
 
@@ -115,8 +116,58 @@ public class BookStockService {
 	
 	
 	// (도서관) 검색된 소장도서 리스트 출력
-	public List<BookStock> getDetailSearchStockList(BookInformation bookInformation){
-		List<BookStock> stockList = bookStockMapper.getDetailSearchStockList(bookInformation);
+	public Map<String, Object> getDetailSearchStockList(Map<String,Object> params, int currentPage){
+		
+		// DB 행의 총 개수를 구하는 getStockAllCount() 메서드를 호출하여 int Date Type의 boardCount 변수에 대입
+        int boardCount = bookStockMapper.getStockAllCount(params);
+        System.out.println("boardCount===>"+boardCount);
+
+		
+		// 페이지에 보여줄 행의 개수
+        final int ROW_PER_PAGE = 15; 
+        
+        // 페이지에 보여줄 첫번째 페이지 번호는 1로 초기화
+        int startPageNum = 1;
+        
+        // 처음 보여줄 마지막 페이지 번호는 10
+        int lastPageNum = 10;
+        
+        // 현재 페이지가 ROW_PER_PAGE/2 보다 클 경우
+        if(currentPage > (ROW_PER_PAGE/2)) {
+            // 보여지는 페이지 첫번째 페이지 번호는 현재페이지 - ((마지막 페이지 번호/2) -1 )
+            // ex 현재 페이지가 6이라면 첫번째 페이지번호는 2
+            startPageNum = currentPage - ((lastPageNum/2)-1);
+            // 보여지는 마지막 페이지 번호는 현재 페이지 번호 + 현재 페이지 번호 - 1 
+            lastPageNum += (startPageNum-1);
+        }
+        
+        // Map Data Type 객체 참조 변수 map 선언
+        // HashMap() 생성자 메서드로 새로운 객체를 생성, 생성된 객체의 주소값을 객체 참조 변수에 할당
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        
+        // 한 페이지에 보여지는 첫번째 행은 (현재페이지 - 1) * ROW_PER_PAGE        
+        int	startRow = (currentPage - 1)*ROW_PER_PAGE;     	
+
+        // 값을 map에 던져줌
+        params.put("startRow", startRow);
+        params.put("rowPerPage", ROW_PER_PAGE);
+      
+        // 마지막 페이지번호를 구하기 위해 총 개수 / 페이지당 보여지는 행의 개수 -> 올림 처리 -> lastPage 변수에 대입
+        int lastPage = 0;
+        if ( boardCount%ROW_PER_PAGE == 0) {
+        	lastPage = (int) boardCount/ROW_PER_PAGE;
+        }else {
+        	lastPage = (int) boardCount/ROW_PER_PAGE +1;
+        }
+               
+        // 현재 페이지가 (마지막 페이지-4) 보다 같거나 클 경우
+        if(currentPage >= (lastPage-4)) {
+            // 마지막 페이지 번호는 lastPage
+            lastPageNum = lastPage;
+        }
+        
+        
+        List<BookStock> stockList = bookStockMapper.getDetailSearchStockList(params);
 		String bsCallNum = "";		
 		if(stockList!= null) {			
 			for(int i=0; i<stockList.size(); i++) {				
@@ -137,12 +188,20 @@ public class BookStockService {
 				}								
 				stockList.get(i).setBsCallNum(bsCallNum);				
 			}						
-		}		
-		return stockList;	
+		}	
+		
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", stockList);
+        resultMap.put("currentPage", currentPage);
+        resultMap.put("lastPage", lastPage);
+        resultMap.put("startPageNum", startPageNum);
+        resultMap.put("lastPageNum", lastPageNum);
+        return resultMap;	
 	}
-		
-		
-		
+
+	
+	
 		
     // (도서관) 도서 상세페이지 - 반납예정일 계산하는 메서드
     public BookLend getReturnDate(String bsCode) {
@@ -353,9 +412,8 @@ public class BookStockService {
 		return val;
 	 }  
 	  
-	  
-	  
-	  
+
+	
 	  
 	  
 	  

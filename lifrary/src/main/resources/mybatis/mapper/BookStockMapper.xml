@@ -164,7 +164,8 @@
 		where
 			bs.bs_delete_id IS NULL
 		and
-			bs.l_code=#{lCode}			
+			bs.l_code=#{lCode}
+					
 	</select>
 
 <!--  (어드민) 삭제 도서 리스트 가져오기   -->		
@@ -292,12 +293,60 @@
 		and
 			bs_book_state = '정상'
 		and
-			bi.bi_name Like CONCAT ('%',#{biName},'%')  	
+			bi.bi_name Like CONCAT ('%',#{biName},'%')
+		
+	
+	</select>
+	<!--  (도서관) 책 상태가 정상인 모든 소장도서 중 검색 조건에 맞는 도서 리스트 가져오기     -->	
+	<select id="getStockAllCount" parameterType="hashMap" 
+	resultType="java.lang.Integer">
+		SELECT 
+			 count(1)	
+        From  book_stock  bs 
+        left JOIN book_information  bi ON bs.bi_isbn = bi.bi_isbn
+        left JOIN book_cate_large bcl ON bs.bcl_code = bcl.bcl_code
+        left JOIN book_cate_medium bcm ON bs.bcm_code = bcm.bcm_code
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="bclCode != null and bclCode neq ''.toString()"> 
+			        AND bs.bcl_code=#{bclCode}		
+			</if>
+	
+			<if test="lCode != null and lCode neq ''.toString()"> 
+			        AND bs.l_code=#{lCode}		
+			</if>
+			<if test="biName != null and biName neq ''.toString()"> 
+			        AND bi.bi_name Like CONCAT ('%',#{biName},'%')		
+			</if>
+	
+			<if test="biPublisher != null and biPublisher neq ''.toString()"> 
+			        AND bi.bi_publisher Like CONCAT ('%',#{biPublisher},'%')	
+			</if>
+	
+			<if test="biIsbn != null and biIsbn neq ''.toString()"> 
+			        AND bi.bi_isbn=#{biIsbn}		
+			</if>
+	
+			<if test="biAuthor != null and biAuthor neq ''.toString()"> 
+			        AND bi.bi_author Like CONCAT ('%',#{biAuthor},'%')	
+			</if>
+	
+			<if test="biDtail != null and biDtail neq ''.toString()"> 
+			        AND bi.bi_detail Like CONCAT ('%',#{biDtail},'%')		
+			</if>
+	
+			<if test="biYearStart neq null and biYearStart neq ''
+				  and biYearEnd neq null and biYearEnd neq ''.toString()">
+				AND <![CDATA[
+	    				bi.bi_year >= CAST( #{biYearStart} AS DECIMAL)
+   				    and bi.bi_year <= CAST( #{biYearEnd} AS DECIMAL)
+				]]>
+			</if>
+		</trim>
 	</select>
 	
 <!--  (도서관) 책 상태가 정상인 모든 소장도서 중 상세 검색 조건에 맞는 도서 리스트 가져오기     -->		
 	<select id="getDetailSearchStockList" resultMap="bookStockResultMap"
-    		parameterType="ksmart.pentagon.vo.BookInformation">
+    		parameterType="hashMap">
         SELECT 
 			  bs.bs_code
 			, bs.u_id
@@ -358,6 +407,10 @@
    				    and bi.bi_year <= CAST( #{biYearEnd} AS DECIMAL)
 				]]>
 			</if>
+			<if test="startRow neq null and rowPerPage neq null"> 
+	            ORDER BY bi.bi_name 
+	            LIMIT #{startRow},#{rowPerPage}
+            </if>	
 		</trim>
 	</select>
 	

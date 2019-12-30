@@ -31,7 +31,10 @@ public interface BookStockMapper {
 	// api정보 없을때 +insertBookInfoStock
 	
 	// (도서관) 검색된 소장도서 리스트 출력
-	public List<BookStock> getDetailSearchStockList(BookInformation bookInformation);
+	public List<BookStock> getDetailSearchStockList(Map<String,Object> params);
+	// 검색 시 결과 리스트목록 갯수 세는 메서드 
+	public int getStockAllCount(Map<String,Object> params);
+	
 	
 	// (도서관) 도서 상세페이지 - 반납예정일 계산하는 메서드
 	public BookLend getReturnDate(String bsCode);

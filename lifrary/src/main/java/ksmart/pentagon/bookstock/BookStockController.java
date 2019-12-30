@@ -1,5 +1,7 @@
 package ksmart.pentagon.bookstock;
 
+import java.util.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -153,38 +155,22 @@ public class BookStockController {
     // (도서관) 상세 검색후 결과 도서 리스트
     @GetMapping("/lifrary/bookDataSearchList")
     public String bookDataDetailSearchList(Model model
-    		, @RequestParam(value="bclCode",required=false) String bclCode
-    		, @RequestParam(value="biName",required=false) String biName
-    		, @RequestParam(value="biPublisher",required=false) String biPublisher
-    		, @RequestParam(value="biIsbn",required=false) String biIsbn
-    		, @RequestParam(value="biAuthor",required=false) String biAuthor
-    		, @RequestParam(value="biDtail",required=false) String biDtail
-    		, @RequestParam(value="biYearStart",required=false) String biYearStart
-    		, @RequestParam(value="biYearEnd",required=false) String biYearEnd
+    		, @RequestParam Map<String,Object> params
+    		, @RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
     		, HttpSession session) {
     	
-    	String lCode = (String)session.getAttribute("LIBNUM");    	
+    	String lCode = (String)session.getAttribute("LIBNUM");   
+    	params.put("lCode", lCode);
+    	    	
+    	Map<String, Object> map = bookStockService.getDetailSearchStockList(params, currentPage);
     	
-    	BookInformation bookInformation = new BookInformation();
-    	bookInformation.setBclCode(bclCode);
-    	bookInformation.setlCode(lCode);
-    	bookInformation.setBiName(biName);
-    	bookInformation.setBiPublisher(biPublisher);
-    	bookInformation.setBiIsbn(biIsbn);
-    	bookInformation.setBiAuthor(biAuthor);
-    	bookInformation.setBiDtail(biDtail);
-    	bookInformation.setBiYearStart(biYearStart);
-    	bookInformation.setBiYearEnd(biYearEnd);
+    	model.addAttribute("searchList", map.get("list"));
     	
-    	model.addAttribute("searchList", bookStockService.getDetailSearchStockList(bookInformation));
-    	model.addAttribute("bclCode", bclCode);
-    	model.addAttribute("biName", biName);
-    	model.addAttribute("biIsbn", biIsbn);
-    	model.addAttribute("biPublisher", biPublisher);
-    	model.addAttribute("biAuthor", biAuthor);
-    	model.addAttribute("biDtail", biDtail);
-    	model.addAttribute("biYearStart", biYearStart);
-    	model.addAttribute("biYearEnd", biYearEnd);
+    	model.addAttribute("currentPage", map.get("currentPage"));
+    	model.addAttribute("lastPage", map.get("lastPage"));
+    	model.addAttribute("startPageNum", map.get("startPageNum"));
+    	model.addAttribute("lastPageNum", map.get("lastPageNum"));
+    	
     	
     	return "/librarypage/bookData/bookDataSearchList";
     }
@@ -195,40 +181,23 @@ public class BookStockController {
 	 * @return  /librarypage/bookData/bookDataSearchGrid
 	 * @author 신다은
 	 */
+   
     @GetMapping("/lifrary/bookDataSearchGrid")
     public String bookDataSearchGrid(Model model
-    		, @RequestParam(value="bclCode",required=false) String bclCode
-    		, @RequestParam(value="biName",required=false) String biName
-    		, @RequestParam(value="biPublisher",required=false) String biPublisher
-    		, @RequestParam(value="biIsbn",required=false) String biIsbn
-    		, @RequestParam(value="biAuthor",required=false) String biAuthor
-    		, @RequestParam(value="biDtail",required=false) String biDtail
-    		, @RequestParam(value="biYearStart",required=false) String biYearStart
-    		, @RequestParam(value="biYearEnd",required=false) String biYearEnd
+    		, @RequestParam Map<String,Object> params
+    		, @RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
     		, HttpSession session) {
     	
     	String lCode = (String)session.getAttribute("LIBNUM");    	
+    	params.put("lCode", lCode);
     	
-    	BookInformation bookInformation = new BookInformation();
-    	bookInformation.setBclCode(bclCode);
-    	bookInformation.setlCode(lCode);
-    	bookInformation.setBiName(biName);
-    	bookInformation.setBiPublisher(biPublisher);
-    	bookInformation.setBiIsbn(biIsbn);
-    	bookInformation.setBiAuthor(biAuthor);
-    	bookInformation.setBiDtail(biDtail);
-    	bookInformation.setBiYearStart(biYearStart);
-    	bookInformation.setBiYearEnd(biYearEnd);
+    	Map<String, Object> map = bookStockService.getDetailSearchStockList(params, currentPage);
+    	model.addAttribute("searchList", map.get("list"));
     	
-    	model.addAttribute("searchList", bookStockService.getDetailSearchStockList(bookInformation));
-    	model.addAttribute("bclCode", bclCode);
-    	model.addAttribute("biName", biName);
-    	model.addAttribute("biIsbn", biIsbn);
-    	model.addAttribute("biPublisher", biPublisher);
-    	model.addAttribute("biAuthor", biAuthor);
-    	model.addAttribute("biDtail", biDtail);
-    	model.addAttribute("biYearStart", biYearStart);
-    	model.addAttribute("biYearEnd", biYearEnd);
+    	model.addAttribute("currentPage", map.get("currentPage"));
+    	model.addAttribute("lastPage", map.get("lastPage"));
+    	model.addAttribute("startPageNum", map.get("startPageNum"));
+    	model.addAttribute("lastPageNum", map.get("lastPageNum"));
     	
     	return "/librarypage/bookData/bookDataSearchGrid";
     }

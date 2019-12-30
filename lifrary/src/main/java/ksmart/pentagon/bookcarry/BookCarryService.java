@@ -71,7 +71,13 @@ public class BookCarryService {
 
 		}
 	
-	
+	// 오더 주문상태 변경
+	int updateOrderState1(String boCode) {
+		return bookCarryMapper.updateOrderState1(boCode);
+	}
+	int updateOrderState2(String boCode) {
+		return bookCarryMapper.updateOrderState2(boCode);
+	}
 	
 	/*************************************************************/	
 	
@@ -132,18 +138,27 @@ public class BookCarryService {
 	}
 	// 기부자 리스트 버튼으로 상태변경
 	//1. 기부자스티커
+	
 	public int updateStickerO(String bdnCode) {		
 		bookCarryMapper.updateStickerO(bdnCode);
-		return 0;
+		return 1;
 	}
 	public int updateStickerX(String bdnCode) {		
 		bookCarryMapper.updateStickerX(bdnCode);
-		return 1;
+		return 2;
+	}
+	public int updateHonorO(String bdnCode) {
+		return bookCarryMapper.updateHonorO(bdnCode);
+	}
+	public int updateHonorX(String bdnCode) {
+		return bookCarryMapper.updateHonorX(bdnCode);
 	}
 	
-	
 	/*************************************************************/	
-	
+	//희망도서 상태변경 Ajax
+	int updateProgress(String brCode,String brProgress,String brCancelReason) {
+		return bookCarryMapper.updateProgress(brCode, brProgress, brCancelReason);
+	}
 	
 	// 희망도서신청 리스트 출력
 	public List<BookRequest> getRequestList(String lCode) {
