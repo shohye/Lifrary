@@ -615,10 +615,11 @@ public class AdminController {
     @RequestMapping(value="/deleteUser", produces = "text/plain")
     public @ResponseBody String deleteUser( Model model 
     		, @RequestParam(value="said",required=false)String said
-    		, @RequestParam(value="write",required=false)String write) {
+    		, @RequestParam(value="write",required=false)String write
+    		, @RequestParam(value="uId",required=false)String uId) {
 		System.out.println("deleteUser 관리자가 회원 삭제하기 ");
 
-    	int result = adminService.deleteUser(said, write);
+    	int result = adminService.deleteUser(said, write, uId);
     	String text ="";
     	if(result == 0) {
     		text = "비밀번호가 틀렸습니다";

@@ -120,7 +120,7 @@ public interface AdminMapper {
 	//삭제 Ajax
 	
 	//userSearchList - 관리자가 회원 삭제
-	public int deleteUser(String said, String write); 
+	public int deleteUser(String said, String write, String uId); 
 	
 	//adUserLevelList - 관리자가 회원등급 삭제
 	public int deleteLevel(String said, String write, String ulLevel); 
