@@ -199,4 +199,36 @@ public class PointController {
 		return "/librarypage/point/myPoint";
 		
 		}
+	/**
+	 * 
+	 * @param session
+	 * @brief 사용 포인트 리스트
+	 * @return 사용 포인트 리스트
+	 * @author 최지혜
+	 */
+	@RequestMapping(value="/lifrary/getUsePointList", produces = "application/json")
+	public @ResponseBody List<Point> getUsePointList(HttpSession session) {
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
+		
+		return pointService.getUsePointList(libNum);
+		}
+	
+	@PostMapping("/lifrary/myPointInsert")
+	public String myPointInsert(@RequestParam(value="pCode" ) String pCode
+								, HttpSession session
+								, RedirectAttributes redirectAttributes) {
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
+		String uId = (String) session.getAttribute("SID");
+		
+		Point point = new Point();
+		point.setlCode(libNum);
+		point.setuId(uId);
+		point.setpCode(pCode);
+		
+		redirectAttributes.addFlashAttribute("resultInsert", pointService.myPointInsert(point));
+		
+		return "redirect:/lifrary/myPointList";
+	}
 }

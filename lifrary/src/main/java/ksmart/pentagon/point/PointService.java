@@ -58,5 +58,15 @@ public class PointService {
 
 		return pointMapper.myTotalPoint(uId);
 	}
+	//사용 포인트 리스트
+	public List<Point> getUsePointList(String libNum){
+		return pointMapper.getUsePointList(libNum);
+	}
+	//포인트 사용 내역 등록
+	public int myPointInsert(Point point) {
+		
+		return pointMapper.myPointInsert(point);
+		
+	}
 
 }

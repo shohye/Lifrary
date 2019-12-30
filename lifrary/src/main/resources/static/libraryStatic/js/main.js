@@ -21,8 +21,74 @@
 
 //----------------------------------------------------------------
 
+var selectUI = function($evTarget, fn){
+	//Select List (Dropdown)
+    //--------------------------------------------------------
+	
+		
+    var selectObj = $('select');
+    var selectListObj = $('ul.select-list');
+    selectObj.each(function () {
+    	    	
+        var $this = $(this), numberOfOptions = $(this).children('option').length;
+        
+        $this.addClass('select-hidden');   
+        
+        if($evTarget != undefined){  
+        	$evTarget.parent().children('.select-styled').remove();
+        	$evTarget.parent().children('.select-list').remove();  
+        }else{        	
+        	$this.wrap('<div class="select"></div>');
+        }
+        
+        $this.after('<div class="select-styled"></div>');
+
+        var $styledSelect = $this.next('div.select-styled');
+        $styledSelect.text($this.children('option').eq(0).text());
+
+        var $list = $('<ul />', {
+            'class': 'select-list'
+        }).insertAfter($styledSelect);
+
+        for (var i = 0; i < numberOfOptions; i++) {
+            $('<li />', {
+                text: $this.children('option').eq(i).text(),
+                rel: $this.children('option').eq(i).val()
+            }).appendTo($list);
+        }
+
+        var $listItems = $list.children('li');
+
+        $styledSelect.on('click', function (e) {
+            e.stopPropagation();
+            $('div.select-styled.active').not(this).each(function () {
+                $(this).removeClass('active').next(selectListObj).hide();
+            });
+            $(this).toggleClass('active').next(selectListObj).toggle();
+        });
+
+        $listItems.on('click', function (e) {
+            e.stopPropagation();
+            $styledSelect.text($(this).text()).removeClass('active');
+            $this.val($(this).attr('rel'));
+            $list.hide();
+            if(typeof fn == 'function'){            	
+            	fn($(this).attr('rel'));
+            }
+        });
+
+        $(document).on('click', function () {
+            $styledSelect.removeClass('active');
+            $list.hide();
+        });
+
+    });
+}
+
 $(function () {
-    'use strict';
+	
+	//Select List (Dropdown)
+	selectUI();
 
     //Mobile Menu
     //--------------------------------------------------------
@@ -103,54 +169,7 @@ $(function () {
         }
     });
 
-    //Select List (Dropdown)
-    //--------------------------------------------------------
-    var selectObj = $('select');
-    var selectListObj = $('ul.select-list');
-    selectObj.each(function () {
-        var $this = $(this), numberOfOptions = $(this).children('option').length;
-
-        $this.addClass('select-hidden');
-        $this.wrap('<div class="select"></div>');
-        $this.after('<div class="select-styled"></div>');
-
-        var $styledSelect = $this.next('div.select-styled');
-        $styledSelect.text($this.children('option').eq(0).text());
-
-        var $list = $('<ul />', {
-            'class': 'select-list'
-        }).insertAfter($styledSelect);
-
-        for (var i = 0; i < numberOfOptions; i++) {
-            $('<li />', {
-                text: $this.children('option').eq(i).text(),
-                rel: $this.children('option').eq(i).val()
-            }).appendTo($list);
-        }
-
-        var $listItems = $list.children('li');
-
-        $styledSelect.on('click', function (e) {
-            e.stopPropagation();
-            $('div.select-styled.active').not(this).each(function () {
-                $(this).removeClass('active').next(selectListObj).hide();
-            });
-            $(this).toggleClass('active').next(selectListObj).toggle();
-        });
-
-        $listItems.on('click', function (e) {
-            e.stopPropagation();
-            $styledSelect.text($(this).text()).removeClass('active');
-            $this.val($(this).attr('rel'));
-            $list.hide();
-        });
-
-        $(document).on('click', function () {
-            $styledSelect.removeClass('active');
-            $list.hide();
-        });
-
-    });
+    
 
     //Facts Counter
     //--------------------------------------------------------

@@ -138,4 +138,40 @@
 		WHERE
 			ph.u_id = #{uId}
  	</select>
+	<select id="getUsePointList" parameterType="java.lang.String" resultMap="point">
+ 		SELECT
+			*
+		FROM
+			point
+		WHERE
+		 	l_code = #{libNum}
+		AND
+		<![CDATA[
+			p_point < 0	
+		]]>	
+		ORDER BY p_point DESC 
+ 	</select>
+ 	<insert id="myPointInsert" parameterType="ksmart.pentagon.vo.Point">
+ 		<selectKey keyProperty="phCode" resultType="String" order="BEFORE">
+	  	SELECT 
+		CONCAT('ph-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(ph.ph_code), '-', -1),6) 
+			, '00001' 
+			,LPAD(RIGHT(MAX(ph.ph_code),5)+1,5,'0')))) AS phCode
+		FROM 
+			point_history AS ph
+	  	</selectKey>
+ 		INSERT INTO point_history(
+			ph_code
+			, l_code
+			, p_code
+			, u_id
+			, ph_date)
+			VALUES (
+			#{phCode}
+			, #{lCode}
+			, #{pCode}
+			, #{uId}
+			, CURDATE())
+ 	</insert>
   </mapper>

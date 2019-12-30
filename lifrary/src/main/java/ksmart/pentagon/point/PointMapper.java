@@ -27,4 +27,9 @@ public interface PointMapper {
 	public List<Point> myPointList(String uId);
 	//회원 총포인트
 	public String myTotalPoint(String uId);
+	//사용 포인트 리스트
+	public List<Point> getUsePointList(String libNum);
+	//포인트 사용 내역 등록
+	public int myPointInsert(Point point);
+	
 }
