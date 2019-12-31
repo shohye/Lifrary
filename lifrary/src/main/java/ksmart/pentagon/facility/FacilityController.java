@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.pentagon.vo.Facility;
+import ksmart.pentagon.vo.FacilityReservation;
 
 /*
  * @file   FacilityController.java 
@@ -71,13 +73,25 @@ public class FacilityController {
 		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/lockerReservation";
 	}
-
+	/**
+	 * fCode를 이용하여 자리 테이블에대한 값을 가져옴.
+	 * @param fCode
+	 * @return
+	 */
 	@PostMapping("/lifrary/reservationAjax")
 	public @ResponseBody Map<String, List<String>> getSeat(@RequestParam(value = "fCode") String fCode) {
 		Map<String, List<String>> data = new HashMap<String, List<String>>(); // ajax의 결과물을 보내기 위해 Map을 만들어준다.
 		data.put("seatNum", facilityService.getReservationSeat(fCode)); //integer타입을 담는 리스트를 seatNum이라는 키값과 함께 put한다.
-		System.out.println(facilityService.getReservationSeat(fCode));
 		return data;
+	}
+	
+	@PostMapping("/lifrary/reservation")
+	public String reservation(FacilityReservation fr, @RequestParam(value = "fKinds")String fKinds, HttpServletResponse response) {
+		
+		String result = facilityService.reserveFacility(fr, fKinds);
+		System.out.println(result);
+		
+		return null;
 	}
 
 	/* ======================================================== */
@@ -118,6 +132,10 @@ public class FacilityController {
 		return "adminpage/facility/facilityDetail";
 	}
 
+	/**
+	 * 공공시설 등록 페이지로 이동
+	 * @return
+	 */
 	@GetMapping("/admin/facilityInsert")
 	public String facilityInsert() {
 		return "adminpage/facility/facilityInsert";

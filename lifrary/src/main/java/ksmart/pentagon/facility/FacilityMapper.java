@@ -36,4 +36,10 @@ public interface FacilityMapper {
 	//시설코드 하나를 받아 공공시설 삭제하기
 	public void deleteFacility(String fCode);
 	
+	//공공시설 예약 처리 fKinds를 매개변수로 받아, 예약시 시간을 다르게 해줄것.
+	public void reserveFacility(FacilityReservation fr, String fKinds);
+	
+	//공공시설 당일에 예약했는지 확인
+	public FacilityReservation getRevserVation(String uId, String libNum);
+	
 }
