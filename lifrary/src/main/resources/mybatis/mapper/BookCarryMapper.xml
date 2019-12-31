@@ -80,35 +80,41 @@
 			<result property="uEmailAgree" column="u_email_agree"/>
 	 </resultMap>
 	 
-<!-- (어드민) 수서 입력폼에서 사용하는 도서정보 가져오기 버튼 클릭시 도서정보 가져오는 메서드   -->	 
+<!-- (어드민) 수서모든 삭제   -->
+	<!-- (어드민) 삭제 위하여 사서 pw체크하는 메서드  --> 
+	 <select id="checkPw" resultMap="userResultMap" parameterType="String">
+  		SELECT 
+			  * 
+		FROM 
+			  user
+		WHERE 
+			  u_id     = #{said}
+	 	and	  u_pw 	   = #{write}		 		    
+  	 </select>
 	 <delete id="deleteOrder" parameterType="String">
 	  	DELETE 
-	 		bo.*
-	 	FROM  book_order bo INNER JOIN user u
+	 	FROM  
+	 		 book_order	 	
 	 	WHERE 
-	 		 bo.bo_code = #{boCode}
-	 	AND  u.u_id     = #{said}
-	 	AND  u.u_pw 	= #{write}				    
+	 		 bo_code = #{boCode}				    
 	 </delete>
 	 <delete id="deletePurchase" parameterType="String">
 	  	DELETE 
-	 		bp.*
-	 	FROM  book_purchase bp INNER JOIN user u
+	 	FROM  
+	 		 book_purchase	 	
 	 	WHERE 
-	 		 bp.bp_code = #{bpCode}
-	 	AND  u.u_id     = #{said}
-	 	AND  u.u_pw 	= #{write}				    
+	 		 bp_code = #{bpCode}				    
 	 </delete>
 	 <delete id="deleteDonation" parameterType="String">
 	  	DELETE 
-	 		bdn.*
-	 	FROM  book_donation bdn INNER JOIN user u
+	 	FROM  
+	 		book_donation 	 	
 	 	WHERE 
-	 		 bdn.bdn_code = #{bdnCode}
-	 	AND  u.u_id     = #{said}
-	 	AND  u.u_pw 	= #{write}				    
+	 		bdn_code = #{bdnCode}			    
 	 </delete>
 	 
+	 
+<!-- (어드민) 수서 입력폼에서 사용하는 도서정보 가져오기 버튼 클릭시 도서정보 가져오는 메서드   -->		 
 	 <select id="getBookInfo" resultMap="bookInfoResultMap" parameterType="String">
   			SELECT 
 				* 

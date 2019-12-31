@@ -77,8 +77,8 @@
 			                        </div>
 			                        <div class="col-md-4 col-sm-6">
 			                            <div class="form-group">
-			                                <label class="sr-only" for="keywords">Search by Keyword</label>
-			                                <input id="biName" name="biName" class="form-control" placeholder="Search by Keyword" type="text">
+			                                <label class="sr-only" for="keywords">자료 검색</label>
+			                                <input id="biName" name="biName" class="form-control" placeholder="검색" type="text">
 			                            </div>
 			                        </div>
 			                        <div class="col-md-2 col-sm-6">					                     
@@ -185,29 +185,37 @@
                          
                          </th:block>
                       </div>
-                     <div class="text-center" style="margin-bottom: 40px">
-					    <span><a th:href="@{/lifrary/bookDataSearchList(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
-                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=1)}">처음</a></span>
-					    
-					    <!-- 현재 페이지가 1보다 클 경우 이전 href, 1보다 작은 경우 이전 text -->
-					    <span th:if="${currentPage > 1}"><a th:href="@{/lifrary/bookDataSearchList(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
-                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=(${currentPage}-1))}">이전</a></span>
-					    <span th:unless="${currentPage > 1}" th:text="이전"></span>
-					    
-					    <!-- #number.sequence 인수로 지정한 2개의 수 범위에서 배열을 생성 -->
-					    <th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
-					        <span th:if="${currentPage == num}" th:text="${'['+ num + ']'}"></span>
-					        <a th:unless="${currentPage == num}" th:text="${'['+ num + ']'}" th:href="@{/lifrary/bookDataSearchList(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
-                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=${num})}"></a>
-					    </th:block>
-					    
-					    <!-- 현재 페이지가 마지막페이지와 같지 않을 경우 다음 href, 같을 경우 다음 text -->
-					    <span th:if="${currentPage != lastPage}"><a th:href="@{/lifrary/bookDataSearchList(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
-                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=(${currentPage}+1))}">다음</a></span>
-					    <span th:unless="${currentPage != lastPage}" th:text="다음"></span>
-					    <span><a th:href="@{/lifrary/bookDataSearchList(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
-                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=${lastPage})}">마지막</a></span>
-			       </div>
+                      <nav class="navigation pagination text-center" style="margin-bottom: 40px">
+                         <h2 class="screen-reader-text">Posts navigation</h2>
+                         <div class="nav-links">   
+                         	 <span th:if="${currentPage > 1}">
+                             	<a class="prev page-numbers" th:href="@{/lifrary/bookDataSearchList(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
+                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=(${currentPage}-1))}">
+                                     <i class="fa fa-long-arrow-left"></i> 이전
+                                 </a>
+                             </span>
+                             
+                                              
+	                         <th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+						        <span th:if="${currentPage == num}" th:text="${num}" class="page-numbers current"></span>
+						        <span th:unless="${currentPage == num}">
+						        	<a th:text="${num}" class="page-numbers" th:href="@{/lifrary/bookDataSearchList(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
+	                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=${num})}">
+	                                </a>
+						    	</span>
+						    
+						     </th:block>
+						      
+						      
+						                             
+                             <span th:if="${currentPage != lastPage}"> 
+                             	<a class="next page-numbers" th:if="${currentPage != lastPage}" th:href="@{/lifrary/bookDataSearchList(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
+                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=(${currentPage}+1))}"> 
+                                	 다음<i class="fa fa-long-arrow-right"></i>
+                             	</a>
+                            </span>
+                         </div>
+                     </nav>
                  </div>                
              </div>
          </div>

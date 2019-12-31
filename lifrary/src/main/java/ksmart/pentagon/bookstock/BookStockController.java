@@ -156,13 +156,13 @@ public class BookStockController {
     @GetMapping("/lifrary/bookDataSearchList")
     public String bookDataDetailSearchList(Model model
     		, @RequestParam Map<String,Object> params
-    		, @RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
+    		, @RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPageStr
     		, HttpSession session) {
-    	
+    	System.out.println("currentPageStr =======================> "+currentPageStr);
     	String lCode = (String)session.getAttribute("LIBNUM");   
     	params.put("lCode", lCode);
     	    	
-    	Map<String, Object> map = bookStockService.getDetailSearchStockList(params, currentPage);
+    	Map<String, Object> map = bookStockService.getDetailSearchStockList(params, currentPageStr);
     	
     	model.addAttribute("searchList", map.get("list"));
     	
@@ -185,13 +185,15 @@ public class BookStockController {
     @GetMapping("/lifrary/bookDataSearchGrid")
     public String bookDataSearchGrid(Model model
     		, @RequestParam Map<String,Object> params
-    		, @RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage
+    		, @RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPageStr
     		, HttpSession session) {
     	
+    	
+    	System.out.println("currentPageStr =======================> "+currentPageStr);
     	String lCode = (String)session.getAttribute("LIBNUM");    	
     	params.put("lCode", lCode);
     	
-    	Map<String, Object> map = bookStockService.getDetailSearchStockList(params, currentPage);
+    	Map<String, Object> map = bookStockService.getDetailSearchStockList(params, currentPageStr);
     	model.addAttribute("searchList", map.get("list"));
     	
     	model.addAttribute("currentPage", map.get("currentPage"));

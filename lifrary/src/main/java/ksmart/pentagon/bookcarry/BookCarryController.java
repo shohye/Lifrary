@@ -41,6 +41,12 @@ public class BookCarryController {
 		String lCode = (String) session.getAttribute("LIBNUM");
     	return "adminpage/bookCarry/bookDonationInsert";
     }
+	// 기부신청자 파일 업로드 화면
+	@GetMapping("/admin/bookDonationFile")
+    public String bookDonationFile(HttpSession session) {
+		String lCode = (String) session.getAttribute("LIBNUM");
+    	return "adminpage/bookCarry/bookDonationFile";
+    }
 	// 기부신청자 리스트
     @GetMapping("/admin/bookDonationList")
     public String bookDonationList(Model model,HttpSession session) {
@@ -237,6 +243,18 @@ public class BookCarryController {
     	model.addAttribute("requestDetail",bookCarryService.getRequestDatail(brCode));
     	return "adminpage/bookCarry/requestDetail";
     }
+    
+  // (도서관) 도서기부 안내 화면
+    /****
+	 * @brief  (도서관)  도서기부 안내 화면
+	 * @return  /librarypage/book/bookDonationGuide
+	 * @author 신다은
+	 */
+    @GetMapping("/lifrary/bookDonationGuide")
+    public String bookDonationGuide() {
+    	return "librarypage/book/bookDonationGuide";
+    }
+    
  // (도서관) 희망도서 신청 안내 화면
     /****
 	 * @brief  (도서관) 희망도서 신청 안내 화면
@@ -349,6 +367,9 @@ public class BookCarryController {
     	   , @RequestParam(value="write",required=false)String write
     	   , @RequestParam(value="bdnCode",required=false)String bdnCode) {
     	
+    	System.out.println( "deleteDonation said    ===> "+ said);
+    	System.out.println( "deleteDonation write   ===> "+ write);
+    	System.out.println( "deleteDonation bdnCode ===> "+ bdnCode);
     	int result = bookCarryService.deleteDonation(said, write, bdnCode);	
     	String text ="";
     	if(result == 0) {

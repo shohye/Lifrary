@@ -223,19 +223,37 @@ public class BookCarryService {
     /*************************************************************/	
 	// order 삭제
 	public int deleteOrder(String said, String write , String boCode) {
-		int result = bookCarryMapper.deleteOrder(said, write, boCode);
+		User u = bookCarryMapper.checkPw(said, write);
+		int result = 0;
+		if(u == null) {
+			
+		}else {
+			result = bookCarryMapper.deleteOrder(boCode);
+		}
 		System.out.println("deleteOrder result=>"+result);
 		return result;
 	}
 	// purchase 삭제
 	public int deletePurchase(String said, String write , String bpCode) {
-		int result = bookCarryMapper.deletePurchase(said, write, bpCode);
+		User u = bookCarryMapper.checkPw(said, write);
+		int result = 0;
+		if(u == null) {
+			
+		}else {
+			result = bookCarryMapper.deletePurchase(bpCode);
+		}
 		System.out.println("deletePurchase result=>"+result);
 		return result;
 	}
 	// purchase 삭제
 	public int deleteDonation(String said, String write , String bdnCode) {
-		int result = bookCarryMapper.deleteDonation(said, write, bdnCode);
+		User u = bookCarryMapper.checkPw(said, write);
+		int result = 0;
+		if(u == null) {
+			
+		}else {
+			result = bookCarryMapper.deleteDonation(bdnCode);
+		}
 		System.out.println("deletePurchase result=>"+result);
 		return result;
 	}
