@@ -39,14 +39,12 @@
 		                  	<td th:text="${pro.count}"></td>
 		                  	<td><a th:href="@{/admin/inquiryDetail(boardCode=${l.boardCode})}" title="상세보기" th:utext="${l.boardTitle}"></a></td>
 		                  	<td>
-		                  	<th:block th:if="${l.boardCCode} != null">
+		             		<th:block th:if="${l.boardComment} != null">
 		                  		<span class="badge badge-outline-success">답변완료</span>
 		                  	</th:block>
-		                  	<th:block th:if="${l.boardCCode} == null">
+		                  	<th:block th:if="${l.boardComment} == null">
 		                  		<span class="badge badge-outline-danger">처리중</span>
 		                  	</th:block>
-		                  		
-								
 		                  	</td>
 		                  	<td th:text="${l.uId}"></td>
 		                  	<td th:text="${l.boardPageView}"></td>

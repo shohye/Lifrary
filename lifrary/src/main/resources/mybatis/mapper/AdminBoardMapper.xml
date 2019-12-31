@@ -2,20 +2,30 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ksmart.pentagon.board.BoardMapper">
-	<resultMap type="ksmart.pentagon.vo.Board" id="boardNoticeList">
-		<result property="boardCode" column="board_code" />
-		<result property="lCode" column="l_code" />
-		<result property="uId" column="u_id" />
-		<result property="boardLCode" column="board_l_code" />
-		<result property="boardMCode" column="board_m_code" />
-		<result property="boardTitle" column="board_title" />
-		<result property="boardPw" column="board_pw" />
-		<result property="boardContent" column="board_content" />
-		<result property="boardOpen" column="board_open" />
-		<result property="boardPageView" column="board_page_view" />
-		<result property="boardDate" column="board_date" />
-		<result property="boardCCode" column="board_c_code"/>
+<mapper namespace="ksmart.pentagon.board.BoardMapper">						
+	<resultMap type="ksmart.pentagon.vo.Board" id="boardNoticeList">		
+		<result property="boardCode" column="board_code" />					<!-- 게시글내용 코드 -->	
+		<result property="lCode" column="l_code" />							<!-- 도서관코드 -->	
+		<result property="uId" column="u_id" />								<!-- 아이디 -->	
+		<result property="boardLCode" column="board_l_code" />				<!-- 게시판 대분류코드 -->
+		<result property="boardMCode" column="board_m_code" />				<!-- 게시판 중분류코드 -->	
+		<result property="boardTitle" column="board_title" />				<!-- 게시글제목 -->
+		<result property="boardPw" column="board_pw" />						<!-- 게시글비번 -->	
+		<result property="boardContent" column="board_content" />			<!-- 게시글내용 -->
+		<result property="boardOpen" column="board_open" />					<!-- 공개여부 -->
+		<result property="boardPageView" column="board_page_view" />		<!-- 조회수 -->
+		<result property="boardDate" column="board_date" />					<!-- 게시글 등록일 -->
+	</resultMap>
+	
+	<resultMap type="ksmart.pentagon.vo.BoardComment" id="comment">	
+		<result property="boardCCode" column="board_c_code"/>				<!-- 댓글코드 -->
+		<result property="lCode" column="l_code"/>							<!-- 도서관코드 -->	
+		<result property="uId" column="u_id"/>								<!-- 아이디 -->
+		<result property="boardCode" column="board_code"/>					<!-- 게시글내용 코드 -->
+		<result property="bReportCode" column="b_report_code"/>				<!-- 독후감코드 -->
+		<result property="boardCContent" column="board_c_content"/>			<!-- 내용 -->
+		<result property="boardCOpen" column="board_c_open"/>				<!-- 공개여부 -->
+		<result property="boardCDate" column="board_c_date"/>				<!-- 등록일 -->
 	</resultMap>
 
 	<!-- 공지사항 리스트 불러오는 쿼리문 -->
@@ -94,11 +104,45 @@
 		WHERE board_code= #{boardCode}
 	</delete>
 
-	<select id="commentCheck" parameterType="String" resultType="String">
-		SELECT bc.board_code
+	<select id="commentCheck" parameterType="String" resultMap="comment">
+		SELECT bc.*
 		FROM board_comment AS bc INNER JOIN board AS b
 		ON
 		bc.board_code = b.board_code
 		WHERE bc.board_code = #{boardCode}
 	</select>
+	
+	<select id="getComment" parameterType="ksmart.pentagon.vo.Board" resultMap="comment">
+		SELECT *
+		FROM board_comment
+		WHERE board_code = #{boardCode}	
+	</select>
+	
+	<insert id="inquiryCommentInsert" parameterType="ksmart.pentagon.vo.BoardComment">
+	INSERT INTO board_comment
+	(board_c_code, l_code, u_id, board_code, board_c_content, board_c_date)
+	VALUES (#{boardCCode}, #{lCode}, #{uId}, #{boardCode}, #{boardCContent}, NOW())
+	</insert>
+	
+	<select id="maxCommentCode" resultType="String">
+		SELECT
+		max(board_c_code)
+		AS max
+		FROM board_comment
+	</select>
+	
+	<update id="inquiryCommentUpdate" parameterType="ksmart.pentagon.vo.BoardComment">
+	UPDATE board_comment
+	SET
+		u_id= #{uId},
+		board_c_content= #{boardCContent},
+		board_c_date=NOW()
+	WHERE board_c_code= #{boardCCode}
+	</update>
+	
+	<delete id="inquiryCommentDelete" parameterType="ksmart.pentagon.vo.BoardComment">
+		DELETE 
+		FROM board_comment
+		WHERE board_c_code= #{boardCCode}
+	</delete>
 </mapper>

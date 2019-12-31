@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import ksmart.pentagon.vo.Board;
+import ksmart.pentagon.vo.BoardComment;
 
 @Mapper
 public interface BoardMapper {
@@ -31,5 +32,19 @@ public interface BoardMapper {
 	public void boardDelete(String boardCode);
 	
 	//board 문의 댓글 상태 확인
-	public String commentCheck(String boardCCode);
+	public BoardComment commentCheck(String boardCCode);
+	
+	//board 문의 댓글 테이블 가져오기
+	public BoardComment getComment(Board board);
+	
+	//문의 댓글 등록
+	public void inquiryCommentInsert(BoardComment boardComment);
+	
+	//문의 댓글등록 pk 맥스번호 가져오는 쿼리실행
+	public String maxCommentCode();
+	
+	//댓글 업데이트 쿼리문 실행
+	public void inquiryCommentUpdate(BoardComment boardComment);
+	
+	public void inquiryCommentDelete(BoardComment boardComment);
 }

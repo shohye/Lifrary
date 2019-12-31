@@ -9,7 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import ksmart.pentagon.vo.Board;
+import ksmart.pentagon.vo.BoardComment;
 /*
  * @file   BoardController.java
  * @name   boardController
@@ -96,11 +99,8 @@ public class BoardController {
 	 */
 	@GetMapping("/admin/noticeDetail")
 	public String adminNoticeDetail(Board Dboard,HttpSession session, Model model) {
-		System.out.println("공지사항 상세보기 컨트롤러 /admin/noticeDetail ##Mapping경로");
-		System.out.println("공지사항 상세보기 겟방식 코드 : " + Dboard);
 		Dboard.setlCode((String)session.getAttribute("LIBNUM"));
 		Board board = boardService.getBoardDetail(Dboard);
-		System.out.println("controller96상세 Board 결과 : "+ board);
 		model.addAttribute("board", board);
 		return "adminpage/board/noticeDetail";
 	}
@@ -113,11 +113,8 @@ public class BoardController {
 	 */
 	@GetMapping("/admin/inquiryDetail")
 	public String adminInquiryDetail(Board Dboard,HttpSession session ,Model model) {
-		System.out.println("공지사항 상세보기 컨트롤러 /admin/noticeDetail ##Mapping경로");
-		System.out.println("공지사항 상세보기 겟방식 코드 : " + Dboard);
 		Dboard.setlCode((String	)session.getAttribute("LIBNUM"));
-		Board board = boardService.getBoardDetail(Dboard);
-		System.out.println("controller96상세 Board 결과 : "+ board);
+		Board board = boardService.getInquiryDetail(Dboard);
 		model.addAttribute("board", board);
 		return "adminpage/board/adminInquiryDetail";
 	}
@@ -130,11 +127,8 @@ public class BoardController {
 	 */
 	@GetMapping("/admin/noticeUpdate")
 	public String adminNoticeUpdate(Board Dboard,HttpSession session , Model model) {
-		System.out.println("공지사항 수정 컨트롤러 /admin/noticeUpdate ##Mapping경로");
-		System.out.println("Controller143 : " + Dboard);
 		Dboard.setlCode((String)session.getAttribute("LIBNUM"));	
 		Board board = boardService.getBoardDetail(Dboard);
-		System.out.println("공지사항 수정화면으로 이동 " + board);
 		model.addAttribute("board", board);
 		return "adminpage/board/noticeUpdate";
 	}
@@ -179,5 +173,29 @@ public class BoardController {
 		return "/adminpage/board/adminInquiryComment";
 	}
 	
+	@PostMapping("/admin/inquiryCommentInsert")
+	public @ResponseBody BoardComment inquiryCommentInsert(BoardComment boardComment, HttpSession session) {
+		boardComment.setlCode((String)session.getAttribute("LIBNUM"));
+		boardComment.setuId((String)session.getAttribute("SAID"));
+		System.out.println("service189"+boardComment);
+		BoardComment comment = boardService.inquiryCommentInsert(boardComment);
+		return comment;
+	}
 	
+	@PostMapping("/admin/inquiryCommentUpdate")
+	public @ResponseBody BoardComment inquiryCommentUpdate(BoardComment boardComment, HttpSession session) {
+		boardComment.setuId((String)session.getAttribute("SAID"));
+		System.out.println("controller188 : " + boardComment);
+		BoardComment commentUpdate = boardService.inquiryCommentUpdate(boardComment);
+		return commentUpdate;
+	}
+	
+	@GetMapping("/admin/inquiryCommentDelete")
+	public String inquiryCommentDelete(Board board,BoardComment boardComment) {
+		System.out.println("controller195 : " + board +boardComment);
+		boardService.inquiryCommentDelete(boardComment);
+		String boardCode = board.getBoardCode();
+		String URLboardCode = URLEncoder.encode(boardCode);
+		return "redirect:/admin/inquiryDetail?boardCode="+URLboardCode;
+	}
 }
