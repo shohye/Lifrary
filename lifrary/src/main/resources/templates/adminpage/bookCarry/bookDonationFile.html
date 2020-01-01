@@ -51,6 +51,22 @@
 	    	appearance: none; }
 
 	    </style>
+	  <script type="text/javascript" th:inline="javascript">  
+	  
+	  var formData = new FormData($('#fileForm')[0]); 
+	  $.ajax({ 
+		  	type: "POST",
+		  	enctype: 'multipart/form-data', // 필수
+		  	url: '/multipartUpload', 
+		  	data: formData, 				// 필수 
+		  	processData: false,			    // 필수 
+		  	contentType: false, 			// 필수 
+		  	cache: false, 
+		  	success: 
+		  		function (result) { }, 
+		  		error: function (e) { } 
+	  });
+	  </script>
     </th:block>
 	  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
 	  
@@ -65,7 +81,7 @@
 
             <div class="card mb-4">
               <div class="card-body" t>
-                <form id="validation-form" enctype="multipart/form-data" th:action="@{/admin/bookDonationUpdate}" method="post">
+                <form id="fileForm" enctype="multipart/form-data" th:action="@{/admin/bookDonationUpdate}" method="post">
                 
                   <div class="filebox"> 
                   	<input class="upload-name"  disabled="disabled"> 
