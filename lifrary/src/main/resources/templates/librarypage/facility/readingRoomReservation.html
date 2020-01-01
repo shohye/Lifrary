@@ -38,8 +38,6 @@
 						fCode.val(selectFcode)						 //선택된것이 어떤 시설의 코드인지.
 						frSelectNum.val(selectNum)					 //선택된 자리의 번호
 						fKinds.val(selectfKinds)
-						
-						
 					}
 				} else if($(this).attr("status") == 'true' && selectSeat == false){
 					alert('자리이 이미 선택되어있습니다.')
@@ -51,6 +49,11 @@
 							$(this).css("color",'white') 				 // 선택된 자리의 글자색이 변경
 							$(this).attr("status",'true');				 // status를 false로 변경
 							selectSeat = true;
+							$('#uId').val('')							 //세션에 저장된 아이디값 넣기
+							$('#lCode').val('')						 //세션에 저장된 도서관코드 넣기
+							fCode.val('')						 //선택된것이 어떤 시설의 코드인지.
+							frSelectNum.val('')					 //선택된 자리의 번호
+							fKinds.val('')
 						}
 					}
 				}
