@@ -144,7 +144,7 @@
 		facility_reservation AS fr 
 	WHERE 
 		fr.u_id = #{uId} AND 
-		fr.l_code =  #{lCode} AND
+		fr.l_code =  #{libNum} AND
 		DATE_FORMAT(fr.fr_reserve_date, "%Y-%m-%d") = CURDATE()
  </select>
  

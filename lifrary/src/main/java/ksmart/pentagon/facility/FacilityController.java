@@ -1,5 +1,7 @@
 package ksmart.pentagon.facility;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,13 +87,28 @@ public class FacilityController {
 		return data;
 	}
 	
+	/**
+	 * 공공시설 예약 처리 메서드
+	 * 당일 예약한 기록이 있으면 등록 안되게 막기.
+	 * return 해서 경로 이동을 해도 되지만  에러.
+	 * 에러가 나도 이동은 가능. HttpServletResponse객체때문에 에러남.
+	 * @param fr
+	 * @param fKinds
+	 * @param response
+	 * @return
+	 * @throws IOException 
+	 */
 	@PostMapping("/lifrary/reservation")
-	public String reservation(FacilityReservation fr, @RequestParam(value = "fKinds")String fKinds, HttpServletResponse response) {
+	public void reservation(FacilityReservation fr, HttpServletResponse response) throws IOException {
+		System.out.println(fr + " <== reservation");
+		String result = facilityService.reserveFacility(fr);
 		
-		String result = facilityService.reserveFacility(fr, fKinds);
-		System.out.println(result);
-		
-		return null;
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('"+ result +"'); history.go(-1);</script>");
+		out.flush();
+
+		//return "/lifrary/readingRoom";
 	}
 
 	/* ======================================================== */
