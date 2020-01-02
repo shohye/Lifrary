@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+  <th:block layout:fragment="libraryTitle">
+    	<title>..:: 공지사항 ::..</title>
+  </th:block>
+	  <th:block layout:fragment="customScript">
+			    <!-- addLibs -->
+		  <script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+		  <script th:src="@{/adminStatic/vendor/libs/bootstrap-select/bootstrap-select.js}"></script>
+		
+		  <!-- addDemo -->
+		  <script th:src="@{/adminStatic/js/inquiry_list_tables.js}"></script>
+		  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+		  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
+		  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-select/bootstrap-select.css}">
+ 	 </th:block>
+  <th:block layout:fragment="customContents">
+    <style>
+	a {
+	color : #4E5155;
+	}
+	</style>
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>공지사항</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">공지사항을 읽어주세요</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">메인화면</a></li>
+                        <li>공지사항 리스트</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Layout content -->
+        <div class="layout-content">
+			<div style="padding: 190px;">
+          <!-- Content -->
+          <div class="container-fluid flex-grow-1 container-p-y" style="width: 100%">
+
+            <h4 class="font-weight-bold py-3 mb-4">
+              <span class="text-muted font-weight-light"></span>문의하기
+            </h4>
+            <div class="card">
+			<div class="card" style="padding-top: 20px; padding-left: 20px; padding-right: 20px;">
+	            <div class="table-responsive">
+	              <table class="datatables-demo table table-striped table-bordered">
+	                <thead>
+	                  <tr>
+	                    <th style="width: 10%; text-align: center;">번호</th>
+	                    <th style="width: 20%; text-align: center;">문의명</th>
+	                    <th style="width: 40%; text-align: center;">제목</th>
+	                    <th style="width: 10%; text-align: center;">작성자</th>
+	                    <th style="width: 10%; text-align: center;">조회수</th>
+	                    <th style="width: 10%; text-align: center;">작성일</th>
+	                  </tr>
+	                </thead>
+	                <tbody>
+		                  <tr>
+		                  	<td>123123123</td>
+		                  	<td>123123123</td>
+		                  	<td>123</td>
+		                  	<td>123</td>
+		                  	<td>1</td>
+		                  	<td>123</td>
+		                  </tr>
+	                </tbody>
+	              </table>
+	            </div>
+            </div>
+            </div>
+          </div>
+	   <div>
+	   		<a style="margin-top: 10px;" th:href="@{/admin/noticeInsert(boardLCode=${boardLCode},boardMCode=${boardMCode})}" value="문의하기" id="noticeInsertBtn" class="btn btn-primary">문의하기등록</a>
+	   </div>
+          </div>
+          <!-- / Content -->
+        </div>
+        <!-- Layout content -->
+	   <br>
+	   <br>
+        
+        
+       
+  </th:block>
+</html>

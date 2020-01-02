@@ -164,6 +164,13 @@ public class BoardController {
 		return "redirect:/admin/noticeSearchList?boardLName="+URLboardLName;
 	}
 	
+	/**
+	 * 문의 상세페이지 댓글 불러오는 메서드
+	 * @param Dboard
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/admin/adminInquiryComment")
 	public String adminInquiryComment(Board Dboard,HttpSession session,Model model) {
 		Dboard.setlCode((String)session.getAttribute("LIBNUM"));
@@ -173,6 +180,12 @@ public class BoardController {
 		return "/adminpage/board/adminInquiryComment";
 	}
 	
+	/**
+	 * 문의 상세페이지에서 댓글누른후 댓글입력후 
+	 * @param boardComment
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/admin/inquiryCommentInsert")
 	public @ResponseBody BoardComment inquiryCommentInsert(BoardComment boardComment, HttpSession session) {
 		boardComment.setlCode((String)session.getAttribute("LIBNUM"));
@@ -182,6 +195,12 @@ public class BoardController {
 		return comment;
 	}
 	
+	/**
+	 * 문의 상세페이지에서 댓글 수정후 수정값 리턴
+	 * @param boardComment
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/admin/inquiryCommentUpdate")
 	public @ResponseBody BoardComment inquiryCommentUpdate(BoardComment boardComment, HttpSession session) {
 		boardComment.setuId((String)session.getAttribute("SAID"));
@@ -190,6 +209,12 @@ public class BoardController {
 		return commentUpdate;
 	}
 	
+	/**
+	 * 문의 상세페이지에서 댓글 삭제누르면 삭제후 문의상세페이지로 이동
+	 * @param board
+	 * @param boardComment
+	 * @return
+	 */
 	@GetMapping("/admin/inquiryCommentDelete")
 	public String inquiryCommentDelete(Board board,BoardComment boardComment) {
 		System.out.println("controller195 : " + board +boardComment);
@@ -197,5 +222,15 @@ public class BoardController {
 		String boardCode = board.getBoardCode();
 		String URLboardCode = URLEncoder.encode(boardCode);
 		return "redirect:/admin/inquiryDetail?boardCode="+URLboardCode;
+	}
+	
+	@GetMapping("/lifrary/noticeList")
+	public String lifraryNoticeList(Model model, Board board) {
+		return "/librarypage/book/noticeList";
+	}
+	
+	@GetMapping("/lifrary/inquirySearchList")
+	public String lifraryInquirySearchList(Model model, Board board) {
+		return "/librarypage/book/inquirySearchList";
 	}
 }

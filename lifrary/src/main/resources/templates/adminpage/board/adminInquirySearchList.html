@@ -1,30 +1,42 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
-
-
-<!-- Content -->
-<th:block layout:fragment="adminContents">
-<style>
-	a {
-	color : #4E5155;
-	}
-</style>
-        <!-- Layout content -->
-        <div class="layout-content">
-
-          <!-- Content -->
-          <div class="container-fluid flex-grow-1 container-p-y" style="width: 100%">
-
-            <h4 class="font-weight-bold py-3 mb-4">
-              <span class="text-muted font-weight-light"></span>문의하기
-            </h4>
-            <div class="card">
-			<div class="card" style="padding-top: 20px; padding-left: 20px; padding-right: 20px;">
-	            <div class="table-responsive">
-	              <table class="datatables-demo table table-striped table-bordered">
-	                <thead>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+ <!-- headAdd(Libs&page) -->
+  <th:block layout:fragment="adminTitle">
+	<title>문의 사항</title>
+  </th:block>  
+  <th:block layout:fragment="adminHeadAdd">
+  <!-- addLibs -->  
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-select/bootstrap-select.css}">
+  </th:block>
+  
+  <!-- /headAdd(Libs&page) --> 
+  
+  <!-- teamScript -->
+  <th:block layout:fragment="teamHeadScript">
+  <script type="text/javascript" th:inline="javascript">
+  
+  </script>
+  
+  </th:block>
+  <!-- / teamScript  -->
+  
+  <!-- Content -->
+  <th:block layout:fragment="adminContents">
+	<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+		<div>문의 사항</div>
+		<button type="button" class="btn btn-primary rounded-pill d-block" style="margin-right: 100px;">
+			<a class="ion ion-md-add" style="color: #FFFFFF" th:href="@{/admin/noticeInsert(boardLCode=${boardLCode},boardMCode=${boardMCode})}" id="noticeInsertBtn">문의 등록</a>
+		</button>
+	</h4>
+	<div class="card">
+	    <div class="card-datatable table-responsive">
+	      <table class="datatables-demo table table-striped table-bordered">
+	        <thead>
 	                  <tr>
 	                    <th style="width: 10%;">번호</th>
 	                    <th style="width: 50%;">제목</th>
@@ -52,38 +64,37 @@
 		                  </tr>
 	                </tbody>
 	              </table>
-	            </div>
-            </div>
-          </div>
-	   <div>
+	    		</div>
+	    		<div>
 	   		<a style="margin-top: 10px;" th:href="@{/admin/noticeInsert(boardLCode=${boardLCode},boardMCode=${boardMCode})}" value="문의하기" id="noticeInsertBtn" class="btn btn-primary">문의하기등록</a>
 	   </div>
-          </div>
-          <!-- / Content -->
+          
         </div>
         <!-- Layout content -->
 	   <br>
 	   <br>
-</th:block>
+	    	 </div>
+	
+  </th:block>
+  <!-- Content -->
+ 
+  <!-- / scripts -->
+  <th:block layout:fragment="pageScript">
+  
+  <!-- addLibs -->
+  <script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+  <script th:src="@{/adminStatic/vendor/libs/bootstrap-select/bootstrap-select.js}"></script>
 
-<!-- / Content -->
+  <!-- addDemo -->
+  <script th:src="@{/adminStatic/js/inquiry_list_tables.js}"></script>
+  </th:block>
+   
+  <!-- teamScript  -->
+  <th:block layout:fragment="adminFootScript">
 
-<!-- script -->
-<th:block layout:fragment="pageScript">
-  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
-  <script th:src="@{/adminStatic/vendor/libs/popper/popper.js}"></script>
-  <script th:src="@{/adminStatic/vendor/js/bootstrap.js}"></script>
-  <script th:src="@{/adminStatic/vendor/js/sidenav.js}"></script>
+  </th:block>
+  <!--/ teamScript -->
 
-  <!-- Libs -->
-  <script th:src="@{/adminStatic/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
-  <script th:src="@{/adminStatic/vendor/libs/datatables/datatables2.js}"></script>
-  <!-- Demo -->
-  <script th:src="@{/adminStatic/js/demo.js}"></script>
-  <script th:src="@{/adminStatic/js/tables_datatables.js}"></script>
-</th:block>
-<!-- /script -->
-
-
-
+  <!-- / scripts -->
+  
 </html>
