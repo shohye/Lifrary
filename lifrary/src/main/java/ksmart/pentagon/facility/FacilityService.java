@@ -57,24 +57,25 @@ public class FacilityService {
 		}
 		return frStringList;
 	}
+	
 
 	// 공공시설 예약 처리
 	public String reserveFacility(FacilityReservation fr) {
-		List<String> frResult = getReserVation(fr.getuId(), fr.getlCode()); // 결과값이 나오면 오늘 한번이라도 예약한것.
+		List<String> frResult = getReserVation(fr.getuId(), fr.getlCode(), fr.getfKinds()); // 결과값이 나오면 오늘 한번이라도 예약한것.
 		String result = null;
 		if (frResult.size() == 0) { // 객체가 없으면 오늘 예약을 한번도 안한것.
 			facilityMapper.reserveFacility(fr);
 			result = "예약을 완료하였습니다.";
 		} else {
-			result = "당일 예약을 한 기록이 있어 예약이 불가합니다.";
+			result = "예약을 한 기록이 있어 예약이 불가합니다.";
 		}
 		return result;
 	}
 
 	// 공공시설 당일에 예약했는지 확인 , 공공시설 예약 처리에서 메서드를 사용합니다.
-	public List<String> getReserVation(String uId, String libNum) {
-		System.out.println(uId + "     " + libNum);
-		List<String> frResult = facilityMapper.getRevserVation(uId, libNum);
+	public List<String> getReserVation(String uId, String libNum, String fKinds) {
+		System.out.println(uId + "     " + libNum + "     " + fKinds);
+		List<String> frResult = facilityMapper.getRevserVation(uId, libNum, fKinds);
 		return frResult;
 	}
 }

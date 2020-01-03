@@ -35,7 +35,7 @@
   <!-- 시설종류가 xx 인것의 리스트를 출력 -->
   <select id="getFacilityList" parameterType="String" resultMap="FResultMap">
   	SELECT 
-	*
+		*
 	FROM 
 		facility
 	WHERE
@@ -138,13 +138,15 @@
  
  <!-- 당일 예약을 1회라도 했는지 찾는 쿼리문. 1회라도 있으면 당일 예약은 더이상 불가능. -->
  <select id="getRevserVation" resultMap="reserveResultMap">
- 	SELECT 
+ 	SELECT
 		fr.u_id as uId
-	FROM 
-		facility_reservation AS fr 
-	WHERE 
-		fr.u_id = #{uId} AND 
+	FROM
+		facility_reservation AS fr INNER JOIN facility AS f
+	ON fr.f_code = f.f_code
+	WHERE
+		fr.u_id = #{uId} AND
 		fr.l_code =  #{libNum} AND
+		f.f_kinds = #{fKinds} AND
 		DATE_FORMAT(fr.fr_reserve_date, "%Y-%m-%d") = CURDATE()
  </select>
  
