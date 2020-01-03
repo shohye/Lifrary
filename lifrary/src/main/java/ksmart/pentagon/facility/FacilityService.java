@@ -57,7 +57,6 @@ public class FacilityService {
 		}
 		return frStringList;
 	}
-	
 
 	// 공공시설 예약 처리
 	public String reserveFacility(FacilityReservation fr) {
@@ -77,5 +76,10 @@ public class FacilityService {
 		System.out.println(uId + "     " + libNum + "     " + fKinds);
 		List<String> frResult = facilityMapper.getRevserVation(uId, libNum, fKinds);
 		return frResult;
+	}
+
+	// 공공시설 예약 리스트 출력
+	public List<FacilityReservation> getFacilityReservation(String fKinds, String libNum) {
+		return facilityMapper.getFacilityReservation(fKinds, libNum);
 	}
 }

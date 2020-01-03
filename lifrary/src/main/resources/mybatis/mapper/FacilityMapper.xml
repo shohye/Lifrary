@@ -32,6 +32,7 @@
   	<result property="frEndDate" column="fr_end_date"/>
   	<result property="fKinds" column="f_kinds"/>
   </resultMap>  
+  
   <!-- 시설종류가 xx 인것의 리스트를 출력 -->
   <select id="getFacilityList" parameterType="String" resultMap="FResultMap">
   	SELECT 
@@ -44,6 +45,22 @@
 		AND f_kinds = #{fKinds}
 	</if>
   </select>
+  
+  <!-- 시설종류가 XX인것의 예약 리스트 출력 -->
+  <select id="getFacilityReservation" parameterType="String" resultMap="reserveResultMap">
+  SELECT
+		fr.*,
+		f.f_kinds
+	FROM
+		facility_reservation AS fr INNER JOIN facility AS f
+	ON fr.f_code = f.f_code
+	WHERE
+		fr.l_code = #{libNum}
+	<if test="fKinds != '전체'">
+		AND f_kinds = #{fKinds}
+	</if>
+  </select>
+  
   
   <!-- fCode 1개를 조회하여 상세정보 출력 -->
   <select id="getFacility" parameterType="String" resultMap="FResultMap">

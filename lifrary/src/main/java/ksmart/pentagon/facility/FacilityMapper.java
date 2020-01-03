@@ -41,5 +41,8 @@ public interface FacilityMapper {
 
 	// 공공시설 당일에 예약했는지 확인
 	public List<String> getRevserVation(String uId, String libNum, String fKinds);
+	
+	// 공공시설 예약 리스트 출력
+	public List<FacilityReservation> getFacilityReservation(String fKinds, String libNum);
 
 }

@@ -75,40 +75,41 @@ public class FacilityController {
 		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/lockerReservation";
 	}
+
 	/**
 	 * fCode를 이용하여 자리 테이블에대한 값을 가져옴.
+	 * 
 	 * @param fCode
 	 * @return
 	 */
 	@PostMapping("/lifrary/reservationAjax")
 	public @ResponseBody Map<String, List<String>> getSeat(@RequestParam(value = "fCode") String fCode) {
 		Map<String, List<String>> data = new HashMap<String, List<String>>(); // ajax의 결과물을 보내기 위해 Map을 만들어준다.
-		data.put("seatNum", facilityService.getReservationSeat(fCode)); //integer타입을 담는 리스트를 seatNum이라는 키값과 함께 put한다.
+		data.put("seatNum", facilityService.getReservationSeat(fCode)); // integer타입을 담는 리스트를 seatNum이라는 키값과 함께 put한다.
 		return data;
 	}
-	
+
 	/**
-	 * 공공시설 예약 처리 메서드
-	 * 당일 예약한 기록이 있으면 등록 안되게 막기.
-	 * return 해서 경로 이동을 해도 되지만  에러.
-	 * 에러가 나도 이동은 가능. HttpServletResponse객체때문에 에러남.
+	 * 공공시설 예약 처리 메서드 당일 예약한 기록이 있으면 등록 안되게 막기. return 해서 경로 이동을 해도 되지만 에러. 에러가 나도
+	 * 이동은 가능. HttpServletResponse객체때문에 에러남.
+	 * 
 	 * @param fr
 	 * @param fKinds
 	 * @param response
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@PostMapping("/lifrary/reservation")
 	public void reservation(FacilityReservation fr, HttpServletResponse response) throws IOException {
 		System.out.println(fr + " <== reservation");
 		String result = facilityService.reserveFacility(fr);
-		
+
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		out.println("<script>alert('"+ result +"'); history.go(-1);</script>");
+		out.println("<script>alert('" + result + "'); history.go(-1);</script>");
 		out.flush();
 
-		//return "/lifrary/readingRoom";
+		// return "/lifrary/readingRoom";
 	}
 
 	/* ======================================================== */
@@ -151,6 +152,7 @@ public class FacilityController {
 
 	/**
 	 * 공공시설 등록 페이지로 이동
+	 * 
 	 * @return
 	 */
 	@GetMapping("/admin/facilityInsert")
@@ -189,6 +191,7 @@ public class FacilityController {
 
 	/**
 	 * 공공시설 수정후 디테일로 이동하기
+	 * 
 	 * @param facility
 	 * @return
 	 */
@@ -201,19 +204,22 @@ public class FacilityController {
 
 	/**
 	 * 공공시설 삭제후 리스트로 이동
+	 * 
 	 * @param fCode
 	 * @return
 	 */
 	@GetMapping("/admin/facilityDelete")
-	public String facilityDelete(@RequestParam(value = "fCode")String fCode) {
+	public String facilityDelete(@RequestParam(value = "fCode") String fCode) {
 		facilityService.deleteFacility(fCode);
 		return "redirect:/admin/facilityList";
 	}
-	
-	
-	@GetMapping("/admin/facilityReservationSearchList")
-	public String facilityReservationSearchList() {
 
+	@GetMapping("/admin/facilityReservationSearchList")
+	public String facilityReservationSearchList(
+			@RequestParam(value = "fKinds", required = false, defaultValue = "전체") String fKinds, HttpSession session,	Model model) {
+		String libNum = (String) session.getAttribute("LIBNUM");
+		model.addAttribute("facilityReserveList", facilityService.getFacilityReservation(fKinds, libNum));
+		model.addAttribute("nowKinds", fKinds);
 		return "adminpage/facility/facilityReservationSearchList";
 	}
 
