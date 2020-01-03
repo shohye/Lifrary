@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.bookstock.FileMapper">
+	  <resultMap type="ksmart.pentagon.vo.DonationFile" id="donationFileResultMap">
+			<!-- db -->
+			<result property="fileCode"       column="file_code"/>
+			<result property="lCode"     	  column="l_code"/>
+			<result property="uId"            column="u_id"/>
+			<result property="fileName"       column="file_name"/>
+			<result property="fileOriName"    column="file_ori_name"/>
+			<result property="fileUrl"        column="file_url"/>	
+	   </resultMap>
+  
+ 	</mapper>

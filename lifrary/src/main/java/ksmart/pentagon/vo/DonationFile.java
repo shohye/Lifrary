@@ -4,11 +4,18 @@ public class DonationFile {
 	
 	private String fileCode;  
 	private String uId;          // 파일 올린 사서 id
+	private String lCode; 		 // 도서관 코드
     private String fileName;     // 저장할 파일
     private String fileOriName;  // 실제 파일
-    private String fileUrl;
+    private String fileUrl;      // 파일 위치
     
     
+	public String getlCode() {
+		return lCode;
+	}
+	public void setlCode(String lCode) {
+		this.lCode = lCode;
+	}
 	public String getFileCode() {
 		return fileCode;
 	}
