@@ -82,4 +82,10 @@ public class FacilityService {
 	public List<FacilityReservation> getFacilityReservation(String fKinds, String libNum) {
 		return facilityMapper.getFacilityReservation(fKinds, libNum);
 	}
+
+	// myPage 내가 신청한 공공시설 리스트 보기.
+	public List<FacilityReservation> getFacilityReservationList(String uId, String libNum, String fKinds) {
+		
+		return facilityMapper.getFacilityReservationList(uId, libNum, fKinds);
+	}
 }

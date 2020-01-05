@@ -11,6 +11,8 @@ public class FacilityReservation {
 	private String frReserveDate;
 	private String frEndDate;
 	private String fKinds;
+	private String fName;
+	private String fLocation;
 
 	public String getFrCode() {
 		return frCode;
@@ -92,11 +94,28 @@ public class FacilityReservation {
 		this.fKinds = fKinds;
 	}
 
+	public String getfName() {
+		return fName;
+	}
+
+	public void setfName(String fName) {
+		this.fName = fName;
+	}
+
+	public String getfLocation() {
+		return fLocation;
+	}
+
+	public void setfLocation(String fLocation) {
+		this.fLocation = fLocation;
+	}
+
 	@Override
 	public String toString() {
 		return "FacilityReservation [frCode=" + frCode + ", lCode=" + lCode + ", uId=" + uId + ", fCode=" + fCode
 				+ ", frSelectNum=" + frSelectNum + ", frTel=" + frTel + ", frExtension=" + frExtension
-				+ ", frReserveDate=" + frReserveDate + ", frEndDate=" + frEndDate + ", fKinds=" + fKinds + "]";
+				+ ", frReserveDate=" + frReserveDate + ", frEndDate=" + frEndDate + ", fKinds=" + fKinds + ", fName="
+				+ fName + ", fLocation=" + fLocation + "]";
 	}
 
 }

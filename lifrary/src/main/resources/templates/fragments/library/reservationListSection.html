@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+
+		
+<!-- 검색 ajax처리 -->
+<th:block layout:fragment="customContents">
+	        
+        <!-- Start: Reservation List Section -->
+	<section class ="section-padding" th:fragment="ReservationListSectionFragment">
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="main-news-list">
+                        <div class="container">
+                            <div class="row myReserve">
+                                <div class="col-md-9 col-md-push-3 news-events-list-view" style="padding: 20px;">
+                                   
+                                    <style>
+										.myTable td, th{
+											text-align: center;
+										}
+									</style>
+                                   <!-- 프로그램 리스트 반복 출력 --> 
+                                   <th:block th:if="${fKinds} == '열람실'">
+                                   <h3>열람실 신청 내역</h3> <br>
+                                   		<table id="myTable" class="datatables-demo table table-striped table-bordered myTable">                         
+						                  <thead>
+						                    <tr>
+						                        <th>번호</th>
+						                        <th>시설명</th>
+												<th>시설위치</th>
+												<th>연장 여부</th>
+												<th>사용 시작시간</th>             
+												<th>사용 종료시간</th>          
+												<th>연장</th>          
+												<th>퇴실</th>          
+						                    </tr>
+						                  </thead>
+							                  <tbody>
+								                  <th:block th:if="${#lists.size(frList)} > 0">
+												    <tr th:each="frList, fl : ${frList}">	
+													      <td th:text="${fl.count}"></td>
+													      <td th:text="${frList.fName}"></td>
+													      <td th:text="${frList.fLocation}"></td>
+													      <td th:text="${frList.frExtension}"></td>
+													      <td th:text="${frList.frReserveDate}"></td>
+													      <td th:text="${frList.frEndDate}"></td>										 		
+													      <td><a th:href="@{#}">연장하기</a></td>										 		
+													      <td><a th:href="@{#}">퇴실하기</a></td>										 		
+												    </tr>
+												   </th:block>
+												   <th:block th:unless="${#lists.size(frList)} > 0">
+											             <tr>
+											            	 <td colspan="9" style="height: 150px; text-align: center; vertical-align: middle;">신청한 내역이 없습니다</td>
+											             </tr>	
+										           </th:block>
+											  </tbody> 
+						                </table>
+                                    </th:block>
+                                   <th:block th:if="${fKinds} == '스터디룸'">
+                                   <h3>스터디룸 신청 내역</h3> <br>
+                                   		<table id="myTable" class="datatables-demo table table-striped table-bordered myTable">                         
+						                  <thead>
+						                    <tr>
+						                        <td>번호</td>
+						                        <td>시설명</td>
+												<td>시설위치</td>
+												<td>사용 시작시간</td>             
+												<td>사용 종료시간</td>          
+												<td>퇴실</td>          
+						                    </tr>
+						                  </thead>
+							                  <tbody>
+								                  <th:block th:if="${#lists.size(frList)} > 0">
+												    <tr th:each="frList, fl : ${frList}">	
+													      <td th:text="${fl.count}"></td>
+													      <td th:text="${frList.fName}"></td>
+													      <td th:text="${frList.fLocation}"></td>
+													      <td th:text="${frList.frReserveDate}"></td>
+													      <td th:text="${frList.frEndDate}"></td>										 		
+													      <td><a th:href="@{#}">퇴실하기</a></td>										 		
+												    </tr>
+												   </th:block>
+												   <th:block th:unless="${#lists.size(frList)} > 0">
+											             <tr>
+											            	 <td colspan="9" style="height: 150px; text-align: center; vertical-align: middle;">신청한 내역이 없습니다</td>
+											             </tr>	
+										           </th:block>
+											  </tbody> 
+						                </table>
+                                    </th:block>
+                                   <th:block th:if="${fKinds} == '강연실'">
+                                   <h3>강연실 신청 내역</h3> <br>
+                                   		<table id="myTable" class="datatables-demo table table-striped table-bordered myTable">                         
+						                  <thead>
+						                    <tr>
+						                        <td>번호</td>
+						                        <td>시설명</td>
+												<td>시설위치</td>
+												<td>사용 시작시간</td>             
+												<td>사용 종료시간</td>          
+												<td>퇴실</td>          
+						                    </tr>
+						                  </thead>
+							                  <tbody>
+								                  <th:block th:if="${#lists.size(frList)} > 0">
+												    <tr th:each="frList, fl : ${frList}">	
+													      <td th:text="${fl.count}"></td>
+													      <td th:text="${frList.fName}"></td>
+													      <td th:text="${frList.fLocation}"></td>
+													      <td th:text="${frList.frReserveDate}"></td>
+													      <td th:text="${frList.frEndDate}"></td>										 		
+													      <td><a th:href="@{#}">퇴실하기</a></td>										 		
+												    </tr>
+												   </th:block>
+												   <th:block th:unless="${#lists.size(frList)} > 0">
+											             <tr>
+											            	 <td colspan="9" style="height: 150px; text-align: center; vertical-align: middle;">신청한 내역이 없습니다</td>
+											             </tr>	
+										           </th:block>
+											  </tbody> 
+						                </table>
+                                    </th:block>
+                                   <th:block th:if="${fKinds} == '사물함'">
+                                   <h3>사물함 신청 내역</h3> <br>
+                                   		<table id="myTable" class="datatables-demo table table-striped table-bordered myTable">                         
+						                  <thead>
+						                    <tr>
+						                        <td>번호</td>
+						                        <td>시설명</td>
+												<td>시설위치</td>
+												<td>사용 시작시간</td>             
+												<td>사용 종료시간</td>          
+												<td>퇴실</td>          
+						                    </tr>
+						                  </thead>
+							                  <tbody>
+								                  <th:block th:if="${#lists.size(frList)} > 0">
+												    <tr th:each="frList, fl : ${frList}">	
+													      <td th:text="${fl.count}"></td>
+													      <td th:text="${frList.fName}"></td>
+													      <td th:text="${frList.fLocation}"></td>
+													      <td th:text="${frList.frReserveDate}"></td>
+													      <td th:text="${frList.frEndDate}"></td>										 		
+													      <td><a th:href="@{#}">퇴실하기</a></td>										 		
+												    </tr>
+												   </th:block>
+												   <th:block th:unless="${#lists.size(frList)} > 0">
+											             <tr>
+											            	 <td colspan="9" style="height: 150px; text-align: center; vertical-align: middle;">신청한 내역이 없습니다</td>
+											             </tr>	
+										           </th:block>
+											  </tbody> 
+						                </table>
+                                    </th:block>
+                                    
+                                    
+                                    <!-- 위쪽으로는 공공시설 섹션 -->
+                                    <nav class="navigation pagination text-center">
+                                        <h2 class="screen-reader-text">Posts navigation</h2>
+                                        <div class="nav-links">
+                                            <a class="prev page-numbers" th:href="@{#}"><i class="fa fa-long-arrow-left"></i> Previous</a>
+                                            <span class="page-numbers current">1</span>
+                                            <a class="page-numbers" th:href="@{#}">2</a>
+                                            <a class="page-numbers" th:href="@{#}">3</a>
+                                            <a class="page-numbers" th:href="@{#}">4</a>
+                                            <a class="next page-numbers" th:href="@{#}">Next <i class="fa fa-long-arrow-right"></i></a>
+                                        </div>
+                                    </nav>
+                                </div>
+                                <!-- 마이페이지 사이드메뉴  -->
+                                <div th:replace="fragments/library/myPageLeftMenu :: myPageLeftMenuFragment"></div>
+                                <!-- 마이페이지 사이드메뉴-->
+                            
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <!-- End: Reservation List Section -->
+        </section>
+        
+    </th:block>
+</html>

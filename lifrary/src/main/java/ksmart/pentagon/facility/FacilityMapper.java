@@ -21,6 +21,9 @@ public interface FacilityMapper {
 	// 시설종류 문자열을 받아 해당되는 시설 출력. +도서관 코드 추가
 	public List<Facility> getFacilityList(String fKinds, String libNum);
 
+	// myPage 내가 신청한 공공시설 리스트 보기.
+	public List<FacilityReservation> getFacilityReservationList(String uId, String libNum, String fKinds);
+	
 	// 선택한 시설의 코드를 이용하여 , 해당 시설의 상세정보 보여주기
 	public Facility getFacility(String fCode, String libNum);
 

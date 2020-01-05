@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+	<!-- Start: Page Banner -->
+	      <th:block>
+	       <section class="page-banner services-banner" th:fragment="facilityReservationBannerFragment">
+	            <div class="container">
+	                <div class="banner-header">
+	                    <h2 th:text="|${fKinds} 신청 리스트|"></h2>
+	                    <span class="underline center"></span>
+	                    <p class="lead" th:text="|${fKinds} 신청 리스트입니다.|"></p>
+	                </div>
+	                <div class="breadcrumb">
+	                    <ul>
+	                        <li><a th:href="@{/}">메인메뉴</a></li>
+	                        <li th:text="|${fKinds} 신청 리스트|"></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </section>
+		</th:block>
+    <!-- End: Page Banner -->
+        
+</html>

@@ -32,8 +32,13 @@ public class FacilityController {
 	@Autowired
 	private FacilityService facilityService;
 
-	// 열람실 관련 메서드
-
+	/**
+	 * 열람실 신청 페이지로 이동
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/lifrary/readingRoom")
 	public String readingRoom(Model model, HttpSession session) {
 		String fKinds = "열람실";
@@ -43,8 +48,13 @@ public class FacilityController {
 		return "librarypage/facility/readingRoomReservation";
 	}
 
-	// 스터디룸 관련 메서드
-
+	/**
+	 * 스터디룸 신청 페이지로 이동
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/lifrary/studyRoom")
 	public String studyRoom(Model model, HttpSession session) {
 		String fKinds = "스터디룸";
@@ -54,8 +64,13 @@ public class FacilityController {
 		return "librarypage/facility/studyRoomReservation";
 	}
 
-	// 강연실 관련 메서드
-
+	/**
+	 * 강연실 신청 페이지로 이동
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/lifrary/lectureRoom")
 	public String lectureRoom(Model model, HttpSession session) {
 		String fKinds = "강연실";
@@ -65,8 +80,13 @@ public class FacilityController {
 		return "librarypage/facility/lectureRoomReservation";
 	}
 
-	// 사물함 관련 메서드
-
+	/**
+	 * 사물함 신청 페이지로 이동
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/lifrary/locker")
 	public String locker(Model model, HttpSession session) {
 		String fKinds = "사물함";
@@ -74,6 +94,54 @@ public class FacilityController {
 		model.addAttribute("room", "locker");
 		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/lockerReservation";
+	}
+	
+	
+	/**
+	 * 마이페이지 - 열람실 신청 내역
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+
+	@GetMapping("/lifrary/myReadingRoomReserveList")
+	public String myReadingRoomReserveList(Model model, HttpSession session) {
+		String uId = (String) session.getAttribute("SID");
+		String libNum = (String) session.getAttribute("LIBNUM");
+		String fKinds = "열람실";
+		model.addAttribute("frList",facilityService.getFacilityReservationList(uId, libNum, fKinds));
+		model.addAttribute("fKinds", fKinds);
+		return "librarypage/facility/myReadingRoomReserveList";
+	}
+
+	@GetMapping("/lifrary/myStudyRoomReserveList")
+	public String myStudyRoomReserveList(Model model, HttpSession session) {
+		String uId = (String) session.getAttribute("SID");
+		String libNum = (String) session.getAttribute("LIBNUM");
+		String fKinds = "스터디룸";
+		model.addAttribute("frList",facilityService.getFacilityReservationList(uId, libNum, fKinds));
+		model.addAttribute("fKinds", fKinds);
+		return "librarypage/facility/myStudyRoomReserveList";
+	}
+
+	@GetMapping("/lifrary/myLectureRoomReserveList")
+	public String myLectureRoomReserveList(Model model, HttpSession session) {
+		String uId = (String) session.getAttribute("SID");
+		String libNum = (String) session.getAttribute("LIBNUM");
+		String fKinds = "강연실";
+		model.addAttribute("frList",facilityService.getFacilityReservationList(uId, libNum, fKinds));
+		model.addAttribute("fKinds", fKinds);
+		return "librarypage/facility/myLectureRoomReserveList";
+	}
+
+	@GetMapping("/lifrary/myLockerReserveList")
+	public String myLockerReserveList(Model model, HttpSession session) {
+		String uId = (String) session.getAttribute("SID");
+		String libNum = (String) session.getAttribute("LIBNUM");
+		String fKinds = "사물함";
+		model.addAttribute("frList",facilityService.getFacilityReservationList(uId, libNum, fKinds));
+		model.addAttribute("fKinds", fKinds);
+		return "librarypage/facility/myLockerReserveList";
 	}
 
 	/**
@@ -216,7 +284,8 @@ public class FacilityController {
 
 	@GetMapping("/admin/facilityReservationSearchList")
 	public String facilityReservationSearchList(
-			@RequestParam(value = "fKinds", required = false, defaultValue = "전체") String fKinds, HttpSession session,	Model model) {
+			@RequestParam(value = "fKinds", required = false, defaultValue = "전체") String fKinds, HttpSession session,
+			Model model) {
 		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("facilityReserveList", facilityService.getFacilityReservation(fKinds, libNum));
 		model.addAttribute("nowKinds", fKinds);
