@@ -15,6 +15,9 @@
 		<result property="boardOpen" column="board_open" />					<!-- 공개여부 -->
 		<result property="boardPageView" column="board_page_view" />		<!-- 조회수 -->
 		<result property="boardDate" column="board_date" />					<!-- 게시글 등록일 -->
+		<result property="boardLName" column="board_l_name"/>				<!-- 게시판 대분류명 -->
+		<result property="boardMName" column="board_m_name"/>				<!-- 게시판 중분류명 -->
+						
 	</resultMap>
 	
 	<resultMap type="ksmart.pentagon.vo.BoardComment" id="comment">	
@@ -145,4 +148,37 @@
 		FROM board_comment
 		WHERE board_c_code= #{boardCCode}
 	</delete>
+	
+	<select id="lifraryInquirySearchList" parameterType="ksmart.pentagon.vo.BoardComment" resultMap="boardNoticeList">
+		SELECT
+		b.*,bm.board_m_name,bl.board_l_name
+		FROM
+		board AS b INNER JOIN board_large AS bl
+		ON b.board_l_code = bl.board_l_code
+		INNER JOIN board_medium AS bm
+		ON b.board_m_code = bm.board_m_code
+		WHERE bl.board_l_name = #{boardLName} AND b.l_code = #{lCode} ORDER BY b.board_date DESC
+	</select>
+	
+	<select id="lifraryInquiryDetail" parameterType="ksmart.pentagon.vo.BoardComment" resultMap="boardNoticeList">
+		SELECT
+		b.*,bm.board_m_name
+		FROM
+		board AS b INNER JOIN board_large AS bl
+		ON b.board_l_code = bl.board_l_code
+		INNER JOIN board_medium AS bm
+		ON b.board_m_code = bm.board_m_code
+		WHERE bl.board_l_name = #{boardLName} AND b.l_code = #{lCode} AND b.board_code = #{boardCode}
+	</select>
+	
+	<select id="inquirySearchListAjax" parameterType="ksmart.pentagon.vo.BoardComment" resultMap="boardNoticeList">
+		SELECT
+		b.*,bm.board_m_name,bl.board_l_name
+		FROM
+		board AS b INNER JOIN board_large AS bl
+		ON b.board_l_code = bl.board_l_code
+		INNER JOIN board_medium AS bm
+		ON b.board_m_code = bm.board_m_code
+		WHERE bl.board_l_name = #{boardLName} AND b.l_code = #{lCode} AND b.board_open = 'O' AND bm.board_m_name = #{boardMName} ORDER BY b.board_date DESC
+	</select>
 </mapper>

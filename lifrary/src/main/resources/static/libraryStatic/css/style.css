@@ -18103,8 +18103,8 @@ a:focus {
     width: 78%;
   }
 }
-.comments-area .comment-meta:before,
-.comments-area .comment-meta:after {
+.comments-area .comment0-meta:before,
+.comments-area .comment0-meta:after {
   right: 100%;
   top: 23%;
   border: solid transparent;

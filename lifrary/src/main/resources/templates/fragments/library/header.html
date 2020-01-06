@@ -74,7 +74,7 @@
                                             <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">4.게시판</a>
                                             <ul class="dropdown-menu">
                                                 <li><a th:href="@{/lifrary/noticeList}">!공지사항</a></li>
-                                                <li><a th:href="@{/lifrary/inquirySearchList}">!문의</a></li>
+                                                <li><a th:href="@{/lifrary/inquirySearchList(boardLName=${'문의하기'})}">!문의</a></li>
                                                 <li><a th:href="@{/lifrary/bookReportSearchList}">!독후감</a></li>
                                                 <li><a th:href="@{/lifrary/bookRequestIntro}">!희망도서 신청</a></li>
                                             </ul>
@@ -152,8 +152,8 @@
                                     <li>
                                         <a th:href="@{#}">4.게시판</a>
                                         <ul>
-                                            <li><a th:href="@{#}">!공지사항</a></li>
-                                            <li><a th:href="@{#}">#문의</a></li>
+                                            <li><a th:href="@{/lifrary/noticeList}">!공지사항</a></li>
+                                            <li><a th:href="@{/lifrary/inquirySearchList(boardLName=${'문의하기'})}">!문의</a></li>
                                             <li><a th:href="@{/lifrary/bookReportSearchList}">#독후감</a></li>
                                             <li><a th:href="@{/lifrary/bookRequestIntro}">!희망도서 신청</a></li>
                                         </ul>

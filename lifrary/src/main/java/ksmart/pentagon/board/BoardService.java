@@ -95,4 +95,20 @@ public class BoardService {
 			boardmapper.inquiryCommentDelete(boardComment);
 		}
 		
+		public List<Board> lifraryInquirySearchList(Board board){
+			List<Board> boardList = boardmapper.lifraryInquirySearchList(board);
+			for(int i=0; i< boardList.size(); i++) {
+			BoardComment commentCheck = boardmapper.getComment(boardList.get(i));
+			boardList.get(i).setBoardComment(commentCheck);
+			}
+			return boardList;
+		}
+		
+		public Board lifraryInquiryDetail(Board Dboard) {
+			boardmapper.boardPageViewUp(Dboard);
+			Board board = boardmapper.lifraryInquiryDetail(Dboard);
+			board.setBoardComment(boardmapper.getComment(Dboard));
+			return board;
+		}
+		
 }

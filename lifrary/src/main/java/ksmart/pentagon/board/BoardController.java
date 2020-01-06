@@ -226,11 +226,30 @@ public class BoardController {
 	
 	@GetMapping("/lifrary/noticeList")
 	public String lifraryNoticeList(Model model, Board board) {
-		return "/librarypage/book/noticeList";
+		return "/librarypage/board/noticeList";
 	}
 	
 	@GetMapping("/lifrary/inquirySearchList")
-	public String lifraryInquirySearchList(Model model, Board board) {
-		return "/librarypage/book/inquirySearchList";
+	public String lifraryInquirySearchList(Model model, Board board, HttpSession session) {
+		board.setlCode((String)session.getAttribute("LIBNUM"));
+		List<Board> boardList = boardService.lifraryInquirySearchList(board);
+		System.out.println("controller236 : " + boardList);
+		model.addAttribute("boardList", boardList);
+		return "/librarypage/board/inquirySearchList";
+	}
+	
+	@GetMapping("/lifrary/inquiryDetail")
+	public String lifraryInquiryDetail(Model model,Board board, HttpSession session) {
+		board.setlCode((String)session.getAttribute("LIBNUM"));
+		Board boardDetail = boardService.lifraryInquiryDetail(board);
+		model.addAttribute("board", boardDetail);
+		return "/librarypage/board/inquiryDetail";
+	}
+	
+	@PostMapping("/inquirySearchListAjax")
+	public @ResponseBody List<Board> inquirySearchListAjax(Board board, HttpSession session){
+		board.setlCode((String)session.getAttribute("LIBNUM"));
+		System.out.println("controller251" + board);
+		return null;
 	}
 }
