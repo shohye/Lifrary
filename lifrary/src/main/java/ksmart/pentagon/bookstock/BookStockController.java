@@ -256,6 +256,17 @@ public class BookStockController {
     
     /***********************************************************************/
     
+  
+  // 도서예약하는 AJAX
+    @RequestMapping(value="/holdBook", produces = "application/json")
+	public @ResponseBody String holdBook(
+			   @RequestParam(value="sid",required=false)String sid
+			 , @RequestParam(value="bsCode",required=false)String bsCode ) {
+    	
+    	
+		return null;	
+    }
+    
     
   //도서정보 가져오기 AJAX
     @RequestMapping(value="/getBookInfoStock", produces = "application/json")

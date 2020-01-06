@@ -24,6 +24,36 @@
 		 		margin: 10px 0 10px 0;
 		 	}
 	 	</style>
+	 	<script type="text/javascript" th:inline="javascript">  
+       $(document).ready(function(){  	
+    	   $('#holdBtn').click(function(){
+    		   var sid = [[${session.SID}]]
+    		   
+    		   if( sid == null ){
+    			   alert('도서를 예약하시려면 로그인을 해주세요');
+    		   }else{
+    			   
+    			   var bsCode =$('#bsCode').text();
+    			   console.log(bsCode);
+    			   
+    			   var request = $.ajax({
+   					url:"/holdBook",
+   					method: "POST",
+   					data : { 'sid':sid, 'bsCode':bsCode }, 
+   					dataType: "text"
+	  				});				 
+	  				request.done(function( data ) {
+	  					 console.log(data);		
+	  				});				 
+	  				request.fail(function( jqXHR, textStatus ) {
+	  					alert( "Request failed: " + textStatus );
+	  				}); 				
+	   			   
+	   		   }
+     	   });
+    	}); // 처음 function끝
+    	    	
+    	</script>
  	</th:block>  
   
   
@@ -122,7 +152,7 @@
                                             <br>
                                             <br>  
                                             <br>                        
-                                            <a href="#." class="btn btn-dark-gray">당일 도서 예약</a> 
+                                            <a href="#." class="btn btn-dark-gray" type="button" id="holdBtn">당일 도서 예약</a> 
                                             <br>
                                             <a th:href="@{'http://www.aladin.co.kr/shop/book/wletslookViewer.aspx?ISBN='+${s.bookInformation.biIsbn}}" class="btn btn-dark-gray">도서 미리보기</a> 
                                             
@@ -153,7 +183,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td class="align-middle text-center" th:text="${s.bsCode}"></td>
+                                                        <td class="align-middle text-center" th:text="${s.bsCode}" id="bsCode"></td>
                                                         <td class="align-middle text-center" th:text="${s.bsCallNum}"></td>
                                                         <td class="align-middle text-center">
                                                         	 <span th:if="${s.bsLendState eq 'O'}">대출가능</span>
