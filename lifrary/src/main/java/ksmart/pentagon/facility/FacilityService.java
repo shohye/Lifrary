@@ -85,7 +85,31 @@ public class FacilityService {
 
 	// myPage 내가 신청한 공공시설 리스트 보기.
 	public List<FacilityReservation> getFacilityReservationList(String uId, String libNum, String fKinds) {
-		
+
 		return facilityMapper.getFacilityReservationList(uId, libNum, fKinds);
 	}
+
+	// 시설 예약코드를 하나 받아 (예약시작 < 현재시간 < 예약종료) 시작과 종료 사이에 있는지 체크후 사이에 해당되는것을 가져온후
+	// 객체가 있다면 ( 연장 가능한것 ) extensionChange 메서드를 호출하여 X를 O로 바꿔준다. 처리 완료라는 문자열을 보내준다.
+	// 객체가 없다면 ( 시간이 지나 연장이 불가능 ) 불가능하다는 문자열을 컨트롤러로 보내준다.
+	public String getReservation(String frCode){
+		FacilityReservation fr = facilityMapper.getReservation(frCode);
+		String frExtension = fr.getFrExtension();
+		String result = "";
+		
+			if (frExtension.equals("X")) { // 연장 여부가 X인 경우, 연장해주는 쿼리를 실행. 
+				facilityMapper.extensionChange(frCode);
+				result = "연장완료";
+			} 
+			else if (frExtension.equals("O")) { // 연장 여부가 O인경우, 연장이 안된다는 문자열 보낼것.
+				result = "연장불가";
+			} 		
+		
+		return result;
+	}
+	
+	// 퇴실버튼 클릭시, 예약 종료시간을 현재시간으로 바꿔준다.
+		public void frEndDateChange(String frCode) {
+			facilityMapper.frEndDateChange(frCode);
+		}
 }

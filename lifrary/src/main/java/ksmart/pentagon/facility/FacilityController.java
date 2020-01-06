@@ -95,10 +95,10 @@ public class FacilityController {
 		model.addAttribute("facility", facilityService.getFacilityList(fKinds, libNum));
 		return "librarypage/facility/lockerReservation";
 	}
-	
-	
+
 	/**
 	 * 마이페이지 - 열람실 신청 내역
+	 * 
 	 * @param model
 	 * @param session
 	 * @return
@@ -109,37 +109,82 @@ public class FacilityController {
 		String uId = (String) session.getAttribute("SID");
 		String libNum = (String) session.getAttribute("LIBNUM");
 		String fKinds = "열람실";
-		model.addAttribute("frList",facilityService.getFacilityReservationList(uId, libNum, fKinds));
+		model.addAttribute("frList", facilityService.getFacilityReservationList(uId, libNum, fKinds));
 		model.addAttribute("fKinds", fKinds);
 		return "librarypage/facility/myReadingRoomReserveList";
 	}
-
+	
+	/**
+	 * 연장 버튼 클릭시, 연장이 가능한지 확인 후 연장처리. 
+	 * @param frCode
+	 * @return
+	 */
+	@PostMapping("/lifrary/extension")
+	public @ResponseBody String extensionUpdate(@RequestParam(value = "frCode") String frCode) {
+		String result = facilityService.getReservation(frCode);
+		return result;
+	}
+	
+	/**
+	 * 퇴실 버튼 클릭시, 종료시간을 현재시간으로 업데이트
+	 * @param frCode
+	 * @return
+	 */
+	@PostMapping("/lifrary/leaving")
+	public @ResponseBody String leavingUpdate(@RequestParam(value = "frCode") String frCode) {
+		facilityService.frEndDateChange(frCode);
+		String result = "사용 종료 처리가 완료되었습니다.";
+		return result;
+	}
+	
+	
+	/**
+	 * 마이페이지 - 스터디룸 신청 내역
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/lifrary/myStudyRoomReserveList")
 	public String myStudyRoomReserveList(Model model, HttpSession session) {
 		String uId = (String) session.getAttribute("SID");
 		String libNum = (String) session.getAttribute("LIBNUM");
 		String fKinds = "스터디룸";
-		model.addAttribute("frList",facilityService.getFacilityReservationList(uId, libNum, fKinds));
+		model.addAttribute("frList", facilityService.getFacilityReservationList(uId, libNum, fKinds));
 		model.addAttribute("fKinds", fKinds);
 		return "librarypage/facility/myStudyRoomReserveList";
 	}
 
+	/**
+	 * 마이페이지 - 강연실 신청 내역
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/lifrary/myLectureRoomReserveList")
 	public String myLectureRoomReserveList(Model model, HttpSession session) {
 		String uId = (String) session.getAttribute("SID");
 		String libNum = (String) session.getAttribute("LIBNUM");
 		String fKinds = "강연실";
-		model.addAttribute("frList",facilityService.getFacilityReservationList(uId, libNum, fKinds));
+		model.addAttribute("frList", facilityService.getFacilityReservationList(uId, libNum, fKinds));
 		model.addAttribute("fKinds", fKinds);
 		return "librarypage/facility/myLectureRoomReserveList";
 	}
 
+	/**
+	 * 마이페이지 - 사물함 신청 내역
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/lifrary/myLockerReserveList")
 	public String myLockerReserveList(Model model, HttpSession session) {
 		String uId = (String) session.getAttribute("SID");
 		String libNum = (String) session.getAttribute("LIBNUM");
 		String fKinds = "사물함";
-		model.addAttribute("frList",facilityService.getFacilityReservationList(uId, libNum, fKinds));
+		model.addAttribute("frList", facilityService.getFacilityReservationList(uId, libNum, fKinds));
 		model.addAttribute("fKinds", fKinds);
 		return "librarypage/facility/myLockerReserveList";
 	}

@@ -6,6 +6,7 @@
 <th:block layout:fragment="customScript">
 <style>
 	table.reserveForm tbody tr td {color: black; text-align: center; font-size: 12px; width: 500px;}
+	table.reserveForm {width: 400px;}
 </style>
 	<script th:inline="javascript">
 		$(document).ready(function(){
@@ -41,7 +42,7 @@
 					contents += '<input id="fKinds" type="hidden" name = "fKinds">'
 					contents += '<tr><td>연락처</td><td><input id="frTel" type="text" name = "frTel"></td></tr>'
            			
-					contents += '<tr><td>예약하기</td><td><button id="reserveBtn" type="button">예약하기</button></td></tr></table>'
+					contents += '<tr><td>신청 하기</td><td><button id="reserveBtn" type="button">신청</button></td></tr></table>'
 					contents += '</form>'
 					
 				 tdTable.html(contents)
@@ -56,12 +57,11 @@
 				$(document).on('click','#reserveBtn',function(){ // 예약하기 버튼 눌렀을때.
 					var reserveForm = $('#reserveForm');
 					var uIdVal = $('#uId').val()							 //세션에 저장된 아이디값 넣기
-					var lCodeVal = $('#lCode').val()							 //세션에 저장된 도서관코드 넣기
+					var lCodeVal = $('#lCode').val()								 //세션에 저장된 도서관코드 넣기
 					var fCodeVal = $('#fCode').val()						 		 //선택된것이 어떤 시설의 코드인지.
-					var frSelectNumVal = $('#frSelectNum').val()							 //선택된 자리의 번호
+					var frSelectNumVal = $('#frSelectNum').val()					 //선택된 자리의 번호
 					var fKindsVal = $('#fKinds').val()								 // 시설 종류
-					
-						console.log(uIdVal + "  " + lCodeVal)
+					var frTel = $('#frTel').val();
 					
 					if(uIdVal == "" && lCodeVal == ""){
 						alert('세션이 만료되었습니다. 다시 로그인해주세요')
@@ -73,12 +73,9 @@
 						location.href = "/lifrary/login";
 						return false;
 					}
-					if(fCodeVal == ""){
-						alert('목록에서 사용할곳을 선택해주세요.')
-						return false;
-					}
-					if(fKindsVal == ""){
-						alert('시설을 선택해주세요.')
+					if(frTel == ""){
+						alert('연락처를 입력해주세요.');
+						$('#frTel').focus();
 						return false;
 					}
 					reserveForm.submit();

@@ -123,7 +123,7 @@
 		 f_code = #{fCode}
   </update>
   
-  <!-- 예약일자 <= 현재날짜 <= 예약종료일자   현재날짜가 사이에 있는것만 출력.-->
+  <!-- 예약일자 <= 현재날짜 <= 예약종료일자   현재날짜가 사이에 있는 좌석만 출력.-->
   <select id="getReservationSeat" parameterType="String" resultMap="reserveResultMap">
   	SELECT
 		fr_select_num
@@ -133,6 +133,36 @@
 		f_code = #{fCode}
 		<![CDATA[ AND fr_reserve_date <= NOW() AND fr_end_date >= NOW() ]]>
   </select>
+  
+  <!-- 예약일자 <= 현재날짜 <= 예약종료일자   현재날짜가 사이에 있는지 확인. 객체 리턴. 확인 -->
+  <select id="getReservation" parameterType="String" resultMap="reserveResultMap">
+  	SELECT
+		*
+	FROM
+		facility_reservation
+	WHERE
+		fr_code = #{frCode}
+		<![CDATA[ AND fr_reserve_date <= NOW() AND fr_end_date >= NOW() ]]>
+  </select>
+  
+  <!-- 연장 버튼 누른것에 대하여 연장 처리해줌. -->
+  <update id="extensionChange" parameterType="String">
+  	UPDATE facility_reservation AS fr
+	SET
+		fr.fr_end_date = DATE_ADD(fr.fr_end_date, INTERVAL 1 HOUR),
+		fr.fr_extension='O'
+	WHERE 
+		fr.fr_code = #{frCode}
+  </update>
+  
+  <!-- 퇴실 버튼 클릭시 종료시간을 현재시간으로 변경 -->
+  <update id="frEndDateChange" parameterType="String">
+  	UPDATE facility_reservation AS fr
+	SET
+		fr.fr_end_date = NOW()
+	WHERE 
+		fr.fr_code = #{frCode}
+  </update>
   
  <!-- 공공시설을 삭제해주는 쿼리 -->
  <delete id="deleteFacility" parameterType="String">

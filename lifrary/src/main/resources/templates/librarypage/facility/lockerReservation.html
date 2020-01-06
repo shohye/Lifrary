@@ -7,6 +7,7 @@
 <style>
 	table.makeTbLine tbody tr td {color: black; text-align: center; font-size: 12px; width: 40px; height: 35px; border: 1px solid #000;}
 	table.reserveForm tbody tr td {color: black; text-align: center; font-size: 12px; width: 40px; height: 35px;}
+	table.reserveForm {width: 400px;}
 	.tdClass:hover {cursor: grab;}
 </style>
 	<script th:inline="javascript">
@@ -97,7 +98,7 @@
 						contents += '<input id="frSelectNum" type="hidden" name = "frSelectNum" readonly="readonly">'
 						contents += '<tr><td>연락처</td><td><input id="frTel" type="text" name = "frTel"></td></tr>'
             			
-						contents += '<tr><td>예약하기</td><td><button id="reserveBtn" type="button">예약하기</button></td></tr></table>'
+						contents += '<tr><td>신청 하기</td><td><button id="reserveBtn" type="button">신청</button></td></tr></table>'
 						contents += '</form>'
 						
 					 tdTable.html(contents)

@@ -23,7 +23,7 @@ public interface FacilityMapper {
 
 	// myPage 내가 신청한 공공시설 리스트 보기.
 	public List<FacilityReservation> getFacilityReservationList(String uId, String libNum, String fKinds);
-	
+
 	// 선택한 시설의 코드를 이용하여 , 해당 시설의 상세정보 보여주기
 	public Facility getFacility(String fCode, String libNum);
 
@@ -36,6 +36,15 @@ public interface FacilityMapper {
 	// 시설코드를 하나 받아 (예약시작 < 현재시간 < 예약종료) 시작과 종료 사이에 있는지 체크후 사이에 해당되는것을 가져오기
 	public List<FacilityReservation> getReservationSeat(String fCode);
 
+	// 시설 예약코드를 하나 받아 (예약시작 < 현재시간 < 예약종료) 시작과 종료 사이에 있는지 체크후 사이에 해당되는것을 가져오기
+	public FacilityReservation getReservation(String frCode);
+
+	// 연장버튼 클릭시, getReservation 메서드를 실행후 본 메서드를 실행할것. X인 상태를 O로 변경함.
+	public void extensionChange(String frCode);
+
+	// 퇴실버튼 클릭시, 예약 종료시간을 현재시간으로 바꿔준다.
+	public void frEndDateChange(String frCode);
+
 	// 시설코드 하나를 받아 공공시설 삭제하기
 	public void deleteFacility(String fCode);
 
@@ -44,7 +53,7 @@ public interface FacilityMapper {
 
 	// 공공시설 당일에 예약했는지 확인
 	public List<String> getRevserVation(String uId, String libNum, String fKinds);
-	
+
 	// 공공시설 예약 리스트 출력
 	public List<FacilityReservation> getFacilityReservation(String fKinds, String libNum);
 

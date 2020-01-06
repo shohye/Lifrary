@@ -18,37 +18,58 @@
                                 <div class="col-md-9 col-md-push-3 news-events-list-view" style="padding: 20px;">
                                    
                                     <style>
+                                    	
 										.myTable td, th{
 											text-align: center;
+											vertical-align: middle;
+											padding: 8px;
+											
+										}
+										.extension, .leaving, .impossible{
+											font-size: 15px;
+											padding: 6px;
+										}
+										.impossible{
+											cursor: no-drop;
 										}
 									</style>
+								<th:block  th:with="now = ${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:ss:mm')}">
                                    <!-- 프로그램 리스트 반복 출력 --> 
                                    <th:block th:if="${fKinds} == '열람실'">
                                    <h3>열람실 신청 내역</h3> <br>
-                                   		<table id="myTable" class="datatables-demo table table-striped table-bordered myTable">                         
+                                   		<table id="myTable" class="datatables-demo table-striped table-bordered myTable">                         
 						                  <thead>
 						                    <tr>
 						                        <th>번호</th>
 						                        <th>시설명</th>
 												<th>시설위치</th>
+						                        <th>선택좌석</th>
 												<th>연장 여부</th>
-												<th>사용 시작시간</th>             
-												<th>사용 종료시간</th>          
-												<th>연장</th>          
-												<th>퇴실</th>          
+												<th>사용 시작시간</th>
+												<th>사용 종료시간</th>
+												<th>연장</th>
+												<th>퇴실</th>
 						                    </tr>
 						                  </thead>
 							                  <tbody>
 								                  <th:block th:if="${#lists.size(frList)} > 0">
-												    <tr th:each="frList, fl : ${frList}">	
+												    <tr th:each="frList, fl : ${frList}">
+												    	  <input type="hidden" name="frCode" th:value="${frList.frCode}">
 													      <td th:text="${fl.count}"></td>
 													      <td th:text="${frList.fName}"></td>
 													      <td th:text="${frList.fLocation}"></td>
+													      <td th:text="${frList.frSelectNum}"></td>
 													      <td th:text="${frList.frExtension}"></td>
 													      <td th:text="${frList.frReserveDate}"></td>
-													      <td th:text="${frList.frEndDate}"></td>										 		
-													      <td><a th:href="@{#}">연장하기</a></td>										 		
-													      <td><a th:href="@{#}">퇴실하기</a></td>										 		
+													      <td th:text="${frList.frEndDate}"></td>
+													      <th:block th:if="${frList.frReserveDate} <= ${now} and ${frList.frEndDate} >= ${now}">								 		
+													      	<td><button class="extension">연장</button></td>
+													      	<td><button class="leaving">퇴실</button></td>				
+													      </th:block>		
+													      <th:block th:unless="${frList.frReserveDate} <= ${now} and ${frList.frEndDate} >= ${now}">								 		
+													      	<td><button class ="impossible">연장</button></td>
+													      	<td><button class ="impossible">퇴실</button></td>
+													      </th:block>	
 												    </tr>
 												   </th:block>
 												   <th:block th:unless="${#lists.size(frList)} > 0">
@@ -61,7 +82,7 @@
                                     </th:block>
                                    <th:block th:if="${fKinds} == '스터디룸'">
                                    <h3>스터디룸 신청 내역</h3> <br>
-                                   		<table id="myTable" class="datatables-demo table table-striped table-bordered myTable">                         
+                                   		<table id="myTable" class="datatables-demo table-striped table-bordered myTable">                         
 						                  <thead>
 						                    <tr>
 						                        <td>번호</td>
@@ -74,13 +95,19 @@
 						                  </thead>
 							                  <tbody>
 								                  <th:block th:if="${#lists.size(frList)} > 0">
-												    <tr th:each="frList, fl : ${frList}">	
+												    <tr th:each="frList, fl : ${frList}">
+												    	<input type="hidden" name="frCode" th:value="${frList.frCode}">	
 													      <td th:text="${fl.count}"></td>
 													      <td th:text="${frList.fName}"></td>
 													      <td th:text="${frList.fLocation}"></td>
 													      <td th:text="${frList.frReserveDate}"></td>
 													      <td th:text="${frList.frEndDate}"></td>										 		
-													      <td><a th:href="@{#}">퇴실하기</a></td>										 		
+													      <th:block th:if="${frList.frReserveDate} <= ${now} and ${frList.frEndDate} >= ${now}"> 
+													      	<td><button class="leaving">퇴실</button></td>					
+													      </th:block>
+													      <th:block th:unless="${frList.frReserveDate} <= ${now} and ${frList.frEndDate} >= ${now}">								 		
+													      	<td><button class ="impossible">퇴실</button></td>
+													      </th:block>									 		
 												    </tr>
 												   </th:block>
 												   <th:block th:unless="${#lists.size(frList)} > 0">
@@ -93,7 +120,7 @@
                                     </th:block>
                                    <th:block th:if="${fKinds} == '강연실'">
                                    <h3>강연실 신청 내역</h3> <br>
-                                   		<table id="myTable" class="datatables-demo table table-striped table-bordered myTable">                         
+                                   		<table id="myTable" class="datatables-demo table-striped table-bordered myTable">                         
 						                  <thead>
 						                    <tr>
 						                        <td>번호</td>
@@ -107,12 +134,18 @@
 							                  <tbody>
 								                  <th:block th:if="${#lists.size(frList)} > 0">
 												    <tr th:each="frList, fl : ${frList}">	
+												    <input type="hidden" name="frCode" th:value="${frList.frCode}">
 													      <td th:text="${fl.count}"></td>
 													      <td th:text="${frList.fName}"></td>
 													      <td th:text="${frList.fLocation}"></td>
 													      <td th:text="${frList.frReserveDate}"></td>
 													      <td th:text="${frList.frEndDate}"></td>										 		
-													      <td><a th:href="@{#}">퇴실하기</a></td>										 		
+													      <th:block th:if="${frList.frReserveDate} <= ${now} and ${frList.frEndDate} >= ${now}"> 
+													      	<td><button class="leaving">퇴실</button></td>					
+													      </th:block>
+													      <th:block th:unless="${frList.frReserveDate} <= ${now} and ${frList.frEndDate} >= ${now}">								 		
+													      	<td><button class ="impossible">퇴실</button></td>
+													      </th:block>										 		
 												    </tr>
 												   </th:block>
 												   <th:block th:unless="${#lists.size(frList)} > 0">
@@ -125,7 +158,7 @@
                                     </th:block>
                                    <th:block th:if="${fKinds} == '사물함'">
                                    <h3>사물함 신청 내역</h3> <br>
-                                   		<table id="myTable" class="datatables-demo table table-striped table-bordered myTable">                         
+                                   		<table id="myTable" class="datatables-demo table-striped table-bordered myTable">                         
 						                  <thead>
 						                    <tr>
 						                        <td>번호</td>
@@ -133,18 +166,24 @@
 												<td>시설위치</td>
 												<td>사용 시작시간</td>             
 												<td>사용 종료시간</td>          
-												<td>퇴실</td>          
+												<td>종료</td>          
 						                    </tr>
 						                  </thead>
 							                  <tbody>
 								                  <th:block th:if="${#lists.size(frList)} > 0">
 												    <tr th:each="frList, fl : ${frList}">	
+												    <input type="hidden" name="frCode" th:value="${frList.frCode}">
 													      <td th:text="${fl.count}"></td>
 													      <td th:text="${frList.fName}"></td>
 													      <td th:text="${frList.fLocation}"></td>
 													      <td th:text="${frList.frReserveDate}"></td>
 													      <td th:text="${frList.frEndDate}"></td>										 		
-													      <td><a th:href="@{#}">퇴실하기</a></td>										 		
+													      <th:block th:if="${frList.frReserveDate} <= ${now} and ${frList.frEndDate} >= ${now}"> 
+													      	<td><button class="leaving">사용종료</button></td>					
+													      </th:block>
+													      <th:block th:unless="${frList.frReserveDate} <= ${now} and ${frList.frEndDate} >= ${now}">								 		
+													      	<td><button class ="impossible">사용종료</button></td>
+													      </th:block>										 		
 												    </tr>
 												   </th:block>
 												   <th:block th:unless="${#lists.size(frList)} > 0">
@@ -155,7 +194,7 @@
 											  </tbody> 
 						                </table>
                                     </th:block>
-                                    
+                                 </th:block> 
                                     
                                     <!-- 위쪽으로는 공공시설 섹션 -->
                                     <nav class="navigation pagination text-center">
