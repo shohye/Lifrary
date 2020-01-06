@@ -113,9 +113,10 @@ public class FacilityController {
 		model.addAttribute("fKinds", fKinds);
 		return "librarypage/facility/myReadingRoomReserveList";
 	}
-	
+
 	/**
-	 * 연장 버튼 클릭시, 연장이 가능한지 확인 후 연장처리. 
+	 * 연장 버튼 클릭시, 연장이 가능한지 확인 후 연장처리.
+	 * 
 	 * @param frCode
 	 * @return
 	 */
@@ -124,9 +125,10 @@ public class FacilityController {
 		String result = facilityService.getReservation(frCode);
 		return result;
 	}
-	
+
 	/**
 	 * 퇴실 버튼 클릭시, 종료시간을 현재시간으로 업데이트
+	 * 
 	 * @param frCode
 	 * @return
 	 */
@@ -136,8 +138,7 @@ public class FacilityController {
 		String result = "사용 종료 처리가 완료되었습니다.";
 		return result;
 	}
-	
-	
+
 	/**
 	 * 마이페이지 - 스터디룸 신청 내역
 	 * 
@@ -228,7 +229,7 @@ public class FacilityController {
 	/* ======================================================== */
 	/* ======================================================== */
 	/* ======================================================== */
-	/* ==========================사서채널============================= */
+	/* ==========================사서채널======================== */
 
 	/**
 	 * 시설종류, 도서관코드를 받아 리스트 출력.
