@@ -13,8 +13,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class AdminInterceptor implements HandlerInterceptor{
 	
-	
-	
 	@Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
@@ -43,7 +41,14 @@ public class AdminInterceptor implements HandlerInterceptor{
         }
         
         else {
-	        response.sendRedirect("/intro.html");
+        	response.setContentType("text/html;charset=UTF-8");
+        	
+	        PrintWriter out = response.getWriter();
+       	 
+        	out.println("<script>alert('잘못된 접근입니다'); location.href='/';</script>");
+        	 
+        	out.flush();
+        	
 			return false;
 		
         }
