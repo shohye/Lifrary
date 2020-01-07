@@ -114,4 +114,16 @@ public interface AdminMapper {
 	//사서 - 사서 내 정보 상세보기.
 	public User librarianMyDetail(String getSAID, String libNum);
 	
+	
+	/***************************************************************/
+	
+	//삭제 Ajax
+	
+	//userSearchList - 관리자가 회원 삭제
+	public int deleteUser(String said, String write, String uId); 
+	
+	//adUserLevelList - 관리자가 회원등급 삭제
+	public int deleteLevel(String said, String write, String ulLevel); 
+	
+	
 }

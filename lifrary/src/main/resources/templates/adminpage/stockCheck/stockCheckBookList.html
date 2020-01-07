@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+<th:block layout:fragment="adminTitle">
+	<title>장서점검</title>
+ </th:block>
+
+ <!-- headAdd(Libs&page) -->
+  
+  <th:block layout:fragment="adminHeadAdd">
+  
+  
+  <!-- addLibs -->
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
+
+  <!-- addPage -->
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/products.css}">
+  </th:block>
+  
+  <!-- /headAdd(Libs&page) --> 
+<!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+  <script type="text/javascript" th:inline="javascript">
+  
+  </script>
+  </th:block>
+<!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+	  
+	 
+	<!-- Content -->
+	<th:block layout:fragment="adminContents">   
+		<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+			<div>장서점검</div>
+		</h4>
+			<!-- 대출반납도서 리스트 -->
+			 <div class="card">
+			        <div class="card-datatable table-responsive">
+			          <table class="datatables-demo table table-hover table-bordered">
+			            <thead>
+			              <tr>
+			                <th>도서코드</th>
+			                <th>도서명</th>
+			                <th>대출일</th>
+			                <th>반납예정일</th>
+			                <th>반납일</th>
+			                <th>연체일</th>
+			                <th>연장</th>
+			                <th>상세보기</th>
+			              </tr>
+			            </thead>
+			            <tbody>
+			             <tr role="row" th:each="L : ${lendList}">
+			               <td class="align-middle" th:text="${L.bsCode}"></td>
+			               <td style="min-width: 300px;">
+			            	 	<div class="media align-items-center">
+			            	 		<img class="ui-w-40 d-block" th:src="${L.biImg}" alt="">
+			            	 		<span class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(L.biName,25)}"></span>
+			            	 	</div>
+			            	 </td>
+			               <td class="align-middle" th:text="${L.blLendDate}"></td>
+			               <td class="align-middle" th:text="${L.blScheduleDate}"></td>
+			               <td class="align-middle" th:text="${L.blReturnDate}"></td>
+			               <td class="align-middle" th:text="|${L.blOverdueDays}일|"></td>
+			               <td class="align-middle text-center" th:if = "${L.blExtensionDate != null || L.blReturnDate != null}">
+			               	<span class="badge badge-outline-secondary">연장불가</span>
+			               </td> 
+			               <td class="align-middle text-center" th:unless = "${L.blExtensionDate != null || L.blReturnDate != null}">
+			               	<a th:href="@{/admin/extensionUpdate(blCode=${L.blCode})}" th:if ="${session.SALBA eq 'O'}">
+			               		<span class="badge badge-outline-success">연장하기</span>
+			               	</a>
+			               </td>
+			               <td class="align-middle">
+			             	<a th:href="@{/admin/stockDetail(bsCode=${L.bsCode})}"class="btn btn-default btn-xs icon-btn md-btn-flat" title="도서정보" data-original-title="도서정보" >
+			             		<i class="fas fa-book"></i>
+			             	</a>
+			             	<a th:href="@{/admin/adminUserDetail(uId=${L.blId})}" class="btn btn-default btn-xs icon-btn md-btn-flat" title="회원정보" data-original-title="회원정보" >
+			             	 	<i class="fas fa-user-alt"></i>
+			             	</a>
+			               </td>
+			             </tr>
+			            </tbody>
+			          </table>
+			         </div>
+			      </div>
+	<th:block layout:fragment="pageScript">
+	
+	<!-- addLibs -->
+	<script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+	<script th:src="@{/adminStatic/vendor/libs/numeral/numeral.js}"></script>
+	<script th:src="@{/adminStatic/vendor/libs/nouislider/nouislider.js}"></script>
+
+	<!-- addDemo -->
+	<script th:src="@{/adminStatic/js/book_lend_tables.js}"></script>
+	</th:block>
+	<!-- / scripts -->
+	          
+</html>
