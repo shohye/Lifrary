@@ -77,12 +77,10 @@ public class BookLendService {
 				String lendDate = bookStock.getBookLend().getBlLendDate();//대출일
 				String returnDate = bookStock.getBookLend().getBlReturnDate();//반납일
 				
-				//예약 도서인지 확인하는 조건문
-				if(lendDate == null && returnDate == null) {
+				if(lendDate == null && returnDate == null) {//예약 도서인지 확인하는 조건문
 					bookStock.setBsLendState("예약");
-				}
-				//반납안된 도서인지 확인하는 조건문
-				else if(lendDate != null && returnDate == null) {	
+					bookInfoMap.put("searchBook", 3);//예약도서인  경우 3 대입
+				}else if(lendDate != null && returnDate == null) {//반납안된 도서인지 확인하는 조건문	
 					User user = bookLendMapper.userInfo(libNum, bookStock.getuId());
 					
 					if(user != null) {
@@ -105,7 +103,7 @@ public class BookLendService {
 						}	
 					}
 					bookInfoMap.put("resultUser", user);
-					bookInfoMap.put("searchBook", 2);//반납안된 도서인 경우 2 대입
+					bookInfoMap.put("searchBook", 2);//반납안된 도서인 경우2 대입
 				}
 			}	
 		}else {
@@ -203,7 +201,9 @@ public class BookLendService {
 		return result;
 		
 	}
-	
+	public int holdUpdate(String saId, String blCode, String ulLendDay) {
+		return bookLendMapper.holdUpdate(saId, blCode, ulLendDay);
+	}
 	//연장일 등록
 	public int extensionUpdate(String blCode) {
 		

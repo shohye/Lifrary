@@ -271,6 +271,15 @@
 			WHERE 
 				bl_code = #{blCode}
 	</update>
+	<update id="holdUpdate">
+		UPDATE book_lend
+		SET
+			u_id= #{saId},
+			bl_lend_date= CURDATE(),
+			bl_schedule_date= DATE_ADD(CURDATE(), INTERVAL ${ulLendDay} DAY)
+		WHERE 
+			bl_code = #{blCode}
+	</update>
 	<select id="holdSearchList" resultMap="bookLend">
 		SELECT
 			 bl.bl_code

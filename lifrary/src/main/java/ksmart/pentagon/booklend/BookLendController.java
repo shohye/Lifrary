@@ -129,6 +129,7 @@ public class BookLendController {
 			//도서
 			Map<String, Object> bookInfoMap = bookLendService.bookInfo(libNum, svBook);
 			//검색결과 리다이렉트로 보내기
+			redirectAttributes.addFlashAttribute("searchBook", bookInfoMap.get("searchBook"));
 			redirectAttributes.addFlashAttribute("resultBook", bookInfoMap.get("resultBook"));
 			
 	
@@ -188,6 +189,21 @@ public class BookLendController {
 		System.out.println(result);
 		
 		redirectAttributes.addFlashAttribute("resultUpdate", result);
+		
+		return "redirect:/admin/lendSearchList";
+	}
+	
+	@PostMapping("/admin/holdUpdate")
+	public String holdUpdate(	 @RequestParam(value="blCode" ) String blCode
+								, @RequestParam(value="ulLendDay" ) String ulLendDay 
+								, HttpSession session
+			 					, RedirectAttributes redirectAttributes) {
+
+		String saId = (String) session.getAttribute("SAID");
+		
+		int result = bookLendService.holdUpdate(saId, blCode, ulLendDay);
+		
+		redirectAttributes.addFlashAttribute("resultInsert", result);
 		
 		return "redirect:/admin/lendSearchList";
 	}

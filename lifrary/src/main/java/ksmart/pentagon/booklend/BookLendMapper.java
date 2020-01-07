@@ -28,6 +28,8 @@ public interface BookLendMapper {
 	public int stockUpdate(String bsCode, String lendState);
 	//반납일 등록
 	public int returnUpdate(String blCode);
+	//예약도서 대출 등록
+	public int holdUpdate(String saId, String blCode, String ulLendDay);
 	//연장일 등록
 	public int extensionUpdate(String blCode) ;
 	//예약도서 리스트

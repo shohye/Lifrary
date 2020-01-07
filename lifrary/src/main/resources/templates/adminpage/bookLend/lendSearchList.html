@@ -70,7 +70,7 @@
 			//예약도서 대출버튼 활성화
 			else if(bsLendState == '예약' && blId == uId){
 				if(bsBookState == '정상' && uasLendLimit == 'O' && ulLendNum > 0){
-					$('#lendForm').find('button').attr('class','btn btn-primary').text('대출등록');
+					$('#lendForm').find('button').attr('class','btn btn-info').text('대출등록');
 				}
 			}
 			//소장도서 대출버튼 활성화
@@ -130,14 +130,14 @@
 	 $('#insertBtn').click(function(){
 		 var btnClass = $(this).attr('class');
 		
-		 //반납등록
-		 if(btnClass == 'btn btn-success'){
+		 if(btnClass == 'btn btn-success'){//반납등록
 			 $("#lendForm").attr("action", "/admin/returnUpdate").submit();
-		 }
-		 //대출등록
-		 else if(btnClass == 'btn btn-primary'){
+		 }else if(btnClass == 'btn btn-primary'){ //대출등록
 			 $("#lendForm").submit();
+		 }else if(btnClass == 'btn btn-info'){//예약등록
+			 $("#lendForm").attr("action", "/admin/holdUpdate").submit();
 		 }
+		 
  		
 	 }); 
 	 
@@ -304,9 +304,9 @@
 		<!-- 대출/반납 등록  -->
 		<form th:action="@{/admin/lendInsert}" id="lendForm" method="post">
 			<input type="hidden" name="blId" th:if ="${resultUser != null && searchBook != 2}" th:value=${resultUser.uId}>
-			<input type="hidden" name="ulLendDay" th:if ="${resultUser != null && searchBook != 2}" th:value=${resultUser.userLevel.ulLendDay}>
+			<input type="hidden" name="ulLendDay" th:if ="${resultUser != null && searchBook != 2 || resultUser != null && searchBook == 3}" th:value=${resultUser.userLevel.ulLendDay}>
 			<input type="hidden" name="bsCode" th:if ="${resultBook != null}" th:value=${resultBook.bsCode}>
-			<input type="hidden" name="blCode" th:if ="${searchBook != null && searchBook == 2}" th:value=${resultBook.bookLend.blCode}>
+			<input type="hidden" name="blCode" th:if ="${searchBook != null && searchBook == 2 || searchBook != null && searchBook == 3}" th:value=${resultBook.bookLend.blCode}>
 			<div class="text-center form-group" th:if ="${session.SALBA eq 'O'}" >
 				<button type="button" id="insertBtn" class="btn btn-outline-default">대출/반납</button>
 			</div>
