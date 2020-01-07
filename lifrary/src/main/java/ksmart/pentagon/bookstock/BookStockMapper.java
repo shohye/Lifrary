@@ -24,11 +24,17 @@ public interface BookStockMapper {
 	public BookStock getStockDeleteDetail(String bsCode);
 			
 	// (어드민) 소장도서 인서트 ( book_stock insert/ book_information update)
+	// information에 해당도서가 있는지 확인하는 메서드
+	public BookInformation checkBookInfo(String biIsbn);
 	public void insertStock(Map<String , Object> insertMap);
 	public void updateBookInfoStock(BookInformation bookInformation);
+	// api정보 없을때 +insertBookInfoStock
 	
 	// (도서관) 검색된 소장도서 리스트 출력
-	public List<BookStock> getDetailSearchStockList(BookInformation bookInformation);
+	public List<BookStock> getDetailSearchStockList(Map<String,Object> params);
+	// 검색 시 결과 리스트목록 갯수 세는 메서드 
+	public int getStockAllCount(Map<String,Object> params);
+	
 	
 	// (도서관) 도서 상세페이지 - 반납예정일 계산하는 메서드
 	public BookLend getReturnDate(String bsCode);
@@ -36,6 +42,13 @@ public interface BookStockMapper {
 	// (어드민) 도서 정보 업데이트하는 메서드
 	public void updateStock(Map<String , Object> stockMap);
 	
+	
+	// (도서관) 회원 대출,예약 가능여부확인
+	public User userInfoCheck(String lCode, String sid);	
+	// (도서관) 홈페이지에서 도서 예약등록 
+	public int holdInsert(String lCode, String sid , String bsCode );
+	
+	public void updateStockHoldLendState(String bsCode);
 	
 	
 	

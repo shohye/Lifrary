@@ -71,7 +71,13 @@ public class BookCarryService {
 
 		}
 	
-	
+	// 오더 주문상태 변경
+	int updateOrderState1(String boCode) {
+		return bookCarryMapper.updateOrderState1(boCode);
+	}
+	int updateOrderState2(String boCode) {
+		return bookCarryMapper.updateOrderState2(boCode);
+	}
 	
 	/*************************************************************/	
 	
@@ -132,16 +138,27 @@ public class BookCarryService {
 	}
 	// 기부자 리스트 버튼으로 상태변경
 	//1. 기부자스티커
-	public int updateStickerO(String bdnCode) {
-		return bookCarryMapper.updateStickerO(bdnCode);
-	}
-	public int updateStickerX(String bdnCode) {
-		return bookCarryMapper.updateStickerX(bdnCode);
-	}
 	
+	public int updateStickerO(String bdnCode) {		
+		bookCarryMapper.updateStickerO(bdnCode);
+		return 1;
+	}
+	public int updateStickerX(String bdnCode) {		
+		bookCarryMapper.updateStickerX(bdnCode);
+		return 2;
+	}
+	public int updateHonorO(String bdnCode) {
+		return bookCarryMapper.updateHonorO(bdnCode);
+	}
+	public int updateHonorX(String bdnCode) {
+		return bookCarryMapper.updateHonorX(bdnCode);
+	}
 	
 	/*************************************************************/	
-	
+	//희망도서 상태변경 Ajax
+	int updateProgress(String brCode,String brProgress,String brCancelReason) {
+		return bookCarryMapper.updateProgress(brCode, brProgress, brCancelReason);
+	}
 	
 	// 희망도서신청 리스트 출력
 	public List<BookRequest> getRequestList(String lCode) {
@@ -206,19 +223,37 @@ public class BookCarryService {
     /*************************************************************/	
 	// order 삭제
 	public int deleteOrder(String said, String write , String boCode) {
-		int result = bookCarryMapper.deleteOrder(said, write, boCode);
+		User u = bookCarryMapper.checkPw(said, write);
+		int result = 0;
+		if(u == null) {
+			
+		}else {
+			result = bookCarryMapper.deleteOrder(boCode);
+		}
 		System.out.println("deleteOrder result=>"+result);
 		return result;
 	}
 	// purchase 삭제
 	public int deletePurchase(String said, String write , String bpCode) {
-		int result = bookCarryMapper.deletePurchase(said, write, bpCode);
+		User u = bookCarryMapper.checkPw(said, write);
+		int result = 0;
+		if(u == null) {
+			
+		}else {
+			result = bookCarryMapper.deletePurchase(bpCode);
+		}
 		System.out.println("deletePurchase result=>"+result);
 		return result;
 	}
 	// purchase 삭제
 	public int deleteDonation(String said, String write , String bdnCode) {
-		int result = bookCarryMapper.deleteDonation(said, write, bdnCode);
+		User u = bookCarryMapper.checkPw(said, write);
+		int result = 0;
+		if(u == null) {
+			
+		}else {
+			result = bookCarryMapper.deleteDonation(bdnCode);
+		}
 		System.out.println("deletePurchase result=>"+result);
 		return result;
 	}

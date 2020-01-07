@@ -32,7 +32,9 @@
      <script type="text/javascript" th:inline="javascript">  
        $(document).ready(function(){  	   	   
     	   $('#deleteBtn').click(function(){
-    		   var SAID = [[${session.SAID}]]
+    		   
+    		   var SAID = [[${session.SAID}]];
+    		   
     		   console.log(SAID);
     		   var write = $('#uPw').val();
     		   console.log(write);
@@ -51,33 +53,14 @@
 						 $('#uPw').focus();
 					 }else if(data =='도서 삭제가 완료되었습니다'){
 						 alert(data);
-						 $('#modals-default').modal('hide');						
+						 $('#modals-default').modal('hide');
+						 location.reload(true);
 					 }						
 				});				 
 				request.fail(function( jqXHR, textStatus ) {
 					alert( "Request failed: " + textStatus );
 				}); 				
     	   });
-    	     	   
-        	   $('#bdnStickerX').click(function(){
-        
-        		   var bdnCode = $('#bdnCode').val();
-        		   
-        		   var request = $.ajax({
-    					url:"/updateStickerO",
-    					method: "POST",
-    					data : { 'bdnCode' : bdnCode }, 
-    					dataType: "text"
-    				});				 
-    				request.done(function( data ) {
-    					console.log(data);
-    				});				 
-    				request.fail(function( jqXHR, textStatus ) {
-    					alert( "Request failed: " + textStatus );
-    				}); 				
-        	   });
-    	   
-    	   
     	   
     	}); // 처음 function끝
     	    	
@@ -93,7 +76,7 @@
          <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
 			<div>도서 기부 신청자 리스트</div>
 			
-	<th:block th:if="${session.SALC} == 'O'">		
+	<th:block th:if="${session.SALC} == 'O'">	
 		<a th:href="@{/admin/bookDonationInsert}" style="color: white" class="btn btn-primary rounded-pill d-block"> 
 		<span class="ion ion-md-add"></span>신청자 추가 </a>
 	</th:block>		
@@ -130,20 +113,24 @@
 				      <td class="align-middle" th:text="${d.bdnAddr}"></td>
 				      <td class="align-middle" th:text="${d.bdnNum}"></td>
 				      <td class="align-middle text-center">
-				      	 <span th:if="${d.bdnPersonal eq 'O'}"  class="badge badge-outline-success">동의</span>
+				      	 <span th:if="${d.bdnPersonal eq 'O'}" class="badge badge-outline-success" >동의</span>
 				     	 <span th:unless="${d.bdnPersonal eq 'O'}" class="badge badge-outline-danger">비동의</span>
 				      </td>
 				      <td class="align-middle text-center">
-				      	 <span th:if="${d.bdnSticker eq 'O'}" id="bdnStickerO">
-				      	 	<a id="bdnStickerO" href="#" class="badge badge-outline-success" type="button">부착</a>
+				      	 <span id="bdnSticker" th:if="${d.bdnSticker eq 'O'}">
+				      	 	<a class="badge badge-outline-success" th:href="@{/updateSticker(bdnCode=${d.bdnCode},bdnSticker=${d.bdnSticker})}">부착</a>
 				      	 </span>
-				      	 <span th:unless="${d.bdnSticker eq 'O'}">
-				      	 	<a id="bdnStickerX" href="#" class="badge badge-outline-danger" type="button">미부착</a>
-				      	 </span>				      
+				     	 <span id="bdnSticker" th:unless="${d.bdnSticker eq 'O'}">
+				     	 	<a class="badge badge-outline-danger" th:href="@{/updateSticker(bdnCode=${d.bdnCode},bdnSticker=${d.bdnSticker})}">미부착</a>
+				     	 </span>						      
 				      </td>
 				      <td class="align-middle text-center">
-				      	 <span id="bdnHonorAgreeO" th:if="${d.bdnHonorAgree eq 'O'}" class="badge badge-outline-success">등록</span>
-				         <span id="bdnHonorAgreeX" th:unless="${d.bdnHonorAgree eq 'O'}" class="badge badge-outline-danger">미등록</span>
+				      	 <span id="bdnHonorAgree" th:if="${d.bdnHonorAgree eq 'O'}">
+				      		<a class="badge badge-outline-success" th:href="@{/updateHonor(bdnCode=${d.bdnCode},bdnHonorAgree=${d.bdnHonorAgree})}"> 등록</a>
+				      	 </span>
+				         <span id="bdnHonorAgree" th:unless="${d.bdnHonorAgree eq 'O'}">
+			                <a class="badge badge-outline-danger" th:href="@{/updateHonor(bdnCode=${d.bdnCode},bdnHonorAgree=${d.bdnHonorAgree})}"> 미등록</a>
+				         </span>
 				      </td>
 				      <td class="align-middle" th:text="${d.bdnDate}"></td>	
 				      <td class="align-middle text-center">
@@ -163,6 +150,14 @@
                 </table>
               </div>
             </div>
+            
+            <th:block th:if="${session.SALC} == 'O'">
+            <div style="margin-top: 20px">
+			    <a th:href="@{/admin/bookDonationFile}" class="btn rounded-pill btn-outline-primary"> 
+				<span class="ion ion-md-add"></span>홈페이지 신청서 업로드 </a>
+			</div>		
+			</th:block>	
+			
             <div class="modal fade" id="modals-default">
                   <div class="modal-dialog">
                     <form class="modal-content">
@@ -192,7 +187,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <a th:href="@{/admin/bookDonationList}" id="deleteBtn" type="button" class="btn btn-primary">삭제</a>
+                        <a th:href="@{#}" id="deleteBtn" type="button" class="btn btn-primary">삭제</a>
                       </div>
                     </form>
                   </div>

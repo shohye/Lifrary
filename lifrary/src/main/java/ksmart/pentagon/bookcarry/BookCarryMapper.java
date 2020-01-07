@@ -23,6 +23,9 @@ public interface BookCarryMapper {
 	// insertBookInformation 사용
 	// 오더 도서 인서트  ver2(update+insert)
 	int insertOrderBookCarry(BookCarry bookCarry);
+	// 오더 주문상태 변경
+	int updateOrderState1(String boCode);
+	int updateOrderState2(String boCode);
 		
 	/*************************************************************/	
 	
@@ -56,6 +59,9 @@ public interface BookCarryMapper {
 	//1. 기부자스티커
 	int updateStickerO(String bdnCode);
 	int updateStickerX(String bdnCode);
+	//2. 명예전당
+	int updateHonorO(String bdnCode);
+	int updateHonorX(String bdnCode);
 	
 	/*************************************************************/	
 	
@@ -80,13 +86,16 @@ public interface BookCarryMapper {
 	int insertBookInfo(BookInformation bookInformation);
 	
 	// delete AJAX( 사서  비번과 비교 후 맞으면 삭제 )
+	// 사서 아이디 ,비번 확인
+	User checkPw(String said, String write);
 	// book_order
-	int deleteOrder(String said, String write, String boCode);
+	int deleteOrder(String boCode);
 	// book_purchase
-	int deletePurchase(String said, String write, String bpCode);
+	int deletePurchase(String bpCode);
 	// book_donation
-	int deleteDonation(String said, String write, String bdnCode);
+	int deleteDonation(String bdnCode);
 	
-	
+	//희망도서 상태변경 Ajax
+	int updateProgress(String brCode,String brProgress,String brCancelReason);
 	
 }
