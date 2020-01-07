@@ -20,9 +20,12 @@
           <!-- Content -->
           <div class="container-fluid flex-grow-1 container-p-y" style="width: 100%">
 
-            <h4 class="font-weight-bold py-3 mb-4">
-              <span class="text-muted font-weight-light"></span>공지사항
-            </h4>
+            <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+		<div>공지 사항</div>
+		<button type="button" class="btn btn-primary rounded-pill d-block" style="margin-right: 80px;">
+			<a class="ion ion-md-add" style="color: #FFFFFF" th:href="@{/admin/noticeInsert(boardLName=${boardLName},boardMName=${'공지사항'})}" id="noticeInsertBtn">공지 등록</a>
+		</button>
+	</h4>
             <div class="card">
 			<div class="card" style="padding-top: 20px; padding-left: 20px; padding-right: 20px;">
 	            <div class="table-responsive">
@@ -50,13 +53,8 @@
             </div>
           </div>
 	   <div>
-	   		<a th:href="@{/admin/noticeInsert(boardLName=${boardLName},boardMName=${'공지사항'})}" style="color: white"> 
-				            <button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
-				            	<span class="ion ion-md-add">공지사항추가</span>
-							</button>
-			</a>
-	   </div>
-          </div>
+   </div>
+ </div>
           <!-- / Content -->
         </div>
         <!-- Layout content -->

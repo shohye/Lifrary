@@ -36,16 +36,39 @@
 		            +'<option>기타</option>'
 		      	    +'</select></div>');
 			$(document).on('change','#search',function(){
-				var searchText = $('#search option:checked').text();
-				var boardLName = $('#boardLName').val();
-				console.log(searchText);
-				console.log(boardLName);
+				var boardMName = $('#search option:checked').text();
+				var boardLName = $('#boardLName').text().trim();
+				console.log(boardMName);
+				console.log(boardLName.trim());
 				
+				var request = $.ajax({
+				  url: "/inquirySearchListAjax",
+				  method: "POST",
+				  data: { "boardMName" : boardMName , "boardLName" : boardLName },
+				  dataType: "json"
+				});
+				 
+				request.done(function( boardList ) {
+					console.log(boardList.length)
+						$('tbody').html('');
+					for(var i = 0; i< boardList.length; i++){
+						$('tbody').append('<tr>'
+										 +'<td>'+(i+1)+'</td>'
+									  	 +'<td><a href="/lifrary/inquiryDetail?boardCode='+boardList[i].boardCode+'&boardLName='+boardList[i].boardLName+'">'+boardList[i].boardTitle +'</a></td>'
+										 +'<td>'+boardList[i].boardMName +'</td>'
+										 +'<td>'+boardList[i].uId +'</td>'
+										 +'<td>'+boardList[i].boardPageView +'</td>'
+										 +'<td>'+boardList[i].boardDate +'</td>'
+										 +'</tr>')
+					}
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});
 				
 			})
 		})
-		
-		
 	</script>
        <section class="page-banner services-banner">
             <div class="container">
@@ -63,15 +86,14 @@
             </div>
         </section>
         <!-- Layout content -->
-        <input type="hidden" id="boardLName" th:value="${board.boardLName}">
         <div class="layout-content">
 			<div style="padding: 190px;">
           <!-- Content -->
           <div class="container-fluid flex-grow-1 container-p-y" style="width: 100%">
 
             <div class="card">
-            <h4 class="font-weight-bold py-3 mb-4">
-              <span class="text-muted font-weight-light"></span>문의하기
+            <h4 id="boardLName" class="font-weight-bold py-3 mb-4">
+              <spanclass="text-muted font-weight-light"></span>문의하기
             </h4>
             <br>
 	            <div class="table-responsive">
@@ -104,7 +126,7 @@
 	            </div>
           </div>
 	   <div>
-	   		<a style="margin-top: 10px;" th:href="@{/admin/noticeInsert(boardLCode=${boardLCode},boardMCode=${boardMCode})}" value="문의하기" id="noticeInsertBtn" class="btn btn-primary">문의하기등록</a>
+	   		<a style="margin-top: 10px;" th:href="@{/library/inquiryInsert(boardLName=${'문의하기'})}" id="inquiryInsertBtn" class="btn btn-primary">문의하기등록</a>
 	   </div>
           </div>
           <!-- / Content -->

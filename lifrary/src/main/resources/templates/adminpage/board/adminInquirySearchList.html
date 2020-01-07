@@ -29,9 +29,6 @@
   <th:block layout:fragment="adminContents">
 	<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
 		<div>문의 사항</div>
-		<button type="button" class="btn btn-primary rounded-pill d-block" style="margin-right: 100px;">
-			<a class="ion ion-md-add" style="color: #FFFFFF" th:href="@{/admin/noticeInsert(boardLCode=${boardLCode},boardMCode=${boardMCode})}" id="noticeInsertBtn">문의 등록</a>
-		</button>
 	</h4>
 	<div class="card">
 	    <div class="card-datatable table-responsive">
@@ -65,16 +62,10 @@
 	                </tbody>
 	              </table>
 	    		</div>
-	    		<div>
-	   		<a style="margin-top: 10px;" th:href="@{/admin/noticeInsert(boardLCode=${boardLCode},boardMCode=${boardMCode})}" value="문의하기" id="noticeInsertBtn" class="btn btn-primary">문의하기등록</a>
-	   </div>
-          
         </div>
         <!-- Layout content -->
 	   <br>
 	   <br>
-	    	 </div>
-	
   </th:block>
   <!-- Content -->
  

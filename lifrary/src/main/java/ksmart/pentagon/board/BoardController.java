@@ -250,6 +250,20 @@ public class BoardController {
 	public @ResponseBody List<Board> inquirySearchListAjax(Board board, HttpSession session){
 		board.setlCode((String)session.getAttribute("LIBNUM"));
 		System.out.println("controller251" + board);
-		return null;
+		List<Board> boardList = boardService.inquirySearchListAjax(board);
+		
+		return boardList;
+	}
+	
+	@GetMapping("/library/inquiryInsert")
+	public String libraryInquiryInsert(Model model , Board board) {
+		System.out.println("controller260 : " + board);
+		model.addAttribute("boardLName", board.getBoardLName());
+		return "/librarypage/board/inquiryInsert";
+	}
+	
+	@PostMapping("textgogo")
+	public @ResponseBody void textgogo(@RequestParam(value = "text01")String text01) {
+		System.out.println("controller266 : " + text01);
 	}
 }

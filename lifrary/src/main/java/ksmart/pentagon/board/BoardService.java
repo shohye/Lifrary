@@ -6,12 +6,14 @@ import java.util.Date;
 import java.util.List;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpSession;
 import javax.xml.ws.Response;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.pentagon.codeup.CodeUp;
 import ksmart.pentagon.vo.Board;
@@ -109,6 +111,13 @@ public class BoardService {
 			Board board = boardmapper.lifraryInquiryDetail(Dboard);
 			board.setBoardComment(boardmapper.getComment(Dboard));
 			return board;
+		}
+		
+		public List<Board> inquirySearchListAjax(Board board){
+			return boardmapper.inquirySearchListAjax(board);
+		}
+		
+		public void libraryInquiryInsert(Board board){
 		}
 		
 }
