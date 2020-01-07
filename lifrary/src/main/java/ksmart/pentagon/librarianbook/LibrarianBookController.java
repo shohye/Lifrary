@@ -71,6 +71,8 @@ public class LibrarianBookController {
 			}
 			
 		}
+		
+//		추천도서 등록
 		@PostMapping("/admin/bookRecommendInsert")
 		public String bookRecommendInsert(LibrarianBook librarianBook , @RequestParam(value = "isbn")String isbn,HttpSession httpSession) {
 			librarianBook.setlCode((String)httpSession.getAttribute("LIBNUM"));
@@ -94,7 +96,9 @@ public class LibrarianBookController {
 		@PostMapping("/admin/bookRecommendUpdate")
 		public String bookRecommendUpdate(LibrarianBook librarianBook) {
 			System.out.println("controller96 : " + librarianBook);
-			return null;
+			librarianBookService.bookRecommendUpdate(librarianBook);
+			String lbCode = librarianBook.getLbCode();
+			return "redirect:/admin/bookRecommendDetail?lbCode="+lbCode;
 		}
 		
 		

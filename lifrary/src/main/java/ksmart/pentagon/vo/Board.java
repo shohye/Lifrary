@@ -14,7 +14,8 @@ public class Board {
 	private String boardDate;		//게시글등록일
 	private String boardLName;		//대분류명
 	private String boardMName;		//중분류명
-	private int lNum;
+	private BoardComment boardComment; //댓글 테이블
+	
 	public String getBoardCode() {
 		return boardCode;
 	}
@@ -93,19 +94,20 @@ public class Board {
 	public void setBoardMName(String boardMName) {
 		this.boardMName = boardMName;
 	}
-	public int getlNum() {
-		return lNum;
+	public BoardComment getBoardComment() {
+		return boardComment;
 	}
-	public void setlNum(int lNum) {
-		this.lNum = lNum;
+	public void setBoardComment(BoardComment boardComment) {
+		this.boardComment = boardComment;
 	}
 	@Override
 	public String toString() {
 		return "Board [boardCode=" + boardCode + ", lCode=" + lCode + ", uId=" + uId + ", boardLCode=" + boardLCode
 				+ ", boardMCode=" + boardMCode + ", boardTitle=" + boardTitle + ", boardPw=" + boardPw
 				+ ", boardContent=" + boardContent + ", boardOpen=" + boardOpen + ", boardPageView=" + boardPageView
-				+ ", boardDate=" + boardDate + ", boardLName=" + boardLName + ", boardMName=" + boardMName + ", lNum="
-				+ lNum + "]";
+				+ ", boardDate=" + boardDate + ", boardLName=" + boardLName + ", boardMName=" + boardMName
+				+ ", boardComment=" + boardComment + "]";
 	}
+	
 	
 }

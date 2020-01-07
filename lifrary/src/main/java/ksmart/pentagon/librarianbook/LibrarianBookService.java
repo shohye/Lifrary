@@ -42,4 +42,8 @@ public class LibrarianBookService {
 		librarianBookMapper.bookRecommendInsert(librarianBook);
 		return lbCode;
 	}
+	
+	public void bookRecommendUpdate(LibrarianBook librarianBook) {
+		librarianBookMapper.bookRecommendUpdate(librarianBook);
+	}
 }

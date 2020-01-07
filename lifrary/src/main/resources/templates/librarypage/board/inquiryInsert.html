@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+ <th:block layout:fragment="libraryTitle">
+	<title>독후감 작성</title>
+ </th:block>
+    
+ <th:block layout:fragment="customScript">
+ 	<style>
+	.radio label {
+	padding-left: 20px;
+	margin-bottom: 5px;
+	display: inline;
+}
+ 	</style>
+	
+ </th:block>
+    <th:block layout:fragment="customContents">
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>문의 하기</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">문의를 접수해 주세요.</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">메인화면</a></li>
+                        <li>문의 등록</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <script>
+        	$(document).ready(function(){
+        		$('.select-styled').click(function(){
+        			$('ul').html('<li rel="도서관자료"> 도서관자료 </li>'
+        						+'<li rel="대출/반납/연기"> 대출/반납/연기</li>'
+        						+'<li rel="도서관시설"> 도서관시설 </li>'
+        						+'<li rel="회원증"> 회원증   </li>'
+        						+'<li rel="홈페이지"> 홈페이지  </li>'
+        						+'<li rel="기타"> 기타    </li>'
+        			);
+        		$('li').click(function(){
+        			var textval = $(this).text();
+        			var boardMName = textval.trim()
+        			console.log(boardMName);
+        			$('.select-styled').text(textval);
+        			$('#boardMName').val(boardMName);
+        		})
+        		})
+        	})
+        </script>
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="services-main">
+                        <div class="services-pg">                            
+                            <section class="services-offering">
+                                <div class="container">
+	                                <div class="row">
+	                                    <div class="center-content">
+	                                        <h2 class="section-title">문의하기</h2>
+	                                        <span class="underline center"></span>
+	                                        <p class="lead"></p>
+	                                        <div class="clearfix"></div>
+	                                    </div>
+	                                    <div class="cart-head">
+		                                    <div style="width: 80%;">
+		                                   		<strong>선택</strong>
+		                                            	<select>
+		                                            		<option id="text001">&emsp;&ensp;&ensp;&ensp;.::선택::.&ensp;&ensp;&emsp;</option>
+<!-- 		                                            		<option>&emsp;도서관자료&emsp;</option> -->
+<!-- 		                                            		<option>&emsp;대출/반납/연기</option> -->
+<!-- 		                                            		<option>&emsp;도서관시설&emsp;</option> -->
+<!-- 		                                            		<option>&emsp;회원증&emsp;&emsp;&emsp;</option> -->
+<!-- 		                                            		<option>&emsp;홈페이지&emsp;&emsp;</option> -->
+<!-- 		                                            		<option>&emsp;기타&emsp;&emsp;&emsp;&emsp;</option> -->
+		                                           		</select> 
+		                                     
+		                                    </div>
+		                                    <div class="clearfix"></div>
+		                                </div>
+	                                     <div class="entry-content">
+			                             	<form id="reportForm" th:action="@{/lifrary/myBookReportSearchList}" >
+		                                        <div class="form-group">
+		                                        <table>
+		                                        	<tr>
+		                                        		<td style="width: 150px;"><strong>제목을 입력해주세요 : </strong></td>
+		                                        		<td>
+		                                        			<input type="text" id="boardTaitle" name="boardTaitle" style="width: 100%;">
+		                                        		</td>
+		                                        	</tr>
+			                                        <tr>
+			                                        	<td colspan="2">
+			                                        		<hr>
+			                                        	</td>
+			                                        </tr>
+												    <tr>
+												    	<td><strong>내용을 입력해주세요</strong> </td>
+												        <td><textarea style="width: 100%;" rows="15" cols="15" id="boardContent"></textarea></td>
+												        
+												    </tr>
+												</table>
+			                               	   </div>
+			                               	   <div class="form-group radio">  
+			                               	   		 <strong>공개여부:</strong>&nbsp;
+				                                      <input id="open" type="radio" value="O" name="boardOpen">
+                                                      <label for="open">공개&nbsp;</label>
+				                                      <input id="no" type="radio" value="X" name="boardOpen">
+                                                      <label for="no">비공개</label>
+			                               		</div>
+			                               	   <div class="form-group">  
+			                               	   		 <input type="hidden" name="boardMName" id="boardMName">
+				                                     <button type="button" id="inquiryBtn" class="btn btn-primary">문의 등록</button> 
+			                               		</div>
+			                               </form>
+	                                   </div>
+	                                </div>
+                                </div>
+                            </section>
+                          </div>
+                     </div> 
+                </main>
+            </div>
+        </div>
+    </th:block>
+</html>

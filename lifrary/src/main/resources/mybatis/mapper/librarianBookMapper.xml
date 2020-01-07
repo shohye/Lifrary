@@ -25,33 +25,34 @@
  		<result property="biDtail" column="bi_detail"/>			<!-- 상세설명 -->
  		<result property="biImg" column="bi_img"/>				<!-- 이미지 -->
  		<result property="biDate" column="bi_date"/>			<!-- 등록일 -->
+ 		<result property="bsCode" column="bs_code"/>			<!-- 소장도서코드 -->
  	</resultMap>
  	<select id="librarianBookList" resultMap="LibrarianBookList">
- 	SELECT
-	*
-	FROM librarian_book AS lb INNER JOIN 
-	(SELECT
-	bi.*,bs.bs_code
-	FROM book_information AS bi INNER JOIN book_stock AS bs
-	ON bi.bi_isbn = bs.bi_isbn
-	GROUP BY bi.bi_isbn)AS si
-	ON lb.bs_code = si.bs_code
-	WHERE lb.l_code = #{lCode}
-	GROUP BY lb.lb_code
+	 	SELECT
+		*
+		FROM librarian_book AS lb INNER JOIN 
+		(SELECT
+		bi.*,bs.bs_code
+		FROM book_information AS bi INNER JOIN book_stock AS bs
+		ON bi.bi_isbn = bs.bi_isbn
+		GROUP BY bi.bi_isbn)AS si
+		ON lb.bs_code = si.bs_code
+		WHERE lb.l_code = #{lCode}
+		GROUP BY lb.lb_code
  	</select>
  	
  	<select id="bookRecommendDetail" resultMap="LibrarianBookList">
  		SELECT
-	*
-	FROM librarian_book AS lb INNER JOIN 
-	(SELECT
-	bi.*,bs.bs_code
-	FROM book_information AS bi INNER JOIN book_stock AS bs
-	ON bi.bi_isbn = bs.bi_isbn
-	GROUP BY bi.bi_isbn)AS si
-	ON lb.bs_code = si.bs_code
-	WHERE lb.l_code = '000000' AND lb.lb_code = #{lbCode}
-	GROUP BY lb.lb_code
+		*
+		FROM librarian_book AS lb INNER JOIN 
+		(SELECT
+		bi.*,bs.bs_code
+		FROM book_information AS bi INNER JOIN book_stock AS bs
+		ON bi.bi_isbn = bs.bi_isbn
+		GROUP BY bi.bi_isbn)AS si
+		ON lb.bs_code = si.bs_code
+		WHERE lb.l_code = '000000' AND lb.lb_code = #{lbCode}
+		GROUP BY lb.lb_code
  	</select>
  	
  	<select id="bookRecommendDelete" parameterType="String">
@@ -84,7 +85,20 @@
  	
  	<insert id="bookRecommendInsert" parameterType="ksmart.pentagon.vo.BookInformation">
 		INSERT INTO librarian_book
-		(lb_code, l_code, u_id, bs_code, lb_title, lb_content, lb_id, lb_open, lb_date)
-		VALUES (#{lbCode}, #{lCode}, #{uId}, #{bsCode}, '', #{lbContent}, #{lbId}, #{lbOpen}, NOW())
+		(lb_code, l_code, u_id, bs_code, lb_content, lb_id, lb_open, lb_date)
+		VALUES (#{lbCode}, #{lCode}, #{uId}, #{bsCode}, #{lbContent}, #{lbId}, #{lbOpen}, NOW())
  	</insert>
+ 	
+ 	<update id="bookRecommendUpdate" parameterType="ksmart.pentagon.vo.LibrarianBook">
+ 		UPDATE librarian_book
+		SET
+		l_code= #{lCode},
+		u_id= #{uId},
+		bs_code= #{bsCode},
+		lb_content= #{lbContent},
+		lb_id= #{lbId},
+		lb_open= #{lbOpen},
+		lb_date= NOW()
+		WHERE lb_code= #{lbCode}
+ 	</update>
  </mapper>

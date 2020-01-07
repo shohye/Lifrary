@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+  <th:block layout:fragment="libraryTitle">
+    	<title>..:: 문의 리스트 ::..</title>
+  </th:block>
+	  <th:block layout:fragment="customScript">
+			    <!-- addLibs -->
+		  <script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+		  <script th:src="@{/adminStatic/vendor/libs/bootstrap-select/bootstrap-select.js}"></script>
+		
+		  <!-- addDemo -->
+		  <script th:src="@{/adminStatic/js/inquiry_list_tables.js}"></script>
+		  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+		  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
+		  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-select/bootstrap-select.css}">
+ 	 </th:block>
+  <th:block layout:fragment="customContents">
+    <style>
+	a {
+	color : #4E5155;
+	}
+	</style>
+	
+	<script>
+		$(document).ready(function(){
+			$('input').after('<div style="margin-left: 50px;"><select id="search" class="form-control form-control-sm">'
+					+'<option>.::검색조건 선택::.</option>'
+		          	+'<option>도서관자료</option>'
+		            +'<option>대출/반납/연기</option>'
+		            +'<option>도서관시설</option>'
+		            +'<option>회원증</option>'
+		            +'<option>홈페이지</option>'
+		            +'<option>기타</option>'
+		      	    +'</select></div>');
+			$(document).on('change','#search',function(){
+				var boardMName = $('#search option:checked').text();
+				var boardLName = $('#boardLName').text().trim();
+				console.log(boardMName);
+				console.log(boardLName.trim());
+				
+				var request = $.ajax({
+				  url: "/inquirySearchListAjax",
+				  method: "POST",
+				  data: { "boardMName" : boardMName , "boardLName" : boardLName },
+				  dataType: "json"
+				});
+				 
+				request.done(function( boardList ) {
+					console.log(boardList.length)
+						$('tbody').html('');
+					for(var i = 0; i< boardList.length; i++){
+						$('tbody').append('<tr>'
+										 +'<td>'+(i+1)+'</td>'
+									  	 +'<td><a href="/lifrary/inquiryDetail?boardCode='+boardList[i].boardCode+'&boardLName='+boardList[i].boardLName+'">'+boardList[i].boardTitle +'</a></td>'
+										 +'<td>'+boardList[i].boardMName +'</td>'
+										 +'<td>'+boardList[i].uId +'</td>'
+										 +'<td>'+boardList[i].boardPageView +'</td>'
+										 +'<td>'+boardList[i].boardDate +'</td>'
+										 +'</tr>')
+					}
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});
+				
+			})
+		})
+	</script>
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>공지사항</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">공지사항을 읽어주세요</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">메인화면</a></li>
+                        <li>공지사항 리스트</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- Layout content -->
+        <div class="layout-content">
+			<div style="padding: 190px;">
+          <!-- Content -->
+          <div class="container-fluid flex-grow-1 container-p-y" style="width: 100%">
+
+            <div class="card">
+            <h4 id="boardLName" class="font-weight-bold py-3 mb-4">
+              <spanclass="text-muted font-weight-light"></span>문의하기
+            </h4>
+            <br>
+	            <div class="table-responsive">
+	              <table class="datatables-demo table table-striped table-bordered">
+	                <thead>
+	                  <tr>
+	                    <th style="width: 10%; text-align: center;">번호</th>
+	                    <th style="width: 50%; text-align: center;">제목</th>
+	                    <th style="width: 10%; text-align: center;">문의명</th>
+	                    <th style="width: 10%; text-align: center;">작성자</th>
+	                    <th style="width: 10%; text-align: center;">조회수</th>
+	                    <th style="width: 10%; text-align: center;">작성일</th>
+	                  </tr>
+	                </thead>
+	                <tbody>
+	                	<th:block th:each="l,pro : ${boardList}">
+		                  	<th:block th:if = "${l.boardComment} != null">
+			                  <tr th:if="${l.boardOpen} == O">
+				                  	<td th:text="${pro.count}"></td>
+				                  	<td><a th:href="@{/lifrary/inquiryDetail(boardCode=${l.boardCode},boardLName=${l.boardLName})}" th:text="${l.boardTitle}"></a></td>
+				                  	<td th:text="${l.boardMName}"></td>
+				                  	<td th:text="${l.uId}"></td>
+				                  	<td th:text="${l.boardPageView}"></td>
+				                  	<td th:text="${l.boardDate}"></td>
+			                  </tr>
+		                  	</th:block>
+		                </th:block>
+	                </tbody>
+	              </table>
+	            </div>
+          </div>
+	   <div>
+	   		<a style="margin-top: 10px;" th:href="@{/library/inquiryInsert(boardLName=${'문의하기'})}" id="inquiryInsertBtn" class="btn btn-primary">문의하기등록</a>
+	   </div>
+          </div>
+          <!-- / Content -->
+        </div>
+        </div>
+        <!-- Layout content -->
+	   <br>
+	   <br>
+        
+        
+       
+  </th:block>
+</html>
