@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="~{layout/admin/adminDefault}"
+	  class="default-style">
+	  
+<th:block layout:fragment="adminTitle">
+	<title>장서점검 회차 리스트</title>
+</th:block>
+
+ <!-- headAdd(Libs&page) -->
+  
+  <th:block layout:fragment="adminHeadAdd">
+  
+  <!-- addLibs -->
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
+
+  <!-- addPage -->
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/products.css}">
+ 
+  </th:block>
+  
+  <!-- /headAdd(Libs&page) --> 
+  
+  <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+  <script type="text/javascript">
+  
+  </script>
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+	  
+	<!-- Content -->
+	<th:block layout:fragment="adminContents">   
+		 <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+              <div>장서점검 회차 리스트</div>
+              <a th:href="@{#}" class="btn btn-primary rounded-pill d-block">
+              <span class="ion ion-md-add"></span>장서점검 회차 등록</a>
+        </h4>
+
+
+            <div class="card">
+              <div class="card">
+                <div class="card-datatable table-responsive">
+				  <table class="datatables-demo table table-striped table-bordered">
+	                <thead>
+                  	<tr>
+                    	<th>회차코드</th>
+                    	<th>도서관코드</th>
+                    	<th>관리자ID</th>
+                    	<th>회차 명</th>	
+                    	<th>회차 설명</th>
+                    	<th>점검 권수</th>
+                    	<th>점검일</th>
+                    	<th></th>	
+                    </tr>
+	                </thead>
+	                  <tbody>
+	                   <tr role="row" th:each="s : ${stockCheckList}">
+	               			<td class="align-middle" th:text="${s.sbtCode}"></td>
+	               			<td class="align-middle" th:text="${session.LIBNUM}"></td>
+	               			<td class="align-middle" th:text="${session.SAID}"></td>
+	               			<td class="align-middle" th:text="${s.sbtName}"></td>
+	               			<td class="align-middle" th:text="${#strings.abbreviate(s.sbtExplain,14)}" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="|${s.sbtCheckNum}권|" style="text-align:center"></td>
+	               			<td class="align-middle" th:text="${s.sbtDate}" style="text-align:center"></td>
+	               		
+	               			<td class="text-center text-nowrap">
+								<input type="hidden" name="uId" id="uId" th:value="${s.uId}">    
+               					<button type="button" class="btn btn-default btn-xs icon-btn md-btn-flat" data-toggle="modal" data-target="#modals-default">
+                     					<i class="ion ion-ios-cut d-block"  title="삭제"></i>
+               					</button>&nbsp;&nbsp;
+	                   		</td>
+	                   	</tr> 
+		            </tbody>
+		          </table>
+			      </div>
+	           </div>
+	    	</div>
+	 
+	</th:block>
+	<!-- / Content -->
+  <!-- / scripts -->
+	  <th:block layout:fragment="pageScript">
+	  <!-- addLibs -->
+	  <script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+	  <script th:src="@{/adminStatic/vendor/libs/numeral/numeral.js}"></script>
+	  <script th:src="@{/adminStatic/vendor/libs/nouislider/nouislider.js}"></script>
+		
+	  <!-- addDemo -->
+ 		<script th:src="@{/adminStatic/js/ad_stock_book_check_tables.js}"></script>
+	  </th:block>
+   <!-- / scripts -->
+	          
+</html>
