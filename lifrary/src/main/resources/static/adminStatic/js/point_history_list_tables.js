@@ -27,7 +27,7 @@ $(function() {
 		    	"defaultContent": ""},
 		      { "data": "pPoint",
 		    	"defaultContent": ""},
-		      { "data": "phPoint",
+		      { "data": "sumPoint",
 		    	"defaultContent": ""},
 		      { "data": "phDate",
 		    	"defaultContent": ""},

@@ -11,8 +11,9 @@ public class Point {
 	private int pPoint;
 	private String pDate;
 	private String phCode;
-	private int phPoint;//누적포인트
+	private int sumPoint;//누적포인트
 	private String phDate;
+
 	public String getpCode() {
 		return pCode;
 	}
@@ -73,11 +74,11 @@ public class Point {
 	public void setPhCode(String phCode) {
 		this.phCode = phCode;
 	}
-	public int getPhPoint() {
-		return phPoint;
+	public int getSumPoint() {
+		return sumPoint;
 	}
-	public void setPhPoint(int phPoint) {
-		this.phPoint = phPoint;
+	public void setSumPoint(int sumPoint) {
+		this.sumPoint = sumPoint;
 	}
 	public String getPhDate() {
 		return phDate;
@@ -89,8 +90,6 @@ public class Point {
 	public String toString() {
 		return "Point [pCode=" + pCode + ", lCode=" + lCode + ", uId=" + uId + ", uName=" + uName + ", uNumber="
 				+ uNumber + ", pName=" + pName + ", pStandard=" + pStandard + ", pPoint=" + pPoint + ", pDate=" + pDate
-				+ ", phCode=" + phCode + ", phPoint=" + phPoint + ", phDate=" + phDate + "]";
+				+ ", phCode=" + phCode + ", sumPoint=" + sumPoint + ", phDate=" + phDate + "]";
 	}
-	
-	
 }

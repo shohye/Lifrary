@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.calendar.GoalMapper">
+  <resultMap type="ksmart.pentagon.vo.Goal" id="goal">	         
+       <result property="gCode" column="g_code"/>	         
+       <result property="lCode" column="l_code"/>
+       <result property="uId" column="u_id"/>	         
+       <result property="gDivision" column="g_division"/>
+       <result property="gNum" column="g_num"/>
+       <result property="lendCount" column="lend_count"/>
+       <result property="gSuccess" column="g_success"/>	         
+       <result property="gStartDate" column="g_start_date"/>
+       <result property="gEndDate" column="g_end_date"/>              
+	 </resultMap>
+  <select id="getGoalList" parameterType="java.lang.String" resultMap="goal">
+  	SELECT
+  		g.g_division
+		,g.g_num
+		,(SELECT 
+				COUNT(1) 
+			FROM 
+				book_lend AS bl 
+			WHERE
+				DATE_FORMAT(bl.bl_return_date,'%Y-%m-%d') BETWEEN g.g_start_date AND g.g_end_date
+			AND 
+				bl.bl_lend_date IS NOT NULL
+			AND
+				bl.bl_id = g.u_id	) AS lend_count	
+	FROM
+		goal AS g		
+	WHERE 
+		g.u_id = #{uId}
+	AND(
+			 (g.g_division='month' AND DATE_FORMAT(g.g_end_date,'%m') = DATE_FORMAT(CURDATE(),'%m'))
+		 	OR 
+			 (g.g_division='year' AND DATE_FORMAT(g.g_end_date,'%y') = DATE_FORMAT(CURDATE(),'%y'))
+			OR 
+			 (g.g_division ='quarterly' AND g.g_end_date = #{gEndDate}) 
+		 )
+  </select>
+  <insert id="goalInsert" parameterType="ksmart.pentagon.vo.Goal">
+  	<selectKey keyProperty="gCode" resultType="String" order="BEFORE">
+	  	SELECT 
+		CONCAT('g-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(g.g_code), '-', -1),6) 
+			, '00001' 
+			,LPAD(RIGHT(MAX(g.g_code),5)+1,5,'0')))) AS gCode
+		FROM 
+			goal as g
+	</selectKey>
+  	INSERT INTO goal(
+		g_code
+		, l_code
+		, u_id
+		, g_division
+		, g_num
+		, g_success
+		, g_start_date
+		, g_end_date)
+	VALUES (
+		#{gCode}
+		, #{lCode}
+		, #{uId}
+		, #{gDivision}
+		, ${gNum}
+		, 'X'
+		, #{gStartDate} 
+		, #{gEndDate})
+  </insert>
+  </mapper>

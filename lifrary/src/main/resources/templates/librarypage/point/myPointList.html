@@ -2,9 +2,130 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
-    
-    
-    <th:block layout:fragment="customContents">
+   <th:block layout:fragment="libraryTitle">
+		<title>나의 포인트</title>
+   </th:block> 
+   <th:block layout:fragment="customScript">
+	   <script type="text/javascript" th:inline="javascript">
+		   	$(document).ready(function() {
+		   		/*<![CDATA[*/  	
+			  	var myTotalPoint = [[ ${myTotalPoint} ]];//총 포인트
+			  	var resultInsert = [[ ${resultInsert} ]];//포인트 등록 결과
+				/*]]*/	
+				
+			  	if(resultInsert == 1){
+		  			alert('포인트 사용 신청이 등록되었습니다.');
+		  		}
+	
+			   	$('#pointUseBtn').click(function(){		
+			   		
+			   		//사용 가능  포인트 리스트 가져오기
+			   		var request = $.ajax({
+				   		  url: "/lifrary/getUsePointList",
+				   		  method: "POST",
+				   		  dataType: "json"
+				   		});
+				   		 
+			   		request.done(function(data) {
+			   			console.log(data);
+			   			//포인트 리스트 출력
+			   			if(data.length > 0){
+			   				$('[name="pName"]').append('<option value="0">::포인트 선택::</option>');
+						   	for(var i = 0; i<data.length; i++){
+						   		var point = data[i];
+						 		$('[name="pName"]').append('<option></option>');
+						 		var opt= $('[name="pName"]').children('option').eq(i+1);
+						 		opt.text(point.pName); 
+						 		opt.val(i+1); 
+						   	}
+						   	//총포인트 출력
+						   	if(myTotalPoint != null){
+					   			$('#insertForm input').eq(1).val(myTotalPoint);	
+					   		}else{
+					   			$('#insertForm input').eq(1).val('사용가능 포인트가 없습니다');
+					   		}
+						   	//select 중복제거 및 option value값 가져오기
+						   	selectUI($('[name="pName"]'), function(i){
+						   		console.log(i);
+						   		if(i > 0){
+							   		var point = data[i-1];
+							   		
+							   		$('[name="pCode"]').val(point.pCode);//선택한 포인트코드
+							   		$('#insertForm input').eq(0).val(point.pPoint);//선택한 포인트
+							   		var selectPoint = point.pPoint*-1; //선택 포인트 int타입으로 변환
+							   		var totalPoint = parseInt(myTotalPoint);//총포인트
+					   				console.log(myTotalPoint);
+							   		if(myTotalPoint != null){
+							   			var totalPoint = parseInt(myTotalPoint);//총포인트
+							   			if(selectPoint > totalPoint){
+								   			$('#insertForm input').eq(1).val('사용가능 포인트가 부족합니다');	
+								   		}else{
+								   			$('#insertForm input').eq(1).val(myTotalPoint-selectPoint);	
+								   		}
+							   		}else{
+							   			$('#insertForm input').eq(1).val('사용가능 포인트가 없습니다');
+							   		}
+							   		
+							   
+							   	}else{
+							   		//선택 option초기화
+							   		$('#insertForm input').eq(0).val('');
+							   		$('#insertForm input').eq(1).val(myTotalPoint);	
+							   	}
+						   		
+						   	});
+						   	
+					   		$('#insertModal').modal('show');
+					   		
+			   			}
+		   	   			else{
+			   	   			$('[name="pName"]').children('option').eq(0).text('등록된 포인트가 없습니다');
+
+		   	   			}
+					});//request.done
+			   		 
+			   		request.fail(function( jqXHR, textStatus ) {
+			   		  alert('포인트 정보를 불러오는데 실패하였습니다');
+			   		});//request.fail
+			   		
+			   	});
+		   		//포인트 사용 등록
+		   		$('#insertBtn').click(function(){
+		   			var selectStr = $('#insertForm input').eq(0).val();
+		   			var selectPoint = parseInt(selectStr)*-1;
+			   		var totalPoint = parseInt(myTotalPoint);
+	   				
+			   		console.log($('[name="pCode"]').val());
+			   		
+			   		if(selectStr == ''){
+			   			alert('포인트를 선택해주세요');	
+			   		}else if(myTotalPoint == null){
+			   			alert('사용가능 포인트가 없습니다');
+			   		}
+			   		else if(selectPoint > totalPoint){
+			   			alert('사용가능 포인트가 부족합니다');	
+			   		}
+		   			else{
+			   			$('#insertForm').submit();
+			   		} 
+		   		});
+		   		
+		  		//모달 초기화
+			   	$('.modal').on('hidden.bs.modal', function (e) {
+					 $(this).find('form')[0].reset()
+					 $('[name="pName"]').html('');
+				});
+			   	
+		   });//document.ready
+	   </script>
+	   <style type="text/css">
+		   .form-control[readonly]{
+		   	    background-color: transparent;
+		   }
+	   
+	   </style>
+   </th:block>
+   <th:block layout:fragment="customContents">
        <section class="page-banner services-banner">
             <div class="container">
                 <div class="banner-header">
@@ -30,27 +151,27 @@
                                 <section class="search-filters">
                                     <div class="container">
                                         <div class="filter-box">
-                                            <h3>무엇을 넣어야 좋을까..?</h3>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">세모</label>
-                                                        <input class="form-control" placeholder=""  type="text" readonly="readonly">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">네모</label>
-                                                        <input class="form-control" placeholder=""  type="text" readonly="readonly">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">치와와</label>
-                                                        <input class="form-control" placeholder="" type="text" readonly="readonly">
-                                                    </div>
-                                                </div>
-                                        </div>
-                                    </div>
+                                        <h3>무엇을 넣어야 좋을까..?</h3>
+                                              <div class="col-md-4 col-sm-6">
+                                                  <div class="form-group">
+                                                      <label for="keywords">세모</label>
+                                                      <input class="form-control" placeholder=""  type="text" readonly="readonly">
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-4 col-sm-6">
+                                                  <div class="form-group">
+                                                      <label for="keywords">네모</label>
+                                                      <input class="form-control" placeholder=""  type="text" readonly="readonly">
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-4 col-sm-6">
+                                                  <div class="form-group">
+                                                      <label for="keywords">치와와</label>
+                                                      <input class="form-control" placeholder="" type="text" readonly="readonly">
+                                                  </div>
+                                              </div>
+                                      	</div>
+                                	</div>
                                 </section>
                                 <!-- End: Search Section -->
                             </div>
@@ -59,21 +180,15 @@
                                 	<h3>나의 포인트</h3> <br>
                                 	<div class="filter-options margin-list">
                                         <div class="row">                                            
-                                            <div class="col-md-3 col-sm-3">
-                                                <select name="orderby">
-                                                    <option selected="selected">::카테고리 선택::</option>
-                                                    <option>완독 도서</option>
-                                                    <option>읽는 중인 도서</option>
-                                                    <option>노잼 도서</option>
-                                                    <option>꿀잼도서</option>
-                                                </select>
+                                            <div class="col-md-3 col-sm-3" th:if="${myTotalPoint != null}">
+                                                <h4 th:text="|총 포인트:&nbsp&nbsp${myTotalPoint}|" style="color: #ff7236;"></h4>
                                             </div>
-                                            <div class="col-md-4 col-sm-3">
-                                                <div class="filter-result">total 29</div>
+                                            <div class="col-md-3 col-sm-3" th:unless="${myTotalPoint != null}">
+                                                <h4 style="color: #ff7236;">총 포인트:&nbsp&nbsp 0</h4>
                                             </div>
                                             <div class="col-md-3 col-sm-3 pull-right">
                                                 <div >
-                                                	<a href="/lifrary/myPoint" class="btn btn-dark-gray">포인트 사용</a>
+                                                	<a id="pointUseBtn"class="btn btn-dark-gray">포인트 사용</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -85,43 +200,24 @@
 					                      <th>포인트명</th>
 					                      <th>상세설명</th>
 					                      <th>포인트</th>
-					                      <th>누적포인트</th>
 					                      <th>등록일</th>
 					                    </tr>
 					                  </thead>
 							          <tbody>
-									  	<tr>	
-									      <td class="align-middle">번호</td>
-									      <td class="align-middle">포인트명</td>
-									      <td class="align-middle">상세설명</td>
-									      <td class="align-middle">포인트</td>
-									      <td class="align-middle">누적포인트</td>		
-									      <td class="align-middle">등록일</td>		
+							          	<th:block th:if="${#lists.size(myPointList)} > 0">
+									  	<tr th:each="Mpl,C : ${myPointList}">	
+									      <td class="align-middle" th:text="${C.count}">번호</td>
+									      <td class="align-middle" th:text="${Mpl.pName}">포인트명</td>
+									      <td class="align-middle" th:text="${Mpl.pStandard}">상세설명</td>
+									      <td class="align-middle" th:text="${Mpl.pPoint}">포인트</td>
+									      <td class="align-middle" th:text="${Mpl.phDate}">등록일</td>		
 									  	</tr>
-									  	<tr>	
-									      <td class="align-middle">번호</td>
-									      <td class="align-middle">포인트명</td>
-									      <td class="align-middle">상세설명</td>
-									      <td class="align-middle">포인트</td>
-									      <td class="align-middle">누적포인트</td>		
-									      <td class="align-middle">등록일</td>		
-									  	</tr>
-									  	<tr>	
-									      <td class="align-middle">번호</td>
-									      <td class="align-middle">포인트명</td>
-									      <td class="align-middle">상세설명</td>
-									      <td class="align-middle">포인트</td>
-									      <td class="align-middle">누적포인트</td>		
-									      <td class="align-middle">등록일</td>	
-									  	</tr>
-									  	<tr>	
-									      <td class="align-middle">번호</td>
-									      <td class="align-middle">포인트명</td>
-									      <td class="align-middle">상세설명</td>
-									      <td class="align-middle">포인트</td>
-									      <td class="align-middle">누적포인트</td>		
-									      <td class="align-middle">등록일</td>	
-									  	</tr>
+									  	 </th:block>
+									  	 <th:block th:unless="${#lists.size(myPointList)} > 0">
+								             <tr>
+								            	 <td colspan="7" style="height: 150px; text-align: center; vertical-align: middle;">포인트이력이 없습니다</td>
+								             </tr>	
+							             </th:block>
 									  </tbody> 
 						            </table>
                                     <nav class="navigation pagination text-center">
@@ -145,5 +241,62 @@
                 </main>
             </div>
         </div>
+        <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <form id="insertForm" class="modal-content" th:action="@{/lifrary/myPointInsert}" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">포인트 사용</h4>
+		      </div>
+		      <div class="modal-body">
+		      	  <div class="row">
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-12">
+	                  		<p class="form-row form-row form-row-wide">
+		                  	  <select name="pName" class="form-control">
+	                          </select>
+                           </p>
+	                  	</div>
+                  	 </div>
+                  	 <!-- <div class="col-md-12">
+	                  	<div class="col-sm-6">	
+	                       <p class="form-row form-row form-row-wide">&nbsp;선택포인트
+	                       	<input class="form-control" type="text" readonly="readonly">
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">	
+	                  		<div style="margin-top: 35px;">
+	                       	<span class="badge" style="background-color:#ff7236; cursor:pointer;">
+	                       		<i class="fa fa-plus" aria-hidden="true"></i>
+	                       	</span>
+	                       	<span>1</span>
+	                       	<span class="badge" style="background-color:#ff7236; cursor:pointer;">
+	                       		<i class="fa fa-minus" aria-hidden="true"></i>
+	                       	</span>
+	                       	</div>
+	                  	</div>
+	                </div> -->
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">	
+	                       <p class="form-row form-row form-row-wide">&nbsp;차감 포인트
+	                       	<input class="form-control" type="text" readonly="readonly">
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">	
+	                       <p class="form-row form-row form-row-wide">&nbsp;총 포인트
+	                       	<input class="form-control" type="text" readonly="readonly">
+	                       	<input class="form-control" type="hidden" name="pCode">
+	                       </p>
+	                  	</div>
+	                </div>
+                 </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
+		        <button type="button" id="insertBtn" class="btn btn-primary" >등록</button>
+		      </div>
+		    </form>
+		  </div>
+		</div>
     </th:block>
 </html>
