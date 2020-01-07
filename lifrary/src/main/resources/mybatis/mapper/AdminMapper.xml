@@ -780,13 +780,10 @@
 
 	<delete id="deleteUser" parameterType="String">
 		DELETE 
-			u.*
 		FROM 
-			user AS u
+			user
 		WHERE 
-			u.u_id=#{said} 
-			AND 
-			u.u_pw =#{write}
+			u_id=#{said} 
 	</delete>
 	<delete id="deleteLevel" parameterType="String">
 		DELETE 
