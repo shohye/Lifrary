@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import groovyjarjarpicocli.CommandLine.Parameters;
 import ksmart.pentagon.vo.LibrarianLevel;
@@ -604,6 +606,45 @@ public class AdminController {
 		
 	}
 	
+/*******************************************************************************************/
 	
+	
+	
+    // userSearchList 삭제 결과값 가져오는 ajax - 회원 삭제
+	//컨트롤러를 통해 보내고있는 응답의 유형을 나타 내기 위해 produce를 사용
+    @RequestMapping(value="/deleteUser", produces = "text/plain")
+    public @ResponseBody String deleteUser( Model model 
+    		, @RequestParam(value="said",required=false)String said
+    		, @RequestParam(value="write",required=false)String write
+    		, @RequestParam(value="uId",required=false)String uId) {
+		System.out.println("deleteUser 관리자가 회원 삭제하기 ");
+
+    	int result = adminService.deleteUser(said, write, uId);
+    	String text ="";
+    	if(result == 0) {
+    		text = "비밀번호가 틀렸습니다";
+		}else if(result == 1) {
+			text = "회원 삭제가 완료되었습니다";
+		}				
+ 		return text;
+    }
+    
+    // adUserLevelList 삭제 결과값 가져오는 ajax - 회원등급 삭제
+    @RequestMapping(value="/deleteLevel", produces = "text/plain")
+    public @ResponseBody String deleteLevel( Model model 
+    		, @RequestParam(value="said",required=false)String said
+    		, @RequestParam(value="write",required=false)String write
+    		, @RequestParam(value="ulLevel",required=false)String ulLevel) {
+    	System.out.println("deleteLevel 관리자가 회원 등급 삭제하기 ");
+    	
+    	int result = adminService.deleteLevel(said, write, ulLevel);
+    	String text ="";
+    	if(result == 0) {
+    		text = "비밀번호가 틀렸습니다";
+    	}else if(result == 1) {
+    		text = "등급 삭제가 완료되었습니다";
+    	}				
+    	return text;
+    }
 	
 }

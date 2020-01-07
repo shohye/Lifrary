@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.stockcheck.StockBookCheckMapper">
+   <resultMap type="ksmart.pentagon.vo.StockBookTimes" id="StockBookTimes">
+	<!-- db -->
+	<result property="sbtCode" column="sbt_code"/>
+	<result property="lCode" column="l_code"/>
+	<result property="uId" column="u_id"/>
+	<result property="sbtName" column="sbt_name"/>
+	<result property="sbtExplain" column="sbt_explain"/>
+	<result property="sbtCheckNum" column="sbt_check_num"/>
+	<result property="sbtDate" column="sbt_date"/>
+	<result property="llBookStock" column="ll_book_stock"/>	
+   </resultMap>
+  
+  <select id="stockCheckList" resultMap="StockBookTimes" parameterType="String">
+		SELECT 
+			*
+		FROM 
+			stock_book_times
+		WHERE 
+			l_code = #{libNum} 
+  </select>
+  
+  </mapper>
