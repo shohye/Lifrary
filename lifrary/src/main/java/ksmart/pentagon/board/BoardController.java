@@ -262,7 +262,7 @@ public class BoardController {
 		return "/librarypage/board/inquiryInsert";
 	}
 	
-	@PostMapping("textgogo")
+	@PostMapping("/textgogo")
 	public @ResponseBody void textgogo(@RequestParam(value = "text01")String text01) {
 		System.out.println("controller266 : " + text01);
 	}
