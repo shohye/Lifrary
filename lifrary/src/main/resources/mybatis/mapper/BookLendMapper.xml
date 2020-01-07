@@ -224,13 +224,16 @@
 		LIMIT 0,1
 			
   	</select>
-  	<select id="maxCode"  resultType="java.lang.String">
-  		SELECT
-			MAX(bl_code)
-		FROM
-			book_lend
-  	</select>
   	<insert id="lendInsert" parameterType="ksmart.pentagon.vo.BookLend">
+	  	<selectKey keyProperty="blCode" resultType="String" order="BEFORE">
+		  	SELECT 
+			CONCAT('bl-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+				(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(bl.bl_code), '-', -1),6) 
+				, '00001' 
+				,LPAD(RIGHT(MAX(bl.bl_code),5)+1,5,'0')))) AS blCode
+			FROM 
+				book_lend as bl
+		</selectKey>
 		INSERT INTO book_lend(
 			bl_code
 			,l_code
@@ -270,6 +273,15 @@
 				bl_schedule_date= DATE_ADD(bl_schedule_date, INTERVAL 7 DAY) 
 			WHERE 
 				bl_code = #{blCode}
+	</update>
+	<update id="holdUpdate">
+		UPDATE book_lend
+		SET
+			u_id= #{saId},
+			bl_lend_date= CURDATE(),
+			bl_schedule_date= DATE_ADD(CURDATE(), INTERVAL ${ulLendDay} DAY)
+		WHERE 
+			bl_code = #{blCode}
 	</update>
 	<select id="holdSearchList" resultMap="bookLend">
 		SELECT

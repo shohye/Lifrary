@@ -30,5 +30,14 @@ public class BookCalenderService {
 	public Calender getMyCalender(String cCode) {
 		return bookCalenderMapper.getMyCalender(cCode);
 	}
+	//캘린더 일정 수정
+	public int myCalenderUpdate(Calender calender) {
+		return bookCalenderMapper.myCalenderUpdate(calender);
+	}
+	//캘린더 일정 삭제
+	public int myCalenderDelete(String cCode) {
+		
+		return bookCalenderMapper.myCalenderDelete(cCode);
+	}
 	
 }
