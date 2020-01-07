@@ -7,15 +7,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ksmart.pentagon.codeup.CodeUp;
+import ksmart.pentagon.point.PointMapper;
 import ksmart.pentagon.vo.BookLend;
 import ksmart.pentagon.vo.BookStock;
+import ksmart.pentagon.vo.Point;
 import ksmart.pentagon.vo.User;
 
 @Service
 public class BookLendService {
 	
 	@Autowired private BookLendMapper bookLendMapper;
+	@Autowired private PointMapper pointMapper;
 	
 	//대출도서 리스트 
 	public List<BookLend> bookSearchList(String libNum){
@@ -129,7 +131,6 @@ public class BookLendService {
 			int lendNum = user.getUserLevel().getUlLendNum();
 			int lendCnt = user.getuLendCnt();
 				
-			
 			if(lendNum > lendCnt) {
 				
 				bookLendNum = lendNum-lendCnt;
@@ -157,10 +158,6 @@ public class BookLendService {
 	public int lendInsert(BookLend booklend) {
 		int result = 0;
 		
-		String recode = CodeUp.codeMaker(bookLendMapper.maxCode());
-		
-		booklend.setBlCode(recode); 
-		
 		int lendinsert = bookLendMapper.lendInsert(booklend);
 		
 		if(lendinsert == 1) {
@@ -182,7 +179,7 @@ public class BookLendService {
 		
 	}
 	//반납일 등록
-	public int returnUpdate(String blCode, String bsCode) {
+	public int returnUpdate(String blCode, String bsCode, Point point) {
 		
 		int result = 0;
 		
@@ -192,11 +189,19 @@ public class BookLendService {
 			String lendState = "O";
 			
 			int stockUpdate = bookLendMapper.stockUpdate(bsCode, lendState);
-			if(stockUpdate == 1)result = 1;
-			else result = 2;
+			if(stockUpdate == 1) {
+				
+				//포인트 등록
+				pointMapper.myPointInsert(point);
+				
+				result = 1;//반납등록,대출상태 수정 성공
+			}
+				
+			else result = 2;//대출상태 수정 실패
+						
 			
 		}else {
-			result = 0;
+			result = 0; //반납등록 실패
 		}
 		return result;
 		
@@ -227,11 +232,11 @@ public class BookLendService {
 			String lendState = "O";
 			
 			int stockUpdate = bookLendMapper.stockUpdate(bsCode, lendState);
-			if(stockUpdate == 1)result = 1;
-			else result = 2;
+			if(stockUpdate == 1)result = 1;//예약 취소,대출상태 수정 성공
+			else result = 2;//대출상태 수정 실패
 			
 		}else {
-			result = 0;
+			result = 0; //예약 취소 실패
 		}
 		return result;
 		

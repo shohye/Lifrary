@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ksmart.pentagon.vo.BookLend;
+import ksmart.pentagon.vo.Point;
 
 
 /***
@@ -183,9 +184,19 @@ public class BookLendController {
 	@PostMapping("/admin/returnUpdate")
 	public String returnUpdate(	 @RequestParam(value="blCode" ) String blCode
 								, @RequestParam(value="bsCode" ) String bsCode
+								, @RequestParam(value="blId" ) String blId
+								, HttpSession session
 			 					, RedirectAttributes redirectAttributes) {
 
-		int result = bookLendService.returnUpdate(blCode, bsCode);
+		String libNum = (String) session.getAttribute("LIBNUM");
+
+		//포인트 생성
+		Point point = new Point();
+		point.setlCode(libNum);
+		point.setuId(blId);
+		point.setpCode("p001");
+				
+		int result = bookLendService.returnUpdate(blCode, bsCode, point);
 		System.out.println(result);
 		
 		redirectAttributes.addFlashAttribute("resultUpdate", result);

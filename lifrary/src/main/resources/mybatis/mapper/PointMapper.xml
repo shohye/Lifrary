@@ -58,6 +58,29 @@
 			ph.l_code = #{libNum}
 		ORDER BY ph.ph_date, ph.ph_code
   	</select>
+  	<insert id="pointHistoryInsert">
+  		<selectKey keyProperty="phCode" resultType="String" order="BEFORE">
+		  	SELECT 
+			CONCAT('ph-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+				(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(ph.ph_code), '-', -1),6) 
+				, '00001' 
+				,LPAD(RIGHT(MAX(ph.ph_code),5)+1,5,'0')))) AS phCode
+			FROM 
+				point_history as ph
+		</selectKey>
+  		INSERT INTO point_history(
+			ph_code
+			, l_code
+			, p_code
+			, u_id
+			, ph_date)
+			VALUES (
+			#{phCode}
+			, #{lCode}
+			, #{pCode}
+			, #{uId}
+			, CURDATE())
+  	</insert>
   	<delete id="pointHistoryDelete">
   		DELETE FROM point_history 
   		WHERE 

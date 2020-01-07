@@ -11,6 +11,8 @@ import ksmart.pentagon.vo.Point;
 public interface PointMapper {
 	//포인트 사용 내역 리스트
 	public List<Point> pointHistorySearchList(String libNum);
+	//포인트 사용 내역 등록
+	public int pointHistoryInsert(Point Point);
 	//포인트 사용 내역 삭제
 	public int pointHistoryDelete(String phCode);
 	//포인트 리스트

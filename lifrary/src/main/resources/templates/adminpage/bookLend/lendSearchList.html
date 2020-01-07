@@ -303,7 +303,7 @@
 		<!-- 도서/회원 검색 -->
 		<!-- 대출/반납 등록  -->
 		<form th:action="@{/admin/lendInsert}" id="lendForm" method="post">
-			<input type="hidden" name="blId" th:if ="${resultUser != null && searchBook != 2}" th:value=${resultUser.uId}>
+			<input type="hidden" name="blId" th:if ="${resultUser != null}" th:value=${resultUser.uId}>
 			<input type="hidden" name="ulLendDay" th:if ="${resultUser != null && searchBook != 2 || resultUser != null && searchBook == 3}" th:value=${resultUser.userLevel.ulLendDay}>
 			<input type="hidden" name="bsCode" th:if ="${resultBook != null}" th:value=${resultBook.bsCode}>
 			<input type="hidden" name="blCode" th:if ="${searchBook != null && searchBook == 2 || searchBook != null && searchBook == 3}" th:value=${resultBook.bookLend.blCode}>
