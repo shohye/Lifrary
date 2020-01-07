@@ -41,6 +41,12 @@ public class BookCarryController {
 		String lCode = (String) session.getAttribute("LIBNUM");
     	return "adminpage/bookCarry/bookDonationInsert";
     }
+	// 기부신청자 파일 업로드 화면
+	@GetMapping("/admin/bookDonationFile")
+    public String bookDonationFile(HttpSession session) {
+		String lCode = (String) session.getAttribute("LIBNUM");
+    	return "adminpage/bookCarry/bookDonationFile";
+    }
 	// 기부신청자 리스트
     @GetMapping("/admin/bookDonationList")
     public String bookDonationList(Model model,HttpSession session) {
@@ -85,13 +91,29 @@ public class BookCarryController {
     }
     // 기부자 리스트 버튼으로 상태변경
  	//1. 기부자스티커
-    @RequestMapping(value="/updateStickerO", produces = "text/plain")
-    public @ResponseBody int updateStickerO(@RequestParam(value="bdnCode",required=false)String bdnCode) {
-    	int result = bookCarryService.updateStickerO(bdnCode);
-    	return result;   
+    
+    @GetMapping("/updateSticker")
+    public String updateSticker(@RequestParam(value="bdnCode",required=false)String bdnCode
+    						   , @RequestParam(value="bdnSticker",required=false)String bdnSticker) {
+    	if( "O".equals(bdnSticker) ) {   		
+    		 bookCarryService.updateStickerX(bdnCode);
+    	}else if("X".equals(bdnSticker) ) {    		
+    		 bookCarryService.updateStickerO(bdnCode);
+    	}   
+    	return "redirect:/admin/bookDonationList";
     }
+    //2.명예전당
     
-    
+    @GetMapping("/updateHonor")
+    public String updateHonor(@RequestParam(value="bdnCode",required=false)String bdnCode
+    						   , @RequestParam(value="bdnHonorAgree",required=false)String bdnHonorAgree) {
+    	if( "O".equals(bdnHonorAgree) ) {   		
+    		 bookCarryService.updateHonorX(bdnCode);
+    	}else if("X".equals(bdnHonorAgree) ) {    		
+    		 bookCarryService.updateHonorO(bdnCode);
+    	}   
+    	return "redirect:/admin/bookDonationList";
+    }
     
     
     /***************************************************************************/
@@ -188,6 +210,18 @@ public class BookCarryController {
 		return "redirect:/admin/bookOrderList";   	
     }
 
+    // 주문상태 변경
+    @GetMapping("/updateOrderState")
+    public String updateOrderState(
+    		@RequestParam(value="bosState",required=false)String bosState
+    	  , @RequestParam(value="boCode",required=false)String boCode) {
+    	if( "주문완료".equals(bosState) ) {   		
+    		bookCarryService.updateOrderState2(boCode);
+    	}else if("수령완료".equals(bosState) ) {    		
+    		bookCarryService.updateOrderState1(boCode);
+    	}   
+    	return "redirect:/admin/bookOrderList";
+    }
     
     /***************************************************************************/
     
@@ -209,6 +243,18 @@ public class BookCarryController {
     	model.addAttribute("requestDetail",bookCarryService.getRequestDatail(brCode));
     	return "adminpage/bookCarry/requestDetail";
     }
+    
+  // (도서관) 도서기부 안내 화면
+    /****
+	 * @brief  (도서관)  도서기부 안내 화면
+	 * @return  /librarypage/book/bookDonationGuide
+	 * @author 신다은
+	 */
+    @GetMapping("/lifrary/bookDonationGuide")
+    public String bookDonationGuide() {
+    	return "librarypage/book/bookDonationGuide";
+    }
+    
  // (도서관) 희망도서 신청 안내 화면
     /****
 	 * @brief  (도서관) 희망도서 신청 안내 화면
@@ -321,6 +367,9 @@ public class BookCarryController {
     	   , @RequestParam(value="write",required=false)String write
     	   , @RequestParam(value="bdnCode",required=false)String bdnCode) {
     	
+    	System.out.println( "deleteDonation said    ===> "+ said);
+    	System.out.println( "deleteDonation write   ===> "+ write);
+    	System.out.println( "deleteDonation bdnCode ===> "+ bdnCode);
     	int result = bookCarryService.deleteDonation(said, write, bdnCode);	
     	String text ="";
     	if(result == 0) {
@@ -331,6 +380,20 @@ public class BookCarryController {
  		return text;
     }
     
-    
-    
+    //희망도서 상태변경 Ajax    
+    @RequestMapping(value="/updateProgress", produces = "application/json")
+    public @ResponseBody int updateProgress( Model model
+    	   , @RequestParam(value="brCode",required=false)String brCode
+    	   , @RequestParam(value="brProgress",required=false)String brProgress
+    	   , @RequestParam(value="brCancelReason",required=false)String brCancelReason) {
+    	
+    	System.out.println("brCode===========>"+brCode);
+    	System.out.println("brProgress=======>"+brProgress);
+    	System.out.println("brCancelReason===>"+brCancelReason);
+    	
+    	int result = 0;
+    	result = bookCarryService.updateProgress(brCode, brProgress, brCancelReason);
+    	
+		return result;
+    }
 }

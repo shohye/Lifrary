@@ -11774,7 +11774,7 @@ a:focus {
 }
 .site-footer .sub-footer ul li {
   float: left;
-  font-family: "Lato", Georgia, Times, serif;
+  /* font-family: "Lato", Georgia, Times, serif; */
 }
 @media (max-width: 991px) {
   .site-footer .sub-footer ul li {

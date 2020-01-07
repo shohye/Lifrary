@@ -77,8 +77,8 @@
 			                        </div>
 			                        <div class="col-md-4 col-sm-6">
 			                            <div class="form-group">
-			                                <label class="sr-only" for="keywords">Search by Keyword</label>
-			                                <input id="biName" name="biName" class="form-control" placeholder="Search by Keyword" type="text">
+			                                <label class="sr-only" for="keywords">자료 검색</label>
+			                                <input id="biName" name="biName" class="form-control" placeholder="검색" type="text">
 			                            </div>
 			                        </div>
 			                        <div class="col-md-2 col-sm-6">					                     
@@ -129,8 +129,8 @@
                                  <div class="filter-toggle" >
                                 	 <input type="hidden" name="bclCode" value="${bclCode}">
                                 	 <input type="hidden" name="biName" value="${biName}">
-                                     <a th:href="@{/lifrary/bookDataSearchGrid(bclCode=${bclCode},biName=${biName},biPublisher=${biPublisher},
-                                     biIsbn=${biIsbn},biAuthor=${biAuthor},biDtail=${biDtail},biYearStart=${biYearStart},biYearEnd=${biYearEnd})}">
+                                     <a th:href="@{/lifrary/bookDataSearchGrid(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
+                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=1)}">
 										<i class="glyphicon glyphicon-th-large"></i></a>
                                      <a href="books-media-list-view.html" class="active"><i class="glyphicon glyphicon-th-list"></i></a>
                                  </div>
@@ -170,7 +170,7 @@
                                          <p th:text="${#strings.abbreviate(sl.bookInformation.biDtail,70)}"></p>
                                      </div>
                                      <footer class="entry-footer">
-                                         <a class="btn btn-dark-gray" th:href="@{/lifrary/bookDetail(bsCode=${sl.bsCode})}">Read More</a>
+                                         <a class="btn btn-dark-gray" th:href="@{/lifrary/bookDetail(bsCode=${sl.bsCode})}">상세보기</a>
                                      </footer>
                                  </div>
                                  <div class="clear"></div>
@@ -185,22 +185,42 @@
                          
                          </th:block>
                       </div>
-                     <nav class="navigation pagination text-center" style="margin-bottom: 40px">
+                      <nav class="navigation pagination text-center" style="margin-bottom: 40px">
                          <h2 class="screen-reader-text">Posts navigation</h2>
-                         <div class="nav-links">
-                             <a class="prev page-numbers" href="#."><i class="fa fa-long-arrow-left"></i> Previous</a>
-                             <a class="page-numbers" href="#.">1</a>
-                             <span class="page-numbers current">2</span>
-                             <a class="page-numbers" href="#.">3</a>
-                             <a class="page-numbers" href="#.">4</a>
-                             <a class="next page-numbers" href="#.">Next <i class="fa fa-long-arrow-right"></i></a>
+                         <div class="nav-links">   
+                         	 <span th:if="${currentPage > 1}">
+                             	<a class="prev page-numbers" th:href="@{/lifrary/bookDataSearchList(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
+                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=(${currentPage}-1))}">
+                                     <i class="fa fa-long-arrow-left"></i> 이전
+                                 </a>
+                             </span>
+                             
+                                              
+	                         <th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+						        <span th:if="${currentPage == num}" th:text="${num}" class="page-numbers current"></span>
+						        <span th:unless="${currentPage == num}">
+						        	<a th:text="${num}" class="page-numbers" th:href="@{/lifrary/bookDataSearchList(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
+	                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=${num})}">
+	                                </a>
+						    	</span>
+						    
+						     </th:block>
+						      
+						      
+						                             
+                             <span th:if="${currentPage != lastPage}"> 
+                             	<a class="next page-numbers" th:if="${currentPage != lastPage}" th:href="@{/lifrary/bookDataSearchList(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
+                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=(${currentPage}+1))}"> 
+                                	 다음<i class="fa fa-long-arrow-right"></i>
+                             	</a>
+                            </span>
                          </div>
                      </nav>
                  </div>                
              </div>
          </div>
- 
-     
+         
+         
      </div>
     
     

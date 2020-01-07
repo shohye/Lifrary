@@ -36,7 +36,9 @@
 			FROM
 				book_stock
 			WHERE
-				bs_author_mark=#{bs_author_mark}
+				bs_author_mark=#{resultStr}
+			and
+			    l_code=#{lCode}
 			
 		</select>
 		<select id="checkAuthor" parameterType="String" resultType="hashMap">
@@ -47,5 +49,15 @@
 			WHERE
 				bi_author=#{biAuthor}
 			
+		</select>
+		<select id="checkWriterMark" parameterType="String" resultType="hashMap">
+			SELECT
+				bs_writer_mark
+			FROM
+				book_stock
+			WHERE
+				bs_writer_mark=#{writer}
+			and
+			    l_code=#{lCode}			
 		</select>
  	</mapper>

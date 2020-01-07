@@ -77,6 +77,7 @@
                                                 <li><a th:href="@{#}">#문의</a></li>
                                                 <li><a th:href="@{/lifrary/bookReportSearchList}">!독후감</a></li>
                                                 <li><a th:href="@{/lifrary/bookRequestIntro}">!희망도서 신청</a></li>
+                                                <li><a th:href="@{/lifrary/bookDonationGuide}">!도서 기부</a></li>
                                             </ul>
                                         </li>
                                         <!--  공공시설  -->
@@ -102,7 +103,7 @@
 	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 서재</a></li>
 	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 프로그램 신청 내역</a></li>
 	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">#내 공공시설 신청 내역</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">#희망도서 신청 내역</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!희망도서 신청 내역</a></li>
 	                                            </th:block>
 	                                            <th:block th:unless="${session.SID} == null">
 	                                                <li><a th:href="@{/lifrary/myUserDetail}">!내 정보</a></li>

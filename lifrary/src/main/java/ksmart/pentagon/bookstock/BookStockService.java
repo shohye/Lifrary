@@ -15,11 +15,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import ksmart.pentagon.codeup.CodeUp;
 import ksmart.pentagon.vo.BookCarry;
 import ksmart.pentagon.vo.BookCate;
 import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.BookLend;
 import ksmart.pentagon.vo.BookStock;
+import ksmart.pentagon.vo.Paging;
 import ksmart.pentagon.vo.User;
 import ksmart.pentagon.vo.UserLevel;
 
@@ -115,8 +117,28 @@ public class BookStockService {
 	
 	
 	// (도서관) 검색된 소장도서 리스트 출력
-	public List<BookStock> getDetailSearchStockList(BookInformation bookInformation){
-		List<BookStock> stockList = bookStockMapper.getDetailSearchStockList(bookInformation);
+	public Map<String, Object> getDetailSearchStockList(Map<String,Object> params, String currentPageStr){
+		int boardCount = bookStockMapper.getStockAllCount(params);
+		
+		System.out.println("서비스단 currentPageStr ====>"+currentPageStr);
+		 
+		Paging paging =  new Paging(boardCount, currentPageStr);
+		// DB 행의 총 개수를 구하는 getStockAllCount() 메서드를 호출하여 int Date Type의 boardCount 변수에 대입
+       
+        System.out.println("boardCount===>"+boardCount);
+        
+        int currentPage = paging.getCurrentPage();
+        int lastPage = paging.getLastPage();
+        int startPageNum = paging.getStartPageNum();
+        int lastPageNum = paging.getLastPage();
+        
+        int startRow = paging.getStartRow();
+        int ROW_PER_PAGE = Paging.getRowPerPage();
+       
+        params.put("startRow", startRow);
+        params.put("rowPerPage", ROW_PER_PAGE);
+        
+        List<BookStock> stockList = bookStockMapper.getDetailSearchStockList(params);
 		String bsCallNum = "";		
 		if(stockList!= null) {			
 			for(int i=0; i<stockList.size(); i++) {				
@@ -137,12 +159,21 @@ public class BookStockService {
 				}								
 				stockList.get(i).setBsCallNum(bsCallNum);				
 			}						
-		}		
-		return stockList;	
+		}	
+		
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", stockList);
+        resultMap.put("currentPage", currentPage);
+        resultMap.put("lastPage", lastPage);
+        resultMap.put("startPageNum", startPageNum);
+        resultMap.put("lastPageNum", lastPageNum);
+        
+        return resultMap;	
 	}
-		
-		
-		
+
+	
+	
 		
     // (도서관) 도서 상세페이지 - 반납예정일 계산하는 메서드
     public BookLend getReturnDate(String bsCode) {
@@ -194,6 +225,11 @@ public class BookStockService {
     
     // ( 어드민 ) 소장도서 인서트
     public void insertStock(BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
+    	
+    	String biIsbn =  bookInformation.getBiIsbn();
+    	
+    	BookInformation bi =  bookStockMapper.checkBookInfo(biIsbn);
+    	
     	Map<String,Object> insertMap = new HashMap<String,Object>();
     	
     	insertMap.put("bsCode",bookStock.getBsCode());
@@ -211,8 +247,13 @@ public class BookStockService {
     	insertMap.put("bsLendState",bookStock.getBsLendState());
     	insertMap.put("bsCarryRoute",bookStock.getBsCarryRoute());  
     	
-    	bookStockMapper.insertStock(insertMap);   	
-    	bookStockMapper.updateBookInfoStock(bookInformation);
+        if(bi == null) {
+        	bookStockMapper.insertBookInfoStock(bookInformation);
+        	bookStockMapper.updateBookInfoStock(bookInformation);        	
+        }else {       	
+        	bookStockMapper.insertStock(insertMap);   	
+        	bookStockMapper.updateBookInfoStock(bookInformation);
+        }    	
     }
 	  
 	  
@@ -220,6 +261,46 @@ public class BookStockService {
     
     
 	/****************************************************************************/
+    
+    // (도서관) 회원 대출,예약 가능여부확인 + 홈페이지에서 도서 예약등록 
+    public int bookHold(String lCode, String sid, String bsCode) {
+		
+		int result = 0;
+		
+		String sidTrim =sid.trim(); //앞뒤공백제거
+		User user = bookStockMapper.userInfoCheck(lCode,sidTrim);
+		
+		if(user != null) {
+			//대출가능권수 구하기
+			int bookLendNum = 0;
+			int lendNum = user.getUserLevel().getUlLendNum();
+			int lendCnt = user.getuLendCnt();
+			
+			String uasLendLimit = user.getUasLendLimit();
+			
+			if ("O".equals(uasLendLimit)) {
+				if(lendNum > lendCnt) {				
+					bookLendNum = lendNum-lendCnt;
+					// (도서관) 홈페이지에서 도서 예약등록 
+					bookStockMapper.holdInsert(lCode, sid ,bsCode);
+					bookStockMapper.updateStockHoldLendState(bsCode);
+					result = 1;  // 예약 가능
+				}else {
+					bookLendNum = 0;
+					result = 0;     // 권한은 있는데 이번달 예약권수 다 차서 예약불가
+				}
+			}else {
+				result = 2;   // 대출제한 상태로 대출 불가
+			}
+
+		}else {
+			result = 3;   // 유저가 없음
+		}
+	
+		
+		return result;
+		
+	}
     
     
     // deleteStock update ajax
@@ -343,9 +424,8 @@ public class BookStockService {
 		return val;
 	 }  
 	  
-	  
-	  
-	  
+
+	
 	  
 	  
 	  

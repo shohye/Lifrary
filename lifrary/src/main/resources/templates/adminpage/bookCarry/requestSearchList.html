@@ -8,6 +8,45 @@
 	  <th:block layout:fragment="adminTitle">
 		<title>수서-희망도서 관리</title>
 	  </th:block>
+	  
+	 <th:block layout:fragment="teamHeadScript">
+     <script type="text/javascript">  
+       $(document).ready(function(){  	   	   
+    	   $('#applyBtn').click(function(){
+   				var brProgress = $('[name="brProgress"]:checked').val();
+   				var brCode = $('#brCode').val();
+   				var brCancelReason = $('#brCancelReason').val();
+    		   
+   				console.log(brProgress);
+   				console.log(brCode);
+   				console.log(brCancelReason);
+   				
+    		   var request = $.ajax({
+					url:"/updateProgress",
+					method: "POST",
+					data : { 'brCode':brCode , 'brProgress':brProgress , 'brCancelReason':brCancelReason }, 
+					dataType: "json"
+				});				 
+				request.done(function( data ) {
+					 console.log(data);
+					 if(data == 1){
+						 alert("상태변경이 정사적으로 완료되었습니다.");
+						 $('#modals-default').modal('hide');
+						 location.reload(true);
+					 }else{
+						 alert("다시 시도해 주세요");
+					 }
+ 			
+				});				 
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				}); 				
+    	   });
+    	   
+    	}); // 처음 function끝
+    	    	
+    	</script>
+  	    </th:block>
 	
   
 	  <th:block layout:fragment="adminHeadAdd">
@@ -71,7 +110,8 @@
 				      <td class="align-middle" th:text="${r.brPrice}"></td>
 				      <td class="align-middle" th:text="${#strings.abbreviate(r.brAuthor,7)}"></td>
 				      <td class="align-middle" th:text="${r.brPublisher}"></td>
-				      <td class="align-middle text-center">
+				      <td class="align-middle text-center" data-toggle="modal" data-target="#modals-default">
+				      	 <input type="hidden" th:value="${r.brCode}" id="brCode">
 				      	 <span th:if="${r.brProgress eq '취소'}"  class="badge badge-outline-danger">[[${r.brProgress}]]</span>
 				         <span th:unless="${r.brProgress eq '취소'}"  class="badge badge-outline-success">[[${r.brProgress}]]</span>
 				      </td>
@@ -88,6 +128,47 @@
                 </table>
               </div>
             </div>
+            
+            <div class="modal fade" id="modals-default">
+               <div class="modal-dialog">
+                 <form class="modal-content">
+                   <div class="modal-header">
+                     <h5 class="modal-title">
+                       	진행상황 변경
+                     </h5>
+                     <a th:href="@{/admin/bookOrderList}"  type="button" class="close" data-dismiss="modal" aria-label="Close">×</a>
+                   </div>
+                   <div class="modal-body">
+                   	  <div class="form-row">
+	                    <div class="form-group col-md-6">
+	                       <label class="custom-control custom-radio">		               		   	
+		               		   	<input name="brProgress" type="radio" class="custom-control-input" value="접수완료">
+		               		   	<span class="custom-control-label">접수완료</span>
+	                       </label>
+	                       <label class="custom-control custom-radio">
+	                 		   	<input name="brProgress" type="radio" class="custom-control-input" value="심사중">
+	                 		   	<span class="custom-control-label">심사중</span>
+	                       </label>	
+	                       <label class="custom-control custom-radio">
+	                 		   	<input name="brProgress" type="radio" class="custom-control-input" value="취소">
+	                 		   	<span class="custom-control-label">취소</span>
+	                       </label>	
+	                    </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col">
+                          <label class="form-label">취소 사유 (상태를 취소로 변경하는 경우 꼭 사유를 작성해 주세요)</label>
+                          <input id="brCancelReason" type="text" class="form-control" >
+                        </div>
+                      </div>
+                   </div>
+                   <div class="modal-footer">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     <button id="applyBtn" type="button" class="btn btn-primary">적용</button>
+                   </div>
+                 </form>
+               </div>
+             </div>
                         
 
           </th:block>

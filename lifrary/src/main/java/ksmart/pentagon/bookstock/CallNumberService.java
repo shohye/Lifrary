@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ksmart.pentagon.vo.BookStock;
 import ksmart.pentagon.vo.CallNumber;
 
 @Service
@@ -17,7 +18,7 @@ public class CallNumberService {
 	// 저작기호 = 저자기호 + 도서기호
 
     // 저자기호 구하기
-	public String makeBsmarkAuthor(String biAuthor) {	
+	public String makeBsmarkAuthor(String biAuthor, String lCode) {	
 		
 		List<Map<String, Character>> charList = makeBsmarkService.getCharList(biAuthor);
 		
@@ -43,30 +44,26 @@ public class CallNumberService {
 			// informaton 작가명
 			List<String> author = callNumberMapper.checkAuthor(biAuthor);
 			// stock 작가기호
-			List<String> authorMark = callNumberMapper.checkAuthorMark(resultStr);
+			List<String> authorMark = callNumberMapper.checkAuthorMark(resultStr,lCode);
 			String plus = "1";
 			String resultStrPlus = "";
 			
-			// 작가명 자체가 겹치지 않을때
-			if(author.size()<0) {
+			// 작가명 자체가 겹칠때 = 같은작가(동일 인물)   //이라고 예를 들자.. 동명이인은 알아서 하시기를,,
+			if(author.size()>0) {
 				
-				if(authorMark.size()<0) { // 작가명이 겹치지 않고 작가기호도 겹치지 않을때
-					
-				}else { // 작가명이 겹치지 않으나, 작가기호가 겹칠때
-					
-					resultStr += plus;
+			// 작가명 자체가 겹치지 않을때
+			}else {
+				
+			   if(authorMark.size()>0) {  // 작가명이 겹치지 않으나, 작가기호가 겹칠때
+				   resultStr += plus;
 					
 			    /*  List<String> authorMark2 = callNumberMapper.checkAuthorMark(resultStr);
 					if(authorMark2.size()>0) {
 						resultStrPlus = resultStr+"2";					
-					}*/
-				}
-			
-			// 작가명 자체가 겹칠때 = 같은작가(동일 인물)   //이라고 예를 들자.. 동명이인은 알아서 하시기를,,
-			}else {
-				
-			}
-			
+					}*/					
+				}else { // 작가명이 겹치지 않고 작가기호도 겹치지 않을때
+				}				
+			}			
 		}				
 		return resultStr;
 	}
@@ -100,6 +97,37 @@ public class CallNumberService {
 		}				
 		return resultStr;		
 	}
+	
+	// 도서 기호 구하기2
+	public String makeBsmarkName2(String biName) {
+		System.out.println("============ makeBsmarkName ============");	
+		List<Map<String, Character>> nameList = makeBsmarkService.getCharList(biName);
+		List<Map<String, Integer>> nIntList = makeBsmarkService.getIntList(biName);
+		
+		String resultStr = "";
+		
+		if(nIntList != null && nIntList.size() > 1) {
+			
+			Map<String, Integer> nameIntNextMap = nIntList.get(0);
+			
+			int a = (int)nameIntNextMap.get("cho"); //1번째
+			int b = (int)nameIntNextMap.get("jun"); //2번째
+			
+			if(a != 0)  {
+				Character temp = (char)(0xAC00 + 28 * 21 *(a) + 28 * (b));
+				resultStr = temp.toString();
+			}			
+		}				
+		return resultStr;		
+	}
+	
+	
+	public List<String> checkWriterMark(String writer, String lCode) {
+		return callNumberMapper.checkWriterMark(writer,lCode);
+	}
+	
+	
+	
 }
 
 

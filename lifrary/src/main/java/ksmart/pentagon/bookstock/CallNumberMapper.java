@@ -15,8 +15,13 @@ public interface CallNumberMapper {
 	
 	public String makeBsmarkNum(String text);
 	
+	//해당 저자명 있는지 체크
 	public List<String> checkAuthor(String biAuthor);
 	
-	public List<String> checkAuthorMark(String resultStr);
+	//저자기호 있는지 체크
+	public List<String> checkAuthorMark(String resultStr, String lCode);
+	
+	//해당 저작기호 있는지 체크
+	public List<String> checkWriterMark(String writer, String lCode);
 
 }
