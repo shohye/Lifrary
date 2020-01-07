@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.Calender;
-import ksmart.pentagon.vo.Point;
 
 
 /***
@@ -107,5 +106,21 @@ public class BookCalenderController {
 		return bookCalenderService.getMyCalender(cCode);
 	}
 	
+	@PostMapping("/lifrary/myCalenderUpdate")
+	public String myCalenderUpdate(Calender calender
+								  , RedirectAttributes redirectAttributes) {
+		
+		redirectAttributes.addFlashAttribute("resultUpdate", bookCalenderService.myCalenderUpdate(calender));
+		
+		return "redirect:/lifrary/myCalender";
+	}
+	@PostMapping("/lifrary/myCalenderDelete")
+	public String myCalenderDelete(@RequestParam(value="cCode") String cCode
+								  , RedirectAttributes redirectAttributes) {
+			
+		redirectAttributes.addFlashAttribute("resultDelete", bookCalenderService.myCalenderDelete(cCode));
+		
+		return "redirect:/lifrary/myCalender";
+	}
 	
 }

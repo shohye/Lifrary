@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -121,7 +122,7 @@ public class PointController {
 		
 		redirectAttributes.addFlashAttribute("resultDelete", pointService.pointDelete(pCode));
 		
-		return "redirect:/admin/pointHistoryList";
+		return "redirect:/admin/pointList";
 	}
 	
 	/***
@@ -168,13 +169,19 @@ public class PointController {
 	}
 	
 	/**
+	 * @param session
+	 * @param model
 	 * @brief 마이페이지 포인트사용이력리스트 
 	 * @return /librarypage/point/myPointList
 	 * @author 최지혜
 	 */
 	@GetMapping("/lifrary/myPointList")
-	public String myPointList() {
+	public String myPointList(HttpSession session
+							 , Model model) {
 		
+		String uId = (String) session.getAttribute("SID");
+		model.addAttribute("myPointList", pointService.myPointList(uId));
+		model.addAttribute("myTotalPoint", pointService.myTotalPoint(uId));
 		
 		return "/librarypage/point/myPointList";
 		
@@ -192,4 +199,36 @@ public class PointController {
 		return "/librarypage/point/myPoint";
 		
 		}
+	/**
+	 * 
+	 * @param session
+	 * @brief 사용 포인트 리스트
+	 * @return 사용 포인트 리스트
+	 * @author 최지혜
+	 */
+	@RequestMapping(value="/lifrary/getUsePointList", produces = "application/json")
+	public @ResponseBody List<Point> getUsePointList(HttpSession session) {
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
+		
+		return pointService.getUsePointList(libNum);
+		}
+	
+	@PostMapping("/lifrary/myPointInsert")
+	public String myPointInsert(@RequestParam(value="pCode" ) String pCode
+								, HttpSession session
+								, RedirectAttributes redirectAttributes) {
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
+		String uId = (String) session.getAttribute("SID");
+		
+		Point point = new Point();
+		point.setlCode(libNum);
+		point.setuId(uId);
+		point.setpCode(pCode);
+		
+		redirectAttributes.addFlashAttribute("resultInsert", pointService.myPointInsert(point));
+		
+		return "redirect:/lifrary/myPointList";
+	}
 }

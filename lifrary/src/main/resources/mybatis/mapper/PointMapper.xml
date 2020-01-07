@@ -13,32 +13,74 @@
        <result property="pStandard" column="p_standard"/>
        <result property="pPoint" column="p_point"/>
        <result property="pDate" column="p_date"/>	              
-       <result property="phCode" column="ph_code"/>	              
-       <result property="phPoint" column="ph_point"/>	              
+       <result property="phCode" column="ph_code"/>	                          
+       <result property="sumPoint" column="sum_point"/>	              
        <result property="phDate" column="ph_date"/>	              
 	 </resultMap>
   
   	<select id="pointHistorySearchList" parameterType="java.lang.String" resultMap="point">
   		SELECT
-			ph.*
+  			ph.ph_code
+			,ph.u_id  
+			,ph.ph_date
 			,p.p_name
 			,p.p_standard
 			,p.p_point
 			,u.u_number
 			,u.u_name
-		FROM
+			,<![CDATA[(
+				SELECT
+					SUM(PS.p_point)
+				FROM
+					point_history AS PHS
+					INNER JOIN
+					point AS PS
+					ON
+					PS.p_code = PHS.p_code
+				WHERE
+					PHS.u_id = ph.u_id
+					AND
+					PHS.ph_date <= ph.ph_date
+					AND
+					PHS.ph_code <= ph.ph_code
+			) AS sum_point ]]>	
+		FROM 
 			point_history AS ph
 		INNER JOIN
 			point AS p
 		ON
-			ph.p_code = p.p_code		
+			ph.p_code = p.p_code
 		INNER JOIN
 			user AS u
 		ON
-			ph.u_id = u.u_id		
+			ph.u_id = u.u_id	
 		WHERE
 			ph.l_code = #{libNum}
+		ORDER BY ph.ph_date, ph.ph_code
   	</select>
+  	<insert id="pointHistoryInsert">
+  		<selectKey keyProperty="phCode" resultType="String" order="BEFORE">
+		  	SELECT 
+			CONCAT('ph-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+				(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(ph.ph_code), '-', -1),6) 
+				, '00001' 
+				,LPAD(RIGHT(MAX(ph.ph_code),5)+1,5,'0')))) AS phCode
+			FROM 
+				point_history as ph
+		</selectKey>
+  		INSERT INTO point_history(
+			ph_code
+			, l_code
+			, p_code
+			, u_id
+			, ph_date)
+			VALUES (
+			#{phCode}
+			, #{lCode}
+			, #{pCode}
+			, #{uId}
+			, CURDATE())
+  	</insert>
   	<delete id="pointHistoryDelete">
   		DELETE FROM point_history 
   		WHERE 
@@ -110,4 +152,68 @@
 		WHERE 
 			p_code=#{pCode}
  	</delete>
+ 	<select id="myPointList" parameterType="java.lang.String" resultMap="point">
+ 		SELECT
+			 p.p_name
+			,p.p_standard
+			,p.p_point
+			,ph.ph_date
+		FROM
+			point_history AS ph
+		INNER JOIN
+			point AS p
+		ON
+			ph.p_code = p.p_code		
+		WHERE
+			ph.u_id = #{uId}
+		ORDER BY ph.ph_date DESC	
+ 	</select>
+ 	<select id="myTotalPoint" parameterType="java.lang.String" resultType="java.lang.String">
+ 		SELECT
+			sum(p.p_point) AS total_point
+		FROM
+			point_history AS ph
+		INNER JOIN
+			point AS p
+		ON
+			ph.p_code = p.p_code		
+		WHERE
+			ph.u_id = #{uId}
+ 	</select>
+	<select id="getUsePointList" parameterType="java.lang.String" resultMap="point">
+ 		SELECT
+			*
+		FROM
+			point
+		WHERE
+		 	l_code = #{libNum}
+		AND
+		<![CDATA[
+			p_point < 0	
+		]]>	
+		ORDER BY p_point DESC 
+ 	</select>
+ 	<insert id="myPointInsert" parameterType="ksmart.pentagon.vo.Point">
+ 		<selectKey keyProperty="phCode" resultType="String" order="BEFORE">
+	  	SELECT 
+		CONCAT('ph-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(ph.ph_code), '-', -1),6) 
+			, '00001' 
+			,LPAD(RIGHT(MAX(ph.ph_code),5)+1,5,'0')))) AS phCode
+		FROM 
+			point_history AS ph
+	  	</selectKey>
+ 		INSERT INTO point_history(
+			ph_code
+			, l_code
+			, p_code
+			, u_id
+			, ph_date)
+			VALUES (
+			#{phCode}
+			, #{lCode}
+			, #{pCode}
+			, #{uId}
+			, CURDATE())
+ 	</insert>
   </mapper>

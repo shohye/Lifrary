@@ -20,14 +20,14 @@ public interface BookLendMapper {
 	public BookStock bookInfoStock(String libNum, String svBook);
 	//회원정보 	
 	public User userInfo(String libNum, String svUser);
-	//대출도서코드 최대값
-	public String maxCode();
 	//대출도서 등록
 	public int lendInsert(BookLend booklend);
 	//대출상태 수정
 	public int stockUpdate(String bsCode, String lendState);
 	//반납일 등록
 	public int returnUpdate(String blCode);
+	//예약도서 대출 등록
+	public int holdUpdate(String saId, String blCode, String ulLendDay);
 	//연장일 등록
 	public int extensionUpdate(String blCode) ;
 	//예약도서 리스트
