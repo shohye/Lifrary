@@ -69,17 +69,112 @@
 	</resultMap>
 	 <!--   User    --> 	 
    	 <resultMap type="ksmart.pentagon.vo.User" id="userResultMap">
-			<!-- db -->
-			<result property="uId" column="u_id"/>
-			<result property="uPw" column="u_pw"/>
-			<result property="uNumber" column="u_number"/>
-			<result property="uName" column="u_name"/>
-			<result property="uTel" column="u_tel"/>
-			<result property="uEmail" column="u_email"/>
-			<result property="uEmailAgree" column="u_email_agree"/>
+		<result property="uId"			  column="u_id"/>
+		<result property="uPw" 			  column="u_pw"/>
+		<result property="uNumber"		  column="u_number"/>
+		<result property="uName"		  column="u_name"/>
+		<result property="uTel" 		  column="u_tel"/>
+		<result property="uEmail"         column="u_email"/>
+		<result property="uEmailAgree"    column="u_email_agree"/>
+	    <result property="uOverdueDay"    column="u_overdue_day"/>
+	    <result property="ulLevel" 		  column="ul_level"/>
+	    <result property="uasCode" 		  column="uas_code"/>
+	    <result property="uAuthorityDate" column="u_authority_date" />
+	    <result property="uAuthorityDays" column="u_authority_days"/>
+	    <result property="uasLendLimit"   column="uas_lend_limit"/>
+	    <result property="uLendCnt"       column="u_lend_cnt"/>
+	    <collection property="userLevel" resultMap="userLevel"/>
 	 </resultMap>
-	 
-	 <select id="checkPw" resultMap="userResultMap" parameterType="String">
+	 <resultMap type="ksmart.pentagon.vo.UserLevel" id="userLevel">
+	    <result column="ul_name"  		  property="ulName"/>
+	    <result column="ul_lend_num" 	  property="ulLendNum"/>
+	    <result column="ul_lend_day" 	  property="ulLendDay"/>
+	</resultMap>
+<!--  (도서관) 회원 대출,예약 가능여부확인  -->
+	<select id="userInfoCheck" parameterType="String" resultMap="userResultMap">
+  		SELECT
+			 u.u_id
+			,u.u_name
+			,u.u_number
+			,u.u_overdue_day
+			,ul.ul_name
+			,ul.ul_lend_num
+			,ul.ul_lend_day
+			,uas.uas_lend_limit
+			,(SELECT
+					COUNT(1)
+				FROM
+					book_lend AS bl
+				WHERE
+					bl.bl_return_date IS NULL
+				AND
+				(
+					(bl.bl_lend_date IS NULL AND bl.bl_hold_date IS NOT NULL)
+					OR
+					bl.bl_lend_date IS NOT NULL
+				)
+				AND 
+					bl.bl_id = u.u_id	) AS u_lend_cnt
+		FROM
+			user AS u
+		INNER JOIN
+			user_level AS ul
+		ON
+			u.ul_level = ul.ul_level 
+		INNER JOIN
+			user_authority_set AS uas
+		ON 
+			u.uas_code = uas.uas_code	
+		LEFT JOIN 
+			user_authority_history AS uah
+		ON 
+			u.u_id = uah.u_id
+		WHERE
+			u.u_id = #{sid}
+		AND 
+			u.l_code = #{lCode}	
+		ORDER BY 
+			uah.uah_date DESC
+		LIMIT 0,1
+			
+  	</select>
+ <!--  (도서관) 홈페이지에서 도서 예약등록  -->
+  	<insert id="holdInsert" parameterType="String">
+  	<selectKey keyProperty="blCode" resultType="String" order="BEFORE">
+ 		SELECT 
+		CONCAT('bl-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(bl.bl_code), '-', -1),6) 
+			, '00001' 
+			,LPAD(RIGHT(MAX(bl.bl_code),5)+1,5,'0'))))
+		FROM 
+			book_lend AS bl
+ 	</selectKey>	
+		INSERT INTO book_lend(
+			 bl_code
+			,l_code
+			,bl_id
+			,bs_code
+			,bl_hold_date
+		)VALUES (
+			 #{blCode}
+			,#{lCode}
+			,#{sid}
+			,#{bsCode}
+			,CURDATE() 
+		)
+	</insert>
+<!--  (도서관) 홈페이지에서 도서 예약등록시 도서 대출 불가상태로 update  -->
+ 	<update id="updateStockHoldLendState" parameterType="String">
+  			UPDATE 
+				book_stock
+			SET
+				bs_lend_state = 'X'
+			WHERE 
+				 bs_code = #{bsCode}			    
+  	 </update>
+  	
+  	<!--  (어드민) 삭제시 사서 비번확인   -->	
+	<select id="checkPw" resultMap="userResultMap" parameterType="String">
   			SELECT 
 				* 
 			FROM 
@@ -88,7 +183,7 @@
 				u_id = #{said}
 			and 
 				u_pw = #{write} 		    
-  	 </select>
+  	</select>
  <!--  (어드민) 소장도서 목록에서 삭제상태로 변경 => 삭제 도서로 이동   -->	
   	 <update id="updateStockDelete" parameterType="String">
   			UPDATE 
@@ -495,7 +590,7 @@
 		, bs_delete_date)
 	VALUES (
 		  #{bsCode}
-		, #{lCode}
+		, '111111'
 		, #{uId}
 		, #{bclCode}
 		, (SELECT bcm_code FROM book_cate_medium 

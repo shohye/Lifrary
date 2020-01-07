@@ -43,6 +43,13 @@ public interface BookStockMapper {
 	public void updateStock(Map<String , Object> stockMap);
 	
 	
+	// (도서관) 회원 대출,예약 가능여부확인
+	public User userInfoCheck(String lCode, String sid);	
+	// (도서관) 홈페이지에서 도서 예약등록 
+	public int holdInsert(String lCode, String sid , String bsCode );
+	
+	public void updateStockHoldLendState(String bsCode);
+	
 	
 	
 /*************************************************************/	

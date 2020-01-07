@@ -259,12 +259,14 @@ public class BookStockController {
   
   // 도서예약하는 AJAX
     @RequestMapping(value="/holdBook", produces = "application/json")
-	public @ResponseBody String holdBook(
+	public @ResponseBody int holdBook(
 			   @RequestParam(value="sid",required=false)String sid
-			 , @RequestParam(value="bsCode",required=false)String bsCode ) {
+			 , @RequestParam(value="bsCode",required=false)String bsCode 
+			 , HttpSession session) {
     	
-    	
-		return null;	
+    	String lCode = (String)session.getAttribute("LIBNUM");  
+   	
+		return bookStockService.bookHold(lCode, sid, bsCode);	
     }
     
     
