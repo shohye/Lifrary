@@ -101,7 +101,7 @@
 			, #{cStartDate}
 			, curdate())
 	</insert>
-	<update id="">
+	<update id="myCalenderUpdate" parameterType="ksmart.pentagon.vo.Calender">
 		UPDATE calender
 		SET
 			c_current_page = ${cCurrentPage}
@@ -137,4 +137,9 @@
 		WHERE
 			c.c_code = #{cCode}	
 	</select>
+	<delete id="myCalenderDelete" parameterType="java.lang.String">
+		DELETE FROM calender 
+		WHERE 
+			c_code= #{cCode}	
+	</delete>
 </mapper>
