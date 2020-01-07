@@ -3,6 +3,9 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
 
+<th:block layout:fragment="adminTitle">
+	<title>공지사항 리스트</title>
+</th:block>
 
 <!-- Content -->
 <th:block layout:fragment="adminContents">
@@ -17,9 +20,12 @@
           <!-- Content -->
           <div class="container-fluid flex-grow-1 container-p-y" style="width: 100%">
 
-            <h4 class="font-weight-bold py-3 mb-4">
-              <span class="text-muted font-weight-light"></span>공지사항
-            </h4>
+            <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+		<div>공지 사항</div>
+		<button type="button" class="btn btn-primary rounded-pill d-block" style="margin-right: 80px;">
+			<a class="ion ion-md-add" style="color: #FFFFFF" th:href="@{/admin/noticeInsert(boardLName=${boardLName},boardMName=${'공지사항'})}" id="noticeInsertBtn">공지 등록</a>
+		</button>
+	</h4>
             <div class="card">
 			<div class="card" style="padding-top: 20px; padding-left: 20px; padding-right: 20px;">
 	            <div class="table-responsive">
@@ -47,9 +53,8 @@
             </div>
           </div>
 	   <div>
-	   		<a style="margin-top: 10px;" th:href="@{/admin/noticeInsert(boardLCode=${boardLCode},boardMCode=${boardMCode})}" value="공지사항" id="noticeInsertBtn" class="btn btn-primary">공지사항등록</a>
-	   </div>
-          </div>
+   </div>
+ </div>
           <!-- / Content -->
         </div>
         <!-- Layout content -->
@@ -61,17 +66,17 @@
 
 <!-- script -->
 <th:block layout:fragment="pageScript">
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
-  <script th:src="@{/admin/vendor/libs/popper/popper.js}"></script>
-  <script th:src="@{/admin/vendor/js/bootstrap.js}"></script>
-  <script th:src="@{/admin/vendor/js/sidenav.js}"></script>
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+  <script th:src="@{/adminStatic/vendor/libs/popper/popper.js}"></script>
+  <script th:src="@{/adminStatic/vendor/js/bootstrap.js}"></script>
+  <script th:src="@{/adminStatic/vendor/js/sidenav.js}"></script>
 
   <!-- Libs -->
-  <script th:src="@{/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
-  <script th:src="@{/admin/vendor/libs/datatables/datatables2.js}"></script>
+  <script th:src="@{/adminStatic/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
+  <script th:src="@{/adminStatic/vendor/libs/datatables/datatables2.js}"></script>
   <!-- Demo -->
-  <script th:src="@{/admin/js/demo.js}"></script>
-  <script th:src="@{/admin/js/tables_datatables.js}"></script>
+  <script th:src="@{/adminStatic/js/demo.js}"></script>
+  <script th:src="@{/adminStatic/js/tables_datatables.js}"></script>
 </th:block>
 <!-- /script -->
 

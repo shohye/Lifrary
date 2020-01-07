@@ -3,10 +3,13 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
 
+<th:block layout:fragment="adminTitle">
+	<title>공지사항 수정</title>
+</th:block>
 
 <!-- Content -->
 <th:block layout:fragment="adminContents">
-	<script type="text/javascript" th:src="@{/library/ckeditor/ckeditor.js}"></script>
+	<script type="text/javascript" th:src="@{/libraryStatic/ckeditor/ckeditor.js}"></script>
 
 	<style type="text/css">
 #text {
@@ -52,7 +55,7 @@ button {
 	
 	
 	<h4 class="font-weight-bold py-3 mb-4">
-		<span class="text-muted font-weight-light"></span>공지사항 등록
+		<span class="text-muted font-weight-light"></span>공지사항 수정
 	
 	</h4>
 	<div style="padding-left: 1140px; margin-bottom: 10px;">
@@ -62,7 +65,7 @@ button {
 				<form th:action="@{/admin/noticeUpdate}" method="post">
 				<input type="hidden" th:value="${board.boardCode}" name="boardCode">
 				<input type="hidden" th:value="${session.SAID}" name="uId">
-				<input type="hidden" value="000000" name="lCode">
+				<input type="hidden" th:value="${session.LIBNUM}" name="lCode">
 				<input type="hidden" th:value="${boardLCode}" name="boardLCode">
 				<input type="hidden" th:value="${boardMCode}" name="boardMCode">
 				<input type="hidden" name="boardContent">
@@ -74,7 +77,6 @@ button {
 					<div id="boardTitle" type="text" name="boardTitle" class="form-control" placeholder="제목을 입력해주세요." style="height: 40px;" contenteditable="true" th:utext="${board.boardTitle}"></div>
 				</div>
 			</div>
-			
 			<div style="padding-left: 43%; padding-top: 10px;">
 			</div>
 			<div class="form-group">
@@ -82,7 +84,7 @@ button {
 			<textarea id="boardContent" class="form-control" rows="10" th:utext="${board.boardContent}"></textarea>
 			<div style="padding: 10px;">
 			<input type="submit" id="nsbtn" value="공지사항 수정 완료" class="btn btn-primary">
-			<a onclick="history.go(-1)" class="btn btn-secondary">수정취소</a>
+			<a onclick="history.go(-1)" class="btn btn-secondary" style="color: #FFFFFF;">수정취소</a>
 			
 			</div>
 			</form>

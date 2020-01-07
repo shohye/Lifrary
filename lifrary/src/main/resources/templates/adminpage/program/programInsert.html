@@ -6,15 +6,15 @@
   
   <!-- headAdd(Libs&page) -->
   <th:block layout:fragment="adminHeadAdd">
-    <link rel="stylesheet" th:href="@{/admin/vendor/libs/select2/select2.css}">
-  	<link rel="stylesheet" th:href="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
+    <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/select2/select2.css}">
+  	<link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
   </th:block>
   <!-- /headAdd(Libs&page) -->
 	 
 	 <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
   <th:block layout:fragment="teamHeadScript">
   
-  <script th:src="@{/admin/js/programValidation.js}"></script> <!-- 유효성 검사 스크립트. -->
+  <script th:src="@{/adminStatic/js/programValidation.js}"></script> <!-- 유효성 검사 스크립트. -->
   		
 
   </th:block>
@@ -60,7 +60,7 @@
 	                    <label class="form-label">등록 사서 아이디</label>
 	                    <input id="uId" type="text" class="form-control" name="uId" readonly="readonly" th:value="${session.SAID}">
                  	 </div>
-	                    <!-- <input type="hidden" class="form-control" name="lCode" th:value="${session.LIBNUM}"> 사서채널 도서관코드 등록시 주석 해제할것.-->                	 
+	                    <input type="hidden" class="form-control" name="lCode" th:value="${session.LIBNUM}">                	 
 	              </div>
 	              <div class="form-row">
 	                  <div class="form-group col-md-8" >
@@ -175,11 +175,11 @@
   
  <!--  scripts -->
   <th:block layout:fragment="pageScript">
-   <script th:src="@{/admin/vendor/libs/validate/validate.js}"></script>
-   <script th:src="@{/admin/vendor/libs/select2/select2.js}"></script>
-   <script th:src="@{/admin/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
+   <script th:src="@{/adminStatic/vendor/libs/validate/validate.js}"></script>
+   <script th:src="@{/adminStatic/vendor/libs/select2/select2.js}"></script>
+   <script th:src="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js}"></script>
   
-   <script th:src="@{/admin/js/forms_validation.js}"></script>  
+   <script th:src="@{/adminStatic/js/forms_validation.js}"></script>  
   </th:block>
  <!-- / scripts -->
 </body>

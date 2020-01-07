@@ -9,7 +9,7 @@
                          <h5 class="widget-sub-title" data-control="">내 정보</h5>
                          <div class="widget_categories" data-content="" style="max-height: 0px; overflow: hidden;">
                              <ul>
-                                 <li><a href="#">#내 정보 수정</a></li>
+                                 <li><a href="/lifrary/myUserDetail">!내 정보 수정</a></li>
                                  <li><a href="/lifrary/myPointList">!내 포인트</a></li>
                                  <li><a href="#">#회원 탈퇴</a></li>
                              </ul>
@@ -30,7 +30,6 @@
                          <div class="widget_categories" data-content="" style="max-height: 0px; overflow: hidden;">
                              <ul>
                                  <li><a href="/lifrary/myCalender">!북 캘린더</a></li>
-                                 <li><a href="#">#한줄일기</a></li>
                                  <li><a href="/lifrary/myBookReportSearchList">!내 독후감</a></li>
                              </ul>
                          </div>
@@ -58,10 +57,10 @@
                          <h5 class="widget-sub-title" data-control="">내 공공시설 신청 내역</h5>
                          <div class="widget_categories" data-content="" style="max-height: 0px; overflow: hidden;">
                              <ul>
-                                 <li><a href="#">#열람실</a></li>
-                                 <li><a href="#">#스터디룸</a></li>
-                                 <li><a href="#">#강연실</a></li>
-                                 <li><a href="#">#사물함</a></li>
+                                 <li><a th:href="@{/lifrary/myReadingRoomReserveList}">!열람실</a></li>
+                                 <li><a th:href="@{/lifrary/myStudyRoomReserveList}">!스터디룸</a></li>
+                                 <li><a th:href="@{/lifrary/myLectureRoomReserveList}">!강연실</a></li>
+                                 <li><a th:href="@{/lifrary/myLockerReserveList}">!사물함</a></li>
                              </ul>
                          </div>
                          <div class="clearfix"></div>

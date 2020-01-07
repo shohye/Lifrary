@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ksmart.pentagon.vo.BookLend;
+import ksmart.pentagon.vo.Point;
 
 
 /***
@@ -129,6 +130,7 @@ public class BookLendController {
 			//도서
 			Map<String, Object> bookInfoMap = bookLendService.bookInfo(libNum, svBook);
 			//검색결과 리다이렉트로 보내기
+			redirectAttributes.addFlashAttribute("searchBook", bookInfoMap.get("searchBook"));
 			redirectAttributes.addFlashAttribute("resultBook", bookInfoMap.get("resultBook"));
 			
 	
@@ -182,12 +184,37 @@ public class BookLendController {
 	@PostMapping("/admin/returnUpdate")
 	public String returnUpdate(	 @RequestParam(value="blCode" ) String blCode
 								, @RequestParam(value="bsCode" ) String bsCode
+								, @RequestParam(value="blId" ) String blId
+								, HttpSession session
 			 					, RedirectAttributes redirectAttributes) {
 
-		int result = bookLendService.returnUpdate(blCode, bsCode);
+		String libNum = (String) session.getAttribute("LIBNUM");
+
+		//포인트 생성
+		Point point = new Point();
+		point.setlCode(libNum);
+		point.setuId(blId);
+		point.setpCode("p001");
+				
+		int result = bookLendService.returnUpdate(blCode, bsCode, point);
 		System.out.println(result);
 		
 		redirectAttributes.addFlashAttribute("resultUpdate", result);
+		
+		return "redirect:/admin/lendSearchList";
+	}
+	
+	@PostMapping("/admin/holdUpdate")
+	public String holdUpdate(	 @RequestParam(value="blCode" ) String blCode
+								, @RequestParam(value="ulLendDay" ) String ulLendDay 
+								, HttpSession session
+			 					, RedirectAttributes redirectAttributes) {
+
+		String saId = (String) session.getAttribute("SAID");
+		
+		int result = bookLendService.holdUpdate(saId, blCode, ulLendDay);
+		
+		redirectAttributes.addFlashAttribute("resultInsert", result);
 		
 		return "redirect:/admin/lendSearchList";
 	}

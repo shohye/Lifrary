@@ -2,15 +2,17 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
- 
+   <th:block layout:fragment="libraryTitle">
+	 <title>희망도서 신청내역</title>
+   </th:block>
     
     <th:block layout:fragment="customContents">
        <section class="page-banner services-banner">
             <div class="container">
                 <div class="banner-header">
-                    <h2>희망도서 신청 리스트</h2>
+                    <h2>MY REQUEST LIST</h2>
                     <span class="underline center"></span>
-                    <p class="lead">희망도서 신청 리스트입니다.</p>
+                    <p class="lead">나의 희망도서 신청 리스트입니다</p>
                 </div>
                 <div class="breadcrumb">
                     <ul>
@@ -28,11 +30,11 @@
                             <!-- Start: program Search Section -->
                            	
                             <!-- End: Search Section -->
-                            <div class="row">
+                            <div class="row" style="margin-top: 70px">
                                 <div class="col-md-9 col-md-push-3 news-events-list-view" style="padding: 20px;">
                                    
                                    <!-- 프로그램 리스트 반복 출력 --> 
-                                   <h3>나의 신청 내역</h3> <br>
+                                   <h3>나의 희망도서 신청 내역</h3> <br>
                                    <table id="myTable" class="datatables-demo table table-striped table-bordered">                         
 						                  <thead>
 						                    <tr>
@@ -45,16 +47,23 @@
 						                      <th>취소사유</th>           
 						                    </tr>
 						                  </thead>
-							                  <tbody>
-											    <tr >	<!-- th:each="apply, al : ${#}" -->
-												      <td class="align-middle" >ㄹㄹ</td> <!-- th:text="${#}"  -->
-												      <td class="align-middle" >ㄹㄹ</td>
-												      <td class="align-middle" >ㄹㄹ</td>
-												      <td class="align-middle" >ㄹㄹ</td>
-												      <td class="align-middle" >ㄹㄹ</td>
-												      <td class="align-middle" >ㄹㄹ</td>
-												      <td class="align-middle" >ㄹㄹ</td>												      								 		
+							                 <tbody>
+							                  <th:block th:if="${#lists.size(myRequestList)} > 0">
+											    <tr th:each = "l : ${myRequestList}">	
+												      <td class="align-middle" th:text="${l.brCode}"></td> <!-- th:text="${l.}"  -->
+												      <td class="align-middle" th:text="${l.brTitle}"></td>
+												      <td class="align-middle" th:text="${l.brIsbn}"></td>
+												      <td class="align-middle" th:text="${l.brPrice}"></td>
+												      <td class="align-middle" th:text="${l.brDate}"></td>
+												      <td class="align-middle" th:text="${l.brProgress}"></td>
+												      <td class="align-middle" th:text="${l.brCancelReason}"></td>												      								 		
 											    </tr>
+											     </th:block> 
+											    <th:block th:unless="${#lists.size(myRequestList)} > 0">
+									             <tr>
+									            	 <td colspan="7" style="height: 150px; text-align: center;">희망도서 신청 내역이 없습니다</td>
+									             </tr>
+									            </th:block> 
 											  </tbody> 
 						                </table>
                                     

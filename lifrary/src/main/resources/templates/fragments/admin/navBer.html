@@ -49,12 +49,12 @@
 		              <div class="demo-navbar-user nav-item dropdown">
 		                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
 		                  <span class="d-inline-flex flex-lg-row-reverse align-items-center align-middle">
-		                    <!-- <img th:src="@{/admin/img/avatars/1.png}" alt class="d-block ui-w-30 rounded-circle"> -->
+		                    <!-- <img th:src="@{/adminStatic/img/avatars/1.png}" alt class="d-block ui-w-30 rounded-circle"> -->
 		                    <span class="px-1 mr-lg-2 ml-2 ml-lg-0"th:text="${session.SANAME}"></span>
 		                  </span>
 		                </a>
 		                <div class="dropdown-menu dropdown-menu-right">
-		                  <a href="javascript:void(0)" class="dropdown-item"><i class="ion ion-ios-person text-lightest"></i> &nbsp; 내 정보</a>
+		                  <a th:href="@{/admin/librarianMyDetail}" class="dropdown-item"><i class="ion ion-ios-person text-lightest"></i> &nbsp; 내 정보</a>
 		                  <!-- <a href="javascript:void(0)" class="dropdown-item"><i class="ion ion-md-settings text-lightest"></i> &nbsp; Account settings</a> -->
 		                  <div class="dropdown-divider"></div>
 		                  <a th:href="@{/admin/logout}" onclick="alert('페이지에서 로그아웃 되었습니다.')" class="dropdown-item"><i class="ion ion-ios-log-out text-danger"></i> &nbsp; 로그아웃</a>

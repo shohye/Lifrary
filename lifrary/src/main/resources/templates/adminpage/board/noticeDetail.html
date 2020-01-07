@@ -3,10 +3,12 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
 
-
+<th:block layout:fragment="adminTitle">
+	<title>공지사항 상세보기</title>
+</th:block>
 	<!-- Content -->
 	<th:block layout:fragment="adminContents">
-	<script type="text/javascript" th:src="@{/library/ckeditor/ckeditor.js}"></script>
+	<script type="text/javascript" th:src="@{/libraryStatic/ckeditor/ckeditor.js}"></script>
 		 	<h2 class="font-weight-bold py-3 mb-4">
               <span class="text-muted font-weight-light"></span>공지사항
             </h2>
@@ -19,6 +21,7 @@
 			
 				<div th:utext="${board.boardContent}">
 				</div>
+				<br><br><br><br>
 				<hr style="border-color: #dcdcdc;">
 			<table>
 				<tr>
@@ -56,7 +59,7 @@
 	<th:block layout:fragment="pageScript">
 	
 		<!-- addLibs -->
-		<script th:src="@{/admin/vendor/libs/chartjs/chartjs.js}"></script>
+		<script th:src="@{/adminStatic/vendor/libs/chartjs/chartjs.js}"></script>
 		
 		<!-- addDemo -->
 	</th:block>

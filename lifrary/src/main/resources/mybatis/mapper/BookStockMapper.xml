@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="ksmart.pentagon.stock.BookStockMapper">  
+  <mapper namespace="ksmart.pentagon.bookstock.BookStockMapper">  
  <!--  BookInformation   -->
   	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfoResultMap">
 	    <result column="bi_isbn"      property="biIsbn"/>
@@ -33,6 +33,7 @@
 	    <result column="bcl_code"         property="bclCode"/>
 	    <result column="bcm_code"         property="bcmCode"/>
 	    <result column="bs_alias_mark"    property="bsAliasMark"/>
+	    <result column="bs_author_mark"    property="bsAuthorMark"/>
 	    <result column="bs_writer_mark"   property="bsWriterMark"/>
 	    <result column="bs_secondary_mark" property="bsSecondaryMark"/>
 	    <result column="bs_total_page"    property="bsTotalPage"/>  
@@ -66,6 +67,176 @@
 	    <result column="bl_hold_date"      property="blHoldDate"/>
 	    <result column="bl_overdue_days"   property="blOverdueDays"/>
 	</resultMap>
+	 <!--   User    --> 	 
+   	 <resultMap type="ksmart.pentagon.vo.User" id="userResultMap">
+		<result property="uId"			  column="u_id"/>
+		<result property="uPw" 			  column="u_pw"/>
+		<result property="uNumber"		  column="u_number"/>
+		<result property="uName"		  column="u_name"/>
+		<result property="uTel" 		  column="u_tel"/>
+		<result property="uEmail"         column="u_email"/>
+		<result property="uEmailAgree"    column="u_email_agree"/>
+	    <result property="uOverdueDay"    column="u_overdue_day"/>
+	    <result property="ulLevel" 		  column="ul_level"/>
+	    <result property="uasCode" 		  column="uas_code"/>
+	    <result property="uAuthorityDate" column="u_authority_date" />
+	    <result property="uAuthorityDays" column="u_authority_days"/>
+	    <result property="uasLendLimit"   column="uas_lend_limit"/>
+	    <result property="uLendCnt"       column="u_lend_cnt"/>
+	    <collection property="userLevel" resultMap="userLevel"/>
+	 </resultMap>
+	 <resultMap type="ksmart.pentagon.vo.UserLevel" id="userLevel">
+	    <result column="ul_name"  		  property="ulName"/>
+	    <result column="ul_lend_num" 	  property="ulLendNum"/>
+	    <result column="ul_lend_day" 	  property="ulLendDay"/>
+	</resultMap>
+<!--  (도서관) 회원 대출,예약 가능여부확인  -->
+	<select id="userInfoCheck" parameterType="String" resultMap="userResultMap">
+  		SELECT
+			 u.u_id
+			,u.u_name
+			,u.u_number
+			,u.u_overdue_day
+			,ul.ul_name
+			,ul.ul_lend_num
+			,ul.ul_lend_day
+			,uas.uas_lend_limit
+			,(SELECT
+					COUNT(1)
+				FROM
+					book_lend AS bl
+				WHERE
+					bl.bl_return_date IS NULL
+				AND
+				(
+					(bl.bl_lend_date IS NULL AND bl.bl_hold_date IS NOT NULL)
+					OR
+					bl.bl_lend_date IS NOT NULL
+				)
+				AND 
+					bl.bl_id = u.u_id	) AS u_lend_cnt
+		FROM
+			user AS u
+		INNER JOIN
+			user_level AS ul
+		ON
+			u.ul_level = ul.ul_level 
+		INNER JOIN
+			user_authority_set AS uas
+		ON 
+			u.uas_code = uas.uas_code	
+		LEFT JOIN 
+			user_authority_history AS uah
+		ON 
+			u.u_id = uah.u_id
+		WHERE
+			u.u_id = #{sid}
+		AND 
+			u.l_code = #{lCode}	
+		ORDER BY 
+			uah.uah_date DESC
+		LIMIT 0,1
+			
+  	</select>
+ <!--  (도서관) 홈페이지에서 도서 예약등록  -->
+  	<insert id="holdInsert" parameterType="String">
+  	<selectKey keyProperty="blCode" resultType="String" order="BEFORE">
+ 		SELECT 
+		CONCAT('bl-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(bl.bl_code), '-', -1),6) 
+			, '00001' 
+			,LPAD(RIGHT(MAX(bl.bl_code),5)+1,5,'0'))))
+		FROM 
+			book_lend AS bl
+ 	</selectKey>	
+		INSERT INTO book_lend(
+			 bl_code
+			,l_code
+			,bl_id
+			,bs_code
+			,bl_hold_date
+		)VALUES (
+			 #{blCode}
+			,#{lCode}
+			,#{sid}
+			,#{bsCode}
+			,CURDATE() 
+		)
+	</insert>
+<!--  (도서관) 홈페이지에서 도서 예약등록시 도서 대출 불가상태로 update  -->
+ 	<update id="updateStockHoldLendState" parameterType="String">
+  			UPDATE 
+				book_stock
+			SET
+				bs_lend_state = 'X'
+			WHERE 
+				 bs_code = #{bsCode}			    
+  	 </update>
+  	
+  	<!--  (어드민) 삭제시 사서 비번확인   -->	
+	<select id="checkPw" resultMap="userResultMap" parameterType="String">
+  			SELECT 
+				* 
+			FROM 
+				user
+			where
+				u_id = #{said}
+			and 
+				u_pw = #{write} 		    
+  	</select>
+ <!--  (어드민) 소장도서 목록에서 삭제상태로 변경 => 삭제 도서로 이동   -->	
+  	 <update id="updateStockDelete" parameterType="String">
+  			UPDATE 
+				book_stock
+			SET
+				 bs_delete         = 'O'
+				,bs_delete_id      = #{said}
+				,bs_delete_reason  = #{bsDeleteReason}
+				,bs_delete_date    = CURDATE()
+			WHERE 
+				 bs_code = #{bsCode}			    
+  	 </update>
+<!--  (어드민) 소장도서 삭제목록에서 복구하기   -->	
+  	 <update id="updateStockReset" parameterType="String">
+  			UPDATE 
+				book_stock
+			SET
+				 bs_delete         = 'X'
+				,bs_delete_id      = null
+				,bs_delete_reason  = null
+				,bs_delete_date    = null
+			WHERE 
+				 bs_code = #{bsCode}			    
+  	 </update>
+<!--  (어드민) 소장도서 수정   -->	
+	<update id="updateStock" parameterType="hashMap">
+  			UPDATE 
+				book_stock bs
+			INNER JOIN
+				book_information bi
+			on bi.bi_isbn = bs.bi_isbn
+			SET
+				 bi.bi_name      	 = #{biName}
+				,bi.bi_author     	 = #{biAuthor}
+				,bi.bi_publisher  	 = #{biPublisher}
+				,bi.bi_detail     	 = #{biDtail}
+				,bi.bi_kdc        	 = #{biKdc}
+				,bs.bcl_code      	 = #{bclCode}
+				,bs.bcm_code      	 = (SELECT bcm_code FROM book_cate_medium 
+								   	    WHERE bcl_code = #{bclCode}  
+										AND bcm_name= #{bcmName} )				
+				,bs.bs_alias_mark 	 = #{bsAliasMark}
+				,bs.bs_writer_mark	 = #{bsWriterMark}
+				,bs.bs_secondary_mark = #{bsSecondaryMark}
+				,bs.bs_total_page 	 = #{bsTotalPage}
+				,bs.bs_book_state    = #{bsBookState}
+				,bs.bs_lend_state    = #{bsLendState}
+				,bs.bs_carry_route   = #{bsCarryRoute}
+			WHERE 
+				 bs.bs_code 		 = #{bsCode}		    
+  	 </update>
+	 
+	 
 
 <!--  (어드민) 삭제하지 않은 모든 소장도서 리스트 가져오기   -->		
 	<select id="getStockList" resultMap="bookStockResultMap" parameterType="String">
@@ -88,7 +259,8 @@
 		where
 			bs.bs_delete_id IS NULL
 		and
-			bs.l_code=#{lCode}			
+			bs.l_code=#{lCode}
+					
 	</select>
 
 <!--  (어드민) 삭제 도서 리스트 가져오기   -->		
@@ -216,12 +388,60 @@
 		and
 			bs_book_state = '정상'
 		and
-			bi.bi_name Like CONCAT ('%',#{biName},'%')  	
+			bi.bi_name Like CONCAT ('%',#{biName},'%')
+		
+	
+	</select>
+	<!--  (도서관) 책 상태가 정상인 모든 소장도서 중 검색 조건에 맞는 도서 리스트 가져오기     -->	
+	<select id="getStockAllCount" parameterType="hashMap" 
+	resultType="java.lang.Integer">
+		SELECT 
+			 count(1)	
+        From  book_stock  bs 
+        left JOIN book_information  bi ON bs.bi_isbn = bi.bi_isbn
+        left JOIN book_cate_large bcl ON bs.bcl_code = bcl.bcl_code
+        left JOIN book_cate_medium bcm ON bs.bcm_code = bcm.bcm_code
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="bclCode != null and bclCode neq ''.toString()"> 
+			        AND bs.bcl_code=#{bclCode}		
+			</if>
+	
+			<if test="lCode != null and lCode neq ''.toString()"> 
+			        AND bs.l_code=#{lCode}		
+			</if>
+			<if test="biName != null and biName neq ''.toString()"> 
+			        AND bi.bi_name Like CONCAT ('%',#{biName},'%')		
+			</if>
+	
+			<if test="biPublisher != null and biPublisher neq ''.toString()"> 
+			        AND bi.bi_publisher Like CONCAT ('%',#{biPublisher},'%')	
+			</if>
+	
+			<if test="biIsbn != null and biIsbn neq ''.toString()"> 
+			        AND bi.bi_isbn=#{biIsbn}		
+			</if>
+	
+			<if test="biAuthor != null and biAuthor neq ''.toString()"> 
+			        AND bi.bi_author Like CONCAT ('%',#{biAuthor},'%')	
+			</if>
+	
+			<if test="biDtail != null and biDtail neq ''.toString()"> 
+			        AND bi.bi_detail Like CONCAT ('%',#{biDtail},'%')		
+			</if>
+	
+			<if test="biYearStart neq null and biYearStart neq ''
+				  and biYearEnd neq null and biYearEnd neq ''.toString()">
+				AND <![CDATA[
+	    				bi.bi_year >= CAST( #{biYearStart} AS DECIMAL)
+   				    and bi.bi_year <= CAST( #{biYearEnd} AS DECIMAL)
+				]]>
+			</if>
+		</trim>
 	</select>
 	
 <!--  (도서관) 책 상태가 정상인 모든 소장도서 중 상세 검색 조건에 맞는 도서 리스트 가져오기     -->		
 	<select id="getDetailSearchStockList" resultMap="bookStockResultMap"
-    		parameterType="ksmart.pentagon.vo.BookInformation">
+    		parameterType="hashMap">
         SELECT 
 			  bs.bs_code
 			, bs.u_id
@@ -282,6 +502,10 @@
    				    and bi.bi_year <= CAST( #{biYearEnd} AS DECIMAL)
 				]]>
 			</if>
+			<if test="startRow neq null and rowPerPage neq null"> 
+	            ORDER BY bi.bi_name 
+	            LIMIT #{startRow},#{rowPerPage}
+            </if>	
 		</trim>
 	</select>
 	
@@ -295,6 +519,8 @@
 		  bs_code = #{bsCode}
 		AND 
 		  bl_return_date IS NULL
+		AND 
+		  bl_lend_date IS NOT NULL
 		ORDER BY 
 		  bl_lend_date DESC
 		LIMIT 0,1
@@ -311,6 +537,93 @@
 			, #{biPublisher}, #{biKdc}, #{biDtail}, #{biImg}, CURDATE())
 	 
 	</insert>
+	 <select id="getBookInfoStock" resultMap="bookInfoResultMap" parameterType="String">
+  			SELECT 
+				* 
+			FROM 
+				book_information
+			where
+				bi_isbn = #{biIsbn}
+			    
+  	</select>
 	
+<!--  (어드민) 소장도서 인서트  -->
+	<select id="checkBookInfo" resultMap="bookInfoResultMap" parameterType="String">
+  			SELECT 
+				* 
+			FROM 
+				book_information
+			where
+				bi_isbn = #{biIsbn} 		    
+  	</select>
+  	 
+	<insert id="insertStock">
+	<selectKey keyProperty="bsCode" resultType="String" order="BEFORE">
+ 		SELECT 
+		CONCAT('bs-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(bs.bs_code), '-', -1),6) 
+			, '00001' 
+			,LPAD(RIGHT(MAX(bs.bs_code),5)+1,5,'0'))))
+		FROM 
+			book_stock AS bs
+ 	</selectKey>	
+	INSERT INTO book_stock
+	( 	  bs_code
+		, l_code
+		, u_id
+		, bcl_code
+		, bcm_code
+		, bi_isbn
+		, bs_alias_mark
+		, bs_author_mark
+		, bs_writer_mark
+		, bs_secondary_mark
+		, bs_total_page
+		, bs_stock_state
+		, bs_book_state
+		, bs_lend_state
+		, bs_carry_route
+		, bs_date
+		, bs_delete
+		, bs_delete_id
+		, bs_delete_reason
+		, bs_delete_date)
+	VALUES (
+		  #{bsCode}
+		, '111111'
+		, #{uId}
+		, #{bclCode}
+		, (SELECT bcm_code FROM book_cate_medium 
+		   WHERE bcl_code = #{bclCode}  
+		   AND bcm_name= #{bcmName} )	
+		, #{biIsbn}
+		, #{bsAliasMark}
+		, #{bsAuthorMark}
+		, #{bsWriterMark}
+		, #{bsSecondaryMark}
+		, #{bsTotalPage}
+		, '소장'
+		, '정상'
+		, 'O'
+		, #{bsCarryRoute}
+		, CURDATE()
+		, 'X'
+		, null
+		, null
+		, null)
+
+	</insert>
+	<update id="updateBookInfoStock" parameterType="ksmart.pentagon.vo.BookInformation" >
+		UPDATE 
+			book_information
+		SET
+			 bi_name      = #{biName}
+			,bi_author    = #{biAuthor}
+			,bi_publisher = #{biPublisher}
+			,bi_year      = #{biYear}
+			,bi_kdc       = #{biKdc}
+		WHERE 
+			 bi_isbn = #{biIsbn}
+    </update>
 	
   </mapper>

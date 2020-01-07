@@ -21,6 +21,12 @@ public class ProgramService {
 	@Autowired
 	private ProgramMapper programMapper;
 
+	// 프로그램 좌측메뉴에 최근등록 프로그램 3개까지 뿌려주기.
+	public List<ProgramManager> getLatelyProgram(String libNum) {
+		
+		return programMapper.getLatelyProgram(libNum);
+	}
+
 	// 프로그램 리스트 전체 가져오기
 	public List<ProgramManager> getProgramList(String libNum) {
 		return programMapper.getProgramList(libNum);
@@ -28,10 +34,10 @@ public class ProgramService {
 
 	// 검색결과에 맞는 프로그램 리스트 가져오기
 	public List<ProgramManager> getSearchProgramList(String keywords, String target, String libNum) {
-	
+
 		System.out.println(keywords + " <== keywords");
 		System.out.println(target + " <== target");
-				
+
 		return programMapper.getSearchProgramList(keywords, target, libNum);
 
 	}
@@ -69,11 +75,9 @@ public class ProgramService {
 	}
 
 	// 프로그램 신청하기
-	public void insertProgram(ProgramApply pa) {
+	public void applyProgram(ProgramApply pa) {
 		String appUpdate = "insert";
-		// 자동 코드 기능이 생기면 수정할것.
-		pa.setPaCode("pa-19121600009");
-		programMapper.insertProgram(pa);
+		programMapper.applyProgram(pa);
 		programMapper.updateApplicant(appUpdate, pa.getPmCode()); // 신청시 applicant + 1 해주기.
 	}
 
@@ -87,5 +91,10 @@ public class ProgramService {
 	// 프로그램 수정하기
 	public void updateProgram(ProgramManager pm) {
 		programMapper.updateProgram(pm);
+	}
+
+	// 프로그램 등록하기
+	public void insertProgram(ProgramManager pm) {
+		programMapper.insertProgram(pm);
 	}
 }

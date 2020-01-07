@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/admin/adminDefault}" class="default-style">
+
+<th:block layout:fragment="adminTitle">
+	<title>문의하기</title>
+</th:block>
+	<!-- Content -->
+	<th:block layout:fragment="adminContents">
+	<script type="text/javascript" th:src="@{/libraryStatic/ckeditor/ckeditor.js}"></script>
+		 	<h2 class="font-weight-bold py-3 mb-4">
+              <span class="text-muted font-weight-light"></span>
+            </h2>
+			<div class="card mb-4">
+				<div style="margin: 30px;" th:each="l : ${board}" >
+				
+					<h4><span th:utext="${l.boardTitle}"></span></h4>
+					<h6><span style="color: #A2A4A6;" th:text="|작성자 : ${board.uId}  ㅣ  등록일 : ${board.boardDate}  ㅣ  조회수 : ${board.boardPageView}|"></span></h6>
+					<hr style="border-color: #dcdcdc;">
+			
+				<div th:utext="${board.boardContent}">
+				</div>
+				<hr style="border-color: #dcdcdc;">
+			<table>
+				<tr>
+					<td style="width: 130px;">
+						<button type="button" class="btn btn-primary d-block" style="margin-top: 10px;">
+			   				<a th:href="@{/admin/adminInquiryUpdate(boardCode=${l.boardCode},boardLName=${'문의하기'})}" style="color: white">
+			            		<span class="ion ion-md-build">수정하기</span>
+			  				</a>
+						</button>
+					</td>
+					<td style="width: 130px;">
+						<button type="button" class="btn btn-danger d-block" style="margin-top: 10px;">
+							<a th:href="@{/admin/noticeDelete(boardCode=${l.boardCode},boardLName=${'문의하기'})}" style="color: white"> 
+			          			<span class="ion ion-md-cut">삭제하기</span>
+			       			</a>
+						</button>
+					</td>
+					<td>
+						<button type="button" class="btn d-block btn-secondary" style="margin-top: 10px;">
+							<a th:href="@{/admin/noticeSearchList(boardLName=${'문의하기'})}" style="color: white"> 
+			          			<span class="far fa-list-alt">리스트</span>
+			       			</a>
+						</button>
+					</td>
+				</tr>
+			</table>
+			</div>
+		</div>
+	</th:block>
+	
+	<!-- / Content -->
+	
+	<!-- script -->
+	<th:block layout:fragment="pageScript">
+	
+		<!-- addLibs -->
+		<script th:src="@{/adminStatic/vendor/libs/chartjs/chartjs.js}"></script>
+		
+		<!-- addDemo -->
+	</th:block>
+	<!-- /script -->
+
+
+
+</html>

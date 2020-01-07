@@ -14,14 +14,31 @@
   	<result property="fAccommodate" column="f_accommodate"/>
   	<result property="fGender" column="f_gender"/>
   	<result property="fTerm" column="f_term"/>
-  	<result property="fImg" column="f_img"/>
+  	<result property="fRow" column="f_row"/>
+  	<result property="fCol" column="f_col"/>
+  	<result property="fSeatOrImg" column="f_seat_or_img"/>
   	<result property="fDate" column="f_date"/>
   </resultMap>
+		
+  <resultMap type="ksmart.pentagon.vo.FacilityReservation" id="reserveResultMap">
+  	<result property="frCode" column="fr_code"/>
+  	<result property="lCode" column="l_code"/>
+  	<result property="uId" column="u_id"/>
+  	<result property="fCode" column="f_code"/>
+  	<result property="frSelectNum" column="fr_select_num"/>
+  	<result property="frTel" column="fr_tel"/>
+  	<result property="frExtension" column="fr_extension"/>
+  	<result property="frReserveDate" column="fr_reserve_date"/>
+  	<result property="frEndDate" column="fr_end_date"/>
+  	<result property="fKinds" column="f_kinds"/>
+  	<result property="fName" column="f_name"/>
+  	<result property="fLocation" column="f_location"/>
+  </resultMap>  
   
   <!-- 시설종류가 xx 인것의 리스트를 출력 -->
   <select id="getFacilityList" parameterType="String" resultMap="FResultMap">
   	SELECT 
-	*
+		*
 	FROM 
 		facility
 	WHERE
@@ -30,6 +47,39 @@
 		AND f_kinds = #{fKinds}
 	</if>
   </select>
+  
+  <!-- 시설종류가 XX인것의 예약 리스트 출력 -->
+  <select id="getFacilityReservation" parameterType="String" resultMap="reserveResultMap">
+  SELECT
+		fr.*,
+		f.f_kinds
+	FROM
+		facility_reservation AS fr INNER JOIN facility AS f
+	ON fr.f_code = f.f_code
+	WHERE
+		fr.l_code = #{libNum}
+	<if test="fKinds != '전체'">
+		AND f.f_kinds = #{fKinds}
+	</if>
+  </select>
+  
+  <!-- 마이페이지  시설종류에 따른  예약 리스트 출력 -->
+  <select id="getFacilityReservationList" parameterType="String" resultMap="reserveResultMap">
+  SELECT
+		fr.*,
+		f.f_kinds,
+		f.f_name,
+		f.f_location
+	FROM
+		facility_reservation AS fr INNER JOIN facility AS f
+	ON fr.f_code = f.f_code
+	WHERE
+		fr.u_id = #{uId} AND
+		fr.l_code = #{libNum} AND
+		f.f_kinds = #{fKinds}
+  </select>
+  
+  
   
   <!-- fCode 1개를 조회하여 상세정보 출력 -->
   <select id="getFacility" parameterType="String" resultMap="FResultMap">
@@ -41,4 +91,130 @@
 		f_code=#{fCode} AND l_code= #{libNum}
   </select>
   
+  <!-- 공공시설 등록하기. -->
+  <insert id="insertFacility">
+  	<selectKey keyProperty="fCode" resultType="String" order="BEFORE">
+  		SELECT 
+		CONCAT('f-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(f.f_code), '-', -1),6) 
+			, '00001' 
+			,LPAD(RIGHT(MAX(f.f_code),5)+1,5,'0'))))
+		FROM 
+			facility AS f
+  	</selectKey>
+  	INSERT INTO facility
+	(f_code, l_code, u_id, f_name, f_kinds, f_location, f_accommodate, f_gender, f_term, f_row, f_col, f_seat_or_img, f_date)
+	VALUES (#{fCode}, #{lCode}, #{uId}, #{fName}, #{fKinds}, #{fLocation}, #{fAccommodate}, #{fGender}, #{fTerm}, #{fRow}, #{fCol}, #{fSeatOrImg}, NOW())
+  </insert>
+  
+  <!-- 공공시설 수정하기 / 열람실,사물함 / 스터디룸,강연실 다르게 해줘야함. fCode를 받아서 처리-->
+  <update id="updateFacility" parameterType="ksmart.pentagon.vo.Facility">
+  	UPDATE 
+  		facility
+	SET
+		f_name=			#{fName},
+		f_location=		#{fLocation},
+		f_accommodate=	#{fAccommodate},
+		f_gender=		#{fGender},
+		f_row=			#{fRow},
+		f_col=			#{fCol},
+		f_seat_or_img=	#{fSeatOrImg}
+	WHERE 
+		 f_code = #{fCode}
+  </update>
+  
+  <!-- 예약일자 <= 현재날짜 <= 예약종료일자   현재날짜가 사이에 있는 좌석만 출력.-->
+  <select id="getReservationSeat" parameterType="String" resultMap="reserveResultMap">
+  	SELECT
+		fr_select_num
+	FROM
+		facility_reservation
+	WHERE
+		f_code = #{fCode}
+		<![CDATA[ AND fr_reserve_date <= NOW() AND fr_end_date >= NOW() ]]>
+  </select>
+  
+  <!-- 예약일자 <= 현재날짜 <= 예약종료일자   현재날짜가 사이에 있는지 확인. 객체 리턴. 확인 -->
+  <select id="getReservation" parameterType="String" resultMap="reserveResultMap">
+  	SELECT
+		*
+	FROM
+		facility_reservation
+	WHERE
+		fr_code = #{frCode}
+		<![CDATA[ AND fr_reserve_date <= NOW() AND fr_end_date >= NOW() ]]>
+  </select>
+  
+  <!-- 연장 버튼 누른것에 대하여 연장 처리해줌. -->
+  <update id="extensionChange" parameterType="String">
+  	UPDATE facility_reservation AS fr
+	SET
+		fr.fr_end_date = DATE_ADD(fr.fr_end_date, INTERVAL 1 HOUR),
+		fr.fr_extension='O'
+	WHERE 
+		fr.fr_code = #{frCode}
+  </update>
+  
+  <!-- 퇴실 버튼 클릭시 종료시간을 현재시간으로 변경 -->
+  <update id="frEndDateChange" parameterType="String">
+  	UPDATE facility_reservation AS fr
+	SET
+		fr.fr_end_date = NOW()
+	WHERE 
+		fr.fr_code = #{frCode}
+		<![CDATA[ AND fr_reserve_date <= NOW() AND fr_end_date >= NOW() ]]>
+  </update>
+  
+ <!-- 공공시설을 삭제해주는 쿼리 -->
+ <delete id="deleteFacility" parameterType="String">
+ 	DELETE FROM 
+ 		facility 
+ 	WHERE 
+ 		f_code=#{fCode}
+ </delete>
+ 
+ <!-- 공공시설 예약 쿼리 -->
+ <insert id="reserveFacility" parameterType="ksmart.pentagon.vo.FacilityReservation">
+ 	<selectKey keyProperty="frCode" resultType="String" order="BEFORE">
+ 		SELECT 
+		CONCAT('fr-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+			(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(fr.fr_code), '-', -1),6) 
+			, '00001' 
+			,LPAD(RIGHT(MAX(fr.fr_code),5)+1,5,'0'))))
+		FROM 
+			facility_reservation AS fr
+ 	</selectKey>
+ 		INSERT INTO facility_reservation
+			(fr_code, l_code, u_id, f_code, fr_select_num, fr_tel, fr_reserve_date, fr_end_date)
+	
+			VALUES (#{frCode}, #{lCode}, #{uId}, #{fCode}, #{frSelectNum}, #{frTel}, NOW(), 
+		<if test='fKinds.equals("열람실")'>
+			DATE_ADD(NOW(), INTERVAL 3 HOUR)
+		</if>
+		<if test='fKinds.equals("스터디룸")'>
+			DATE_ADD(NOW(), INTERVAL 5 HOUR)
+		</if>
+		<if test='fKinds.equals("강연실")'>
+			DATE_ADD(NOW(), INTERVAL 1 DAY)
+		</if>
+		<if test='fKinds.equals("사물함")'>
+			DATE_ADD(NOW(), INTERVAL 1 MONTH)
+		</if>
+		)
+ </insert>
+ 
+ <!-- 당일 예약을 1회라도 했는지 찾는 쿼리문. 1회라도 있으면 당일 예약은 더이상 불가능. -->
+ <select id="getRevserVation" resultMap="reserveResultMap">
+ 	SELECT
+		fr.u_id as uId
+	FROM
+		facility_reservation AS fr INNER JOIN facility AS f
+	ON fr.f_code = f.f_code
+	WHERE
+		fr.u_id = #{uId} AND
+		fr.l_code =  #{libNum} AND
+		f.f_kinds = #{fKinds} AND
+		DATE_FORMAT(fr.fr_reserve_date, "%Y-%m-%d") = CURDATE()
+ </select>
+ 
   </mapper>

@@ -3,12 +3,15 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
     
+    <th:block layout:fragment="libraryTitle">
+	 <title>희망도서 신청안내</title>
+   </th:block>
     
     <th:block layout:fragment="customContents">
        <section class="page-banner services-banner">
             <div class="container">
                 <div class="banner-header">
-                    <h2>Book Request</h2>
+                    <h2>BOOK REQUEST</h2>
                     <span class="underline center"></span>
                     <p class="lead">희망 도서 신청</p>
                 </div>
@@ -129,8 +132,14 @@
 								</ul>
                                 <br>
                                 <div class="entry-content search-buttons align-middle text-center"> 
-                                	<a th:href="@{/lifrary/bookRequestInsert}" class="btn btn-dark-gray">신청하기</a> 
+                                <th:block th:if="${session.SID} neq null"> 
+                                	<a th:href="@{/lifrary/bookRequestInsert}" class="btn btn-dark-gray">신청하기</a>
                                 	<a th:href="@{/lifrary/myBookRequestList}" class="btn btn-dark-gray">신청확인</a>
+                                </th:block>	
+                                 <th:block th:unless="${session.SID} neq null">
+                                   <br>
+                                   <p class="basic_p"> ** 희망도서 신청은 로그인 후 가능합니다. **</p> 
+                                 </th:block>	
                                 </div>
                                 <br>
                                 <br>

@@ -3,6 +3,10 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
+		
+  <th:block layout:fragment="libraryTitle">
+	 <title>도서상세</title>
+  </th:block>
   
   <th:block layout:fragment="customScript">
 	    <style>
@@ -20,6 +24,48 @@
 		 		margin: 10px 0 10px 0;
 		 	}
 	 	</style>
+	 	<script type="text/javascript" th:inline="javascript">  
+       $(document).ready(function(){  	
+    	   $('#holdBtn').click(function(){
+    		   var sid = [[${session.SID}]]
+    		   
+    		   if( sid == null ){
+    			   alert('도서를 예약하시려면 로그인을 해주세요');
+    			   location.replace('/lifrary/login');
+
+    		   }else{
+    			   
+    			   var bsCode =$('#bsCode').text();
+    			   console.log(bsCode);
+    			   
+    			   var request = $.ajax({
+   					url:"/holdBook",
+   					method: "POST",
+   					data : { 'sid':sid, 'bsCode':bsCode }, 
+   					dataType: "text"
+	  				});				 
+	  				request.done(function( data ) {
+	  					 console.log(data);
+	  					 if(data == 1){
+	  						alert('도서예약이 완료되었습니다. 당일 예약이므로 오늘 중 대출을 부탁드립니다.');
+	  						location.reload();
+	  					 }else if(data == 0){
+	  						alert('대출가능권수 초과로 인하여 도서예약이 불가합니다.'); 
+	  					 }else if(data == 2){
+	  						alert('현재 대출제한 상태로 인하여 도서예약이 불가합니다.'); 
+	  					 }else{
+	  						alert('도서예약이 불가합니다.'); 
+	  					 }
+	  				});				 
+	  				request.fail(function( jqXHR, textStatus ) {
+	  					alert( "Request failed: " + textStatus );
+	  				}); 				
+	   			   
+	   		   }
+     	   });
+    	}); // 처음 function끝
+    	    	
+    	</script>
  	</th:block>  
   
   
@@ -118,7 +164,7 @@
                                             <br>
                                             <br>  
                                             <br>                        
-                                            <a href="#." class="btn btn-dark-gray">당일 도서 예약</a> 
+                                            <a href="#." class="btn btn-dark-gray" type="button" id="holdBtn">당일 도서 예약</a> 
                                             <br>
                                             <a th:href="@{'http://www.aladin.co.kr/shop/book/wletslookViewer.aspx?ISBN='+${s.bookInformation.biIsbn}}" class="btn btn-dark-gray">도서 미리보기</a> 
                                             
@@ -149,7 +195,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td class="align-middle text-center" th:text="${s.bsCode}"></td>
+                                                        <td class="align-middle text-center" th:text="${s.bsCode}" id="bsCode"></td>
                                                         <td class="align-middle text-center" th:text="${s.bsCallNum}"></td>
                                                         <td class="align-middle text-center">
                                                         	 <span th:if="${s.bsLendState eq 'O'}">대출가능</span>
@@ -157,8 +203,6 @@
                                                         </td>
                                                         <td class="align-middle text-center">
                                                         	 <span th:text="${returnDate.blScheduleDate}"></span>			      
-                                                        
-                                                        <!--   ${r.blScheduleDate ne null and r.blHoldDate eq null}    -->
                                                         
                                                         </td>                 
                                                         <td class="align-middle text-center">

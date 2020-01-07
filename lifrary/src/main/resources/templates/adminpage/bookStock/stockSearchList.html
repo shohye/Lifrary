@@ -5,27 +5,41 @@
 	  class="default-style">
 
  <!-- headAdd(Libs&page) -->
+ <th:block layout:fragment="adminTitle">
+	<title>도서목록</title>
+ </th:block>
   
   <th:block layout:fragment="adminHeadAdd">
   
-  
   <!-- addLibs -->
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
 
   <!-- addPage -->
-  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/products.css}">
   </th:block>
+  
+   <th:block layout:fragment="teamHeadScript">
+   <script type="text/javascript"> 
+   
+   function page(bsCode) {
+      
+       var bsCode = bsCode;
+       location.href="stockDetail?bsCode="+bsCode;
+   }
+    
+   </script>
+   </th:block>
   
  
 	<!-- Content -->
-	<th:block layout:fragment="adminContents">   
+   <th:block layout:fragment="adminContents">   
 		<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
 			<div>전체 도서 관리</div> 
 <th:block th:if="${session.SALBS} == 'O'">
-			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>&nbsp; 
-				 <a th:href="@{/admin/stockDetailInsert}" style="color: white"> 도서 추가 </a>
-			</button>
+ 	 <a th:href="@{/admin/stockDetailInsert}" class="btn btn-primary rounded-pill d-block"> 도서 추가 
+ 	   <span class="ion ion-md-add"></span>
+ 	 </a>
 </th:block>
 		</h4>
 
@@ -47,12 +61,12 @@
                     </tr>
                   </thead>
                   <tbody>
-	                  <tr role="row" th:each="l: ${stockList}">
+	                  <tr role="row" th:each="l: ${stockList}" th:attr="onclick=|javascript:page('${l.bsCode}')|">
 	                    <td class="align-middle" th:text="${l.bsCode}"></td>
 	                    <td style="min-width: 170px;">
 			               	 	<div class="media align-items-center">
-			               	 		<img class="ui-w-40 d-block" th:src="${l.bookInformation.biImg}" alt="이미지가 제공되지 않는 도서">
-			               	 		<span class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(l.bookInformation.biName,20)}"></span>
+			               	 		<img class="ui-w-40 d-block" th:src="${l.bookInformation.biImg}" alt="이미지 없음">
+			               	 		<span class="media-body d-block text-body ml-3" th:text="${#strings.abbreviate(l.bookInformation.biName,18)}"></span>
 			               	 	</div>
 			            </td>
 	                    <td class="align-middle" th:text="${l.bsCallNum}"></td> 
@@ -82,12 +96,12 @@
 	<th:block layout:fragment="pageScript">
 	
 	<!-- addLibs -->
-	<script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
-	<script th:src="@{/admin/vendor/libs/numeral/numeral.js}"></script>
-	<script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
+	<script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+	<script th:src="@{/adminStatic/vendor/libs/numeral/numeral.js}"></script>
+	<script th:src="@{/adminStatic/vendor/libs/nouislider/nouislider.js}"></script>
 
 	<!-- addDemo -->
-	<script th:src="@{/admin/js/book_stock_list_tables.js}"></script>
+	<script th:src="@{/adminStatic/js/book_stock_list_tables.js}"></script>
 	</th:block>
 	<!-- / scripts -->
 	          

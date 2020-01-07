@@ -2,7 +2,194 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
-		
+
+<th:block layout:fragment="customScript">
+<style>
+	table.makeTbLine tbody tr td {color: black; text-align: center; font-size: 12px; width: 40px; height: 35px; border: 1px solid #000;}
+	table.reserveForm tbody tr td {color: black; text-align: center; font-size: 12px; width: 40px; height: 35px;}
+	table.reserveForm {width: 400px;}
+	.tdClass:hover {cursor: grab;}
+</style>
+	<script th:inline="javascript">
+		$(document).ready(function(){
+			
+			var selectNum =''; 		// 누른 자리 저장 / 비교에 사용							 
+			var selectSeat = true;  // 자리이 눌러져있으면 true
+			var selectFcode =''; 	// 누른 테이블의 공공시설 코드
+			var selectfKinds = '';  // 누른 테이블의 공공시설 종류
+			var uId = [[${session.SID}]]
+			var lCode = [[${session.LIBNUM}]]
+			
+			
+			/* 예약 기능. 당일 예약이 있으면 예약 불가., */
+			$(document).on('click','.tdClass',function(){ 			 // 자리 선택시 이벤트
+				var fCode = $('#fCode')
+				var frSelectNum = $('#frSelectNum')
+				var fKinds = $('#fKinds')
+				
+				if($(this).attr("status") == 'true' && selectSeat == true){ 				 // 자리 선택시 해당 자리의 status가  true인경우 (예약 가능인경우)
+					selectNum = $(this).attr("seat");				 // 누른것 저장. (하나만 선택 가능하게 할것)	
+					var confirmd = confirm($(this).text()+'번을 선택하셨습니다. \n선택한 자리를 예약 하시겠습니까?')
+					if(confirmd){ 									 // 확인버튼 누르면
+						$(this).css("background-color",'yellow')	 // 선택된 자리의 색이 변경
+						$(this).css("color",'black') 				 // 선택된 자리의 글자색이 변경
+						$(this).attr("status",'false');				 //status를 false로 변경
+						selectSeat = false;
+						
+						fCode.val(selectFcode)						 //선택된것이 어떤 시설의 코드인지.
+						frSelectNum.val(selectNum)					 //선택된 자리의 번호
+						fKinds.val(selectfKinds)
+					}
+				} else if($(this).attr("status") == 'true' && selectSeat == false){
+					alert('자리가 이미 선택되어있습니다. \n취소하려면 선택된 좌석을 클릭해주세요.')
+				} else { 												 // 자리 선택시 해당 자리의 status가  false인경우
+					if($(this).attr("seat") == selectNum){
+						var confirmd = confirm('이미 선택한 자리입니다. \n취소하시겠습니까?')
+						if(confirmd){ 									 // 확인버튼 누르면
+							$(this).css("background-color",'black')	 	 // 선택된 자리의 색이 변경
+							$(this).css("color",'white') 				 // 선택된 자리의 글자색이 변경
+							$(this).attr("status",'true');				 // status를 false로 변경
+							selectSeat = true;
+							fCode.val('')						 		 //선택된것이 어떤 시설의 코드인지.
+							frSelectNum.val('')							 //선택된 자리의 번호
+							fKinds.val('')								 // 시설 종류
+						}
+					}
+				}
+			})
+			
+			
+			$(document).on('click', '.fTable', function(){ // 공공시설 목록을 눌렀을때.
+				var fCode = $(this).find('input[name=fCode]').val();
+				var fKinds = $(this).find('input[name=fKinds]').val();
+				var fSeatOrImg = $(this).find('input[name=fSeatOrImg]').val();
+				var fName = $(this).find('input[name=fName]').val();				
+				var tdTable = $('#tdTable')
+				var contents = '';
+				selectFcode = fCode; // 어떤 공공시설 눌렀는지 fCode를 저장.
+				selectfKinds = fKinds;
+					console.log('열람실 / 사물함임')
+					var fRow = $(this).find('input[name=fRow]').val();
+					var fCol = $(this).find('input[name=fCol]').val();
+					var reserveArray = new Array(); // ajax로 가져온 결과를 담는 배열. 예약된 자리를 담는 배열
+					
+					 /* 테이블 그려주기 */
+					var seatArray = fSeatOrImg.split(',');
+						selectSeat = true; // 선택 초기화
+						
+						contents += '<br><h3>자리 배치도&emsp;&emsp;'+fName+'</h3><br>'
+						contents += '<table class="makeTbLine" border="0px;" style="display: inline-block;">';
+						for(var i = 1; i <= fCol; i++){
+							contents += '<tr>';
+							for(var j = 1; j <= fRow; j++){
+								contents += '<td class="tdClass" style="color:black; text-align: center; font-size:12px;  width: 40px; height: 35px;"'+ 
+								'seat="'+i+'-'+j+'" status="true">'+i+'-'+j+'</td>';
+							}
+							contents += '</tr>';
+						}
+						contents += '</table>';
+						contents += '<br><br><h3>신청하기</h3><br><br>'
+						contents += '<form id="reserveForm" action="/lifrary/reservation" method="post">'
+						contents += '<table class="reserveForm" border="1";>'
+						contents += '<input id="uId" type="hidden" name = "uId">'
+						contents += '<input id="lCode" type="hidden" name = "lCode">'
+						contents += '<input id="fCode" type="hidden" name = "fCode">'
+						contents += '<input id="fKinds" type="hidden" name = "fKinds">'
+						contents += '<input id="frSelectNum" type="hidden" name = "frSelectNum" readonly="readonly">'
+						contents += '<tr><td>연락처</td><td><input id="frTel" type="text" name = "frTel"></td></tr>'
+            			
+						contents += '<tr><td>신청 하기</td><td><button id="reserveBtn" type="button">신청</button></td></tr></table>'
+						contents += '</form>'
+						
+					 tdTable.html(contents)
+					 var tdClass = $('.tdClass');
+					 
+						$('#uId').val(uId)							 //세션에 저장된 아이디값 넣기
+						$('#lCode').val(lCode)						 //세션에 저장된 도서관코드 넣기
+					 /* DB에서 해당 시설코드에 대한 예약자를 문자열(배열로만들수있게)가져온다. */
+					 var request = $.ajax({
+						  url: "/lifrary/reservationAjax",
+						  method: "POST",
+						  data: { 'fCode' : fCode },
+						  dataType: "json"
+						});
+						 
+						request.done(function(data) {
+							reserveArray = data.seatNum; // 결과물을 reserveArray에 대입한다. 
+							console.log(reserveArray)
+							
+							
+							/* 뿌려준 테이블에 가져온 배열(선택된 자리)색칠해주기 */
+							 for(var i = 0; i < tdClass.length; i++){
+								if(seatArray.indexOf(tdClass.eq(i).attr('seat')) >= 0){ // 배열에서 tdClass의 seat값과 같은 게있는가.
+								tdClass.eq(i).text(seatArray.indexOf(tdClass.eq(i).attr('seat'))+1); // seat배열과 같은 index로 text변경
+								
+									if(reserveArray.indexOf(tdClass.eq(i).attr('seat'))+1 > 0){ // ajax로 가져와 담은 배열에 테이블의 seat속성과 같은게 있으면, true
+										tdClass.eq(i).css("background-color",'orange'); // #FA5858 = 빨강
+										tdClass.eq(i).attr("status",'false');
+									}else {
+										tdClass.eq(i).css("background-color",'black'); //#58FA58  = 초록
+										tdClass.eq(i).css("color",'white')
+										tdClass.eq(i).attr("status",'true');
+									}
+								
+								}else{
+									tdClass.eq(i).css("background-color",'white')		// seat값과 다르면 글자색을 흰색으로 변경
+									tdClass.eq(i).text('');								// 글자 없애기
+									tdClass.eq(i).attr("status",'false')				// 속성을 false로 바꿔 누를수도 없게 만든다.
+								}
+							}
+						});
+						 
+						request.fail(function( jqXHR, textStatus ) {
+						  alert( "Request failed: " + textStatus );
+						});
+						
+						
+				
+				
+				/* 예약 유효성 검사 */
+				$(document).on('click','#reserveBtn',function(){ // 예약하기 버튼 눌렀을때.
+					var reserveForm = $('#reserveForm');
+					var uIdVal = $('#uId').val()							 //세션에 저장된 아이디값 넣기
+					var lCodeVal = $('#lCode').val()							 //세션에 저장된 도서관코드 넣기
+					var fCodeVal = $('#fCode').val()						 		 //선택된것이 어떤 시설의 코드인지.
+					var frSelectNumVal = $('#frSelectNum').val()							 //선택된 자리의 번호
+					var fKindsVal = $('#fKinds').val()								 // 시설 종류
+					
+						console.log(uIdVal + "  " + lCodeVal)
+					
+					if(uIdVal == "" && lCodeVal == ""){
+						alert('세션이 만료되었습니다. 다시 로그인해주세요')
+						location.href = "/";
+						return false;
+					}
+					if(uIdVal == ""){
+						alert('로그인 후 이용해주세요.')
+						location.href = "/lifrary/login";
+						return false;
+					}
+					if(fCodeVal == ""){
+						alert('목록에서 사용할곳을 선택해주세요.')
+						return false;
+					}
+					
+					if(frSelectNumVal == ""){
+						alert('자리가 선택되지 않았습니다.')
+						return false;
+					}
+					if(fKindsVal == ""){
+						alert('시설을 선택해주세요.')
+						return false;
+					}
+					reserveForm.submit();
+				})
+					
+			})
+		})
+	</script>
+</th:block>	
+				
 		<th:block layout:fragment="customContents">
 			<!-- Start: Page Banner -->
 	        	<section th:replace="fragments/library/facilityBanner :: facilityBannerFragment"></section>

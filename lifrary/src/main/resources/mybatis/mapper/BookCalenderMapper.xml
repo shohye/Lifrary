@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="ksmart.pentagon.calendar.BookCalenderMapper">
+ <resultMap type="ksmart.pentagon.vo.Calender" id="Calender">	         
+	<result property="cCode" column="c_code"/>	         
+	<result property="lCode" column="l_code"/>
+	<result property="uId" column="u_id"/>	         
+	<result property="bsCode" column="bs_code"/>
+	<result property="cCurrentPage" column="c_current_page"/>
+	<result property="cBookFinish" column="c_book_finish"/>	         
+	<result property="cTitle" column="c_title"/>
+	<result property="cContent" column="c_content"/>
+	<result property="cStartDate" column="c_start_date"/>	              
+	<result property="cEndDate" column="c_end_date"/>	              
+	<result property="cDate" column="c_date"/>	                        
+	<result property="biImg" column="bi_img"/>
+	<collection property="bookInformation" resultMap="bookInfo"/>	                        
+ </resultMap>
+ <resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfo">
+	    <result column="bi_isbn"      property="biIsbn"/>
+	    <result column="bi_name"      property="biName"/>
+	    <result column="bi_year"      property="biYear"/>
+	    <result column="bi_author"    property="biAuthor"/>
+	    <result column="bi_publisher" property="biPublisher"/>
+	    <result column="bi_kdc"       property="biKdc"/>
+	    <result column="bi_img"       property="biImg"/>
+	    <result column="bi_detail"    property="biDtail"/>
+	    <result column="bs_code"      property="bsCode"/>
+	    <result column="bs_total_page" property="bsTotalPage"/>
+ </resultMap>
+
+	<select id="getMyCalenderList" resultMap="Calender" parameterType="java.lang.String">
+		SELECT
+			c.*
+			,bi.bi_img 
+		FROM
+			calender AS c
+		INNER JOIN
+			book_stock AS bs
+		ON
+		 c.bs_code = bs.bs_code
+		LEFT JOIN
+			book_information AS bi
+		ON
+			bs.bi_isbn = bi.bi_isbn	 	 	
+		WHERE
+			c.l_code =#{libNum}
+		AND 
+			c.u_id = #{uId}
+ 	</select>
+	<select id="getBooKInfo" resultMap="bookInfo" parameterType="java.lang.String">
+		SELECT 
+			bs.bs_code
+			, bs.bs_total_page
+			, bi.bi_name
+			, bi.bi_isbn
+			, bi.bi_author
+			, bi.bi_publisher
+		FROM  
+			book_stock  bs 
+		INNER JOIN 
+			book_information  bi 
+		ON bs.bi_isbn = bi.bi_isbn
+		WHERE
+			bs.l_code = #{libNum}
+		and
+			bi.bi_name Like CONCAT ('%',#{biName},'%')		
+	</select>
+	<insert id="myCalenderInsert" parameterType="ksmart.pentagon.vo.Calender">
+		<selectKey keyProperty="cCode" resultType="String" order="BEFORE">
+	  		SELECT 
+			CONCAT('c-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+				(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(c.c_code), '-', -1),6) 
+				, '00001' 
+				,LPAD(RIGHT(MAX(c.c_code),5)+1,5,'0')))) AS cCode
+			FROM 
+				calender AS c
+	  	</selectKey>
+		INSERT INTO calender(
+			c_code
+			, l_code
+			, u_id
+			, bs_code
+			, c_current_page
+			, c_book_finish
+			, c_title
+			, c_content
+			, c_start_date
+			, c_date)
+		VALUES (
+			#{cCode}
+			, #{lCode}
+			, #{uId}
+			, #{bsCode}
+			, ${cCurrentPage}
+			, #{cBookFinish}
+			, #{cTitle}
+			, #{cContent}
+			, #{cStartDate}
+			, curdate())
+	</insert>
+	<update id="myCalenderUpdate" parameterType="ksmart.pentagon.vo.Calender">
+		UPDATE calender
+		SET
+			c_current_page = ${cCurrentPage}
+			,c_book_finish = #{cBookFinish}
+			,c_title = #{cTitle}
+			,c_content = #{cContent}
+		WHERE 
+		 	c_code = #{cCode}
+	</update>
+	<select id="getMyCalender" resultMap="Calender" parameterType="java.lang.String">
+		SELECT
+			c.c_code
+			,c.c_current_page
+			,c.c_book_finish
+			,c.c_title
+			,c.c_content
+			,c.c_start_date
+			,bs.bs_total_page
+			,bi.bi_isbn
+			,bi.bi_name
+			,bi.bi_author
+			,bi.bi_publisher
+		FROM 
+			calender AS c
+		INNER JOIN
+			book_stock AS bs
+		ON 
+			c.bs_code = bs.bs_code
+		INNER JOIN
+			book_information AS bi
+		ON
+			bs.bi_isbn = bi.bi_isbn				
+		WHERE
+			c.c_code = #{cCode}	
+	</select>
+	<delete id="myCalenderDelete" parameterType="java.lang.String">
+		DELETE FROM calender 
+		WHERE 
+			c_code= #{cCode}	
+	</delete>
+</mapper>

@@ -1,5 +1,7 @@
 package ksmart.pentagon.program;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +38,11 @@ public class ProgramController {
 		String libNum = (String)session.getAttribute("LIBNUM");
 		model.addAttribute("menu", "프로그램 리스트");
 		model.addAttribute("programList", programService.getProgramList(libNum));
+		model.addAttribute("latelyProgram", programService.getLatelyProgram(libNum)); // 최근 등록된 3개 프로그램 뿌려주기
 		return "librarypage/program/programSearchList";
 	}
 
+	
 	/**
 	 * 키워드, 대상 검색리스트 가져오기.
 	 * @param keywords
@@ -53,6 +57,7 @@ public class ProgramController {
 		String libNum = (String)session.getAttribute("LIBNUM");
 		model.addAttribute("menu", "프로그램 리스트");
 		model.addAttribute("programList", programService.getSearchProgramList(keywords, target,libNum));
+		model.addAttribute("latelyProgram", programService.getLatelyProgram(libNum)); // 최근 등록된 3개 프로그램 뿌려주기
 		return "librarypage/program/programSearchList";
 	}
 
@@ -64,11 +69,11 @@ public class ProgramController {
 	 * @return
 	 */
 	@GetMapping("/lifrary/programDetail")
-	public String programDetail(@RequestParam(value = "pmCode") String pmCode, Model model) {
-
+	public String programDetail(@RequestParam(value = "pmCode") String pmCode, Model model, HttpSession session) {
+		String libNum = (String)session.getAttribute("LIBNUM");
 		model.addAttribute("menu", "프로그램 상세보기");
 		model.addAttribute("program", programService.getProgram(pmCode));
-
+		model.addAttribute("latelyProgram", programService.getLatelyProgram(libNum)); // 최근 등록된 3개 프로그램 뿌려주기
 		return "librarypage/program/programDetail";
 	}
 
@@ -81,11 +86,12 @@ public class ProgramController {
 	 */
 	@GetMapping("/lifrary/programApply")
 	public String programApply(@RequestParam(value = "pmCode") String pmCode,
-			@RequestParam(value = "pmName") String pmName, Model model) {
+			@RequestParam(value = "pmName") String pmName, Model model, HttpSession session) {
+		String libNum = (String)session.getAttribute("LIBNUM");
 		model.addAttribute("menu", "프로그램 신청하기");
 		model.addAttribute("pmCode", pmCode);
 		model.addAttribute("pmName", pmName);
-
+		model.addAttribute("latelyProgram", programService.getLatelyProgram(libNum)); // 최근 등록된 3개 프로그램 뿌려주기
 		return "librarypage/program/programApply";
 	}
 
@@ -98,7 +104,7 @@ public class ProgramController {
 	@PostMapping("/lifrary/programApply")
 	public String programApply(ProgramApply pa) {
 		System.out.println(pa + " <== pa");
-		programService.insertProgram(pa);
+		programService.applyProgram(pa);
 		return "redirect:/lifrary/programSearchList";
 	}
 
@@ -180,10 +186,15 @@ public class ProgramController {
 		return "adminpage/program/programInsert";
 	}
 
+	/**
+	 * 프로그램(행사, 강좌) 등록처리후 프로그램 리스트로 이동
+	 * @param pm
+	 * @return
+	 */
 	@PostMapping("/admin/programInsert")
 	public String programInsert(ProgramManager pm) {
-		System.out.println(pm);
-		return "redirect:/admin/programApplySearchList";
+		programService.insertProgram(pm);
+		return "redirect:/admin/programSearchList";
 	}
 
 	/**

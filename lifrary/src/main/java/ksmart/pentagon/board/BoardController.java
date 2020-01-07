@@ -1,23 +1,18 @@
 package ksmart.pentagon.board;
 
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.fasterxml.jackson.annotation.JacksonInject.Value;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.pentagon.vo.Board;
+import ksmart.pentagon.vo.BoardComment;
 /*
  * @file   BoardController.java
  * @name   boardController
@@ -37,33 +32,29 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping("/admin/noticeSearchList")
-	public String adminNoticeSearchList(Board board,Model model) {
+	public String adminNoticeSearchList(Board board,Model model, HttpSession session) {
 		System.out.println("board 컨트롤러  /admin/noticeSearchList ##Mapping경로 ");
 		//boardList 공지사항 전체 리스트
+		board.setlCode((String)session.getAttribute("LIBNUM"));
 		System.out.println("controller31"+board);
 		List<Board> boardList = boardService.getBoard(board);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("boardList : "+boardList);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		//공지사항 전체 리스트 갯수만큼 리스트 Num에 추가하여 리스트에 번호출력
-		
-		String boardLCode = boardList.get(0).getBoardLCode();
-		String boardMCode = boardList.get(0).getBoardMCode();
-		System.out.println("boardLCode : "+ boardLCode);
-		System.out.println("boardMCode : "+ boardMCode);	
-		model.addAttribute("boardLCode", boardLCode);
-		model.addAttribute("boardMCode", boardMCode);
 		model.addAttribute("boardList", boardList);
 		String returnUrl = null;
 		if("공지사항".equals(board.getBoardLName())) {
+			model.addAttribute("boardLName", board.getBoardLName());
 			System.out.println("공지사항 리스트");
 			returnUrl = "adminpage/board/noticeSearchList";
 			
 		}else if("문의하기".equals(board.getBoardLName())) {
+			model.addAttribute("boardLName", board.getBoardLName());
 			System.out.println("문의하기 리스트");
 			returnUrl =  "adminpage/board/adminInquirySearchList";
 		}else{
-			System.out.println(" 실패 ");
+			System.out.println("실패 ");
 		}
 		return returnUrl;
 	}
@@ -76,10 +67,10 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping("/admin/noticeInsert")
-	public String adminNoticeInsert(@RequestParam(value = "boardLCode")String boardLCode,@RequestParam(value = "boardMCode")String boardMCode,Model model) {
+	public String adminNoticeInsert(@RequestParam(value = "boardLName")String boardLName,@RequestParam(value = "boardMName")String boardMName,Model model) {
 		System.out.println("공지사항 등록 컨트롤러  /admin/noticeInsert ##Mapping경로 ");
-		model.addAttribute("boardLCode", boardLCode);
-		model.addAttribute("boardMCode", boardMCode);
+		model.addAttribute("boardLName", boardLName);
+		model.addAttribute("boardMName", boardMName);
 		return "adminpage/board/noticeInsert";
 	}
 	
@@ -107,11 +98,9 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping("/admin/noticeDetail")
-	public String adminNoticeDetail(@RequestParam(value = "boardCode", required = false ) String boardCode, Model model) {
-		System.out.println("공지사항 상세보기 컨트롤러 /admin/noticeDetail ##Mapping경로");
-		System.out.println("공지사항 상세보기 겟방식 코드 : " + boardCode);
-		Board board = boardService.getBoardDetail(boardCode);
-		System.out.println("controller96상세 Board 결과 : "+ board);
+	public String adminNoticeDetail(Board Dboard,HttpSession session, Model model) {
+		Dboard.setlCode((String)session.getAttribute("LIBNUM"));
+		Board board = boardService.getBoardDetail(Dboard);
 		model.addAttribute("board", board);
 		return "adminpage/board/noticeDetail";
 	}
@@ -123,11 +112,9 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping("/admin/inquiryDetail")
-	public String adminInquiryDetail(@RequestParam(value = "boardCode", required = false ) String boardCode, Model model) {
-		System.out.println("공지사항 상세보기 컨트롤러 /admin/noticeDetail ##Mapping경로");
-		System.out.println("공지사항 상세보기 겟방식 코드 : " + boardCode);
-		Board board = boardService.getBoardDetail(boardCode);
-		System.out.println("controller96상세 Board 결과 : "+ board);
+	public String adminInquiryDetail(Board Dboard,HttpSession session ,Model model) {
+		Dboard.setlCode((String	)session.getAttribute("LIBNUM"));
+		Board board = boardService.getInquiryDetail(Dboard);
 		model.addAttribute("board", board);
 		return "adminpage/board/adminInquiryDetail";
 	}
@@ -139,12 +126,9 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping("/admin/noticeUpdate")
-	public String adminNoticeUpdate(@RequestParam(value = "boardCode", required = false)String boardCode, Model model) {
-		System.out.println("공지사항 수정 컨트롤러 /admin/noticeUpdate ##Mapping경로");
-		System.out.println(boardCode);
-		Board board = boardService.getBoardDetail(boardCode);
-		board.setBoardCode(boardCode);
-		System.out.println("공지사항 수정화면으로 이동 " + board);
+	public String adminNoticeUpdate(Board Dboard,HttpSession session , Model model) {
+		Dboard.setlCode((String)session.getAttribute("LIBNUM"));	
+		Board board = boardService.getBoardDetail(Dboard);
 		model.addAttribute("board", board);
 		return "adminpage/board/noticeUpdate";
 	}
@@ -159,7 +143,7 @@ public class BoardController {
 			System.out.println("공지사항 수정완료후 등록 /admin/noticeUpdate 경로 adminNoticeUpdate메서드 실행 ");
 			System.out.println("controller105board : " + board);
 			boardService.setBoardUpdate(board);
-			boardService.getBoardDetail(board.getBoardCode());
+			boardService.getBoardDetail(board);
 			return "adminpage/board/noticeDetail";
 	}
 	
@@ -180,5 +164,106 @@ public class BoardController {
 		return "redirect:/admin/noticeSearchList?boardLName="+URLboardLName;
 	}
 	
+	/**
+	 * 문의 상세페이지 댓글 불러오는 메서드
+	 * @param Dboard
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/admin/adminInquiryComment")
+	public String adminInquiryComment(Board Dboard,HttpSession session,Model model) {
+		Dboard.setlCode((String)session.getAttribute("LIBNUM"));
+		Board board = boardService.getBoardDetail(Dboard);
+		System.out.println("Controller187 : " + board);
+		model.addAttribute("board",board);
+		return "/adminpage/board/adminInquiryComment";
+	}
 	
+	/**
+	 * 문의 상세페이지에서 댓글누른후 댓글입력후 
+	 * @param boardComment
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/admin/inquiryCommentInsert")
+	public @ResponseBody BoardComment inquiryCommentInsert(BoardComment boardComment, HttpSession session) {
+		boardComment.setlCode((String)session.getAttribute("LIBNUM"));
+		boardComment.setuId((String)session.getAttribute("SAID"));
+		System.out.println("service189"+boardComment);
+		BoardComment comment = boardService.inquiryCommentInsert(boardComment);
+		return comment;
+	}
+	
+	/**
+	 * 문의 상세페이지에서 댓글 수정후 수정값 리턴
+	 * @param boardComment
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/admin/inquiryCommentUpdate")
+	public @ResponseBody BoardComment inquiryCommentUpdate(BoardComment boardComment, HttpSession session) {
+		boardComment.setuId((String)session.getAttribute("SAID"));
+		System.out.println("controller188 : " + boardComment);
+		BoardComment commentUpdate = boardService.inquiryCommentUpdate(boardComment);
+		return commentUpdate;
+	}
+	
+	/**
+	 * 문의 상세페이지에서 댓글 삭제누르면 삭제후 문의상세페이지로 이동
+	 * @param board
+	 * @param boardComment
+	 * @return
+	 */
+	@GetMapping("/admin/inquiryCommentDelete")
+	public String inquiryCommentDelete(Board board,BoardComment boardComment) {
+		System.out.println("controller195 : " + board +boardComment);
+		boardService.inquiryCommentDelete(boardComment);
+		String boardCode = board.getBoardCode();
+		String URLboardCode = URLEncoder.encode(boardCode);
+		return "redirect:/admin/inquiryDetail?boardCode="+URLboardCode;
+	}
+	
+	@GetMapping("/lifrary/noticeList")
+	public String lifraryNoticeList(Model model, Board board) {
+		return "/librarypage/board/noticeList";
+	}
+	
+	@GetMapping("/lifrary/inquirySearchList")
+	public String lifraryInquirySearchList(Model model, Board board, HttpSession session) {
+		board.setlCode((String)session.getAttribute("LIBNUM"));
+		List<Board> boardList = boardService.lifraryInquirySearchList(board);
+		System.out.println("controller236 : " + boardList);
+		model.addAttribute("boardList", boardList);
+		return "/librarypage/board/inquirySearchList";
+	}
+	
+	@GetMapping("/lifrary/inquiryDetail")
+	public String lifraryInquiryDetail(Model model,Board board, HttpSession session) {
+		board.setlCode((String)session.getAttribute("LIBNUM"));
+		Board boardDetail = boardService.lifraryInquiryDetail(board);
+		model.addAttribute("board", boardDetail);
+		return "/librarypage/board/inquiryDetail";
+	}
+	
+	@PostMapping("/inquirySearchListAjax")
+	public @ResponseBody List<Board> inquirySearchListAjax(Board board, HttpSession session){
+		board.setlCode((String)session.getAttribute("LIBNUM"));
+		System.out.println("controller251" + board);
+		List<Board> boardList = boardService.inquirySearchListAjax(board);
+		
+		return boardList;
+	}
+	
+	@GetMapping("/library/inquiryInsert")
+	public String libraryInquiryInsert(Model model , Board board) {
+		System.out.println("controller260 : " + board);
+		model.addAttribute("boardLName", board.getBoardLName());
+		return "/librarypage/board/inquiryInsert";
+	}
+	
+	@PostMapping("/textgogo")
+	public @ResponseBody void textgogo(@RequestParam(value = "text01")String text01) {
+		System.out.println("controller266 : " + text01);
+	}
 }

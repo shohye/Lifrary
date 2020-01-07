@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/library/libraryDefault}">
+
+<th:block layout:fragment="customScript">
+	<script>
+	$(document).ready(function(){
+		
+		/* 연장버튼 클릭시 */
+			$('.extension').click(function(){
+				var frCode = $(this).parents('tr').find('input[name=frCode]').val();
+				//console.log(frCode);
+				
+				var request = $.ajax({ // fr코드 받아서  
+					  url: "/lifrary/extension",
+					  method: "POST",
+					  data: { "frCode" : frCode },
+					  dataType: "text"
+					});
+					 
+					request.done(function( data ) {
+						console.log(data)
+						if(data == '연장완료'){
+							alert('연장이 완료되었습니다.')
+							location.reload(true);
+							
+						}else if(data == '연장불가'){
+							alert('연장이 불가능합니다.');
+						}
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
+			})
+			/* 퇴실버튼 클릭시 */
+			$('.leaving').click(function(){
+				var frCode = $(this).parents('tr').find('input[name=frCode]').val();
+				
+				var request = $.ajax({ // fr코드 받아서  
+					  url: "/lifrary/leaving",
+					  method: "POST",
+					  data: { "frCode" : frCode },
+					  dataType: "text"
+					});
+					 
+					request.done(function( data ) {
+						alert(data);
+						location.reload(true);
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
+			})
+			
+			$('.impossible').click(function(){
+				var result = $(this).text();
+				alert(result+ '이 불가능합니다.');
+			})
+		
+	})
+	
+	
+	</script>
+</th:block>
+
+
+<th:block layout:fragment="customContents">
+
+	<!-- Start: Page Banner -->
+	<section
+		th:replace="fragments/library/facilityReservationBanner :: facilityReservationBannerFragment"></section>
+	<!-- End: Page Banner -->
+
+	<!-- Start: Program List Section -->
+	<section
+		th:replace="fragments/library/reservationListSection :: ReservationListSectionFragment"></section>
+	<!-- End: Program List Section -->
+
+</th:block>
+
+</html>

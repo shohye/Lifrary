@@ -9,16 +9,16 @@
 	  <th:block layout:fragment="adminHeadAdd">
 	  
 	  <!-- addLibs -->
-	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
-	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/select.dataTables.min.css}">
+	      <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+	      <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/select.dataTables.min.css}">
 	  <!-- addPage -->
 	  
-	    <script th:src="@{/admin/vendor/js/jquery-3.3.1.min.js}"></script>
-	    <script th:src="@{/admin/vendor/js/jquery.dataTables.js}"></script>
-	    <script th:src="@{/admin/vendor/js/dataTables.responsive.min.js}"></script>
-	    <script th:src="@{/admin/vendor/js/dataTables.buttons.min.js}"></script>
-		<script th:src="@{/admin/vendor/js/buttons.html5.min.js}"></script>
-		<script th:src="@{/admin/js/tables_datatables_purchase.js}"></script>
+	    <script th:src="@{/adminStatic/vendor/js/jquery-3.3.1.min.js}"></script>
+	    <script th:src="@{/adminStatic/vendor/js/jquery.dataTables.js}"></script>
+	    <script th:src="@{/adminStatic/vendor/js/dataTables.responsive.min.js}"></script>
+	    <script th:src="@{/adminStatic/vendor/js/dataTables.buttons.min.js}"></script>
+		<script th:src="@{/adminStatic/vendor/js/buttons.html5.min.js}"></script>
+		<script th:src="@{/adminStatic/js/tables_datatables_facility.js}"></script>
 
 	  </th:block>
 	  
@@ -76,6 +76,7 @@
                       <th>이용성별</th>
                       <th>사용시간</th>
                       <th>등록일</th> 
+                      <th>등록일</th> 
                     </tr>
                   </thead>
                   
@@ -88,26 +89,27 @@
 				      <td class="align-middle" th:text="${fac.fGender}"></td>
 				      <td class="align-middle" th:text="${fac.fTerm}"></td>
 				      <td class="align-middle" th:text="${fac.fDate}"></td>		 		
+				      <td class="align-middle" th:text="${fac.fDate}"></td>		 		
 				    </tr>
 				  </tbody> 
                 </table>
-                
-                <div style="padding-left: 20px; padding-top: 20px; ">
-			    <label>
-			            전체     <input type="radio" value="전체" name = "fKinds" class="kRadio" checked="checked">
-			    </label>
-                <label>
-			            열람실 	<input type="radio" value="열람실" name = "fKinds" class="kRadio">
-			    </label>
-			    <label>
-			            스터디룸    <input type="radio" value="스터디룸" name = "fKinds" class="kRadio">
-			    </label>
-			    <label>
-			            강연실    <input type="radio" value="강연실" name = "fKinds" class="kRadio">
-			    </label>
-			    <label>
-			            사물함     <input type="radio" value="사물함" name = "fKinds" class="kRadio">
-			    </label>
+                <hr>
+                <div style="padding-left: 20px; padding-top: 20px;">
+				    <label>
+				            전체     <input type="radio" value="전체" name = "fKinds" class="kRadio" checked="checked">
+				    </label>
+	                <label style="padding-left: 20px;">
+				          열람실 	<input type="radio" value="열람실" name = "fKinds" class="kRadio">
+				    </label>
+				    <label style="padding-left: 20px;">
+				           스터디룸    <input type="radio" value="스터디룸" name = "fKinds" class="kRadio">
+				    </label>
+				    <label style="padding-left: 20px;">
+				           강연실    <input type="radio" value="강연실" name = "fKinds" class="kRadio">
+				    </label>
+				    <label style="padding-left: 20px;">
+				           사물함     <input type="radio" value="사물함" name = "fKinds" class="kRadio">
+				    </label>
                 </div>
                 
               </div>
@@ -128,8 +130,8 @@
           <th:block layout:fragment="pageScript">
 
 		  <!-- addLibs -->
-		    <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script> 
-		    <script th:src="@{/admin/vendor/libs/datatables/dataTables.select.min.js}"></script>
+		    <script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script> 
+		    <script th:src="@{/adminStatic/vendor/libs/datatables/dataTables.select.min.js}"></script>
 		
 		  <!-- addDemo -->
 		    

@@ -15,56 +15,188 @@
                                     <div class="news-list-box">
                                         <div class="single-news-list">  
                                          
+                                   <th:block th:with="f = ${facility}">
+								<style>
+									.text-center thead th, tbody td{
+										text-align: center;
+									}
+								</style>
+ 
                                          <!-- ==== 열람실 ==== -->                                    
 										<th:block th:if=" ${room} == 'reading'">
 											<span style="font-size: 40px;">열람실 신청 안내</span>											
 	                                        <section class = "section-padding">
-											<div style="background-color: #CCCC99; font-size: 15px; font-style: italic">
-												위치 : 3층, 4층 <br>
-												규모 : 806석 (노트북실 포함) <br>
-												이용시간 : 07:00 - 23:00 (단, 금요일은 09:00 - 18:00) <br>
-												이용대상 : 중학생 이상의 청소년과 일반인 <br>
-												일반열람실Ⅰ(3층, 152석, 장애인석 1석 포함), 일반열람실Ⅱ(4층, 254석)은 일반인을 대상으로 운영하고 있습니다. <br>
-												여자열람실(3층, 108석), 남자열람실(4층, 108석)은 청소년과 일반인 모두를 대상으로 운영하고 있습니다. <br>
-												청소년ㆍ일반열람실(4층, 92석)은 청소년과 일반인 남·여 모두를 대상으로 운영하고 있습니다. <br>
-												노트북실(3층, 92석)은 노트북과 태블릿PC 이용자를 대상으로 운영하며, 청소년과 일반인 남·여 모두 이용 가능합니다.
-											</div>	                                        
+											<div style="background-color: #CCCC99; font-size: 15px;  padding: 20px;">
+												<!-- 시설 사용 안내 -->
+												<h3><strong>사용 기간</strong></h3><br>
+												- 1일 1회 (3시간)동안 사용 가능합니다.<br>
+												&emsp;※ 사용자가 연장을 원하는 경우 
+												      마이페이지에서 연장 버튼을 누릅니다. <strong style="color: red;">(1시간 연장)</strong><br><br>
+												      
+												<h3><strong>사용 방법</strong></h3><br>
+												- 열람실 위치를 선택 후, 사용하고자 하는 자리를 눌러주세요.<br>
+												- 연락처 입력 후 신청 해주세요.<br><br>
+												
+												<h3><strong>주의 사항</strong></h3><br>
+												- 열람실 이용 중 물품 분실에 대한 모든 책임은 사용자에게 있다.<br>
+												- 열람실 이용을 조기 종료하는 경우  마이페이지 퇴실 버튼을 눌러 준다.<br>
+												- 열람실 자리의 무단 사용·양도 또는 이용 권리를 매매하거나 중복 신청한 것이 적발될 경우,<br>
+												&ensp;열람실 신청 및 이용을 <strong style="color: red;">영구 제한</strong>한다.<br>
+												
+											</div>
+											<div style="margin-top: 30px;">
+												<table border="1" class= "text-center">
+													<thead>
+														<tr>
+															<th>시설명</th>
+															<th>시설위치</th>
+															<th>최대 사용인원</th>
+															<th>사용 성별</th>
+															<th>사용시간</th>
+														</tr>
+													</thead>
+													<tbody>
+														<th:block th:each="fList : ${f}">
+															<tr class="fTable">
+																<input type="hidden" name= "fCode" th:value="${fList.fCode}">
+																<input type="hidden" name = "fKinds" th:value="${fList.fKinds}">
+																<input type="hidden" name = "fSeatOrImg" th:value="${fList.fSeatOrImg}">
+																<input type="hidden" name = "fRow" th:value="${fList.fRow}">
+																<input type="hidden" name = "fCol" th:value="${fList.fCol}">
+																<input type="hidden" name = "fName" th:value="${fList.fName}">
+																<td th:text="${fList.fName}"></td>
+																<td th:text="${fList.fLocation}"></td>
+																<td th:text="${fList.fAccommodate}"></td>
+																<td th:text="${fList.fGender}"></td>
+																<td th:text="${fList.fTerm}"></td>
+															</tr>
+														</th:block>
+													</tbody>
+												
+												</table>
+											</div>                                      
+	                                       	<div>
+	                                        	<div id = "tdTable" style="padding-left: 50px;padding-right: 50px;">
+	                                        	
+	                                        	</div>
+	                                        </div>
 	                                        </section>
 	                                        <div class="clearfix"></div>
 	                                     </th:block>   
 	                                    
-	                                    <!-- ====  강연실 ====  -->
+	                                    <!-- ====  스터디룸  ====  -->
 	                                    <th:block th:if=" ${room} == 'study'">
 											<span style="font-size: 40px;">스터디룸 신청 안내</span>											
 	                                        <section class = "section-padding">
-											<div style="background-color: #CCCC99; font-size: 15px; font-style: italic">
-												위치 : 3층, 4층 <br>
-												규모 : 806석 (노트북실 포함) <br>
-												이용시간 : 07:00 - 23:00 (단, 금요일은 09:00 - 18:00) <br>
-												이용대상 : 중학생 이상의 청소년과 일반인 <br>
-												일반열람실Ⅰ(3층, 152석, 장애인석 1석 포함), 일반열람실Ⅱ(4층, 254석)은 일반인을 대상으로 운영하고 있습니다. <br>
-												여자열람실(3층, 108석), 남자열람실(4층, 108석)은 청소년과 일반인 모두를 대상으로 운영하고 있습니다. <br>
-												청소년ㆍ일반열람실(4층, 92석)은 청소년과 일반인 남·여 모두를 대상으로 운영하고 있습니다. <br>
-												노트북실(3층, 92석)은 노트북과 태블릿PC 이용자를 대상으로 운영하며, 청소년과 일반인 남·여 모두 이용 가능합니다.
-											</div>	                                        
+											<div style="background-color: #CCCC99; font-size: 15px;  padding: 20px;">
+												<!-- 시설 사용 안내 -->
+												<h3><strong>사용 기간</strong></h3><br>
+												- 1일 1회 (5시간)동안 사용 가능합니다.<br><br>
+												
+												<h3><strong>사용 방법</strong></h3><br>
+												- 연락처 입력 후 신청 해주세요.<br><br>
+												
+												<h3><strong>주의 사항</strong></h3><br>
+												- 스터디룸 이용 중 물품 분실에 대한 모든 책임은 사용자에게 있다.<br>
+												&emsp;<strong style="color: red;">※ 자리 이탈시 귀중품 분실의 책임은 본인에게 있습니다.</strong><br>
+												- 스터디룸 이용 중 물품 분실에 대한 모든 책임은 사용자에게 있다.<br>
+												- 스터디룸 이용을 조기 종료하는 경우  마이페이지 퇴실 버튼을 눌러 준다.<br>
+												- 스터디룸 자리의 무단 사용·양도 또는 이용 권리를 매매하거나 중복 신청한 것이 적발될 경우,<br>
+												&ensp;스터디룸 신청 및 이용을 <strong style="color: red;">영구 제한</strong>한다.<br>
+												
+											</div>
+											<div style="margin-top: 30px;">
+												<table border="1" class= "text-center">
+												
+													<thead>
+														<tr>
+															<th>시설명</th>
+															<th>시설위치</th>
+															<th>최대 사용인원</th>
+															<th>사용 성별</th>
+															<th>사용시간</th>
+														</tr>
+													</thead>
+													<tbody>
+														<th:block th:each="fList : ${f}">
+															<tr class="fTable">
+																<input type="hidden" name= "fCode" th:value="${fList.fCode}">
+																<input type="hidden" name = "fKinds" th:value="${fList.fKinds}">
+																<input type="hidden" name = "fSeatOrImg" th:value="${fList.fSeatOrImg}">
+																<input type="hidden" name = "fName" th:value="${fList.fName}">
+																<td th:text="${fList.fName}"></td>
+																<td th:text="${fList.fLocation}"></td>
+																<td th:text="${fList.fAccommodate}"></td>
+																<td th:text="${fList.fGender}"></td>
+																<td th:text="${fList.fTerm}"></td>
+															</tr>
+														</th:block>
+													</tbody>
+												</table>
+											</div>
+											<div>
+	                                        	<div id = "tdTable">
+	                                        	</div>
+	                                        </div> 	                                        
 	                                        </section>
+	                                        
 	                                        <div class="clearfix"></div>
 	                                     </th:block>
 	                                     
-	                                     <!-- ==== 스터디룸 ==== -->
+	                                     <!-- ==== 강연실 ==== -->
 	                                    <th:block th:if=" ${room} == 'lecture'">
 											<span style="font-size: 40px;">강연실 신청 안내</span>											
 	                                        <section class = "section-padding">
-											<div style="background-color: #CCCC99; font-size: 15px; font-style: italic">
-												위치 : 3층, 4층 <br>
-												규모 : 806석 (노트북실 포함) <br>
-												이용시간 : 07:00 - 23:00 (단, 금요일은 09:00 - 18:00) <br>
-												이용대상 : 중학생 이상의 청소년과 일반인 <br>
-												일반열람실Ⅰ(3층, 152석, 장애인석 1석 포함), 일반열람실Ⅱ(4층, 254석)은 일반인을 대상으로 운영하고 있습니다. <br>
-												여자열람실(3층, 108석), 남자열람실(4층, 108석)은 청소년과 일반인 모두를 대상으로 운영하고 있습니다. <br>
-												청소년ㆍ일반열람실(4층, 92석)은 청소년과 일반인 남·여 모두를 대상으로 운영하고 있습니다. <br>
-												노트북실(3층, 92석)은 노트북과 태블릿PC 이용자를 대상으로 운영하며, 청소년과 일반인 남·여 모두 이용 가능합니다.
-											</div>	                                        
+											<div style="background-color: #CCCC99; font-size: 15px;  padding: 20px;">
+												<!-- 시설 사용 안내 -->
+												<h3><strong>사용 기간</strong></h3><br>
+												- 1일 1회 (하루)동안 사용 가능합니다.<br><br>
+												
+												<h3><strong>사용 방법</strong></h3><br>
+												- 연락처 입력후 신청 해주세요.<br><br>
+												
+												<h3><strong>주의 사항</strong></h3><br>
+												- 강연실 이용 중 물품 분실에 대한 모든 책임은 사용자에게 있다.<br>
+												&emsp;<strong style="color: red;">※ 자리 이탈시 귀중품 분실의 책임은 본인에게 있습니다.</strong><br>
+												- 강연실 이용 중 물품 분실에 대한 모든 책임은 사용자에게 있다.<br>
+												- 강연실 이용을 조기 종료하는 경우  마이페이지 퇴실 버튼을 눌러 준다.<br>
+												- 강연실 자리의 무단 사용·양도 또는 이용 권리를 매매하거나 중복 신청한 것이 적발될 경우,<br>
+												&ensp;강연실 신청 및 이용을 <strong style="color: red;">영구 제한</strong>한다.<br>
+												
+											</div>
+											<div style="margin-top: 30px;">
+												<table border="1" class= "text-center">
+												
+													<thead>
+														<tr>
+															<th>시설명</th>
+															<th>시설위치</th>
+															<th>최대 사용인원</th>
+															<th>사용 성별</th>
+															<th>사용시간</th>
+														</tr>
+													</thead>
+													<tbody>
+														<th:block th:each="fList : ${f}">
+															<tr class="fTable">
+																<input type="hidden" name= "fCode" th:value="${fList.fCode}">
+																<input type="hidden" name = "fKinds" th:value="${fList.fKinds}">
+																<input type="hidden" name = "fSeatOrImg" th:value="${fList.fSeatOrImg}">
+																<input type="hidden" name = "fName" th:value="${fList.fName}">
+																<td th:text="${fList.fName}"></td>
+																<td th:text="${fList.fLocation}"></td>
+																<td th:text="${fList.fAccommodate}"></td>
+																<td th:text="${fList.fGender}"></td>
+																<td th:text="${fList.fTerm}"></td>
+															</tr>
+														</th:block>
+													</tbody>
+												</table>
+											</div>	
+											<div>
+	                                        	<div id = "tdTable">
+	                                        	</div>
+	                                        </div>                                         
 	                                        </section>
 	                                        <div class="clearfix"></div>
 	                                     </th:block>
@@ -73,20 +205,66 @@
 	                                    <th:block th:if=" ${room} == 'locker'">
 											<span style="font-size: 40px;">사물함 신청 안내</span>											
 	                                        <section class = "section-padding">
-											<div style="background-color: #CCCC99; font-size: 15px; font-style: bold">
-												위치 : 3층, 4층 <br>
-												규모 : 806석 (노트북실 포함) <br>
-												이용시간 : 07:00 - 23:00 (단, 금요일은 09:00 - 18:00) <br>
-												이용대상 : 중학생 이상의 청소년과 일반인 <br>
-												일반열람실Ⅰ(3층, 152석, 장애인석 1석 포함), 일반열람실Ⅱ(4층, 254석)은 일반인을 대상으로 운영하고 있습니다. <br>
-												여자열람실(3층, 108석), 남자열람실(4층, 108석)은 청소년과 일반인 모두를 대상으로 운영하고 있습니다. <br>
-												청소년ㆍ일반열람실(4층, 92석)은 청소년과 일반인 남·여 모두를 대상으로 운영하고 있습니다. <br>
-												노트북실(3층, 92석)은 노트북과 태블릿PC 이용자를 대상으로 운영하며, 청소년과 일반인 남·여 모두 이용 가능합니다.
-											</div>	                                        
+											<div style="background-color: #CCCC99; font-size: 15px; padding: 20px;">
+											
+											<!-- 시설 사용 안내 -->
+												<h3><strong>사용 기간</strong></h3><br>
+												- 연 최대 1회 (한달)동안 사용 가능합니다.<br><br>
+												
+												<h3><strong>사용 방법</strong></h3><br>
+												- 사물함 위치를 선택 후, 사용하고자 하는 자리를 눌러주세요.<br>
+												- 연락처 입력후 신청 해주세요.<br><br>
+												
+												<h3><strong>주의 사항</strong></h3><br>
+												- 사물함 이용 중 사물함 내 물품 분실에 대한 모든 책임은 사용자에게 있다.<br>
+												<strong style="color: red;">※ 사물함에 귀중품은 보관하지 마세요.</strong><br>
+												- 기한 내 미 반납 된 사물함은 다른 배정자를 위해 임의로 개봉하고 물품을 1개월간 보관 후 임의 처리한다.<br>
+												- 사물함을 미 반납한 이용자는 다음 6개월 간 사물함 신청 및 이용이 불가하다.<br>
+												- 사물함의 무단 사용·양도 또는 이용 권리를 매매하거나 중복 신청한 것이 적발될 경우,<br>
+												- 사물함 신청 및 이용을 <strong style="color: red;">영구 제한</strong>한다.<br>
+												- 열쇠를 분실 할 경우 현물 배상한다.<br>
+												
+												
+											</div>
+											<div style="margin-top: 30px;">
+												<table border="1" class= "text-center">
+												
+													<thead>
+														<tr>
+															<th>시설명</th>
+															<th>시설위치</th>
+															<th>최대 사용인원</th>
+															<th>사용 성별</th>
+															<th>사용시간</th>
+														</tr>
+													</thead>
+													<tbody>
+														<th:block th:each="fList : ${f}">
+															<tr class="fTable">
+																<input type="hidden" name= "fCode" th:value="${fList.fCode}">
+																<input type="hidden" name = "fKinds" th:value="${fList.fKinds}">
+																<input type="hidden" name = "fSeatOrImg" th:value="${fList.fSeatOrImg}">
+																<input type="hidden" name = "fRow" th:value="${fList.fRow}">
+																<input type="hidden" name = "fCol" th:value="${fList.fCol}">
+																<input type="hidden" name = "fName" th:value="${fList.fName}">
+																<td th:text="${fList.fName}"></td>
+																<td th:text="${fList.fLocation}"></td>
+																<td th:text="${fList.fAccommodate}"></td>
+																<td th:text="${fList.fGender}"></td>
+																<td th:text="${fList.fTerm}"></td>
+															</tr>
+														</th:block>
+													</tbody>
+												</table>
+											</div>
+											<div>
+	                                        	<div id = "tdTable">
+	                                        	</div>
+	                                        </div>                                       
 	                                        </section>
 	                                        <div class="clearfix"></div>
 	                                     </th:block>
-	                                        
+	                                  </th:block>      
 	                                    </div>
                               	 </div>                                                                                                          
                           </div>

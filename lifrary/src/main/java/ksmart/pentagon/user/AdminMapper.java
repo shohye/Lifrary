@@ -50,7 +50,7 @@ public interface AdminMapper {
 	public List<UserLevel> adUserLevelList(String libNum);
 	
 	//관리자가 회원등급수정-getmapping
-	public UserLevel getAdUserLevelUpdate(String ulLevel);
+	public UserLevel getAdUserLevelUpdate(String ulLevel, String getSAID);
 	
 	//관리자가 회원등급수정 postmapping
 	public int adUserLevelUpdate(UserLevel userLevel);  
@@ -72,7 +72,7 @@ public interface AdminMapper {
 	public List<UserAuthoritySet> adUserAuthorityList(String libNum);
 	
 	//관리자가 회원 권한 수정하기 getmapping
-	public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode);
+	public UserAuthoritySet getAdUserAuthorityUpdate(String uasCode, String getSAID);
 	 
 	//관리자가 회원 권한 수정하기 postmapping
 	public int adUserAuthorityUpdate(UserAuthoritySet userAuthoritySet);
@@ -95,8 +95,9 @@ public interface AdminMapper {
 	public List<User> librarianLevelList1(String libNum);
 	public List<User> librarianLevelList2(String libNum);
 	
+	
 	//관리자가 회원정보&권한 수정 - 한개정보만 가져오기
-	public List<User> getLibrarianLevelUpdate(String uId);
+	public User getLibrarianLevelUpdate(String uId, String libNum);
 	//관리자가 회원정보&권한 수정
 	public int librarianLevelUpdate1(User user);
 	public int librarianLevelUpdate2(LibrarianLevel librarianLevel);
@@ -104,6 +105,25 @@ public interface AdminMapper {
 	//관리자가 사서 회원 상세보기.
 	public User librarianDetail(String uId);
 	
+	
+	//사서 - 사서 내 정보 수정하기.
+	public User getLibrarianMyUpdate(String getSAID, String libNum);
+	//사서 - 사서 내정보 수정후 상세페이지로 이동
+	public int librarianMyUpdate(User user);
+	
 	//사서 - 사서 내 정보 상세보기.
-	public User librarianMyDetail(String uId);
+	public User librarianMyDetail(String getSAID, String libNum);
+	
+	
+	/***************************************************************/
+	
+	//삭제 Ajax
+	
+	//userSearchList - 관리자가 회원 삭제
+	public int deleteUser(String said, String write, String uId); 
+	
+	//adUserLevelList - 관리자가 회원등급 삭제
+	public int deleteLevel(String said, String write, String ulLevel); 
+	
+	
 }

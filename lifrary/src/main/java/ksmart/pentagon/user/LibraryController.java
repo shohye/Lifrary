@@ -139,9 +139,68 @@ public class LibraryController {
 		libraryService.userInsert3(userAuthorityHistory);
 		libraryService.userInsert4(studyCate);
 		
-
 		return "redirect:/";
 	}
 	
+	//도서관페이지-마이페이지 내정보 상세보기
+	@GetMapping("/lifrary/myUserDetail")
+	public String myUserDetail(Model model, HttpSession session) {
+		System.out.println("myUserDetail @GetMapping 내정보 상세보기 ");
+		
+		String getSID = (String) session.getAttribute("SID");//세션에서 회원ID
+		String getSAID = (String) session.getAttribute("SAID");
+		String libNum = (String) session.getAttribute("LIBNUM");	//세션에서 도서관코드
+		System.out.println("getSID 세션에서가져온 아이디  >>>" + getSID );
+		System.out.println("getSID 세션에서가져온 아이디  >>>" + getSAID ); 
+		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+		
+		model.addAttribute("myUserDetail", libraryService.myUserDetail(getSID ,libNum));
+		System.out.println("myUserDetail 값 넘어오는지 확인바람"+ libraryService.myUserDetail(getSID ,libNum));
+		return "/librarypage/user/myUserDetail";
+	}
+	
+	//도서관페이지 - 마이페이지 내정보 수정하기 
+	@GetMapping("/lifrary/myUserUpdate")
+	public String getMyUserUpdate(Model model, HttpSession session) {
+	   System.out.println("getLibrarianMyUpdate 내정보 수정 하는 폼 ");
+	   
+	   String getSID = (String) session.getAttribute("SID");
+	   String getSAID = (String) session.getAttribute("SAID");
+	   String libNum = (String) session.getAttribute("LIBNUM");
+	   System.out.println("getSID 세션에서가져온 아이디  >>>" + getSID );
+	   System.out.println("getSAID 세션에서가져온 아이디  >>>" + getSAID );
+	   System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+	   
+	   model.addAttribute("myUserUpdate", libraryService.getMyUserUpdate(getSID ,libNum));
+	   System.out.println("myUserUpdate 값 넘어오는지 확인바람  >>>> ");
+		
+	   return "/librarypage/user/myUserUpdate";
+		
+	}
+
+	//사서 자신 정보 수정 //제출하다
+	@PostMapping("/lifrary/myUserUpdate")
+	public String myUserUpdate(User user) {
+		System.out.println("myUserUpdate  내정보 수정 후 상세보기로  ");
+		
+		libraryService.myUserUpdate(user);
+		return "redirect:/lifrary/myUserDetail";
+	}
+	
+	//회원 탈퇴 하는 폼 
+	@GetMapping("/lifrary/myUserDelete")
+	public String myUserDelete(Model model, HttpSession session){
+		System.out.println("myUserDelete 탈퇴 폼 ");
+		
+		String SID = (String) session.getAttribute("SID");
+		String SAID = (String) session.getAttribute("SAID");
+		String libNum = (String) session.getAttribute("LIBNUM");
+		System.out.println("SID 세션에서가져온 아이디  >>>" + SID );
+		System.out.println("SAID 세션에서가져온 관리자/사서 아이디  >>>" + SAID );
+		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
+		
+
+		return "/librarypage/user/myUserDelete";
+	}
 	
 }

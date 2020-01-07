@@ -3,6 +3,9 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
+	  <th:block layout:fragment="adminTitle">
+		 <title>수서-주문관리</title>
+	  </th:block>
 
 	 <th:block layout:fragment="teamHeadScript">
      <script type="text/javascript" th:inline="javascript">  
@@ -10,8 +13,10 @@
     	 
        // 도서 정보 가져오기   
   	   $('#bookInfoBtn').click(function(){  			
-				var biIsbn = $('#biIsbn').val();
-				console.log($.trim(biIsbn));
+				var abiIsbn = $('#biIsbn').val();
+				console.log($.trim(abiIsbn));
+				
+				var biIsbn = $.trim(abiIsbn);
 				
 				var request = $.ajax({
 					url:"/getBookInfo",
@@ -99,7 +104,8 @@
     	    	
     	</script>
   	    </th:block>
-	 
+  	    
+  	  
 	          <!-- Content -->
 	      <th:block layout:fragment="adminContents">
           <div class="container-fluid flex-grow-1 container-p-y">
@@ -149,7 +155,7 @@
 	                  </div>
 	                  <div class="form-group col-md-4">
 	                    <label class="form-label">주문권수</label>
-	                    <select class="form-control" id="boBookNum">
+	                    <select class="form-control" id="boBookNum" name="boBookNum">
 	                    	<option value="0" selected>::주문권수를 선택해주세요::</option>
 	                   		<option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
 	                    </select>

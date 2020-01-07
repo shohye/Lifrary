@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.bookstock.CallNumberMapper">
+	  <resultMap type="ksmart.pentagon.vo.CallNumber" id="callNumberResultMap">
+			<!-- db -->
+			<result property="uniUnicode"    column="uni_unicode"/>
+			<result property="uniHangul"     column="uni_hangul"/>
+			<result property="uniNum"        column="uni_num"/>		
+	   </resultMap>
+   <!--  BookInformation   -->
+	  	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfoResultMap">
+		    <result column="bi_isbn"      property="biIsbn"/>
+		    <result column="bi_name"      property="biName"/>
+		    <result column="bi_year"      property="biYear"/>
+		    <result column="bi_author"    property="biAuthor"/>
+		    <result column="bi_publisher" property="biPublisher"/>
+		    <result column="bi_kdc"       property="biKdc"/>
+		    <result column="bi_img"       property="biImg"/>
+		    <result column="bi_detail"    property="biDtail"/>
+		</resultMap>
+	   	  
+	  <select id="makeBsmarkNum" parameterType="String" resultType="String">
+			SELECT
+				uni_num
+			FROM
+				unicode
+			WHERE
+				uni_hangul=#{uniHangul}
+			
+		</select>
+		<select id="checkAuthorMark" parameterType="String" resultType="hashMap">
+			SELECT
+				bs_author_mark
+			FROM
+				book_stock
+			WHERE
+				bs_author_mark=#{resultStr}
+			and
+			    l_code=#{lCode}
+			
+		</select>
+		<select id="checkAuthor" parameterType="String" resultType="hashMap">
+			SELECT
+				bi_author
+			FROM
+				book_information
+			WHERE
+				bi_author=#{biAuthor}
+			
+		</select>
+		<select id="checkWriterMark" parameterType="String" resultType="hashMap">
+			SELECT
+				bs_writer_mark
+			FROM
+				book_stock
+			WHERE
+				bs_writer_mark=#{writer}
+			and
+			    l_code=#{lCode}			
+		</select>
+ 	</mapper>

@@ -2,43 +2,362 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
+	<th:block layout:fragment="libraryTitle">
+		<title>나의 북캘린더</title>
+ 	</th:block> 
+ 	  	
 	<th:block layout:fragment="customScript">
-	<link th:href="@{/library/fullcalendar/packages/core/main.css}" rel="stylesheet" />
-   	<link th:href="@{/library/fullcalendar/packages/daygrid/main.css}" rel="stylesheet" />
-
-   	<script th:src="@{/library/fullcalendar/packages/core/main.js}"></script>
-   	<script th:src="@{/library/fullcalendar/packages/daygrid/main.js}"></script>
-   	<script th:src="@{/library/fullcalendar/packages/core/locales/ko.js}"></script>
-   	<script type="text/javascript">
+	<link th:href="@{/libraryStatic/fullcalendar/packages/core/main.css}" rel="stylesheet" />
+   	<link th:href="@{/libraryStatic/fullcalendar/packages/daygrid/main.css}" rel="stylesheet" />
+   	<script th:src="@{/libraryStatic/fullcalendar/packages/core/main.js}"></script>
+   	<script th:src="@{/libraryStatic/fullcalendar/packages/moment.js}"></script>
+   	<script th:src="@{/libraryStatic/fullcalendar/packages/daygrid/main.js}"></script>
+   	<script th:src="@{/libraryStatic/fullcalendar/packages/interaction/main.js}"></script>
+   	<script th:src="@{/libraryStatic/fullcalendar/packages/core/locales/ko.js}"></script>
+   	<script type="text/javascript" th:inline="javascript">
+   	$(document).ready(function() {
+   		
+   	  
+  	  /*<![CDATA[*/
+  		var resultInsert = [[ ${resultInsert} ]];//일정 등록 결과
+  		var resultUpdate = [[ ${resultUpdate} ]];//일정 수정 결과
+  		var resultDelete = [[ ${resultDelete} ]];//일정 수정 결과
+  		/*]]*/
+  		
+  		if(resultInsert == 1){
+  			alert('정상적으로 일정이 등록되었습니다');
+  		}
+		if(resultUpdate == 1){
+			alert('정상적으로 일정이 수정되었습니다');
+  		}
+		if(resultDelete == 1){
+			alert('정상적으로 일정이 삭제되었습니다');
+  		}
 		
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('bookCalendar');
+		var today =moment().format('YYYY-MM-DD');//오늘 날짜
+		var month =parseInt(moment().format('M'));//이번 달
+		var year =moment().format('YYYY');//이번 년도
+		var gEndDate = null; //분기별 마지막일
+		
+ 		$('.goal').eq(0).find('label').text(year+'년 목표량');
+		$('.goal').eq(2).find('label').text(month+'월 목표량'); 
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'dayGrid'],
-          customButtons: {
-        	    book: {
-        	      text: '북 캘린더',
-        	      click: function() {
-        	        alert('북캘린더 화면에 뿌리기');
-        	      }
-        	    },
-        	    month:{
-        	      text: '월별',
-          	      click: function() {
-          	        alert('월별 화면에 뿌리기');
-          	      }	
-        	    }
-        	  },
-          header: {
-              left: 'book month',
-              center: 'title'
-            }
-          });
+		if(month < 4){//1분기
+			gEndDate = year+'-03-31';
+			$('.goal').eq(1).find('label').text('1분기 목표량');
+		}else if(3 < month && month < 7){//2분기
+			gEndDate = year+'-06-30';
+			$('.goal').eq(1).find('label').text('2분기 목표량');
+		}else if(6 < month && month < 10){//3분기
+			gEndDate = year+'-09-30';
+			$('.goal').eq(1).find('label').text('3분기 목표량');
+		}else if(9 < month){//4분기
+			gEndDate = year+'-12-31';
+			$('.goal').eq(1).find('label').text('4분기 목표량');
+		}
+		//목표량 출력
+		var request = $.ajax({
+	  	   		  url: "/lifrary/getGoalList",
+	  	   		  data: { gEndDate : gEndDate },
+	  	   		  method: "POST",
+	  	   		  dataType: "json"
+	  	   		});
+	  	   		 
+	  	   		request.done(function(data) {
+	  	   			for(var i = 0; i<data.length; i++){
+	  	   				goal = data[i];
+	  	   				if(goal.gDivision == 'month'){
+	  	   					$('.goal').eq(2).find('strong').text('('+goal.lendCount+'/'+goal.gNum+')');
+	  	   					$('.progress-bar').eq(2).attr('aria-valuenow',goal.percent).css('width',goal.percent+'%').text(goal.percent+'%');
+	  	   				}else if(goal.gDivision == 'quarterly'){
+	  	   				    $('.goal').eq(1).find('strong').text('('+goal.lendCount+'/'+goal.gNum+')');
+	  	   					$('.progress-bar').eq(1).attr('aria-valuenow',goal.percent).css('width',goal.percent+'%').text(goal.percent+'%');
+	  	   				}else if(goal.gDivision == 'year'){
+	  	   					$('.goal').eq(0).find('strong').text('('+goal.lendCount+'/'+goal.gNum+')');
+	  	   					$('.progress-bar').eq(0).attr('aria-valuenow',goal.percent).css('width',goal.percent+'%').text(goal.percent+'%');
+	  	   				}
+	  	   			}
+	  	   			 	  	   				  	   			
+	  			});//request.done
+	  	   		request.fail(function( jqXHR, textStatus ) {
+	  	   		  alert('목표량을 불러오는데 실패하였습니다');
+	  	   		});//request.fail
+	 	   	//목표량 등록
+				 $('#goalInsert li').click(function(){
+		 			
+					var endDay = null;//종료일 
+					//선택한 옵션 값
+		 			var optValue = $(this).attr('rel');
+		 			 console.log(optValue);
+		 			 
+		 			if(optValue == 'month'){//월별인 경우 종료일에 이번달 마지막일 셋팅 
+		 				endDay = moment().endOf('month').format('YYYY-MM-DD');
+		 			}else if(optValue == 'quarterly'){//분기별인 경우 분기에 따라 종료일 셋팅
+		 				endDay = gEndDate;
+		 			}else if(optValue == 'year'){//년도별인 경우 올 해 마지막일 셋팅
+		 				endDay = year+'-12-31';
+		 			}
+		 			 
+					$('[name="gStartDate"]').val(today);
+					$('[name="gEndDate"]').val(endDay);
+	
+	 	 		 }); 
+	  	 //목표량 등록  		
+		 $('#goalBtn').click(function(){
+			 var year = $('.progress-bar').eq(0).text();
+			 var quarterly = $('.progress-bar').eq(1).text();
+			 var month =  $('.progress-bar').eq(2).text();
+			 
+			 var gDivision = $('[name="gDivision"]').val();
+			 var gNum = $('[name="gNum"]').val();
+			 var gStartDate = $('[name="gStartDate"]').val();
+			 var gEndDate = $('[name="gEndDate"]').val();
+			if(gDivision == 'none'){
+				alert('목표기간을 선택해주세요');
+			}else if(gNum == 0){
+				alert('목표권수를 입력해주세요');
+			}else if(year != '' && gDivision == 'year'){
+				alert('이미 년도별 목표량은 등록되었습니다');
+			}else if(quarterly != '' && gDivision == 'quarterly'){
+				alert('이미 분기별별 목표량은 등록되었습니다');
+			}else if(month != '' && gDivision == 'month'){
+				alert('이미 월별 목표량은 등록되었습니다');
+			}else{
+				$('#goalForm').submit();
+			}  
+		 });   		
 
-        calendar.render();
-      });
+   		var bookInfoList = []; //도서 검색 리스트 담을 변수
+        var totalPage = 0; //전체페이지
+   		
+		//캘린더 생성
+        var calendar = new FullCalendar.Calendar($('#bookCalendar')[0], {
+	          plugins: [ 'dayGrid','interaction'],
+	          header: {
+	              left: 'dayGridMonth',
+	              center: 'title'
+	            },
+	          eventLimit: true, 
+	          fixedWeekCount: false,
+	          contentHeight: 720,
+		      navLinks: true,
+		      locale: 'ko',
+	          events: function(info, successCallback, failureCallback ){
+	        	//ajax로 DB에서 data가져오기
+	        	  $.ajax({ 
+	        	     url: '/lifrary/getMyCalenderList', 
+	        	     dataType: 'json',
+	        	     success: function(data) { 
+		        	      var events = [];
+		        	      //반복문
+		        	      $.each(data, function(index, list) { 
+		        	      	events.push({
+		        	      	   id: list.cCode,	
+		        	      	   start: list.cStartDate,
+		        	      	   imageurl: list.biImg
+		        	      	}); 
+		        	      }); 
+		        	      successCallback(events);
+	        	     } //success
+	        	 });//ajax
+	          },
+	         //날짜에 이미지 넣기
+	         eventRender: function(info) {
+	              if (info.event.extendedProps.imageurl) {
+	                  info.el.firstChild.innerHTML = info.el.firstChild.innerHTML + '<img src="' + info.event.extendedProps.imageurl +'" style="height: 100px; width=100%;">';
+	              }
+	          },
+	        /*  eventRender: function(info) {
+	              if (info.event.extendedProps.imageurl) {
+	            	  info.el.firstChild.innerHTML ='<div><a href="#">'+ info.event.title +'</a><img src="' + info.event.extendedProps.imageurl +'" width="40" height="40"></div>';
+	              }
+	          } */
+	        navLinkDayClick: function(date, jsEvent){     	
+	        	var selectDate =moment(date).format('YYYY-MM-DD');
+	        	console.log(selectDate);
+	            $('#bookInsertModal').modal('show');
+	            $('#selectDate').text(selectDate);
+	            $('#insertForm [name="cStartDate"]').val(selectDate);
+	        },
+	        eventClick: function(info) {
+	            var cCode = info.event.id;
+	            $('#bookUpdateModal').modal('show');
+	            var request = $.ajax({
+	  	   		  url: "/lifrary/getMyCalender",
+	  	   		  data: { cCode : cCode },
+	  	   		  method: "POST",
+	  	   		  dataType: "json"
+	  	   		});
+	  	   		 
+	  	   		request.done(function(data) {
+	  	   			var bookInfo = data.bookInformation;
+	  	   			totalPage = bookInfo.bsTotalPage;//총페이지
+	  	   			
+		  	   		 $('#updateForm strong').eq(1).text(bookInfo.biName);//도서명
+		   			 $('#updateForm strong').eq(3).text(bookInfo.biIsbn);//ISBN
+		   			 $('#updateForm strong').eq(5).text(bookInfo.biAuthor);//저자명
+		   			 $('#updateForm strong').eq(7).text(bookInfo.biPublisher);//발행자
+		   			 $('#updateForm [name="cCode"]').val(data.cCode);//읽은 페이지
+		   			 $('#updateForm [name="cTitle"]').val(data.cTitle);//읽은 페이지
+		   			 $('#updateForm [name="cContent"]').val(data.cContent);//읽은 페이지
+		   			 $('#updateForm [name="cCurrentPage"]').val(data.cCurrentPage);//읽은 페이지
+		   			 $('#updateForm input').eq(3).attr('placeholder','전체페이지:  '+data.cCurrentPage+'/'+ totalPage);
+		   			 $('#updateForm [name="cStartDate"]').val(data.cStartDate);//등록한 날짜
+		   			 $('#updateForm [name="cBookFinish"]').val(data.cBookFinish);//등록한 날짜
+		   			 	  	   				  	   			
+	  			});//request.done
+	  	   		 
+	  	   		request.fail(function( jqXHR, textStatus ) {
+	  	   		  alert('수정도서 정보를 불러오는데 실패하였습니다');
+	  	   		});//request.fail
+	  		
+	        }          
+          });//calendar
+        
+          calendar.render();
+ 		
+		 //도서 검색 & 검색 리스트
+		 $('#bookInfoBtn').click(function(){
+			
+			//리스트출력부분 초기화
+			$('#insertForm').find('ul').css("display","none").html('');
+			
+			var biName = $('#bookName').val();
+			var request = $.ajax({
+	   		  url: "/lifrary/getBooKInfo",
+	   		  data: { biName : biName },
+	   		  method: "POST",
+	   		  dataType: "json"
+	   		});
+	   		 
+	   		request.done(function( data ) {
+	   			console.log(data);
+	   			bookInfoList = data;
+	   			//리턴값 있는 경우 리스트출력
+	   			if(data.length > 0){
+				   	for(var i = 0; i<data.length; i++){
+				   		var list = data[i];
+				 		var ul = $('#insertForm').find('ul');
+				 		ul.css("display","block");
+				   		ul.append('<li></li>');
+				   		var li = ul.children('li').eq(i);
+				   		li.text(list.biName);
+				   		li.attr('value',i); 
+				   	}
+	   			}
+	   			//리턴값 없는 경우 
+	   			else{
+	 	   			var ul = $('#insertForm').find('ul');
+	 	   			ul.css("display","block");
+			   		ul.append('<li></li>');
+			   		var li = ul.children('li')
+			   		li.text('검색조건에 맞는 도서가 없습니다');
+			   		li.css( "height", "50px" );
+			   		li.css( "text-align", "center" );	
+			   	}
+			});//request.done
+	   		 
+	   		request.fail(function( jqXHR, textStatus ) {
+	   		  alert('검색도서 정보를 불러오는데 실패하였습니다');
+	   		});//request.fail
+		 });
+		 
+		 //도서검색 리스트 클릭시 해당 도서 정보 화면에 출력
+		 $('#insertForm').on('click','li',function(){
+			 $('#insertForm').find('ul').css("display","none");
 
+			 var liText = $(this).text();//검색도서명
+			 $('#insertForm input').eq(0).val(liText);
+   			
+			 var i = $(this).val();
+   			 var selectBook = bookInfoList[i];//검색도서 정보
+   			 totalPage = selectBook.bsTotalPage
+   			 //검색도서 정보 화면에 출력
+   			 $('#insertForm strong').eq(1).text(selectBook.biName);//도서명
+   			 $('#insertForm strong').eq(3).text(selectBook.biIsbn);//ISBN
+   			 $('#insertForm strong').eq(5).text(selectBook.biAuthor);//저자명
+   			 $('#insertForm strong').eq(7).text(selectBook.biPublisher);//발행자
+   			 $('#insertForm input').eq(3).attr('placeholder','전체페이지:  /'+totalPage);
+   			 $('#insertForm [name="bsCode"]').val(selectBook.bsCode);
+   			 
+   		 });
+		
+		 //읽은 페이지 표시		 
+		 $('.modal [name="cCurrentPage"]').change(function(){
+			var currentPage = parseInt($(this).val());
+			console.log('이벤트실행');
+			if(totalPage != 0){
+				if(currentPage > totalPage){
+					alert('전체페이지보다 큰 수는 입력할 수 없습니다');
+				}else if(currentPage == totalPage ){
+					alert('완독도서에 등록하시겠습니까?');
+					$('.modal [name="cBookFinish"]').val('O');
+				}else{
+					$('.modal .totalPage').attr('placeholder','전체페이지: '+currentPage+'/'+totalPage);	
+					$('.modal [name="cBookFinish"]').val('X');
+				}
+			}
+		 });
+		 //일정등록
+		 $('#insertBtn').click(function(){
+			 var cTitle = $('#insertForm [name="cTitle"]').val();
+			 var cContent = $('#insertForm [name="cContent"]').val();
+			 var cCurrentPage = $('#insertForm [name="cCurrentPage"]').val();
+			 var bsCode = $('#insertForm [name="bsCode"]').val();
+			 var currentPage = parseInt($('#insertForm [name="cCurrentPage"]').val());
+
+			 if(bsCode == null || bsCode ==''){
+				 alert('도서를 검색해주세요');		
+			 }else if(cTitle == ''){
+				 alert('제목을 입력해주세요');
+			 }else if(cContent == ''){
+				 alert('내용을 입력해주세요');
+			 }else if(cContent.length > 250){
+	             alert('내용은 250자 이하로 적어 주세요');
+	         }else if(currentPage > totalPage){
+					alert('전체페이지보다 큰 수는 등록할 수 없습니다');
+		 	 }else{
+		 		$('#insertForm').submit();
+		 	}
+		 });
+		//일정수정 등록
+		 $('#updateBtn').click(function(){
+			 var cTitle = $('#updateForm [name="cTitle"]').val();
+			 var cContent = $('#updateForm [name="cContent"]').val();
+			 var cCurrentPage = $('#updateForm [name="cCurrentPage"]').val();
+			 var currentPage = parseInt($('#updateForm [name="cCurrentPage"]').val());
+
+			 if(cTitle == ''){
+				 alert('제목을 입력해주세요');
+			 }else if(cContent == ''){
+				 alert('내용을 입력해주세요');
+			 }else if(cContent.length > 250){
+	             alert('내용은 250자 이하로 적어 주세요');
+	         }else if(currentPage > totalPage){
+					alert('전체페이지보다 큰 수는 등록할 수 없습니다');
+		 	 }else{
+		 		$('#updateForm').submit();
+		 	}
+		 });
+		 //캘린더 일정 삭제
+		 $('#deleteBtn').click(function(){
+			 $('#updateForm').attr('action','/lifrary/myCalenderDelete').submit();
+		 });
+		  
+		 //모달 초기화
+		 $('.modal').on('hidden.bs.modal', function (e) {
+			
+			$(this).find('form')[0].reset()
+			$('form').find('#bookInsertModal ul').css("display","none").html('');
+			$('.modal strong').eq(1).text('');//도서명
+			$('.modal strong').eq(3).text('');//ISBN
+			$('.modal strong').eq(5).text('');//저자명
+			$('.modal strong').eq(7).text('');//발행자
+			$('.modal input').eq(3).attr('placeholder','전체페이지:  /');
+		});
+ 
+      });//document.ready
+     
     </script>
     <style type="text/css">
     #bookCalendar {
@@ -46,12 +365,31 @@
         margin: 0 0 20px;
     }
     #bookCalendar h2 {
-    	color: #2C3E50;;
+    	color: #2C3E50;
     }
-    .fc-day-number.fc-sat.fc-past { color:#0000FF; }
-    .fc-day-number.fc-sun.fc-past { color:#FF0000; }
-</style>
-  
+   .fc-event, .fc-event-dot{
+    	background-color: rgba(0, 0, 0, 0);
+    }
+    .fc-event{
+    	border: rgba(0, 0, 0, 0);
+    }
+    .fc-event-container a{
+    	 display:inline-block;
+    }
+    textarea{
+    	width: 100%;
+    }
+    #bookInsertModal .select-list{
+ 		display: block; 
+ 		position: inherit;
+ 		border-top: 3px solid #f4f4f4;
+ 		margin-top: 5px;
+ 	}
+ 	strong:nth-child(odd) {
+ 		color: #ff7236;
+ 	}
+	</style>
+	</th:block>
 	<th:block layout:fragment="customContents">
 
        <section class="page-banner services-banner">
@@ -79,25 +417,42 @@
                                 <section class="search-filters">
                                     <div class="container">
                                         <div class="filter-box">
-                                            <h3>내 독서 목표량 진행 상황</h3>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">년도별 목표량</label>
-                                                        <input class="form-control" placeholder="년별 목표량"  type="text" readonly="readonly">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">분기별 목표량</label>
-                                                        <input class="form-control" placeholder="분기별 목표량"  type="text" readonly="readonly">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">월별 목표량</label>
-                                                        <input class="form-control" placeholder="월별목표량" type="text" readonly="readonly">
-                                                    </div>
-                                                </div>
+                                            <h3>내 독서 목표량</h3>
+                                            <div class="col-md-12">
+                                            	<div class="row">
+		                                            <div class="col-md-12 col-sm-2">
+		                                                <div class="form-group pull-right">
+		                                                	<strong>
+		                                                		<a href="#goalInsert" data-toggle="modal">설정<i class="fa fa-cog"></i></a>
+		                                                	</strong>
+		                                                </div>
+		                                            </div>
+		                                            <div class="col-md-4 col-sm-6">
+		                                                <div class="form-group goal">
+		                                                    <label for="keywords"></label>&nbsp;<strong></strong>
+		                                                    <div class="progress">
+															  <div class="progress-bar bg-success progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+															</div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="col-md-4 col-sm-6">
+		                                                <div class="form-group goal">
+		                                                    <label for="keywords"></label>&nbsp;<strong></strong>
+		                                                    <div class="progress">
+															  <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+															</div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="col-md-4 col-sm-6">
+		                                                <div class="form-group goal">
+		                                                    <label for="keywords"></label>&nbsp;<strong></strong>
+		                                                    <div class="progress">
+															  <div class="progress-bar bg-warning progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+															</div>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+                                        	</div>
                                         </div>
                                     </div>
                                 </section>
@@ -116,5 +471,218 @@
                 </main>
             </div>
         </div>
+        <div class="modal fade" id="bookInsertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <form id="insertForm" class="modal-content" th:action="@{/lifrary/myCalenderInsert}" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">일정 등록</h4>
+		      </div>
+		      <div class="modal-body">
+		      	  <div class="row">
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-8">
+	                       	<input id="bookName" class="form-control" type="text" placeholder="도서명" >
+		                    <ul class="select-list" style="display: none;">
+			                </ul>
+	                  	</div>
+	                  	<div class="col-sm-4">
+	                       	<button type="button" id="bookInfoBtn" class="btn btn-primary form-control" >도서검색</button>
+	                  	</div>
+                  	 </div>
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide" style="margin-top: 20px;">
+	                       	<strong>도서명:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide" style="margin-top: 20px;">
+	                       	<strong>ISBN:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+                  	 </div>
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide">
+	                       	<strong>저자명:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide">
+	                       	<strong>발행사:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+                  	 </div>
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-12">	
+	                       <p class="form-row form-row form-row-wide">&nbsp;제목
+	                       	<input name="cTitle" class="form-control" type="text" placeholder="제목">
+	                       </p>
+	                  	</div>
+	                  </div>
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-12">
+	                       <p class="form-row form-row form-row-wide">&nbsp;내용
+	                       	<textarea name="cContent" rows="5" style=" padding: 5px 10px;" placeholder="내용"></textarea>
+	                       </p>
+	                  	</div>
+	                  </div>
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-4">
+	                       <p class="form-row form-row form-row-wide">&nbsp;읽은페이지
+	                       	<input name="cCurrentPage" class="form-control" type="number" min="0" value="0">
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-4">
+	                       <p class="form-row form-row form-row-wide">&nbsp;진행상황
+	                       	<input class="form-control totalPage" type="text" placeholder="전체페이지: /" readonly="readonly">
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-4">
+	                       <p class="form-row form-row form-row-wide">&nbsp;선택일
+	                       	<input class="form-control" type="date" name="cStartDate">
+	                       	<input type="hidden" name="bsCode">
+	                       	<input type="hidden" name="cBookFinish">
+	                       </p>
+	                  	</div>
+                  	 </div>
+                 </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
+		        <button type="button" id="insertBtn" class="btn btn-primary" >등록</button>
+		      </div>
+		    </form>
+		  </div>
+		</div>
+		<div class="modal fade" id="bookUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <form id="updateForm" class="modal-content" th:action="@{/lifrary/myCalenderUpdate}" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">일정 수정</h4>
+		      </div>
+		      <div class="modal-body">
+		      	  <div class="row">
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide" style="margin-top: 20px;">
+	                       	<strong>도서명:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide" style="margin-top: 20px;">
+	                       	<strong>ISBN:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+                  	 </div>
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide">
+	                       	<strong>저자명:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide">
+	                       	<strong>발행사:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+                  	 </div>
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-12">	
+	                       <p class="form-row form-row form-row-wide">&nbsp;제목
+	                        <input type="hidden" name="cCode">
+	                       	<input name="cTitle" class="form-control" type="text" placeholder="제목">
+	                       </p>
+	                  	</div>
+	                  </div>
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-12">
+	                       <p class="form-row form-row form-row-wide">&nbsp;내용
+	                       	<textarea name="cContent" rows="5" style=" padding: 5px 10px;" placeholder="내용"></textarea>
+	                       </p>
+	                  	</div>
+	                  </div>
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-4">
+	                       <p class="form-row form-row form-row-wide">&nbsp;읽은페이지
+	                       	<input name="cCurrentPage" class="form-control" type="number" min="0" value="0">
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-4">
+	                       <p class="form-row form-row form-row-wide">&nbsp;진행상황
+	                       	<input class="form-control totalPage" type="text" placeholder="전체페이지: /" readonly="readonly">
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-4">
+	                       <p class="form-row form-row form-row-wide">&nbsp;등록일
+	                       	<input class="form-control" type="date" name="cStartDate" readonly="readonly">
+	                       	<input type="hidden" name="cBookFinish">
+	                       </p>
+	                  	</div>
+                  	 </div>
+                 </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
+		        <button type="button" id="updateBtn" class="btn btn-primary" >수정</button>
+		        <button type="button" id="deleteBtn" class="btn btn-primary" >삭제</button>
+		      </div>
+		    </form>
+		  </div>
+		</div>
+		<div class="modal fade" id="goalInsert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <form id="goalForm" class="modal-content" th:action="@{/lifrary/goalInsert}" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">목표량 등록</h4>
+		      </div>
+		      <div class="modal-body">
+		      	  <div class="row">
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">	
+	                       <p class="form-row form-row form-row-wide">&nbsp;목표 기간 선택
+	                       	<select name="gDivision" class="form-control">
+	                       	   <option value="none">목표기간</option>
+                               <option value="month">월별</option>
+                               <option value="quarterly">분기별</option>
+                               <option value="year">년도별</option>
+                           </select>
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">
+		                  	<p class="form-row form-row form-row-wide">&nbsp;목표권수
+		                  		<input name="gNum" class="form-control" type="number" min="0" value="0">	
+		                  	</p>
+	                  	</div>
+	                 </div>
+	                 <div class="col-md-12">
+	                  	<div class="col-sm-6">
+		                  	<p class="form-row form-row form-row-wide">&nbsp;시작일
+		                  		<input name="gStartDate" class="form-control" type="date" readonly="readonly">	
+		                  	</p>
+	                  	</div>
+	                  	<div class="col-sm-6">
+		                  	<p class="form-row form-row form-row-wide">&nbsp;종료일
+		                  		<input name="gEndDate" class="form-control" type="date" readonly="readonly">	
+		                  	</p>
+	                  	</div>
+	                 </div>
+	                 <div class="col-md-12">
+	                  	<div class="col-sm-12">
+		                  	<p class="form-row form-row form-row-wide">&nbsp;*한 번 등록한 목표량은 수정이 불가합니다.</p>
+	                  	</div>
+	                 </div>
+                 </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
+		        <button type="button" id="goalBtn" class="btn btn-primary" >등록</button>
+		      </div>
+		    </form>
+		  </div>
+		</div>
     </th:block>
 </html>

@@ -2,6 +2,90 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
+
+<th:block layout:fragment="customScript">
+	<style>
+	table.reserveForm tbody tr td {color: black; text-align: center; font-size: 12px; width: 500px;}
+	table.reserveForm {width: 400px;}
+</style>
+	<script th:inline="javascript">
+		$(document).ready(function(){
+			
+			var selectFcode =''; 	// 누른 테이블의 공공시설 코드
+			var selectfKinds = '';  // 누른 테이블의 공공시설 종류
+			var uId = [[${session.SID}]]
+			var lCode = [[${session.LIBNUM}]]
+			
+			
+			$(document).on('click', '.fTable', function(){ // 공공시설 목록을 눌렀을때.
+				var fCode = $(this).find('input[name=fCode]').val();
+				var fKinds = $(this).find('input[name=fKinds]').val();
+				var fSeatOrImg = $(this).find('input[name=fSeatOrImg]').val();
+				var fName = $(this).find('input[name=fName]').val();				
+				var tdTable = $('#tdTable')
+				var contents = '';
+				
+				selectFcode = fCode; // 어떤 공공시설 눌렀는지 fCode를 저장.
+				selectfKinds = fKinds;
+				console.log(fName)
+				
+					contents += '<br><h3>자리 배치도&emsp;&emsp;'+fName+'</h3><br>'
+					//강연실 / 스터디룸 이미지 보여주기
+					contents += '<img alt="이미지를 표시할 수 없습니다." src="/adminStatic/img/avatars/1.png"><br>'
+					
+					contents += '<br><br><h3>신청하기</h3><br><br>'
+					contents += '<form id="reserveForm" action="/lifrary/reservation" method="post">'
+					contents += '<table class="reserveForm" border="1";>'
+					contents += '<input id="uId" type="hidden" name = "uId">'
+					contents += '<input id="lCode" type="hidden" name = "lCode">'
+					contents += '<input id="fCode" type="hidden" name = "fCode">'
+					contents += '<input id="fKinds" type="hidden" name = "fKinds">'
+					contents += '<tr><td>연락처</td><td><input id="frTel" type="text" name = "frTel"></td></tr>'
+           			
+					contents += '<tr><td>신청 하기</td><td><button id="reserveBtn" type="button">신청</button></td></tr></table>'
+					contents += '</form>'
+					
+				 tdTable.html(contents)
+				 
+					$('#uId').val(uId)							 //세션에 저장된 아이디값 넣기
+					$('#lCode').val(lCode)						 //세션에 저장된 도서관코드 넣기
+					$('#fCode').val(fCode)
+					$('#fKinds').val(fKinds)
+					
+				})
+				
+				/* 예약 유효성 검사 */
+				$(document).on('click','#reserveBtn',function(){ // 예약하기 버튼 눌렀을때.
+					var reserveForm = $('#reserveForm');
+					var uIdVal = $('#uId').val()							 //세션에 저장된 아이디값 넣기
+					var lCodeVal = $('#lCode').val()							 //세션에 저장된 도서관코드 넣기
+					var fCodeVal = $('#fCode').val()						 		 //선택된것이 어떤 시설의 코드인지.
+					var frSelectNumVal = $('#frSelectNum').val()							 //선택된 자리의 번호
+					var fKindsVal = $('#fKinds').val()								 // 시설 종류
+					var frTel = $('#frTel').val();
+					
+					if(uIdVal == "" && lCodeVal == ""){
+						alert('세션이 만료되었습니다. 다시 로그인해주세요')
+						location.href = "/";
+						return false;
+					}
+					if(uIdVal == ""){
+						alert('로그인 후 이용해주세요.')
+						location.href = "/lifrary/login";
+						return false;
+					}
+					if(frTel == ""){
+						alert('연락처를 입력해주세요.');
+						$('#frTel').focus();
+						return false;
+					}
+
+					reserveForm.submit();
+				})
+				
+			}) 
+	</script>
+</th:block>		
 		
 		<th:block layout:fragment="customContents">
 			<!-- Start: Page Banner -->

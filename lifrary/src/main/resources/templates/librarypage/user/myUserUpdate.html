@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+		
+<th:block layout:fragment="libraryTitle">
+	<title>회원정보 수정</title>
+</th:block>
+		
+
+		<th:block layout:fragment="customScript">
+			<script type="text/javascript">
+				$(document).ready(function(){
+					
+					//유효성 검사 - 수정하기 위한
+					$('#upBtn').click(function(){
+						var SID = $('#SID').val();
+						var uName = $('#uName').val();
+						var uPw = $('#uPw').val();
+						var uPwCheck = $('#uPwCheck').val();	//비밀번호 확인
+						var uBirth = $('#uBirth').val();
+						var uEmail = $('#uEmail').val();
+						var uTel = $('#uTel').val();
+						var uAddr = $('#uAddr').val();
+					 
+						
+						if(SID == ""){
+							alert('세션이 만료되었습니다. 다시 로그인 해주세요');
+							location.href = "/lifrary/login";
+							return false;	//안쓰면 못넘어감
+						}
+						if(uName == ""){
+							alert('이름을 입력해 주세요.');
+							$('#uName').focus();
+							return false;
+						}if(uPw == ""){
+							alert('비밀번호를 입력해 주세요.');
+							$('#uPw').focus();
+							return false;
+						}
+						if(uPwCheck != uPw){
+							alert('비밀번호가 틀립니다.');
+							$('#uPwCheck').focus();
+							return false;
+						}
+						if(uBirth == ""){
+							alert('생년월일을 입력해주세요.');
+							$('#uBirth').focus();
+							return false;
+						}
+						if(uEmail == ""){
+							alert('이메일을 입력해주세요.');
+							$('#uEmail').focus();
+							return false;
+						}
+						if(uTel == ""){
+							alert('핸드폰 번호를 입력해주세요.');
+							$('#uTel').focus();
+							return false;
+						}
+						if(uAddr == ""){
+							alert('주소를 입력해주세요.');
+							$('#uAddr').focus();
+							return false;	
+						}
+						else{
+							alert('회원정보 수정이 완료되었습니다.');
+							updateForm.submit();
+						}
+						/* console.log(SID);
+						console.log(uName); */
+					});
+					
+					});
+					
+			
+			</script>
+		</th:block>   
+  	<th:block layout:fragment="customContents">
+           <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>MY PROFILE UPDATE</h2>
+                    
+                    <span class="underline center"></span>
+                    <p class="lead">나의 정보 수정하기</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">메인메뉴</a></li>
+                        <li>MY UPDATE</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+<!-- Start: Cart Checkout Section -->
+        <div id="content" class="site-content" th:fragment="cartCheckOutSectionFragment">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="checkout-main">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <article class="page type-page status-publish hentry">
+                                        <div class="entry-content">
+                                            <div class="woocommerce">
+                                                <form id="updateForm" th:action="@{/lifrary/myUserUpdate}" class="checkout woocommerce-checkout" method="post" name="checkout" th:with="m = ${myUserUpdate}">
+                                                    <div class="row">
+                                                        <div id="customer_details">
+                                                            <div class="col-md-push-2 col-md-9">
+                                                                <div class="woocommerce-billing-fields">
+                                                                    <h2>회원 정보 수정하기</h2>
+                                                                    <span class="underline left"></span>
+                                                                    <div class="row">
+                                                                        <div class="billing-address-box">
+                                                                        
+                                                                        		<input type="hidden" name="uDivision" readonly="readonly" value="회원" placeholder="구분">
+                                                                        		<input type="hidden" name="lCode" readonly="readonly" th:value="${session.LIBNUM}" placeholder="도서관코드">
+                                                                        		
+                                                                        		
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">아이디 : </label>
+                                                                                    <p><input type="text" autocomplete="given-name" placeholder="아이디를 입력해주세요" id="SID" name="uId" th:value="${session.SID}" class="input-text" readonly="readonly"></p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">이름 : </label>
+                                                                                    <p><input type="text" placeholder="이름을 입력해주세요" name="uName" id="uName" th:value="${m.uName}" class="input-text"></p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">비밀번호 : </label>                                                           
+                                                                                    <p><input type="password" autocomplete="family-name" placeholder="비밀번호를 입력해주세요" id="uPw" name="uPw" th:value="${m.uPw}" class="input-text"></p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">비밀번호 확인 : </label>                                                           
+                                                                                    <p><input type="password" autocomplete="family-name" placeholder="비밀번호를 한번 더 입력해주세요" id="uPwCheck" name="uPwCheck" class="input-text"></p>
+                                                                            </div>
+                                                                            <!-- <div class="clear"></div> -->
+                                                                         <div class="form-row">
+                                                                            <div class="col-xs-4 col-sm-4">
+                                                                            	<label class="form-label">생년월일 :  </label>
+                                                                                
+                                                                                   <p><input type="date" autocomplete="organization" placeholder="년도를 입력해주세요" name="uBirth" id="uBirth" th:value="${m.uBirth}" class="input-text "></p>
+                                                                              
+                                                                            </div>
+                                                                           <!--  <div class="col-md-4 col-sm-4">
+							                                                   <div class="form-group">
+							                                                    <label class="form-label">&nbsp; </label>
+							                                                        <div class="select">	
+							                                                        <select name="month" id="category" class="form-control select-hidden">
+							                                                        	 <option selected="selected">월을 선택해주세요</option>
+							                                                             <option value="01">01월</option>
+																			             <option value="02">02월</option>
+																			             <option value="03">03월</option>
+																			             <option value="04">04월</option>
+																			             <option value="05">05월</option>
+																			             <option value="06">06월</option>
+																			             <option value="07">07월</option>
+																			             <option value="08">08월</option>
+																			             <option value="09">09월</option>
+																			             <option value="10">10월</option>
+																			             <option value="11">11월</option>
+																			             <option value="12">12월</option>
+							                                                        </select>
+							                                                        </div>
+							                                                    </div>
+							                                                </div>
+							                                                <div class="col-md-4 col-sm-4">
+							                                                    <div class="form-group">
+							                                                    <label class="form-label">&nbsp; </label>
+							                                                        <div class="select">	
+							                                                        <select name="day" id="category" class="form-control select-hidden">
+							                                                        	 <option selected="selected">일을 선택해주세요</option>
+							                                                             <option value="01">01일</option>
+																			             <option value="02">02일</option>
+																			             <option value="03">03일</option>
+																			             <option value="04">04일</option>
+																			             <option value="05">05일</option>
+																			             <option value="06">06일</option>
+																			             <option value="07">07일</option>
+																			             <option value="08">08일</option>
+																			             <option value="09">09일</option>
+																			             <option value="10">10일</option>
+																			             <option value="11">11일</option>
+																			             <option value="12">12일</option>
+																			             <option value="13">13일</option>
+																			             <option value="14">14일</option>
+																			             <option value="15">15일</option>
+																			             <option value="16">16일</option>
+																			             <option value="17">17일</option>
+																			             <option value="18">18일</option>
+																			             <option value="19">19일</option>
+																			             <option value="20">20일</option>
+																			             <option value="21">21일</option>
+																			             <option value="22">22일</option>
+																			             <option value="23">23일</option>
+																			             <option value="24">24일</option>
+																			             <option value="25">25일</option>
+																			             <option value="26">26일</option>
+																			             <option value="27">27일</option>
+																			             <option value="28">28일</option>	
+																			             <option value="29">29일</option>
+																			             <option value="30">30일</option>
+																			             <option value="31">31일</option>
+							                                                        </select>
+							                                                        </div>
+							                                                    </div>
+							                                                </div> -->
+                                                                           </div>
+                                                                      
+                                                                            <div class="col-xs-6 col-sm-6">
+                                                                            	<label class="form-label">이메일 : </label>
+                                                                                    <p><input type="text" placeholder="이메일입력 해주세요" id="uEmail" name="uEmail" th:value="${m.uEmail}" class="input-text "></p>
+                                                                            </div>
+                                                                            <div class="col-xs-6 col-sm-6">
+                                                                            	<label class="form-label">핸드폰 : ('-' 을 넣어서 입력해주세요)</label>
+                                                                               		<p><input type="tel" autocomplete="tel" placeholder="핸드폰번호 입력해주세요" id="uTel" name="uTel" th:value="${m.uTel}" class="input-text "></p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">주소 : </label>
+                                                                                    <p><input type="tel" autocomplete="tel" placeholder="주소를 입력해주세요" id="uAddr" name="uAddr" th:value="${m.uAddr}" class="input-text "></p>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">메일수신 동의 : </label>
+                                                                                <div class="radio">
+                                                                                    <input id="open" th:if="${m.uEmailAgree eq 'O'}" type="radio" value="O" name="uEmailAgree" class="custom-control-input" checked="">
+                                                                                    <input id="open" th:unless="${m.uEmailAgree eq 'O'}" type="radio" value="O" name="uEmailAgree" class="custom-control-input" >
+                                                                                    <label for="open"> 동의 </label>
+                                                                                </div>
+                                                                                <div class="radio">
+                                                                                    <input id="no" th:if="${m.uEmailAgree eq 'X'}" type="radio" value="X" name="uEmailAgree" class="custom-control-input" checked="">
+                                                                                    <input id="no" th:unless="${m.uEmailAgree eq 'X'}" type="radio" value="X" name="uEmailAgree" class="custom-control-input" >
+                                                                                    <label for="no"> 비동의 </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-6">
+                                                                            	<label class="form-label">임명장 부여  : </label>
+                                                                                <div class="radio">
+                                                                                    <input id="op" th:if="${m.uAppointment eq 'O'}" type="radio" value="O" name="uAppointment" class="custom-control-input" checked="">
+                                                                                    <input id="op" th:unless="${m.uAppointment eq 'O'}" type="radio" value="O" name="uAppointment" class="custom-control-input" >
+                                                                                    <label for="op"> 동의 </label>
+                                                                                </div>
+                                                                                <div class="radio">
+                                                                                    <input id="noo" th:if="${m.uAppointment eq 'X'}" type="radio" value="X" name="uAppointment" class="custom-control-input" checked="">
+                                                                                    <input id="noo" th:unless="${m.uAppointment eq 'X'}" type="radio" value="X" name="uAppointment" class="custom-control-input">
+                                                                                    <label for="noo"> 비동의 </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-12" style="margin-bottom: 40px">
+                                                                        		<button type="button" id="upBtn">수정완료 버튼</button>
+                           													</div>
+                                                                    
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                           
+                                                        </div>	
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div><!-- .entry-content -->
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <!-- End: Cart Checkout Section -->
+ </th:block>
+</html>

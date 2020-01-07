@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
  <!-- Start: Footer -->
         <footer class="site-footer" th:fragment="footerFragment">
+        
+        <!--
             <div class="container">
                 <div id="footer-widgets">
                     <div class="row">
@@ -80,21 +82,22 @@
                     </div>
                 </div>                
             </div>
+        -->   
+           
             <div class="sub-footer">
                 <div class="container">
                     <div class="row">
                         <div class="footer-text col-md-3">
-                            <p><a target="_blank" href="https://www.templatespoint.net">TemplatesPoint</a></p>
+                            <p><a target="_blank" href="https://www.templatespoint.net"></a></p>
                         </div>
                         <div class="col-md-9 pull-right">
                             <ul>
-                                <li><a th:href="@{/}">메인화면</a></li>
-                                <li><a href="books-media-list-view.html">Books &amp; Media</a></li>
+                                <li><a th:href="@{/lifrary/bookDataSearch}">검색</a></li>
+                                <li><a th:href="@{#}">인기도서</a></li>
                                 <li><a th:href="@{/lifrary/programSearchList}">프로그램 (행사 &amp; 강좌)</a></li>
-                                <li><a href="#">Kids &amp; Teens</a></li>
+                                <li><a href="#">게시판</a></li>
                                 <li><a th:href="@{/lifrary/readingRoom}">공공시설</a></li>
-                                <li><a href="#">Research</a></li>
-                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">도서관 소개</a></li>
                             </ul>
                         </div>
                     </div>

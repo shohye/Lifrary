@@ -5,26 +5,72 @@
 	  class="default-style">
 	  
 <!-- headAdd(Libs&page) -->
+
+    <th:block layout:fragment="adminTitle">
+		<title>수서-구매관리</title>
+	</th:block>
   
 	  <th:block layout:fragment="adminHeadAdd">
 	  
 	  <!-- addLibs -->
-	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
-	      <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/select.dataTables.min.css}">
+	      <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+	      <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/select.dataTables.min.css}">
 	  <!-- addPage -->
 	  
-	    <script th:src="@{/admin/vendor/js/jquery-3.3.1.min.js}"></script>
-	    <script th:src="@{/admin/vendor/js/jquery.dataTables.js}"></script>
-	    <script th:src="@{/admin/vendor/js/dataTables.responsive.min.js}"></script>
-	    <script th:src="@{/admin/vendor/js/dataTables.buttons.min.js}"></script>
-		<script th:src="@{/admin/vendor/js/buttons.html5.min.js}"></script>
-		<script th:src="@{/admin/js/tables_datatables_purchase.js}"></script>
+	    <script th:src="@{/adminStatic/vendor/js/jquery-3.3.1.min.js}"></script>
+	    <script th:src="@{/adminStatic/vendor/js/jquery.dataTables.js}"></script>
+	    <script th:src="@{/adminStatic/vendor/js/dataTables.responsive.min.js}"></script>
+	    <script th:src="@{/adminStatic/vendor/js/dataTables.buttons.min.js}"></script>
+		<script th:src="@{/adminStatic/vendor/js/buttons.html5.min.js}"></script>
+		<script th:src="@{/adminStatic/js/tables_datatables_purchase.js}"></script>
 	   
-	     
-	 
 	  </th:block>
+	
+	
 	  
-<!-- /headAdd(Libs&page) --> 
+	  <th:block layout:fragment="teamHeadScript">
+      <script type="text/javascript" th:inline="javascript">  
+       $(document).ready(function(){  	
+    	   
+    	   $('#deleteBtn').click(function(){
+    		   var SAID = [[${session.SAID}]]
+    		   console.log(SAID);
+    		   var write = $('#uPw').val();
+    		   console.log(write);
+    		   var bpCode = $('#bpCode').val();
+    		   
+    		   var request = $.ajax({
+					url:"/deletePurchase",
+					method: "POST",
+					data : { 'said' : SAID , 'write' : write ,'bpCode' :bpCode }, 
+					dataType: "text"
+				});
+				 
+				request.done(function( data ) {
+
+					 console.log(data);
+					 if(data == '비밀번호가 틀렸습니다'){
+						 alert(data);
+						 $('#uPw').focus();
+					 }else if(data =='도서 삭제가 완료되었습니다'){
+						 alert(data);
+						 $('#modals-default').modal('hide');
+						 location.reload(true);
+					 }
+						
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				}); 
+				
+    	   });   				
+    	}); // 처음 function끝
+    	    	
+    	</script>
+  	    </th:block>
+ 
+
  
  
   <!-- Content -->
@@ -32,10 +78,10 @@
          <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
 			<div>구매예정 도서 리스트</div>
 			
-	<th:block th:if="${session.SALC} == 'O'">		
-			<button type="button" class="btn btn-primary rounded-pill d-block"><span class="ion ion-md-add"></span>
-				 <a th:href="@{/admin/bookPurchaseInsert}" style="color: white"> 도서 추가 </a>
-			</button>
+	<th:block th:if="${session.SALC} == 'O'">
+		<a th:href="@{/admin/bookPurchaseInsert}" class="btn btn-primary rounded-pill d-block"> 
+			<span class="ion ion-md-add"></span>도서 추가
+		</a>	
 	</th:block>	
 		
 		</h4>
@@ -51,10 +97,10 @@
                 
                   <thead>
                     <tr>
-                      <th data-orderable="false">ISBN</th>
+                      <th>ISBN</th>
                       <th>도서명</th>
                       <th>저자명</th>
-                      <th>결제가격</th>
+                      <th>가격</th>
                       <th>권수</th>               
                       <th>등록일</th>
                       <th>상세&수정</th> 
@@ -78,16 +124,51 @@
 						   </a>						
 					  </td>		  
 					  <td class="align-middle text-center">
-						
-						   <a href="#" class="btn btn-default btn-xs icon-btn md-btn-flat" title="삭제">
-							 <i class="ion ion-ios-cut d-block" title="삭제"></i>
-						   </a>
-                      </td> 
+					  <input type="hidden" name="bpCode" id="bpCode" th:value="${pl.bpCode}">     
+                      <button type="button" class="btn btn-default btn-xs icon-btn md-btn-flat" data-toggle="modal" data-target="#modals-default">
+                      		<i class="ion ion-ios-cut d-block"  title="삭제"></i>
+                      </button>            
+						  
+                      </td>	
 				    </tr>
 				  </tbody> 
                 </table>
               </div>
             </div>
+            <div class="modal fade" id="modals-default">
+                  <div class="modal-dialog">
+                    <form class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">
+                          	구매예정도서 목록 삭제
+                          
+                          <br>
+                          <small class="text-muted">정말 삭제 하시겠습니까? 삭제하시는 경우 복구가 불가능한 목록입니다.<br>
+                                                            삭제를 위하여 본인 id의 password를 작성해 주세요.</small>
+                        </h5>
+                        <a th:href="@{/admin/bookOrderList}"  type="button" class="close" data-dismiss="modal" aria-label="Close">×</a>
+                      </div>
+                      <div class="modal-body">
+                      	<div class="form-row">
+                          <div class="form-group col">
+                            <label class="form-label">ID</label>
+                            <input id="uId" type="text" class="form-control" th:value="${session.SAID}">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col">
+                            <label class="form-label">PASSWORD</label>
+                            <input id="uPw" type="password" class="form-control" placeholder="***********">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <a th:href="@{/admin/bookPurchaseList}" id="deleteBtn" type="button" class="btn btn-primary">삭제</a></button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
                         
 
           </th:block>
@@ -98,8 +179,8 @@
           <th:block layout:fragment="pageScript">
 
 		  <!-- addLibs -->
-		    <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script> 
-		    <script th:src="@{/admin/vendor/libs/datatables/dataTables.select.min.js}"></script>
+		    <script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script> 
+		    <script th:src="@{/adminStatic/vendor/libs/datatables/dataTables.select.min.js}"></script>
 		
 		  <!-- addDemo -->
 		    

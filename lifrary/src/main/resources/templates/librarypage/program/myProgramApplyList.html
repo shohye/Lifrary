@@ -3,8 +3,8 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
 <!-- 검색 ajax처리 -->
-
 <th:block layout:fragment="customContents">
+	
        <section class="page-banner services-banner">
             <div class="container">
                 <div class="banner-header">
@@ -104,12 +104,17 @@
     <!-- End: Program Search Section -->
     
     
-                            <div class="row">
+                            <div class="row myApply">
                                 <div class="col-md-9 col-md-push-3 news-events-list-view" style="padding: 20px;">
-                                   
+                                   <style>
+										.myTable th, td{
+											text-align: center;
+										}
+									</style>
+									
                                    <!-- 프로그램 리스트 반복 출력 --> 
                                    <h3>나의 신청 내역</h3> <br>
-                                   <table id="myTable" class="datatables-demo table table-striped table-bordered">                         
+                                   <table id="myTable" class="datatables-demo table table-striped table-bordered myTable">                         
 						                  <thead>
 						                    <tr>
 						                      <th>번호</th>
@@ -124,17 +129,24 @@
 						                    </tr>
 						                  </thead>
 							                  <tbody>
+							                  <th:block th:if="${#lists.size(applyList)} > 0">
 											    <tr th:each="apply, al : ${applyList}">	
-												      <td class="align-middle" th:text="${al.count}"></td>
-												      <td class="align-middle"><a th:href="@{/lifrary/programApplyDetail(paCode = ${apply.paCode})}" th:text="${apply.pmName}"></a></td>
-												      <td class="align-middle" th:text="${apply.uId}"></td>
-												      <td class="align-middle" th:text="${apply.paParticipants}"></td>
-												      <td class="align-middle" th:text="${apply.paGender}"></td>
-												      <td class="align-middle" th:text="${apply.paBirth}"></td>
-												      <td class="align-middle" th:text="${apply.paTel}"></td>
-												      <td class="align-middle" th:text="${apply.paCondition}"></td>
-												      <td class="align-middle" th:text="${apply.paDate}"></td>										 		
+												      <td th:text="${al.count}"></td>
+												      <td><a th:href="@{/lifrary/programApplyDetail(paCode = ${apply.paCode})}" th:text="${apply.pmName}"></a></td>
+												      <td th:text="${apply.uId}"></td>
+												      <td th:text="${apply.paParticipants}"></td>
+												      <td th:text="${apply.paGender}"></td>
+												      <td th:text="${apply.paBirth}"></td>
+												      <td th:text="${apply.paTel}"></td>
+												      <td th:text="${apply.paCondition}"></td>
+												      <td th:text="${apply.paDate}"></td>										 		
 											    </tr>
+											   </th:block>
+											   <th:block th:unless="${#lists.size(applyList)} > 0">
+										             <tr>
+										            	 <td colspan="9" style="height: 150px; text-align: center; vertical-align: middle;">신청 프로그램이 없습니다</td>
+										             </tr>	
+									           </th:block>
 											  </tbody> 
 						                </table>
                                     

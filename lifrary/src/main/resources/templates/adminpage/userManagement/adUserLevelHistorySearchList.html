@@ -4,16 +4,19 @@
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
 
+<th:block layout:fragment="adminTitle">
+	<title>회원전체 등급내역 검색리스트</title>
+</th:block>
  <!-- headAdd(Libs&page) -->
   
   <th:block layout:fragment="adminHeadAdd">
   
   <!-- addLibs -->
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
 
   <!-- addPage -->
-  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/products.css}">
  
   </th:block>
   
@@ -38,7 +41,7 @@
 	<!-- Content -->
 	<th:block layout:fragment="adminContents">   
 		 <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-              <div>회원전체 등급 내역 검색리스트//시간정하여  배치프로그램 쓸 예정 </div>   
+              <div>회원전체 등급 내역 검색리스트</div>   
         </h4>
 
 
@@ -55,7 +58,9 @@
                     	<th>회원등급</th>
                     	<th>등급명</th>
                     	<th>회원등급변동사유</th>
-                    	<th>등록일</th>	
+                    	<th>등록일</th>
+                    	<th></th>
+                    		
                     </tr>
 	                </thead>
 	                  <tbody>
@@ -68,6 +73,12 @@
 	               			<td class="align-middle" th:text="${lh.ulName}" style="text-align:center"></td>
 	               			<td class="align-middle" th:text="${#strings.abbreviate(lh.ulhReason,20)}" style="text-align:center"></td>
 	               			<td class="align-middle" th:text="|${lh.ulhDate}일|" style="text-align:center"></td>
+	               			<td class="text-center text-nowrap">
+	               				<a th:href="@{#}" data-original-title="Edit" 
+	               					class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip">
+	               					<i class="ion ion-ios-cut d-block" title="삭제"></i>
+	               				</a>&nbsp;&nbsp;
+	               			</td>
 	                   	</tr> 
 		            </tbody>
 		          </table>
@@ -79,12 +90,12 @@
   <!-- / scripts -->
 	  <th:block layout:fragment="pageScript">
 	  <!-- addLibs -->
-	  <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
-	  <script th:src="@{/admin/vendor/libs/numeral/numeral.js}"></script>
-	  <script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
+	  <script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+	  <script th:src="@{/adminStatic/vendor/libs/numeral/numeral.js}"></script>
+	  <script th:src="@{/adminStatic/vendor/libs/nouislider/nouislider.js}"></script>
 		
 	  <!-- addDemo -->
- 		<script th:src="@{/admin/js/ad_user_level_history_search_list.js}"></script>
+ 		<script th:src="@{/adminStatic/js/ad_user_level_history_search_list.js}"></script>
 	  </th:block>
    <!-- / scripts -->
 	          

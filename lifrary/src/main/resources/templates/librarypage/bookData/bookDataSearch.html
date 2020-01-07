@@ -3,8 +3,12 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
+	
+	<th:block layout:fragment="libraryTitle">
+		<title>도서검색</title>
+	</th:block>
 		
-    <th:block layout:fragment="customScript">
+     <th:block layout:fragment="customScript">
      <script type="text/javascript" th:inline="javascript">  
        $(document).ready(function(){  
     	   
@@ -34,7 +38,7 @@
 	        <section class="page-banner services-banner" th:fragment="bookBannerFragment">
             <div class="container">
                 <div class="banner-header">
-                    <h2>Books Search</h2>
+                    <h2>BOOK SEARCH</h2>
                     <span class="underline center"></span>
                     <p class="lead">검색어를 입력해주세요</p>
                 </div>
@@ -72,8 +76,8 @@
 							                        </div>
 							                        <div class="col-md-4 col-sm-6">
 							                            <div class="form-group">
-							                                <label class="sr-only" for="keywords">Search by Keyword</label>
-							                                <input id="biName" name="biName" class="form-control" placeholder="Search by Keyword" type="text">
+							                                <label class="sr-only" for="keywords">자료 검색</label>
+							                                <input id="biName" name="biName" class="form-control" placeholder="검색" type="text">
 							                            </div>
 							                        </div>
 							                        <div class="col-md-2 col-sm-6">					                     

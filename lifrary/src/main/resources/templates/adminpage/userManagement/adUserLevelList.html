@@ -3,33 +3,71 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
+	  
+<th:block layout:fragment="adminTitle">
+	<title>회원등급 리스트</title>
+</th:block>
 
  <!-- headAdd(Libs&page) -->
-  
   <th:block layout:fragment="adminHeadAdd">
   
   <!-- addLibs -->
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/datatables/datatables.css}">
-  <link rel="stylesheet" th:href="@{/admin/vendor/libs/nouislider/nouislider.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
 
   <!-- addPage -->
-  <link rel="stylesheet" th:href="@{/admin/vendor/css/pages/products.css}">
+  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/products.css}">
  
   </th:block>
-  
   <!-- /headAdd(Libs&page) --> 
+  
+  <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+  <script type="text/javascript">
+  
+  $(document).ready(function(){ 
 	  
+	  $('#deleteBtn').click(function(){
+	   var SAID = [[${session.SAID}]]
+	   console.log(SAID);
+	   var write = $('#uPw').val();
+	   var ulLevel = $('#ulLevel').val();
+	   
+	   var request = $.ajax({
+			url:"/deleteLevel",
+			method: "POST",
+			data : { 'said' : SAID , 'write' : write , 'ulLevel' : ulLevel }, 
+			dataType: "text"
+		});		
+	   //응답완료 후 실행 - 정상처리
+		request.done(function( data ) {
+			 console.log(data);
+			 if(data == '비밀번호가 틀렸습니다'){
+				 alert(data);
+				 $('#uPw').focus();
+			 }else if(data =='등급 삭제가 완료되었습니다'){
+				 alert(data);
+				 $('#modals-default').modal('hide');						
+			 }						
+		});				 
+		request.fail(function( jqXHR, textStatus ) {
+			alert( "Request failed: " + textStatus );
+		}); 				
+ 	 });
+	  
+ });
+ </script>
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->	  
 	 
 	<!-- Content -->
 	<th:block layout:fragment="adminContents">   
 		 <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
               <div>회원 등급 리스트</div>
-              <button type="button" class="btn btn-primary rounded-pill d-block">
-              <a th:href="@{/admin/adUserLevelInsert}">
-              <span class="ion ion-md-add"></span>회원등급 등록</a></button>
-            </h4>
-
-            <div class="card">
+              <a th:href="@{/admin/adUserLevelInsert}" class="btn btn-primary rounded-pill d-block">
+              <span class="ion ion-md-add"></span>회원등급 등록</a>
+        </h4>
+		  <div class="card">
             <div class="card">
               <div class="card-datatable table-responsive">
                 <div id="product-list_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -47,8 +85,7 @@
 	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">대출가능일수</th>
 	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center">등록일</th>
 	                    	<th class="sorting_disabled" aria-controls="product-list" rowspan="1" colspan="1" style="text-align:center"></th>
-	                    	
-	                   </tr>
+	                    </tr>
 	                   <th:block th:each="ul : ${userLevel}">
 	                   		<tr>
 	                   			<td th:text="${ul.ulLevel}"></td>
@@ -61,69 +98,68 @@
 	                   			<td th:text="${ul.ulDate}"></td>
 	                   		
 	                   			<td class="text-center text-nowrap">
-	                   				<button title="" 
-	                   						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip" 
-	                   						type="button" data-original-title="Edit">
-	                   				<a th:href="@{/admin/adUserLevelUpdate(ulLevel=${ul.ulLevel})}" title="수정">
-	                   				<i class="ion ion-md-create" title="수정"></i></a>
-	                   				</button>&nbsp;&nbsp;
-	                   				<button title="" 
-	                   						class="btn btn-default btn-xs icon-btn md-btn-flat dropdown-toggle hide-arrow user-tooltip" 
-	                   						type="button" 
-	                   						data-original-title="Actions" data-toggle="dropdown">
-	                   				<a th:href="@{#}" title="삭제">
-	                   				<i class="ion ion-ios-settings" title="삭제"></i>
-	                   				</button>
+	                   				<a th:href="@{/admin/adUserLevelUpdate(ulLevel=${ul.ulLevel})}" data-original-title="Edit" 
+	               						class="btn btn-default btn-xs icon-btn md-btn-flat user-tooltip">
+	               							<i class="ion ion-md-create" title="수정"></i>
+	               					</a>&nbsp;&nbsp;
+	               						<input type="hidden" name="ulLevel" id="ulLevel" th:value="${ul.ulLevel}">    
+	               					<button type="button" class="btn btn-default btn-xs icon-btn md-btn-flat" data-toggle="modal" data-target="#modals-default">
+                      					<i class="ion ion-ios-cut d-block"  title="삭제"></i>
+	               					</button>&nbsp;&nbsp;
 	                   			</td>
 	                   		</tr>
 	                   </th:block>
 	                  </thead>
-		               
-		             	 </table>
+		               </table>
 		           		</div>
 		          	</div>
-		       <!--      <div class="row">
-		            	<div class="col-sm-12 col-md-5">
-		            		<div class="dataTables_info" id="product-list_info" role="status" aria-live="polite">Showing 1 to 10 of 37 entries</div>
-		            	</div>
-		            	<div class="col-sm-12 col-md-7">
-		            		<div class="dataTables_paginate paging_simple_numbers" id="product-list_paginate">
-		            			<ul class="pagination">
-		            				<li class="paginate_button page-item previous disabled" id="product-list_previous">
-		            					<a href="#" aria-controls="product-list" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-		            				</li>
-		            				<li class="paginate_button page-item active">
-		            					<a href="#" aria-controls="product-list" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-		            				</li>
-		            				<li class="paginate_button page-item ">
-		            					<a href="#" aria-controls="product-list" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-		            				</li>
-		            				<li class="paginate_button page-item ">
-		            					<a href="#" aria-controls="product-list" data-dt-idx="3" tabindex="0" class="page-link">3</a>
-		            				</li>
-		            				<li class="paginate_button page-item ">
-		            					<a href="#" aria-controls="product-list" data-dt-idx="4" tabindex="0" class="page-link">4</a>
-		            				</li>
-		            				<li class="paginate_button page-item next" id="product-list_next">
-		            					<a href="#" aria-controls="product-list" data-dt-idx="5" tabindex="0" class="page-link">Next</a>
-		            				</li>
-		            			</ul>
-		            		</div>
-		            	</div>
-		            </div> -->
 		           </div>
               </div>
             </div>
-          </div>
-            
+          </div>  
+          
+	    	<div class="modal fade" id="modals-default">
+              <div class="modal-dialog">
+                <form class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">
+                      	회원 등급 목록 삭제
+                      
+                      <br>
+                      <small class="text-muted">정말 삭제 하시겠습니까? 삭제하시는 경우 복구가 불가능한 목록입니다.<br>
+                                                        삭제를 위하여 본인 id의 password를 작성해 주세요.</small>
+                    </h5>
+                    <a th:href="@{/admin/adUserLevelList}" type="button" class="close" data-dismiss="modal" aria-label="Close">X</a>
+                  </div>
+                  <div class="modal-body">
+                  	<div class="form-row">
+                      <div class="form-group col">
+                        <label class="form-label">ID</label>
+                        <input id="uId" type="text" class="form-control" th:value="${session.SAID}">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col">
+                        <label class="form-label">PASSWORD</label>
+                        <input id="uPw" type="password" class="form-control" placeholder="********">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a th:href="@{/admin/adUserLevelList}" id="deleteBtn" type="button" class="btn btn-primary">삭제</a>
+                  </div>
+                </form>
+              </div>
+            </div> 
 	</th:block>
 	<!-- / Content -->
   <!-- / scripts -->
 	  <th:block layout:fragment="pageScript">
 	  <!-- addLibs -->
-	  <script th:src="@{/admin/vendor/libs/datatables/datatables.js}"></script>
-	  <script th:src="@{/admin/vendor/libs/numeral/numeral.js}"></script>
-	  <script th:src="@{/admin/vendor/libs/nouislider/nouislider.js}"></script>
+	  <script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+	  <script th:src="@{/adminStatic/vendor/libs/numeral/numeral.js}"></script>
+	  <script th:src="@{/adminStatic/vendor/libs/nouislider/nouislider.js}"></script>
 		
 	  <!-- addDemo -->
  

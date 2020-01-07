@@ -135,6 +135,7 @@
 			,u.u_birth				AS uBirth
 			,u.u_tel				AS uTel
 			,u.u_email_agree		AS uEmailAgree
+			,u.u_appointment		AS uAppointment
 			,u.u_email				AS uEmail
 			,uas.uas_lend_limit		AS uasLendLimit
 			,uas.uas_facility_limit AS uasFacilityLimit
@@ -164,6 +165,7 @@
 			,u.u_birth				AS uBirth
 			,u.u_tel				AS uTel
 			,u.u_email_agree		AS uEmailAgree
+			,u.u_appointment		AS uAppointment
 			,u.u_email				AS uEmail
 			,uas.uas_lend_limit		AS uasLendLimit
 			,uas.uas_facility_limit AS uasFacilityLimit
@@ -196,6 +198,7 @@
  			u.u_number 	AS uNumber 
 			,u.u_tel 	AS uTel
 			,u.u_id 	AS uId
+			,u.u_pw 	AS uPw
 			,u.u_name 	AS uName
 			,u.u_addr	AS uAddr
 			,u.u_email 	AS uEmail
@@ -203,10 +206,12 @@
 			,u.u_birth 	AS uBirth
 			,u.u_date 	AS uDate
 			,ul.ul_name 	AS ulName
+			,ul.ul_level 	AS ulLevel
 			,uas.uas_lend_limit		AS uasLendLimit
 			,uas.uas_facility_limit AS uasFacilityLimit
 			,uas.uas_name			AS uasName
 			,u.u_email_agree 	AS uEmailAgree
+			,u.u_appointment		AS uAppointment
 		FROM
 			user u 
 		INNER JOIN 
@@ -244,8 +249,14 @@
  			<if test="uEmailAgree neq null and uEmailAgree neq ''.toString()">
  				u_email_agree=#{uEmailAgree},
  			</if>
+ 			<if test="uEmailAgree neq null and uEmailAgree neq ''.toString()">
+ 				u_appointment=#{uAppointment},
+ 			</if>
  			<if test="uasCode neq null and uasCode neq ''.toString()">
- 				uas_code=#{uasCode},
+ 				uas_code=#{uasCode}
+ 			</if>
+ 			<if test="ulLevel neq null and ulLevel neq ''.toString()">
+ 				ul_level=#{ulLevel}
  			</if>
  		</trim>
  		WHERE u_id = #{uId}
@@ -287,6 +298,11 @@
 	</select>
 	
     <insert id="adUserLevelInsert">
+    	<selectKey keyProperty="ulLevel" resultType="String" order="BEFORE">
+ 			SELECT 
+				CONCAT('ul',(SELECT LPAD(RIGHT(MAX(ul.ul_level),3)+1,3,'0')))
+			FROM user_level AS ul
+ 		</selectKey>
 		INSERT INTO user_level(
 			 u_id
 			 ,l_code
@@ -306,11 +322,16 @@
 			,#{ulMax}
 			,#{ulLendNum}
 			,#{ulLendDay}
-			,#{ulDate}
+			,CURDATE()
 		)
 	</insert>
 	
 	<insert id="adUserAuthorityInsert">
+		<selectKey keyProperty="uasCode" resultType="String" order="BEFORE">
+ 			SELECT 
+				CONCAT('uas',(SELECT LPAD(RIGHT(MAX(uas.uas_code),3)+1,3,'0')))
+			FROM user_authority_set AS uas
+ 		</selectKey>
 		INSERT INTO user_authority_set(
 			 uas_code
 			 ,l_code
@@ -332,7 +353,7 @@
 			,#{uasLendLimit}
 			,#{uasFacilityLimit}
 			,#{uasLimitDate}
-			,#{uasDate}
+			,CURDATE()
 		)
 	</insert>
 	
@@ -359,7 +380,7 @@
 			,ul_lend_day    = #{ulLendDay}
 			,ul_date        = #{ulDate}
 		WHERE 
-			 ul_level = #{ulLevel}
+			 ul_level = #{ulLevel} 
 	</update>
 	
 	<select id="getAdUserLevelUpdate" resultMap="userLevel" parameterType="String">
@@ -642,7 +663,7 @@
 		ON 
 			u.u_id = ll.u_id
 		WHERE 
-			u.u_id = #{uId}
+			u.u_id = #{uId} 
   	</select>
   	
   	<update id="librarianLevelUpdate1" parameterType="ksmart.pentagon.vo.User" >
@@ -660,8 +681,7 @@
 			,u_email  		=#{uEmail}
 			,u_email_agree	=#{uEmailAgree}
 			,u_appointment	=''
-			,u_overdue_day	=0,
-			,u_date			=CURDATE()
+			,u_overdue_day	=0
 		WHERE 
 			u_id = #{uId}
     </update>
@@ -676,8 +696,7 @@
 			,ll_carry		=#{llCarry}
 			,ll_book_admin	=#{llBookAdmin}
 			,ll_stats		=#{llStats}
-			,ll_book_stock	=#{llBookStock}
-			,ll_update		=CURDATE()		
+			,ll_book_stock	=#{llBookStock}	
 		WHERE 
 			u_id = #{uId}
     </update>
@@ -704,24 +723,81 @@
 	
 	<select id="librarianMyDetail" resultMap="userResultMap" parameterType="String">
 		SELECT 
-			u_id
-			,l_code
-			,u_division
-			,u_pw
-			,u_name
-			,u_birth
-			,u_addr
-			,u_tel
-			,u_email
-			,u_email_agree
-			,u_date
+			 u.u_id
+			,u.l_code
+			,u.u_division
+			,u.u_pw
+			,u.u_name
+			,u.u_birth
+			,u.u_addr
+			,u.u_tel
+			,u.u_email
+			,u.u_email_agree
+			,u.u_date
+			,ll.ll_insert
+			,ll.ll_carry
+			,ll.ll_book_admin
+			,ll.ll_stats
+			,ll.ll_book_stock
 		FROM 
-			user 
+			user AS u
+		INNER JOIN 
+			librarian_level AS ll
+		ON 
+			u.u_id = ll.u_id
 		where
-			u_id=#{uId}
+			u.u_id= #{getSAID}
 	</select>
-  	
+	
+    <select id="getLibrarianMyUpdate" resultMap="userResultMap" parameterType="String">
+		SELECT 
+			*
+		FROM 
+			user
+		where 
+			u_id = #{getSAID} and l_code = #{libNum}
+	</select>
+	
+	<update id="librarianMyUpdate" parameterType="ksmart.pentagon.vo.User" >
+		UPDATE 
+			user
+		SET
+			u_division		=#{uDivision}
+			,u_pw			=#{uPw}
+			,u_name			=#{uName}
+			,u_birth		=#{uBirth}
+			,u_addr			=#{uAddr}
+			,u_tel			=#{uTel}	
+			,u_email		=#{uEmail}
+			,u_email_agree	=#{uEmailAgree}
+			,u_date			=#{uDate}			
+		WHERE 
+			u_id = #{uId}
+			
+    </update>
 
+<!--  삭제 처리  --> <!--  삭제 처리  --> <!--  삭제 처리  -->
 
+	<delete id="deleteUser" parameterType="String">
+		DELETE 
+		FROM 
+			user
+		WHERE 
+			u_id=#{said} 
+	</delete>
+	<delete id="deleteLevel" parameterType="String">
+		DELETE 
+			ul.*
+		FROM 
+			user AS u 
+		INNER JOIN 
+			user_level AS ul
+		WHERE 
+			ul.ul_level =# {ulLevel}
+			AND
+			u.u_id =# {said}
+			AND
+			u.u_pw =# {write}
+	</delete>
 
   </mapper>

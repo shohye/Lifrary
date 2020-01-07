@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="ksmart.pentagon.librarianbook.LibrarianBookMapper">
+ 	<resultMap type="ksmart.pentagon.vo.LibrarianBook" id="LibrarianBookList">
+ 		<result property="lbCode" column="lb_code"/> 			<!-- 추천도서코드 -->
+ 		<result property="lCode" column="l_code"/>				<!-- 도서관코드 -->
+ 		<result property="uId" column="u_id"/>					<!-- 등록아이디 -->
+ 		<result property="bsCode" column="bs_code"/>			<!-- 소장도서코드 -->
+ 		<result property="lbTitle" column="lb_title"/>			<!-- 사서추천제목 -->
+ 		<result property="lbContent" column="lb_content"/>		<!-- 사서추천내용 -->
+ 		<result property="lbId" column="lb_id"/>				<!-- 추천인 아이디 -->
+ 		<result property="lbOpen" column="lb_open"/>			<!-- 공개여부 -->
+ 		<result property="lbDate" column="lb_date"/>			<!-- 등록일 -->
+ 		<collection property="bookInformation" resultMap="bookInformation1"/>
+ 	</resultMap>
+ 	<resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInformation1">
+ 		<result property="biIsbn" column="bi_isbn"/>			<!-- isbn코드 -->
+ 		<result property="biName" column="bi_name"/>			<!-- 도서명 -->
+ 		<result property="biYear" column="bi_year"/>			<!-- 발행년도 -->
+ 		<result property="biAuthor" column="bi_author"/>		<!-- 저자명 -->
+ 		<result property="biPublisher" column="bi_publisher"/>	<!-- 발행자 -->
+ 		<result property="biKdc" column="bi_kdc"/>				<!-- 분류기호 -->
+ 		<result property="biDtail" column="bi_detail"/>			<!-- 상세설명 -->
+ 		<result property="biImg" column="bi_img"/>				<!-- 이미지 -->
+ 		<result property="biDate" column="bi_date"/>			<!-- 등록일 -->
+ 		<result property="bsCode" column="bs_code"/>			<!-- 소장도서코드 -->
+ 	</resultMap>
+ 	<select id="librarianBookList" resultMap="LibrarianBookList">
+	 	SELECT
+		*
+		FROM librarian_book AS lb INNER JOIN 
+		(SELECT
+		bi.*,bs.bs_code
+		FROM book_information AS bi INNER JOIN book_stock AS bs
+		ON bi.bi_isbn = bs.bi_isbn
+		GROUP BY bi.bi_isbn)AS si
+		ON lb.bs_code = si.bs_code
+		WHERE lb.l_code = #{lCode}
+		GROUP BY lb.lb_code
+ 	</select>
+ 	
+ 	<select id="bookRecommendDetail" resultMap="LibrarianBookList">
+ 		SELECT
+		*
+		FROM librarian_book AS lb INNER JOIN 
+		(SELECT
+		bi.*,bs.bs_code
+		FROM book_information AS bi INNER JOIN book_stock AS bs
+		ON bi.bi_isbn = bs.bi_isbn
+		GROUP BY bi.bi_isbn)AS si
+		ON lb.bs_code = si.bs_code
+		WHERE lb.l_code = '000000' AND lb.lb_code = #{lbCode}
+		GROUP BY lb.lb_code
+ 	</select>
+ 	
+ 	<select id="bookRecommendDelete" parameterType="String">
+ 		DELETE
+ 		FROM
+ 		librarian_book 
+ 		WHERE lb_code= #{lbCode}
+ 	</select>
+ 	
+ 	<select id="getBookInformation" parameterType="String" resultMap="bookInformation1">
+		SELECT *
+		FROM book_information AS bi INNER JOIN book_stock AS bs
+		ON bi.bi_isbn = bs.bi_isbn
+		WHERE bi.bi_isbn = #{isbnVal}
+ 	</select>
+ 	
+ 	<select id="maxlbCode" resultType="String">
+ 		SELECT
+  		max(lb_code)
+  		AS max
+  		FROM librarian_book
+ 	</select>
+ 	
+ 	<select id="checkBsCode" parameterType="String" resultType="String">
+ 		SELECT
+		bs_code
+		FROM book_stock
+		WHERE bi_isbn = #{putIsbn}
+ 	</select>
+ 	
+ 	<insert id="bookRecommendInsert" parameterType="ksmart.pentagon.vo.BookInformation">
+		INSERT INTO librarian_book
+		(lb_code, l_code, u_id, bs_code, lb_content, lb_id, lb_open, lb_date)
+		VALUES (#{lbCode}, #{lCode}, #{uId}, #{bsCode}, #{lbContent}, #{lbId}, #{lbOpen}, NOW())
+ 	</insert>
+ 	
+ 	<update id="bookRecommendUpdate" parameterType="ksmart.pentagon.vo.LibrarianBook">
+ 		UPDATE librarian_book
+		SET
+		l_code= #{lCode},
+		u_id= #{uId},
+		bs_code= #{bsCode},
+		lb_content= #{lbContent},
+		lb_id= #{lbId},
+		lb_open= #{lbOpen},
+		lb_date= NOW()
+		WHERE lb_code= #{lbCode}
+ 	</update>
+ </mapper>
