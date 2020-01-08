@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:fragment="headFragment">        
+<head th:fragment="introHeadFragment">        
         
         <!-- Meta -->
         <meta charset="utf-8" />
@@ -23,10 +23,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
         
         <link th:href="@{/libraryStatic/css/jquery.accordion.css}" rel="stylesheet" type="text/css" /> 
         <!-- Stylesheet -->
-        <th:block th:unless="${session == null}">
-        <link th:if = "${session.LIBNUM eq '000000'}" th:href="@{/libraryStatic/css/style.css}" rel="stylesheet" type="text/css" /> 
-        <link th:if = "${session.LIBNUM eq '111111'}" th:href="@{/libraryStatic/css/style2.css}" rel="stylesheet" type="text/css" />     
-        </th:block>
+        <link th:href="@{/libraryStatic/css/style.css}" rel="stylesheet" type="text/css" />      
         <th:block th:replace="fragments/library/oldScript :: oldScript"></th:block>
         <th:block layout:fragment="customScript"></th:block>
         
