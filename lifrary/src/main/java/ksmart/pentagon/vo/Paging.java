@@ -6,7 +6,7 @@ public class Paging {
 	// DB 행의 총 개수
 	private int boardCount;
 	// 페이지에 보여줄 행의 개수
-	private static final int ROW_PER_PAGE = 15; 
+	private static final int ROW_PER_PAGE = 10; 
 	public static int getRowPerPage() {
 		return ROW_PER_PAGE;
 	}

@@ -32,25 +32,42 @@
                                 <section class="search-filters">
                                     <div class="container">
                                         <div class="filter-box">
-                                            <h3>무엇을 넣어야 좋을까..?</h3>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">세모</label>
-                                                        <input class="form-control" placeholder=""  type="text" readonly="readonly">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">네모</label>
-                                                        <input class="form-control" placeholder=""  type="text" readonly="readonly">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="keywords">치와와</label>
-                                                        <input class="form-control" placeholder="" type="text" readonly="readonly">
-                                                    </div>
-                                                </div>
+                                            <h3>나의 독후감 검색</h3>
+                                            <form>
+	                                            <div class="col-md-3 col-sm-6">
+	                                                <div class="form-group">
+	                                                    <label for="keywords">검색조건</label>
+	                                                    <select name="sk" class="form-control">
+	                                                  <option value="title">제목</option>
+	                                                  <option value="content">내용</option>
+	                                            		</select>
+	                                                </div>
+	                                            </div>
+	                                            <div class="col-md-4 col-sm-6">
+	                                                <div class="form-group">
+	                                                    <label for="keywords">검색어</label>
+	                                                    <input class="form-control" type="text">
+	                                                </div>
+	                                            </div>
+	                                            <div class="col-md-3 col-sm-6">
+	                                                <div class="form-group">
+	                                                    <label for="keywords">기간</label>
+	                                                    <select name="svDate" class="form-control">
+	                                                  <option value="">전체기간</option>
+	                                                  <option value="week">최근 1주일</option>
+	                                                  <option value="month">최근 1개월</option>
+	                                                  <option value="6month">최근 6개월</option>
+	                                                  <option value="year">최근 1년</option>
+	                                              </select>
+	                                                </div>
+	                                            </div>
+	                                            <div class="col-md-2 col-sm-6">
+	                                                <div class="form-group">
+	                                                	<label for="keywords">&nbsp</label>
+	                                                    <input class="form-control" type="submit" value="검색">
+	                                                </div>
+	                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </section>
@@ -58,28 +75,6 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-9 col-md-push-3">
-                                	<div class="filter-options margin-list">
-                                        <div class="row">                                            
-                                            <div class="col-md-4 col-sm-4">
-                                                <select name="orderby">
-                                                    <option selected="selected">머넣을까..</option>
-                                                    <option>Sort by popularity</option>
-                                                    <option>Sort by rating</option>
-                                                    <option>Sort by newness</option>
-                                                    <option>Sort by price</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <div class="filter-result">total 29</div>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 pull-right">
-                                                <div class="filter-toggle">
-                                                    <a href="#"><i class="glyphicon glyphicon-th-large"></i></a>
-                                                    <a href="#" class="active"><i class="glyphicon glyphicon-th-list"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="booksmedia-detail-box">
 		                                <div class="clearfix"></div>
 		                  				<div class="table-tabs" id="responsiveTabs">
