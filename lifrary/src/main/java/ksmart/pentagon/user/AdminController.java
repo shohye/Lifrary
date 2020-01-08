@@ -77,9 +77,10 @@ public class AdminController {
 	public String adminLogin(@RequestParam(value = "uId")String uId, @RequestParam(value = "uPw")String uPw, HttpSession session, Model model) {
 		System.out.println(uId + " <== uId");
 		System.out.println(uPw + " <== uPw");
-		String libNum = (String)session.getAttribute("LIBNUM");
-		Map<String,Object> map =  adminService.adminLoginCheck(uId, uPw, libNum);
+		Map<String,Object> map =  adminService.adminLoginCheck(uId, uPw);
 		String result = (String)map.get("result");
+		
+		
 		User user = (User)map.get("user");
 		
 		if(!result.equals("로그인 성공")) {
@@ -89,6 +90,7 @@ public class AdminController {
 		}
 		
 		session.setAttribute("SAID",user.getuId()); // 아이디
+		session.setAttribute("LIBNUM", user.getlCode());
 		session.setAttribute("SADIV",user.getuDivision()); // 사서 / 관리자 구분
 		session.setAttribute("SANAME",user.getuName()); // 이름
 		session.setAttribute("SALI",user.getLibrarianLevel().getLlInsert()); // library insert - 사서 등록
@@ -97,7 +99,7 @@ public class AdminController {
 		session.setAttribute("SALS",user.getLibrarianLevel().getLlStats()); // library stats - 통계
 		session.setAttribute("SALBS",user.getLibrarianLevel().getLlBookStock()); // library book stock - 장서 점검 
 		System.out.println(result + " < == result");
-		
+		System.out.println(user.getlCode());
 		return "redirect:/admin/index";
 	}
 	/**

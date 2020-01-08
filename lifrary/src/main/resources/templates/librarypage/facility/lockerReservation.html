@@ -2,7 +2,9 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
-
+<th:block layout:fragment="libraryTitle">
+    	<title>..:: 사물함 신청 페이지 ::..</title>
+  </th:block>
 <th:block layout:fragment="customScript">
 <style>
 	table.makeTbLine tbody tr td {color: black; text-align: center; font-size: 12px; width: 40px; height: 35px; border: 1px solid #000;}
