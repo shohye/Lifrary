@@ -8,13 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+
 import ksmart.pentagon.vo.LayoutStats;
+import ksmart.pentagon.program.ProgramService;
 
 @Controller
 public class LayoutController {
 	
 	@Autowired private LayoutService layoutService;
 
+	@Autowired private ProgramService programService;
+	
 	@GetMapping("/")
 	public String intro() {
 		
@@ -53,6 +57,8 @@ public class LayoutController {
 		System.out.println(session.getAttribute("SNAME") + "<== 현재 세션 SNAME");
 		System.out.println(session.getAttribute("SDIV") + "<== 현재 세션 SDIV");
 		System.out.println(session.getAttribute("LIBNUM")+ "<== 현재 세션 LIBNUM");
+		
+		
 		return "librarypage/index";
 		  
 	}

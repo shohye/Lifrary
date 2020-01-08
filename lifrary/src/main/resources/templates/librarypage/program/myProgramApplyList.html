@@ -2,6 +2,10 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
+		
+		<th:block layout:fragment="libraryTitle">
+    	<title>..:: 마이페이지 - 프로그램 신청 리스트 ::..</title>
+  </th:block>
 <!-- 검색 ajax처리 -->
 <th:block layout:fragment="customContents">
 	

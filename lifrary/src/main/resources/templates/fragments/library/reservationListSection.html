@@ -33,7 +33,7 @@
 											cursor: no-drop;
 										}
 									</style>
-								<th:block  th:with="now = ${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:ss:mm')}">
+								<th:block  th:with="now = ${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}">
                                    <!-- 프로그램 리스트 반복 출력 --> 
                                    <th:block th:if="${fKinds} == '열람실'">
                                    <h3>열람실 신청 내역</h3> <br>

@@ -23,7 +23,6 @@ public class ProgramService {
 
 	// 프로그램 좌측메뉴에 최근등록 프로그램 3개까지 뿌려주기.
 	public List<ProgramManager> getLatelyProgram(String libNum) {
-		
 		return programMapper.getLatelyProgram(libNum);
 	}
 
