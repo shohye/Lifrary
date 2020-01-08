@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		 class="default-style">
-<head th:replace="fragments/library/head :: headFragment"></head>
+<head th:replace="fragments/library/introHead :: introHeadFragment"></head>
 <th:block layout:fragment="libraryTitle">
 	<title>..:: WELCOME LIFRARY ::..</title>
 </th:block>
@@ -40,40 +40,32 @@
 			                            </div>
 		                             </div>
 		                             <div class="row">
-			                            <div class="fun-stuff">
+			                            <div>
 				                		<p><strong>*</strong> 배포 날짜 : 2020-01-07</p>
 						                  <div class="facts-counter">
 						                      <ul>
-						                          <li class="col-sm-3">
-						                              <div class="fact-item icon-ebooks">
+						                          <li class="col-sm-4">
+						                              <div class="fact-item">
 						                                  <div class="fact-icon">
-						                                      <img th:src="@{/libraryStatic/images/icon-ebooks.png}" alt="" />
+						                                      <img th:src="@{/libraryStatic/images/pentagon.png}" alt="" />
 						                                  </div>
-						                                  <a th:href="@{/pentagon/index}"><span>펜타곤 도서관 <strong>Home</strong></span></a>
+						                                  <a th:href="@{/pentagon/index}"><span style="color: rgb(255, 198, 10);">펜타곤 도서관 <strong>Home</strong></span></a>
 						                              </div>
 						                          </li>
-						                          <li class="col-sm-3">
-						                              <div class="fact-item icon-eaudio">
+						                          <li class="col-sm-4">
+						                              <div class="fact-item">
 						                                  <div class="fact-icon">
-						                                      <img th:src="@{/libraryStatic/images/icon-eaudio.png}" alt="" /></a>
+						                                      <img th:src="@{/libraryStatic/images/square.png}" alt="" /></a>
 						                                  </div>
-						                                  <a th:href="@{/square/index}"><span>스퀘어 도서관<strong>Home</strong></span>
+						                                  <a th:href="@{/square/index}"><span style="color: rgb(64, 162, 215);">스퀘어 도서관<strong>Home</strong></span>
 						                              </div>
 						                          </li>
-						                          <li class="col-sm-3">
-						                              <div class="fact-item icon-magazine">
+						                          <li class="col-sm-4">
+						                              <div class="fact-item">
 						                                  <div class="fact-icon">
-						                                      <img th:src="@{/libraryStatic/images/icon-magazine.png}" alt="" />
+						                                      <img th:src="@{/libraryStatic/images/admin.png}" alt="" /></a>
 						                                  </div>
-						                                  <a th:href="@{#}"><span>펜타곤 도서관<strong>Admin</strong></span></a>
-						                              </div>
-						                          </li>
-						                          <li class="col-sm-3">
-						                              <div class="fact-item icon-videos">
-						                                  <div class="fact-icon">
-						                                      <img th:src="@{/libraryStatic/images/icon-videos.png}" alt="" />
-						                                  </div>
-						                                 <a th:href="@{#}"><span>스퀘어 도서관<strong>Admin</strong></span></a>
+						                                  <a th:href="@{/admin/login}"><span style="color: #fff;">관리자 페이지<strong>Admin</strong></span>
 						                              </div>
 						                          </li>
 						                      </ul>
