@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -22,7 +23,8 @@ public class LayoutController {
 
 
 	@GetMapping("/{lib}/index") 
-	public String index(@PathVariable(value="lib") String lib, HttpSession session) {
+	public String index(@PathVariable(value="lib") String lib, HttpSession session, Model model) {
+		String libNum = "";
 		
 		if (session.getAttribute("SAID") != null) {
 			System.out.println("세션에 SAID값이 있습니다");
@@ -41,11 +43,16 @@ public class LayoutController {
 		session.removeAttribute("LIBNUM");
 		
 		if("pentagon".equals(lib)) { 
-			
-			session.setAttribute("LIBNUM","000000");
-			
+			libNum = "000000";
+			session.setAttribute("LIBNUM",libNum);
+			model.addAttribute("programList", programService.getLatelyProgram(libNum));
+			//프로그램 가져와서 뿌려주기. 000000
 		} else if("square".equals(lib)) {
-			session.setAttribute("LIBNUM","111111");
+			libNum = "111111";
+			session.setAttribute("LIBNUM",libNum);
+			model.addAttribute("programList", programService.getLatelyProgram(libNum));
+			//프로그램 가져와서 뿌려주기. 111111
+			
 		}
 	    //도서관 페이지 세션 찍기 테스트.
 		System.out.println(session.getAttribute("SID") + "<== 현재 세션 SID");

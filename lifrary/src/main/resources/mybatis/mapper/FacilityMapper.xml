@@ -162,7 +162,7 @@
 		fr.fr_end_date = NOW()
 	WHERE 
 		fr.fr_code = #{frCode}
-		<![CDATA[ AND fr_reserve_date <= NOW() AND fr_end_date >= NOW() ]]>
+		<![CDATA[ AND fr_reserve_date <= NOW() AND fr_end_date > NOW() ]]>
   </update>
   
  <!-- 공공시설을 삭제해주는 쿼리 -->
