@@ -1,4 +1,4 @@
-package ksmart.pentagon.board;
+package ksmart.pentagon.controller;
 
 import java.io.BufferedInputStream;
 import java.net.URL;
