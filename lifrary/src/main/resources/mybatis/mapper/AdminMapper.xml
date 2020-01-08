@@ -97,6 +97,7 @@
 		SELECT
 			u.u_id,
 			u.u_pw,
+			u.l_code,
 			u.u_division,
 			u.u_name,
 			ll.ll_insert,
@@ -109,7 +110,7 @@
 		ON
 			u.u_id = ll.u_id
 		WHERE
-			u.u_id = #{uId} and u.l_code = #{libNum}  and (u.u_division = '관리자' or u.u_division = '사서')
+			u.u_id = #{uId} and (u.u_division = '관리자' or u.u_division = '사서')
 	</select>
  
   	<select id="getUserLevel" resultType="ksmart.pentagon.vo.UserLevel">

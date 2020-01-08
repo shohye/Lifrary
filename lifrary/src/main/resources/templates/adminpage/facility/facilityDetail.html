@@ -12,12 +12,15 @@
   <th:block layout:fragment="teamHeadScript">
 	  <script th:inline="javascript">
 			$(document).ready(function(){
-				
+				var fCode = [[${facility.fCode}]];
 				$('#fDeleteBtn').click(function(){
 					var deleteConfirm = confirm('정말로 삭제하시겠습니까?');
 					
 					if(deleteConfirm == true){
+						location.href = '/admin/facilityDelete?fCode='+fCode;
 						alert('삭제 완료')
+					}else{
+						location.reload();
 					}
 				})
 				
@@ -135,7 +138,7 @@
 					  				</a>
 				  			 	</td>
 					  			 	<td>
-						 				 <a th:href="@{/admin/facilityDelete(fCode = ${f.fCode})}" style="color: white"> 
+						 				 <a style="color: white"> 
 								            <button id= "fDeleteBtn" type="button" class="btn btn-danger d-block" style="margin-top: 10px;">
 							            			<span class="ion ion-md-cut"> 삭제하기</span>
 											</button>
