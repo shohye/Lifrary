@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="ksmart.pentagon.controller.LayoutMapper">
+		<resultMap type="ksmart.pentagon.vo.LayoutStats" id="count">
+			<result property="bsStockState" column="bsStockState"/>
+			<result property="blLendDate" column="blLendDate"/>
+			<result property="librarian" column="librarian"/>
+			<result property="member" column="member"/>
+		</resultMap>
+		
+		<select id="bookStockCount" parameterType="String" resultType="String">
+			SELECT
+			COUNT(bs_stock_state) AS bsStockState
+			FROM
+			book_stock
+			WHERE bs_stock_state = '소장' AND l_code = #{libnum}
+		</select>
+		
+		<select id="bookLendCount" parameterType="String" resultType="String">
+			SELECT
+			COUNT(bl_lend_date) AS blLendDate
+			FROM
+			book_lend
+			WHERE bl_lend_date = DATE(NOW()) AND l_code = #{libnum}
+		</select>
+		
+		<select id="librarianCount" parameterType="String" resultType="String">
+			SELECT
+			COUNT(u_division) AS librarian
+			FROM
+			user
+			WHERE u_division = '사서' AND l_code = #{libnum}
+		</select>
+		
+		<select id="memberCount" parameterType="String" resultType="String">
+			SELECT
+			COUNT(u_division) AS member
+			FROM
+			user
+			WHERE u_division = '회원' AND l_code = #{libnum}
+		</select>
+	</mapper>

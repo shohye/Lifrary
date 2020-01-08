@@ -12,8 +12,8 @@
          
 
             <h4 class="font-weight-bold py-3 mb-4">
-              Dashboard
-              <div class="text-muted text-tiny mt-1"><small class="font-weight-normal">Today is Tuesday, 8 February 2018</small></div>
+              통계
+              <div class="text-muted text-tiny mt-1"><small class="font-weight-normal" th:text="|${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm')} 기준통계 |"></small></div>
             </h4>
 
             <!-- Counters -->
@@ -23,10 +23,10 @@
                 <div class="card mb-4">
                   <div class="card-body">
                     <div class="d-flex align-items-center">
-                      <div class="lnr lnr-cart display-4 text-success"></div>
+                      <div class="display-4 text-success"><i class="fas fa-book d-block"></i></div>
                       <div class="ml-3">
-                        <div class="text-muted small">Monthly sales</div>
-                        <div class="text-large">2362</div>
+                        <div class="text-muted small">소장도서</div>
+                        <div class="text-large">[[${count.bsStockState}]] 권</div>
                       </div>
                     </div>
                   </div>
@@ -38,10 +38,10 @@
                 <div class="card mb-4">
                   <div class="card-body">
                     <div class="d-flex align-items-center">
-                      <div class="lnr lnr-earth display-4 text-info"></div>
+                      <div class="display-4 text-info"><i class="fas fa-address-book d-block"></i></div>
                       <div class="ml-3">
-                        <div class="text-muted small">Monthly visits</div>
-                        <div class="text-large">687,123</div>
+                        <div class="text-muted small">금일 대출도서</div>
+                        <div class="text-large">[[${count.blLendDate}]] 권</div>
                       </div>
                     </div>
                   </div>
@@ -53,10 +53,10 @@
                 <div class="card mb-4">
                   <div class="card-body">
                     <div class="d-flex align-items-center">
-                      <div class="lnr lnr-gift display-4 text-danger"></div>
+                      <div class="display-4 text-danger"><i class="fas fa-users-cog d-block"></i></div>
                       <div class="ml-3">
-                        <div class="text-muted small">Products</div>
-                        <div class="text-large">985</div>
+                        <div class="text-muted small">사서</div>
+                        <div class="text-large">[[${count.librarian}]] 명</div>
                       </div>
                     </div>
                   </div>
@@ -70,8 +70,8 @@
                     <div class="d-flex align-items-center">
                       <div class="lnr lnr-users display-4 text-warning"></div>
                       <div class="ml-3">
-                        <div class="text-muted small">Users</div>
-                        <div class="text-large">105,652</div>
+                        <div class="text-muted small">회원</div>
+                        <div class="text-large">[[${count.member}]] 명</div>
                       </div>
                     </div>
                   </div>
@@ -80,6 +80,80 @@
               </div>
             </div>
             <!-- / Counters -->
+            
+            
+            
+            
+            
+            
+            
+
+			<div class="card mb-4">
+               <div class="card-body">
+               
+               
+                      <div class="display-5 text-danger">
+	                      <i class="fas fa-chart-line d-block">
+	                      	<strong style="color: #000000;">
+	                      		&ensp;전체도서관 인기대출 도서
+	                      	</strong>
+	                      	<span style="color: #BDBDBD;">
+	                      		(분석기간 : 0000-00-00&ensp;~&ensp;0000-00-00)
+	                      	</span>
+	                      </i>
+                      </div>
+                      <div class="ml-3">
+                        <div class="text-muted small"></div>
+                      </div>
+             	<br>
+               <div class="col-xl-6">
+
+                <div class="nav-tabs-top mb-4">
+                  <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                  <a data-toggle="tab" href="#navs-top-home"><button type="button" class="btn btn-outline-info">지역</button></a>
+                    </li>
+                    <li class="nav-item">
+                      <a data-toggle="tab" href="#navs-top-home"><button type="button" class="btn btn-outline-info">연령</button></a>
+                    </li>
+                    <li class="nav-item">
+                      <a data-toggle="tab" href="#navs-top-home"><button type="button" class="btn btn-outline-info">성별</button></a>
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane fade" id="navs-top-home">
+                      <div class="card-body">
+                        btn btn-xl btn-outline-info
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="navs-top-profile">
+                      <div class="card-body">
+                        2
+                      </div>
+                    </div>
+                    <div class="tab-pane fade active show" id="navs-top-messages">
+                      <div class="card-body">
+                        3
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+               
+               
+               
+               
+				</div>
+			</div>
+			
+			
+			
+			
+			
+			
+			
+			
 
             <!-- Statistics -->
             <div class="card mb-4">
