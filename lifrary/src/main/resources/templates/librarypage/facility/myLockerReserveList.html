@@ -2,7 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/library/libraryDefault}">
-
+<th:block layout:fragment="libraryTitle">
+    	<title>..:: 마이페이지 - 사물함 신청 내역 ::..</title>
+  </th:block>
 <th:block layout:fragment="customScript">
 	<script>
 	$(document).ready(function(){
