@@ -7,9 +7,30 @@
 		<title>WELCOME ADMINPAGE</title>
 	</th:block>
  
+ 
+  <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+  	<script>
+  		$(document).ready(function(){
+  			areaClick = function(a,b){
+  				console.log(a)
+  				console.log(b)
+  			}
+  			
+  		})
+  	</script>
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   <!-- Content -->
          <th:block layout:fragment="adminContents">
-         
+         	
 
             <h4 class="font-weight-bold py-3 mb-4">
               통계
@@ -135,30 +156,30 @@
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane fade show active" id="area">
-						<div class="card-body">
+						<div class="card-body" style="padding: 0px;">
 							<div class="nav-tabs-top mb-4">
-								<ul class="nav nav-tabs" style="background-color: #D8D8D8;">
-									<li class="nav-item">&emsp;<a
-										data-toggle="tab" href="#eowjs">대전</a></li>
-									<li class="nav-item">&emsp;<a
-										data-toggle="tab" href="#tjdnf">서울</a></li>
-									<li class="nav-item">&emsp;<a
-										data-toggle="tab" href="#cjdwn">청주</a></li>
+								<ul class="nav nav-tabs" style="background-color: #E6E6E6;">
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#areaTotar" onclick="areaClick('성별','나이')">전국</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#Seoul">서울</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#busan">부산</a></li>
 								</ul>
 								<div class="tab-content">
-									<div class="tab-pane fade show active" id="eowjs">
+									<div class="tab-pane fade show active" id="areaTotar">
 										<div class="card-body">
-											1대전
+											1전국
 										</div>
 									</div>
-									<div class="tab-pane fade" id="tjdnf">
+									<div class="tab-pane fade" id="Seoul">
 										<div class="card-body">
 											2서울
 										</div>
 									</div>
-									<div class="tab-pane fade" id="cjdwn">
+									<div class="tab-pane fade" id="busan">
 										<div class="card-body">
-											3청주
+											3부산
 										</div>
 									</div>
 								</div>

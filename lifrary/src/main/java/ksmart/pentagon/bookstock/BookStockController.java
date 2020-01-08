@@ -152,6 +152,35 @@ public class BookStockController {
 				
 	/************************************************************************/
    
+	 // (도서관) 인트로 검색 상세검색후 결과 도서 리스트
+    @GetMapping("/lifrary/introSearchList")
+    public String introSearchList(Model model
+    		, @RequestParam Map<String,Object> params
+    		, @RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPageStr
+    		, HttpSession session) {
+    	
+    	if(session == null) {
+    		session.setAttribute("LIBNUM","000000");
+    	}else {
+    		session.setAttribute("LIBNUM",params.get("lCode"));
+    	}
+    	System.out.println("currentPageStr =======================> "+currentPageStr);
+    	    	
+    	Map<String, Object> map = bookStockService.getDetailSearchStockList(params, currentPageStr);
+    	
+    	model.addAttribute("searchList", map.get("list"));
+    	
+    	model.addAttribute("currentPage", map.get("currentPage"));
+    	model.addAttribute("lastPage", map.get("lastPage"));
+    	model.addAttribute("startPageNum", map.get("startPageNum"));
+    	model.addAttribute("lastPageNum", map.get("lastPageNum"));
+    	model.addAttribute("pageViewBlock", map.get("pageViewBlock"));
+    	model.addAttribute("pageViewArray", map.get("pageViewArray"));
+    	
+    	
+    	return "/librarypage/bookData/bookDataSearchList";
+    }
+
     // (도서관) 상세 검색후 결과 도서 리스트
     @GetMapping("/lifrary/bookDataSearchList")
     public String bookDataDetailSearchList(Model model
@@ -170,6 +199,8 @@ public class BookStockController {
     	model.addAttribute("lastPage", map.get("lastPage"));
     	model.addAttribute("startPageNum", map.get("startPageNum"));
     	model.addAttribute("lastPageNum", map.get("lastPageNum"));
+    	model.addAttribute("pageViewBlock", map.get("pageViewBlock"));
+    	model.addAttribute("pageViewArray", map.get("pageViewArray"));
     	
     	
     	return "/librarypage/bookData/bookDataSearchList";
@@ -198,8 +229,7 @@ public class BookStockController {
     	
     	model.addAttribute("currentPage", map.get("currentPage"));
     	model.addAttribute("lastPage", map.get("lastPage"));
-    	model.addAttribute("startPageNum", map.get("startPageNum"));
-    	model.addAttribute("lastPageNum", map.get("lastPageNum"));
+ 
     	
     	return "/librarypage/bookData/bookDataSearchGrid";
     }
