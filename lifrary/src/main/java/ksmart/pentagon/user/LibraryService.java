@@ -87,9 +87,5 @@ public class LibraryService {
 	}
 	
 	//회원 탈퇴 페이지
-	public int myUserDelete(User user) {
-		System.out.println("myUserDelete 서비스진입");
-		return libraryMapper.myUserDelete(user);
 
-	}
 }

@@ -23,7 +23,7 @@
   
   <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
   <th:block layout:fragment="teamHeadScript">
-  <script type="text/javascript">
+  <script type="text/javascript" th:inline="javascript">
   
   $(document).ready(function(){ 
 	  
@@ -31,7 +31,9 @@
 	   var SAID = [[${session.SAID}]]
 	   console.log(SAID);
 	   var write = $('#uPw').val();
+	   console.log(write);
 	   var ulLevel = $('#ulLevel').val();
+	   console.log(ulLevel);
 	   
 	   var request = $.ajax({
 			url:"/deleteLevel",
@@ -47,7 +49,8 @@
 				 $('#uPw').focus();
 			 }else if(data =='등급 삭제가 완료되었습니다'){
 				 alert(data);
-				 $('#modals-default').modal('hide');						
+				 $('#modals-default').modal('hide');
+				 location.reload(true);
 			 }						
 		});				 
 		request.fail(function( jqXHR, textStatus ) {

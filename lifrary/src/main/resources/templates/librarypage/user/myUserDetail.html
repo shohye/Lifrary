@@ -39,7 +39,7 @@
                                    <h3>나의 정보 상세보기 </h3> <br>
                                    
                                    <div class="member-info">
-                                                    <strong><span>등록자</span> : <span th:text="${session.getSID}"></span></strong> <br>
+                                                    <strong><span>등록자</span> : <span th:text="${session.SID}"></span></strong> <br>
                                                     <strong><span>모바일 회원번호</span> : <span th:text="${d.uNumber}"></span>							  
                                                     </strong> <br><br>
                                                     <ul class="news-event-info">
@@ -95,7 +95,6 @@
                                                     <br>
                                                     <br>     
                                                    		<a class="btn btn-primary" th:href="@{/lifrary/myUserUpdate}">수정하고싶어요</a>
-                                                   		<a class="btn btn-primary" th:href="@{/lifrary/myUserDelete}">악 탈퇴할래요</a>
                                                 </div>
                                     
                                    

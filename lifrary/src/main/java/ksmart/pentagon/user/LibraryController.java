@@ -189,17 +189,8 @@ public class LibraryController {
 	
 	//회원 탈퇴 하는 폼 
 	@GetMapping("/lifrary/myUserDelete")
-	public String myUserDelete(Model model, HttpSession session){
-		System.out.println("myUserDelete 탈퇴 폼 ");
+	public String getMyUserDelete() {
 		
-		String SID = (String) session.getAttribute("SID");
-		String SAID = (String) session.getAttribute("SAID");
-		String libNum = (String) session.getAttribute("LIBNUM");
-		System.out.println("SID 세션에서가져온 아이디  >>>" + SID );
-		System.out.println("SAID 세션에서가져온 관리자/사서 아이디  >>>" + SAID );
-		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
-		
-
 		return "/librarypage/user/myUserDelete";
 	}
 	

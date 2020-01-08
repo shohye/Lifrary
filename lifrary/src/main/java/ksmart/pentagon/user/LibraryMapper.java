@@ -36,5 +36,5 @@ public interface LibraryMapper {
 	public int myUserUpdate(User user);
 	
 	//회원 탈퇴 페이지
-	public int myUserDelete(User user);
+
 }

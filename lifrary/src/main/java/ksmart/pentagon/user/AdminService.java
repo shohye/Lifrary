@@ -270,18 +270,29 @@ public class AdminService {
 	//userSearchList - 관리자가 회원 삭제
 	public int deleteUser(String said, String write, String uId) {
 		System.out.println("deleteUser 서비스진입");
-		int result = adminMapper.deleteUser(said, write, uId);
-		System.out.println("deleteUser result >>> " + result);
 		
+		User u = adminMapper.checkPw(said, write);
+		int result = 0;
+		if(u == null) {
+			
+		}else {
+			result = adminMapper.deleteUser(uId);
+		}
+		System.out.println("deleteUser result=>"+result);
 		return result;
 	}
 	
 	//adUserLevelList - 관리자가 회원등급 삭제
 	public int deleteLevel(String said, String write, String ulLevel) {
-		System.out.println("deleteUser 서비스진입");
-		int result = adminMapper.deleteLevel(said, write, ulLevel);
-		System.out.println("deleteLevel result >>> " + result);
-		
+		System.out.println("deleteLevel 서비스진입");
+		User u = adminMapper.checkPw(said, write);
+		int result = 0;
+		if(u == null) {
+			
+		}else {
+			result = adminMapper.deleteLevel(ulLevel);
+		}
+		System.out.println("deleteLevel result=> " +result);
 		return result;
 	}
 	

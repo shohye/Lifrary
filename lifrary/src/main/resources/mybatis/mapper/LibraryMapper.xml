@@ -259,7 +259,9 @@
 			,u_appointment	=#{uAppointment}			
 		WHERE 
 			u_id = #{getSID}
-		AND l_code = #{libNum}
+		AND l_code = #{libNum}	`		
     </update>
+ 
+    
 	
  </mapper>

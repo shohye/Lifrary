@@ -119,11 +119,13 @@ public interface AdminMapper {
 	
 	//삭제 Ajax
 	
+	// delete AJAX( 사서  비번과 비교 후 맞으면 삭제 )
+	// 사서 아이디 ,비번 확인
+	public User checkPw(String said, String write);
 	//userSearchList - 관리자가 회원 삭제
-	public int deleteUser(String said, String write, String uId); 
-	
+	public int deleteUser(String uId); 
 	//adUserLevelList - 관리자가 회원등급 삭제
-	public int deleteLevel(String said, String write, String ulLevel); 
+	public int deleteLevel(String ulLevel);
 	
 	
 }
