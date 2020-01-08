@@ -12,9 +12,17 @@
   <th:block layout:fragment="teamHeadScript">
   	<script>
   		$(document).ready(function(){
-  			areaClick = function(a,b){
-  				console.log(a)
-  				console.log(b)
+  			areaClick = function(area){
+  				console.log(area)
+  				$('#areaDiv').html('<span>'+area+'</span>');
+  			}
+  			ageClick = function(startAge,andAge){
+  				console.log(startAge+" : "+andAge);
+  				$('#ageDiv').html('<span>'+startAge+" : "+andAge+'</span>');
+  			}
+  			genderClick = function(gender,startAge,andAge){
+  				console.log(gender+" : "+startAge+" : "+andAge);
+  				$('#genderDiv').html('<span>'+gender+" : "+startAge+" : "+andAge+'</span>');
   			}
   			
   		})
@@ -135,7 +143,7 @@
 				<i class="fas fa-chart-line d-block"> <strong
 					style="color: #000000;"> &ensp;전체도서관 인기대출 도서 </strong> <span
 					style="color: #BDBDBD;"> (분석기간 :
-						0000-00-00&ensp;~&ensp;0000-00-00) </span>
+						0000-00-00&ensp;~&ensp;[[${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm')}]] </span>
 				</i>
 			</div>
 			<br>
@@ -160,52 +168,159 @@
 							<div class="nav-tabs-top mb-4">
 								<ul class="nav nav-tabs" style="background-color: #E6E6E6;">
 									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
-										data-toggle="tab" href="#areaTotar" onclick="areaClick('성별','나이')">전국</a></li>
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('0')">전국</a></li>
 									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
-										data-toggle="tab" href="#Seoul">서울</a></li>
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('11')">서울</a></li>
 									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
-										data-toggle="tab" href="#busan">부산</a></li>
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('21')">부산</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('22')">대구</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('23')">인천</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('24')">광주</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('25')">대전</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('26')">울산</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('29')">세종</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('31')">경기</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('32')">강원</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('33')">충북</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('34')">충남</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('35')">전북</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('36')">전남</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('37')">경북</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('38')">경남</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('39')">제주</a></li>
 								</ul>
 								<div class="tab-content">
-									<div class="tab-pane fade show active" id="areaTotar">
-										<div class="card-body">
+									<div class="tab-pane fade show active" id="AreaTotar">
+										<div class="card-body" id="areaDiv">
 											1전국
-										</div>
-									</div>
-									<div class="tab-pane fade" id="Seoul">
-										<div class="card-body">
-											2서울
-										</div>
-									</div>
-									<div class="tab-pane fade" id="busan">
-										<div class="card-body">
-											3부산
 										</div>
 									</div>
 								</div>
 							</div>
-						
-						
-						
-						
 						</div>
 					</div>
 					<div class="tab-pane fade" id="age">
-						<div class="card-body">
-						
+						<div class="card-body" style="padding: 0px;">
+							<div class="nav-tabs-top mb-4">
+								<ul class="nav nav-tabs" style="background-color: #E6E6E6;">
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('','')">전체</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('0','5')">영유아(0~5)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('6','7')">유아(6~7)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('8','13')">초등(8~13)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('14','19')">청소년(14~19)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('20','29')">20대</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('30','39')">30대</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('40','49')">40대</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('50','59')">50대</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('60','100')">60 이상</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="AgeTotal">
+										<div class="card-body" id="ageDiv">
+											age전국
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="genger">
-						<div class="card-body">
-						
+						<div class="card-body" style="padding: 0px;">
+							<div class="nav-tabs-top mb-4">
+								<ul class="nav nav-tabs" style="background-color: #E6E6E6;">
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('','','')">전체</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','0','5')">영유아(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','0','5')">영유아(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','6','7')">유아(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','6','7')">유아(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','8','13')">초등(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','8','13')">초등(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','14','19')">청소년(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','14','19')">청소년(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','20','29')">20대(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','20','29')">20대(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','30','39')">30대(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','30','39')">30대(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','40','49')">40대(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','40','49')">40대(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','50','59')">50대(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','50','59')">50대(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','60','100')">60대 이상(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','60','100')">60대 이상(여)</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="GenderTotal">
+										<div class="card-body" id="genderDiv">
+											Gender전체
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
+					
+					
 				</div>
 			</div>
-
-
 		</div>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+			
 
 
 
