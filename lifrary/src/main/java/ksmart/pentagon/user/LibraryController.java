@@ -190,8 +190,19 @@ public class LibraryController {
 	//회원 탈퇴 하는 폼 
 	@GetMapping("/lifrary/myUserDelete")
 	public String getMyUserDelete() {
+		System.out.println("getMyUserDelete  회원 탈퇴하기  ");
 		
 		return "/librarypage/user/myUserDelete";
 	}
+	
+	@GetMapping("/lifrary/userFindIdPw")
+	public String userFindIdPw() {
+		System.out.println("userFindIdPw  내정보 아이디 비번 찾기  ");
+		
+		return "/librarypage/user/userFindIdPw";
+		
+	}
+	
+	
 	
 }
