@@ -262,6 +262,6 @@
 		AND l_code = #{libNum}	`		
     </update>
  
-    
+     
 	
  </mapper>
