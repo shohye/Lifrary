@@ -21,7 +21,7 @@
   	  /*<![CDATA[*/
   		var resultInsert = [[ ${resultInsert} ]];//일정 등록 결과
   		var resultUpdate = [[ ${resultUpdate} ]];//일정 수정 결과
-  		var resultDelete = [[ ${resultDelete} ]];//일정 수정 결과
+  		var resultDelete = [[ ${resultDelete} ]];//일정 삭제 결과
   		/*]]*/
   		
   		if(resultInsert == 1){
@@ -82,26 +82,26 @@
 	  	   		request.fail(function( jqXHR, textStatus ) {
 	  	   		  alert('목표량을 불러오는데 실패하였습니다');
 	  	   		});//request.fail
-	 	   	//목표량 등록
-				 $('#goalInsert li').click(function(){
-		 			
-					var endDay = null;//종료일 
-					//선택한 옵션 값
-		 			var optValue = $(this).attr('rel');
-		 			 console.log(optValue);
-		 			 
-		 			if(optValue == 'month'){//월별인 경우 종료일에 이번달 마지막일 셋팅 
-		 				endDay = moment().endOf('month').format('YYYY-MM-DD');
-		 			}else if(optValue == 'quarterly'){//분기별인 경우 분기에 따라 종료일 셋팅
-		 				endDay = gEndDate;
-		 			}else if(optValue == 'year'){//년도별인 경우 올 해 마지막일 셋팅
-		 				endDay = year+'-12-31';
-		 			}
-		 			 
-					$('[name="gStartDate"]').val(today);
-					$('[name="gEndDate"]').val(endDay);
-	
-	 	 		 }); 
+	 	 //기간에 따른 종료일 구하기
+		 $('#goalInsert li').click(function(){
+ 			
+			var endDay = null;//종료일 
+			//선택한 옵션 값
+ 			var optValue = $(this).attr('rel');
+ 			 console.log(optValue);
+ 			 
+ 			if(optValue == 'month'){//월별인 경우 종료일에 이번달 마지막일 셋팅 
+ 				endDay = moment().endOf('month').format('YYYY-MM-DD');
+ 			}else if(optValue == 'quarterly'){//분기별인 경우 분기에 따라 종료일 셋팅
+ 				endDay = gEndDate;
+ 			}else if(optValue == 'year'){//년도별인 경우 올 해 마지막일 셋팅
+ 				endDay = year+'-12-31';
+ 			}
+ 			 
+			$('[name="gStartDate"]').val(today);
+			$('[name="gEndDate"]').val(endDay);
+
+	 		 }); 
 	  	 //목표량 등록  		
 		 $('#goalBtn').click(function(){
 			 var year = $('.progress-bar').eq(0).text();
