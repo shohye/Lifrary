@@ -6,6 +6,35 @@
 <th:block layout:fragment="libraryTitle">
 	<title>..:: WELCOME LIFRARY ::..</title>
 </th:block>
+
+ <th:block layout:fragment="customScript">
+     <script type="text/javascript" th:inline="javascript">  
+       $(document).ready(function(){  
+    	   
+    		// 유효성검사 시작
+    		$('#searchBtn').click(function(){   			
+    			var lCode = $('#lCode');
+    			var biName = $('#biName');
+    			console.log(biName.val());
+    			
+    			if(lCode.val() == '0'){
+    				alert('도서관을 선택해 주세요');
+    				lCode.focus();
+    				return false;
+    			}
+    			if(biName.val() == ''){
+    				alert('검색어를 입력해주세요');
+    				biName.focus();
+    				return false;
+    			}
+    			    			
+    			$('#searchForm').submit();
+    			
+    		}); // 유효성검사 끝    		
+    	}); // 처음 function끝
+    	    	
+  	</script>
+    </th:block>
     
     <body class="layout-v3">
         <th:block layout:fragment="customContents">  
@@ -21,20 +50,20 @@
 	                            <div class="container-fluid">
 	                           		<div class="row">
 			                            <div class="filter-box">
-			                                <form th:action="@{#}" class="banner-filter-box" method="get">
+			                                <form id="searchForm" th:action="@{/lifrary/introSearchList}" class="banner-filter-box" method="get">
 												<div class="form-group">
-			                                        <select name="catalog" id="catalog">
-			                                            <option>::도서관 선택::</option>
-			                                            <option>펜타곤 도서관</option>
-			                                            <option>오각형 도서관</option>
+			                                        <select name="lCode" id="lCode">
+			                                            <option value="0">::도서관 선택::</option>
+			                                            <option value="000000">오각형 도서관</option>
+			                                            <option value="111111">사각형 도서관</option>
 			                                        </select>
 			                                    </div>                                       
 			                                    <div class="form-group">
 			                                        <label class="sr-only" for="keywords">도서명을 입력하세요</label>
-			                                        <input class="form-control" placeholder="도서명을 입력하세요" id="keywords" name="keywords" type="text">
+			                                        <input class="form-control" placeholder="도서명을 입력하세요" id="biName" name="biName" type="text">
 			                                    </div>
 			                                    <div class="form-group">
-			                                    <input class="form-control" type="button" value="Search">
+			                                    <input id="searchBtn" class="form-control" type="button" value="Search">
 			                               		</div>
 			                                </form>
 			                            </div>
@@ -78,6 +107,5 @@
 			   </div>
 			</div>
          </th:block>
-        <footer th:replace="fragments/library/footer :: footerFragment"></footer>
     </body>
 </html>
