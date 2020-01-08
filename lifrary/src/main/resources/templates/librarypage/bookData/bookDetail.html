@@ -74,9 +74,9 @@
 		<section class="page-banner services-banner" th:fragment="bookBannerFragment">
             <div class="container">
                 <div class="banner-header">
-                    <h2>Books & Media Listing</h2>
+                    <h2>도서 상세보기</h2>
                     <span class="underline center"></span>
-                    <p class="lead">Proin ac eros pellentesque dolor pharetra tempo.</p>
+                    <p class="lead">도서의 상세정보를 확인해보세요</p>
                 </div>
                 <div class="breadcrumb">
                     <ul>
@@ -175,8 +175,8 @@
                                 
                                 <div class="clearfix"></div>
                                 <p th:with="s=${stockDetail}"><strong>책 상세설명:</strong> 
-                                	<span th:if="${s.bookInformation.biDtail ne null}" th:text="${s.bookInformation.biDtail}"></span>
-                                	<span th:unless="${s.bookInformation.biDtail ne null}"> * 이 도서는 상세설명을 제공 하지 않습니다.</span>
+                                	<span th:if="${s.bookInformation.biDtail ne null and s.bookInformation.biDtail ne ''}" th:text="${s.bookInformation.biDtail}"></span>
+                                	<span th:unless="${s.bookInformation.biDtail ne null and s.bookInformation.biDtail ne ''}"> &nbsp* 이 도서는 상세설명을 제공 하지 않습니다.</span>
                                 </p>
 
                                 <div class="table-tabs" id="responsiveTabs">
