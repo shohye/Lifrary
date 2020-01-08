@@ -11,49 +11,46 @@
                     </figure>
                     <div class="container">
                         <div class="carousel-caption">
-                            <h3>관리자 로그인 페이지이동을 위한 임시화면</h3>
-                            <h2>관리자 로그인 페이지 이동!!</h2>
-                            <p>이것은 임시입니다. 다들 백업하고 푸쉬 풀 열심히 합시다 ㅠㅠ</p>
+                            <h3>신작 추천 도서</h3>
+                            <h2>19호실로 가다</h2>
+                            <p> 영국을 대표하는 노벨문학상 수상작가 도리스 레싱의 단편소설집 &lt;To Room Nineteen: Collected Stories Volume One&gt;(1994)에 실린 11편의 단편을 묶었다. 남은 9편은 &lt;사랑하는 습관&gt;이라는 제목으로 출간된다.</p>
                             <div class="slide-buttons hidden-sm hidden-xs">    
-                                <a th:href="@{/admin/login}" class="btn btn-primary">관리자 로그인 페이지</a>
+                                <a th:href="@{/lifrary/bookDetail(bsCode=bs-20010600023)}" class="btn btn-primary">상세보기</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="item">
+				<div class="item">
                     <figure>
-                        <img alt="Home Slide" th:src="@{libraryStatic/images/header-slider/home-v1/header-slide.jpg}" />
+                        <img alt="Home Slide" th:src="@{/libraryStatic/images/header-slider/home-v1/header-slide.jpg}" />
                     </figure>
                     <div class="container">
                         <div class="carousel-caption">
-                            <h3>Online Learning Anytime, Anywhere!</h3>
-                            <h2>Discover Your Roots</h2>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humor, or randomized words.</p>
+                            <h3>인기도서</h3>
+                            <h2>Good morning wedding</h2>
+                            <p>주미란 장편소설. "두 달 안에 해치웁시다." "뭘요?" "결혼." "그쪽이랑 나랑?" 첫 맞선. 부모님이 고르신 집안의 아가씨라면 눈이 세 개에 콧구멍이 하나이지 않은 이상 결혼까지 할 생각이었다. 그런데 처음으로 만난 여자가 의외로 재미있는 아가씨다. 당돌하다고 해야 하나, 당당하다고 해야 하나.</p>
                             <div class="slide-buttons hidden-sm hidden-xs">    
-                                <a th:href="@{#}" class="btn btn-primary">Read More</a>
-                                <a th:href="@{#}" class="btn btn-default">Purchase</a>
+                                <a th:href="@{/lifrary/bookDetail(bsCode=bs-20010600067)}" class="btn btn-primary">상세보기</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="item">
                     <figure>
-                  	  <img alt="Home Slide" th:src="@{libraryStatic/images/header-slider/home-v1/header-slide.jpg}" />
+                  	  <img alt="Home Slide" th:src="@{/libraryStatic/images/header-slider/home-v1/header-slide.jpg}" />
                     </figure>
                     <div class="container">
                         <div class="carousel-caption">
-                            <h3>Online Learning Anytime, Anywhere!</h3>
-                            <h2>Discover Your Roots</h2>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humor, or randomized words.</p>
+                            <h3>사서 추천 도서</h3>
+                            <h2>타인의 시선을 의식해 힘든 나에게</h2>
+                            <p> &lt;오늘처럼 내가 싫었던 날은 없다&gt; 글배우 작가가 전하는 위로와 용기의 말들. 수년 간 많은 이들의 고민을 직접 상담해오며 요즘 사람들이 가장 걱정하는 문제에 대해 같이 공감하고 이야기를 나눈 저자가 실질적인 도움을 줄 수 있는 방법을 모아 담은 책이다.</p>
                             <div class="slide-buttons hidden-sm hidden-xs">    
-                                <a th:href="@{#}" class="btn btn-primary">Read More</a>
-                                <a th:href="@{#}" class="btn btn-default">Purchase</a>
+                                <a th:href="@{/lifrary/bookDetail(bsCode=bs-19122400007)}" class="btn btn-primary">상세보기</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-             -->
             <!-- Controls -->
             <a class="left carousel-control" href="#home-v1-header-carousel" data-slide="prev"></a>
             <a class="right carousel-control" href="#home-v1-header-carousel" data-slide="next"></a>

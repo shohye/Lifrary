@@ -18,8 +18,7 @@ public class LibraryInterceptor implements HandlerInterceptor{
 		
         HttpSession session = request.getSession(false);
         String uri = request.getRequestURI();
-        System.out.println(uri+ "<----------uri");
-        
+               
         if(session != null) {
         	if(("/lifrary/myUserDetail").equals(uri)||("/lifrary/myPointList").equals(uri)||
         			("/lifrary/myLendList").equals(uri)||("/lifrary/myHoldList").equals(uri)||

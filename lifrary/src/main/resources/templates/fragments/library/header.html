@@ -10,7 +10,10 @@
                                     <div class="navbar-brand">
                                         <h1>
                                             <a th:href="@{/}">
-                                                <img th:src="@{/libraryStatic/images/libraria-logo-v1.png}" alt="LIFRARY" />
+                                        	<th:block th:unless="${session == null}">
+                                                <img th:if = "${session.LIBNUM eq '000000'}" th:src="@{/libraryStatic/images/pentagon_logo.png}" alt="LIFRARY" />
+                                                <img th:if = "${session.LIBNUM eq '111111'}" th:src="@{/libraryStatic/images/square_logo.png}" alt="LIFRARY" />
+                                       		 </th:block>    
                                             </a>
                                         </h1>
                                     </div>
@@ -21,11 +24,6 @@
                                 <div class="header-topbar hidden-sm hidden-xs">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <div class="topbar-info">
-                                                <a th:href="@{tel:063-717-1008}"><i class="fa fa-phone"></i>063-717-1008</a>
-                                                <span>/</span>
-                                                <a th:href="@{mailto:support@libraria.com}"><i class="fa fa-envelope"></i>support@libraria.com</a>
-                                            </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="topbar-links">
