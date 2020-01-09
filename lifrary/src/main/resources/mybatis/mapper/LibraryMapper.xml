@@ -74,7 +74,7 @@
 		WHERE u_id = #{uId} and l_code = #{libNum}
  	</select>
  	
- 	<insert id="userInsert1" parameterType="ksmart.pentagon.vo.User">
+ 	<insert id="userInsertUser" parameterType="ksmart.pentagon.vo.User">
 		<selectKey keyProperty="uNumber" resultType="String" order="BEFORE">
  			SELECT 
  				CONCAT(MAX((u_number)+1))AS uNumber
@@ -118,7 +118,7 @@
 		)
 	</insert>
 	
-	<insert id="userInsert2">
+	<insert id="userInsertUserLevelHistory">
 		<selectKey keyProperty="ulhCode" resultType="String" order="BEFORE">
  			SELECT 
 			CONCAT('ulh_',DATE_FORMAT(CURDATE(), '%y%m%d'),
@@ -146,7 +146,7 @@
 		)
 	</insert>
 	
-	<insert id="userInsert3">
+	<insert id="userInsertUserAuthorityHistory">
 	 	<selectKey keyProperty="uahCode" resultType="String" order="BEFORE">
  			SELECT 
 			CONCAT('uah_',DATE_FORMAT(CURDATE(), '%y%m%d'),
@@ -174,7 +174,7 @@
 		)
 	</insert>
 	
-	<insert id="userInsert4">
+	<insert id="userInsertStudyCate">
 		<selectKey keyProperty="scCode" resultType="String" order="BEFORE">
  			SELECT 
 			CONCAT('sc_',DATE_FORMAT(CURDATE(), '%y%m%d'),

@@ -196,8 +196,8 @@ public class LibraryController {
 	
 	//회원 탈퇴 하는 폼 
 	@GetMapping("/lifrary/myUserDelete")
-	public String myUserDelete (HttpSession session, Model model) {
-		System.out.println("getMyUserDelete  회원 탈퇴하기  ");
+	public String myUserDelete (User user, HttpSession session, Model model) {
+		System.out.println("myUserDelete  회원 탈퇴하기  ");
 		
 		String SID = (String) session.getAttribute("SID");	//회원아이디
 		String libNum = (String) session.getAttribute("LIBNUM");	//도서관 코드
