@@ -261,7 +261,19 @@
 			u_id = #{getSID}
 		AND l_code = #{libNum}	`		
     </update>
- 
+    
+    <!-- 회원탈퇴 delete-->
+ 	<delete id="MyUserDelete">
+ 		DELETE 
+		FROM 
+			user 
+		WHERE 
+			u_id = #{SID}
+		AND 
+			u_pw = #{uPw}
+		AND
+			l_code = #{libNum}
+ 	</delete>
      
 	
  </mapper>

@@ -23,10 +23,10 @@ public interface LibraryMapper {
 	public User loginCheck(String uId, String libNum);
 	
 	//회원가입
-	public int userInsert1(User user);
-	public int userInsert2(UserLevelHistory userLevelHistory);
-	public int userInsert3(UserAuthorityHistory userAuthorityHistory);
-	public int userInsert4(StudyCate studyCate);
+	public int userInsertUser(User user);
+	public int userInsertUserLevelHistory(UserLevelHistory userLevelHistory);
+	public int userInsertUserAuthorityHistory(UserAuthorityHistory userAuthorityHistory);
+	public int userInsertStudyCate(StudyCate studyCate);
 	
 	//마이페이지 - 내정보
 	public User myUserDetail(String getSID ,String libNum);
@@ -36,5 +36,6 @@ public interface LibraryMapper {
 	public int myUserUpdate(User user);
 	
 	//회원 탈퇴 페이지
+	public User MyUserDelete();
 
 }

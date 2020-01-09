@@ -125,6 +125,7 @@ public class LibraryController {
 	}
 	
 	//회원가입 등록
+	//4개 테이블 동시 등록
 	@PostMapping("/lifrary/userInsert")
 	public String userInsert(HttpSession session, User user, UserLevelHistory userLevelHistory
 								, UserAuthorityHistory userAuthorityHistory, StudyCate studyCate) {
@@ -134,14 +135,20 @@ public class LibraryController {
 		System.out.println("userAuthorityHistory 확인 ==>> " + userAuthorityHistory);
 		System.out.println("studyCate 확인 ==>> " + studyCate);
 		
-		libraryService.userInsert1(user);
-		libraryService.userInsert2(userLevelHistory);
-		libraryService.userInsert3(userAuthorityHistory);
-		libraryService.userInsert4(studyCate);
+		
+		libraryService.userInsertUser(user);	
+		libraryService.userInsertUserLevelHistory(userLevelHistory);	
+		libraryService.userInsertUserAuthorityHistory(userAuthorityHistory);
+		libraryService.userInsertStudyCate(studyCate);
 		
 		return "redirect:/";
 	}
 	
+	/***
+	 * 도서관페이지 내정보 상세보기 
+	 * @return 
+	 * @author 한우리
+	 */
 	//도서관페이지-마이페이지 내정보 상세보기
 	@GetMapping("/lifrary/myUserDetail")
 	public String myUserDetail(Model model, HttpSession session) {
@@ -167,7 +174,7 @@ public class LibraryController {
 	   String getSID = (String) session.getAttribute("SID");
 	   String getSAID = (String) session.getAttribute("SAID");
 	   String libNum = (String) session.getAttribute("LIBNUM");
-	   System.out.println("getSID 세션에서가져온 아이디  >>>" + getSID );
+	    System.out.println("getSID 세션에서가져온 아이디  >>>" + getSID );
 	   System.out.println("getSAID 세션에서가져온 아이디  >>>" + getSAID );
 	   System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
 	   
@@ -189,12 +196,17 @@ public class LibraryController {
 	
 	//회원 탈퇴 하는 폼 
 	@GetMapping("/lifrary/myUserDelete")
-	public String getMyUserDelete() {
+	public String myUserDelete (HttpSession session, Model model) {
 		System.out.println("getMyUserDelete  회원 탈퇴하기  ");
+		
+		String SID = (String) session.getAttribute("SID");	//회원아이디
+		String libNum = (String) session.getAttribute("LIBNUM");	//도서관 코드
+		System.out.println("SID 세션에서 가져온 회원아이디 >> "+ SID);
+		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
 		
 		return "/librarypage/user/myUserDelete";
 	}
-	
+
 	@GetMapping("/lifrary/userFindIdPw")
 	public String userFindIdPw() {
 		System.out.println("userFindIdPw  내정보 아이디 비번 찾기  ");
@@ -203,6 +215,5 @@ public class LibraryController {
 		
 	}
 	
-	
-	
+		
 }
