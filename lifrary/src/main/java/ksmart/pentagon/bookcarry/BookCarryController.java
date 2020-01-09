@@ -284,9 +284,21 @@ public class BookCarryController {
 	 * @author 신다은
 	 */
     @GetMapping("/lifrary/myBookRequestList")
-    public String myBookRequestList(Model model,HttpSession session) {
+    public String myBookRequestList(Model model,HttpSession session
+    		, @RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPageStr) {
+    	
     	String uid = (String) session.getAttribute("SID");
-    	model.addAttribute("myRequestList", bookCarryService.getMyRequestList(uid));
+    	
+    	Map<String, Object> map =  bookCarryService.getMyRequestLists(uid,currentPageStr);
+    	
+    	model.addAttribute("myRequestList", map.get("list"));
+    	
+    	model.addAttribute("currentPage", map.get("currentPage"));
+    	model.addAttribute("lastPage", map.get("lastPage"));
+    	model.addAttribute("startPageNum", map.get("startPageNum"));
+    	model.addAttribute("lastPageNum", map.get("lastPageNum"));
+    	model.addAttribute("pageViewBlock", map.get("pageViewBlock"));
+    	model.addAttribute("pageViewArray", map.get("pageViewArray"));
     	
     	return "librarypage/book/myBookRequestList";
     }

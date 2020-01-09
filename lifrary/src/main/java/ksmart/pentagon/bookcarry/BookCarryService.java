@@ -15,6 +15,7 @@ import org.xml.sax.SAXException;
 import ksmart.pentagon.vo.BookCarry;
 import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.BookRequest;
+import ksmart.pentagon.vo.Paging;
 import ksmart.pentagon.vo.User;
 
 @Service
@@ -215,8 +216,45 @@ public class BookCarryService {
 		return bookCarryMapper.insertRequest(bookRequest);		
 	}
 	//( 도서관 ) 사용자 id를 기준으로 하는 희망도서 신청 리스트
-	public List<BookRequest> getMyRequestList(String uid){
-		return bookCarryMapper.getMyRequestList(uid);	
+	public Map<String, Object> getMyRequestLists(String uid, String currentPageStr){
+				
+		int boardCount = bookCarryMapper.getCountMyRequest(uid);
+		// 페이징
+		Paging paging =  new Paging(boardCount, currentPageStr);
+		// DB 행의 총 개수를 구하는 getStockAllCount() 메서드를 호출하여 int Date Type의 boardCount 변수에 대입
+       
+        System.out.println("boardCount===>"+boardCount);
+        
+        
+        
+        // 페이징vo에 있는거 가져오는거임,,,
+        int currentPage = paging.getCurrentPage();
+        int lastPage = paging.getLastPage();
+        int startPageNum = paging.getStartPageNum();
+        int lastPageNum = paging.getLastPageNum();
+       
+        
+        int startRow = paging.getStartRow();
+        int ROW_PER_PAGE = Paging.getRowPerPage();
+        
+        Map<String ,Object> map = new HashMap<String ,Object>();
+        map.put("uid", uid);
+        map.put("startRow", startRow);
+        map.put("rowPerPage", ROW_PER_PAGE);
+        
+        List<BookRequest> myRequestList= bookCarryMapper.getMyRequestList(map);
+		
+     // 가져온거 맵으로 컨트롤러에 전달
+     // bookDataSearchList.html 아래부분  nav보면 사용한 방식이 나옵니다. 그것을 보세용
+      Map<String, Object> resultMap = new HashMap<String, Object>();
+	  resultMap.put("list", myRequestList);
+      resultMap.put("currentPage", currentPage);
+      resultMap.put("lastPage", lastPage);
+      resultMap.put("startPageNum", startPageNum);
+      resultMap.put("lastPageNum", lastPageNum);
+		
+		
+		return resultMap;	
 	}
 	
 
