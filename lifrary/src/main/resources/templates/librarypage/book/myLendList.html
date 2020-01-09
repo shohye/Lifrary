@@ -54,32 +54,38 @@
                                     <div class="container">
                                         <div class="filter-box">
                                             <h3>나의 대출 도서 검색</h3>
-                                            <div class="col-md-4 col-sm-6">
-                                                <div class="form-group">
-                                                    <input class="form-control" placeholder="도서명" type="text" name="biName">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-sm-6">
-                                                <select name="skDate" class="form-control">
-                                                    <option value="blLendDate">대출일</option>
-                                                    <option value="blScheduleDate">반납예정일</option>
-                                                    <option value="blReturnDate">반납일</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3 col-sm-6">
-                                                <select name="svDate" class="form-control">
-                                                    <option value="">전체기간</option>
-                                                    <option value="week">최근 1주일</option>
-                                                    <option value="month">최근 1개월</option>
-                                                    <option value="6month">최근 6개월</option>
-                                                    <option value="year">최근 1년</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2 col-sm-6">
-                                                <div class="form-group">
-                                                    <input class="form-control" type="submit" value="검색">
-                                                </div>
-                                            </div>
+                                            <form>
+	                                            <div class="col-md-4 col-sm-6">
+	                                                <div class="form-group">
+	                                                	<label for="keywords">도서명</label>
+	                                                    <input class="form-control" type="text" name="biName">
+	                                                </div>
+	                                            </div>
+	                                            <div class="col-md-3 col-sm-6">
+	                                            	<label for="keywords">기간조건</label>
+	                                                <select name="skDate" class="form-control">
+	                                                    <option value="blLendDate">대출일</option>
+	                                                    <option value="blScheduleDate">반납예정일</option>
+	                                                    <option value="blReturnDate">반납일</option>
+	                                                </select>
+	                                            </div>
+	                                            <div class="col-md-3 col-sm-6">
+	                                            	<label for="keywords">기간선택</label>
+	                                                <select name="svDate" class="form-control">
+	                                                    <option value="all">전체기간</option>
+	                                                    <option value="week">최근 1주일</option>
+	                                                    <option value="month">최근 1개월</option>
+	                                                    <option value="6month">최근 6개월</option>
+	                                                    <option value="year">최근 1년</option>
+	                                                </select>
+	                                            </div>
+	                                            <div class="col-md-2 col-sm-6">
+	                                                <div class="form-group">
+	                                                	<label for="keywords">&nbsp</label>
+	                                                    <input class="form-control" type="submit" value="검색">
+	                                                </div>
+	                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </section>
@@ -119,7 +125,7 @@
 							            	<span class="badge">연장불가</span>
 							             </td> 
 							             <td class="align-middle text-center" th:unless = "${Ml.blExtensionDate != null || Ml.blReturnDate != null}">
-							            	 <a th:href="@{#(blCode=${Ml.blCode})}">
+							            	 <a th:href="@{/lifrary/extensionUpdate(blCode=${Ml.blCode})}">
 							            		<span class="badge" style="background-color:#02BC77;">연장하기</span>
 							            	 </a>
 							             </td>
