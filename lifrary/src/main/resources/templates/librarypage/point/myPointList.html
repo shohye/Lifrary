@@ -135,8 +135,8 @@
                 </div>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a th:href="@{/}">Home</a></li>
-                        <li>MY POINT</li>
+                        <li><a>마이페이지</a></li>
+                        <li>내 포인트</li>
                     </ul>
                 </div>
             </div>
@@ -147,47 +147,17 @@
                     <div class="books-media-list">
                         <div class="container">
                             <div class="row">
-                                <!-- Start: Search Section -->
-                                <section class="search-filters">
-                                    <div class="container">
-                                        <div class="filter-box">
-                                  			<h3>나의 대출 도서 검색</h3>
-                                            <form>
-	                                            <div class="col-md-4 col-sm-6">
-	                                                <div class="form-group">
-	                                                	<label for="keywords">포인트명</label>
-	                                                    <input class="form-control" type="text" name="biName">
-	                                                </div>
-	                                            </div>
-	                                            <div class="col-md-3 col-sm-6">
-	                                            	<label for="keywords">기간조건</label>
-	                                                <select name="skDate" class="form-control">
-	                                                    <option value="blLendDate">대출일</option>
-	                                                    <option value="blScheduleDate">반납예정일</option>
-	                                                    <option value="blReturnDate">반납일</option>
-	                                                </select>
-	                                            </div>
-	                                            <div class="col-md-3 col-sm-6">
-	                                            	<label for="keywords">기간선택</label>
-	                                                <select name="svDate" class="form-control">
-	                                                    <option value="all">전체기간</option>
-	                                                    <option value="week">최근 1주일</option>
-	                                                    <option value="month">최근 1개월</option>
-	                                                    <option value="6month">최근 6개월</option>
-	                                                    <option value="year">최근 1년</option>
-	                                                </select>
-	                                            </div>
-	                                            <div class="col-md-2 col-sm-6">
-	                                                <div class="form-group">
-	                                                	<label for="keywords">&nbsp</label>
-	                                                    <input class="form-control" type="submit" value="검색">
-	                                                </div>
-	                                            </div>
-                                            </form>
-                                      	</div>
-                                	</div>
-                                </section>
-                                <!-- End: Search Section -->
+                                  <section class="services-offering">
+                                <div class="container">
+                                    <div class="center-content">
+                                        <h2 class="section-title">MY POINT</h2>
+                                        <span class="underline center"></span>
+                                        <p class="lead">내 포인트 이력</p>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </section>
+                                
                             </div>
                             <div class="row">
                                 <div class="col-md-9 col-md-push-3">
@@ -237,12 +207,7 @@
                                     <nav class="navigation pagination text-center" style="padding-bottom: 20px;">
                                         <h2 class="screen-reader-text">Posts navigation</h2>
                                         <div class="nav-links">
-                                            <a class="prev page-numbers" th:href="@{#}"><i class="fa fa-long-arrow-left"></i> Previous</a>
                                             <span class="page-numbers current">1</span>
-                                            <a class="page-numbers" th:href="@{#}">2</a>
-                                            <a class="page-numbers" th:href="@{#}">3</a>
-                                            <a class="page-numbers" th:href="@{#}">4</a>
-                                            <a class="next page-numbers" th:href="@{#}">Next <i class="fa fa-long-arrow-right"></i></a>
                                         </div>
                                     </nav>
                                 </div>
