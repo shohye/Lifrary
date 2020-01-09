@@ -193,12 +193,10 @@
 					book_lend AS bl
 				WHERE
 					bl.bl_return_date IS NULL
-				AND
-				(
+				AND(
 					(bl.bl_lend_date IS NULL AND bl.bl_hold_date IS NOT NULL)
 					OR
-					bl.bl_lend_date IS NOT NULL
-				)
+					bl.bl_lend_date IS NOT NULL)
 				AND 
 					bl.bl_id = u.u_id	) AS u_lend_cnt
 		FROM
@@ -222,7 +220,6 @@
 		ORDER BY 
 			uah.uah_date DESC
 		LIMIT 0,1
-			
   	</select>
   	<insert id="lendInsert" parameterType="ksmart.pentagon.vo.BookLend">
 	  	<selectKey keyProperty="blCode" resultType="String" order="BEFORE">

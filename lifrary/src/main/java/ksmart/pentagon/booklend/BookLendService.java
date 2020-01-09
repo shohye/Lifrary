@@ -38,15 +38,13 @@ public class BookLendService {
 	//도서정보검색
 	public Map<String, Object> bookInfo(String libNum, String svBook) {
 		
+		BookStock bookStock = null;
 		Map<String, Object> bookInfoMap = new HashMap<String, Object>();
 				
 		//앞뒤공백제거
 		String svBookTrim =svBook.trim();
 		//새로 등록된 도서인지 확인
 		int bookLendCheck = bookLendMapper.bookLendCheck(libNum, svBookTrim);
-		
-		BookStock bookStock = null;
-		
 		if(bookLendCheck == 0) bookStock = bookLendMapper.bookInfoStock(libNum, svBookTrim);
 		else bookStock = bookLendMapper.bookInfo(libNum,svBookTrim);
 			
@@ -82,9 +80,9 @@ public class BookLendService {
 				if(lendDate == null && returnDate == null) {//예약 도서인지 확인하는 조건문
 					bookStock.setBsLendState("예약");
 					bookInfoMap.put("searchBook", 3);//예약도서인  경우 3 대입
-				}else if(lendDate != null && returnDate == null) {//반납안된 도서인지 확인하는 조건문	
+				}else if(lendDate != null && returnDate == null) {//대출된 도서인지 확인하는 조건문	
+					//대출도서 회원정보 가져오기
 					User user = bookLendMapper.userInfo(libNum, bookStock.getuId());
-					
 					if(user != null) {
 						//대출가능권수 구하기
 						int bookLendNum = 0;
@@ -98,14 +96,13 @@ public class BookLendService {
 							bookLendNum = 0;	
 						}
 						user.getUserLevel().setUlLendNum(bookLendNum);
-						
 						//대출제한일이 null이거나 사용제한일이 지난 경우 
 						if(user.getuAuthorityDate() == null || user.getuAuthorityDays() <= 0) {
 							user.setuAuthorityDate(" ");
 						}	
 					}
 					bookInfoMap.put("resultUser", user);
-					bookInfoMap.put("searchBook", 2);//반납안된 도서인 경우2 대입
+					bookInfoMap.put("searchBook", 2);//대출된 도서인 경우2 대입
 				}
 			}	
 		}else {
@@ -114,8 +111,7 @@ public class BookLendService {
 		}
 		bookInfoMap.put("resultBook", bookStock);
 		
-		return bookInfoMap;
-		
+		return bookInfoMap;	
 	}
 	//회원정보
 	public Map<String, Object> userInfo(String libNum, String svUser) {
