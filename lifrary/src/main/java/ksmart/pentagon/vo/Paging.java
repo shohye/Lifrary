@@ -111,8 +111,5 @@ public class Paging {
 	public void setLastPageNum(int lastPageNum) {
 		this.lastPageNum = lastPageNum;
 	}
-
-	
-	
-    
+  
 }
