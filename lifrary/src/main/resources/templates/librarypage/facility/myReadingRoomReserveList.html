@@ -8,11 +8,10 @@
 <th:block layout:fragment="customScript">
 	<script>
 	$(document).ready(function(){
-		
+	
 		/* 연장버튼 클릭시 */
 			$('.extension').click(function(){
 				var frCode = $(this).parents('tr').find('input[name=frCode]').val();
-				//console.log(frCode);
 				
 				var request = $.ajax({ // fr코드 받아서  
 					  url: "/lifrary/extension",
@@ -46,7 +45,7 @@
 					  data: { "frCode" : frCode },
 					  dataType: "text"
 					});
-					 
+				
 					request.done(function( data ) {
 						alert(data);
 						location.reload(true);
@@ -61,10 +60,7 @@
 				var result = $(this).text();
 				alert(result+ '이 불가능합니다.');
 			})
-		
 	})
-	
-	
 	</script>
 </th:block>
 
