@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ksmart.pentagon.controller.OpenApi;
 import ksmart.pentagon.vo.Board;
 import ksmart.pentagon.vo.BoardComment;
 /*
@@ -24,20 +23,6 @@ import ksmart.pentagon.vo.BoardComment;
 public class BoardController {
 	
 	@Autowired BoardService boardService;
-	
-	@GetMapping("/admin/api")
-	public String apiText() {
-		System.out.println("dasdfasdfsdf");
-		OpenApi openapi = new OpenApi();
-		try {
-			openapi.OpenApi("2018-01-01", "2019-01-01", "0", "15", "20");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return "adminpage/board/noticeInsert";
-	}
 	
 	/**
 	 * 사이드메뉴에서 공지사항 클릭시 겟방식으로 "대분류명"을 받아 온 값으로 값에맞는 리스트 뽑는 메서드

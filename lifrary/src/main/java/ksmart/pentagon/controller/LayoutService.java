@@ -1,5 +1,11 @@
 package ksmart.pentagon.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +25,27 @@ public class LayoutService {
 		layoutStats.setMember(layoutMapper.memberCount(libnum));
 		System.out.println("service20 : " + layoutStats);
 		return layoutStats;
+	}
+	
+	public ArrayList<ArrayList> getAreaOpenApi(@RequestParam(value = "startDt")String startDt,
+			@RequestParam(value = "endDt")String endDt,
+			@RequestParam(value = "area")String area){
+		System.out.println("service 33 : " + startDt + endDt + area);
+		AreaOpenApi OpenApi = new AreaOpenApi();
+		ArrayList<ArrayList> list = OpenApi.OpenApi(startDt,endDt,area);
+		System.out.println("Service72 : " + list);
+		return list;
+	}
+	
+	public ArrayList<ArrayList> getAge( @RequestParam(value = "startDt")String startDt,
+										@RequestParam(value = "endDt")String endDt,
+										@RequestParam(value = "fromAge")String fromAge,
+										@RequestParam(value = "toAge")String toAge){
+		String gender = "2";
+		AgeOpenApi ageOpenApi = new AgeOpenApi();
+		ArrayList<ArrayList> List = ageOpenApi.OpenApi(startDt, endDt, gender, fromAge, toAge);
+		
+	return List;	
 	}
 
 }
