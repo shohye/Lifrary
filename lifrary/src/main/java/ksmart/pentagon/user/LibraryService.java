@@ -86,6 +86,16 @@ public class LibraryService {
 		return libraryMapper.myUserUpdate(user);
 	}
 	
-	//회원 탈퇴 페이지
-
+	//회원탈퇴 페이지
+	public User myUserDelete(String SID, String libNum) {
+		System.out.println("MyUserDelete 서비스진입 탈퇴 페이지");
+		return libraryMapper.myUserDelete(SID, libNum);
+	}
+	
+	//회원 탈퇴 AJAX
+	public int deleteUser(String SID, String uPw) {
+		System.out.println("deleteUser 서비스진입");
+		
+		return 0;
+	}
 }

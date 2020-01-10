@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.pentagon.vo.StudyCate;
 import ksmart.pentagon.vo.User;
@@ -196,7 +198,7 @@ public class LibraryController {
 	
 	//회원 탈퇴 하는 폼 
 	@GetMapping("/lifrary/myUserDelete")
-	public String myUserDelete (User user, HttpSession session, Model model) {
+	public String myUserDelete (HttpSession session, Model model) {
 		System.out.println("myUserDelete  회원 탈퇴하기  ");
 		
 		String SID = (String) session.getAttribute("SID");	//회원아이디
@@ -206,7 +208,20 @@ public class LibraryController {
 		
 		return "/librarypage/user/myUserDelete";
 	}
+	
+	// userDelete 삭제 결과값 가져오는 ajax - 회원탈퇴
+	//컨트롤러를 통해 보내고있는 응답의 유형을 나타 내기 위해 produce를 사용
+    @RequestMapping(value="/userDelete", produces = "text/plain")
+    public @ResponseBody String userDelete( Model model 
+    		, @RequestParam(value="SID",required=false)String SID
+    		, @RequestParam(value="uPw",required=false)String uPw) {
+		System.out.println("deleteUser 관리자가 회원 삭제하기 ");
 
+ 		return "redirect:/";
+    }
+
+
+	//아이디,비번 찾기 
 	@GetMapping("/lifrary/userFindIdPw")
 	public String userFindIdPw() {
 		System.out.println("userFindIdPw  내정보 아이디 비번 찾기  ");
@@ -214,6 +229,7 @@ public class LibraryController {
 		return "/librarypage/user/userFindIdPw";
 		
 	}
+	
 	
 		
 }
