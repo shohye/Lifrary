@@ -1,5 +1,9 @@
 package ksmart.pentagon.booklend;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +14,7 @@ import org.springframework.stereotype.Service;
 import ksmart.pentagon.point.PointMapper;
 import ksmart.pentagon.vo.BookLend;
 import ksmart.pentagon.vo.BookStock;
+import ksmart.pentagon.vo.Paging;
 import ksmart.pentagon.vo.Point;
 import ksmart.pentagon.vo.User;
 
@@ -239,8 +244,40 @@ public class BookLendService {
 	}
 	
 	//회원 대출 리스트
-	public List<BookLend> myLendList(String libNum, String blId) {
-		List<BookLend> bookLend = bookLendMapper.myLendList(libNum, blId);
+	public Map<String, Object> myLendList(Map<String,Object> params, String currentPageStr) {
+		
+	    Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("current: " + df.format(cal.getTime()));
+
+        String svDate = (String) params.get("svDate");
+        if(("week").equals(svDate)) {
+        	cal.add(Calendar.DATE, -7);
+        }else if(("month").equals(svDate)) {
+        	cal.add(Calendar.MONTH, -1);
+        }else if(("6month").equals(svDate)) {
+        	cal.add(Calendar.MONTH, -6);
+        }else if(("year").equals(svDate)) {
+        	cal.add(Calendar.YEAR, -1);
+        }
+        params.put("svDate", df.format(cal.getTime()));
+
+        int myLendCnt = bookLendMapper.myLendListCnt(params);
+        
+        Paging paging =  new Paging(myLendCnt, currentPageStr);
+        int currentPage = paging.getCurrentPage();
+        int lastPage = paging.getLastPage();
+        int startPageNum = paging.getStartPageNum();
+        int lastPageNum = paging.getLastPageNum();
+        
+        int startRow = paging.getStartRow();
+        int ROW_PER_PAGE = Paging.getRowPerPage();
+        
+        params.put("startRow", startRow);
+        params.put("rowPerPage", ROW_PER_PAGE);
+        
+		List<BookLend> bookLend = bookLendMapper.myLendList(params);
 		
 		//연체일이 0보다 작은 경우 0으로 셋팅
 		for(int i = 0; i < bookLend.size(); i++) {
@@ -250,7 +287,15 @@ public class BookLendService {
 				bl.setBlOverdueDays(0);
 			}
 		}
-		return bookLend;
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("myLendList", bookLend);
+        resultMap.put("currentPage", currentPage);
+        resultMap.put("lastPage", lastPage);
+        resultMap.put("startPageNum", startPageNum);
+        resultMap.put("lastPageNum", lastPageNum);
+		
+		return resultMap;
 	}
 	
 	//회원 예약 리스트

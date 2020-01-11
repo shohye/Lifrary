@@ -2,6 +2,7 @@ package ksmart.pentagon.booklend;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -34,8 +35,10 @@ public interface BookLendMapper {
 	public List<BookLend> holdSearchList(String libNum);
 	//예약취소
 	public int holdDelete(String blCode);
+	//회원 대출 도서 리스트 카운트
+	public int myLendListCnt(Map<String,Object> params);
 	//회원 대출 도서 리스트
-	public List<BookLend> myLendList(String libNum, String blId);
+	public List<BookLend> myLendList(Map<String,Object> params);
 	//회원 예약 도서 리스트
 	public List<BookLend> myHoldList(String libNum, String blId);
 }
