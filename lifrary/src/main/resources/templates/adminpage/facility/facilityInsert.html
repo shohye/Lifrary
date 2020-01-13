@@ -10,7 +10,10 @@
   	<link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css}">
   </th:block>
   <!-- /headAdd(Libs&page) -->
-	 
+	  <!-- headAdd(Libs&page) -->
+  	<th:block layout:fragment="adminTitle">
+		<title>공공 시설 등록하기</title>
+	</th:block>
 	 <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
   <th:block layout:fragment="teamHeadScript">
   <script th:inline="javascript">
