@@ -49,25 +49,25 @@ public class LibraryService {
 	/*****************************************************************/
 	
 	//회원가입
-	public int userInsert1(User user) {
-		System.out.println("userInsert1 서비스진입");
+	public int userInsertUser(User user) {
+		System.out.println("userInsertUser 서비스진입");
 		
-		return libraryMapper.userInsert1(user);
+		return libraryMapper.userInsertUser(user);
 	}
-	public int userInsert2(UserLevelHistory userLevelHistory) {
-		System.out.println("userInsert2 서비스진입");
+	public int userInsertUserLevelHistory(UserLevelHistory userLevelHistory) {
+		System.out.println("userInsertUserLevelHistory 서비스진입");
 		
-		return libraryMapper.userInsert2(userLevelHistory);
+		return libraryMapper.userInsertUserLevelHistory(userLevelHistory);
 	}
-	public int userInsert3(UserAuthorityHistory userAuthorityHistory) {
-		System.out.println("userInsert3 서비스진입");
+	public int userInsertUserAuthorityHistory(UserAuthorityHistory userAuthorityHistory) {
+		System.out.println("userInsertUserAuthorityHistory 서비스진입");
 		
-		return libraryMapper.userInsert3(userAuthorityHistory);
+		return libraryMapper.userInsertUserAuthorityHistory(userAuthorityHistory);
 	}
-	public int userInsert4(StudyCate studyCate) {
-		System.out.println("userInsert4 서비스진입");
+	public int userInsertStudyCate(StudyCate studyCate) {
+		System.out.println("userInsertStudyCate 서비스진입");
 		
-		return libraryMapper.userInsert4(studyCate);
+		return libraryMapper.userInsertStudyCate(studyCate);
 	}
 	
 	//회원 마이페이지 - 내정보 상세보기
@@ -86,10 +86,21 @@ public class LibraryService {
 		return libraryMapper.myUserUpdate(user);
 	}
 	
-	//회원 탈퇴 페이지
-	public int myUserDelete(User user) {
-		System.out.println("myUserDelete 서비스진입");
-		return libraryMapper.myUserDelete(user);
 
+	
+	//회원 탈퇴 AJAX
+	public String deleteUser(String SID, String uPw, String libNum) {
+		System.out.println("deleteUser 서비스진입");
+		
+		User u = libraryMapper.deleteUserCheck(SID, uPw, libNum);
+		String result = "";
+		System.out.println("user 확인 >>"+u);
+		if(u == null) { // 일치하지 않음
+			result = "불일치";
+		}else { // 일치함
+			libraryMapper.deleteUser(SID);	//삭제 
+			result = "삭제";
+		}
+		return result;
 	}
 }
