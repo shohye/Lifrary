@@ -85,7 +85,21 @@
 	</script>
 </th:block>
     <th:block layout:fragment="customContents">
-	<section th:replace="fragments/library/loginBanner :: loginBannerFragment"></section>
+	        <section class="page-banner services-banner" th:fragment="loginBannerFragment">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>회원가입 페이지</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">반갑습니다.</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">메인화면</a></li>
+                        <li>회원가입</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 <!-- Start: Cart Checkout Section -->
         <div id="content" class="site-content" th:fragment="cartCheckOutSectionFragment">
             <div id="primary" class="content-area">

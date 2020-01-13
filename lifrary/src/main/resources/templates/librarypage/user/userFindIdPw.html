@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+    
+  <th:block layout:fragment="libraryTitle">
+	 	<title>ID / PW 찾기</title>
+  </th:block>
+    <th:block layout:fragment="customContents">
+       
+        <!-- Start: Slider Section -->
+        <section class="page-banner services-banner" th:fragment="bookBannerFragment">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>아이디 / 비번 찾기</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">소중한 회원님, 잊어버린 ID / PW 를 찾아드립니다.</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li>ID / PW 찾기</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </section> 
+        <!-- End: Slider Section -->
+        
+         <!-- Start: Services Section -->
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="services-main">
+                        <div class="services-pg">       
+                              
+                            <!-- Start: Our Partners Section -->
+                            <section class="community-testimonial">
+                                <div class="container">
+                                    <div class="text-center">
+                                        <h2 class="section-title">아이디 / 비번 찾기</h2>
+                                        <span class="underline center"></span>
+                                        <p class="lead">회원님의 소중한 아이디/비번 을 찾아드립니다.</p>
+                                    </div>
+                                    <div class="owl-carousel">
+                                        <div class="single-testimonial-box">
+                                            <div class="top-portion">
+                                                <div class="user-comment">
+                                                    <div class="arrow-left"></div>
+                                                    <blockquote cite="#">                                                                                                 
+                                                    	<p> 
+                                                    		<h5>아이디 찾기</h5>
+                                                    		&nbsp&nbsp 이름 ,이메일 ,핸드폰 번호가 같아야 아이디 찾기가 가능합니다. 
+	                                                    	&nbsp&nbsp <div> 이름 : <input type="text" autocomplete="organization" placeholder="Id를 입력해주세요" name="uId" class="input-text "></div>
+															&nbsp&nbsp 	핸드폰 번호  : <input type="tel" autocomplete="organization" placeholder="핸드폰을 입력해주세요" name="uId" class="input-text ">
+															&nbsp&nbsp <div>이메일 : <input type="text" autocomplete="organization" placeholder="이메일을 입력해주세요" name="uId" class="input-text "></div>
+															<br><br>
+															<button type="button" style="width:30;height:30;">아이디 찾기</button>
+															<br>
+														</p>
+                                                    </blockquote>
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                           
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="single-testimonial-box">
+                                            <div class="top-portion">
+                                                <div class="user-comment">
+                                                    <div class="arrow-left"></div>
+                                                    <blockquote cite="#">
+                                                    	<p>
+                                                    		<h5>비밀번호 찾기</h5>
+	                                                    	&nbsp&nbsp ID, 이름 ,이메일 ,핸드폰 번호가 같아야 비밀번호 찾기가 가능합니다. <br>
+	                                                    	&nbsp&nbsp ID : <input type="text" autocomplete="organization" placeholder="Id를 입력해주세요" name="uId" class="input-text "><br>
+	                                                    	&nbsp&nbsp 이름 : <input type="text" autocomplete="organization" placeholder="이름을 입력해주세요" name="uId" class="input-text "><br>
+															&nbsp&nbsp 핸드폰 번호  : <input type="tel" autocomplete="organization" placeholder="핸드폰을 입력해주세요" name="uId" class="input-text "><br>
+															&nbsp&nbsp 이메일 : <input type="text" autocomplete="organization" placeholder="이메일을 입력해주세요" name="uId" class="input-text "><br>
+															<br>
+															<button type="button" style="width:30;height:30;">비밀번호 찾기</button>
+														</p>
+                                                    </blockquote>
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                            
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>                                                  
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <!-- End: Services Section -->
+  
+       
+    </th:block>
+</html>
