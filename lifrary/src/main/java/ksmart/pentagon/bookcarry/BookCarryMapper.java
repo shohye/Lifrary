@@ -66,14 +66,18 @@ public interface BookCarryMapper {
 	/*************************************************************/	
 	
 	
+	
 	// 희망도서신청 리스트 출력
 	List<BookRequest> getRequestList(String lCode);
 	// 희망도서 한개정보 출력 => 상세정보 화면
 	BookRequest getRequestDatail(String brCode);
 	// 희망도서 인서트
 	int insertRequest(BookRequest bookRequest);
+	
 	//( 도서관 ) 사용자 id를 기준으로 하는 희망도서 신청 리스트
-	List<BookRequest> getMyRequestList(String uid);
+	List<BookRequest> getMyRequestList(Map map);
+	//페이징 전체 리스특갯수 구하기
+	int getCountMyRequest(String uid);
 	
 	
 	/*************************************************************/	

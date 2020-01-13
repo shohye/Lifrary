@@ -27,20 +27,32 @@
 <!-- /headAdd(Libs&page) --> 
 
      <th:block layout:fragment="teamHeadScript">
-     <script type="text/javascript" th:inline="javascript">  
-       $(document).ready(function(){  	
-    	   
-    	   $('#deleteBtn').click(function(){
-    		   var SAID = [[${session.SAID}]]
+     <script type="text/javascript" th:inline="javascript"> 
+     //<![CDATA[
+           var SAID = [[${session.SAID}]]
+    //]]>  
+    	   function show(boCode){
+    		   
+    		   var boCode = boCode;
+    	    	
+    		   $('#boCode2').val(boCode);
+    		   $("#modals-default").modal('show');
+
+    	   };
+
+    	   $(document).on('click','#deleteBtn', function(){  
+    		   
     		   console.log(SAID);
     		   var write = $('#uPw').val();
     		   console.log(write);
-    		   var boCode = $('#boCode').val();
+    		   var boCode2 = $('.modal-body #boCode2').val();
+    		   console.log(boCode2);
+    		   
     		   
     		   var request = $.ajax({
 					url:"/deleteOrder",
 					method: "POST",
-					data : { 'said' : SAID , 'write' : write ,'boCode' :boCode }, 
+					data : { 'said' : SAID , 'write' : write ,'boCode' :boCode2 }, 
 					dataType: "text"
 				});
 				 
@@ -63,7 +75,7 @@
 					alert( "Request failed: " + textStatus );
 				}); 
 				
-    	   });   				
+    	      				
     	}); // 처음 function끝
     	    	
     	</script>
@@ -76,11 +88,11 @@
          <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
 			<div>주문 도서 리스트</div>
 			
-	 <th:block th:if="${session.SALC} == 'O'">	
-		<a th:href="@{/admin/bookOrderInsert}" class="btn btn-primary rounded-pill d-block"> 
-			<span class="ion ion-md-add"></span>도서 추가
-		</a>
-	 </th:block>		
+			 <th:block th:if="${session.SALC} == 'O'">	
+				<a th:href="@{/admin/bookOrderInsert}" class="btn btn-primary rounded-pill d-block"> 
+					<span class="ion ion-md-add"></span>도서 추가
+				</a>
+			 </th:block>		
 			
 		 </h4>
          
@@ -130,56 +142,58 @@
 							 <i class="ion ion-md-create" title="수정"></i>
 						   </a>
 					</td>
-					<td class="align-middle text-center">    
-					  <input type="hidden" name="boCode" id="boCode" th:value="${ol.boCode}">
-                      <button type="button" class="btn btn-default btn-xs icon-btn md-btn-flat" data-toggle="modal" data-target="#modals-default">
-                      	
-                      		<i class="ion ion-ios-cut d-block"  title="삭제"></i>
-                      	 
-                      </button>            
-						  
-                      </td>	
+					<td class="align-middle text-center">
+					  <input type="hidden" id="boCode" th:value="${ol.boCode}">  					  
+                      <button id="modalBtn" class="btn btn-default btn-xs icon-btn md-btn-flat"  
+                      th:attr="onclick=|javascript:show('${ol.boCode}')|"
+                      data-toggle="modal" data-target="#modals-default">                    	
+                      		<i class="ion ion-ios-cut d-block"  title="삭제"></i>	 
+                      </button>
+                     </td>	
 				    </tr>
+				    
 				  </tbody> 
                 </table>
               </div>
             </div>
-            <div class="modal fade" id="modals-default">
-                  <div class="modal-dialog">
-                    <form class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">
-                          	주문도서 목록 삭제
-                          
-                          <br>
-                          <small class="text-muted">정말 삭제 하시겠습니까? 삭제하시는 경우 복구가 불가능한 목록입니다.<br>
-                                                            삭제를 위하여 본인 id의 password를 작성해 주세요.</small>
-                        </h5>          
-                         <a th:href="@{/admin/bookOrderList}"  type="button" class="close" data-dismiss="modal" aria-label="Close">×</a>
-                      </div>
-                      <div class="modal-body">
-                      	<div class="form-row">
-                          <div class="form-group col">
-                            <label class="form-label">ID</label>
-                            <input id="uId" type="text" class="form-control" th:value="${session.SAID}">
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col">
-                            <label class="form-label">PASSWORD</label>
-                            <input id="uPw" type="password" class="form-control" placeholder="***********">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         <div class="modal fade" id="modals-default">
+                <div class="modal-dialog">
+                  <form class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">
+                        	주문도서 목록 삭제
                         
-                          <a th:href="@{#}" id="deleteBtn" type="button" class="btn btn-primary">삭제</a>
+                        <br>
+                        <small class="text-muted">정말 삭제 하시겠습니까? 삭제하시는 경우 복구가 불가능한 목록입니다.<br>
+                                                          삭제를 위하여 본인 id의 password를 작성해 주세요.</small>
+                      </h5>          
+                       <a th:href="@{/admin/bookOrderList}"  type="button" class="close" data-dismiss="modal" aria-label="Close">×</a>
+                    </div>
+                    <div class="modal-body">
+                    	<div class="form-row">
+                        <div class="form-group col">
+                          <label class="form-label">ID</label>
+                          <input type="hidden" id="boCode2" >
+                          <input id="uId" type="text" class="form-control" th:value="${session.SAID}">
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col">
+                          <label class="form-label">PASSWORD</label>
+                          <input id="uPw" type="password" class="form-control" placeholder="***********">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                       
-                    </form>
-                  </div>
+                        <a th:href="@{#}" id="deleteBtn" type="button" class="btn btn-primary">삭제</a>
+                    </div>
+                    
+                  </form>
                 </div>
-                        
+              </div>               
+                    
 
           </th:block>
           

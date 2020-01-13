@@ -10,21 +10,31 @@
 	  </th:block>
 	  
 	 <th:block layout:fragment="teamHeadScript">
-     <script type="text/javascript">  
-       $(document).ready(function(){  	   	   
-    	   $('#applyBtn').click(function(){
+     <script type="text/javascript"> 
+     
+     	function show(brCode){
+		   
+		   var brCode = brCode;
+	    	
+		   $('#brCode2').val(brCode);
+		   $("#modals-default").modal('show');
+
+	    };
+
+	    
+	    $(document).on('click','#applyBtn', function(){  
    				var brProgress = $('[name="brProgress"]:checked').val();
-   				var brCode = $('#brCode').val();
+   				var brCode2 = $('#brCode2').val();
    				var brCancelReason = $('#brCancelReason').val();
     		   
    				console.log(brProgress);
-   				console.log(brCode);
+   				console.log(brCode2);
    				console.log(brCancelReason);
    				
     		   var request = $.ajax({
 					url:"/updateProgress",
 					method: "POST",
-					data : { 'brCode':brCode , 'brProgress':brProgress , 'brCancelReason':brCancelReason }, 
+					data : { 'brCode':brCode2 , 'brProgress':brProgress , 'brCancelReason':brCancelReason }, 
 					dataType: "json"
 				});				 
 				request.done(function( data ) {
@@ -41,7 +51,6 @@
 				request.fail(function( jqXHR, textStatus ) {
 					alert( "Request failed: " + textStatus );
 				}); 				
-    	   });
     	   
     	}); // 처음 function끝
     	    	
@@ -111,9 +120,10 @@
 				      <td class="align-middle" th:text="${#strings.abbreviate(r.brAuthor,7)}"></td>
 				      <td class="align-middle" th:text="${r.brPublisher}"></td>
 				      <td class="align-middle text-center" data-toggle="modal" data-target="#modals-default">
-				      	 <input type="hidden" th:value="${r.brCode}" id="brCode">
-				      	 <span th:if="${r.brProgress eq '취소'}"  class="badge badge-outline-danger">[[${r.brProgress}]]</span>
-				         <span th:unless="${r.brProgress eq '취소'}"  class="badge badge-outline-success">[[${r.brProgress}]]</span>
+				      	 <span th:if="${r.brProgress eq '취소'}" class="badge badge-outline-danger"
+				      	 th:attr="onclick=|javascript:show('${r.brCode}')|">[[${r.brProgress}]]</span>
+				         <span th:unless="${r.brProgress eq '취소'}"  class="badge badge-outline-success"
+				         th:attr="onclick=|javascript:show('${r.brCode}')|">[[${r.brProgress}]]</span>
 				      </td>
 				      <td class="align-middle" th:text="${r.brDate}"></td>
 				      <td class="align-middle text-center">
@@ -141,7 +151,8 @@
                    <div class="modal-body">
                    	  <div class="form-row">
 	                    <div class="form-group col-md-6">
-	                       <label class="custom-control custom-radio">		               		   	
+	                       <label class="custom-control custom-radio">
+	                       		<input type="hidden" id="brCode2">             		   	
 		               		   	<input name="brProgress" type="radio" class="custom-control-input" value="접수완료">
 		               		   	<span class="custom-control-label">접수완료</span>
 	                       </label>
