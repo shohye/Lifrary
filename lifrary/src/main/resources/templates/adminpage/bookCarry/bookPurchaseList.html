@@ -30,19 +30,33 @@
 	  
 	  <th:block layout:fragment="teamHeadScript">
       <script type="text/javascript" th:inline="javascript">  
-       $(document).ready(function(){  	
+      
+	      //<![CDATA[
+	      var SAID = [[${session.SAID}]]
+		 //]]>  
+		   function show(bpCode){
+			   
+			   var bpCode = bpCode;
+			   
+			   console.log(bpCode);
+		    	
+			   $('#bpCode2').val(bpCode);
+			   $("#modals-default").modal('show');
+	
+		   };
+       
     	   
-    	   $('#deleteBtn').click(function(){
-    		   var SAID = [[${session.SAID}]]
-    		   console.log(SAID);
+    	   $(document).on('click','#deleteBtn', function(){  
+
     		   var write = $('#uPw').val();
     		   console.log(write);
-    		   var bpCode = $('#bpCode').val();
+    		   var bpCode2 = $('.modal-body #bpCode2').val();
+    		   console.log(bpCode2);
     		   
     		   var request = $.ajax({
 					url:"/deletePurchase",
 					method: "POST",
-					data : { 'said' : SAID , 'write' : write ,'bpCode' :bpCode }, 
+					data : { 'said' : SAID , 'write' : write ,'bpCode' :bpCode2 }, 
 					dataType: "text"
 				});
 				 
@@ -64,7 +78,7 @@
 					alert( "Request failed: " + textStatus );
 				}); 
 				
-    	   });   				
+    	    				
     	}); // 처음 function끝
     	    	
     	</script>
@@ -123,9 +137,10 @@
 							 <i class="ion ion-md-create" title="수정"></i>
 						   </a>						
 					  </td>		  
-					  <td class="align-middle text-center">
-					  <input type="hidden" name="bpCode" id="bpCode" th:value="${pl.bpCode}">     
-                      <button type="button" class="btn btn-default btn-xs icon-btn md-btn-flat" data-toggle="modal" data-target="#modals-default">
+					  <td class="align-middle text-center">   
+                      <button id="modalBtn" class="btn btn-default btn-xs icon-btn md-btn-flat"  
+                      th:attr="onclick=|javascript:show('${pl.bpCode}')|" 
+                      data-toggle="modal" data-target="#modals-default">
                       		<i class="ion ion-ios-cut d-block"  title="삭제"></i>
                       </button>            
 						  
@@ -152,6 +167,7 @@
                       	<div class="form-row">
                           <div class="form-group col">
                             <label class="form-label">ID</label>
+                             <input type="hidden" id="bpCode2" >
                             <input id="uId" type="text" class="form-control" th:value="${session.SAID}">
                           </div>
                         </div>
