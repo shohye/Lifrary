@@ -9,10 +9,6 @@
  <th:block layout:fragment="customScript">
  	<script type="text/javascript">
  	 $(document).ready(function(){
- 		 $('li').click(function(){
- 			 var optvalue = $(this).attr('rel');
- 			 console.log(optvalue);
- 		 }); 
  		 
  		$('#searchBtn').click(function(){
  			var biName =$('[name="biName"]').val();
@@ -164,7 +160,7 @@
 				                         <th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
 									        <span th:if="${currentPage == num}" th:text="${num}" class="page-numbers current"></span>
 									        <span th:unless="${currentPage == num}">
-									        	<a th:text="${num}" class="page-numbers" th:href="@{/lifrary/myLendList(biName=${param.biName},skDate=${param.skDate},svDate=${param.svDate}, currentPage=(${currentPage}+1))}">
+									        	<a th:text="${num}" class="page-numbers" th:href="@{/lifrary/myLendList(biName=${param.biName},skDate=${param.skDate},svDate=${param.svDate}, currentPage=${num})}">
 				                                </a>
 									    	</span>
 									     </th:block>

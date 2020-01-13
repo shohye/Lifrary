@@ -1,12 +1,14 @@
 package ksmart.pentagon.point;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ksmart.pentagon.vo.Paging;
 import ksmart.pentagon.vo.Point;
 
 @Service
@@ -50,8 +52,32 @@ public class PointService {
 		return pointMapper.pointDelete(pCode);
 	}
 	//회원 포인트 리스트
-	public List<Point> myPointList(String uId){
-		return pointMapper.myPointList(uId);
+	public Map<String, Object> myPointList(String uId, String currentPageStr){
+		
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("uId", uId);
+		
+		int myPointCnt = pointMapper.myPointListCnt(uId);
+        Paging paging =  new Paging(myPointCnt, currentPageStr);
+        int currentPage = paging.getCurrentPage();
+        int lastPage = paging.getLastPage();
+        int startPageNum = paging.getStartPageNum();
+        int lastPageNum = paging.getLastPageNum();
+        
+        int startRow = paging.getStartRow();
+        int ROW_PER_PAGE = Paging.getRowPerPage();
+        
+        params.put("startRow", startRow);
+        params.put("rowPerPage", ROW_PER_PAGE);
+        
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("myPointList", pointMapper.myPointList(params));
+        resultMap.put("currentPage", currentPage);
+        resultMap.put("lastPage", lastPage);
+        resultMap.put("startPageNum", startPageNum);
+        resultMap.put("lastPageNum", lastPageNum);
+		
+		return resultMap;
 	}
 	//회원 총포인트
 	public String myTotalPoint(String uId) {

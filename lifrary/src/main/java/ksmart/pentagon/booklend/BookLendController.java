@@ -334,14 +334,28 @@ public class BookLendController {
 	 * @author 최지혜
 	 */
 	@GetMapping("/lifrary/myHoldList")
-	public String myHoldList(HttpSession session
-			 				 , Model model) {
+	public String myHoldList(@RequestParam Map<String,Object> params
+							 ,@RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPageStr
+							 , HttpSession session
+							 , Model model) {
 		
 		String libNum = (String) session.getAttribute("LIBNUM");
 		String blId = (String) session.getAttribute("SID");
 		
-		model.addAttribute("myHoldList", bookLendService.myHoldList(libNum, blId));
-				
+		params.put("libNum", libNum);
+		params.put("blId", blId);
+		
+		Map<String, Object> map = bookLendService.myHoldList(params, currentPageStr);
+		
+		model.addAttribute("myHoldList", map.get("myHoldList"));
+		
+		model.addAttribute("currentPage", map.get("currentPage"));
+    	model.addAttribute("lastPage", map.get("lastPage"));
+    	model.addAttribute("startPageNum", map.get("startPageNum"));
+    	model.addAttribute("lastPageNum", map.get("lastPageNum"));
+    	model.addAttribute("pageViewBlock", map.get("pageViewBlock"));
+    	model.addAttribute("pageViewArray", map.get("pageViewArray"));
+		
 		return "/librarypage/book/myHoldList";
 		
 	}

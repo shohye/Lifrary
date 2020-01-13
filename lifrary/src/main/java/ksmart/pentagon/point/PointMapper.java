@@ -25,8 +25,10 @@ public interface PointMapper {
 	public int updatePoint(Point point);
 	//포인트 삭제
 	public int pointDelete(String pCode);
+	//회원 포인트 리스트 카운트
+	public int myPointListCnt(String uId);
 	//회원 포인트 리스트
-	public List<Point> myPointList(String uId);
+	public List<Point> myPointList(Map<String,Object> params);
 	//회원 총포인트
 	public String myTotalPoint(String uId);
 	//사용 포인트 리스트

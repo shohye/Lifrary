@@ -39,6 +39,8 @@ public interface BookLendMapper {
 	public int myLendListCnt(Map<String,Object> params);
 	//회원 대출 도서 리스트
 	public List<BookLend> myLendList(Map<String,Object> params);
+	//회원 예약 도서 리스트 카운트
+	public int myHoldListCnt(Map<String,Object> params);
 	//회원 예약 도서 리스트
-	public List<BookLend> myHoldList(String libNum, String blId);
+	public List<BookLend> myHoldList(Map<String,Object> params);
 }

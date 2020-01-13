@@ -299,9 +299,47 @@ public class BookLendService {
 	}
 	
 	//회원 예약 리스트
-	public List<BookLend> myHoldList(String libNum, String blId){
+	public Map<String, Object> myHoldList(Map<String,Object> params, String currentPageStr){
 		
-		return bookLendMapper.myHoldList(libNum, blId);
+	    Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("current: " + df.format(cal.getTime()));
+
+        String svDate = (String) params.get("svDate");
+        if(("week").equals(svDate)) {
+        	cal.add(Calendar.DATE, -7);
+        }else if(("month").equals(svDate)) {
+        	cal.add(Calendar.MONTH, -1);
+        }else if(("6month").equals(svDate)) {
+        	cal.add(Calendar.MONTH, -6);
+        }else if(("year").equals(svDate)) {
+        	cal.add(Calendar.YEAR, -1);
+        }
+        params.put("svDate", df.format(cal.getTime()));
+        
+        int myLendCnt = bookLendMapper.myHoldListCnt(params);
+        
+        Paging paging =  new Paging(myLendCnt, currentPageStr);
+        int currentPage = paging.getCurrentPage();
+        int lastPage = paging.getLastPage();
+        int startPageNum = paging.getStartPageNum();
+        int lastPageNum = paging.getLastPageNum();
+        
+        int startRow = paging.getStartRow();
+        int ROW_PER_PAGE = Paging.getRowPerPage();
+        
+        params.put("startRow", startRow);
+        params.put("rowPerPage", ROW_PER_PAGE);
+        
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("myHoldList", bookLendMapper.myHoldList(params));
+        resultMap.put("currentPage", currentPage);
+        resultMap.put("lastPage", lastPage);
+        resultMap.put("startPageNum", startPageNum);
+        resultMap.put("lastPageNum", lastPageNum);
+		
+		return resultMap;
 	
 	}
 	
