@@ -146,15 +146,30 @@
 			where 
 				br.br_code =#{brCode}
   	</select>
- <!-- (어드민) 희망도서 신청리스트에서 세션 id의 리스트 모두 가져오기   --> 
- 	<select id="getMyRequestList" resultMap="bookRequestResultMap" >
+ <!-- (도서관) 희망도서 신청리스트에서 세션 id의 리스트 모두 가져오기   --> 
+ 	<select id="getMyRequestList" resultMap="bookRequestResultMap" parameterType="hashMap">
   			SELECT 
 				* 
 			FROM 
 				book_request
 			where 
                 u_id = #{uid}
+        <if test="startRow neq null and rowPerPage neq null"> 
+	            ORDER BY br_code DESC
+	            LIMIT #{startRow},#{rowPerPage}
+        </if>	
   	</select>
+ <!-- (도서관) 내 희망도서  갯수 구하기 / 페이징 위함 -->
+ <select id="getCountMyRequest" parameterType="String" resultType="java.lang.Integer">
+  			SELECT 
+				count(1) 
+			FROM 
+				book_request
+			where 
+                u_id = #{uid}
+</select>
+ 
+ 
  <!-- (어드민) 희망도서 상태변경 메서드   -->
     <update id="updateProgress" parameterType="String" >
 		UPDATE 

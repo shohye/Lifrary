@@ -55,7 +55,23 @@
   
     
     <!-- Start: Book & Media Section -->
-    <section th:replace="fragments/library/bookBanner :: bookBannerFragment"></section> 
+    <!-- Start: Page Banner -->
+        <section class="page-banner services-banner" th:fragment="bookBannerFragment">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>도서 검색 결과</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">검색하신 도서 입니다</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li>Books</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    <!-- End: Page Banner --> 
     <div class="books-media-list">
          <div class="container">
              <div class="row">

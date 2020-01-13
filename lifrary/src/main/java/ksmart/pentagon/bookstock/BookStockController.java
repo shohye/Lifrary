@@ -229,6 +229,10 @@ public class BookStockController {
     	
     	model.addAttribute("currentPage", map.get("currentPage"));
     	model.addAttribute("lastPage", map.get("lastPage"));
+    	model.addAttribute("startPageNum", map.get("startPageNum"));
+    	model.addAttribute("lastPageNum", map.get("lastPageNum"));
+    	model.addAttribute("pageViewBlock", map.get("pageViewBlock"));
+    	model.addAttribute("pageViewArray", map.get("pageViewArray"));
  
     	
     	return "/librarypage/bookData/bookDataSearchGrid";
