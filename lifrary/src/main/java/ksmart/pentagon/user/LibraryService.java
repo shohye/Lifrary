@@ -86,16 +86,21 @@ public class LibraryService {
 		return libraryMapper.myUserUpdate(user);
 	}
 	
-	//회원탈퇴 페이지
-	public User myUserDelete(String SID, String libNum) {
-		System.out.println("MyUserDelete 서비스진입 탈퇴 페이지");
-		return libraryMapper.myUserDelete(SID, libNum);
-	}
+
 	
 	//회원 탈퇴 AJAX
-	public int deleteUser(String SID, String uPw) {
+	public String deleteUser(String SID, String uPw, String libNum) {
 		System.out.println("deleteUser 서비스진입");
 		
-		return 0;
+		User u = libraryMapper.deleteUserCheck(SID, uPw, libNum);
+		String result = "";
+		System.out.println("user 확인 >>"+u);
+		if(u == null) { // 일치하지 않음
+			result = "불일치";
+		}else { // 일치함
+			libraryMapper.deleteUser(SID);	//삭제 
+			result = "삭제";
+		}
+		return result;
 	}
 }

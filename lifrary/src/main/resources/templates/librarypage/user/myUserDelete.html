@@ -27,8 +27,12 @@
 
 		   //응답완료 후 실행 - 정상처리
 		request.done(function( data ) {
-			 console.log(data);
-			 		
+			 if(data == '불일치'){
+				 alert('비밀번호가 틀립니다.')
+			 }else if(data == '삭제'){
+				 alert('회원이 탈퇴 되었습니다.')
+				 location.href='/';		//처음페이지로 이동
+			 }		
 		});				 
 		request.fail(function( jqXHR, textStatus ) {
 			alert( "Request failed: " + textStatus );
@@ -50,7 +54,7 @@
                 <div class="breadcrumb">
                     <ul>
                         <li><a th:href="@{/}">메인메뉴</a></li>
-                        <li>MY DELETE</li>
+                        <li>탈퇴 페이지</li>
                     </ul>
                 </div>
             </div>

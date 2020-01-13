@@ -143,7 +143,7 @@ public class LibraryController {
 		libraryService.userInsertUserAuthorityHistory(userAuthorityHistory);
 		libraryService.userInsertStudyCate(studyCate);
 		
-		return "redirect:/";
+		return "redirect:/pentagon/index";
 	}
 	
 	/***
@@ -187,7 +187,7 @@ public class LibraryController {
 		
 	}
 
-	//사서 자신 정보 수정 //제출하다
+	//사서 자신 정보 수정
 	@PostMapping("/lifrary/myUserUpdate")
 	public String myUserUpdate(User user) {
 		System.out.println("myUserUpdate  내정보 수정 후 상세보기로  ");
@@ -196,16 +196,10 @@ public class LibraryController {
 		return "redirect:/lifrary/myUserDetail";
 	}
 	
-	//회원 탈퇴 하는 폼 
+	//회원 탈퇴 하는 페이지
 	@GetMapping("/lifrary/myUserDelete")
-	public String myUserDelete (HttpSession session, Model model) {
+	public String myUserDelete() {
 		System.out.println("myUserDelete  회원 탈퇴하기  ");
-		
-		String SID = (String) session.getAttribute("SID");	//회원아이디
-		String libNum = (String) session.getAttribute("LIBNUM");	//도서관 코드
-		System.out.println("SID 세션에서 가져온 회원아이디 >> "+ SID);
-		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
-		
 		return "/librarypage/user/myUserDelete";
 	}
 	
@@ -214,10 +208,19 @@ public class LibraryController {
     @RequestMapping(value="/userDelete", produces = "text/plain")
     public @ResponseBody String userDelete( Model model 
     		, @RequestParam(value="SID",required=false)String SID
-    		, @RequestParam(value="uPw",required=false)String uPw) {
-		System.out.println("deleteUser 관리자가 회원 삭제하기 ");
-
- 		return "redirect:/";
+    		, @RequestParam(value="uPw",required=false)String uPw
+    		,HttpSession session ) {
+		System.out.println("deleteUser 관리자가 회원 삭제하기 ajax");
+		String libNum = (String)session.getAttribute("LIBNUM");	//도서관코드
+		System.out.println("도서관 코드  : " + session.getAttribute("LIBNUM"));
+		String result = libraryService.deleteUser(SID, uPw, libNum);
+		
+		//세션 종료
+		if(result.equals("삭제")) {
+			session.invalidate();
+		}
+		
+ 		return result;
     }
 
 

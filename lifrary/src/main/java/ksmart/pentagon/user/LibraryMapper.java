@@ -35,9 +35,9 @@ public interface LibraryMapper {
 	//내정보 수정후 상세페이지로 이동
 	public int myUserUpdate(User user);
 	
-	//회원 탈퇴 페이지
-	public User myUserDelete(String SID, String libNum);
-
-	//삭제 Ajax
-	public int deleteUser(String SID, String uPw);
+	
+	//회원 존재 check
+	public User deleteUserCheck(String SID, String uPw, String libNum);
+	// 회원 삭제 Ajax 
+	public void deleteUser(String SID);
 }

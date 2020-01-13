@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- Start: Program -->
+        <section class="search-filters" th:fragment="calenderIndexFragment">
+            <div class="container">
+                <div class="center-content">
+                    <h2 class="section-title c-light"> 도서관 일정 </h2>
+                    <span class="underline center"></span><br>
+                    <p class="lead c-light"> 일정을 살펴보세요. </p>
+                </div>
+                
+                  <div class="events-calendar">
+                      <h3>도서관 일정</h3>
+                      <span class="underline left"></span>
+                      <div class="form-group">
+                          <label>카테고리 :</label>
+                          <select name="category" id="category1" class="form-control select-hidden">
+                              <option>모든 일정</option>
+                              <option> 자료실 휴관일 </option>
+                              <option> 도서관 휴관일 </option>
+                              <option> 독서의 날 </option>
+                          </select>
+                      </div>
+                      <table class="event-table cart">
+                          <thead>                             
+                              <tr>
+                                  <th class="product-name">Date/Time</th>
+                                  <th class="product-name">Event</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td data-title="date-time">
+                                      <a target="_blank">
+                                          <i class="fa fa-calendar"></i> 
+                                          1월 24일 - 27일
+                                      </a>
+                                      <a target="_blank">
+                                          <i class="fa fa-clock-o"></i> 
+                                          9:30 am
+                                      </a>
+                                  </td>
+                                  <td data-title="event">
+                                    	   자료실/도서관 휴관일 (설 연휴)
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td data-title="date-time">
+                                      <a target="_blank">
+                                          <i class="fa fa-calendar"></i> 
+                                          2월 15일 - 
+                                      </a>
+                                      <a target="_blank">
+                                          <i class="fa fa-clock-o"></i> 
+                                          9:30 am
+                                      </a>
+                                  </td>
+                                  <td data-title="event">
+                                 	     자료실 휴관일 
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td data-title="date-time">
+                                      <a target="_blank">
+                                          <i class="fa fa-calendar"></i>                                 
+                                          2월 02일 - 
+                                      </a>
+                                      <a target="_blank">
+                                          <i class="fa fa-clock-o"></i> 
+                                          8:30 am
+                                      </a>
+                                  </td>
+                                  <td data-title="event">
+									         별빛 독서의 날 
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td data-title="date-time">
+                                      <a target="_blank">
+                                          <i class="fa fa-calendar"></i> 
+                                          2월 06일 - 
+                                      </a>
+                                      <a target="_blank">
+                                          <i class="fa fa-clock-o"></i> 
+                                          9:30 am
+                                      </a>
+                                  </td>
+                                  <td data-title="event">
+                                   	   자료실 휴관일 (보수 공사)
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td data-title="date-time">
+                                      <a target="_blank">
+                                          <i class="fa fa-calendar"></i> 
+                                          3월 01일 - 
+                                      </a>
+                                      <a target="_blank">
+                                          <i class="fa fa-clock-o"></i> 
+                                          9:30 am
+                                      </a>
+                                  </td>
+                                  <td data-title="event">
+                                      	도서관 휴관일(삼일절) 
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td data-title="date-time">
+                                      <a target="_blank">
+                                          <i class="fa fa-calendar"></i> 
+                                          3월 25 - 
+                                      </a>
+                                      <a target="_blank">
+                                          <i class="fa fa-clock-o"></i> 
+                                          9:30 am
+                                      </a>
+                                  </td>
+                                  <td data-title="event">
+                                  	    부모 교육 특강 접수 안내
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      <div class="clearfix"></div>
+                  </div>
+            
+       			
+            </div>
+        </section>
+        <!-- End: program -->
+        
+</html>
