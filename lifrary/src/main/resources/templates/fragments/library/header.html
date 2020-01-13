@@ -64,7 +64,7 @@
                                         <li class="dropdown">
                                             <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifrary/programSearchList}">3.프로그램</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{/lifrary/programSearchList}">!프로그램 신청</a></li>
+                                                <li><a th:href="@{/lifrary/programSearchList}">프로그램 신청</a></li>
                                             </ul>
                                         </li>
                                         <!-- 게시판 -->
@@ -73,45 +73,45 @@
                                             <ul class="dropdown-menu">
                                                 <li><a th:href="@{/lifrary/noticeList(boardLName=${'공지사항'})}">공지사항</a></li>
                                                 <li><a th:href="@{/lifrary/inquirySearchList(boardLName=${'문의하기'})}">문의</a></li>
-                                                <li><a th:href="@{/lifrary/bookReportSearchList}">!독후감</a></li>
-                                                <li><a th:href="@{/lifrary/bookRequestIntro}">!희망도서 신청</a></li>
-                                                <li><a th:href="@{/lifrary/bookDonationGuide}">!도서 기부</a></li>
+                                                <li><a th:href="@{/lifrary/bookReportSearchList}">독후감</a></li>
+                                                <li><a th:href="@{/lifrary/bookRequestIntro}">희망도서 신청</a></li>
+                                                <li><a th:href="@{/lifrary/bookDonationGuide}">도서 기부</a></li>
                                             </ul>
                                         </li>
                                         <!--  공공시설  -->
                                         <li class="dropdown">
                                             <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifrary/readingRoom}">5.공공시설</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{/lifrary/readingRoom}">!열람실</a></li>
-                                                <li><a th:href="@{/lifrary/studyRoom}">!스터디룸</a></li>
-                                                <li><a th:href="@{/lifrary/lectureRoom}">!강연실</a></li>
-                                                <li><a th:href="@{/lifrary/locker}">!사물함</a></li>
+                                                <li><a th:href="@{/lifrary/readingRoom}">열람실</a></li>
+                                                <li><a th:href="@{/lifrary/studyRoom}">스터디룸</a></li>
+                                                <li><a th:href="@{/lifrary/lectureRoom}">강연실</a></li>
+                                                <li><a th:href="@{/lifrary/locker}">사물함</a></li>
                                             </ul>
                                         </li>
                                         <li><a th:href="@{/lifrary/libraryInfomation}">6.도서관 소개</a></li>
                                         <!-- 마이페이지 -->
                                         <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">7.마이페이지</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifrary/myUserDetail}">7.마이페이지</a>
                                             <ul class="dropdown-menu">
 
 	                                            <th:block th:if="${session.SID} == null">
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 정보</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 도서현황</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!북 다이어리</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 서재</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 프로그램 신청 내역</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 공공시설 신청 내역</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!희망도서 신청 내역</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">내 정보</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">내 도서현황</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">북 다이어리</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">내 서재</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">내 프로그램 신청 내역</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">내 공공시설 신청 내역</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">희망도서 신청 내역</a></li>
 	                                            </th:block>
 	                                            <th:block th:unless="${session.SID} == null">
-	                                                <li><a th:href="@{/lifrary/myUserDetail}">!내 정보</a></li>
-	                                                <li><a th:href="@{/lifrary/myLendList}">!내 도서현황</a></li>
-	                                                <li><a th:href="@{/lifrary/myCalender}">!북 다이어리</a></li>
-	                                                <li><a th:href="@{/lifrary/myStudyList}">!내 서재</a></li>
-	                                                <li><a th:href="@{/lifrary/programApplyList}">!내 프로그램 신청 내역</a></li>
-	                                                <li><a th:href="@{/lifrary/myReadingRoomReserveList}">!내 공공시설 신청 내역</a></li>
-	                                                <li><a th:href="@{/lifrary/myinquiryList(boardLName=${'문의하기'})}">!내 문의 신청 내역</a></li>
-	                                                <li><a th:href="@{/lifrary/myBookRequestList}">!희망도서 신청 내역</a></li>
+	                                                <li><a th:href="@{/lifrary/myUserDetail}">내 정보</a></li>
+	                                                <li><a th:href="@{/lifrary/myLendList}">내 도서현황</a></li>
+	                                                <li><a th:href="@{/lifrary/myCalender}">북 다이어리</a></li>
+	                                                <li><a th:href="@{/lifrary/myStudyList}">내 서재</a></li>
+	                                                <li><a th:href="@{/lifrary/programApplyList}">내 프로그램 신청 내역</a></li>
+	                                                <li><a th:href="@{/lifrary/myReadingRoomReserveList}">내 공공시설 신청 내역</a></li>
+	                                                <li><a th:href="@{/lifrary/myinquiryList(boardLName=${'문의하기'})}">내 문의 신청 내역</a></li>
+	                                                <li><a th:href="@{/lifrary/myBookRequestList}">희망도서 신청 내역</a></li>
 	                                            </th:block>
 
                                             </ul>
@@ -145,7 +145,7 @@
                                     <li>
                                         <a th:href="@{/lifrary/programSearchList}">3.프로그램</a>
                                         <ul>
-                                            <li><a th:href="@{/lifrary/programSearchList}">!프로그램 신청</a></li>
+                                            <li><a th:href="@{/lifrary/programSearchList}">프로그램 신청</a></li>
                                         </ul>
                                     </li>
                                      <!-- 게시판 -->
@@ -153,19 +153,19 @@
                                         <a th:href="@{#}">4.게시판</a>
                                         <ul>
                                             <li><a th:href="@{/lifrary/noticeList(boardLName=${'공지사항'})}">!공지사항</a></li>
-                                            <li><a th:href="@{/lifrary/inquirySearchList(boardLName=${'문의하기'})}">!문의</a></li>
-                                            <li><a th:href="@{/lifrary/bookReportSearchList}">#독후감</a></li>
-                                            <li><a th:href="@{/lifrary/bookRequestIntro}">!희망도서 신청</a></li>
+                                            <li><a th:href="@{/lifrary/inquirySearchList(boardLName=${'문의하기'})}">문의</a></li>
+                                            <li><a th:href="@{/lifrary/bookReportSearchList}">독후감</a></li>
+                                            <li><a th:href="@{/lifrary/bookRequestIntro}">희망도서 신청</a></li>
                                         </ul>
                                     </li>
                                     <!-- 공공시설 -->
                                     <li>
                                         <a th:href="@{/readingRoom}">5.공공시설</a>
                                         <ul>
-                                           <li><a th:href="@{/lifrary/readingRoom}">!열람실</a></li>
-                                           <li><a th:href="@{/lifrary/studyRoom}">!스터디룸</a></li>
-                                           <li><a th:href="@{/lifrary/lectureRoom}">!강연실</a></li>
-                                           <li><a th:href="@{/lifrary/locker}">!사물함</a></li>
+                                           <li><a th:href="@{/lifrary/readingRoom}">열람실</a></li>
+                                           <li><a th:href="@{/lifrary/studyRoom}">스터디룸</a></li>
+                                           <li><a th:href="@{/lifrary/lectureRoom}">강연실</a></li>
+                                           <li><a th:href="@{/lifrary/locker}">사물함</a></li>
                                         </ul>
                                     </li>
                                     <!-- 도서관 소개 -->
@@ -173,14 +173,14 @@
                                     <li>
                                         <a th:href="@{#}">7.마이페이지</a>
                                         <ul>
-                                            <li><a th:href="@{#}">#내 정보</a></li>
-                                            <li><a th:href="@{/lifrary/myLendList}">#내 도서현황</a></li>
-                                            <li><a th:href="@{/lifrary/myCalender}">#북 다이어리</a></li>
-                                            <li><a th:href="@{/lifrary/myStudyList}">#내 서재</a></li>
-                                            <li><a th:href="@{/lifrary/programApplyList}">!내 프로그램 신청 내역</a></li>
-                                            <li><a th:href="@{/lifrary/myReadingRoomReserveList}">!내 공공시설 신청 내역</a></li>
-                                            <li><a th:href="@{/lifrary/myinquiryList(boardLName=${'문의하기'})}">!내 문의 신청 내역</a></li>
-                                            <li><a th:href="@{/lifrary/myBookRequestList}">!희망도서 신청 내역</a></li>
+                                            <li><a th:href="@{#}">내 정보</a></li>
+                                            <li><a th:href="@{/lifrary/myLendList}">내 도서현황</a></li>
+                                            <li><a th:href="@{/lifrary/myCalender}">북 다이어리</a></li>
+                                            <li><a th:href="@{/lifrary/myStudyList}">내 서재</a></li>
+                                            <li><a th:href="@{/lifrary/programApplyList}">내 프로그램 신청 내역</a></li>
+                                            <li><a th:href="@{/lifrary/myReadingRoomReserveList}">내 공공시설 신청 내역</a></li>
+                                            <li><a th:href="@{/lifrary/myinquiryList(boardLName=${'문의하기'})}">내 문의 신청 내역</a></li>
+                                            <li><a th:href="@{/lifrary/myBookRequestList}">희망도서 신청 내역</a></li>
                                         </ul>
                                     </li>
                                 </ul>
