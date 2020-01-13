@@ -195,6 +195,17 @@
 		WHERE bl.board_l_name = #{boardLName} AND b.l_code = #{lCode} ORDER BY b.board_date DESC
 	</select>
 	
+	<select id="myinquiryList" parameterType="ksmart.pentagon.vo.Board" resultMap="boardNoticeList">
+		SELECT
+			b.*, bm.board_m_name
+		FROM
+			board AS b INNER JOIN board_large AS bl
+		on b.board_l_code = bl.board_l_code
+			INNER JOIN board_medium AS bm
+		ON b.board_m_code = bm.board_m_code
+			WHERE b.u_id = #{uId} AND bl.board_l_name = #{boardLName} AND b.l_code = #{lCode}
+		ORDER BY b.board_date DESC
+	</select>
 	
 	
 	

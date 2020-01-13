@@ -276,4 +276,11 @@ public class BoardController {
 		return "/librarypage/board/noticeDetail";
 	}
 	
+	@GetMapping("/lifrary/myinquiryList")
+	public String myinquiryList(Model model,Board board, HttpSession session) {
+		board.setuId((String)session.getAttribute("SID"));
+		board.setlCode((String)session.getAttribute("LIBNUM"));
+		return "/librarypage/board/myInquiryList";
+	}
+	
 }

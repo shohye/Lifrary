@@ -59,4 +59,7 @@ public interface BoardMapper {
 	
 	//라이브러리 문의 등록
 	public void libraryInquiryInsert(Board board);
+	
+	//마이페이지 내 문의 신청 내역 이동
+	public List<Board> myinquiryList(Board board);
 }
