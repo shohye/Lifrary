@@ -9,10 +9,19 @@
     <th:block layout:fragment="customScript">
  	<script type="text/javascript">
  	 $(document).ready(function(){
- 		 $('li').click(function(){
- 			 var optvalue = $(this).attr('rel');
- 			 console.log(optvalue);
- 		 }); 
+ 		
+ 		$('#searchBtn').click(function(){
+ 			var biName =$('[name="biName"]').val();
+ 			var skDate =$('[name="skDate"]').val();
+ 			var svDate =$('[name="svDate"]').val();
+
+ 			if(biName == '' || biName == null){
+ 				alert('도서명을 입력해주세요');
+ 			}else{
+ 				$('#searchForm').submit();
+ 			}
+ 		});
+ 		 
  	 });
  	</script>
  	<style>
@@ -37,8 +46,8 @@
                 </div>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a th:href="@{/}">Home</a></li>
-                        <li>MY HOLD BOOKS</li>
+                        <li><a>마이페이지</a></li>
+                        <li>도서 예약 현황</li>
                     </ul>
                 </div>
             </div>
@@ -54,11 +63,11 @@
                                     <div class="container">
                                         <div class="filter-box">
                                             <h3>나의 예약 도서 검색</h3>
-                                            <form>
+                                            <form th:action="@{/lifrary/myHoldList}" id="searchForm">
 	                                            <div class="col-md-4 col-sm-6">
 	                                                <div class="form-group">
 	                                                	<label for="keywords">도서명</label>
-	                                                    <input class="form-control" placeholder="도서명" type="text" name="biName">
+	                                                    <input class="form-control" type="text" name="biName">
 	                                                </div>
 	                                            </div>
 	                                            <div class="col-md-3 col-sm-6">
@@ -82,7 +91,7 @@
 	                                            <div class="col-md-2 col-sm-6">
 	                                                <div class="form-group">
 	                                                	<label for="keywords">&nbsp</label>
-	                                                    <input class="form-control" type="submit" value="검색">
+	                                                    <button type="button" id="searchBtn" class="form-control btn btn-primary" >검색</button>
 	                                                </div>
 	                                            </div>
                                             </form>
@@ -135,14 +144,25 @@
 						            </table>
                                     <nav class="navigation pagination text-center">
                                         <h2 class="screen-reader-text">Posts navigation</h2>
-                                        <div class="nav-links">
-                                            <a class="prev page-numbers" th:href="@{#}"><i class="fa fa-long-arrow-left"></i> Previous</a>
-                                            <span class="page-numbers current">1</span>
-                                            <a class="page-numbers" th:href="@{#}">2</a>
-                                            <a class="page-numbers" th:href="@{#}">3</a>
-                                            <a class="page-numbers" th:href="@{#}">4</a>
-                                            <a class="next page-numbers" th:href="@{#}">Next <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
+                                        <div class="nav-links">   
+			                         	 <span th:if="${currentPage > 1}">
+			                             	<a class="prev page-numbers" th:href="@{/lifrary/myHoldList(biName=${param.biName},skDate=${param.skDate},svDate=${param.svDate}, currentPage=(${currentPage}-1))}">
+			                                     <i class="fa fa-long-arrow-left"></i> 이전
+			                                 </a>
+			                             </span>          
+				                         <th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+									        <span th:if="${currentPage == num}" th:text="${num}" class="page-numbers current"></span>
+									        <span th:unless="${currentPage == num}">
+									        	<a th:text="${num}" class="page-numbers" th:href="@{/lifrary/myHoldList(biName=${param.biName},skDate=${param.skDate},svDate=${param.svDate}, currentPage=${num})}">
+				                                </a>
+									    	</span>
+									     </th:block>
+			                             <span th:if="${currentPage != lastPage}"> 
+			                             	<a class="next page-numbers" th:href="@{/lifrary/myHoldList(biName=${param.biName},skDate=${param.skDate},svDate=${param.svDate}, currentPage=(${currentPage}+1))}"> 
+			                                	 다음<i class="fa fa-long-arrow-right"></i>
+			                             	</a>
+			                            </span>
+			                         </div>
                                     </nav>
                                 </div>
                                 <!-- 마이페이지 사이드메뉴  -->

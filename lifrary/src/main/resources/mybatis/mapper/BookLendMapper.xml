@@ -97,7 +97,7 @@
 		ORDER BY 
 			bl.bl_code  DESC					
   	</select>
-  	<select id="bookLendCheck" parameterType="String" resultType="java.lang.Integer">
+  	<select id="bookLendCheck" parameterType="java.lang.String" resultType="java.lang.Integer">
   		SELECT 
 			 COUNT(1) 
 		FROM
@@ -107,7 +107,7 @@
 		AND 
 			l_code = #{libNum}		
   	</select>
-  	<select id="bookInfo" parameterType="String" resultMap="bookStock">
+  	<select id="bookInfo" parameterType="java.lang.String" resultMap="bookStock">
 		  SELECT 
 			 bs.bs_code
 			,bs.bi_isbn
@@ -149,7 +149,7 @@
 			bl.bl_code desc
 		LIMIT 0,1
   	</select>
-  	<select id="bookInfoStock" parameterType="String" resultMap="bookStock">
+  	<select id="bookInfoStock" parameterType="java.lang.String" resultMap="bookStock">
 		 SELECT
 			bs.bs_code
 			,bs.bi_isbn
@@ -175,7 +175,7 @@
 		AND
 			bs.l_code = #{libNum}
   	</select>
-  	<select id="userInfo" parameterType="String" resultMap="user">
+  	<select id="userInfo" parameterType="java.lang.String" resultMap="user">
   		SELECT
 			 u.u_id
 			,u.u_name
@@ -193,12 +193,10 @@
 					book_lend AS bl
 				WHERE
 					bl.bl_return_date IS NULL
-				AND
-				(
+				AND(
 					(bl.bl_lend_date IS NULL AND bl.bl_hold_date IS NOT NULL)
 					OR
-					bl.bl_lend_date IS NOT NULL
-				)
+					bl.bl_lend_date IS NOT NULL)
 				AND 
 					bl.bl_id = u.u_id	) AS u_lend_cnt
 		FROM
@@ -222,10 +220,9 @@
 		ORDER BY 
 			uah.uah_date DESC
 		LIMIT 0,1
-			
   	</select>
   	<insert id="lendInsert" parameterType="ksmart.pentagon.vo.BookLend">
-	  	<selectKey keyProperty="blCode" resultType="String" order="BEFORE">
+	  	<selectKey keyProperty="blCode" resultType="java.lang.String" order="BEFORE">
 		  	SELECT 
 			CONCAT('bl-',DATE_FORMAT(CURDATE(), '%y%m%d'),
 				(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(bl.bl_code), '-', -1),6) 
@@ -325,7 +322,35 @@
 			WHERE 
 				bl_code = #{blCode}	
 	</update>
-	<select id="myLendList" resultMap="bookLend" resultType="java.lang.String">
+	<select id="myLendListCnt" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT
+			COUNT(1)
+		FROM	  
+			book_lend AS bl
+		INNER JOIN
+			book_stock AS bs
+		ON 
+			bl.bs_code = bs.bs_code
+		INNER JOIN
+			book_information AS bi
+		ON 
+			bs.bi_isbn = bi.bi_isbn
+		WHERE
+			bl.bl_lend_date IS NOT NULL 
+		AND 
+			bl.l_code = #{libNum}
+		AND 
+			bl.bl_id = #{blId}	
+		<if test="biName != null and biName neq ''.toString()"> 
+			AND bi.bi_name Like CONCAT ('%',#{biName},'%')		
+		</if>
+		<if test="skDate != null and skDate neq ''.toString() and svDate != null and svDate neq ''.toString()">
+			<![CDATA[ 
+				AND #{skDate} >= #{svDate}
+			]]>	
+		</if>
+	</select>
+	<select id="myLendList" resultMap="bookLend" parameterType="java.util.HashMap">
 		SELECT
 			 bl.bl_code
 			,bl.bs_code 
@@ -357,11 +382,48 @@
 			bl.l_code = #{libNum}
 		AND 
 			bl.bl_id = #{blId}	
-		ORDER BY 
-			bl.bl_code  DESC
-
+		<if test="biName != null and biName neq ''.toString()"> 
+			AND bi.bi_name Like CONCAT ('%',#{biName},'%')		
+		</if>
+		<if test="skDate != null and skDate neq ''.toString() and svDate != null and svDate neq ''.toString()">
+			<![CDATA[ 
+				AND #{skDate} >= #{svDate}
+			]]>	
+		</if>
+		<if test="startRow neq null and rowPerPage neq null"> 
+	            ORDER BY bl.bl_code  DESC
+	            LIMIT #{startRow},#{rowPerPage}
+        </if>
 	</select>
-	<select id="myHoldList" resultMap="bookLend" resultType="java.lang.String">
+	<select id="myHoldListCnt" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT
+			COUNT(1)
+		FROM 	
+			book_lend AS bl
+		INNER JOIN
+			book_stock AS bs
+		ON 
+			bl.bs_code = bs.bs_code
+		INNER JOIN
+			book_information AS bi
+		ON 
+			bs.bi_isbn = bi.bi_isbn	
+		WHERE 
+			bl.bl_lend_date IS NULL
+		AND 
+			bl.l_code = #{libNum}
+		AND 
+			bl.bl_id = #{blId}
+		<if test="biName != null and biName neq ''.toString()"> 
+			AND bi.bi_name Like CONCAT ('%',#{biName},'%')		
+		</if>
+		<if test="skDate != null and skDate neq ''.toString() and svDate != null and svDate neq ''.toString()">
+			<![CDATA[ 
+				AND #{skDate} >= #{svDate}
+			]]>	
+		</if>		 	
+	</select>
+	<select id="myHoldList" resultMap="bookLend" parameterType="java.util.HashMap">
 		SELECT
 			 bl.bl_code
 			,bl.bl_id  
@@ -388,8 +450,17 @@
 			bl.l_code = #{libNum}
 		AND 
 			bl.bl_id = #{blId}	 
-		ORDER BY 
-			bl.bl_code  DESC		
-		
+		<if test="biName != null and biName neq ''.toString()"> 
+			AND bi.bi_name Like CONCAT ('%',#{biName},'%')		
+		</if>
+		<if test="skDate != null and skDate neq ''.toString() and svDate != null and svDate neq ''.toString()">
+			<![CDATA[ 
+				AND #{skDate} >= #{svDate}
+			]]>	
+		</if>
+		<if test="startRow neq null and rowPerPage neq null"> 
+	            ORDER BY bl.bl_code  DESC
+	            LIMIT #{startRow},#{rowPerPage}
+        </if>		
 	</select>
   </mapper>

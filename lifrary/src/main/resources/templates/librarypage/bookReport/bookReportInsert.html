@@ -38,8 +38,8 @@
                 </div>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a th:href="@{/}">Home</a></li>
-                        <li>BOOK REPORT</li>
+                        <li><a>독후감</a></li>
+                        <li>독후감 작성</li>
                     </ul>
                 </div>
             </div>
@@ -69,10 +69,10 @@
 		                                    </div>
 		                                    <div class="col-xs-12 col-sm-6 library-info">
 		                                        <ul>
-		                                            <li><strong>도서명:</strong>도서명출력</li>
+		                                            <li><strong>도서명:</strong></li>
 		                                            <li>
 		                                            	<strong>ISBN:</strong>
-		                                                <a href="#">도서상세페이지로 이동</a>
+		                                                <a href="#"></a>
 		                                            </li>
 		                                        </ul>
 		                                    </div>
@@ -81,7 +81,12 @@
 	                                     <div class="entry-content">
 			                             	<form id="reportForm" th:action="@{/lifrary/myBookReportSearchList}" >
 		                                        <div class="form-group">
-				                                     <textarea name="reportContent" id="reportEditor" rows="10" ></textarea>
+		                                        	<label for="keywords">제목</label>
+				                                    <input class="form-control" type="text" placeholder="제목을 입력해주세요">
+			                               	   </div>
+		                                        <div class="form-group">
+		                                        	<label for="keywords">내용</label>
+				                                    <textarea name="reportContent" id="reportEditor" rows="10" ></textarea>
 			                               	   </div>
 			                               	    <div class="form-group">  
 			                                     	<div class="rating">
