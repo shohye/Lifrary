@@ -28,6 +28,69 @@
 	   	}); // 처음 function끝
 	   	    	
 	   	</script>
+	   	
+<style type="text/css">
+.events-calendar {
+  background-color: #f4f4f4;
+  padding: 30px;
+}
+.events-calendar h5 {
+  color: #282828;
+  margin: 30px 0 15px;
+}
+.events-calendar .left {
+  margin-bottom: 26px;
+}
+.events-calendar label {
+  color: #282828;
+  font-weight: normal;
+  margin: 18px 0 0;
+}
+.events-calendar .select {
+  float: right;
+  margin-bottom: 30px;
+  width: 70%;
+}
+@media (max-width: 991px) {
+.events-calendar .select {
+    margin: 10px 0 30px;
+    width: 100%;
+  }
+}
+.events-calendar .event-table {
+  border: 1px solid #e5e5e5;
+  border-spacing: 0;
+  margin-bottom: 0;
+}
+.events-calendar .event-table thead tr {
+  background-color: #282828;
+  border-bottom: 0;
+  color: #fff;
+}
+.events-calendar .event-table tr {
+  border-bottom: 1px solid #e5e5e5;
+  line-height: 14px;
+}
+.events-calendar .event-table td {
+  background-color: #fff;
+  
+  font-size: 12px;
+  padding: 18px 20px;
+}
+@media (max-width: 767px) {
+.events-calendar .event-table td {
+    padding: 18px 10px;
+  }
+}
+.events-calendar .event-table th {
+  font-size: 14px;
+  line-height: 14px;
+  padding: 18px;
+  text-transform: uppercase;
+}
+	   	
+</style>
+
    </th:block>
        
         <!-- Start: Slider Section -->
@@ -39,9 +102,15 @@
         	<section th:replace="fragments/library/searchSection :: searchSectionFragment"></section>
         <!-- End: Search Section -->
         
+        
+        <!-- Start: Calender Section -->
+        <section th:replace="fragments/library/calenderIndex :: calenderIndexFragment"></section>
+        <!-- End: Calender Section -->
+       
         <!-- Start: Features -->
         <section th:replace="fragments/library/programIndex :: programIndexFragment"></section>
         <!-- End: Features -->
+        
         
         <!-- Start: Category Filter -->
         <!--	<section th:replace="fragments/library/categoryFilter :: categoryFilterFragment"></section>-->

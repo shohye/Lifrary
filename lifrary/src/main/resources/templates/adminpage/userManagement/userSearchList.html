@@ -34,11 +34,14 @@
 	   console.log(SAID);
 	   var write = $('#uPw').val();
 	   console.log(write);
+	   var uId = $('#uId').val();
+	   console.log(uId);
+	   
 	   
 	   var request = $.ajax({
 			url:"/deleteUser",
 			method: "POST",
-			data : { 'said' : SAID , 'write' : write }, 
+			data : { 'said' : SAID , 'write' : write , 'uId' : uId}, 
 			dataType: "text"
 		});		
 	   //응답완료 후 실행 - 정상처리
@@ -49,7 +52,8 @@
 				 $('#uPw').focus();
 			 }else if(data =='회원 삭제가 완료되었습니다'){
 				 alert(data);
-				 $('#modals-default').modal('hide');						
+				 $('#modals-default').modal('hide');
+				 location.reload(true);
 			 }						
 		});				 
 		request.fail(function( jqXHR, textStatus ) {
@@ -72,7 +76,7 @@
             <div class="card">
               <div class="card">
                 <div class="card-datatable table-responsive">
-				  <table class="datatables-demo table table-striped table-bordered">
+				  <table class="datatables-demo table table-hover table-bordered">
 	                <thead>
                   	<tr>
                     	<th>회원번호</th>

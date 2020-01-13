@@ -75,6 +75,12 @@
 					
 			
 			</script>
+			<style type="text/css">
+			a:HOVER {     /* 마우스 커서 올렸을때 */
+			        text-decoration: underline; color: #00F; font-weight: bold;}
+
+			
+			</style>
 		</th:block>   
   	<th:block layout:fragment="customContents">
            <section class="page-banner services-banner">
@@ -88,7 +94,7 @@
                 <div class="breadcrumb">
                     <ul>
                         <li><a th:href="@{/}">메인메뉴</a></li>
-                        <li>MY UPDATE</li>
+                        <li>내 정보 수정하기</li>
                     </ul>
                 </div>
             </div>
@@ -138,74 +144,9 @@
                                                                             <!-- <div class="clear"></div> -->
                                                                          <div class="form-row">
                                                                             <div class="col-xs-4 col-sm-4">
-                                                                            	<label class="form-label">생년월일 :  </label>
-                                                                                
+                                                                            	<label class="form-label">생년월일 :  </label>  
                                                                                    <p><input type="date" autocomplete="organization" placeholder="년도를 입력해주세요" name="uBirth" id="uBirth" th:value="${m.uBirth}" class="input-text "></p>
-                                                                              
-                                                                            </div>
-                                                                           <!--  <div class="col-md-4 col-sm-4">
-							                                                   <div class="form-group">
-							                                                    <label class="form-label">&nbsp; </label>
-							                                                        <div class="select">	
-							                                                        <select name="month" id="category" class="form-control select-hidden">
-							                                                        	 <option selected="selected">월을 선택해주세요</option>
-							                                                             <option value="01">01월</option>
-																			             <option value="02">02월</option>
-																			             <option value="03">03월</option>
-																			             <option value="04">04월</option>
-																			             <option value="05">05월</option>
-																			             <option value="06">06월</option>
-																			             <option value="07">07월</option>
-																			             <option value="08">08월</option>
-																			             <option value="09">09월</option>
-																			             <option value="10">10월</option>
-																			             <option value="11">11월</option>
-																			             <option value="12">12월</option>
-							                                                        </select>
-							                                                        </div>
-							                                                    </div>
-							                                                </div>
-							                                                <div class="col-md-4 col-sm-4">
-							                                                    <div class="form-group">
-							                                                    <label class="form-label">&nbsp; </label>
-							                                                        <div class="select">	
-							                                                        <select name="day" id="category" class="form-control select-hidden">
-							                                                        	 <option selected="selected">일을 선택해주세요</option>
-							                                                             <option value="01">01일</option>
-																			             <option value="02">02일</option>
-																			             <option value="03">03일</option>
-																			             <option value="04">04일</option>
-																			             <option value="05">05일</option>
-																			             <option value="06">06일</option>
-																			             <option value="07">07일</option>
-																			             <option value="08">08일</option>
-																			             <option value="09">09일</option>
-																			             <option value="10">10일</option>
-																			             <option value="11">11일</option>
-																			             <option value="12">12일</option>
-																			             <option value="13">13일</option>
-																			             <option value="14">14일</option>
-																			             <option value="15">15일</option>
-																			             <option value="16">16일</option>
-																			             <option value="17">17일</option>
-																			             <option value="18">18일</option>
-																			             <option value="19">19일</option>
-																			             <option value="20">20일</option>
-																			             <option value="21">21일</option>
-																			             <option value="22">22일</option>
-																			             <option value="23">23일</option>
-																			             <option value="24">24일</option>
-																			             <option value="25">25일</option>
-																			             <option value="26">26일</option>
-																			             <option value="27">27일</option>
-																			             <option value="28">28일</option>	
-																			             <option value="29">29일</option>
-																			             <option value="30">30일</option>
-																			             <option value="31">31일</option>
-							                                                        </select>
-							                                                        </div>
-							                                                    </div>
-							                                                </div> -->
+                                                                            </div> 
                                                                            </div>
                                                                       
                                                                             <div class="col-xs-6 col-sm-6">
@@ -248,6 +189,7 @@
                                                                             </div>
                                                                             <div class="col-xs-12 col-sm-12" style="margin-bottom: 40px">
                                                                         		<button type="button" id="upBtn">수정완료 버튼</button>
+                                                                        		<div><a th:href="@{/lifrary/myUserDelete(uId =${m.uId})}" style="height: 200px;" target="_blank">회원탈퇴 바로가기</a></div>
                            													</div>
                                                                     
                                                                     </div>
