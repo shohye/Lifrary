@@ -4,7 +4,7 @@
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
 <th:block layout:fragment="adminTitle">
-	<title>대출/반납 도서</title>
+	<title>대출/반납 관리</title>
  </th:block>
 
  <!-- headAdd(Libs&page) -->
@@ -94,10 +94,9 @@
 				
 				if(blId == userId){
 					$('#holdUserCheck').append('<span class="badge badge-outline-info">예약자 일치</span>');
-					console.log('예약자');
+					
 				}else{
 					$('#holdUserCheck').append('<span class="badge badge-outline-danger">예약자 불일치</span>');
-					console.log('예약자아닌데용?');
 				}
 			}
 	  	}
@@ -137,8 +136,6 @@
 		 }else if(btnClass == 'btn btn-info'){//예약등록
 			 $("#lendForm").attr("action", "/admin/holdUpdate").submit();
 		 }
-		 
- 		
 	 }); 
 	 
   });//document.ready
@@ -153,7 +150,7 @@
 	<!-- Content -->
 	<th:block layout:fragment="adminContents">   
 		<h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-			<div>대출 관리</div>
+			<div>대출/반납 관리</div>
 		</h4>
 
 	<!-- 대출 도서 검색 등록 -->

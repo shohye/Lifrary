@@ -16,8 +16,7 @@
    	<script th:src="@{/libraryStatic/fullcalendar/packages/core/locales/ko.js}"></script>
    	<script type="text/javascript" th:inline="javascript">
    	$(document).ready(function() {
-   		
-   	  
+   		 	  
   	  /*<![CDATA[*/
   		var resultInsert = [[ ${resultInsert} ]];//일정 등록 결과
   		var resultUpdate = [[ ${resultUpdate} ]];//일정 수정 결과
@@ -82,6 +81,7 @@
 	  	   		request.fail(function( jqXHR, textStatus ) {
 	  	   		  alert('목표량을 불러오는데 실패하였습니다');
 	  	   		});//request.fail
+	  	   		
 	 	 //기간에 따른 종료일 구하기
 		 $('#goalInsert li').click(function(){
  			
@@ -167,11 +167,6 @@
 	                  info.el.firstChild.innerHTML = info.el.firstChild.innerHTML + '<img src="' + info.event.extendedProps.imageurl +'" style="height: 100px; width=100%;">';
 	              }
 	          },
-	        /*  eventRender: function(info) {
-	              if (info.event.extendedProps.imageurl) {
-	            	  info.el.firstChild.innerHTML ='<div><a href="#">'+ info.event.title +'</a><img src="' + info.event.extendedProps.imageurl +'" width="40" height="40"></div>';
-	              }
-	          } */
 	        navLinkDayClick: function(date, jsEvent){     	
 	        	var selectDate =moment(date).format('YYYY-MM-DD');
 	        	console.log(selectDate);
@@ -346,9 +341,8 @@
 		  
 		 //모달 초기화
 		 $('.modal').on('hidden.bs.modal', function (e) {
-			
 			$(this).find('form')[0].reset()
-			$('form').find('#bookInsertModal ul').css("display","none").html('');
+			$('#bookInsertModal ul').css('display','none').html('');
 			$('.modal strong').eq(1).text('');//도서명
 			$('.modal strong').eq(3).text('');//ISBN
 			$('.modal strong').eq(5).text('');//저자명
@@ -401,8 +395,8 @@
                 </div>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a th:href="@{/}">Home</a></li>
-                        <li>Book & Diary</li>
+                        <li><a>마이페이지</a></li>
+                        <li>북 캘린더</li>
                     </ul>
                 </div>
             </div>
