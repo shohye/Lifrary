@@ -8,6 +8,7 @@ $(function() {
 	      dataType: 'JSON',
 	      dataSrc : '',
 	      dataFilter: function(data){
+	    	  console.log(data);
              return data;   
 	       }
 	  },

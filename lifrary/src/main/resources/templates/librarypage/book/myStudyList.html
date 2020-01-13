@@ -105,8 +105,8 @@
                 </div>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a th:href="@{/}">Home</a></li>
-                        <li>MY STUDY</li>
+                        <li><a>마이페이지</a></li>
+                        <li>나만의 서재</li>
                     </ul>
                 </div>
             </div>
@@ -130,11 +130,11 @@
 								                   	</div>
 								               </div>
 								               <div class="filter-buttons">
-							                   <div class="filter btn" data-filter="all">완독 도서</div>
-							                   <div class="filter btn" data-filter=".adults">읽는 중인 도서</div>
-							                   <div class="filter btn" data-filter=".kids-teens">꿀잼 도서</div>
-							                   <div class="filter btn" data-filter=".video">노잼 도서</div>
-							                   <div class="filter btn" data-filter=".audio">읽을 예정</div>
+								               <div class="filter btn" data-filter=".all">전체 도서</div>
+							                   <div class="filter btn" data-filter=".end">완독 도서</div>
+							                   <div class="filter btn" data-filter=".ing">진행도서</div>
+							                   <div class="filter btn" data-filter=".jam">꿀잼 도서</div>
+							                   <div class="filter btn" data-filter=".nojam">노잼 도서</div>
 							               </div>
 							           </div>
 							    </section>     
@@ -144,23 +144,14 @@
                                 <div class="col-md-9 col-md-push-3">
                                 	 <div class="filter-options margin-list">
                                         <div class="row">                                            
-                                            <div class="col-md-3 col-sm-3">
-                                                <select name="orderby">
-                                                    <option selected="selected">::카테고리 선택::</option>
-                                                    <option>완독 도서</option>
-                                                    <option>읽는 중인 도서</option>
-                                                    <option>노잼 도서</option>
-                                                    <option>꿀잼도서</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 col-sm-3">
-                                                <div class="filter-result">total 29</div>
+                                            <div class="col-md-8 col-sm-8">
+                                                <div><strong>total: </strong>25</div>
                                             </div>
                                             <div class="col-md-4 col-sm-4 pull-right">
                                                 <div >
                                                 	<strong>
                                                 		<i class="fa fa-cog">&nbsp;카테고리 설정</i>
-                                                		<a href="#" data-toggle="modal">등록</a>
+                                                		<a href="#studyInsertModal" data-toggle="modal">등록</a>
                                                 		<a id="studySet" href="#studySetModal" data-toggle="modal">수정</a>
                                                 	</strong>
                                                 </div>
@@ -170,7 +161,7 @@
                                 	 <section class="category-filter" style=" padding: 0px;">
 							            <div id="category-filter" >
 							                <ul class="category-list">
-							                    <li class="category-item adults">
+							                    <li class="category-item all">
 							                        <figure>
 							                            <img src="/libraryStatic/images/studyPlus.png" alt="이미지 준비중" />
 							                            <figcaption class="bg-orange">
@@ -181,14 +172,14 @@
 							                            </figcaption>
 							                        </figure>
 							                    </li>
-							                    <li class="category-item kids-teens">
+							                    <li class="category-item all end">
 							                        <figure>
-							                            <img src="https://image.aladin.co.kr/product/19838/15/cover/k582635330_1.jpg" alt="이미지 준비중" />
+							                            <img src="http://image.aladin.co.kr/product/10393/53/cover/8901215047_1.jpg" alt="이미지 준비중" />
 							                            <figcaption class="bg-orange">
 							                                <div class="info-block">
-							                                    <h4>The Great Gatsby</h4>
-							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
-							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <h4>90일 완성 돈 버는 평생 습관</h4>
+							                                    <span class="author"><strong>Author:</strong>요코야마 미츠아키</span>
+							                                    <span class="author"><strong>ISBN:</strong>9788901215044</span>
 							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a>
 							                                	<ol>
 							                                        <li>
@@ -202,14 +193,14 @@
 							                            </figcaption>
 							                        </figure>
 							                    </li>
-							                    <li class="category-item video">
+							                    <li class="category-item all ing">
 							                        <figure>
-							                            <img src="http://image.aladin.co.kr/product/3273/11/cover/8936456555_1.jpg" alt="이미지 준비중" />
+							                            <img src="http://image.aladin.co.kr/product/14844/15/cover/k772532455_1.jpg" alt="이미지 준비중" />
 							                            <figcaption class="bg-orange">
 							                                <div class="info-block">
-							                                    <h4>The Great Gatsby</h4>
-							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
-							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <h4>변하는 것과 변하지 않는 것</h4>
+							                                    <span class="author"><strong>Author:</strong>강민호</span>
+							                                    <span class="author"><strong>ISBN:</strong>9791196372101</span>
 							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a>
 							                                	<ol>
 							                                        <li>
@@ -223,14 +214,14 @@
 							                            </figcaption>
 							                        </figure>
 							                    </li>
-							                    <li class="category-item audio">
+							                    <li class="category-item all ing">
 							                        <figure>
-							                            <img src="https://bookthumb-phinf.pstatic.net/cover/124/959/12495947.jpg?type=m1&udate=20180609" alt="New Releaase" />
+							                            <img src="https://image.aladin.co.kr/product/15762/65/cover/8965746612_1.jpg" alt="New Releaase" />
 							                            <figcaption class="bg-orange">
 							                                <div class="info-block">
-							                                    <h4>The Great Gatsby</h4>
-							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
-							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <h4>해리 1 :공지영 장편소설</h4>
+							                                    <span class="author"><strong>Author:</strong>공지영</span>
+							                                    <span class="author"><strong>ISBN:</strong>9788965746614</span>
 							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a>
 							                               		<ol>
 							                                        <li>
@@ -244,14 +235,14 @@
 							                            </figcaption>
 							                        </figure>
 							                    </li>
-							                    <li class="category-item books">
+							                    <li class="category-item all jam end">
 							                        <figure>
-							                            <img src="https://image.aladin.co.kr/product/17592/76/cover/8936456873_1.jpg" alt="New Releaase" />
+							                            <img src="http://image.aladin.co.kr/product/5007/78/cover/8983925493_1.jpg" alt="이미지 준비중" />
 							                            <figcaption class="bg-orange">
 							                                <div class="info-block">
-							                                    <h4>The Great Gatsby</h4>
-							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
-							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <h4>해리포터 :혼혈 왕자 4</h4>
+							                                    <span class="author"><strong>Author:</strong>J.K. 롤링</span>
+							                                    <span class="author"><strong>ISBN:</strong>9788983925497</span>
 							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a>
 							                                	<ol>
 							                                        <li>
@@ -265,14 +256,14 @@
 							                            </figcaption>
 							                        </figure>
 							                    </li>
-							                    <li class="category-item magazines">
+							                    <li class="category-item all jam end">
 							                        <figure>
-							                            <img src="https://bookthumb-phinf.pstatic.net/cover/078/420/07842053.jpg?type=m1&udate=20180127" alt="New Releaase" />
+							                            <img src="http://image.aladin.co.kr/product/5007/78/cover/8983925485_1.jpg" alt="New Releaase" />
 							                            <figcaption class="bg-orange">
 							                                <div class="info-block">
-							                                    <h4>The Great Gatsby</h4>
-							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
-							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <h4>해리포터 :혼혈 왕자 3</h4>
+							                                    <span class="author"><strong>Author:</strong>J.K. 롤링</span>
+							                                    <span class="author"><strong>ISBN:</strong>9788983925480</span>
 							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a> 
 							                                	<ol>
 							                                        <li>
@@ -286,14 +277,14 @@
 							                            </figcaption>
 							                        </figure>
 							                    </li>
-							                    <li class="category-item adults">
+							                    <li class="category-item all jam end">
 							                        <figure>
-							                            <img src="https://image.aladin.co.kr/product/19832/27/cover/8936477838_1.jpg" alt="New Releaase" />
+							                            <img src="https://bookthumb-phinf.pstatic.net/cover/001/795/00179544.jpg?type=m1&udate=20130412" alt="New Releaase" />
 							                            <figcaption class="bg-orange">
 							                                <div class="info-block">
-							                                    <h4>The Great Gatsby</h4>
-							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
-							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <h4>해리포터와 비밀의 방</h4>
+							                                    <span class="author"><strong>Author:</strong>조앤 K. 롤링</span>
+							                                    <span class="author"><strong>ISBN:</strong>9788983920706</span>
 							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a>
 							                                	<ol>
 							                                        <li>
@@ -307,14 +298,14 @@
 							                            </figcaption>
 							                        </figure>
 							                    </li>
-							                    <li class="category-item kids-teens">
+							                    <li class="category-item all nojam end">
 							                        <figure>
-							                            <img src="https://image.aladin.co.kr/product/21168/79/cover/k642636886_2.jpg" alt="New Releaase" />
+							                            <img src="https://image.aladin.co.kr/product/16690/37/cover/k562534364_1.jpg" alt="New Releaase" />
 							                            <figcaption class="bg-orange">
 							                                <div class="info-block">
-							                                    <h4>The Great Gatsby</h4>
-							                                    <span class="author"><strong>Author:</strong> F. Scott Fitzgerald</span>
-							                                    <span class="author"><strong>ISBN:</strong> 9781581573268</span>
+							                                    <h4>연애 잘하고 싶은데 방법을 모르겠어</h4>
+							                                    <span class="author"><strong>Author:</strong>송창민</span>
+							                                    <span class="author"><strong>ISBN:</strong>9791196440329</span>
 							                                    <a href="#">상세보기 <i class="fa fa-long-arrow-right"></i></a>
 							                                	<ol>
 							                                        <li>
@@ -332,12 +323,8 @@
 							                <div class="center-content">
 						                   		<nav class="navigation pagination text-center">
 			                                        <div class="nav-links">
-			                                            <a class="prev page-numbers" href="#."><i class="fa fa-long-arrow-left"></i> Previous</a>
-			                                            <a class="page-numbers" href="#.">1</a>
-			                                            <span class="page-numbers current">2</span>
-			                                            <a class="page-numbers" href="#.">3</a>
-			                                            <a class="page-numbers" href="#.">4</a>
-			                                            <a class="next page-numbers" href="#.">Next <i class="fa fa-long-arrow-right"></i></a>
+			                                            <span class="page-numbers current">1</span>
+			                                            
 			                                        </div>
 		                                    	</nav>
 							                </div>
@@ -354,6 +341,31 @@
                 </main>
             </div>
         </div>
+        <div class="modal fade" id="studyInsertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">서재 카테고리 등록</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="row">
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-12">		
+                      	   <p>*최대 20글자까지 설정 가능합니다</p>
+                      	   <label for="keywords">카테고리명</label>
+	                       <input class="form-control" type="text" placeholder="카테고리명을 입력해주세요">
+	                  	</div>
+	                  </div>
+                 </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
+		      	<button type="button" id="insertBtn" class="btn btn-primary" >등록</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<div class="modal fade" id="studySetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">

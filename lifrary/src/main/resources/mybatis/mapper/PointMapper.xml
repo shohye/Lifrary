@@ -152,7 +152,20 @@
 		WHERE 
 			p_code=#{pCode}
  	</delete>
- 	<select id="myPointList" parameterType="java.lang.String" resultMap="point">
+ 	<select id="myPointListCnt" parameterType="java.lang.String" resultType="java.lang.Integer">
+ 		SELECT
+			COUNT(1)
+		FROM
+			point_history AS ph
+		INNER JOIN
+			point AS p
+		ON
+			ph.p_code = p.p_code		
+		WHERE
+			ph.u_id = #{uId}
+		ORDER BY ph.ph_date DESC
+ 	</select>
+ 	<select id="myPointList" parameterType="java.util.HashMap" resultMap="point">
  		SELECT
 			 p.p_name
 			,p.p_standard
@@ -166,7 +179,10 @@
 			ph.p_code = p.p_code		
 		WHERE
 			ph.u_id = #{uId}
-		ORDER BY ph.ph_date DESC	
+		<if test="startRow neq null and rowPerPage neq null"> 
+	            ORDER BY ph.ph_date DESC
+	            LIMIT #{startRow}, #{rowPerPage}
+        </if>	
  	</select>
  	<select id="myTotalPoint" parameterType="java.lang.String" resultType="java.lang.String">
  		SELECT

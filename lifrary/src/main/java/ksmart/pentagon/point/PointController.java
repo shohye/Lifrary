@@ -2,6 +2,7 @@ package ksmart.pentagon.point;
 
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -176,12 +177,24 @@ public class PointController {
 	 * @author 최지혜
 	 */
 	@GetMapping("/lifrary/myPointList")
-	public String myPointList(HttpSession session
+	public String myPointList(@RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPageStr
+							 ,HttpSession session
 							 , Model model) {
 		
 		String uId = (String) session.getAttribute("SID");
-		model.addAttribute("myPointList", pointService.myPointList(uId));
-		model.addAttribute("myTotalPoint", pointService.myTotalPoint(uId));
+		
+		Map<String, Object> map = pointService.myPointList(uId, currentPageStr);
+	
+		model.addAttribute("myPointList", map.get("myPointList"));
+		
+		model.addAttribute("currentPage", map.get("currentPage"));
+    	model.addAttribute("lastPage", map.get("lastPage"));
+    	model.addAttribute("startPageNum", map.get("startPageNum"));
+    	model.addAttribute("lastPageNum", map.get("lastPageNum"));
+    	model.addAttribute("pageViewBlock", map.get("pageViewBlock"));
+    	model.addAttribute("pageViewArray", map.get("pageViewArray"));
+		
+    	model.addAttribute("myTotalPoint", pointService.myTotalPoint(uId));
 		
 		return "/librarypage/point/myPointList";
 		
