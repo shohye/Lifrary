@@ -4,16 +4,191 @@
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
  	<th:block layout:fragment="adminTitle">
-		<title>WELCOME ADMINPAGE</title>
+		<title>도서관 관리시스템</title>
 	</th:block>
+  <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+  	<script>
+  		$(document).ready(function(){
+  			var areaHidden = 0;
+  			var ageHidden1 = 0;
+  			var ageHidden2 = 0;
+  			var genderHidden1 = 0;
+  			var genderHidden2 = 0;
+  			var genderHidden3 = 0;
+  			
+  			areaClick = function(area){
+  				$('#areaHidden').val(area);
+  				var gender = "2";
+  				var fromAge = "0";
+  				var toAge = "100";
+  				var area = area;
+  				var request = $.ajax({
+  				  url: "/getAera",
+  				  method: "POST",
+  				  data: { "gender" : gender , "fromAge" : fromAge , "toAge" : toAge , "area" : area},
+  				  dataType: "json"
+  				});
+  				 
+  				request.done(function( list) {
+					
+					var img = "";
+					var bookName = "";
+					console.log('list : '+list)
+					for(var i = 0; i < list.length; i++){
+						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+						}
+					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+					$('#areaDiv').html(ageDivhtml);
+				});
+  				 
+  				request.fail(function( jqXHR, textStatus ) {
+  				  alert( "Request failed: " + textStatus );
+  				});
+  			}
+  			
+  			//연령 눌렀을시 클릭이벤트
+  			ageClick = function(fromAge,toAge){
+  				$('#ageHidden1').val(fromAge);
+  				$('#ageHidden2').val(toAge);
+  				var gender = "2";
+  				var fromAge = fromAge;
+  				var toAge = toAge;
+  				var area = "0";
+  				
+  				var request = $.ajax({
+    				  url: "/getAera",
+    				  method: "POST",
+    				  data: { "gender" : gender , "fromAge" : fromAge , "toAge" : toAge , "area" : area},
+    				  dataType: "json"
+    				});
+				request.done(function( list) {
+					var img = "";
+					var bookName = "";
+					console.log('list : '+list)
+					for(var i = 0; i < list.length; i++){
+						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+						}
+					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+					$('#ageDiv').html(ageDivhtml);
+				});
+  				 
+  				request.fail(function( jqXHR, textStatus ) {
+  				  alert( "Request failed: " + textStatus );
+  				});
+  				
+
+  			}
+  			genderClick = function(gender,fromAge,toAge){
+  				$('#genderHidden1').val(gender);
+  				$('#genderHidden2').val(fromAge);
+  				$('#genderHidden3').val(toAge);
+  				var gender = $('#genderHidden1').val();
+  				var fromAge =$('#genderHidden2').val();
+  				var toAge = $('#genderHidden3').val();
+  				var area = "0";
+  				
+  				var request = $.ajax({
+    				  url: "/getAera",
+    				  method: "POST",
+    				  data: { "gender" : gender , "fromAge" : fromAge , "toAge" : toAge , "area" : area},
+    				  dataType: "json"
+    				});
+  				request.done(function( list) {
+  					var img = "";
+  					var bookName = "";
+  					console.log('list : '+list)
+  					for(var i = 0; i < list.length; i++){
+  						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+  						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+  						}
+  					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+  					$('#genderDiv').html(ageDivhtml);
+  				});
+  				 
+  				request.fail(function( jqXHR, textStatus ) {
+  				  alert( "Request failed: " + textStatus );
+  				});
+  				
+  			}
+  			
+  			$('#ageBtn').click(function(){
+  				var ageHidden1 = $('#ageHidden1').val();
+  				var ageHidden2 = $('#ageHidden2').val();
+  				console.log(ageHidden1)
+  				console.log(ageHidden2)
+  				var request = $.ajax({
+    				  url: "/getAge",
+    				  method: "POST",
+    				  data: { "fromAge" : ageHidden1 , "toAge" : ageHidden2 },
+    				  dataType: "json"
+    				});
+    				 
+    				request.done(function( list) {
+    					var img = "";
+    					var bookName = "";
+    					console.log('list : '+list)
+    					for(var i = 0; i < list.length; i++){
+    						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+    						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+							}
+    					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+    					$('#ageDiv').html("");
+    					$('#ageDiv').html(ageDivhtml);
+    				});
+    				 
+    				request.fail(function( jqXHR, textStatus ) {
+    				  alert( "Request failed: " + textStatus );
+    				});
+  			})
+  			
+  			$('#genderBtn').click(function(){
+  				var gender = $('#genderHidden1').val();
+  				var fromAge = $('#genderHidden2').val();
+  				var toAge = $('#genderHidden3').val();
+  				var area = "0";
+  				var request = $.ajax({
+  				  url: "/getAera",
+  				  method: "POST",
+  				  data: { "gender" : gender , "fromAge" : fromAge , "toAge" : toAge , "area" : area},
+  				  dataType: "json"
+  				});
+				request.done(function( list) {
+					var img = "";
+					var bookName = "";
+					console.log('list : '+list)
+					for(var i = 0; i < list.length; i++){
+						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+						}
+					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+					$('#genderDiv').html(ageDivhtml);
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});
+  			})
+  			
+  			
+  		})
+  	</script>
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+ 
+ 
+ 
+ 
+ 
+ 
  
   <!-- Content -->
          <th:block layout:fragment="adminContents">
-         
-
             <h4 class="font-weight-bold py-3 mb-4">
-              Dashboard
-              <div class="text-muted text-tiny mt-1"><small class="font-weight-normal">Today is Tuesday, 8 February 2018</small></div>
+              통계
+              <div class="text-muted text-tiny mt-1"><small class="font-weight-normal" th:text="|${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm')} 기준통계 |"></small></div>
             </h4>
 
             <!-- Counters -->
@@ -23,10 +198,10 @@
                 <div class="card mb-4">
                   <div class="card-body">
                     <div class="d-flex align-items-center">
-                      <div class="lnr lnr-cart display-4 text-success"></div>
+                      <div class="display-4 text-success"><i class="fas fa-book d-block"></i></div>
                       <div class="ml-3">
-                        <div class="text-muted small">Monthly sales</div>
-                        <div class="text-large">2362</div>
+                        <div class="text-muted small">소장도서</div>
+                        <div class="text-large">[[${count.bsStockState}]] 권</div>
                       </div>
                     </div>
                   </div>
@@ -38,11 +213,12 @@
                 <div class="card mb-4">
                   <div class="card-body">
                     <div class="d-flex align-items-center">
-                      <div class="lnr lnr-earth display-4 text-info"></div>
+                      <div class="display-4 text-info"><i class="fas fa-address-book d-block"></i></div>
                       <div class="ml-3">
-                        <div class="text-muted small">Monthly visits</div>
-                        <div class="text-large">687,123</div>
+                        <div class="text-muted small">금일 대출도서</div>
+                        <div class="text-large">[[${count.blLendDate}]] 권</div>
                       </div>
+                      
                     </div>
                   </div>
                 </div>
@@ -53,10 +229,10 @@
                 <div class="card mb-4">
                   <div class="card-body">
                     <div class="d-flex align-items-center">
-                      <div class="lnr lnr-gift display-4 text-danger"></div>
+                      <div class="display-4 text-danger"><i class="fas fa-users-cog d-block"></i></div>
                       <div class="ml-3">
-                        <div class="text-muted small">Products</div>
-                        <div class="text-large">985</div>
+                        <div class="text-muted small">사서</div>
+                        <div class="text-large">[[${count.librarian}]] 명</div>
                       </div>
                     </div>
                   </div>
@@ -70,8 +246,8 @@
                     <div class="d-flex align-items-center">
                       <div class="lnr lnr-users display-4 text-warning"></div>
                       <div class="ml-3">
-                        <div class="text-muted small">Users</div>
-                        <div class="text-large">105,652</div>
+                        <div class="text-muted small">회원</div>
+                        <div class="text-large">[[${count.member}]] 명</div>
                       </div>
                     </div>
                   </div>
@@ -80,8 +256,199 @@
               </div>
             </div>
             <!-- / Counters -->
-
-            <!-- Statistics -->
+	<div class="card mb-4">
+		<div class="card-body">
+			<div class="display-5 text-danger">
+				<i class="fas fa-chart-line d-block"> <strong
+					style="color: #000000;"> &ensp;전체도서관 인기대출 도서 </strong> <span
+					style="color: #BDBDBD;"> (분석기간 :
+						[[${startDt}]]&ensp;~&ensp;[[${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}]] </span>
+				</i>
+			</div>
+			<br>
+			<div class="nav-tabs-top mb-4">
+				<ul class="nav nav-tabs">
+					<li class="nav-item"><a id="areaBtn" class="btn btn-outline-info"
+						data-toggle="tab" href="#area">지역</a></li>
+					<li class="nav-item"><a id="ageBtn" class="btn btn-outline-info"
+						data-toggle="tab" href="#age">연령</a></li>
+					<li class="nav-item"><a id="genderBtn" class="btn btn-outline-info"
+						data-toggle="tab" href="#genger">성별</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade show active" id="area">
+						<div class="card-body" style="padding: 0px;">
+							<div class="nav-tabs-top mb-4">
+							<input type="hidden" id="areaHidden" value="0">
+								<ul class="nav nav-tabs" style="background-color: #E6E6E6;">
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('0')">전국</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('11')">서울</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('21')">부산</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('22')">대구</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('23')">인천</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('24')">광주</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('25')">대전</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('26')">울산</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('29')">세종</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('31')">경기</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('32')">강원</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('33')">충북</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('34')">충남</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('35')">전북</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('36')">전남</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('37')">경북</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('38')">경남</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('39')">제주</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="AreaTotar">
+										<div class="card-body" id="areaDiv">
+													<table style="margin: auto;">
+														<tr>
+											<th:block th:each="l : ${list}">
+															<td style="width: 10%;">
+																<img th:src="${l.get(1)}" style="width: 100%; height: 230px;">
+															</td>
+											</th:block>
+														</tr>
+														<tr>
+											<th:block th:each="b : ${list}">
+															<td>
+																<span th:text="${b.get(0)}"  style="width: 100px; height: 150px; margin-left: 5px;"></span>
+															</td>
+											</th:block>
+														</tr>
+													</table>
+													
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="age">
+						<div class="card-body" style="padding: 0px;">
+							<div class="nav-tabs-top mb-4">
+							<input type="hidden" id="ageHidden1" value="0">
+							<input type="hidden" id="ageHidden2" value="100">
+								<ul class="nav nav-tabs" style="background-color: #E6E6E6;">
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('','')">전체</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('0','5')">영유아(0~5)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('6','7')">유아(6~7)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('8','13')">초등(8~13)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('14','19')">청소년(14~19)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('20','29')">20대</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('30','39')">30대</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('40','49')">40대</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('50','59')">50대</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('60','100')">60 이상</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="AgeTotal">
+										<div class="card-body" id="ageDiv">
+											<table>
+												<tr>
+													<td>
+														<img src="">
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<span></span>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="genger">
+						<div class="card-body" style="padding: 0px;">
+							<div class="nav-tabs-top mb-4">
+							<input type="hidden" id="genderHidden1" value="0">
+							<input type="hidden" id="genderHidden2" value="0">
+							<input type="hidden" id="genderHidden3" value="100">
+								<ul class="nav nav-tabs" style="background-color: #E6E6E6;">
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('2','0','100')">전체</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','6','7')">유아(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','6','7')">유아(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','8','13')">초등(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','8','13')">초등(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','14','19')">청소년(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','14','19')">청소년(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','20','29')">20대(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','20','29')">20대(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','30','39')">30대(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','30','39')">30대(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','40','49')">40대(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','40','49')">40대(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','50','59')">50대(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','50','59')">50대(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','60','100')">60대 이상(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','60','100')">60대 이상(여)</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="GenderTotal">
+										<div class="card-body" id="genderDiv">
+											Gender전체
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Statistics -->
             <div class="card mb-4">
               <h6 class="card-header with-elements">
                 <div class="card-header-title">Statistics</div>

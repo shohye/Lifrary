@@ -51,7 +51,7 @@ public interface BoardMapper {
 	//라이브러리 문의리스트 가져오는 메서드
 	public List<Board> lifraryInquirySearchList(Board board);
 	
-	//라이브러리 문의 디테일 가져오는 메서드
+	//라이브러리 문의(공지사항) 디테일 가져오는 메서드
 	public Board lifraryInquiryDetail(Board board);
 	
 	//라이브러리 문의하기 검색후 데이타 가져오는 메서드
@@ -59,4 +59,7 @@ public interface BoardMapper {
 	
 	//라이브러리 문의 등록
 	public void libraryInquiryInsert(Board board);
+	
+	//마이페이지 내 문의 신청 내역 이동
+	public List<Board> myinquiryList(Board board);
 }

@@ -224,11 +224,17 @@ public class BoardController {
 		return "redirect:/admin/inquiryDetail?boardCode="+URLboardCode;
 	}
 	
+	//라이브러리 공지사항 리스트
 	@GetMapping("/lifrary/noticeList")
-	public String lifraryNoticeList(Model model, Board board) {
+	public String lifraryNoticeList(Model model, Board board, HttpSession session) {
+		board.setlCode((String)session.getAttribute("LIBNUM"));
+		List<Board> boardList = boardService.lifraryNoticeList(board);
+		System.out.println("controller231 : " + boardList);
+		model.addAttribute("boardList", boardList);
 		return "/librarypage/board/noticeList";
 	}
 	
+	//라이브러리 문의 리스트
 	@GetMapping("/lifrary/inquirySearchList")
 	public String lifraryInquirySearchList(Model model, Board board, HttpSession session) {
 		board.setlCode((String)session.getAttribute("LIBNUM"));
@@ -262,8 +268,19 @@ public class BoardController {
 		return "/librarypage/board/inquiryInsert";
 	}
 	
-	@PostMapping("/textgogo")
-	public @ResponseBody void textgogo(@RequestParam(value = "text01")String text01) {
-		System.out.println("controller266 : " + text01);
+	@GetMapping("/lifrary/noticeDetail")
+	public String lifraryNoticeDetail(Model model,Board board, HttpSession session) {
+		board.setlCode((String)session.getAttribute("LIBNUM"));
+		Board boardDetail = boardService.lifraryNoticeDetail(board);
+		model.addAttribute("board", boardDetail);
+		return "/librarypage/board/noticeDetail";
 	}
+	
+	@GetMapping("/lifrary/myinquiryList")
+	public String myinquiryList(Model model,Board board, HttpSession session) {
+		board.setuId((String)session.getAttribute("SID"));
+		board.setlCode((String)session.getAttribute("LIBNUM"));
+		return "/librarypage/board/myInquiryList";
+	}
+	
 }
