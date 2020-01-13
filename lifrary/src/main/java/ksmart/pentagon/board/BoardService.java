@@ -120,4 +120,13 @@ public class BoardService {
 		public void libraryInquiryInsert(Board board){
 		}
 		
+		public List<Board> lifraryNoticeList(Board board){
+			return boardmapper.lifraryInquirySearchList(board);
+		}
+		
+		public Board lifraryNoticeDetail(Board Dboard) {
+			boardmapper.boardPageViewUp(Dboard);
+			Board board = boardmapper.lifraryInquiryDetail(Dboard);
+			return board;
+		}
 }

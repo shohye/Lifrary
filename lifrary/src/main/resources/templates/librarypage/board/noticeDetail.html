@@ -59,7 +59,7 @@ hr {
 							<button type="button" class="btn btn-primary d-block"
 								style="margin-top: 10px; height: 45px;">
 								<a
-									th:href="@{/lifrary/inquirySearchList(boardLName=${'문의하기'})}"
+									th:href="@{/lifrary/noticeList(boardLName=${'공지사항'})}"
 									style="color: white"> <span class="ion ion-md-cut">리스트</span>
 								</a>
 							</button>
@@ -78,29 +78,7 @@ hr {
 				</table>
 			</div>
 		</div>
-		<div class="comments-area" id="comments">
-           <div class="comment-bg">
-               <h4 class="comments-title"><i class="fa fa-comment"></i>문의 답변</h4>
-               <span class="underline left"></span>
-               <ol class="comment-list">
-                   <li class="comment even thread-even depth-1 parent">
-                       <div class="comment-body">
-                           
-                           <div class="comment-meta" style="border: solid; color: #E6E6E6;">
-                               
-                               <div class="comment-metadata">
-                               <i style="color: #848484;" th:text="|답변자 : ${board.boardComment.uId} ㅣ |" class="fa fa-user"></i><span style="color: #848484;" th:text="| 등록일 : ${board.boardComment.boardCDate}   |"></span>
-                               </div>
-                               <div class="comment-content" style="color: #000000;">
-                                   <span th:utext="${board.boardComment.boardCContent}"></span>
-                                   <br>
-                               </div>
-                           </div>
-                       </div>
-                   </li>
-               </ol>
-           </div>
-          </div>
+		
 	</div>
 </th:block>
 </html>

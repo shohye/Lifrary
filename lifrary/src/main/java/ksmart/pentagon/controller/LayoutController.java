@@ -107,4 +107,16 @@ public class LayoutController {
         System.out.println("Controller107 : " + list);
 		return list;
 	}
+	@PostMapping("/getAera")
+	public @ResponseBody ArrayList<ArrayList> getAera(@RequestParam(value = "gender")String gender,
+													  @RequestParam(value = "fromAge")String fromAge,
+													  @RequestParam(value = "toAge")String toAge,
+													  @RequestParam(value = "area")String area){
+		System.out.println("gender : " + gender);
+		System.out.println("fromAge : " + fromAge);
+		System.out.println("toAge : " + toAge);
+		System.out.println("area : " + area);
+		ArrayList<ArrayList> List = layoutService.getAera(gender, fromAge, toAge, area);
+		return List;
+	}
 }

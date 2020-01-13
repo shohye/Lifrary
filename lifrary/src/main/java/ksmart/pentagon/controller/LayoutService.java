@@ -9,6 +9,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.pentagon.vo.LayoutStats;
 
@@ -42,10 +43,27 @@ public class LayoutService {
 										@RequestParam(value = "fromAge")String fromAge,
 										@RequestParam(value = "toAge")String toAge){
 		String gender = "2";
+		String aera = "0";
 		AgeOpenApi ageOpenApi = new AgeOpenApi();
-		ArrayList<ArrayList> List = ageOpenApi.OpenApi(startDt, endDt, gender, fromAge, toAge);
+		ArrayList<ArrayList> List = ageOpenApi.OpenApi(startDt, endDt, gender, fromAge, toAge, aera);
 		
 	return List;	
+	}
+	
+	public ArrayList<ArrayList> getAera(@RequestParam(value = "gender")String gender,
+										@RequestParam(value = "fromAge")String fromAge,
+										@RequestParam(value = "toAge")String toAge,
+										@RequestParam(value = "area")String area
+			){
+		Calendar sum = Calendar.getInstance();
+        DateFormat newendDt = new SimpleDateFormat("yyyy-MM-dd");
+        sum.add(Calendar.MONTH, -1);
+        String startDt = newendDt.format(sum.getTime());
+        sum.setTime(new Date());
+        String endDt = newendDt.format(sum.getTime());
+        AgeOpenApi ageOpenApi = new AgeOpenApi();
+		ArrayList<ArrayList> List = ageOpenApi.OpenApi(startDt, endDt, gender, fromAge, toAge, area);
+		return List;
 	}
 
 }

@@ -19,23 +19,99 @@
   			
   			areaClick = function(area){
   				$('#areaHidden').val(area);
-  				areaHidden = $('#areaHidden').val();
-  				
-  				console.log(areaHidden)
-  				$('#areaDiv').html('<span>'+area+'</span>');
+  				var gender = "2";
+  				var fromAge = "0";
+  				var toAge = "100";
+  				var area = area;
+  				var request = $.ajax({
+  				  url: "/getAera",
+  				  method: "POST",
+  				  data: { "gender" : gender , "fromAge" : fromAge , "toAge" : toAge , "area" : area},
+  				  dataType: "json"
+  				});
+  				 
+  				request.done(function( list) {
+					
+					var img = "";
+					var bookName = "";
+					console.log('list : '+list)
+					for(var i = 0; i < list.length; i++){
+						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+						}
+					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+					$('#areaDiv').html(ageDivhtml);
+				});
+  				 
+  				request.fail(function( jqXHR, textStatus ) {
+  				  alert( "Request failed: " + textStatus );
+  				});
   			}
   			
   			//연령 눌렀을시 클릭이벤트
   			ageClick = function(fromAge,toAge){
   				$('#ageHidden1').val(fromAge);
   				$('#ageHidden2').val(toAge);
+  				var gender = "2";
+  				var fromAge = fromAge;
+  				var toAge = toAge;
+  				var area = "0";
   				
+  				var request = $.ajax({
+    				  url: "/getAera",
+    				  method: "POST",
+    				  data: { "gender" : gender , "fromAge" : fromAge , "toAge" : toAge , "area" : area},
+    				  dataType: "json"
+    				});
+				request.done(function( list) {
+					var img = "";
+					var bookName = "";
+					console.log('list : '+list)
+					for(var i = 0; i < list.length; i++){
+						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+						}
+					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+					$('#ageDiv').html(ageDivhtml);
+				});
+  				 
+  				request.fail(function( jqXHR, textStatus ) {
+  				  alert( "Request failed: " + textStatus );
+  				});
   				
 
   			}
-  			genderClick = function(gender,startAge,andAge){
-  				console.log(gender+" : "+startAge+" : "+andAge);
-  				$('#genderDiv').html('<span>'+gender+" : "+startAge+" : "+andAge+'</span>');
+  			genderClick = function(gender,fromAge,toAge){
+  				$('#genderHidden1').val(gender);
+  				$('#genderHidden2').val(fromAge);
+  				$('#genderHidden3').val(toAge);
+  				var gender = $('#genderHidden1').val();
+  				var fromAge =$('#genderHidden2').val();
+  				var toAge = $('#genderHidden3').val();
+  				var area = "0";
+  				
+  				var request = $.ajax({
+    				  url: "/getAera",
+    				  method: "POST",
+    				  data: { "gender" : gender , "fromAge" : fromAge , "toAge" : toAge , "area" : area},
+    				  dataType: "json"
+    				});
+  				request.done(function( list) {
+  					var img = "";
+  					var bookName = "";
+  					console.log('list : '+list)
+  					for(var i = 0; i < list.length; i++){
+  						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+  						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+  						}
+  					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+  					$('#genderDiv').html(ageDivhtml);
+  				});
+  				 
+  				request.fail(function( jqXHR, textStatus ) {
+  				  alert( "Request failed: " + textStatus );
+  				});
+  				
   			}
   			
   			$('#ageBtn').click(function(){
@@ -51,22 +127,51 @@
     				});
     				 
     				request.done(function( list) {
-    					var ageDivhtml = '<table><tr>'+imgsum+'</tr><tr><td><span></span></td></tr></table>';
-    					var imgsum = "";
-    					console.log(list)
+    					var img = "";
+    					var bookName = "";
+    					console.log('list : '+list)
     					for(var i = 0; i < list.length; i++){
-    						for(var j = 0; j < list[i].length; j++){
-	    						console.log(list[i][j])
-	    						console.log(i+" "+j)
-	    					}
-    					}
-    					$('#ageDiv').html();
+    						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+    						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+							}
+    					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+    					$('#ageDiv').html("");
+    					$('#ageDiv').html(ageDivhtml);
     				});
     				 
     				request.fail(function( jqXHR, textStatus ) {
     				  alert( "Request failed: " + textStatus );
     				});
   			})
+  			
+  			$('#genderBtn').click(function(){
+  				var gender = $('#genderHidden1').val();
+  				var fromAge = $('#genderHidden2').val();
+  				var toAge = $('#genderHidden3').val();
+  				var area = "0";
+  				var request = $.ajax({
+  				  url: "/getAera",
+  				  method: "POST",
+  				  data: { "gender" : gender , "fromAge" : fromAge , "toAge" : toAge , "area" : area},
+  				  dataType: "json"
+  				});
+				request.done(function( list) {
+					var img = "";
+					var bookName = "";
+					console.log('list : '+list)
+					for(var i = 0; i < list.length; i++){
+						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+						}
+					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+					$('#genderDiv').html(ageDivhtml);
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});
+  			})
+  			
   			
   		})
   	</script>
@@ -113,6 +218,7 @@
                         <div class="text-muted small">금일 대출도서</div>
                         <div class="text-large">[[${count.blLendDate}]] 권</div>
                       </div>
+                      
                     </div>
                   </div>
                 </div>
@@ -218,8 +324,8 @@
 													<table style="margin: auto;">
 														<tr>
 											<th:block th:each="l : ${list}">
-															<td>
-																<img th:src="${l.get(1)}"  style="width: 110px; height: 180px; margin-left: 5px;">
+															<td style="width: 10%;">
+																<img th:src="${l.get(1)}" style="width: 100%; height: 230px;">
 															</td>
 											</th:block>
 														</tr>
@@ -294,7 +400,7 @@
 							<input type="hidden" id="genderHidden3" value="100">
 								<ul class="nav nav-tabs" style="background-color: #E6E6E6;">
 									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
-										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('','','')">전체</a></li>
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('2','0','100')">전체</a></li>
 									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
 										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','6','7')">유아(남)</a></li>
 									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"

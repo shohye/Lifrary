@@ -4,23 +4,26 @@
 		layout:decorate="~{layout/library/libraryDefault}">
     
   <th:block layout:fragment="libraryTitle">
-    	<title>..:: 공지사항 ::..</title>
+    	<title>..:: 공지사항 리스트 ::..</title>
   </th:block>
-  <th:block layout:fragment="customScript">
-		    <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
-  <script th:src="@{/adminStatic/vendor/libs/popper/popper.js}"></script>
-  <script th:src="@{/adminStatic/vendor/js/bootstrap.js}"></script>
-  <script th:src="@{/adminStatic/vendor/js/sidenav.js}"></script>
-
-  <!-- Libs -->
-  <script th:src="@{/adminStatic/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
-  <script th:src="@{/adminStatic/vendor/libs/datatables/datatables2.js}"></script>
-  <!-- Demo -->
-  <script th:src="@{/adminStatic/js/demo.js}"></script>
-  <script th:src="@{/adminStatic/js/tables_datatables.js}"></script>
-  </th:block>
+	  <th:block layout:fragment="customScript">
+			    <!-- addLibs -->
+		  <script th:src="@{/adminStatic/vendor/libs/datatables/datatables.js}"></script>
+		  <script th:src="@{/adminStatic/vendor/libs/bootstrap-select/bootstrap-select.js}"></script>
+		
+		  <!-- addDemo -->
+		  <script th:src="@{/adminStatic/js/inquiry_list_tables.js}"></script>
+		  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/datatables/datatables.css}">
+		  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/nouislider/nouislider.css}">
+		  <link rel="stylesheet" th:href="@{/adminStatic/vendor/libs/bootstrap-select/bootstrap-select.css}">
+ 	 </th:block>
   <th:block layout:fragment="customContents">
-       
+    <style>
+	a {
+	color : #4E5155;
+	}
+	</style>
+	
        <section class="page-banner services-banner">
             <div class="container">
                 <div class="banner-header">
@@ -36,332 +39,47 @@
                 </div>
             </div>
         </section>
-        
-        
-        
-        
-        <div id="content" class="site-content">
-            <div id="primary" class="content-area">
-                <main id="main" class="site-main">
-                    <div class="booksmedia-detail-main">
-                        <div class="container">
-                            <div class="row">
-                       	      <!-- Start: Search Section -->
-                                <section class="search-filters">
-                                    <div class="container">
-                                        <div class="filter-box">
-                                            <h3>독후감을 검색해보세요</h3>
-                                            <form action="#" method="get">
-                                                <div class="col-md-3 col-sm-6">
-                                                    <div class="form-group">
-                                                        <select name="sv"  class="form-control">
-                                                            <option value="1">::검색어::</option>
-                                                            <option value="2">제목</option>
-                                                            <option value="3">작성자</option>
-                                                            <option value="4">도서명</option>
-                                                            <option value="5">ISBN</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label class="sr-only" for="keywords">검색내용을 입력해주세요</label>
-                                                        <input class="form-control" placeholder="검색내용을 입력해주세요"  name="keywords" type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 col-sm-6">
-                                                    <div class="form-group">
-                                                        <select name="category" class="form-control">
-                                                            <option>::기간::</option>
-                                                            <option>전체기간</option>
-                                                            <option>최근 1주일</option>
-                                                            <option>최근 1개월</option>
-                                                            <option>최근 6개월</option>
-                                                            <option>최근 1년</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2 col-sm-6">
-                                                    <div class="form-group">
-                                                        <input class="form-control" type="submit" value="Search">
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </section>
-	                                <!-- End: Search Section -->
-	                            </div>
-	                            <div class="filter-options margin-list">
-	                           		<div class="booksmedia-detail-box">
-	                                	<div class="clearfix"></div>
-	                                	<div class="table-tabs" id="responsiveTabs">
-	                                	 	<table class="table table-bordered">
-	                                              <thead>
-	                                                  <tr>
-	                                                      <th>번호</th>
-	                                                      <th>작성자</th>
-	                                                      <th>제목</th>
-	                                                      <th>등록일</th>
-	                                                      <th>조회수</th>
-	                                                  </tr>
-	                                              </thead>
-	                                              <tbody>
-	                                                  <tr>
-	                                                  	<td>번호</td>
-	                                                  	<td>작성자</td>
-	                                                      <td>
-	                                                      	<a href="/lifrary/bookReportDetail">독후감 상세보기 페이지로 이동~~</a>
-	                                                      </td>
-	                                                      <td>등록일</td>
-	                                                      <td>조회수</td>                                                
-	                                                  </tr>
-	                                                  <tr>
-	                                                  	<td>번호</td>
-	                                                  	<td>작성자</td>
-	                                                      <td>
-	                                                      	<a href="/lifrary/bookReportDetail">Bedford Park Public Library District</a>
-	                                                      </td>
-	                                                      <td>등록일</td>
-	                                                      <td>조회수</td>    
-	                                                  </tr>
-	                                                  <tr>
-	                                                  	<td>번호</td>
-	                                                  	<td>작성자</td>
-	                                                      <td>
-	                                                      	<a href="/lifrary/bookReportDetail">Blue Island Public Library</a>
-	                                                      </td>
-	                                                      <td>등록일</td>
-	                                                      <td>조회수</td>    
-	                                                  </tr>
-	                                                  <tr>
-	                                                  	<td>번호</td>
-	                                                  	<td>작성자</td>
-	                                                      <td>
-	                                                     		<a href="/lifrary/bookReportDetail">Bridgeview Public Library</a>
-	                                                      </td>
-	                                                      <td>등록일</td>
-	                                                      <td>조회수</td>    
-	                                                  </tr>
-	                                                  <tr>
-	                                                      <td>번호</td>
-	                                                      <td>작성자</td>
-	                                                      <td>
-	                                                      	<a href="/lifrary/bookReportDetail">Eisenhower Public Library District</a>
-	                                                      </td>
-	                                                      <td>등록일</td>
-	                                                      <td>조회수</td>    
-	                                                  </tr>
-	                                                  <tr>
-	                                                      <td>번호</td>
-	                                                      <td>작성자</td>
-	                                                      <td>
-	                                                      	<a href="/lifrary/bookReportDetail">Forest Park Public Library</a>
-	                                                      </td>
-	                                                      <td>등록일</td>
-	                                                      <td>조회수</td>    
-	                                                  </tr>
-	                                                  <tr>
-	                                                      <td>번호</td>
-	                                                      <td>작성자</td>
-	                                                      <td>
-	                                                      	<a href="/lifrary/bookReportDetail">Hinsdale Public Library</a>
-	                                                      </td>
-	                                                      <td>등록일</td>
-	                                                      <td>조회수</td>    
-	                                                  </tr>
-	                                                  <tr>
-	                                                      <td>번호</td>
-	                                                      <td>작성자</td>
-	                                                      <td>
-	                                                      	<a href="/lifrary/bookReportDetail">Oak Park Public Library Maze Branch</a>
-	                                                      </td>
-	                                                      <td>등록일</td>
-	                                                      <td>조회수</td>    
-	                                                  </tr>
-	                                                  <tr>
-	                                                      <td>번호</td>
-	                                                      <td>작성자</td>
-	                                                      <td>
-	                                                      	<a href="/lifrary/bookReportDetail">River Grove Public Library District</a>
-	                                                      </td>
-	                                              		<td>등록일</td>
-	                                                      <td>조회수</td>    
-	                                                  </tr>
-	                                              </tbody>
-	                                          </table>
-	                                          <div>
-	                                          	<a href="/lifrary/bookReportInsert" class="btn btn-dark-gray">작성하기</a>
-	                                          </div>
-	                                          <nav class="navigation pagination text-center" style="margin-top: 10px">
-	                                        	<div class="nav-links">
-	                                            <a class="prev page-numbers" href="#."><i class="fa fa-long-arrow-left"></i> Previous</a>
-	                                            <a class="page-numbers" href="#.">1</a>
-	                                            <span class="page-numbers current">2</span>
-	                                            <a class="page-numbers" href="#.">3</a>
-	                                            <a class="page-numbers" href="#.">4</a>
-	                                            <a class="next page-numbers" href="#.">Next <i class="fa fa-long-arrow-right"></i></a>
-	                                        </div>
-	                                   	</nav>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-                    </div>
-                </main>
-            </div>
-        </div> 
-        
-        
-        
-        <style>
-	a {
-	color : #4E5155;
-	}
-</style>
         <!-- Layout content -->
         <div class="layout-content">
-
+			<div style="padding: 190px;">
           <!-- Content -->
           <div class="container-fluid flex-grow-1 container-p-y" style="width: 100%">
 
-            <h4 class="font-weight-bold py-3 mb-4">
-              <span class="text-muted font-weight-light"></span>문의하기
-            </h4>
             <div class="card">
-			<div class="card" style="padding-top: 20px; padding-left: 20px; padding-right: 20px;">
+            <h4 id="boardLName" class="font-weight-bold py-3 mb-4">
+              <spanclass="text-muted font-weight-light"></span>공지사항
+            </h4>
+            <br>
 	            <div class="table-responsive">
 	              <table class="datatables-demo table table-striped table-bordered">
 	                <thead>
 	                  <tr>
-	                    <th style="width: 10%;">번호</th>
-	                    <th style="width: 50%;">제목</th>
-	                    <th style="width: 10%;">상태</th>
-	                    <th style="width: 10%;">작성자</th>
-	                    <th style="width: 10%;">조회수</th>
-	                    <th style="width: 10%;">작성일</th>
+	                    <th style="width: 10%; text-align: center;">번호</th>
+	                    <th style="width: 50%; text-align: center;">제목</th>
+	                    <th style="width: 10%; text-align: center;">공지사항</th>
+	                    <th style="width: 10%; text-align: center;">작성자</th>
+	                    <th style="width: 10%; text-align: center;">조회수</th>
+	                    <th style="width: 10%; text-align: center;">작성일</th>
 	                  </tr>
 	                </thead>
 	                <tbody>
-		                  <tr>
-		                  	<td>123123123</td>
-		                  	<td>123123123</td>
-		                  	<td>123123
-		                  	</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  </tr>
-		                  <tr>
-		                  	<td>123123123</td>
-		                  	<td>123123123</td>
-		                  	<td>123123
-		                  	</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  </tr>
-		                  <tr>
-		                  	<td>123123123</td>
-		                  	<td>123123123</td>
-		                  	<td>123123
-		                  	</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  </tr>
-		                  <tr>
-		                  	<td>123123123</td>
-		                  	<td>123123123</td>
-		                  	<td>123123
-		                  	</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  </tr>
-		                  <tr>
-		                  	<td>123123123</td>
-		                  	<td>123123123</td>
-		                  	<td>123123
-		                  	</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  </tr>
-		                  <tr>
-		                  	<td>123123123</td>
-		                  	<td>123123123</td>
-		                  	<td>123123
-		                  	</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  </tr>
-		                  <tr>
-		                  	<td>123123123</td>
-		                  	<td>123123123</td>
-		                  	<td>123123
-		                  	</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  </tr>
-		                  <tr>
-		                  	<td>123123123</td>
-		                  	<td>123123123</td>
-		                  	<td>123123
-		                  	</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  </tr>
-		                  <tr>
-		                  	<td>123123123</td>
-		                  	<td>123123123</td>
-		                  	<td>123123
-		                  	</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  </tr>
-		                  <tr>
-		                  	<td>123123123</td>
-		                  	<td>123123123</td>
-		                  	<td>123123
-		                  	</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  </tr>
-		                  <tr>
-		                  	<td>123123123</td>
-		                  	<td>123123123</td>
-		                  	<td>123123
-		                  	</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  </tr>
-		                  <tr>
-		                  	<td>123123123</td>
-		                  	<td>123123123</td>
-		                  	<td>123123
-		                  	</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  	<td>123</td>
-		                  </tr>
-		                  
+	                	<th:block th:each="l,pro : ${boardList}">
+			                 <tr>
+			                  	<td th:text="${pro.count}"></td>
+			                  	<td><a th:href="@{/lifrary/noticeDetail(boardCode=${l.boardCode},boardLName=${'공지사항'})}" th:text="${l.boardTitle}"></a></td>
+			                  	<td th:text="${l.boardMName}"></td>
+			                  	<td th:text="${l.uId}"></td>
+			                  	<td th:text="${l.boardPageView}"></td>
+			                  	<td th:text="${l.boardDate}"></td>
+			                 </tr>
+		                </th:block>
 	                </tbody>
 	              </table>
 	            </div>
-            </div>
-          </div>
-	   <div>
-	   		<a style="margin-top: 10px;" th:href="@{/admin/noticeInsert(boardLCode=${boardLCode},boardMCode=${boardMCode})}" value="문의하기" id="noticeInsertBtn" class="btn btn-primary">문의하기등록</a>
-	   </div>
+          	</div>
           </div>
           <!-- / Content -->
+        </div>
         </div>
         <!-- Layout content -->
 	   <br>
