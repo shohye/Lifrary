@@ -40,7 +40,6 @@
 																		  // 0이 아니면 자리을 선택하는 열람실, 사물함
 																		  
 				if(fRowfCol == 0) { 									  // fRowfCol이 0인경우 = 자리선택을 안해서 자동으로 DB에 0이 들어간 경우.
-					console.log('스터디룸, 강연실을 선택하였습니다.')
 					if(fKinds == '스터디룸'){
 						contents += '<img alt="이미지를 표시할 수 없습니다." src="/adminStatic/img/avatars/studyroom.jpg">'
 					} else if(fKinds == '강연실'){
@@ -49,8 +48,6 @@
 					tableDiv.html(contents);
 					//이런식으로 이미지 출력해주면 될거같습니다.
 				} else{ 												  // 자리이 있는경우는 0이 아닐것이므로, 열람실  / 사물함
-					console.log('열람실, 사물함을 선택하였습니다.')
-					
 					var fSeat = [[${facility.fSeatOrImg}]];   			  // 자리이 있는경우 DB에 저장되어있는 문자열을 가져옵니다.( ex> 1-1,2-2,3-3 )
 					var seatArray = fSeat.split(',');					  // , 를 기준으로 배열에 박아넣습니다.( ex> ['1-1','2-2','3-3'] )
 					

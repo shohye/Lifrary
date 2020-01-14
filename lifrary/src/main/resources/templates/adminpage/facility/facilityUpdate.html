@@ -31,9 +31,6 @@
   					var fSeat = [[${facility.fSeatOrImg}]];   			  // 자리이 있는경우 DB에 저장되어있는 문자열을 가져옵니다.( ex> 1-1,2-2,3-3 )
   					var seatArray = fSeat.split(',');					  // , 를 기준으로 배열에 박아넣습니다.( ex> ['1-1','2-2','3-3'] ) 
   					
-  					console.log(fKinds)
-  					console.log(seatArray)
-  					
   					$('#garo').val(fRow)
   					$('#sero').val(fCol)
   					
@@ -101,7 +98,6 @@
   								//console.log('취소누름');
   							} 					
   						}
-  						console.log(seatArray);
   					})
 
 
@@ -165,7 +161,6 @@
 						});
 						 
 						request.done(function( data ) {
-							//console.log(data);
 							$('#seatSelected').val(data)
 							$('#fRow').val($('#garo').val())
 							$('#fCol').val($('#sero').val())
