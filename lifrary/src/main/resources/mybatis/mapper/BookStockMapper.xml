@@ -590,7 +590,7 @@
 		, bs_delete_date)
 	VALUES (
 		  #{bsCode}
-		, '111111'
+		, #{lCode}
 		, #{uId}
 		, #{bclCode}
 		, (SELECT bcm_code FROM book_cate_medium 

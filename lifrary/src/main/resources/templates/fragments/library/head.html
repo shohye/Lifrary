@@ -23,8 +23,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
         
         <link th:href="@{/libraryStatic/css/jquery.accordion.css}" rel="stylesheet" type="text/css" /> 
         <!-- Stylesheet -->
-        <link th:href="@{/libraryStatic/css/style.css}" rel="stylesheet" type="text/css" />      
-        
+        <th:block th:unless="${session == null}">
+        <link th:if = "${session.LIBNUM eq '000000'}" th:href="@{/libraryStatic/css/style.css}" rel="stylesheet" type="text/css" /> 
+        <link th:if = "${session.LIBNUM eq '111111'}" th:href="@{/libraryStatic/css/style2.css}" rel="stylesheet" type="text/css" />     
+        </th:block>
         <th:block th:replace="fragments/library/oldScript :: oldScript"></th:block>
         <th:block layout:fragment="customScript"></th:block>
         

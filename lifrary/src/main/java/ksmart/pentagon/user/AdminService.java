@@ -27,9 +27,9 @@ public class AdminService {
 	@Autowired private AdminMapper adminMapper;
 	
 	//사서 채널 로그인 처리 / 회원 정보 유무 확인후 로그인
-	public Map<String,Object> adminLoginCheck(String uId, String uPw, String libNum) {
+	public Map<String,Object> adminLoginCheck(String uId, String uPw) {
 		
-		User user = adminMapper.adminLoginCheck(uId, libNum);
+		User user = adminMapper.adminLoginCheck(uId);
 		String result = null;
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		
@@ -270,18 +270,29 @@ public class AdminService {
 	//userSearchList - 관리자가 회원 삭제
 	public int deleteUser(String said, String write, String uId) {
 		System.out.println("deleteUser 서비스진입");
-		int result = adminMapper.deleteUser(said, write, uId);
-		System.out.println("deleteUser result >>> " + result);
 		
+		User u = adminMapper.checkPw(said, write);
+		int result = 0;
+		if(u == null) {
+			
+		}else {
+			result = adminMapper.deleteUser(uId);
+		}
+		System.out.println("deleteUser result=>"+result);
 		return result;
 	}
 	
 	//adUserLevelList - 관리자가 회원등급 삭제
 	public int deleteLevel(String said, String write, String ulLevel) {
-		System.out.println("deleteUser 서비스진입");
-		int result = adminMapper.deleteLevel(said, write, ulLevel);
-		System.out.println("deleteLevel result >>> " + result);
-		
+		System.out.println("deleteLevel 서비스진입");
+		User u = adminMapper.checkPw(said, write);
+		int result = 0;
+		if(u == null) {
+			
+		}else {
+			result = adminMapper.deleteLevel(ulLevel);
+		}
+		System.out.println("deleteLevel result=> " +result);
 		return result;
 	}
 	

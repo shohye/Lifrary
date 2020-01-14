@@ -10,7 +10,10 @@
                                     <div class="navbar-brand">
                                         <h1>
                                             <a th:href="@{/}">
-                                                <img th:src="@{/libraryStatic/images/libraria-logo-v1.png}" alt="LIFRARY" />
+                                        	<th:block th:unless="${session == null}">
+                                                <img th:if = "${session.LIBNUM eq '000000'}" th:src="@{/libraryStatic/images/pentagon_logo.png}" alt="LIFRARY" />
+                                                <img th:if = "${session.LIBNUM eq '111111'}" th:src="@{/libraryStatic/images/square_logo.png}" alt="LIFRARY" />
+                                       		 </th:block>    
                                             </a>
                                         </h1>
                                     </div>
@@ -21,11 +24,6 @@
                                 <div class="header-topbar hidden-sm hidden-xs">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <div class="topbar-info">
-                                                <a th:href="@{tel:063-717-1008}"><i class="fa fa-phone"></i>063-717-1008</a>
-                                                <span>/</span>
-                                                <a th:href="@{mailto:support@libraria.com}"><i class="fa fa-envelope"></i>support@libraria.com</a>
-                                            </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="topbar-links">
@@ -71,10 +69,10 @@
                                         </li>
                                         <!-- 게시판 -->
                                         <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">4.게시판</a>
+                                            <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifrary/noticeList(boardLName=${'공지사항'})}">4.게시판</a>
                                             <ul class="dropdown-menu">
-                                                <li><a th:href="@{/lifrary/noticeList}">!공지사항</a></li>
-                                                <li><a th:href="@{/lifrary/inquirySearchList(boardLName=${'문의하기'})}">!문의</a></li>
+                                                <li><a th:href="@{/lifrary/noticeList(boardLName=${'공지사항'})}">공지사항</a></li>
+                                                <li><a th:href="@{/lifrary/inquirySearchList(boardLName=${'문의하기'})}">문의</a></li>
                                                 <li><a th:href="@{/lifrary/bookReportSearchList}">!독후감</a></li>
                                                 <li><a th:href="@{/lifrary/bookRequestIntro}">!희망도서 신청</a></li>
                                                 <li><a th:href="@{/lifrary/bookDonationGuide}">!도서 기부</a></li>
@@ -90,7 +88,7 @@
                                                 <li><a th:href="@{/lifrary/locker}">!사물함</a></li>
                                             </ul>
                                         </li>
-                                        <li><a th:href="@{#}">6.도서관 소개</a></li>
+                                        <li><a th:href="@{/lifrary/libraryInfomation}">6.도서관 소개</a></li>
                                         <!-- 마이페이지 -->
                                         <li class="dropdown">
                                             <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{#}">7.마이페이지</a>
@@ -102,7 +100,7 @@
 	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!북 다이어리</a></li>
 	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 서재</a></li>
 	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 프로그램 신청 내역</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">#내 공공시설 신청 내역</a></li>
+	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!내 공공시설 신청 내역</a></li>
 	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">!희망도서 신청 내역</a></li>
 	                                            </th:block>
 	                                            <th:block th:unless="${session.SID} == null">
@@ -112,6 +110,7 @@
 	                                                <li><a th:href="@{/lifrary/myStudyList}">!내 서재</a></li>
 	                                                <li><a th:href="@{/lifrary/programApplyList}">!내 프로그램 신청 내역</a></li>
 	                                                <li><a th:href="@{/lifrary/myReadingRoomReserveList}">!내 공공시설 신청 내역</a></li>
+	                                                <li><a th:href="@{/lifrary/myinquiryList(boardLName=${'문의하기'})}">!내 문의 신청 내역</a></li>
 	                                                <li><a th:href="@{/lifrary/myBookRequestList}">!희망도서 신청 내역</a></li>
 	                                            </th:block>
 
@@ -153,7 +152,7 @@
                                     <li>
                                         <a th:href="@{#}">4.게시판</a>
                                         <ul>
-                                            <li><a th:href="@{/lifrary/noticeList}">!공지사항</a></li>
+                                            <li><a th:href="@{/lifrary/noticeList(boardLName=${'공지사항'})}">!공지사항</a></li>
                                             <li><a th:href="@{/lifrary/inquirySearchList(boardLName=${'문의하기'})}">!문의</a></li>
                                             <li><a th:href="@{/lifrary/bookReportSearchList}">#독후감</a></li>
                                             <li><a th:href="@{/lifrary/bookRequestIntro}">!희망도서 신청</a></li>
@@ -170,7 +169,7 @@
                                         </ul>
                                     </li>
                                     <!-- 도서관 소개 -->
-                                    <li><a th:href="@{#}">6.도서관 소개</a></li>
+                                    <li><a th:href="@{/lifrary/libraryInfomation}">6.도서관 소개</a></li>
                                     <li>
                                         <a th:href="@{#}">7.마이페이지</a>
                                         <ul>
@@ -180,6 +179,7 @@
                                             <li><a th:href="@{/lifrary/myStudyList}">#내 서재</a></li>
                                             <li><a th:href="@{/lifrary/programApplyList}">!내 프로그램 신청 내역</a></li>
                                             <li><a th:href="@{/lifrary/myReadingRoomReserveList}">!내 공공시설 신청 내역</a></li>
+                                            <li><a th:href="@{/lifrary/myinquiryList(boardLName=${'문의하기'})}">!내 문의 신청 내역</a></li>
                                             <li><a th:href="@{/lifrary/myBookRequestList}">!희망도서 신청 내역</a></li>
                                         </ul>
                                     </li>

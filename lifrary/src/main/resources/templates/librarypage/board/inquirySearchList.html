@@ -73,14 +73,14 @@
        <section class="page-banner services-banner">
             <div class="container">
                 <div class="banner-header">
-                    <h2>공지사항</h2>
+                    <h2>문의</h2>
                     <span class="underline center"></span>
-                    <p class="lead">공지사항을 읽어주세요</p>
+                    <p class="lead">문의를 읽어주세요</p>
                 </div>
                 <div class="breadcrumb">
                     <ul>
                         <li><a th:href="@{/}">메인화면</a></li>
-                        <li>공지사항 리스트</li>
+                        <li>문의 리스트</li>
                     </ul>
                 </div>
             </div>
@@ -89,7 +89,21 @@
         <div class="layout-content">
 			<div style="padding: 190px;">
           <!-- Content -->
-          <div class="container-fluid flex-grow-1 container-p-y" style="width: 100%">
+          <aside id="secondary" class="sidebar widget-area" style="width: 20%;float: left;">
+             
+             <div class="widget widget_related_search">
+                 <h4 class="widget-title" data-control>게시판</h4>
+                 <div class="widget_categories">
+                     <ul>
+                         <li><h3><a th:href="@{/lifrary/noticeList(boardLName=${'공지사항'})}">공지사항</a></h3></li>
+                         <li><h3><a th:href="@{/lifrary/inquirySearchList(boardLName=${'문의하기'})}">문의</a></h3></li>
+                         <li><h3><a th:href="@{/lifrary/bookReportSearchList}">독후감</a></h3></li>
+                         <li><h3><a th:href="@{/lifrary/bookRequestIntro}">희망 도서신청</a></h3></li>
+                     </ul>
+                 </div>
+             </div>
+         </aside>
+          <div class="container-fluid flex-grow-1 container-p-y" style="width: 70%; float: left;">
 
             <div class="card">
             <h4 id="boardLName" class="font-weight-bold py-3 mb-4">
@@ -125,10 +139,8 @@
 	              </table>
 	            </div>
           </div>
-	   <div>
-	   		<a style="margin-top: 10px;" th:href="@{/library/inquiryInsert(boardLName=${'문의하기'})}" id="inquiryInsertBtn" class="btn btn-primary">문의하기등록</a>
-	   </div>
           </div>
+          <div style="clear: both;"></div>
           <!-- / Content -->
         </div>
         </div>

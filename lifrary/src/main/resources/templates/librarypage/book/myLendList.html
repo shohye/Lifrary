@@ -4,14 +4,24 @@
 		layout:decorate="~{layout/library/libraryDefault}">
  <th:block layout:fragment="libraryTitle">
 	<title>나의 대출도서 목록</title>
- </th:block>   
+ </th:block>
+    
  <th:block layout:fragment="customScript">
  	<script type="text/javascript">
  	 $(document).ready(function(){
- 		 $('li').click(function(){
- 			 var optvalue = $(this).attr('rel');
- 			 console.log(optvalue);
- 		 }); 
+ 		 
+ 		$('#searchBtn').click(function(){
+ 			var biName =$('[name="biName"]').val();
+ 			var skDate =$('[name="skDate"]').val();
+ 			var svDate =$('[name="svDate"]').val();
+
+ 			if(biName == '' || biName == null){
+ 				alert('도서명을 입력해주세요');
+ 			}else{
+ 				$('#searchForm').submit();
+ 			}
+ 		});
+ 		 
  	 });
  	</script>
  	<style>
@@ -37,8 +47,8 @@
                 </div>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a th:href="@{/}">Home</a></li>
-                        <li>MY BOOKS</li>
+                        <li><a>마이페이지</a></li>
+                        <li>도서 대출 현황</li>
                     </ul>
                 </div>
             </div>
@@ -54,32 +64,38 @@
                                     <div class="container">
                                         <div class="filter-box">
                                             <h3>나의 대출 도서 검색</h3>
-                                            <div class="col-md-4 col-sm-6">
-                                                <div class="form-group">
-                                                    <input class="form-control" placeholder="도서명" type="text" name="biName">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-sm-6">
-                                                <select name="skDate" class="form-control">
-                                                    <option value="blLendDate">대출일</option>
-                                                    <option value="blScheduleDate">반납예정일</option>
-                                                    <option value="blReturnDate">반납일</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3 col-sm-6">
-                                                <select name="svDate" class="form-control">
-                                                    <option value="">전체기간</option>
-                                                    <option value="week">최근 1주일</option>
-                                                    <option value="month">최근 1개월</option>
-                                                    <option value="6month">최근 6개월</option>
-                                                    <option value="year">최근 1년</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2 col-sm-6">
-                                                <div class="form-group">
-                                                    <input class="form-control" type="submit" value="검색">
-                                                </div>
-                                            </div>
+                                            <form th:action="@{/lifrary/myLendList}" id="searchForm">
+	                                            <div class="col-md-4 col-sm-6">
+	                                                <div class="form-group">
+	                                                	<label for="keywords">도서명</label>
+	                                                    <input class="form-control" type="text" name="biName">
+	                                                </div>
+	                                            </div>
+	                                            <div class="col-md-3 col-sm-6">
+	                                            	<label for="keywords">기간조건</label>
+	                                                <select name="skDate" class="form-control">
+	                                                    <option value="blLendDate">대출일</option>
+	                                                    <option value="blScheduleDate">반납예정일</option>
+	                                                    <option value="blReturnDate">반납일</option>
+	                                                </select>
+	                                            </div>
+	                                            <div class="col-md-3 col-sm-6">
+	                                            	<label for="keywords">기간선택</label>
+	                                                <select name="svDate" class="form-control">
+	                                                    <option value="">전체기간</option>
+	                                                    <option value="week">최근 1주일</option>
+	                                                    <option value="month">최근 1개월</option>
+	                                                    <option value="6month">최근 6개월</option>
+	                                                    <option value="year">최근 1년</option>
+	                                                </select>
+	                                            </div>
+	                                            <div class="col-md-2 col-sm-6">
+	                                                <div class="form-group">
+	                                                	<label for="keywords">&nbsp</label>
+	                                                    <button type="button" id="searchBtn" class="form-control btn btn-primary" >검색</button>
+	                                                </div>
+	                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </section>
@@ -119,7 +135,7 @@
 							            	<span class="badge">연장불가</span>
 							             </td> 
 							             <td class="align-middle text-center" th:unless = "${Ml.blExtensionDate != null || Ml.blReturnDate != null}">
-							            	 <a th:href="@{#(blCode=${Ml.blCode})}">
+							            	 <a th:href="@{/lifrary/extensionUpdate(blCode=${Ml.blCode})}">
 							            		<span class="badge" style="background-color:#02BC77;">연장하기</span>
 							            	 </a>
 							             </td>
@@ -135,14 +151,25 @@
 						            </table>
                                     <nav class="navigation pagination text-center">
                                         <h2 class="screen-reader-text">Posts navigation</h2>
-                                        <div class="nav-links">
-                                            <a class="prev page-numbers" th:href="@{#}"><i class="fa fa-long-arrow-left"></i> Previous</a>
-                                            <span class="page-numbers current">1</span>
-                                            <a class="page-numbers" th:href="@{#}">2</a>
-                                            <a class="page-numbers" th:href="@{#}">3</a>
-                                            <a class="page-numbers" th:href="@{#}">4</a>
-                                            <a class="next page-numbers" th:href="@{#}">Next <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
+                                        <div class="nav-links">   
+			                         	 <span th:if="${currentPage > 1}">
+			                             	<a class="prev page-numbers" th:href="@{/lifrary/myLendList(biName=${param.biName},skDate=${param.skDate},svDate=${param.svDate}, currentPage=(${currentPage}-1))}">
+			                                     <i class="fa fa-long-arrow-left"></i> 이전
+			                                 </a>
+			                             </span>          
+				                         <th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+									        <span th:if="${currentPage == num}" th:text="${num}" class="page-numbers current"></span>
+									        <span th:unless="${currentPage == num}">
+									        	<a th:text="${num}" class="page-numbers" th:href="@{/lifrary/myLendList(biName=${param.biName},skDate=${param.skDate},svDate=${param.svDate}, currentPage=${num})}">
+				                                </a>
+									    	</span>
+									     </th:block>
+			                             <span th:if="${currentPage != lastPage}"> 
+			                             	<a class="next page-numbers" th:href="@{/lifrary/myLendList(biName=${param.biName},skDate=${param.skDate},svDate=${param.svDate}, currentPage=(${currentPage}+1))}"> 
+			                                	 다음<i class="fa fa-long-arrow-right"></i>
+			                             	</a>
+			                            </span>
+			                         </div>
                                     </nav>
                                 </div>
                                 <!-- 마이페이지 사이드메뉴  -->

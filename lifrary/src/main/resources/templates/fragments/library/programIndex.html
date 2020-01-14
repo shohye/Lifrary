@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- Start: Program -->
+        <section class="news-events section-padding banner" th:fragment="programIndexFragment">
+            <div class="container">
+                <div class="center-content">
+                    <h2 class="section-title c-light">프로그램 &amp; 행사</h2>
+                    <span class="underline center"></span><br>
+                    <p class="lead c-light">진행 예정인 프로그램 &amp; 행사를 살펴보세요.</p>
+                </div>
+                <div class="news-events-list">
+                
+                <th:block th:each="pList, pCount : ${programList}">
+                    <div class="single-news-event">
+                        <figure>
+                            <img th:src="@{/libraryStatic/images/news-event/news-event-0}+${pCount.count}+.jpg" alt="News & Event"/>
+                        </figure>
+                        <div class="content-block">
+                            <div class="member-info">
+                                <div class="content_meta_category">
+                                    <span class="arrow-right"></span>
+                                    <a rel="category tag" th:text="${pList.pmName}"></a>
+                                </div>
+                                <ul class="news-event-info">
+                                                        <!-- 운영기간(시작)~운영기간(종료) -->
+                                                        <li>
+                                                                <i class="fa fa-calendar"></i> <span>진행일 : </span>
+                                                                <span th:text="${pList.pmStartTerm}"></span> ~ <span th:text="${pList.pmEndTerm}"></span>
+                                                        </li>
+                                                        <!-- 운영시간(시작)~운영시간(종료) -->
+                                                        <li>
+                                                                <i class="fa fa-clock-o"></i> <span>운영 시간 : </span>
+                                                                <span th:text="${pList.pmStartTime}"></span> ~ <span th:text="${pList.pmEndTime}"></span>
+                                                        </li>
+                                                        <!-- 접수기간(시작)~접수기간(종료) -->
+                                                        <li>
+                                                                <i class="fa fa-calendar-check-o"></i> <span>접수기간 : </span>
+                                                                 <span th:text="${pList.pmStartReceipt}"></span> ~ <span th:text="${pList.pmEndReceipt}"></span>
+                                                        </li>
+                                                        
+                                                        <!-- 행사 대상 -->
+                                                        <li>
+                                                                <i class="fa fa-user"></i> <span>행사 대상 : </span>
+                                                                 <span th:text="${pList.pmTarget}"></span>
+                                                        </li>
+                                                        
+                                                        <!-- 장소 -->
+                                                        <li>
+                                                                <i class="fa fa-map-marker"></i> <span>장소 : </span>
+                                                                 <span th:text="${pList.pmPlace}"></span>
+                                                        </li>
+                                                        
+                                                         <!-- 행사 참여비 -->
+                                                        <li>
+                                                                <i class="fa fa-krw"></i> <span>행사 참여비 : </span>
+                                                                 <th:block th:if="${pList.pmTuition} == 0">
+                                                                 	<span>무료</span>
+                                                                 </th:block>
+                                                                 <th:block th:if="${pList.pmTuition} != 0">
+                                                                 	<span th:text="${pList.pmTuition}"></span><span>원</span>
+                                                                 </th:block>
+                                                        </li>
+                                                        
+                                                    </ul>
+                                <br>
+                                                    <th:block th:if="${pList.pmProgress} == '종료' ">
+                                                    <br><br><br>
+                                                    	<p> 프로그램이 종료되었습니다. </p> 
+                                                   		<a class="btn btn-primary">종료된 행사</a>
+                                                    </th:block>
+                                                    <th:block th:if="${pList.pmProgress} != '종료' ">
+                                                    <br>
+                                                    <h3><i class="fa fa-hand-o-down" aria-hidden="true"></i>    행사 정보    <i class="fa fa-hand-o-down" aria-hidden="true"></i></h3>
+                                                    	<p th:text="${#strings.abbreviate(pList.pmDetail,20)}"></p>               
+                                                   		<a class="btn btn-primary" th:href="@{/lifrary/programDetail(pmCode = ${pList.pmCode})}">자세히 보기</a>
+                                                    </th:block>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                 </th:block>   
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </section>
+        <!-- End: program -->
+        
+</html>

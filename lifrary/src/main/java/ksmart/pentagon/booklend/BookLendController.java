@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -203,7 +204,15 @@ public class BookLendController {
 		
 		return "redirect:/admin/lendSearchList";
 	}
-	
+	/**
+	 * @param blCode
+	 * @param ulLendDay
+	 * @param session
+	 * @param redirectAttributes
+	 * @brief 예약도서 대출
+	 * @return /admin/lendSearchList
+	 * @author 최지혜
+	 */
 	@PostMapping("/admin/holdUpdate")
 	public String holdUpdate(	 @RequestParam(value="blCode" ) String blCode
 								, @RequestParam(value="ulLendDay" ) String ulLendDay 
@@ -223,15 +232,20 @@ public class BookLendController {
 	 * @param blCode 대출도서코드
 	 * @param redirectAttributes
 	 * @brief 연장일 등록
-	 * @return 
+	 * @return /admin/extensionUpdate
 	 */
-	@GetMapping("/admin/extensionUpdate")
-	public String extensionUpdate( @RequestParam(value="blCode") String blCode
+	@GetMapping("/{page}/extensionUpdate")
+	public String extensionUpdate( @PathVariable(value="page") String page
+								   ,@RequestParam(value="blCode") String blCode
 								   , RedirectAttributes redirectAttributes) {
 		
 		redirectAttributes.addFlashAttribute("resultextension", bookLendService.extensionUpdate(blCode));
 		
-		return "redirect:/admin/lendSearchList";		
+		if(("admin").equals(page)) {	
+			return "redirect:/admin/lendSearchList";		
+		}else {
+			return "redirect:/lifrary/myLendList";	
+		}
 	}
 	
 	/**
@@ -253,17 +267,29 @@ public class BookLendController {
 		
 	}
 	
-	@GetMapping("/admin/holdDelete")
-	public String holdDelete(@RequestParam(value="blCode") String blCode
+	/**
+	 * 
+	 * @param blCode
+	 * @param bsCode
+	 * @param redirectAttributes
+	 * @brief 예약도서 취소
+	 * @return /admin/holdSearchList
+	 * @author 최지혜
+	 */
+	@GetMapping("/{page}/holdDelete")
+	public String holdDelete(@PathVariable(value="page") String page
+							,@RequestParam(value="blCode") String blCode
 							, @RequestParam(value="bsCode") String bsCode
 							, RedirectAttributes redirectAttributes) {
 
-		int result = bookLendService.holdDelete(blCode, bsCode);
-		
+		int result = bookLendService.holdDelete(blCode, bsCode);		
 		redirectAttributes.addFlashAttribute("resultDelete", result);
-		
-		return "redirect:/admin/holdSearchList";
-		
+			
+		if(("admin").equals(page)) {	
+			return "redirect:/admin/holdSearchList";		
+		}else {
+			return "redirect:/lifrary/myHoldList";	
+		}		
 	}
 	
 	/** 
@@ -274,35 +300,62 @@ public class BookLendController {
 	 * @author 최지혜
 	 */
 	@GetMapping("/lifrary/myLendList")
-	public String myLendList(HttpSession session
+	public String myLendList(@RequestParam Map<String,Object> params
+							 ,@RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPageStr
+							 , HttpSession session
 							 , Model model) {
 		
-		String libNum = (String) session.getAttribute("LIBNUM");
+	 	String libNum = (String) session.getAttribute("LIBNUM");
 		String blId = (String) session.getAttribute("SID");
 		
-		model.addAttribute("myLendList", bookLendService.myLendList(libNum, blId));
+		params.put("libNum", libNum);
+		params.put("blId", blId);
+		
+		Map<String, Object> map = bookLendService.myLendList(params, currentPageStr);
+		model.addAttribute("myLendList", map.get("myLendList"));
+		
+		model.addAttribute("currentPage", map.get("currentPage"));
+    	model.addAttribute("lastPage", map.get("lastPage"));
+    	model.addAttribute("startPageNum", map.get("startPageNum"));
+    	model.addAttribute("lastPageNum", map.get("lastPageNum"));
+    	model.addAttribute("pageViewBlock", map.get("pageViewBlock"));
+    	model.addAttribute("pageViewArray", map.get("pageViewArray"));
 		 
 		
-		return "/librarypage/book/myLendList.html";
+		return "/librarypage/book/myLendList";
 		
-	}
+	}	
 	/**
 	 * 
 	 * @param session
 	 * @param model
 	 * @brief 마이페이지 예약도서리스트
-	 * @return
+	 * @return /librarypage/book/myHoldList
 	 * @author 최지혜
 	 */
 	@GetMapping("/lifrary/myHoldList")
-	public String myHoldList(HttpSession session
-			 				 , Model model) {
+	public String myHoldList(@RequestParam Map<String,Object> params
+							 ,@RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPageStr
+							 , HttpSession session
+							 , Model model) {
 		
 		String libNum = (String) session.getAttribute("LIBNUM");
 		String blId = (String) session.getAttribute("SID");
 		
-		model.addAttribute("myHoldList", bookLendService.myHoldList(libNum, blId));
-				
+		params.put("libNum", libNum);
+		params.put("blId", blId);
+		
+		Map<String, Object> map = bookLendService.myHoldList(params, currentPageStr);
+		
+		model.addAttribute("myHoldList", map.get("myHoldList"));
+		
+		model.addAttribute("currentPage", map.get("currentPage"));
+    	model.addAttribute("lastPage", map.get("lastPage"));
+    	model.addAttribute("startPageNum", map.get("startPageNum"));
+    	model.addAttribute("lastPageNum", map.get("lastPageNum"));
+    	model.addAttribute("pageViewBlock", map.get("pageViewBlock"));
+    	model.addAttribute("pageViewArray", map.get("pageViewArray"));
+		
 		return "/librarypage/book/myHoldList";
 		
 	}

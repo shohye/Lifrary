@@ -6,15 +6,15 @@ public class Paging {
 	// DB 행의 총 개수
 	private int boardCount;
 	// 페이지에 보여줄 행의 개수
-	private static final int ROW_PER_PAGE = 15; 
+	private static int ROW_PER_PAGE = 10; 
 	public static int getRowPerPage() {
 		return ROW_PER_PAGE;
 	}
-    // 페이지에 보여줄 첫번째 페이지 번호는 1로 초기화
+	
 	private int startPageNum = 1;    
 	
     // 처음 보여줄 마지막 페이지 번호는 10
-	private int lastPageNum = 10;
+	private int lastPageNum = ROW_PER_PAGE;
 	
 	private int startRow;
 	private int lastPage;
@@ -36,6 +36,14 @@ public class Paging {
 		this.currentPage = currentPage;
 		 // 현재 페이지가 ROW_PER_PAGE/2 보다 클 경우
 		
+		if ( boardCount % ROW_PER_PAGE == 0) {
+	    	lastPage = (int) boardCount/ROW_PER_PAGE;
+	    }else {
+	    	lastPage = (int) boardCount/ROW_PER_PAGE +1;
+	    }
+		
+		startRow = (currentPage - 1)*ROW_PER_PAGE; 
+		
 	    if(currentPage > (ROW_PER_PAGE/2)) {
 	        // 보여지는 페이지 첫번째 페이지 번호는 현재페이지 - ((마지막 페이지 번호/2) -1 )
 	        // ex 현재 페이지가 6이라면 첫번째 페이지번호는 2
@@ -44,23 +52,16 @@ public class Paging {
 	        lastPageNum += (startPageNum-1);
 	    }
 	    
-	    startRow = (currentPage - 1)*ROW_PER_PAGE; 
 	    
-	    if ( boardCount%ROW_PER_PAGE == 0) {
-	    	lastPage = (int) boardCount/ROW_PER_PAGE;
-	    }else {
-	    	lastPage = (int) boardCount/ROW_PER_PAGE +1;
-	    }
 	           
 	    // 현재 페이지가 (마지막 페이지-4) 보다 같거나 클 경우
 	    if(currentPage >= (lastPage-4)) {
 	        // 마지막 페이지 번호는 lastPage
 	        lastPageNum = lastPage;
+	    }else if(currentPage < (lastPage-4)) {
+	    	
 	    }
-	    
-	    
-	    System.out.println( "자바 페이징 startRow ======> "+startRow);
-	    System.out.println( "자바 페이징 ROW_PER_PAGE===> "+ROW_PER_PAGE);
+    
 	}
 
 	public int getCurrentPage() {
@@ -102,7 +103,13 @@ public class Paging {
 	public void setLastPage(int lastPage) {
 		this.lastPage = lastPage;
 	}
-	
-	
-    
+
+	public int getLastPageNum() {
+		return lastPageNum;
+	}
+
+	public void setLastPageNum(int lastPageNum) {
+		this.lastPageNum = lastPageNum;
+	}
+  
 }

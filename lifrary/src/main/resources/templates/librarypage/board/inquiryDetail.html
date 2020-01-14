@@ -43,7 +43,7 @@ hr {
 			<h3 style="font-size: 30px;">문의 상세보기</h3>
 
 				<h4 style="padding-top: 50px;">
-					<span>제목</span>
+					<span>제목 : [[${l.boardTitle}]]</span>
 				</h4><br>
 				<h6 style="color: #A2A4A6;">
 					<i th:text="|회원아이디: ${board.uId}   ㅣ |" class="fa fa-user"></i><i class="fa fa-eye" th:text="|조회수 : ${board.boardPageView}  ㅣ |"></i><span style="color: #A2A4A6;" th:text="| 등록일 : ${board.boardDate}   |"></span>
@@ -91,8 +91,9 @@ hr {
                                <div class="comment-metadata">
                                <i style="color: #848484;" th:text="|답변자 : ${board.boardComment.uId} ㅣ |" class="fa fa-user"></i><span style="color: #848484;" th:text="| 등록일 : ${board.boardComment.boardCDate}   |"></span>
                                </div>
-                               <div class="comment-content">
-                                   <p th:utext="${board.boardComment.boardCContent}"></p>
+                               <div class="comment-content" style="color: #000000;">
+                                   <span th:utext="${board.boardComment.boardCContent}"></span>
+                                   <br>
                                </div>
                            </div>
                        </div>

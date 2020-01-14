@@ -7,17 +7,23 @@
 	  <th:block layout:fragment="adminHeadAdd">
 	  <link rel="stylesheet" th:href="@{/adminStatic/vendor/css/pages/users.css}">
  	  </th:block>
- 
+  <!-- headAdd(Libs&page) -->
+  	<th:block layout:fragment="adminTitle">
+		<title>공공 시설 상세보기</title>
+	</th:block>
  		 <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
   <th:block layout:fragment="teamHeadScript">
 	  <script th:inline="javascript">
 			$(document).ready(function(){
-				
+				var fCode = [[${facility.fCode}]];
 				$('#fDeleteBtn').click(function(){
 					var deleteConfirm = confirm('정말로 삭제하시겠습니까?');
 					
 					if(deleteConfirm == true){
+						location.href = '/admin/facilityDelete?fCode='+fCode;
 						alert('삭제 완료')
+					}else{
+						location.reload();
 					}
 				})
 				
@@ -25,7 +31,8 @@
 				
 				/* Detail페이지에 테이블 뿌려주기 */
 				var fRow = [[${facility.fRow}]];
-				var fCol = [[${facility.fCol}]];	
+				var fCol = [[${facility.fCol}]];
+				var fKinds = [[${facility.fKinds}]];
 				var tableDiv = $('#tableDiv');
 				var contents = '';
 				var fRowfCol = fRow * fCol;							      // 상세보기 페이지에서 들어왔을때 자리이 있는지없는지 체크하기위한 변수. 
@@ -34,9 +41,11 @@
 																		  
 				if(fRowfCol == 0) { 									  // fRowfCol이 0인경우 = 자리선택을 안해서 자동으로 DB에 0이 들어간 경우.
 					console.log('스터디룸, 강연실을 선택하였습니다.')
-					contents += '<img alt="이미지를 표시할 수 없습니다." src="/adminStatic/img/avatars/1.png">'
-					contents += '<img alt="이미지를 표시할 수 없습니다." src="/adminStatic/img/avatars/1.png">'
-					contents += '<img alt="이미지를 표시할 수 없습니다." src="/adminStatic/img/avatars/1.png">'
+					if(fKinds == '스터디룸'){
+						contents += '<img alt="이미지를 표시할 수 없습니다." src="/adminStatic/img/avatars/studyroom.jpg">'
+					} else if(fKinds == '강연실'){
+						contents += '<img alt="이미지를 표시할 수 없습니다." src="/adminStatic/img/avatars/lecture.jpg">'
+					}
 					tableDiv.html(contents);
 					//이런식으로 이미지 출력해주면 될거같습니다.
 				} else{ 												  // 자리이 있는경우는 0이 아닐것이므로, 열람실  / 사물함
@@ -135,7 +144,7 @@
 					  				</a>
 				  			 	</td>
 					  			 	<td>
-						 				 <a th:href="@{/admin/facilityDelete(fCode = ${f.fCode})}" style="color: white"> 
+						 				 <a style="color: white"> 
 								            <button id= "fDeleteBtn" type="button" class="btn btn-danger d-block" style="margin-top: 10px;">
 							            			<span class="ion ion-md-cut"> 삭제하기</span>
 											</button>

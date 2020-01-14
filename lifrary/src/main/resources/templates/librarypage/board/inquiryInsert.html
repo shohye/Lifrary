@@ -13,6 +13,12 @@
 	margin-bottom: 5px;
 	display: inline;
 }
+hr {
+    background-color: #a7a6a6;
+    border: 0;
+    height: 1px;
+    margin-bottom: 20px;
+}
  	</style>
 	
  </th:block>
@@ -33,9 +39,9 @@
             </div>
         </section>
         <script>
-        	$(document).ready(function(){
+     	$(document).ready(function(){
         		$('.select-styled').click(function(){
-        			$('ul').html('<li rel="도서관자료"> 도서관자료 </li>'
+        			$('.select-list').html('<li rel="도서관자료"> 도서관자료 </li>'
         						+'<li rel="대출/반납/연기"> 대출/반납/연기</li>'
         						+'<li rel="도서관시설"> 도서관시설 </li>'
         						+'<li rel="회원증"> 회원증   </li>'
@@ -68,17 +74,19 @@
 	                                    </div>
 	                                    <div class="cart-head">
 		                                    <div style="width: 80%;">
-		                                   		<strong>선택</strong>
-		                                            	<select>
-		                                            		<option id="text001">&emsp;&ensp;&ensp;&ensp;.::선택::.&ensp;&ensp;&emsp;</option>
-<!-- 		                                            		<option>&emsp;도서관자료&emsp;</option> -->
-<!-- 		                                            		<option>&emsp;대출/반납/연기</option> -->
-<!-- 		                                            		<option>&emsp;도서관시설&emsp;</option> -->
-<!-- 		                                            		<option>&emsp;회원증&emsp;&emsp;&emsp;</option> -->
-<!-- 		                                            		<option>&emsp;홈페이지&emsp;&emsp;</option> -->
-<!-- 		                                            		<option>&emsp;기타&emsp;&emsp;&emsp;&emsp;</option> -->
-		                                           		</select> 
-		                                     
+		                                    	<table>
+		                                    		<tr>
+		                                    			<td style="width: 11%;">
+			                                   				<strong>문의 선택</strong>
+			                                            	
+			                                            </td>
+		                                    			<td style="width: 60%;">
+			                                       			<select>
+			                                            		<option id="text001">&emsp;&ensp;&ensp;&ensp;.::선택::.&ensp;&ensp;&emsp;</option>
+			                                           		</select> 
+			                                             </td>
+			                                        </tr>
+		                                     </table>
 		                                    </div>
 		                                    <div class="clearfix"></div>
 		                                </div>

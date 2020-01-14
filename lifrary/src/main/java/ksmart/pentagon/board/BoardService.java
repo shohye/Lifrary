@@ -120,4 +120,18 @@ public class BoardService {
 		public void libraryInquiryInsert(Board board){
 		}
 		
+		public List<Board> lifraryNoticeList(Board board){
+			return boardmapper.lifraryInquirySearchList(board);
+		}
+		
+		public Board lifraryNoticeDetail(Board Dboard) {
+			boardmapper.boardPageViewUp(Dboard);
+			Board board = boardmapper.lifraryInquiryDetail(Dboard);
+			return board;
+		}
+		
+		//마이페이지 내 문의 신청 내역 이동
+		public List<Board> myinquiryList(Board board){
+			return null;
+		}
 }

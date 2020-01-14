@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.pentagon.vo.StudyCate;
 import ksmart.pentagon.vo.User;
@@ -125,6 +127,7 @@ public class LibraryController {
 	}
 	
 	//회원가입 등록
+	//4개 테이블 동시 등록
 	@PostMapping("/lifrary/userInsert")
 	public String userInsert(HttpSession session, User user, UserLevelHistory userLevelHistory
 								, UserAuthorityHistory userAuthorityHistory, StudyCate studyCate) {
@@ -134,14 +137,20 @@ public class LibraryController {
 		System.out.println("userAuthorityHistory 확인 ==>> " + userAuthorityHistory);
 		System.out.println("studyCate 확인 ==>> " + studyCate);
 		
-		libraryService.userInsert1(user);
-		libraryService.userInsert2(userLevelHistory);
-		libraryService.userInsert3(userAuthorityHistory);
-		libraryService.userInsert4(studyCate);
 		
-		return "redirect:/";
+		libraryService.userInsertUser(user);	
+		libraryService.userInsertUserLevelHistory(userLevelHistory);	
+		libraryService.userInsertUserAuthorityHistory(userAuthorityHistory);
+		libraryService.userInsertStudyCate(studyCate);
+		
+		return "redirect:/pentagon/index";
 	}
 	
+	/***
+	 * 도서관페이지 내정보 상세보기 
+	 * @return 
+	 * @author 한우리
+	 */
 	//도서관페이지-마이페이지 내정보 상세보기
 	@GetMapping("/lifrary/myUserDetail")
 	public String myUserDetail(Model model, HttpSession session) {
@@ -167,7 +176,7 @@ public class LibraryController {
 	   String getSID = (String) session.getAttribute("SID");
 	   String getSAID = (String) session.getAttribute("SAID");
 	   String libNum = (String) session.getAttribute("LIBNUM");
-	   System.out.println("getSID 세션에서가져온 아이디  >>>" + getSID );
+	    System.out.println("getSID 세션에서가져온 아이디  >>>" + getSID );
 	   System.out.println("getSAID 세션에서가져온 아이디  >>>" + getSAID );
 	   System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
 	   
@@ -178,7 +187,7 @@ public class LibraryController {
 		
 	}
 
-	//사서 자신 정보 수정 //제출하다
+	//사서 자신 정보 수정
 	@PostMapping("/lifrary/myUserUpdate")
 	public String myUserUpdate(User user) {
 		System.out.println("myUserUpdate  내정보 수정 후 상세보기로  ");
@@ -187,20 +196,43 @@ public class LibraryController {
 		return "redirect:/lifrary/myUserDetail";
 	}
 	
-	//회원 탈퇴 하는 폼 
+	//회원 탈퇴 하는 페이지
 	@GetMapping("/lifrary/myUserDelete")
-	public String myUserDelete(Model model, HttpSession session){
-		System.out.println("myUserDelete 탈퇴 폼 ");
-		
-		String SID = (String) session.getAttribute("SID");
-		String SAID = (String) session.getAttribute("SAID");
-		String libNum = (String) session.getAttribute("LIBNUM");
-		System.out.println("SID 세션에서가져온 아이디  >>>" + SID );
-		System.out.println("SAID 세션에서가져온 관리자/사서 아이디  >>>" + SAID );
-		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
-		
-
+	public String myUserDelete() {
+		System.out.println("myUserDelete  회원 탈퇴하기  ");
 		return "/librarypage/user/myUserDelete";
 	}
 	
+	// userDelete 삭제 결과값 가져오는 ajax - 회원탈퇴
+	//컨트롤러를 통해 보내고있는 응답의 유형을 나타 내기 위해 produce를 사용
+    @RequestMapping(value="/userDelete", produces = "text/plain")
+    public @ResponseBody String userDelete( Model model 
+    		, @RequestParam(value="SID",required=false)String SID
+    		, @RequestParam(value="uPw",required=false)String uPw
+    		,HttpSession session ) {
+		System.out.println("deleteUser 관리자가 회원 삭제하기 ajax");
+		String libNum = (String)session.getAttribute("LIBNUM");	//도서관코드
+		System.out.println("도서관 코드  : " + session.getAttribute("LIBNUM"));
+		String result = libraryService.deleteUser(SID, uPw, libNum);
+		
+		//세션 종료
+		if(result.equals("삭제")) {
+			session.invalidate();
+		}
+		
+ 		return result;
+    }
+
+
+	//아이디,비번 찾기 
+	@GetMapping("/lifrary/userFindIdPw")
+	public String userFindIdPw() {
+		System.out.println("userFindIdPw  내정보 아이디 비번 찾기  ");
+		
+		return "/librarypage/user/userFindIdPw";
+		
+	}
+	
+	
+		
 }

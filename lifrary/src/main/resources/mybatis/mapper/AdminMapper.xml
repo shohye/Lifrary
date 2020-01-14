@@ -97,6 +97,7 @@
 		SELECT
 			u.u_id,
 			u.u_pw,
+			u.l_code,
 			u.u_division,
 			u.u_name,
 			ll.ll_insert,
@@ -109,7 +110,7 @@
 		ON
 			u.u_id = ll.u_id
 		WHERE
-			u.u_id = #{uId} and u.l_code = #{libNum}  and (u.u_division = '관리자' or u.u_division = '사서')
+			u.u_id = #{uId} and (u.u_division = '관리자' or u.u_division = '사서')
 	</select>
  
   	<select id="getUserLevel" resultType="ksmart.pentagon.vo.UserLevel">
@@ -777,27 +778,28 @@
     </update>
 
 <!--  삭제 처리  --> <!--  삭제 처리  --> <!--  삭제 처리  -->
-
+	 <select id="checkPw" resultMap="userResultMap" parameterType="String">
+  		SELECT 
+			  * 
+		FROM 
+			  user
+		WHERE 
+			  u_id     = #{said}
+	 	and	  u_pw 	   = #{write}		 		    
+  	</select>
 	<delete id="deleteUser" parameterType="String">
 		DELETE 
 		FROM 
 			user
 		WHERE 
-			u_id=#{said} 
+			u_id=#{uId} 
 	</delete>
 	<delete id="deleteLevel" parameterType="String">
 		DELETE 
-			ul.*
 		FROM 
-			user AS u 
-		INNER JOIN 
-			user_level AS ul
+			user_level
 		WHERE 
-			ul.ul_level =# {ulLevel}
-			AND
-			u.u_id =# {said}
-			AND
-			u.u_pw =# {write}
+			ul_level =# {ulLevel} 
 	</delete>
 
   </mapper>

@@ -5,7 +5,7 @@
 	  class="default-style">
  <!-- headAdd(Libs&page) -->
  <th:block layout:fragment="adminTitle">
-	<title>예약 도서</title>
+	<title>예약 관리</title>
  </th:block>
   
   <th:block layout:fragment="adminHeadAdd">
@@ -76,7 +76,7 @@
                 	<span class="badge badge-outline-secondary">취소완료</span>
                 </td>
                 <td class="align-middle">
-	             	<a th:href="@{/admin/stockDetail(bsCode=${H.bsCode})}"class="btn btn-default btn-xs icon-btn md-btn-flat" title="도서정보" data-original-title="도서정보" >
+	             	<a th:href="@{/admin/stockDetail(bsCode=${H.bsCode})}" class="btn btn-default btn-xs icon-btn md-btn-flat" title="도서정보" data-original-title="도서정보" >
 	             		<i class="fas fa-book"></i>
 	             	</a>
 	             	<a th:href="@{/admin/adminUserDetail(uId=${H.blId})}" class="btn btn-default btn-xs icon-btn md-btn-flat" title="회원정보" data-original-title="회원정보" >

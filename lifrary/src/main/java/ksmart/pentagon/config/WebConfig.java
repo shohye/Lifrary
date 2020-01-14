@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import ksmart.pentagon.interceptor.AdminInterceptor;
+import ksmart.pentagon.interceptor.LibraryInterceptor;
 
 
 
@@ -16,15 +17,19 @@ import ksmart.pentagon.interceptor.AdminInterceptor;
 public class WebConfig implements WebMvcConfigurer {
 	
 	@Autowired  private AdminInterceptor adminInterceptor; 
-	
+	@Autowired	private LibraryInterceptor libraryInterceptor;
 	
 	@Value("${resources.notload.list}") private List<String> notLoadList;
 	
 	
 	@Override 
 	public void addInterceptors(InterceptorRegistry registry) { 
-		registry.addInterceptor(adminInterceptor) 
+		registry.addInterceptor(adminInterceptor)	
 				.addPathPatterns("/admin/*") 
-				.excludePathPatterns(notLoadList); 
+				.excludePathPatterns(notLoadList);
+		
+		registry.addInterceptor(libraryInterceptor)
+		.addPathPatterns("/lifrary/*") 
+		.excludePathPatterns(notLoadList);
 	}
 }

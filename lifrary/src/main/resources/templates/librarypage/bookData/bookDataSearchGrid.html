@@ -33,21 +33,23 @@
 
 
     <th:block layout:fragment="customContents">
+        <!-- Start: Page Banner -->
         <section class="page-banner services-banner" th:fragment="bookBannerFragment">
             <div class="container">
                 <div class="banner-header">
-                    <h2>Books & Media Listing</h2>
+                    <h2>도서 검색 결과</h2>
                     <span class="underline center"></span>
-                    <p class="lead">Proin ac eros pellentesque dolor pharetra tempo.</p>
+                    <p class="lead">검색하신 도서 입니다</p>
                 </div>
                 <div class="breadcrumb">
                     <ul>
                         <li><a th:href="@{/}">Home</a></li>
-                        <li>Books & Media</li>
+                        <li>Books</li>
                     </ul>
                 </div>
             </div>
         </section>
+    <!-- End: Page Banner --> 
         
             <div id="primary" class="content-area">
                 <main id="main" class="site-main">
@@ -164,49 +166,46 @@
 					                      </th:block>                                                                                                   
                                         </ul>
                                     </div>
-                                    <nav class="navigation pagination text-center" style="margin-bottom: 40px">
-				                         <h2 class="screen-reader-text">Posts navigation</h2>
-				                         <div class="nav-links">   
-				                         	 <span th:if="${currentPage > 1}">
-				                             	<a class="prev page-numbers" th:href="@{/lifrary/bookDataSearchGrid(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
-				                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=(${currentPage}-1))}">
-				                                     <i class="fa fa-long-arrow-left"></i> 이전
-				                                 </a>
-				                             </span>
-				                             
-				                                              
-					                         <th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
-										        <span th:if="${currentPage == num}" th:text="${num}" class="page-numbers current"></span>
-										        <span th:unless="${currentPage == num}">
-										        	<a th:text="${num}" class="page-numbers" th:href="@{/lifrary/bookDataSearchGrid(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
-					                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=${num})}">
-					                                </a>
-										    	</span>
-										    
-										     </th:block>
-										      
-										      
-										                             
-				                             <span th:if="${currentPage != lastPage}"> 
-				                             	<a class="next page-numbers" th:if="${currentPage != lastPage}" th:href="@{/lifrary/bookDataSearchGrid(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
-				                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=(${currentPage}+1))}"> 
-				                                	 다음<i class="fa fa-long-arrow-right"></i>
-				                             	</a>
-				                            </span>
-				                         </div>
-				                     </nav>
-                                
-                                <!-- START : bookPageLeftMenu -->
-			                       <section th:replace="fragments/library/bookPageLeftMenu :: bookPageLeftMenuFragment"></section>
-                                	
-                                <!-- END : bookPageLeftMenu -->
-                                
-                            </div>
+                                   <nav class="navigation pagination text-center" style="margin-bottom: 40px">
+			                         <h2 class="screen-reader-text">Posts navigation</h2>
+			                         <div class="nav-links">   
+			                         	 <span th:if="${currentPage > 1}">
+			                             	<a class="prev page-numbers" th:href="@{/lifrary/bookDataSearchGrid(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
+			                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=(${currentPage}-1))}">
+			                                     <i class="fa fa-long-arrow-left"></i> 이전
+			                                 </a>
+			                             </span>
+			                             
+			                                              
+				                         <th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+									        <span th:if="${currentPage == num}" th:text="${num}" class="page-numbers current"></span>
+									        <span th:unless="${currentPage == num}">
+									        	<a th:text="${num}" class="page-numbers" th:href="@{/lifrary/bookDataSearchGrid(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
+				                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=${num})}">
+				                                </a>
+									    	</span>
+									    
+									     </th:block>
+									      
+									      
+									                             
+			                             <span th:if="${currentPage != lastPage}"> 
+			                             	<a class="next page-numbers" th:if="${currentPage != lastPage}" th:href="@{/lifrary/bookDataSearchGrid(bclCode=${param.bclCode},biName=${param.biName},biPublisher=${param.biPublisher},
+			                                     biIsbn=${param.biIsbn},biAuthor=${param.biAuthor},biDtail=${param.biDtail},biYearStart=${param.biYearStart},biYearEnd=${param.biYearEnd},currentPage=(${currentPage}+1))}"> 
+			                                	 다음<i class="fa fa-long-arrow-right"></i>
+			                             	</a>
+			                            </span>
+			                         </div>
+			                     </nav>
+                           </div>
                         </div>
+                        
+                        
 	              </div>
-                </main>
-            </div>
-        </div>
+	          </div>
+          </main>
+       </div>
+       
       
 
        

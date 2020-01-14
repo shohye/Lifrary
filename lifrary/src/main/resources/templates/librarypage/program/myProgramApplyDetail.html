@@ -2,7 +2,9 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{layout/library/libraryDefault}">
-
+<th:block layout:fragment="libraryTitle">
+    	<title>..:: 마이페이지 - 신청 프로그램 상세보기 ::..</title>
+  </th:block>
 <th:block layout:fragment="customContents">
        <section class="page-banner services-banner">
             <div class="container">
@@ -13,7 +15,7 @@
                 </div>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a th:href="@{/}">메인메뉴</a></li>
+                        <li><a>마이페이지</a></li>
                         <li>프로그램 신청내역 상세보기</li>
                     </ul>
                 </div>

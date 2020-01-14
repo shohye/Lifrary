@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/library/libraryDefault}">
+
+<th:block layout:fragment="libraryTitle">
+	<title>..:: 문의 리스트 ::..</title>
+</th:block>
+<th:block layout:fragment="customScript">
+
+</th:block>
+<th:block layout:fragment="customContents">
+	<style>
+a {
+	color: #4E5155;
+}
+hr {
+    background-color: #A4A4A4;
+    border: 0;
+    height: 1px;
+    margin-bottom: 20px;
+}
+</style>
+	<section class="page-banner services-banner">
+		<div class="container">
+			<div class="banner-header">
+				<h2>문의사항</h2>
+				<span class="underline center"></span>
+				<p class="lead">문의를 읽어주세요</p>
+			</div>
+			<div class="breadcrumb">
+				<ul>
+					<li><a th:href="@{/}">메인화면</a></li>
+					<li>문의 상세보기</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+		<br><br><br><br>
+	<div style="width: 77%; margin: auto;">
+		<div class="comment-bg">
+			<div style="margin: 30px;" th:each="l : ${board}">
+			<h3 style="font-size: 30px;">문의 상세보기</h3>
+
+				<h4 style="padding-top: 50px;">
+					<span>제목 : [[${l.boardTitle}]]</span>
+				</h4><br>
+				<h6 style="color: #A2A4A6;">
+					<i th:text="|회원아이디: ${board.uId}   ㅣ |" class="fa fa-user"></i><i class="fa fa-eye" th:text="|조회수 : ${board.boardPageView}  ㅣ |"></i><span style="color: #A2A4A6;" th:text="| 등록일 : ${board.boardDate}   |"></span>
+				</h6>
+				<hr>
+
+				<div th:utext="${l.boardContent}"></div>
+				<br><br><br>
+				<hr>
+				<table>
+					<tr>
+						<td style="width: 140px;">
+							<button type="button" class="btn btn-primary d-block"
+								style="margin-top: 10px; height: 45px;">
+								<a
+									th:href="@{/lifrary/noticeList(boardLName=${'공지사항'})}"
+									style="color: white"> <span class="ion ion-md-cut">리스트</span>
+								</a>
+							</button>
+						</td>
+						<td th:if="${board.uId} == ${session.SID}">
+							<button type="button" class="btn btn-danger d-block"
+								style="margin-top: 10px;">
+								<a
+									th:href="@{/admin/noticeDelete(boardCode=${l.boardCode},boardLName=${'공지사항'})}"
+									style="color: white"> <span class="ion ion-md-cut">
+										삭제하기</span>
+								</a>
+							</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+	</div>
+</th:block>
+</html>

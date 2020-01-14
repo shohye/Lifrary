@@ -122,15 +122,20 @@ public class BookStockService {
 		
 		System.out.println("서비스단 currentPageStr ====>"+currentPageStr);
 		 
+		
+		// 페이징
 		Paging paging =  new Paging(boardCount, currentPageStr);
 		// DB 행의 총 개수를 구하는 getStockAllCount() 메서드를 호출하여 int Date Type의 boardCount 변수에 대입
        
         System.out.println("boardCount===>"+boardCount);
         
+        
+        // 페이징vo에 있는거 가져오는거임,,,
         int currentPage = paging.getCurrentPage();
         int lastPage = paging.getLastPage();
         int startPageNum = paging.getStartPageNum();
-        int lastPageNum = paging.getLastPage();
+        int lastPageNum = paging.getLastPageNum();
+       
         
         int startRow = paging.getStartRow();
         int ROW_PER_PAGE = Paging.getRowPerPage();
@@ -161,13 +166,16 @@ public class BookStockService {
 			}						
 		}	
 		
-		
+		// 가져온거 맵으로 컨트롤러에 전달
+		// bookDataSearchList.html 아래부분  nav보면 사용한 방식이 나옵니다. 그것을 보세용
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("list", stockList);
         resultMap.put("currentPage", currentPage);
         resultMap.put("lastPage", lastPage);
         resultMap.put("startPageNum", startPageNum);
         resultMap.put("lastPageNum", lastPageNum);
+    
+     
         
         return resultMap;	
 	}
@@ -196,7 +204,7 @@ public class BookStockService {
 	  return bl;		  
     }
     
-     // ( 어드민 ) 소장도서 업데이트  // 하는중!!!!!!!!!!!!!!!!!!!
+     // ( 어드민 ) 소장도서 업데이트  
     public void updateStock(BookInformation bookInformation, BookStock bookStock , BookCate bookCate) {
  
     	Map<String,Object> stockMap = new HashMap<String,Object>();

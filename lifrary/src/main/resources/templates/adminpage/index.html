@@ -4,16 +4,191 @@
 	  layout:decorate="~{layout/admin/adminDefault}"
 	  class="default-style">
  	<th:block layout:fragment="adminTitle">
-		<title>WELCOME ADMINPAGE</title>
+		<title>도서관 관리시스템</title>
 	</th:block>
+  <!-- teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+  <th:block layout:fragment="teamHeadScript">
+  	<script>
+  		$(document).ready(function(){
+  			var areaHidden = 0;
+  			var ageHidden1 = 0;
+  			var ageHidden2 = 0;
+  			var genderHidden1 = 0;
+  			var genderHidden2 = 0;
+  			var genderHidden3 = 0;
+  			
+  			areaClick = function(area){
+  				$('#areaHidden').val(area);
+  				var gender = "2";
+  				var fromAge = "0";
+  				var toAge = "100";
+  				var area = area;
+  				var request = $.ajax({
+  				  url: "/getAera",
+  				  method: "POST",
+  				  data: { "gender" : gender , "fromAge" : fromAge , "toAge" : toAge , "area" : area},
+  				  dataType: "json"
+  				});
+  				 
+  				request.done(function( list) {
+					
+					var img = "";
+					var bookName = "";
+					console.log('list : '+list)
+					for(var i = 0; i < list.length; i++){
+						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+						}
+					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+					$('#areaDiv').html(ageDivhtml);
+				});
+  				 
+  				request.fail(function( jqXHR, textStatus ) {
+  				  alert( "Request failed: " + textStatus );
+  				});
+  			}
+  			
+  			//연령 눌렀을시 클릭이벤트
+  			ageClick = function(fromAge,toAge){
+  				$('#ageHidden1').val(fromAge);
+  				$('#ageHidden2').val(toAge);
+  				var gender = "2";
+  				var fromAge = fromAge;
+  				var toAge = toAge;
+  				var area = "0";
+  				
+  				var request = $.ajax({
+    				  url: "/getAera",
+    				  method: "POST",
+    				  data: { "gender" : gender , "fromAge" : fromAge , "toAge" : toAge , "area" : area},
+    				  dataType: "json"
+    				});
+				request.done(function( list) {
+					var img = "";
+					var bookName = "";
+					console.log('list : '+list)
+					for(var i = 0; i < list.length; i++){
+						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+						}
+					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+					$('#ageDiv').html(ageDivhtml);
+				});
+  				 
+  				request.fail(function( jqXHR, textStatus ) {
+  				  alert( "Request failed: " + textStatus );
+  				});
+  				
+
+  			}
+  			genderClick = function(gender,fromAge,toAge){
+  				$('#genderHidden1').val(gender);
+  				$('#genderHidden2').val(fromAge);
+  				$('#genderHidden3').val(toAge);
+  				var gender = $('#genderHidden1').val();
+  				var fromAge =$('#genderHidden2').val();
+  				var toAge = $('#genderHidden3').val();
+  				var area = "0";
+  				
+  				var request = $.ajax({
+    				  url: "/getAera",
+    				  method: "POST",
+    				  data: { "gender" : gender , "fromAge" : fromAge , "toAge" : toAge , "area" : area},
+    				  dataType: "json"
+    				});
+  				request.done(function( list) {
+  					var img = "";
+  					var bookName = "";
+  					console.log('list : '+list)
+  					for(var i = 0; i < list.length; i++){
+  						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+  						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+  						}
+  					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+  					$('#genderDiv').html(ageDivhtml);
+  				});
+  				 
+  				request.fail(function( jqXHR, textStatus ) {
+  				  alert( "Request failed: " + textStatus );
+  				});
+  				
+  			}
+  			
+  			$('#ageBtn').click(function(){
+  				var ageHidden1 = $('#ageHidden1').val();
+  				var ageHidden2 = $('#ageHidden2').val();
+  				console.log(ageHidden1)
+  				console.log(ageHidden2)
+  				var request = $.ajax({
+    				  url: "/getAge",
+    				  method: "POST",
+    				  data: { "fromAge" : ageHidden1 , "toAge" : ageHidden2 },
+    				  dataType: "json"
+    				});
+    				 
+    				request.done(function( list) {
+    					var img = "";
+    					var bookName = "";
+    					console.log('list : '+list)
+    					for(var i = 0; i < list.length; i++){
+    						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+    						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+							}
+    					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+    					$('#ageDiv').html("");
+    					$('#ageDiv').html(ageDivhtml);
+    				});
+    				 
+    				request.fail(function( jqXHR, textStatus ) {
+    				  alert( "Request failed: " + textStatus );
+    				});
+  			})
+  			
+  			$('#genderBtn').click(function(){
+  				var gender = $('#genderHidden1').val();
+  				var fromAge = $('#genderHidden2').val();
+  				var toAge = $('#genderHidden3').val();
+  				var area = "0";
+  				var request = $.ajax({
+  				  url: "/getAera",
+  				  method: "POST",
+  				  data: { "gender" : gender , "fromAge" : fromAge , "toAge" : toAge , "area" : area},
+  				  dataType: "json"
+  				});
+				request.done(function( list) {
+					var img = "";
+					var bookName = "";
+					console.log('list : '+list)
+					for(var i = 0; i < list.length; i++){
+						img += '<td  style="width: 10%;"><img src="'+list[i][1]+'"  style="width: 100%; height: 230px;"></td>';
+						bookName += '<td><span style="width: 100px; height: 150px; margin-left: 5px;">'+list[i][0]+'</span></td>';
+						}
+					var ageDivhtml = '<table><tr>'+img+'</tr><tr>'+bookName+'</tr></table>';
+					$('#genderDiv').html(ageDivhtml);
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});
+  			})
+  			
+  			
+  		})
+  	</script>
+  </th:block>
+  <!-- / teamScript(각페이지에서 각자 구현할 자바스크립트)  -->
+ 
+ 
+ 
+ 
+ 
+ 
  
   <!-- Content -->
          <th:block layout:fragment="adminContents">
-         
-
             <h4 class="font-weight-bold py-3 mb-4">
-              Dashboard
-              <div class="text-muted text-tiny mt-1"><small class="font-weight-normal">Today is Tuesday, 8 February 2018</small></div>
+              통계
+              <div class="text-muted text-tiny mt-1"><small class="font-weight-normal" th:text="|${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm')} 기준통계 |"></small></div>
             </h4>
 
             <!-- Counters -->
@@ -23,10 +198,10 @@
                 <div class="card mb-4">
                   <div class="card-body">
                     <div class="d-flex align-items-center">
-                      <div class="lnr lnr-cart display-4 text-success"></div>
+                      <div class="display-4 text-success"><i class="fas fa-book d-block"></i></div>
                       <div class="ml-3">
-                        <div class="text-muted small">Monthly sales</div>
-                        <div class="text-large">2362</div>
+                        <div class="text-muted small">소장도서</div>
+                        <div class="text-large">[[${count.bsStockState}]] 권</div>
                       </div>
                     </div>
                   </div>
@@ -38,11 +213,12 @@
                 <div class="card mb-4">
                   <div class="card-body">
                     <div class="d-flex align-items-center">
-                      <div class="lnr lnr-earth display-4 text-info"></div>
+                      <div class="display-4 text-info"><i class="fas fa-address-book d-block"></i></div>
                       <div class="ml-3">
-                        <div class="text-muted small">Monthly visits</div>
-                        <div class="text-large">687,123</div>
+                        <div class="text-muted small">금일 대출도서</div>
+                        <div class="text-large">[[${count.blLendDate}]] 권</div>
                       </div>
+                      
                     </div>
                   </div>
                 </div>
@@ -53,10 +229,10 @@
                 <div class="card mb-4">
                   <div class="card-body">
                     <div class="d-flex align-items-center">
-                      <div class="lnr lnr-gift display-4 text-danger"></div>
+                      <div class="display-4 text-danger"><i class="fas fa-users-cog d-block"></i></div>
                       <div class="ml-3">
-                        <div class="text-muted small">Products</div>
-                        <div class="text-large">985</div>
+                        <div class="text-muted small">사서</div>
+                        <div class="text-large">[[${count.librarian}]] 명</div>
                       </div>
                     </div>
                   </div>
@@ -70,8 +246,8 @@
                     <div class="d-flex align-items-center">
                       <div class="lnr lnr-users display-4 text-warning"></div>
                       <div class="ml-3">
-                        <div class="text-muted small">Users</div>
-                        <div class="text-large">105,652</div>
+                        <div class="text-muted small">회원</div>
+                        <div class="text-large">[[${count.member}]] 명</div>
                       </div>
                     </div>
                   </div>
@@ -80,483 +256,199 @@
               </div>
             </div>
             <!-- / Counters -->
-
-            <!-- Statistics -->
-            <div class="card mb-4">
-              <h6 class="card-header with-elements">
-                <div class="card-header-title">Statistics</div>
-                <div class="card-header-elements ml-auto">
-                  <label class="text m-0">
-                    <span class="text-light text-tiny font-weight-semibold align-middle">
-                      SHOW STATS
-                    </span>
-                    <span class="switcher switcher-sm d-inline-block align-middle mr-0 ml-2">
-                      <input type="checkbox" class="switcher-input" checked>
-                      <span class="switcher-indicator">
-                        <span class="switcher-yes"></span>
-                        <span class="switcher-no"></span>
-                      </span>
-                    </span>
-                  </label>
-                </div>
-              </h6>
-              <div class="row no-gutters row-bordered">
-                <div class="col-md-8 col-lg-12 col-xl-8">
-                  <div class="card-body">
-                    <div style="height: 210px;">
-                      <canvas id="statistics-chart-1"></canvas>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-4 col-lg-12 col-xl-4">
-                  <div class="card-body">
-
-                    <!-- Numbers -->
-                    <div class="row">
-                      <div class="col-6 col-xl-5 text-muted mb-3">Total sales</div>
-                      <div class="col-6 col-xl-7 mb-3">
-                        <span class="text-big">10,332</span>
-                        <sup class="text-success">+12%</sup>
-                      </div>
-                      <div class="col-6 col-xl-5 text-muted mb-3">Income amount</div>
-                      <div class="col-6 col-xl-7 mb-3">
-                        <span class="text-big">$1,534</span>
-                        <sup class="text-danger">-5%</sup>
-                      </div>
-                      <div class="col-6 col-xl-5 text-muted mb-3">Total budget</div>
-                      <div class="col-6 col-xl-7 mb-3">
-                        <span class="text-big">$10,534</span>
-                        <sup class="text-success">+12%</sup>
-                      </div>
-                      <div class="col-6 col-xl-5 text-muted mb-3">Page views</div>
-                      <div class="col-6 col-xl-7 mb-3">
-                        <span class="text-big">21,332</span>
-                        <sup class="text-danger">-12%</sup>
-                      </div>
-                      <div class="col-6 col-xl-5 text-muted mb-3">Completed tasks</div>
-                      <div class="col-6 col-xl-7 mb-3">
-                        <span class="text-big">12</span>
-                        <sup class="text-success">+12%</sup>
-                      </div>
-                    </div>
-                    <!-- / Numbers -->
-
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- / Statistics -->
-
-            <div class="row">
-
-              <!-- Charts -->
-              <div class="col-sm-6 col-xl-4">
-
-                <div class="card mb-4">
-                  <h6 class="card-header with-elements border-0 pr-0 pb-0">
-                    <div class="card-header-title">Sales</div>
-                    <div class="card-header-elements ml-auto">
-                      <div class="btn-group mr-3">
-                        <button type="button" class="btn btn-sm btn-default icon-btn borderless rounded-pill md-btn-flat dropdown-toggle hide-arrow" data-toggle="dropdown">
-                          <i class="ion ion-ios-more"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right" id="sales-dropdown-menu">
-                          <a class="dropdown-item" href="javascript:void(0)">Action 1</a>
-                          <a class="dropdown-item" href="javascript:void(0)">Action 2</a>
-                        </div>
-                      </div>
-                    </div>
-                  </h6>
-                  <div class="mt-3">
-                    <div style="height:100px;">
-                      <canvas id="statistics-chart-2"></canvas>
-                    </div>
-                  </div>
-                  <div class="card-footer text-center py-2">
-                    <div class="row">
-                      <div class="col">
-                        <div class="text-muted small">Target</div>
-                        <strong class="text-big">500</strong>
-                      </div>
-                      <div class="col">
-                        <div class="text-muted small">Current</div>
-                        <strong class="text-big">421</strong>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col-sm-6 col-xl-4">
-
-                <div class="card mb-4">
-                  <div class="card-body">
-                    <div class="float-right text-success">
-                      <small class="ion ion-md-arrow-round-up text-tiny"></small> 12%
-                    </div>
-                    <div class="text-muted small">Total revenue</div>
-                    <div class="text-xlarge">$1,534</div>
-                  </div>
-                  <div class="px-2">
-                    <div class="w-100" style="height: 117px;">
-                      <canvas id="statistics-chart-3"></canvas>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col-sm-6 col-xl-4">
-
-                <div class="card mb-4">
-                  <div class="card-body pb-0">
-                    <div class="text-right small mb-4">Aug 2017 - Feb 2018</div>
-                    <div class="my-3" style="height: 86px;">
-                      <canvas id="statistics-chart-4"></canvas>
-                    </div>
-                  </div>
-                  <div class="card-footer">
-                    <button type="button" class="btn btn-xs btn-outline-primary icon-btn float-right"><i class="ion ion-md-sync"></i></button>
-                    Unique visitors
-                  </div>
-                </div>
-
-              </div>
-              <div class="col-sm-6 col-xl-3">
-
-                <div class="card mb-4">
-                  <h6 class="card-header bg-success text-white">
-                    <i class="ion ion-md-cash"></i>&nbsp;
-                    Revenue
-                  </h6>
-                  <div class="bg-success text-white">
-                    <div class="d-flex align-items-center position-relative mt-4" style="height:140px;">
-                      <div class="w-100 position-absolute" style="height:140px;top:0;">
-                        <canvas id="statistics-chart-5"></canvas>
-                      </div>
-                      <div class="w-100 text-center text-xlarge">85</div>
-                    </div>
-                    <div class="text-center mt-3 mb-4">
-                      Sales today
-                    </div>
-                  </div>
-                  <div class="card-footer border-0 text-center py-3">
-                    <div class="row">
-                      <div class="col">
-                        <div class="text-muted small mb-1">Target</div>
-                        <strong class="text-big">$1225</strong>
-                      </div>
-                      <div class="col">
-                        <div class="text-muted small mb-1">Current</div>
-                        <strong class="text-big">$654</strong>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <!-- / Charts -->
-
-              <div class="col-xl-9">
-
-                <div class="row">
-                  <div class="col-md-6">
-
-                    <!-- Tasks -->
-                    <div class="card mb-4">
-                      <h6 class="card-header with-elements">
-                        <div class="card-header-title">Tasks</div>
-                        <div class="card-header-elements ml-auto">
-                          <button type="button" class="btn btn-default btn-xs md-btn-flat">Show more</button>
-                        </div>
-                      </h6>
-                      <div style="height: 234px" id="tasks-inner">
-                        <div class="card-body">
-                          <p class="text-muted small">Today</p>
-                          <div class="custom-controls-stacked">
-                            <label class="ui-todo-item custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input">
-                              <span class="custom-control-label">Buy products</span>
-                              <span class="ui-todo-badge badge badge-outline-default font-weight-normal ml-2">58 mins left</span>
-                            </label>
-                            <label class="ui-todo-item custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input">
-                              <span class="custom-control-label">Reply to emails</span>
-                            </label>
-                            <label class="ui-todo-item custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input">
-                              <span class="custom-control-label">Write blog post</span>
-                              <span class="ui-todo-badge badge badge-outline-default font-weight-normal ml-2">20 hours left</span>
-                            </label>
-                            <label class="ui-todo-item custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" checked>
-                              <span class="custom-control-label">Wash my car</span>
-                            </label>
-                          </div>
-                        </div>
-                        <hr class="m-0">
-                        <div class="card-body">
-                          <p class="text-muted small">Tomorrow</p>
-                          <div class="custom-controls-stacked">
-                            <label class="ui-todo-item custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input">
-                              <span class="custom-control-label">Buy antivirus</span>
-                            </label>
-                            <label class="ui-todo-item custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input">
-                              <span class="custom-control-label">Jane's Happy Birthday</span>
-                            </label>
-                            <label class="ui-todo-item custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input">
-                              <span class="custom-control-label">Call mom</span>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card-footer">
-                        <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Type your task">
-                          <div class="input-group-append">
-                            <button type="button" class="btn btn-primary">Add</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- / Tasks -->
-
-                  </div>
-                  <div class="col-md-6">
-
-                    <!-- Team ToDo -->
-                    <div class="card mb-4">
-                      <h6 class="card-header with-elements">
-                        <div class="card-header-title">Team TODO</div>
-                        <div class="card-header-elements ml-auto">
-                          <button type="button" class="btn btn-default btn-xs md-btn-flat">Show more</button>
-                        </div>
-                      </h6>
-                      <div style="height: 300px" id="team-todo-inner">
-                        <div class="card-body">
-                          <div class="rounded ui-bordered p-3 mb-3">
-                            Lorem ipsum dolor sit amet, vis erat denique in, dicunt prodesset te vix.
-                            <div class="media align-items-center mt-3">
-                              <img th:src="@{/adminStatic/img/avatars/12-small.png}" class="d-block ui-w-30 rounded-circle" alt>
-                              <div class="media-body ml-2">Arthur Duncan</div>
-                              <div class="text-muted small text-nowrap">02/08/2018</div>
-                            </div>
-                          </div>
-                          <div class="rounded ui-bordered p-3 mb-3">
-                            Sit meis deleniti eu, pri vidit meliore docendi ut.
-                            <div class="media align-items-center mt-3">
-                              <img th:src="@{/adminStatic/img/avatars/11-small.png}" class="d-block ui-w-30 rounded-circle" alt>
-                              <div class="media-body ml-2">Belle Ross</div>
-                              <div class="text-muted small text-nowrap">02/06/2018</div>
-                            </div>
-                          </div>
-                          <div class="rounded ui-bordered p-3">
-                            Cum ea graeci tractatos.
-                            <div class="media align-items-center mt-3">
-                              <img th:src="@{/adminStatic/img/avatars/10-small.png}" class="d-block ui-w-30 rounded-circle" alt>
-                              <div class="media-body ml-2">Wayne Morgan</div>
-                              <div class="text-muted small text-nowrap">02/04/2018</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- / Team ToDo -->
-
-                  </div>
-                </div>
-
-              </div>
-              <div class="col-md-8">
-
-                <!-- Sale stats -->
-                <div class="card mb-4">
-                  <h6 class="card-header with-elements">
-                    <div class="card-header-title">Sale stats</div>
-                    <div class="card-header-elements ml-auto">
-                      <button type="button" class="btn btn-default btn-xs md-btn-flat">Show more</button>
-                    </div>
-                  </h6>
-                  <div class="table-responsive">
-                    <table class="table card-table">
-                      <thead>
-                        <tr>
-                          <th>Date</th>
-                          <th>Sales</th>
-                          <th>Cancelled</th>
-                          <th>Delivered</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>02/08/2018</td>
-                          <td>12</td>
-                          <td>1</td>
-                          <td>5</td>
-                        </tr>
-                        <tr>
-                          <td>02/07/2018</td>
-                          <td>16</td>
-                          <td>2</td>
-                          <td>8</td>
-                        </tr>
-                        <tr>
-                          <td>02/06/2018</td>
-                          <td>5</td>
-                          <td>0</td>
-                          <td>2</td>
-                        </tr>
-                        <tr>
-                          <td>02/05/2018</td>
-                          <td>21</td>
-                          <td>1</td>
-                          <td>10</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <!-- / Sale stats -->
-
-              </div>
-              <div class="col-md-4">
-
-                <!-- Type gadgets chart -->
-                <div class="card mb-4">
-                  <h6 class="card-header with-elements">
-                    <div class="card-header-title">Type gadgets</div>
-                    <div class="card-header-elements ml-auto">
-                      <button type="button" class="btn btn-outline-primary btn-xs icon-btn md-btn-flat">
-                        <i class="ion ion-md-sync"></i>
-                      </button>
-                    </div>
-                  </h6>
-                  <div class="py-4 px-3">
-                    <div style="height:162px;">
-                      <canvas id="statistics-chart-6"></canvas>
-                    </div>
-                  </div>
-                </div>
-                <!-- / Type gadgets chart -->
-
-              </div>
-              <div class="col-md-6 col-lg-12 col-xl-6">
-
-                <!-- Comments -->
-                <div class="card mb-4">
-                  <h6 class="card-header">Comments</h6>
-                  <div class="card-body">
-                    <div class="media pb-1 mb-3">
-                      <img th:src="@{/adminStatic/img/avatars/9-small.png}" class="d-block ui-w-40 rounded-circle" alt>
-                      <div class="media-body ml-3">
-                        <a href="javascript:void(0)">Amanda Warner</a>
-                        <span class="text-muted">commented on</span>
-                        <a href="javascript:void(0)">Article Name</a>
-                        <p class="my-1">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo.</p>
-                        <div class="clearfix">
-                          <a href="javascript:void(0)" class="float-right text-lightest small">
-                            <span class="ion ion-ios-thumbs-down"></span>
-                          </a>
-                          <a href="javascript:void(0)" class="float-right text-lightest small">
-                            <span class="ion ion-ios-thumbs-up mr-2"></span>
-                          </a>
-                          <span class="float-left text-muted small">2 hours ago</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="media pb-1 mb-3">
-                      <img th:src="@{/adminStatic/img/avatars/8-small.png}" class="d-block ui-w-40 rounded-circle" alt>
-                      <div class="media-body ml-3">
-                        <a href="javascript:void(0)">Hallie Lewis</a>
-                        <span class="text-muted">commented on</span>
-                        <a href="javascript:void(0)">Article Name</a>
-                        <p class="my-1">Vivendum torquatos ut nec, sit audiam deterruisset ei, cu sed nibh autem scriptorem. Ea quo vidit deleniti constituto, ex qui malis mollis iudicabit, viris fabellas id has.</p>
-                        <div class="clearfix">
-                          <a href="javascript:void(0)" class="float-right text-lightest small">
-                            <span class="ion ion-ios-thumbs-down"></span>
-                          </a>
-                          <a href="javascript:void(0)" class="float-right text-lightest small">
-                            <span class="ion ion-ios-thumbs-up mr-2"></span>
-                          </a>
-                          <span class="float-left text-muted small">2 hours ago</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="media">
-                      <img th:src="@{/adminStatic/img/avatars/7-small.png}" class="d-block ui-w-40 rounded-circle" alt>
-                      <div class="media-body ml-3">
-                        <a href="javascript:void(0)">Alice Hampton</a>
-                        <span class="text-muted">commented on</span>
-                        <a href="javascript:void(0)">Article Name</a>
-                        <p class="my-1">Eam facilis laboramus reprehendunt ei, ex esse fastidii per.</p>
-                        <div class="clearfix">
-                          <a href="javascript:void(0)" class="float-right text-lightest small">
-                            <span class="ion ion-ios-thumbs-down"></span>
-                          </a>
-                          <a href="javascript:void(0)" class="float-right text-lightest small">
-                            <span class="ion ion-ios-thumbs-up mr-2"></span>
-                          </a>
-                          <span class="float-left text-muted small">2 hours ago</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <a href="javascript:void(0)" class="card-footer d-block text-center text-body small font-weight-semibold">SHOW MORE</a>
-                </div>
-                <!-- / Comments -->
-
-              </div>
-              <div class="col-md-6 col-lg-12 col-xl-6">
-
-                <!-- Support tickets -->
-                <div class="card mb-4">
-                  <h6 class="card-header">Support tickets</h6>
-                  <div class="card-body">
-                    <div class="pb-1 mb-3">
-                      <div class="badge badge-outline-warning float-right">Feature</div>
-                      <a href="javascript:void(0)">Lorem ipsum dolor sit amet, vis erat denique in.</a>&nbsp;
-                      <span class="text-muted">#34563</span>
-                      <br>
-                      <small class="text-muted">Created by <a href="javascript:void(0)" class="text-body">Mike Greene</a> &nbsp;��&nbsp; 1 day ago</small>
-                    </div>
-                    <div class="pb-1 mb-3">
-                      <div class="badge badge-outline-danger float-right">Bug</div>
-                      <a href="javascript:void(0)">Dicunt prodesset te vix.</a>&nbsp;
-                      <span class="text-muted">#34524</span>
-                      <br>
-                      <small class="text-muted">Created by <a href="javascript:void(0)" class="text-body">Leon Wilson</a> &nbsp;��&nbsp; 1 day ago</small>
-                    </div>
-                    <div class="pb-1 mb-3">
-                      <div class="badge badge-outline-success float-right">Question</div>
-                      <a href="javascript:void(0)">Sit meis deleniti eu, pri vidit meliore docendi ut?</a>&nbsp;
-                      <span class="text-muted">#34563</span>
-                      <br>
-                      <small class="text-muted">Created by <a href="javascript:void(0)" class="text-body">Allie Rodriguez</a> &nbsp;��&nbsp; 1 day ago</small>
-                    </div>
-                    <div class="pb-1 mb-3">
-                      <div class="badge badge-outline-secondary float-right">Enhancement</div>
-                      <a href="javascript:void(0)">Eu tantas offendit mnesarchum sit, vide novum ad pri.</a>&nbsp;
-                      <span class="text-muted">#34563</span>
-                      <br>
-                      <small class="text-muted">Created by <a href="javascript:void(0)" class="text-body"> Kenneth Frazier</a> &nbsp;��&nbsp; 1 day ago</small>
-                    </div>
-                    <div>
-                      <div class="badge badge-outline-danger float-right">Bug</div>
-                      <a href="javascript:void(0)">Dicunt prodesset te vix.</a>&nbsp;
-                      <span class="text-muted">#34524</span>
-                      <br>
-                      <small class="text-muted">Created by <a href="javascript:void(0)" class="text-body">Leon Wilson</a> &nbsp;��&nbsp; 1 day ago</small>
-                    </div>
-                  </div>
-                  <a href="javascript:void(0)" class="card-footer d-block text-center text-body small font-weight-semibold">SHOW MORE</a>
-                </div>
-                <!-- / Support tickets -->
-
-              </div>
-            </div>
+	<div class="card mb-4">
+		<div class="card-body">
+			<div class="display-5 text-danger">
+				<i class="fas fa-chart-line d-block"> <strong
+					style="color: #000000;"> &ensp;전체도서관 인기대출 도서 </strong> <span
+					style="color: #BDBDBD;"> (분석기간 :
+						[[${startDt}]]&ensp;~&ensp;[[${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}]] </span>
+				</i>
+			</div>
+			<br>
+			<div class="nav-tabs-top mb-4">
+				<ul class="nav nav-tabs">
+					<li class="nav-item"><a id="areaBtn" class="btn btn-outline-info"
+						data-toggle="tab" href="#area">지역</a></li>
+					<li class="nav-item"><a id="ageBtn" class="btn btn-outline-info"
+						data-toggle="tab" href="#age">연령</a></li>
+					<li class="nav-item"><a id="genderBtn" class="btn btn-outline-info"
+						data-toggle="tab" href="#genger">성별</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade show active" id="area">
+						<div class="card-body" style="padding: 0px;">
+							<div class="nav-tabs-top mb-4">
+							<input type="hidden" id="areaHidden" value="0">
+								<ul class="nav nav-tabs" style="background-color: #E6E6E6;">
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('0')">전국</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('11')">서울</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('21')">부산</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('22')">대구</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('23')">인천</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('24')">광주</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('25')">대전</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('26')">울산</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('29')">세종</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('31')">경기</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('32')">강원</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('33')">충북</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('34')">충남</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('35')">전북</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('36')">전남</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('37')">경북</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('38')">경남</a></li>
+									<li id="areaLi" class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AreaTotar" onclick="areaClick('39')">제주</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="AreaTotar">
+										<div class="card-body" id="areaDiv">
+													<table style="margin: auto;">
+														<tr>
+											<th:block th:each="l : ${list}">
+															<td style="width: 10%;">
+																<img th:src="${l.get(1)}" style="width: 100%; height: 230px;">
+															</td>
+											</th:block>
+														</tr>
+														<tr>
+											<th:block th:each="b : ${list}">
+															<td>
+																<span th:text="${b.get(0)}"  style="width: 100px; height: 150px; margin-left: 5px;"></span>
+															</td>
+											</th:block>
+														</tr>
+													</table>
+													
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="age">
+						<div class="card-body" style="padding: 0px;">
+							<div class="nav-tabs-top mb-4">
+							<input type="hidden" id="ageHidden1" value="0">
+							<input type="hidden" id="ageHidden2" value="100">
+								<ul class="nav nav-tabs" style="background-color: #E6E6E6;">
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('','')">전체</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('0','5')">영유아(0~5)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('6','7')">유아(6~7)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('8','13')">초등(8~13)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('14','19')">청소년(14~19)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('20','29')">20대</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('30','39')">30대</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('40','49')">40대</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('50','59')">50대</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#AgeTotal" onclick="ageClick('60','100')">60 이상</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="AgeTotal">
+										<div class="card-body" id="ageDiv">
+											<table>
+												<tr>
+													<td>
+														<img src="">
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<span></span>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="genger">
+						<div class="card-body" style="padding: 0px;">
+							<div class="nav-tabs-top mb-4">
+							<input type="hidden" id="genderHidden1" value="0">
+							<input type="hidden" id="genderHidden2" value="0">
+							<input type="hidden" id="genderHidden3" value="100">
+								<ul class="nav nav-tabs" style="background-color: #E6E6E6;">
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('2','0','100')">전체</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','6','7')">유아(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','6','7')">유아(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','8','13')">초등(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','8','13')">초등(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','14','19')">청소년(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','14','19')">청소년(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','20','29')">20대(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','20','29')">20대(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','30','39')">30대(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','30','39')">30대(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','40','49')">40대(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','40','49')">40대(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','50','59')">50대(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','50','59')">50대(여)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('0','60','100')">60대 이상(남)</a></li>
+									<li class="nav-item"><a class="btn btn-xs btn-outline-secondary"
+										data-toggle="tab" href="#GdnerTotal" onclick="genderClick('1','60','100')">60대 이상(여)</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="GenderTotal">
+										<div class="card-body" id="genderDiv">
+											Gender전체
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
           </th:block>
           
