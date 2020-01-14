@@ -27,7 +27,6 @@
 				   		});
 				   		 
 			   		request.done(function(data) {
-			   			console.log(data);
 			   			//포인트 리스트 출력
 			   			if(data.length > 0){
 			   				$('[name="pName"]').append('<option value="0">::포인트 선택::</option>');
@@ -46,7 +45,6 @@
 					   		}
 						   	//select 중복제거 및 option value값 가져오기
 						   	selectUI($('[name="pName"]'), function(i){
-						   		console.log(i);
 						   		if(i > 0){
 							   		var point = data[i-1];
 							   		
@@ -54,7 +52,6 @@
 							   		$('#insertForm input').eq(0).val(point.pPoint);//선택한 포인트
 							   		var selectPoint = point.pPoint*-1; //선택 포인트 int타입으로 변환
 							   		var totalPoint = parseInt(myTotalPoint);//총포인트
-					   				console.log(myTotalPoint);
 							   		if(myTotalPoint != null){
 							   			var totalPoint = parseInt(myTotalPoint);//총포인트
 							   			if(selectPoint > totalPoint){
@@ -95,8 +92,6 @@
 		   			var selectPoint = parseInt(selectStr)*-1;
 			   		var totalPoint = parseInt(myTotalPoint);
 	   				
-			   		console.log($('[name="pCode"]').val());
-			   		
 			   		if(selectStr == ''){
 			   			alert('포인트를 선택해주세요');	
 			   		}else if(myTotalPoint == null){

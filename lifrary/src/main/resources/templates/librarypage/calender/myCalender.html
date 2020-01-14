@@ -88,7 +88,6 @@
 			var endDay = null;//종료일 
 			//선택한 옵션 값
  			var optValue = $(this).attr('rel');
- 			 console.log(optValue);
  			 
  			if(optValue == 'month'){//월별인 경우 종료일에 이번달 마지막일 셋팅 
  				endDay = moment().endOf('month').format('YYYY-MM-DD');
@@ -169,7 +168,6 @@
 	          },
 	        navLinkDayClick: function(date, jsEvent){     	
 	        	var selectDate =moment(date).format('YYYY-MM-DD');
-	        	console.log(selectDate);
 	            $('#bookInsertModal').modal('show');
 	            $('#selectDate').text(selectDate);
 	            $('#insertForm [name="cStartDate"]').val(selectDate);
@@ -226,7 +224,6 @@
 	   		});
 	   		 
 	   		request.done(function( data ) {
-	   			console.log(data);
 	   			bookInfoList = data;
 	   			//리턴값 있는 경우 리스트출력
 	   			if(data.length > 0){
