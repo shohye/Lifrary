@@ -94,16 +94,6 @@
                                             <a data-toggle="dropdown" class="dropdown-toggle disabled" th:href="@{/lifrary/myUserDetail}">7.마이페이지</a>
                                             <ul class="dropdown-menu">
 
-	                                            <th:block th:if="${session.SID} == null">
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">내 정보</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">내 도서현황</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">북 다이어리</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">내 서재</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">내 프로그램 신청 내역</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">내 공공시설 신청 내역</a></li>
-	                                                <li><a th:href="@{#}" onclick="alert('로그인후 이용해주세요')">희망도서 신청 내역</a></li>
-	                                            </th:block>
-	                                            <th:block th:unless="${session.SID} == null">
 	                                                <li><a th:href="@{/lifrary/myUserDetail}">내 정보</a></li>
 	                                                <li><a th:href="@{/lifrary/myLendList}">내 도서현황</a></li>
 	                                                <li><a th:href="@{/lifrary/myCalender}">북 다이어리</a></li>
@@ -112,7 +102,6 @@
 	                                                <li><a th:href="@{/lifrary/myReadingRoomReserveList}">내 공공시설 신청 내역</a></li>
 	                                                <li><a th:href="@{/lifrary/myinquiryList(boardLName=${'문의하기'})}">내 문의 신청 내역</a></li>
 	                                                <li><a th:href="@{/lifrary/myBookRequestList}">희망도서 신청 내역</a></li>
-	                                            </th:block>
 
                                             </ul>
                                         </li>
