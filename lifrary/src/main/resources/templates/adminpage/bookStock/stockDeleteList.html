@@ -28,11 +28,9 @@
     	   // 복구 버튼
     	   $('#resetBtn').click(function(){
     		   var SAID = [[${session.SAID}]]
-    		   console.log(SAID);
     		   var write = $('#uPw').val();
-    		   console.log(write);
     		   var bsCode = $('#bsCode').val();
-    		   console.log(bsCode);
+
     		   
     		   var request = $.ajax({
 					url:"/resetStock",
@@ -42,7 +40,6 @@
 				});				 
 				request.done(function( data ) {
 
-					 console.log(data);
 					 if(data == '비밀번호가 틀렸습니다'){
 						 alert(data);
 						 $('#uPw').focus();

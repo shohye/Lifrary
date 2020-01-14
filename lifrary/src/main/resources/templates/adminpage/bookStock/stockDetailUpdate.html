@@ -81,7 +81,6 @@
     	  // 트리뷰 값 가져오기
 	    	$('#jstree-example-1').bind('select_node.jstree', function(event, data){
 	    	    var id = data.instance.get_node(data.selected).id;
-	    	    console.log(id);
 	    	    
 	    	    $('#applyBtn').click(function(){	    		   
 		    		$('#biKdc').val(id);	    

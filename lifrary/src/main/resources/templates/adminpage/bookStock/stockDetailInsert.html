@@ -61,7 +61,7 @@
 		// 도서 정보 가져오기   
     	   $('#bookInfoBtn').click(function(){  			
     		   var biIsbn = $('#biIsbn').val();
-				console.log($.trim(biIsbn));
+				
 				
 				var trimBiIsbn = $.trim(biIsbn);
 				 				
@@ -73,8 +73,7 @@
   				});
   				 
   				request.done(function( data ) {
-  					console.log(data.biName);
-  					
+					
   	    			var biName        = $('#biName');
   	    			var biAuthor      = $('#biAuthor');
   	    			var biPublisher   = $('#biPublisher');
@@ -125,8 +124,7 @@
 				});
 				 
 				request.done(function( data ) {
-					console.log($.trim(data.authors));
-					console.log($.trim(data.bsMark));
+				
 					
 					var bsWriterMark  = $('#bsWriterMark');
 					var bsCallNum  = $('#bsCallNum');
@@ -146,7 +144,7 @@
     	    // 트리뷰 값 가져오기
 	    	$('#jstree-example-1').bind('select_node.jstree', function(event, data){
 	    	    var id = data.instance.get_node(data.selected).id;
-	    	    console.log(id);
+	    
 	    	    
 	    	    $('#applyBtn').click(function(){	    		   
 		    		$('#biKdc').val(id);	    
@@ -271,7 +269,7 @@
 				                </div>        
 			                </div>  
 			                <div class="form-group col-md-6">
-		                      <label class="form-label">저자</label>
+		                                                                                                                                                                                                                                                                             <label class="form-label">저자</label>
 		                      <input type="text" class="form-control" id="biAuthor" name="biAuthor" placeholder="author">
 		                    </div>
 	                    </div>
@@ -293,8 +291,8 @@
 	                   		  </select>
 		                    </div>
 		                    <div class="form-group col-md-3">
-		                      <label class="form-label">저작기호</label>
-		                      <input type="text" class="form-control" id="bsWriterMark" name="bsWriterMark" placeholder="저작기호">
+		                      <label class="form-label">도서기호</label>
+		                      <input type="text" class="form-control" id="bsWriterMark" name="bsWriterMark" placeholder="도서기호">
 		                   	  <input type="hidden" id="bsAuthorMark" name="bsAuthorMark" placeholder="저자기호">
 		                    </div>	
 		                    	
