@@ -33,12 +33,9 @@ public class LibrarianBookService {
 	public String bookRecommendInsert(LibrarianBook librarianBook,@RequestParam(value = "isbn")String putIsbn) {
 		String maxBlCode = librarianBookMapper.maxlbCode();
 		String lbCode = CodeUp.codeMaker(maxBlCode);
-		System.out.println("LibrarianBookService36"+lbCode);
 		librarianBook.setLbCode(lbCode);
 		String bsCode = librarianBookMapper.checkBsCode(putIsbn);
-		System.out.println("service39!!" + bsCode);
 		librarianBook.setBsCode(bsCode);
-		System.out.println("service41"+librarianBook);
 		librarianBookMapper.bookRecommendInsert(librarianBook);
 		return lbCode;
 	}

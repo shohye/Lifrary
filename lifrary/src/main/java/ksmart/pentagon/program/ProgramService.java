@@ -34,9 +34,6 @@ public class ProgramService {
 	// 검색결과에 맞는 프로그램 리스트 가져오기
 	public List<ProgramManager> getSearchProgramList(String keywords, String target, String libNum) {
 
-		System.out.println(keywords + " <== keywords");
-		System.out.println(target + " <== target");
-
 		return programMapper.getSearchProgramList(keywords, target, libNum);
 
 	}
@@ -60,7 +57,6 @@ public class ProgramService {
 
 	// 선택한 paCode에 맞는 pm 정보 가져오기
 	public ProgramManager getProgramDetail(String paCode) {
-		System.out.println(programMapper.getProgramDetail(paCode) + "<== pm 객체 리턴");
 		return programMapper.getProgramDetail(paCode);
 	}
 

@@ -22,8 +22,9 @@ import ksmart.pentagon.vo.StudyCate;
 @Controller
 public class StudyController {
 
-	@Autowired private StudyService studyService;
-	
+	@Autowired
+	private StudyService studyService;
+
 	/**
 	 * @brief 서재 리스트
 	 * @return /librarypage/book/myStudyCateList
@@ -31,11 +32,11 @@ public class StudyController {
 	 */
 	@GetMapping("/lifrary/myStudyList")
 	public String myStudyList() {
-		
+
 		return "/librarypage/book/myStudyList";
-	
+
 	}
-	
+
 	/**
 	 * 
 	 * @param session
@@ -43,38 +44,39 @@ public class StudyController {
 	 * @return
 	 * @author 최지혜
 	 */
-	@RequestMapping(value="/lifrary/studyCateList", produces = "application/json")
+	@RequestMapping(value = "/lifrary/studyCateList", produces = "application/json")
 	public @ResponseBody List<StudyCate> studyCateList(HttpSession session) {
-		
+
 		String libNum = (String) session.getAttribute("LIBNUM");
 		String sId = (String) session.getAttribute("SID");
-				
+
 		return studyService.studyCateList(libNum, sId);
-		
+
 	}
-	
+
 	/**
 	 * @brief 카테고리 등록
 	 * @return /librarypage/book/myStudyCateInsert
 	 * @author 최지혜
 	 */
-	
+
 	@GetMapping("/lifrary/myStudyCateInsert")
 	public String myStudyCateInsert() {
-		
+
 		return "/librarypage/book/myStudyCateInsert";
-	
+
 	}
+
 	/**
 	 * @brief 카테고리 수정
 	 * @return /librarypage/book/myStudyCateUpdate
 	 * @author 최지혜
 	 */
-	 
+
 	@GetMapping("/lifrary/myStudyCateUpdate")
 	public String myStudyCateUpdate() {
-		
+
 		return "/librarypage/book/myStudyCateUpdate";
-	
+
 	}
 }

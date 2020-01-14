@@ -14,7 +14,6 @@ public class AreaOpenApi {
 	private static ArrayList<ArrayList> list;
 	private static ArrayList<String> book;
     public ArrayList<ArrayList> OpenApi(String startDt , String endDt, String aera) {
-    	System.out.println("Api 실행");
     	if(aera != "0") {
     	PHARM_URL = "http://data4library.kr/api/loanItemSrch?authKey="
 		  		+ "86b2aa39b6cd044028fdadb621d0907b5982a7b8a9f5e77514e3bebd85cfccb5"
@@ -51,7 +50,6 @@ public class AreaOpenApi {
         
         String tag = null;
         int event_type = xpp.getEventType();
-        System.out.println("xpp : " +xpp.getEventType());
          list = new ArrayList<ArrayList>();
          
         
@@ -68,7 +66,6 @@ public class AreaOpenApi {
                 if(tag.equals("bookname")){
                 	if(i < 10) {
                 		book = new ArrayList<String>();
-                		System.out.println("bookname 담김 : " + bookname);
                     bookname = xpp.getText();
                     book.add(bookname);
                 	}
@@ -76,7 +73,6 @@ public class AreaOpenApi {
                 if(tag.equals("bookImageURL")){
                 	if(i < 10) {
                 		i += 1;
-                		System.out.println("bookImageURL 담김 : " + bookImageURL);
                 		bookImageURL = xpp.getText();
                 		book.add(bookImageURL);
                 		list.add(book);
@@ -86,19 +82,6 @@ public class AreaOpenApi {
  
             event_type = xpp.next();
         }
-        printList(list);
-    }
-    
-    /**
-     * 결과 값을 출력해본다.
-     * @param list
-     */
-    private void printList(ArrayList<ArrayList> list){
-        for(ArrayList entity : list){
-            System.out.println(entity);
-        }
-        
-        
     }
     
     

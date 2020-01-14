@@ -22,24 +22,24 @@ import ksmart.pentagon.program.ProgramService;
 
 @Controller
 public class LayoutController {
-	
-	@Autowired private LayoutService layoutService;
 
-	@Autowired private ProgramService programService;
-	
+	@Autowired
+	private LayoutService layoutService;
+
+	@Autowired
+	private ProgramService programService;
+
 	@GetMapping("/")
 	public String intro() {
-		
+
 		return "intro";
 	}
 
-
-	@GetMapping("/{lib}/index") 
-	public String index(@PathVariable(value="lib") String lib, HttpSession session, Model model) {
+	@GetMapping("/{lib}/index")
+	public String index(@PathVariable(value = "lib") String lib, HttpSession session, Model model) {
 		String libNum = "";
-		
+
 		if (session.getAttribute("SAID") != null) {
-			System.out.println("세션에 SAID값이 있습니다");
 			session.removeAttribute("SAID");
 			session.removeAttribute("SADIV");
 			session.removeAttribute("SANAME");
@@ -48,80 +48,65 @@ public class LayoutController {
 			session.removeAttribute("SALBA");
 			session.removeAttribute("SALS");
 			session.removeAttribute("SALBS");
-			System.out.println("세션이 잘 종료되었습니다.");
-		} else {
-			System.out.println("(사서)세션값이 없습니다.");
 		}
 		session.removeAttribute("LIBNUM");
-		
-		if("pentagon".equals(lib)) { 
+
+		if ("pentagon".equals(lib)) {
 			libNum = "000000";
-			session.setAttribute("LIBNUM",libNum);
+			session.setAttribute("LIBNUM", libNum);
 			model.addAttribute("programList", programService.getLatelyProgram(libNum));
-			//프로그램 가져와서 뿌려주기. 000000
-		} else if("square".equals(lib)) {
+			// 프로그램 가져와서 뿌려주기. 000000
+		} else if ("square".equals(lib)) {
 			libNum = "111111";
-			session.setAttribute("LIBNUM",libNum);
+			session.setAttribute("LIBNUM", libNum);
 			model.addAttribute("programList", programService.getLatelyProgram(libNum));
-			//프로그램 가져와서 뿌려주기. 111111
-			
+			// 프로그램 가져와서 뿌려주기. 111111
+
 		}
-	    //도서관 페이지 세션 찍기 테스트.
-		System.out.println(session.getAttribute("SID") + "<== 현재 세션 SID");
-		System.out.println(session.getAttribute("SNAME") + "<== 현재 세션 SNAME");
-		System.out.println(session.getAttribute("SDIV") + "<== 현재 세션 SDIV");
-		System.out.println(session.getAttribute("LIBNUM")+ "<== 현재 세션 LIBNUM");
-		
-		
+
 		return "librarypage/index";
-		  
+
 	}
 
 	@GetMapping("/admin/index")
 	public String adminIndex(Model model, HttpSession session) {
-		
+
 		Calendar sum = Calendar.getInstance();
-        DateFormat newendDt = new SimpleDateFormat("yyyy-MM-dd");
-        sum.add(Calendar.MONTH, -1);
-        String startDt = newendDt.format(sum.getTime());
-        sum.setTime(new Date());
-        String endDt = newendDt.format(sum.getTime());
-        String aera = "0";
-        ArrayList list = layoutService.getAreaOpenApi(startDt, endDt, aera);
-		
-		String libnum = (String)session.getAttribute("LIBNUM");
+		DateFormat newendDt = new SimpleDateFormat("yyyy-MM-dd");
+		sum.add(Calendar.MONTH, -1);
+		String startDt = newendDt.format(sum.getTime());
+		sum.setTime(new Date());
+		String endDt = newendDt.format(sum.getTime());
+		String aera = "0";
+		ArrayList list = layoutService.getAreaOpenApi(startDt, endDt, aera);
+
+		String libnum = (String) session.getAttribute("LIBNUM");
 		LayoutStats layoutStats = layoutService.statsCount(libnum);
-		System.out.println("Controller86 : "+ list);
 		model.addAttribute("list", list);
 		model.addAttribute("startDt", startDt);
 		model.addAttribute("count", layoutStats);
 		return "adminpage/index";
 	}
-	
+
 	@PostMapping("/getAge")
-	public @ResponseBody ArrayList<ArrayList> getAge(@RequestParam(value = "fromAge")String fromAge,@RequestParam(value = "toAge")String toAge){
-		System.out.println("/getAge");
+	public @ResponseBody ArrayList<ArrayList> getAge(@RequestParam(value = "fromAge") String fromAge,
+			@RequestParam(value = "toAge") String toAge) {
 		Calendar sum = Calendar.getInstance();
-        DateFormat newendDt = new SimpleDateFormat("yyyy-MM-dd");
-        sum.add(Calendar.MONTH, -1);
-        String startDt = newendDt.format(sum.getTime());
-        sum.setTime(new Date());
-        String endDt = newendDt.format(sum.getTime());
-        String aera = "0";
-        
-        ArrayList<ArrayList> list = layoutService.getAge(startDt, endDt, fromAge, toAge);
-        System.out.println("Controller107 : " + list);
+		DateFormat newendDt = new SimpleDateFormat("yyyy-MM-dd");
+		sum.add(Calendar.MONTH, -1);
+		String startDt = newendDt.format(sum.getTime());
+		sum.setTime(new Date());
+		String endDt = newendDt.format(sum.getTime());
+		String aera = "0";
+
+		ArrayList<ArrayList> list = layoutService.getAge(startDt, endDt, fromAge, toAge);
 		return list;
 	}
+
 	@PostMapping("/getAera")
-	public @ResponseBody ArrayList<ArrayList> getAera(@RequestParam(value = "gender")String gender,
-													  @RequestParam(value = "fromAge")String fromAge,
-													  @RequestParam(value = "toAge")String toAge,
-													  @RequestParam(value = "area")String area){
-		System.out.println("gender : " + gender);
-		System.out.println("fromAge : " + fromAge);
-		System.out.println("toAge : " + toAge);
-		System.out.println("area : " + area);
+	public @ResponseBody ArrayList<ArrayList> getAera(@RequestParam(value = "gender") String gender,
+			@RequestParam(value = "fromAge") String fromAge, @RequestParam(value = "toAge") String toAge,
+			@RequestParam(value = "area") String area) {
 		ArrayList<ArrayList> List = layoutService.getAera(gender, fromAge, toAge, area);
 		return List;
 	}
