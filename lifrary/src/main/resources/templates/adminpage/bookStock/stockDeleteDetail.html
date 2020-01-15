@@ -17,12 +17,10 @@
     	   
     	   // 복구 버튼
     	   $('#resetBtn').click(function(){
-    		   var SAID = [[${session.SAID}]]
-    		   console.log(SAID);
+    		   var SAID = [[${session.SAID}]]    		  
     		   var write = $('#uPw').val();
-    		   console.log(write);
     		   var bsCode = $('#bsCode').val();
-    		   console.log(bsCode);
+
     		   
     		   var request = $.ajax({
 					url:"/resetStock",
