@@ -30,11 +30,17 @@ public class LayoutController {
 	private ProgramService programService;
 
 	@GetMapping("/")
-	public String intro() {
+	public String portfolio() {
 
+		return "portfolio";
+	}
+	
+
+	@GetMapping("/intro")
+	public String intro() {
 		return "intro";
 	}
-
+	
 	@GetMapping("/{lib}/index")
 	public String index(@PathVariable(value = "lib") String lib, HttpSession session, Model model) {
 		String libNum = "";
