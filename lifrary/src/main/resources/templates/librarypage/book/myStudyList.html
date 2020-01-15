@@ -22,7 +22,6 @@
    	   		});
    	   		 
    	   		request.done(function( data ) {
-   	   			console.log(data);
    	   			
    	   			if(data.length > 0){
 				   	for(var i = 0; i<data.length; i++){
@@ -46,7 +45,7 @@
    	   		});
    	   		 
    	   		request.fail(function( jqXHR, textStatus ) {
-   	   		  alert( "Request failed: " + textStatus );
+   	   		  alert( '카테고리를 불러오는데 실패하였습니다' );
    	   		});
    		 });
    		 
