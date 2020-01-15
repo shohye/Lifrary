@@ -9,7 +9,7 @@
                                 <div class="navbar-header">
                                     <div class="navbar-brand">
                                         <h1>
-                                            <a th:href="@{/}">
+                                            <a th:href="@{/intro}">
                                         	<th:block th:unless="${session == null}">
                                                 <img th:if = "${session.LIBNUM eq '000000'}" th:src="@{/libraryStatic/images/pentagon_logo.png}" alt="LIFRARY" />
                                                 <img th:if = "${session.LIBNUM eq '111111'}" th:src="@{/libraryStatic/images/square_logo.png}" alt="LIFRARY" />
