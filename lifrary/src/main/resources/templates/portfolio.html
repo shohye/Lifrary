@@ -26,7 +26,7 @@
     <link rel="stylesheet" th:href="@{/portfolioStatic/css/icomoon.css}">
     <link rel="stylesheet" th:href="@{/portfolioStatic/css/style.css}">
   </head>
-  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" oncontextmenu='return false' ondragstart='return false' onselectstart='return false'>
 	  
 	  
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light site-navbar-target" id="ftco-navbar">
@@ -55,14 +55,12 @@
 	        <div class="container">
 	          <div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end" data-scrollax-parent="true">
 	          	<div class="one-third order-md-last img">
-	          		<img alt="" th:src="@{/portfolioStatic/images/bg_1.jpg}">
 	          		<div class="overlay"></div>
 	          	</div>
 		          <div class="one-forth d-flex  align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
 		          	<div class="text">
-		          		<span class="subheading">Hello</span>
-			            <h1 class="mb-4 mt-3">I'm <span>Niko Bochser</span></h1>
-			            <h2 class="mb-4">A Freelance Web Developer</h2>
+		          		<span class="subheading">안녕하십니까!</span>
+			            <h1 class="mb-4 mt-3">자신감 넘치는 <br>&ensp;신입개발자  <span><br>김상협입니다.</span></h1>
 		            </div>
 		          </div>
 	        	</div>
@@ -80,38 +78,85 @@
     				<div class="img-about img d-flex align-items-stretch">
     					<div class="overlay"></div>
 	    				<div >
-	    				<img class="img d-flex align-self-stretch align-items-center" alt="" th:src="@{/portfolioStatic/images/about-1.jpg}">
+	    				<img class="img d-flex align-self-stretch align-items-center" alt="" th:src="@{/portfolioStatic/images/myPhoto.jpg}">
 	    				</div>
     				</div>
     			</div>
     			<div class="col-md-6 col-lg-7 pl-lg-5 py-5">
-    				<div class="row justify-content-start pb-3">
-		          <div class="col-md-12 heading-section ftco-animate">
-		          	<span class="subheading">Welcome</span>
-		            <h2 class="mb-4" style="font-size: 34px; text-transform: capitalize;">About Me</h2>
-		            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-		          </div>
-		        </div>
+	    			<div class="row justify-content-start pb-3">
+			          <div class="col-md-12 heading-section ftco-animate">
+			          	<span class="subheading">Welcome</span>
+			            <h2 class="mb-4" style="font-size: 34px; text-transform: capitalize;">About Me</h2>
+			            <p>
+			            	안녕하십니까. 신입 개발자 <span style="color: #0075f6;">김상협</span>입니다.<br>
+			            	해결하기 힘든 문제에 직면하더라도 어떻게든 해결하려고 하며<br>
+			            	새로운 것을 두려워 하지 않고 즐기는 마음으로 임하는것이 저의 장점입니다.<br>
+			            	어려운 일이 주어지더라도 해낼 수 있는 개발자가 되겠습니다.<br>
+						</p>
+			          </div>
+			        </div>
 		        <div class="row">
-		        	<div class="col-md-6">
-		        		<div class="media block-6 services d-block ftco-animate">
-		              <div class="icon"><span class="flaticon-analysis"></span></div>
-		              <div class="media-body">
-		                <h3 class="heading mb-3">Web Design</h3>
-		                <p>A small river named Duden flows by their place and supplies.</p>
-		              </div>
-		            </div> 
-		        	</div>
-		        	<div class="col-md-6">
-		        		<div class="media block-6 services d-block ftco-animate">
-		              <div class="icon"><span class="flaticon-analysis"></span></div>
-		              <div class="media-body">
-		                <h3 class="heading mb-3">Web Application</h3>
-		                <p>A small river named Duden flows by their place and supplies.</p>
-		              </div>
-		            </div> 
-		        	</div>
+		        	
+		        	<ul>
+		        		<li>
+		        			<span>Name :</span>
+		        			<span>김상협</span>
+		        		</li>
+		        		<li>
+		        			<span>Birth :</span>
+		        			<span>August 9, 1994</span>
+		        		</li>
+		        		<li>
+		        			<span>Email :</span>
+		        			<span>tkdguq9369@naver.com</span>
+		        		</li>
+		        		<li>
+		        			<span>Phone :</span>
+		        			<span>+82-10-9995-3512</span>
+		        		</li>
+		        		<li>
+		        			<span>Blog :</span>
+		        			<span>
+		        			<a href="https://blog.naver.com/tkdguq9369"  target="_blank">
+		        			https://blog.naver.com/tkdguq9369</a></span>
+		        		</li>
+		        	</ul>
 		        </div>
+		        <br><br>
+		        <div class="row justify-content-start pb-3">
+			          <div class="col-md-12 heading-section ftco-animate">
+			            <h2 class="mb-4" style="font-size: 34px; text-transform: capitalize;">교육 수강</h2>
+			            <p>
+			            	<span>2019.7-2020.1</span>
+							<h3>응용 소프트웨어 개발자 양성 과정</h3>
+							<h2>한국스마트정보교육원</h2>
+							교육이수내역<br><br>
+							⊙ 응용 소프트웨어 개발자 양성 과정<br>
+							(응용SW 및 DB엔지니어링 융합 / NCS직종 : 20010202 6개월과정)<br>
+							<br>
+							▷ 교재<br>
+							그림으로 배우는 Java Programming, node.js 교과서, SQL활용/데이터베이스구현/데이터입출력구현/애플리케이션테스트관리/애플리케이션테스트수행 /요구사항확인/정보시스템이행/제품소프트웨어패키징/제품소프트웨어패키징/ 화면구현/통합구현/화면설계(NCS학습모듈 개발진)<br>
+							<br>
+							▷교육활동<br>
+							sql활용(mysql, mybatis)<br>
+							데이터베이스 구현(mysql, oracle)<br>
+							요구사항 확인<br>
+							데이터 입출력 구현(java, model1, model2)<br>
+							통합구현(spring mvc)<br>
+							정보시스템 이행<br>
+							제품소프트웨어 패키징<br>
+							서버프로그램 구현(Apache tomcat)<br>
+							애플리케이션 테스트 수행(단위테스트, 통합테스트)<br>
+							애플리케이션 배포(cafe24)<br>
+							프로그래밍 언어활용(기초문법)<br>
+							응용 SW기초 기술 활용<br>
+							화면설계<br>
+							애플리케이션 테스트 관리<br>
+							인터페이스 구현<br>
+							화면구현(javascript문법, HTML, CSS)<br>
+						</p>
+			          </div>
+			        </div>
 	         
 	        </div>
         </div>
@@ -210,7 +255,7 @@
         <div class="col-md-12 heading-section text-center ftco-animate">
         	<span class="subheading">portfolio</span>
           <h2 class="mb-4">Portfolio</h2>
-          <p>간단한 프로젝트 설명</p>
+          <p>전국민 독서량 증진과 도서관 방문율을 향상시키는 전국 도서관 통합 관리 시스템 ( Lifrary )</p>
         </div>
       </div>
 		<div class="row d-flex">
@@ -270,8 +315,7 @@
 	<div class="row justify-content-center py-5 mt-5">
 		          <div class="col-md-12 heading-section text-center ftco-animate">
 		          	<span class="subheading">contact</span>
-		            <h2 class="mb-4">Contact me</h2>
-		            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+		            <h2 class="mb-4">Contact Me</h2>
 		          </div>
 		        </div>
 		<div class="row">
@@ -281,10 +325,8 @@
 								<i class="flaticon-analysis"></i>
 							</span>
 							<div class="desc">
-								<h3 class="mb-5"><a th:href=@{#}>Explore</a></h3>
-								<h4>Design Sprints</h4>
-								<h4>Product Strategy</h4>
-								<h4>UX Strategy</h4>
+								<h3 class="mb-5">Contact Number</h3>
+								<h4>+82-10-9995-3512</h4>
 							</div>
 						</div>
 					</div>
@@ -294,10 +336,8 @@
 								<i class="flaticon-flasks"></i>
 							</span>
 							<div class="desc">
-								<h3 class="mb-5"><a th:href=@{#}>Create</a></h3>
-								<h4>Information</h4>
-								<h4>UX/UI Design</h4>
-								<h4>Branding</h4>
+								<h3 class="mb-5">Email Address</h3>
+								<h4>tkdguq9369@naver.com</h4>
 							</div>
 						</div>
 					</div>
@@ -307,10 +347,8 @@
 								<i class="flaticon-ideas"></i>
 							</span>
 							<div class="desc">
-								<h3 class="mb-5"><a th:href=@{#}>Learn</a></h3>
-								<h4>Prototyping</h4>
-								<h4>User Testing</h4>
-								<h4>UI Testing</h4>
+								<h3 class="mb-5">Blog</h3>
+								<a href="https://blog.naver.com/tkdguq9369" target="_blank"><span>https://blog.naver.com/tkdguq9369</span></a>
 							</div>
 						</div>
 					</div>
