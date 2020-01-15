@@ -80,12 +80,15 @@ public class BookLendController {
 			// 검색결과 리다이렉트로 보내기
 			redirectAttributes.addFlashAttribute("searchBook", bookInfoMap.get("searchBook"));
 			redirectAttributes.addFlashAttribute("resultBook", bookInfoMap.get("resultBook"));
-
-			// 회원
-			Map<String, Object> userInfoMap = bookLendService.userInfo(libNum, svUser);
-			// 검색결과 리다이렉트로 보내기
-			redirectAttributes.addFlashAttribute("resultUser", userInfoMap.get("resultUser"));
-
+			
+			//반납안된 도서인 경우 회원정보포함하여 보내기
+			if(bookInfoMap.get("resultUser") != null) {
+				redirectAttributes.addFlashAttribute("resultUser", bookInfoMap.get("resultUser"));	
+			}else {
+				Map<String, Object> userInfoMap = bookLendService.userInfo(libNum, svUser);
+				//검색결과 리다이렉트로 보내기
+				redirectAttributes.addFlashAttribute("resultUser", userInfoMap.get("resultUser"));
+			}
 		}
 		return "redirect:/admin/lendSearchList";
 	}

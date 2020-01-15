@@ -88,7 +88,6 @@
 			var endDay = null;//종료일 
 			//선택한 옵션 값
  			var optValue = $(this).attr('rel');
- 			 console.log(optValue);
  			 
  			if(optValue == 'month'){//월별인 경우 종료일에 이번달 마지막일 셋팅 
  				endDay = moment().endOf('month').format('YYYY-MM-DD');
@@ -169,7 +168,6 @@
 	          },
 	        navLinkDayClick: function(date, jsEvent){     	
 	        	var selectDate =moment(date).format('YYYY-MM-DD');
-	        	console.log(selectDate);
 	            $('#bookInsertModal').modal('show');
 	            $('#selectDate').text(selectDate);
 	            $('#insertForm [name="cStartDate"]').val(selectDate);
@@ -226,7 +224,6 @@
 	   		});
 	   		 
 	   		request.done(function( data ) {
-	   			console.log(data);
 	   			bookInfoList = data;
 	   			//리턴값 있는 경우 리스트출력
 	   			if(data.length > 0){
@@ -284,9 +281,11 @@
 			if(totalPage != 0){
 				if(currentPage > totalPage){
 					alert('전체페이지보다 큰 수는 입력할 수 없습니다');
+					$('.modal .totalPage').attr('placeholder','전체페이지:  /'+totalPage);
 				}else if(currentPage == totalPage ){
-					alert('완독도서에 등록하시겠습니까?');
+					alert('완독도서에 등록됩니다');
 					$('.modal [name="cBookFinish"]').val('O');
+					$('.modal .totalPage').attr('placeholder','전체페이지: '+currentPage+'/'+totalPage);
 				}else{
 					$('.modal .totalPage').attr('placeholder','전체페이지: '+currentPage+'/'+totalPage);	
 					$('.modal [name="cBookFinish"]').val('X');
@@ -305,7 +304,9 @@
 				 alert('도서를 검색해주세요');		
 			 }else if(cTitle == ''){
 				 alert('제목을 입력해주세요');
-			 }else if(cContent == ''){
+			 }else if(cTitle.length > 30){
+	             alert('제목은 30자 이하로 적어 주세요');
+	         }else if(cContent == ''){
 				 alert('내용을 입력해주세요');
 			 }else if(cContent.length > 250){
 	             alert('내용은 250자 이하로 적어 주세요');
