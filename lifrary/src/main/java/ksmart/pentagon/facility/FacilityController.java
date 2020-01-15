@@ -215,7 +215,6 @@ public class FacilityController {
 	 */
 	@PostMapping("/lifrary/reservation")
 	public void reservation(FacilityReservation fr, HttpServletResponse response) throws IOException {
-		System.out.println(fr + " <== reservation");
 		String result = facilityService.reserveFacility(fr);
 
 		response.setContentType("text/html; charset=UTF-8");
@@ -282,7 +281,6 @@ public class FacilityController {
 	 */
 	@PostMapping("/admin/facilityInsert")
 	public String facilityInsert(Facility facility) {
-		System.out.println(facility);
 		facilityService.insertFacility(facility);
 
 		return "redirect:/admin/facilityList";
@@ -311,7 +309,6 @@ public class FacilityController {
 	 */
 	@PostMapping("/admin/facilityUpdate")
 	public String facilityUpdate(Facility facility) {
-		System.out.println(facility);
 		facilityService.updateFacility(facility);
 		return "redirect:/admin/facilityDetail?fCode=" + facility.getfCode();
 	}
@@ -366,7 +363,6 @@ public class FacilityController {
 	 */
 	@PostMapping("/getArray")
 	public @ResponseBody String getArray(@RequestParam(value = "seatArray") List<String> seatArray) {
-		System.out.println(seatArray + " <== seatArray");
 		String array = "";
 		for (int i = 0; i < seatArray.size(); i++) {
 			if ((i + 1) != seatArray.size()) {
@@ -375,7 +371,6 @@ public class FacilityController {
 				array += seatArray.get(i);
 			}
 		}
-		System.out.println(array);
 
 		return array;
 	}

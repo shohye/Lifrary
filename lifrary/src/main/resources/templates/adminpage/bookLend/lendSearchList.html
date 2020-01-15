@@ -64,7 +64,6 @@
 			//반납도서 등록버튼 활성화
 			if(searchBook == 2){
 				$('.svHidden').val('');
-				
 				$('#lendForm').find('button').attr('class','btn btn-success').text('반납등록');
 			}
 			//예약도서 대출버튼 활성화
@@ -77,7 +76,6 @@
 			else if(bsLendState == 'O' && bsBookState == '정상' && uasLendLimit == 'O' && ulLendNum > 0){
 				$('#lendForm').find('button').attr('class','btn btn-primary').text('대출등록');
 			}else{
-				console.log('대출불가');
 			}
 		}
 
@@ -105,7 +103,6 @@
 	  $('#bookInfoBtn').click(function(){
 	  
 		  var bookinfo = $('#bookinfo').val();
-		  
 		  if( bookinfo == ''){
 			  alert('검색 도서를 입력해주세요');
 		  }else{

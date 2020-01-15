@@ -13,8 +13,6 @@ public class StudyService {
 	
 public List<StudyCate> studyCateList(String libNum, String sId) {
 		
-		
-		
 		return studyMapper.studyCateList(libNum, sId);
 
 	}

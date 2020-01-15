@@ -33,16 +33,16 @@ public class ProgramController {
 	 */
 	@GetMapping("/lifrary/programSearchList")
 	public String programListView(Model model, HttpSession session) {
-		String libNum = (String)session.getAttribute("LIBNUM");
+		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("menu", "프로그램 리스트");
 		model.addAttribute("programList", programService.getProgramList(libNum));
 		model.addAttribute("latelyProgram", programService.getLatelyProgram(libNum)); // 최근 등록된 3개 프로그램 뿌려주기
 		return "librarypage/program/programSearchList";
 	}
 
-	
 	/**
 	 * 키워드, 대상 검색리스트 가져오기.
+	 * 
 	 * @param keywords
 	 * @param target
 	 * @param model
@@ -50,11 +50,11 @@ public class ProgramController {
 	 * @return
 	 */
 	@PostMapping("/lifrary/programSearchList")
-	public String programList(@RequestParam(value = "keywords", required = false) String keywords, @RequestParam(value = "target") String target,
-			Model model, HttpSession session) {
-		String libNum = (String)session.getAttribute("LIBNUM");
+	public String programList(@RequestParam(value = "keywords", required = false) String keywords,
+			@RequestParam(value = "target") String target, Model model, HttpSession session) {
+		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("menu", "프로그램 리스트");
-		model.addAttribute("programList", programService.getSearchProgramList(keywords, target,libNum));
+		model.addAttribute("programList", programService.getSearchProgramList(keywords, target, libNum));
 		model.addAttribute("latelyProgram", programService.getLatelyProgram(libNum)); // 최근 등록된 3개 프로그램 뿌려주기
 		return "librarypage/program/programSearchList";
 	}
@@ -68,7 +68,7 @@ public class ProgramController {
 	 */
 	@GetMapping("/lifrary/programDetail")
 	public String programDetail(@RequestParam(value = "pmCode") String pmCode, Model model, HttpSession session) {
-		String libNum = (String)session.getAttribute("LIBNUM");
+		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("menu", "프로그램 상세보기");
 		model.addAttribute("program", programService.getProgram(pmCode));
 		model.addAttribute("latelyProgram", programService.getLatelyProgram(libNum)); // 최근 등록된 3개 프로그램 뿌려주기
@@ -85,7 +85,7 @@ public class ProgramController {
 	@GetMapping("/lifrary/programApply")
 	public String programApply(@RequestParam(value = "pmCode") String pmCode,
 			@RequestParam(value = "pmName") String pmName, Model model, HttpSession session) {
-		String libNum = (String)session.getAttribute("LIBNUM");
+		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("menu", "프로그램 신청하기");
 		model.addAttribute("pmCode", pmCode);
 		model.addAttribute("pmName", pmName);
@@ -101,7 +101,6 @@ public class ProgramController {
 	 */
 	@PostMapping("/lifrary/programApply")
 	public String programApply(ProgramApply pa) {
-		System.out.println(pa + " <== pa");
 		programService.applyProgram(pa);
 		return "redirect:/lifrary/programSearchList";
 	}
@@ -157,7 +156,7 @@ public class ProgramController {
 	 */
 	@GetMapping("/admin/programSearchList")
 	public String adminProgramSearchList(Model model, HttpSession session) {
-		String libNum = (String)session.getAttribute("LIBNUM");
+		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("programList", programService.getProgramList(libNum));
 		return "adminpage/program/programSearchList";
 	}
@@ -169,7 +168,7 @@ public class ProgramController {
 	 */
 	@GetMapping("/admin/programApplySearchList")
 	public String adminProgramApplySearchList(Model model, HttpSession session) {
-		String libNum = (String)session.getAttribute("LIBNUM");
+		String libNum = (String) session.getAttribute("LIBNUM");
 		model.addAttribute("applyList", programService.adminGetProgramApplyList(libNum));
 		return "adminpage/program/programApplySearchList";
 	}
@@ -186,6 +185,7 @@ public class ProgramController {
 
 	/**
 	 * 프로그램(행사, 강좌) 등록처리후 프로그램 리스트로 이동
+	 * 
 	 * @param pm
 	 * @return
 	 */
@@ -236,7 +236,6 @@ public class ProgramController {
 
 	@GetMapping("/admin/programDelete")
 	public String adminProgramDelete(@RequestParam(value = "pmCode") String pmCode) {
-		System.out.println(pmCode + "<== pmCode");
 		programService.deleteProgram(pmCode);
 		return "redirect:/admin/programSearchList";
 	}

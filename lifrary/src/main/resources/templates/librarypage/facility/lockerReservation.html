@@ -70,7 +70,6 @@
 				var contents = '';
 				selectFcode = fCode; // 어떤 공공시설 눌렀는지 fCode를 저장.
 				selectfKinds = fKinds;
-					console.log('열람실 / 사물함임')
 					var fRow = $(this).find('input[name=fRow]').val();
 					var fCol = $(this).find('input[name=fCol]').val();
 					var reserveArray = new Array(); // ajax로 가져온 결과를 담는 배열. 예약된 자리를 담는 배열
@@ -118,7 +117,6 @@
 						 
 						request.done(function(data) {
 							reserveArray = data.seatNum; // 결과물을 reserveArray에 대입한다. 
-							console.log(reserveArray)
 							
 							
 							/* 뿌려준 테이블에 가져온 배열(선택된 자리)색칠해주기 */
@@ -158,8 +156,6 @@
 					var fCodeVal = $('#fCode').val()						 		 //선택된것이 어떤 시설의 코드인지.
 					var frSelectNumVal = $('#frSelectNum').val()							 //선택된 자리의 번호
 					var fKindsVal = $('#fKinds').val()								 // 시설 종류
-					
-						console.log(uIdVal + "  " + lCodeVal)
 					
 					if(uIdVal == "" && lCodeVal == ""){
 						alert('세션이 만료되었습니다. 다시 로그인해주세요')

@@ -17,29 +17,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class StockBookCheckController {
 
-	@Autowired private StockBookCheckService stockBookCheckService;
-	
+	@Autowired
+	private StockBookCheckService stockBookCheckService;
+
 	/**
 	 * 장서점검 페이지로 진입
-	 * @param  model                            
+	 * 
+	 * @param model
 	 * @return adminLogin페이지
 	 * @author 한우리
 	 **/
-	
-	//장서 점검회차 리스트 
+
+	// 장서 점검회차 리스트
 	@GetMapping("/admin/stockCheckList")
 	public String stockCheckList(Model model, HttpSession session) {
-		System.out.println("stockCheckList 장서점검 회차리스트 ");
-		String SAID = (String)session.getAttribute("SAID");
-		String libNum = (String)session.getAttribute("LIBNUM");
-		System.out.println("SAID 세션에서가져온 관리자 코드  >>>" + SAID );
-		System.out.println("libNum 세션에서가져온 도서관 코드  >>>" + libNum );
-		
+		String SAID = (String) session.getAttribute("SAID");
+		String libNum = (String) session.getAttribute("LIBNUM");
+
 		model.addAttribute("stockCheckList", stockBookCheckService.stockCheckList(SAID, libNum));
-		System.out.println("장서점검리스트 stockCheckList 확인바람 =>> "+ stockBookCheckService.stockCheckList(SAID, libNum));
-		
+
 		return "/adminpage/stockCheck/stockCheckList";
 	}
-	
-	
+
 }

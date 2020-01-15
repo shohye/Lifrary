@@ -37,7 +37,6 @@
 					 var con_test = confirm("이미 선택된 자리입니다. "+
 							"[선택자리 : '"+$(this).attr('seat')+"'] \n제거하려면 확인을 누르세요.");
 					if(con_test == true){
-						//console.log('확인누름');						
 						seatArray.splice(seatArray.indexOf($(this).attr('seat')),1); //선택된 배열의 인덱스부터 1개를 지움
 						$(this).css("background-color", 'white'); // 누른곳의 배경색을 하얀색으로 바꾼다.
 						$(this).text($(this).attr('seat')); // 누른곳의 text를 누른곳의 seat속성으로 변경한다.
@@ -117,7 +116,6 @@
 						});
 						 
 						request.done(function( data ) {
-							//console.log(data);
 							$('#seatSelected').val(data)
 							$('#fRow').val($('#garo').val())
 							$('#fCol').val($('#sero').val())
@@ -228,7 +226,6 @@
  				if(fCol.val() == ''){
  					fCol.val(0);
  				}
- 				//console.log('등록완료')
   				facilityInUpForm.submit();
   			})
   			

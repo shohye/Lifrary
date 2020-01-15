@@ -15,7 +15,6 @@
     	// 도서 정보 가져오기   
     	   $('#bookInfoBtn').click(function(){  			
   				var biIsbn = $('#biIsbn').val();
-  				console.log($.trim(biIsbn));
   				
   				var trimBiIsbn = $.trim(biIsbn);
   				
@@ -27,7 +26,6 @@
   				});
   				 
   				request.done(function( data ) {
-  					console.log(data.biName);
   					
   					var biName      = $('input[name=biName]');
   		 			var biAuthor    = $('input[name=biAuthor]');

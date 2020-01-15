@@ -12,7 +12,6 @@
 		/* 연장버튼 클릭시 */
 			$('.extension').click(function(){
 				var frCode = $(this).parents('tr').find('input[name=frCode]').val();
-				//console.log(frCode);
 				
 				var request = $.ajax({ // fr코드 받아서  
 					  url: "/lifrary/extension",
@@ -22,7 +21,6 @@
 					});
 					 
 					request.done(function( data ) {
-						console.log(data)
 						if(data == '연장완료'){
 							alert('연장이 완료되었습니다.')
 							location.reload(true);

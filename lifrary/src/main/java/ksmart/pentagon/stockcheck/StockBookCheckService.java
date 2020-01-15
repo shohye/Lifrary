@@ -15,7 +15,6 @@ public class StockBookCheckService {
 	private StockBookCheckMapper stockBookCheckMapper;
 	
 	public List<StockBookTimes> stockCheckList(String SAID, String libNum) {
-		System.out.println("stockCheckList 서비스진입");
 		
 		return stockBookCheckMapper.stockCheckList(SAID, libNum);
 	}

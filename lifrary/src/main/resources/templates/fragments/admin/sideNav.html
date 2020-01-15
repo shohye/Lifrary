@@ -29,39 +29,39 @@
             <ul class="sidenav-menu">
               <li class="sidenav-item ">
                 <a th:href="@{/admin/userSearchList}" class="sidenav-link">
-                  <div>!회원 관리</div>
+                  <div>회원 관리</div>
                 </a>
               </li>
               <li class="sidenav-item">
 			    <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
-                  <div>!회원 등급 관리</div>
+                  <div>회원 등급 관리</div>
                 </a>
 				<ul class="sidenav-menu">
                   <li class="sidenav-item">
                     <a th:href="@{/admin/adUserLevelList}"  class="sidenav-link">
-                      <div>!회원 등급 설정</div>
+                      <div>회원 등급 설정</div>
                     </a>
                   </li>
                   <li class="sidenav-item">
                     <a th:href="@{/admin/adUserLevelHistorySearchList}"  class="sidenav-link">
-                      <div>!회원 등급 이력</div>
+                      <div>회원 등급 이력</div>
                     </a>
                   </li>
                 </ul>
               </li>
               <li class="sidenav-item">
                 <a href="javascript:void(0)" class="sidenav-link sidenav-toggle">
-                  <div>!회원 권한 관리</div>
+                  <div>회원 권한 관리</div>
                 </a>
                 <ul class="sidenav-menu">
                   <li class="sidenav-item">
                     <a th:href="@{/admin/adUserAuthorityList}"  class="sidenav-link">
-                      <div>!회원 권한 설정</div>
+                      <div>회원 권한 설정</div>
                     </a>
                   </li>
                   <li class="sidenav-item">
                     <a th:href="@{/admin/adUserAuthorityHistorySearchList}"  class="sidenav-link">
-                      <div>!회원 권한 이력</div>
+                      <div>회원 권한 이력</div>
                     </a>
                   </li>
                 </ul>
@@ -78,14 +78,14 @@
             <th:block th:if="${session.SADIV} == '관리자'"> 
               <li class="sidenav-item">
                 <a th:href="@{/admin/librarianMyDetail}" class="sidenav-link">
-                  <div>!사서 나의관리</div>
+                  <div>사서 나의관리</div>
                 </a>
               </li>
             </th:block>
             <th:block th:unless="${session.SADIV} == '관리자'"> 
               <li class="sidenav-item">
                 <a th:href="@{/admin/librarianMyDetail}" class="sidenav-link">
-                  <div>!사서 나의관리</div>
+                  <div>사서 나의관리</div>
                 </a>
               </li>
             </th:block>
@@ -93,7 +93,7 @@
              <th:block th:if="${session.SADIV} == '관리자'">
               <li class="sidenav-item">
                 <a th:href="@{/admin/librarianLevelList}" class="sidenav-link">
-                  <div>!사서 권한 설정</div>
+                  <div>사서 권한 설정</div>
                 </a>
               </li>
              </th:block>
@@ -108,12 +108,12 @@
             <ul class="sidenav-menu">
               <li class="sidenav-item">
                 <a th:href="@{/admin/pointList}" class="sidenav-link">
-                  <div>!포인트 설정</div>
+                  <div>포인트 설정</div>
                 </a>
               </li>
               <li class="sidenav-item">
                 <a th:href="@{/admin/pointHistoryList}" class="sidenav-link">
-                  <div>!포인트 사용 내역</div>
+                  <div>포인트 사용 내역</div>
                 </a>
               </li>
             </ul>
@@ -181,7 +181,7 @@
               </li>
               <li class="sidenav-item"> 
                 <a th:href="@{/admin/stockCheckList}" class="sidenav-link">
-                  <div>!장서 점검</div>
+                  <div>장서 점검</div>
                 </a>
               </li>
               </ul> 
@@ -219,17 +219,17 @@
             <ul class="sidenav-menu">
               <li class="sidenav-item">
                 <a th:href="@{/admin/noticeSearchList(boardLName=${'공지사항'})}" class="sidenav-link">
-                  <div>!공지사항</div>
+                  <div>공지사항</div>
                 </a>
               </li>
               <li class="sidenav-item">
                 <a th:href="@{/admin/noticeSearchList(boardLName=${'문의하기'})}" class="sidenav-link">
-                  <div>!문의</div>
+                  <div>문의</div>
                 </a>
               </li>
               <li class="sidenav-item">
                 <a th:href="@{/admin/bookRecommendList}" class="sidenav-link">
-                  <div>!추천도서</div>
+                  <div>추천도서</div>
                 </a>
               </li>
             </ul>
@@ -244,12 +244,12 @@
             <ul class="sidenav-menu">
               <li class="sidenav-item">
                 <a th:href="@{/admin/facilityList}" class="sidenav-link">
-                  <div>!공공시설 등록 리스트</div>
+                  <div>공공시설 등록 리스트</div>
                 </a>
               </li>
               <li class="sidenav-item">
                 <a th:href="@{/admin/facilityReservationSearchList}" class="sidenav-link">
-                  <div>!공공시설 신청 내역</div>
+                  <div>공공시설 신청 내역</div>
                 </a>
               </li>
             </ul>
@@ -264,12 +264,12 @@
             <ul class="sidenav-menu">              
               <li class="sidenav-item">
                 <a th:href="@{/admin/programSearchList}" class="sidenav-link">
-                  <div>!등록 프로그램 리스트</div>
+                  <div>등록 프로그램 리스트</div>
                 </a>
               </li>
               <li class="sidenav-item">
                 <a th:href="@{/admin/programApplySearchList}" class="sidenav-link">
-                  <div>!프로그램 신청 내역</div>
+                  <div>프로그램 신청 내역</div>
                 </a>
               </li>
             </ul>
