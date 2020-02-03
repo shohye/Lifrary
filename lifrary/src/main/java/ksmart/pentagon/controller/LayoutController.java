@@ -27,7 +27,7 @@ public class LayoutController {
 
 	@Autowired private ProgramService programService;
 	
-	@GetMapping("/")
+	@GetMapping("/intro")
 	public String intro() {
 		
 		return "intro";
@@ -124,5 +124,10 @@ public class LayoutController {
 		System.out.println("area : " + area);
 		ArrayList<ArrayList> List = layoutService.getAera(gender, fromAge, toAge, area);
 		return List;
+	}
+	
+	@GetMapping("/")
+	public String portfolio() {
+		return "test/index";
 	}
 }
